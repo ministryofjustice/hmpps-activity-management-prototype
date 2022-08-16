@@ -1,44 +1,84 @@
 
 {% extends "layout.html" %}
+{% set serviceName = "" %}
 
 {% block pageTitle %}
-  Home – GOV.UK Prototype Kit
+Digital Contacts prototype
 {% endblock %}
 
 {% block content %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">
-        Ricky Test 6
-        <span class="govuk-caption-xl">{{releaseVersion}}</span>
-      </h1>{{releaseVersion | log }}
-      <p>
-        This kit lets you rapidly create HTML prototypes of GOV.UK services.
-      </p>
-
-      <p>
-        It contains all you need to prototype anything from simple static pages to complex, data-driven transactions.
-      </p>
-
-      <h2 class="govuk-heading-m">About this page</h2>
-
-      <p>We recommend you add links to your prototype to this page, rather than delete it.
-        You'll find this page in the kit at '/app/views/index.html'.</p>
-
-      <p>You can change the service name by editing the file '/app/config.js'.</p>
-
-      <h2 class="govuk-heading-m">Examples and documentation</h2>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li>
-          <a href="/docs/tutorials-and-examples">Tutorials and templates</a>
-        </li>
-        <li>
-          <a href="https://design-system.service.gov.uk">GOV.UK Design System</a>
-        </li>
-      </ul>
-    </div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Prototypes for Activities Management
+    </h1>
   </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            User research, content docs and flow diagrams
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+
+          <p class="govuk-body govuk-!-margin-bottom-2">User research:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li><a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">UR</a></li>
+
+          </ul>
+
+          <p class="govuk-body govuk-!-margin-bottom-2">Copydecks:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li><a href="" target="_blank" class="govuk-link govuk-link--no-visited-state">View the content docs </a></li>
+          </ul>
+
+          <p class="govuk-body govuk-!-margin-bottom-2">Flow diagrams:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li><a href="#">View the flow diagrams</a></li>
+          </ul>
+
+        </div>
+      </details>
+
+
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head" >
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Version</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+          <th scope="col" class="govuk-table__header">What changed</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <a href="/v1/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 1</a>
+          <!--  <a href="/2-0/setup?r=t" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a>-->
+          </td>
+          <td class="govuk-table__cell" >
+            <strong class="govuk-tag govuk-tag--green">
+              I<span style="text-transform:lowercase;">n design</span>
+            </strong>
+
+          </td>
+          <td class="govuk-table__cell" >
+            <ul class="govuk-list govuk-list--bullet">
+              <li>Baseline</li>
+            </ul>
+          </td>
+        </tr>
+
+    </tbody>
+  </table>
+
+
+  </div>
+</div>
 
 {% endblock %}
