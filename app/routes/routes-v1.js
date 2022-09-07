@@ -66,7 +66,17 @@ router.post(version +'/create/activity-will-it-recur', function(req, res) {
 			}
 		});
 
-
+	router.post(version +'/create/activity-start-time', function(req, res) {
+		{
+			if (req.session.data.setupLocation == 'dashboard'){
+				res.redirect(version +'/create/activity-location-list-dashboard')
+			}
+			else{
+				res.redirect(version +'/create/activity-location-list-dropdown')
+			}
+		}
+	});
+	
 
 });
 
