@@ -49,8 +49,24 @@ router.post(version +'/create/activity-will-it-recur', function(req, res) {
 		res.redirect(version +'/create/activity-add-recurrence')
 	}
 	else {
-		res.redirect(version +'/create/activity-will-it-recur3')
+		res.redirect(version +'/create/activity-start-date')
 	}
+
+		//Not recurring
+		router.post(version +'/create/activity-start-date', function(req, res) {
+			{
+				res.redirect(version +'/create/activity-start-time')
+			}
+		});
+
+		//Recurring
+		router.post(version +'/create/activity-which-days', function(req, res) {
+			{
+				res.redirect(version +'/create/activity-start-time')
+			}
+		});
+
+
 
 });
 
