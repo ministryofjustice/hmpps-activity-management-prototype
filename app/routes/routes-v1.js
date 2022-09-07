@@ -14,7 +14,7 @@ router.post(version +'/setup', function(req, res) {
 		res.redirect(version +'/create/activity-type-select-with-category')
 	}
 	else {
-		res.redirect(version +'/create/activity-type-select-no-category')
+		res.redirect(version +'/create/activity-name')
 	}
 	});
 
@@ -24,11 +24,12 @@ router.post(version +'/create/activity-type-select-with-category', function(req,
 	}
 });
 
-router.post(version +'/create/activity-type-select-no-category', function(req, res) {
-	{
-		res.redirect(version +'/create/activity-name')
-	}
-});
+//Removed appointments so no need for a page with just activity on
+//router.post(version +'/create/activity-type-select-no-category', function(req, res) {
+//	{
+//		res.redirect(version +'/create/activity-name')
+//	}
+//});
 
 router.post(version +'/create/activity-name', function(req, res) {
 	{
