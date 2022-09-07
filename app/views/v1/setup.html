@@ -7,165 +7,29 @@
         <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
     </div>
 </div>
-<form method="post">
+<form method="post" >
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
 
-        <!-- Prototype version -->
-        <div class="govuk-form-group">
-            <label class="govuk-label" >
-            <strong>User</strong>
+        <h3 class="govuk-label" ><strong>Select activity type</strong></h3><br />
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="setupCategoriesYes" name="setupCategories" type="radio" value="yes" checked="checked">
+            <label class="govuk-label govuk-radios__label" for="setupCategoriesYes">
+              With categories
             </label>
-            <select class="govuk-select" style="min-width: 100%" id="ptVersion" name="ptVersion" data-option="ptVersion">
-                <option {% if myData.ptVersion == 'mvs' %}selected{% endif %} value="pods">Prison</option>
-            </select>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="setupCategoriesNo" name="setupCategories" type="radio" value="no">
+            <label class="govuk-label govuk-radios__label" for="setupCategoriesNo">
+           Without categories
         </div>
-
-        <!-- Start from
-        <div class="govuk-form-group">
-          <label class="govuk-label" >
-            Start from
-          </label>
-          <select class="govuk-select" style="min-width: 100%" id="start" name="start" data-option="start">
-              <option {% if myData.start == 'start' %}selected{% endif %} value="start">Start page</option>
-              <option {% if myData.start == 'home' %}selected{% endif %} value="home">Home page</option>
-          </select>
-      </div>-->
-<!--
-
-      <div class="govuk-form-group">
-        <label class="govuk-label" >
-        <strong>  Current letters preference</strong>
-        </label><br />
-        <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
-          <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="setup-letters-preference-post" name="setupLettersPreference" type="radio" value="Post" checked>
-            <label class="govuk-label govuk-radios__label" for="setup-letters-preference-post">
-            Post
-            </label>
-          </div>
-          <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="setup-letters-preference-online" name="setupLettersPreference" type="radio" value="Online">
-            <label class="govuk-label govuk-radios__label" for="setup-letters-preference-online">
-              Online
-            </label>
-            <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
-            </div>
-          </div>
-          <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="setup-letters-preference-online-not-verified" name="setupLettersPreference" type="radio" value="OnlineNotVerified">
-            <label class="govuk-label govuk-radios__label" for="setup-letters-preference-online-not-verified">
-              Online - email not verified
-            </label>
-            <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
-            </div>
-          </div>
-          <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="setup-letters-preference-online-not-recognised" name="setupLettersPreference" type="radio" value="OnlineNotRecognised">
-            <label class="govuk-label govuk-radios__label" for="setup-letters-preference-online-not-recognised">
-              Online - email not recognised
-            </label>
-            <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
-            </div>
-          </div>
       </div>
-    </div>
-
-    <div class="govuk-form-group">
-      <label class="govuk-label" >
-      <strong>Email verification method</strong>
-      </label><br />
-      <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="setup-verify-email-email" name="setupVerifyEmail" type="radio" value="Link" checked >
-          <label class="govuk-label govuk-radios__label" for="setup-verify-email-email">
-            Link in email
-          </label>
-          <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
-          </div>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="setup-verify-email-code" name="setupVerifyEmail" type="radio" value="Code" >
-          <label class="govuk-label govuk-radios__label" for="setup-verify-email-code"">
-          Code in email
-          </label>
-        </div>
-    </div>
-  </div>
-    </div>
-  </div><br />-->
-
+        <br /><br />
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-
-              <button class="govuk-button" data-module="govuk-button">Start prototype</button>
-
-<!--
-        <p class="govuk-body" >
-            <span class="govuk-!-font-weight-bold">Shareable link:</span><br>
-            <span class="govuk-body" id="start-url-label" style="display:none"></span>
-        </p>
-
-        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
--->
+      <button class="govuk-button" data-module="govuk-button">Start prototype</button>
     </div>
-</div>
+  </div>
 </form>
-<!--
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-
-        <h2 class="govuk-heading-m">Full page list</h2>
-
-        <table class="govuk-table">
-            <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header">Page</th>
-                <th scope="col" class="govuk-table__header">Link</th>
-                </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell">_Setup prototype</th>
-                    <td class="govuk-table__cell" ><a class="govuk-link govuk-link--no-visited-state" href="setup">/setup</a></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell">_Display test data</th>
-                    <td class="govuk-table__cell" ><a class="govuk-link govuk-link--no-visited-state" href="standards">/standards</a></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell">Start</th>
-                    <td class="govuk-table__cell" ><a class="govuk-link govuk-link--no-visited-state" href="start">/start</a></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell">Home</th>
-                    <td class="govuk-table__cell" ><a class="govuk-link govuk-link--no-visited-state" href="home">/home</a></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell">Training list</th>
-                    <td class="govuk-table__cell" ><a class="govuk-link govuk-link--no-visited-state" href="training">/training</a></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell">Training overview</th>
-                    <td class="govuk-table__cell" ><a class="govuk-link govuk-link--no-visited-state" href="standard">/standard</a></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell">Providers list</th>
-                    <td class="govuk-table__cell" ><a class="govuk-link govuk-link--no-visited-state" href="providers">/providers</a></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell">Provider overview</th>
-                    <td class="govuk-table__cell" ><a class="govuk-link govuk-link--no-visited-state" href="provider">/provider</a></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        <p class="govuk-body" >{{myData.apiData|dump|safe}}</p>
-    </div>
-</div> -->
-
 {% endblock %}

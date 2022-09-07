@@ -1,0 +1,68 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+var inputEle = document.getElementById('timeInput');
+
+
+function onTimeChange() {
+  var timeSplit = inputEle.value.split(':'),
+    hours,
+    minutes,
+    meridian;
+  hours = timeSplit[0];
+  minutes = timeSplit[1];
+  if (hours > 12) {
+    meridian = 'PM';
+    hours -= 12;
+  } else if (hours < 12) {
+    meridian = 'AM';
+    if (hours == 0) {
+      hours = 12;
+    }
+  } else {
+    meridian = 'PM';
+  }
+  alert(hours + ':' + minutes + ' ' + meridian);
+}
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Enter the date of the first instance of the activity
+    </h1>
+  </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <form method="post">
+
+        <div class="govuk-form-group">
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+
+              </legend>
+              <div id="contact-hint" class="govuk-hint">
+                Enter the date of the first instance of the activity
+              </div>
+<input type="datetime-local" name="datetime" id="datetime" size=10 style="width: 300px; height:50px; font-size:180%;"><br /><br />
+<input type="date" name="datetime" id="datetime" size=10 style="width: 300px; height:50px; font-size:180%;"><br /><br />
+<input type="time" name="time" id="time" size=10 style="width: 300px; height:50px; font-size:180%;"><br /><br />
+<input type="time" onchange="onTimeChange()" id="timeInput" />
+
+
+
+            </fieldset>
+          </div>
+    <br />
+  <button class="govuk-button" data-module="govuk-button">Continue</button>
+  </div>
+</div>
+
+{% endblock %}
