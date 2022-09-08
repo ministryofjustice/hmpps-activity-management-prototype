@@ -1,13 +1,6 @@
 
 
-{% extends "layout.html" %}
-{% set serviceName = "" %}
-
-{% block pageTitle %}
-Activities Management prototype
-{% endblock %}
-
-{% block content %}
+<!DOCTYPE html>
 <!--[if lt IE 9]><html class="lte-ie8" lang="en"><![endif]-->
 <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
   <head>
@@ -29,13 +22,13 @@ Activities Management prototype
     <div class="column-two-thirds">
       <form class="form" method="post" autocomplete="off">
         <div class="form-group">
-          <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-            Find a location for the activity
-          </h1>
+          <label class="form-label-bold visually-hidden" for="location-select-dropdown">
+            What is your country of birth?
+          </label>
           <div class="form-control-1-2">
             <select class="form-control" id="location-select-dropdown">
               <option value="" disabled selected>
-                Find a location for the activity
+                Choose a location
               </option>
 
                 <option value="Canteen">Canteen</option>
@@ -49,9 +42,7 @@ Activities Management prototype
           </div>
         </div>
         <div class="form-group">
-          <br /><br />
-          <button class="govuk-button" data-module="govuk-button">Continue</button>
-
+          <input class="button" type="submit" value="Continue">
         </div>
       </form>
     </div>
@@ -66,10 +57,6 @@ Activities Management prototype
     .typeahead__menu--inline {
       max-height: none;
       overflow-x: visible;
-      max-width: 49%;
-    }
-    input{
-      max-width: 50%;
     }
   </style>
   <script>
@@ -99,4 +86,3 @@ Activities Management prototype
     <script>if (typeof window.GOVUK === 'undefined') document.body.className = document.body.className.replace('js-enabled', '');</script>
   </body>
 </html>
-{% endblock %}
