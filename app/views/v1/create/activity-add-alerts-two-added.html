@@ -27,15 +27,15 @@ Activities Management prototype
 <main id="content" role="main">
   <div class="grid-row">
     <div class="column-two-thirds">
-      <form class="form" method="post" autocomplete="off">
+      <form class="form" method="post" autocomplete="off" action="addAlert">
         <div class="form-group">
           <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-            Find a location for the activity
-          </h1>
+            Select the alerts for the activity
+          </h1><br />
           <div class="form-control-1-2">
             <select class="form-control" id="location-select-dropdown">
               <option value="" disabled selected>
-                Find a location for the activity
+                Select the alerts for the activity
               </option>
 
                 <option value="Canteen">Canteen</option>
@@ -48,9 +48,30 @@ Activities Management prototype
             </select>
           </div>
         </div>
+
+        <br />
+        <button class="govuk-button govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4" data-module="govuk-button">Add alert to activity</button>
+      </form>
+
+      <div><br />
+        <h3 class="govuk-heading-m">You have added 2 alerts</h3>
+        <p>Racist<span style="float:right;"><a href="activity-add-alerts-one-added">Remove</a></span></p>
+        <hr />
+          <p>Risk to children<span style="float:right;"><a href="activity-add-alerts-one-added">Remove</a></span></p>
+
+
+
+    <!--    <strong style="font-size:25px;" class="govuk-tag govuk-tag--red"> R<span style="text-transform: lowercase;">acist </span></strong>
+-->
+
+
+    </div>
+    <hr />
+    <br /><br />
         <div class="form-group">
-          <br /><br />
-          <button class="govuk-button" data-module="govuk-button">Continue</button>
+          <form class="form" method="post" autocomplete="off">
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
+          </form>
 
         </div>
       </form>
@@ -85,7 +106,7 @@ Activities Management prototype
   <script type="text/javascript" src="https://unpkg.com/registers-picker-engine@0.0.2"></script>
   <script type="text/javascript" src="https://unpkg.com/accessible-typeahead@0.4.1"></script>
   <script type="text/javascript">
-    var dataFilePath = '/public/javascripts/locations.json'
+    var dataFilePath = '/public/javascripts/alerts.json'
     AccessibleTypeahead.enhanceSelectElement({
       autoselect: true,
       selectElement: document.getElementById('location-select-dropdown'),

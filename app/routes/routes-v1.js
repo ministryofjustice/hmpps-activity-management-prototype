@@ -76,7 +76,43 @@ router.post(version +'/create/activity-will-it-recur', function(req, res) {
 			}
 		}
 	});
-	
+
+	router.post(version +'/create/activity-location-list-dashboard', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-incentive-level')
+		}
+	});
+
+	router.post(version +'/create/activity-location-list-dropdown', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-incentive-level')
+		}
+	});
+
+	router.post(version +'/create/activity-incentive-level', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-risk-assessment')
+		}
+	});
+
+	router.post(version +'/create/activity-risk-assessment', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-add-alerts')
+		}
+	});
+	//Add another submit button
+	router.post(version +'/create/addAlert', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-add-alerts-one-added')
+		}
+	});
+
+	router.post(version +'/create/activity-add-alerts', function(req, res) {
+		{
+			res.redirect(version +'/create/looop')
+		}
+	});
+
 
 });
 
