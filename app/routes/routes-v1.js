@@ -107,13 +107,72 @@ router.post(version +'/create/activity-will-it-recur', function(req, res) {
 		}
 	});
 
-	router.post(version +'/create/activity-add-alerts', function(req, res) {
+	router.post(version +'/create/addAlert2', function(req, res) {
 		{
-			res.redirect(version +'/create/looop')
+			res.redirect(version +'/create/activity-add-alerts-two-added')
 		}
 	});
 
+	router.post(version +'/create/activity-add-alerts-one-added', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-payment-details')
+		}
+	});
 
+	router.post(version +'/create/activity-add-alerts-two-added', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-payment-details')
+		}
+	});
+
+	router.post(version +'/create/activity-add-alerts', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-payment-details')
+		}
+	});
+
+	router.post(version +'/create/activity-payment-details', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-add-education')
+		}
+	});
+	router.post(version +'/create/addEducation', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-add-education-one-added')
+		}
+	});
+	router.post(version +'/create/addEducation2', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-add-education-two-added')
+		}
+	});
+	router.post(version +'/create/addEducation3', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-add-education-three-added')
+		}
+	});
+
+	router.post(version +'/create/activity-add-education', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-check-your-answers')
+		}
+	});
+
+	router.post(version +'/create/activity-add-education-one-added', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-check-your-answers')
+		}
+	});
+	router.post(version +'/create/activity-add-education-two-added', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-check-your-answers')
+		}
+	});
+	router.post(version +'/create/activity-add-education-three-added', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-check-your-answers')
+		}
+	});
 });
 
 
