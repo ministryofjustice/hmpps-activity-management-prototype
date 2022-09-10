@@ -205,7 +205,7 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 	else {
 		res.redirect(version +'/create/activity-start-date')
 	}
-
+});
 		//Not recurring
 		router.post(version +'/create/check/activity-start-date', function(req, res) {
 			{
@@ -257,13 +257,13 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 	//Add another submit button
 	router.post(version +'/create/check/addAlert', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-check-your-answers')
+			res.redirect(version +'/create/check/activity-add-alerts-one-added')
 		}
 	});
 
 	router.post(version +'/create/check/addAlert2', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-check-your-answers')
+			res.redirect(version +'/create/check/activity-add-alerts-two-added')
 		}
 	});
 
@@ -292,12 +292,12 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 	});
 	router.post(version +'/create/check/addEducation', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-check-your-answers')
+			res.redirect(version +'/create/check/activity-add-education-one-added')
 		}
 	});
 	router.post(version +'/create/check/addEducation2', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-check-your-answers')
+			res.redirect(version +'/create/check/activity-add-education-two-added')
 		}
 	});
 	router.post(version +'/create/check/addEducation3', function(req, res) {
@@ -333,7 +333,6 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 			res.redirect(version +'/create/activity-check-your-answers')
 		}
 	});
-});
 
 
 ///////END CREATE CHECK YOUR ANSWERS///////////////
