@@ -197,6 +197,13 @@ router.post(version +'/create/activity-start-date', function(req, res) {
 
 
 ///////CREATE CHECK YOUR ANSWERS///////////////
+
+router.post(version +'/create/check/activity-type-select-with-category', function(req, res) {
+	{
+		res.redirect(version +'/create/activity-repeat-check-your-answers')
+	}
+});
+
 router.post(version +'/create/check/activity-name', function(req, res) {
 	{
 		res.redirect(version +'/create/activity-repeat-check-your-answers')
