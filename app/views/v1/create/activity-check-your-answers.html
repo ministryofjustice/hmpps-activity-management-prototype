@@ -79,7 +79,12 @@ Activities Management prototype
               <p class="govuk-body">Room 2</p>
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-location-list-dropdown">
+
+            {% if data.setupLocation == "dashboard" %}
+            <a class="govuk-link" href="check/activity-location-list-1">
+              {% else %}
+              <a class="govuk-link" href="check/activity-location-list-2">
+              {% endif %}
                 Change<span class="govuk-visually-hidden"> contact details</span>
               </a>
             </dd>

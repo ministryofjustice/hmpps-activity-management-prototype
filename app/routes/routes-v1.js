@@ -55,9 +55,18 @@ router.post(version +'/create/activity-start-date', function(req, res) {
 
 	router.post(version +'/create/activity-start-time', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-location-list-dropdown')
+			if (req.session.data.setupLocation == 'dashboard')
+			{
+				res.redirect(version +'/create/activity-location-list-dashboard')
+			}
+			else {
+				res.redirect(version +'/create/activity-location-list-dropdown')
+			}
 		}
 	});
+
+//if dashboard view clicked on setup page
+
 
 	router.post(version +'/create/activity-start-time-one-added', function(req, res) {
 		{
@@ -75,14 +84,7 @@ router.post(version +'/create/activity-start-date', function(req, res) {
 		}
 	});
 
-
-
 	router.post(version +'/create/activity-location-list-dropdown', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-capacity')
-		}
-	});
-	router.post(version +'/create/activity-location-list-dashboard', function(req, res) {
 		{
 			res.redirect(version +'/create/activity-capacity')
 		}
@@ -191,8 +193,6 @@ router.post(version +'/create/activity-start-date', function(req, res) {
 			res.redirect(version +'/create/activity-repeat-check-your-answers')
 		}
 	});
-
-
 
 
 

@@ -114,10 +114,15 @@ Activities Management prototype
               Location
             </dt>
             <dd class="govuk-summary-list__value">
+
               <p class="govuk-body">Room 2</p>
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-location-list-dropdown">
+              {% if data.setupLocation == "dashboard" %}
+              <a class="govuk-link" href="check/activity-location-list-dashboard">
+                {% else %}
+                <a class="govuk-link" href="check/activity-location-list-dropdown">
+                {% endif %}
                 Change<span class="govuk-visually-hidden"> contact details</span>
               </a>
             </dd>
@@ -185,7 +190,7 @@ Activities Management prototype
               </p>
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-start-time-2">
+              <a class="govuk-link" href="check/activity-start-time">
                 Change<span class="govuk-visually-hidden"> contact details</span>
               </a>
             </dd>
@@ -198,7 +203,11 @@ Activities Management prototype
               <p class="govuk-body">Room 2</p>
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-location-list-dropdown">
+              {% if data.setupLocation == "dashboard" %}
+              <a class="govuk-link" href="check/activity-location-list-dashboard">
+                {% else %}
+                <a class="govuk-link" href="check/activity-location-list-dropdown">
+                {% endif %}
                 Change<span class="govuk-visually-hidden"> contact details</span>
               </a>
             </dd>
