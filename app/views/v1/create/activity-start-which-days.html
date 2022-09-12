@@ -1,0 +1,70 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Select the day(s) for the activity
+    </h1>
+
+<!--  <div id="event-name-hint" class="govuk-hint">
+    Enter start and endtimes for the activity
+  </div>-->
+    <form method="post">
+</div>
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{{ govukCheckboxes({
+  idPrefix: "days",
+  name: "whichDays",
+  fieldset: {
+    legend: {
+      text: "",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: "Select the days the that this activity will recur for the time allocation of 1.00pm to 3.00pm."
+  },
+  items: [
+    {
+      value: "monday",
+      text: "Monday"
+    },
+    {
+      value: "Ttuesday",
+      text: "Tuesday"
+    },
+    {
+      value: "wednesday",
+      text: "Wednesday"
+    },
+    {
+      value: "thursday",
+      text: "Thursday"
+    },
+    {
+      value: "friday",
+      text: "Friday"
+    },
+    {
+      value: "saturday",
+      text: "Saturday"
+    },  {
+        value: "sunday",
+        text: "Sunday"
+      }
+
+  ]
+}) }}
+<button class="govuk-button" data-module="govuk-button">Continue</button>
+</form>
+{% endblock %}

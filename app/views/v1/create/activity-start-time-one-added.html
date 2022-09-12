@@ -17,7 +17,6 @@ Activities Management prototype
 <!--  <div id="event-name-hint" class="govuk-hint">
     Enter start and endtimes for the activity
   </div>-->
-    <form class="form" method="post" autocomplete="off" action="addTime">
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
           <h2 class="govuk-heading-m">Start time</h2>
@@ -110,7 +109,7 @@ Activities Management prototype
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="contact" name="contact" type="radio" value="email">
                   <label class="govuk-label govuk-radios__label" for="contact">
-                    No, it does not repeat
+                    No, it does repeat
                   </label>
                 </div>
 
@@ -144,13 +143,13 @@ Activities Management prototype
                                 name: "whichDays",
                                 fieldset: {
                                   legend: {
-                                    text: "Repeat on the following days",
+                                    text: "Recur on the following days",
                                     isPageHeading: true,
                                     classes: "govuk-fieldset__legend--m"
                                   }
                                 },
                                 hint: {
-                                  text: "Select the days the that this activity will run at this time."
+                                  text: "Select the days the that this activity will repeat at this time."
                                 },
                                 items: [
                                   {
@@ -190,16 +189,23 @@ Activities Management prototype
           </div>
         </fieldset>
       </div>
-
+      <form class="form" method="post" autocomplete="off" action="addTime2">
         <button class="govuk-button govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4" data-module="govuk-button">Add this time for the activity</button>
       </form>
+      <br />
+      <div><br />
+        <h3 class="govuk-heading-m">You have added 1 session for this activity</h3>
+        <p>9 00am to 12 00pm<span style="margin-left:30px;">Monday</span><span style="margin-left:400px;">Repeats weekly</span><span style="float:right;"><a href="activity-start-time">Remove</a></span></p>
+        <hr />
 
-
+    <!--    <strong style="font-size:25px;" class="govuk-tag govuk-tag--red"> R<span style="text-transform: lowercase;">acist </span></strong>
+-->
+    </div>
       <br />
       <br /><br />
-      <form class="form" method="post" autocomplete="off">
-        <button class="govuk-button" data-module="govuk-button">Continue</button>
-      </form>
-    </form>
+    <form method="post">
+      <input type="hidden" value="1" name="startTimeAdded" />
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+  </form>
 </div>
 {% endblock %}
