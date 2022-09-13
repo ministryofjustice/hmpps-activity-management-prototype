@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-m">Activities prototype setup</h1>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    </div>
+</div>
+<form method="post" >
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+
+        <h3 class="govuk-label" ><strong>Select activity type</strong></h3><br />
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="setupCategoriesYes" name="setupCategories" type="radio" value="yes" checked="checked">
+            <label class="govuk-label govuk-radios__label" for="setupCategoriesYes">
+           With categories
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="setupCategoriesNo" name="setupCategories" type="radio" value="no">
+          <label class="govuk-label govuk-radios__label" for="setupCategoriesNo">
+            Without categories
+          </label>
+        </div>
+      </div>
+        <br /><br />
+
+        <h3 class="govuk-label" ><strong>Select location search </strong></h3><br />
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="setupLocationSimple" name="setupLocation" type="radio" value="simple" checked="checked">
+            <label class="govuk-label govuk-radios__label" for="setupLocationSimple">
+              Simple dropdown
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="setupLocationDashboard" name="setupLocation" type="radio" value="dashboard">
+            <label class="govuk-label govuk-radios__label" for="setupLocationDashboard">
+           Detailed dashboard
+        </div>
+      </div>
+        <br /><br />
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <button class="govuk-button" data-module="govuk-button">Start prototype</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,104 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Enter the start and end time of the activity
+    </h1>
+  </div>
+<!--  <div id="event-name-hint" class="govuk-hint">
+    Enter start and endtimes for the activity
+  </div>-->
+    <form method="post">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
+          <h2 class="govuk-heading-m">Start time</h2>
+          <div id="passport-issued-hint" class="govuk-hint">
+            For example, 9 00am or 1 35pm. If there are multiple times, you can add these later
+          </div>
+          <div class="govuk-date-input" id="start-time">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
+                  Hour
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-day" name="passport-issued-day" type="text" inputmode="numeric">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
+                  Minute
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-month" name="passport-issued-month" type="text" inputmode="numeric">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="timeAmPM">
+                    am or pm
+                  </label>
+                  <select class="govuk-select" id="timeAmPM" name="timeAmPM">
+                    <option value="am">am &nbsp; &nbsp;  </option>
+                    <option value="pm" selected>pm &nbsp; &nbsp;  </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <br />
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
+          <h2 class="govuk-heading-m">End time</h2>
+          <div id="passport-issued-hint" class="govuk-hint">
+            For example, 9 00am or 1 35pm
+          </div>
+          <div class="govuk-date-input" id="start-time">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
+                  Hour
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-day" name="passport-issued-day" type="text" inputmode="numeric">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
+                  Minute
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-month" name="passport-issued-month" type="text" inputmode="numeric">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="timeAmPM">
+                    am or pm
+                  </label>
+                  <select class="govuk-select" id="timeAmPM" name="timeAmPM">
+                    <option value="am">am &nbsp; &nbsp;  </option>
+                    <option value="pm" selected>pm &nbsp; &nbsp;  </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <br />
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+  </form>
+</div>
+{% endblock %}

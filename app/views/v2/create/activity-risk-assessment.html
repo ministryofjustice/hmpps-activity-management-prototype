@@ -1,0 +1,56 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Select the risk assessment level for the activity
+    </h1>
+  </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <form method="post">
+        <div class="govuk-form-group">
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+              </legend>
+              <div id="contact-hint" class="govuk-hint">
+                Select the minimum security band
+              </div>
+              <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                 <input class="govuk-radios__input" id="incentiveLevelBasic" name="incentiveLevel" type="radio" value="basic" checked data-aria-controls="conditional-contact">
+                  <label class="govuk-label govuk-radios__label" for="incentiveLevelBasic">
+                    High
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="incentiveLevelStandard" name="incentiveLevel" type="radio" value="standard"  data-aria-controls="conditional-contact">
+                  <label class="govuk-label govuk-radios__label" for="incentiveLevelStandard">
+                    Medium
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="incentiveLevelAdvanced" name="incentiveLevel" type="radio" value="advanced"  data-aria-controls="conditional-contact">
+                  <label class="govuk-label govuk-radios__label" for="incentiveLevelAdvanced">
+                    Low
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+    <br /><br />
+  <button class="govuk-button" data-module="govuk-button">Continue</button>
+  </div>
+</div>
+
+{% endblock %}

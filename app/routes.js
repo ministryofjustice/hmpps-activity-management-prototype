@@ -6,3 +6,4 @@ const router = express.Router()
 module.exports = router
 
 require('./routes/routes-v1.js')(router);
+require('./routes/routes-v2.js')(router);
