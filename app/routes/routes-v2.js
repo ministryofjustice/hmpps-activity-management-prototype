@@ -2,20 +2,31 @@ module.exports = function (router) {
 
 var version = '/v2';
 
+
 router.post(version +'/setup', function(req, res) {
-///////CREATE//////////
+			if (req.session.data.setupTaskType == 'allocation'){
+					res.redirect(version +'/allocate/activity-list-dashboard')
+				}
+				else if (req.session.data.setupTaskType == 'creation'){
+						if (req.session.data.setupCategories == 'yes'){
+							res.redirect(version +'/create/activity-type-select-with-category')
+						}
+			else {
+				res.redirect(version +'/create/activity-name')
+			}
+		}
+	});
 
-	//use fresh posted data or use session data
-	//if (req.body['setupCategories'] == 'yes')
+	router.post(version +'/allocate/activity-list-dashboard', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-type-select-with-category')
+		}
+	});
 
-	//SET UP PAGE//
-	if (req.session.data.setupCategories == 'yes')
-	{
-		res.redirect(version +'/create/activity-type-select-with-category')
-	}
-	else {
-		res.redirect(version +'/create/activity-name')
-	}
+	router.post(version +'/allocate/activity-list-dashboard-filtered', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-type-select-with-category')
+		}
 	});
 
 router.post(version +'/create/activity-type-select-with-category', function(req, res) {
@@ -368,4 +379,24 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 
 
 ///////END CREATE//////////
+
+router.post(version +'/allocate/searchAllocationDashboard', function(req, res) {
+	{
+		res.redirect(version +'/allocate/activity-list-dashboard-search-results')
+	}
+});
+
+router.post(version +'/allocate/searchAllocationDashboard', function(req, res) {
+	{
+		res.redirect(version +'/allocate/activity-list-dashboard-search-results')
+	}
+});
+
+router.post(version +'/allocate/clearSearchAllocate', function(req, res) {
+	{
+		res.redirect(version +'/allocate/activity-list-dashboard')
+	}
+});
+
+
 }
