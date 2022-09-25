@@ -1,0 +1,206 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Enter the times and days for the activity
+    </h1>
+  </div>
+<!--  <div id="event-name-hint" class="govuk-hint">
+    Enter start and endtimes for the activity
+  </div>-->
+    <form class="form" method="post" autocomplete="off" action="addTime">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
+          <h2 class="govuk-heading-m">Start time</h2>
+          <div id="passport-issued-hint" class="govuk-hint">
+            For example, 9 00am or 1 35pm. If there are multiple times, you can add these later
+          </div>
+          <div class="govuk-date-input" id="start-time">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
+                  Hour
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-day" name="passport-issued-day" type="text" inputmode="numeric" value="1">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
+                  Minute
+                </label>
+                <input value="00" class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-month" name="passport-issued-month" type="text" inputmode="numeric">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="timeAmPM">
+                    am or pm
+                  </label>
+                  <select class="govuk-select" id="timeAmPM" name="timeAmPM">
+                    <option value="am" >am &nbsp; &nbsp;  </option>
+                    <option value="pm" selected>pm &nbsp; &nbsp;  </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <br />
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
+          <h2 class="govuk-heading-m">End time</h2>
+          <div id="passport-issued-hint" class="govuk-hint">
+            For example, 9 00am or 1 35pm
+          </div>
+          <div class="govuk-date-input" id="start-time">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
+                  Hour
+                </label>
+                <input value="5" class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-day" name="passport-issued-day" type="text" inputmode="numeric">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
+                  Minute
+                </label>
+                <input value="00" class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-month" name="passport-issued-month" type="text" inputmode="numeric">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="timeAmPM">
+                    am or pm
+                  </label>
+                  <select class="govuk-select" id="timeAmPM" name="timeAmPM">
+                    <option value="am">am &nbsp; &nbsp;  </option>
+                    <option value="pm" selected>pm &nbsp; &nbsp;  </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br /><br />
+
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <h1 class="govuk-fieldset__heading">
+                  Does this activity repeat at this time?
+                </h1>
+              </legend>
+
+              <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="contact" name="contact" type="radio" value="email">
+                  <label class="govuk-label govuk-radios__label" for="contact">
+                    No, it does not repeat
+                  </label>
+                </div>
+
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="contact-2" name="contact" type="radio" value="phone" data-aria-controls="conditional-contact-2" checked="checked">
+                  <label class="govuk-label govuk-radios__label" for="contact-2">
+                    Yes, it will repeat
+                  </label>
+                </div>
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-2">
+                  <div class="govuk-form-group">
+                    <div class="govuk-form-group">
+                      <h2 class="govuk-heading-m">Repeats every</h2>
+                        <select class="govuk-select" id="timeAmPM" name="timeAmPM">
+                        <option value="1" selected>1 &nbsp; &nbsp;  </option>
+                        <option value="2" >2 &nbsp; &nbsp;  </option>
+                        <option value="3" >3 &nbsp; &nbsp;  </option>
+                          <option value="4" >4 &nbsp; &nbsp;  </option>
+                      </select>
+                      <select class="govuk-select" id="timeAmPM" name="timeAmPM">
+                      <option value="week" selected>Week(s) &nbsp; &nbsp;  </option>
+                      <option value="month" >Month(s) &nbsp; &nbsp;  </option>
+                      <option value="year" >Year(s) &nbsp; &nbsp;  </option>
+                    </select>
+                    </div>
+
+                              {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+                              {{ govukCheckboxes({
+                                idPrefix: "days",
+                                name: "whichDays",
+                                fieldset: {
+                                  legend: {
+                                    text: "Repeats on the following days",
+                                    isPageHeading: true,
+                                    classes: "govuk-fieldset__legend--m"
+                                  }
+                                },
+                                hint: {
+                                  text: "Select the days the that this activity will run at this time."
+                                },
+                                items: [
+                                  {
+                                    value: "monday",
+                                    text: "Monday",
+                                    checked:"checked"
+                                  },
+                                  {
+                                    value: "Tuesday",
+                                    text: "Tuesday"
+                                  },
+                                  {
+                                    value: "wednesday",
+                                    text: "Wednesday"
+                                  },
+                                  {
+                                    value: "thursday",
+                                    text: "Thursday"
+                                  },
+                                  {
+                                    value: "friday",
+                                    text: "Friday"
+                                  },
+                                  {
+                                    value: "saturday",
+                                    text: "Saturday"
+                                  },  {
+                                      value: "sunday",
+                                      text: "Sunday"
+                                    }
+
+                                ]
+                              }) }}
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </fieldset>
+      </div>
+
+        <button class="govuk-button govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4" data-module="govuk-button">Add this time for the activity</button>
+      </form>
+
+
+      <br />
+      <br /><br />
+      <form class="form" method="post" autocomplete="off">
+        <button class="govuk-button" data-module="govuk-button">Continue</button>
+      </form>
+    </form>
+</div>
+{% endblock %}

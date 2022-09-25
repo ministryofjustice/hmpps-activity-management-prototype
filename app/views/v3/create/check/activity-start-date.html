@@ -1,0 +1,54 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      What is the date of the activity?
+    </h1>
+  </div>
+
+    <form method="post">
+      <div class="govuk-form-group">
+        {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+        {{ govukDateInput({
+          id: "start-date",
+          value: "1",
+          namePrefix: "start-date",
+          fieldset: {
+
+          },
+          hint: {
+            text: "For example, 27 8 2022"
+          },
+          items: [
+    {
+      classes: "govuk-input--width-2",
+      name: "day",
+      value: "20"
+    },
+    {
+      classes: "govuk-input--width-2",
+      name: "month",
+      value: "09"
+    },
+    {
+      classes: "govuk-input--width-4 ",
+      name: "year",
+      value: "2022"
+    }
+  ]
+        }) }}
+      </div>
+      <br />
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+</div>
+{% endblock %}

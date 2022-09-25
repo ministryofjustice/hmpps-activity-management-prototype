@@ -1,0 +1,44 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+    Enter the payment rate
+    </h1>
+  </div>
+  <div id="event-name-hint" class="govuk-hint">
+
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="event-name">Basic rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="event-name" name="event-name" type="text" value="1.21">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="event-name">Standard rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="event-name" name="event-name" type="text" value="1.51">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="event-name">Enhanced rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="event-name" name="event-name" type="text" value="1.81">
+          </div>
+        </fieldset>
+      </div>
+      <br />
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+</div>
+
+{% endblock %}
