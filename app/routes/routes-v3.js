@@ -375,6 +375,12 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 		}
 	});
 
+	router.post(version +'/create/activity-confirmation-created', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-type-select-with-category')
+		}
+	});
+
 ///////END CREATE CHECK YOUR ANSWERS///////////////
 
 
