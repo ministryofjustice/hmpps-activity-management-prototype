@@ -5,6 +5,10 @@ const router = express.Router()
 
 module.exports = router
 
-require('./routes/routes-v1.js')(router);
-require('./routes/routes-v2.js')(router);
-require('./routes/routes-v3.js')(router);
+//CREATE
+require('./routes/create/routes-v1.js')(router);
+require('./routes/create/routes-v2.js')(router);
+require('./routes/create/routes-v3.js')(router);
+
+
+//UNLOCK
