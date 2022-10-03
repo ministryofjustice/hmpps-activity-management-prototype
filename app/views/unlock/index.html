@@ -1,0 +1,121 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block header %}
+{% from "moj/components/header/macro.njk"                import mojHeader %}
+{{ govukHeader({
+  homepageUrl: "/",
+  serviceName: serviceName,
+  serviceUrl: "/",
+  containerClasses: "govuk-width-container"
+}) }}
+
+<div class="app-masthead">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="app-masthead__title govuk-heading-xl govuk-!-margin-bottom-3">
+          Unlock &amp; attend
+        </h1>
+        <h3 class="app-masthead__subtitle govuk-heading-l">Prototype</h3>
+      </div>
+      <div class="govuk-grid-column-one-third">
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          User research, content docs and flow diagrams
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+
+        <p class="govuk-body govuk-!-margin-bottom-2">User research:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">UR</a></li>
+
+        </ul>
+
+        <p class="govuk-body govuk-!-margin-bottom-2">Copydecks:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="" target="_blank" class="govuk-link govuk-link--no-visited-state">View the content docs </a></li>
+        </ul>
+
+        <p class="govuk-body govuk-!-margin-bottom-2">Flow diagrams:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="#">View the flow diagrams</a></li>
+        </ul>
+
+      </div>
+    </details>
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Experimental designs &amp; ideas
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p class="govuk-body govuk-!-margin-bottom-2">Experimental designs</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="/experimental/activity-add-recurrence-datetime-html" class="govuk-link govuk-link--no-visited-state">Date and time calendar selectors</a></li>
+
+        </ul>
+        <p class="govuk-body govuk-!-margin-bottom-2">Ideas</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>Adding 'meta data' to activity, ability for user to add a list of descriptive words, which may not be appropriate in the title of the activity to aid in searching for an activity, such as 'kitchen', 'cooking', 'piecework', 'personal development'</li>
+        </ul>
+      </div>
+    </details>
+
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-4">
+      Prototype versions
+    </h2>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head" >
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" width="15%">Version</th>
+          <th scope="col" class="govuk-table__header" width="15%">Status</th>
+          <th scope="col" class="govuk-table__header">Description</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <a href="/unlock/version-1" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 1</a>
+          </td>
+
+          <td class="govuk-table__cell" >
+            <strong class="govuk-tag govuk-tag--green">
+              In design
+            </strong>
+          </td>
+
+          <td class="govuk-table__cell" >
+            <ul class="govuk-list govuk-list--bullet">
+              <li>First version</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+
+  </div>
+</div>
+
+{% endblock %}
