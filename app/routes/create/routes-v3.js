@@ -5,7 +5,7 @@ var version = '/v3';
 
 router.post(version +'/setup', function(req, res) {
 			if (req.session.data.setupTaskType == 'allocation'){
-					res.redirect(version +'/allocate/activity-list-dashboard')
+					res.redirect(version +'/allocate/activity-dashboard')
 				}
 				else if (req.session.data.setupTaskType == 'creation'){
 						if (req.session.data.setupCategories == 'yes'){
@@ -17,13 +17,13 @@ router.post(version +'/setup', function(req, res) {
 		}
 	});
 
-	router.post(version +'/allocate/activity-list-dashboard', function(req, res) {
+	router.post(version +'/allocate/activity-dashboard', function(req, res) {
 		{
 			res.redirect(version +'/create/activity-type-select-with-category')
 		}
 	});
 
-	router.post(version +'/allocate/activity-list-dashboard-filtered', function(req, res) {
+	router.post(version +'/allocate/activity-dashboard-filtered', function(req, res) {
 		{
 			res.redirect(version +'/create/activity-type-select-with-category')
 		}
@@ -68,10 +68,10 @@ router.post(version +'/create/activity-start-date', function(req, res) {
 		{
 			if (req.session.data.setupLocation == 'dashboard')
 			{
-				res.redirect(version +'/create/activity-location-list-dashboard')
+				res.redirect(version +'/create/activity-location-dashboard')
 			}
 			else {
-				res.redirect(version +'/create/activity-location-list-dropdown')
+				res.redirect(version +'/create/activity-location-dropdown')
 			}
 		}
 	});
@@ -81,21 +81,21 @@ router.post(version +'/create/activity-start-date', function(req, res) {
 
 	router.post(version +'/create/activity-start-time-one-added', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-location-list-dropdown')
+			res.redirect(version +'/create/activity-location-dropdown')
 		}
 	});
 	router.post(version +'/create/activity-start-time-two-added', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-location-list-dropdown')
+			res.redirect(version +'/create/activity-location-dropdown')
 		}
 	});
 	router.post(version +'/create/activity-start-time-three-added', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-location-list-dropdown')
+			res.redirect(version +'/create/activity-location-dropdown')
 		}
 	});
 
-	router.post(version +'/create/activity-location-list-dropdown', function(req, res) {
+	router.post(version +'/create/activity-location-dropdown', function(req, res) {
 		{
 			res.redirect(version +'/create/activity-capacity')
 		}
@@ -261,13 +261,13 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 		}
 	});
 
-	router.post(version +'/create/check/activity-location-list-dashboard', function(req, res) {
+	router.post(version +'/create/check/activity-location-dashboard', function(req, res) {
 		{
 			res.redirect(version +'/create/activity-repeat-check-your-answers')
 		}
 	});
 
-	router.post(version +'/create/check/activity-location-list-dropdown', function(req, res) {
+	router.post(version +'/create/check/activity-location-dropdown', function(req, res) {
 		{
 			res.redirect(version +'/create/activity-repeat-check-your-answers')
 		}
@@ -388,19 +388,19 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 
 router.post(version +'/allocate/searchAllocationDashboard', function(req, res) {
 	{
-		res.redirect(version +'/allocate/activity-list-dashboard-search-results')
+		res.redirect(version +'/allocate/activity-dashboard-search-results')
 	}
 });
 
 router.post(version +'/allocate/searchAllocationDashboard', function(req, res) {
 	{
-		res.redirect(version +'/allocate/activity-list-dashboard-search-results')
+		res.redirect(version +'/allocate/activity-dashboard-search-results')
 	}
 });
 
 router.post(version +'/allocate/clearSearchAllocate', function(req, res) {
 	{
-		res.redirect(version +'/allocate/activity-list-dashboard')
+		res.redirect(version +'/allocate/activity-dashboard')
 	}
 });
 
