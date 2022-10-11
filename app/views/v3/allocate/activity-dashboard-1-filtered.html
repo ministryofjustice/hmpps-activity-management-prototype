@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 {% set serviceName = "" %}
 
@@ -40,7 +41,17 @@ Activities Management prototype
 
 </ul>
 </nav>-->
-
+<!--<div class="govuk-form-group">
+  <label class="govuk-label" for="sort">
+    Show activites in category:
+  </label>
+  <select class="govuk-select" id="sort" name="sort">
+    <option value="published">Recently published</option>
+    <option value="updated" selected>Recently updated</option>
+    <option value="views">Most views</option>
+    <option value="comments">Most comments</option>
+  </select>
+</div>-->
 <div class="moj-primary-navigation">
   <div class="moj-primary-navigation__container">
     <div class="moj-primary-navigation__nav">
@@ -48,17 +59,17 @@ Activities Management prototype
         <ul class="moj-primary-navigation__list">
           <ul class="moj-sub-navigation__list" >
             <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" href="activity-list-dashboard">All activities (5)</a>
+              <a class="moj-sub-navigation__link" href="activity-dashboard-1">All categories (5)</a>
             </li>
             <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" aria-current="page" href="activity-list-dashboard-filtered">Activities with space (3)</a>
+              <a class="moj-sub-navigation__link" aria-current="page"  href="activity-dashboard-1-filtered">Categories with space (3)</a>
             </li>
 
           <li class="moj-primary-navigation__item">
             <form method="post">
-            <button class="govuk-button" data-module="govuk-button" style="margin:-8px 0 0 200px;">Create new activity</button>
+            <button class="govuk-button" data-module="govuk-button" style="margin:-8px 0 0 175px;">Create new activity</button>
           </form>
-        </li>
+          </li>
         </ul>
       </nav>
     </div>
@@ -73,15 +84,15 @@ Activities Management prototype
                   Search
                 </label>
                 <div id="search2-hint" class="govuk-hint moj-search__hint ">
-                    Enter activity, location or facilitator<br />Or try  <a href="test">Advanced search</a>
+                  Enter activity, location <br />or try  <a href="test">Advanced search</a>
                 </div>
                 <input class="govuk-input moj-search__input " id="search2" name="search2" type="search" aria-describedby="search2-hint">
               </div>
-              <form method="post" action="">
               <button class="govuk-button moj-search__button " data-module="govuk-button">
                 Search
               </button>
             </form>
+
           </div>
         </div>
       </div>
@@ -92,90 +103,85 @@ Activities Management prototype
 <br /><br />
 
 
-
 <table class="govuk-table" data-module="moj-sortable-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity name</th>
-      <th scope="col" class="govuk-table__header app-custom-class" >Location</th>
-      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="ascending">Capacity</th>
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity category</th>
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Number of activities</th>
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Capacity</th>
       <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Allocated</th>
-      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Free space</th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Spaces</th>
             <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Waitlist</th>
-      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Percentage filled</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
-
-
-    <tr class="govuk-table__row">
+    <tr class="govuk-table__row" >
       <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-allocation-list" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-          English level 1
+        <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          All activities
         </a></h3>
-          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">Once only</span>
       </th>
-      <td class="govuk-table__cell">B wing</td>
-      <td class="govuk-table__cell">15</td>
+      <td class="govuk-table__cell">129</td>
+      <td class="govuk-table__cell">1,399</td>
+        <td class="govuk-table__cell">1,388</td>
       <td class="govuk-table__cell">11</td>
-        <td class="govuk-table__cell">4</td>
-      <td class="govuk-table__cell">0</td>
-      <td class="govuk-table__cell">
-        <div style="height:26px; border:1px solid black; width:140px;">
-        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
-          <span style="padding-right:60px;">80%</span>
-        </span>
-        </strong>
-      </div>
-        <br />
-      </td>
+          <td class="govuk-table__cell">12</td>
     </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-allocation-list" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-          Food prep 2
-        </a></h3>
-          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">Days: M,F</span>
-      </th>
-      <td class="govuk-table__cell">A wing</td>
-      <td class="govuk-table__cell">16</td>
-      <td class="govuk-table__cell">8</td>
-        <td class="govuk-table__cell">8<br />
 
-        </td>
-      <td class="govuk-table__cell">2</td>
-      <td class="govuk-table__cell">
-        <div style="height:26px; border:1px solid black; width:140px;">
-        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
-          <span style="padding-right:20px;">50%</span>
-        </span>
-        </strong>
-      </div>
-        <br />
-      </td>
+    <tr class="govuk-table__row" >
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Education
+        </a></h3>
+          <span class="govuk-hint" style="font-size:.85em;"></span>
+      </th>
+      <td class="govuk-table__cell ">20</td>
+      <td class="govuk-table__cell">400</td>
+      <td class="govuk-table__cell">399</td>
+        <td class="govuk-table__cell">1</td>
+        <td class="govuk-table__cell">0</td>
+          </tr>
+
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Intervention programmes
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell">4</td>
+      <td class="govuk-table__cell">80</td>
+        <td class="govuk-table__cell">75</td>
+      <td class="govuk-table__cell">5</td>
+      <td class="govuk-table__cell">0</td>
+
+    </tr>
+
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Prison industry work
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell">32</td>
+      <td class="govuk-table__cell">250</td>
+        <td class="govuk-table__cell">249</td>
+      <td class="govuk-table__cell">1</td>
+        <td class="govuk-table__cell">1</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-allocation-list" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-          Gardening and design
+        <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Prison maintenance and services
         </a></h3>
-          <span class="govuk-hint" style="font-size:.85em;">Days: M,T,W</span>
       </th>
-      <td class="govuk-table__cell">C wing</td>
-      <td class="govuk-table__cell">50</td>
-      <td class="govuk-table__cell">20</td>
-      <td class="govuk-table__cell">30</td>
-        <td class="govuk-table__cell">2</td>
-      <td class="govuk-table__cell">
-        <div style="height:26px; border:1px solid black; width:140px;">
-        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
-          <span style="padding-right:5px;">40%</span>
-        </span>
-        </strong>
-      </div>
-        <br />
-      </td>
-          </tr>
+      <td class="govuk-table__cell">19</td>
+      <td class="govuk-table__cell">179</td>
+        <td class="govuk-table__cell">175</td>
+      <td class="govuk-table__cell">4</td>
+        <td class="govuk-table__cell">0</td>
+
+    </tr>
+
   </tbody>
 </table>
 </div>

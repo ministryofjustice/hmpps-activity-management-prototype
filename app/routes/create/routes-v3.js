@@ -5,7 +5,7 @@ var version = '/v3';
 
 router.post(version +'/setup', function(req, res) {
 			if (req.session.data.setupTaskType == 'allocation'){
-					res.redirect(version +'/allocate/activity-dashboard')
+					res.redirect(version +'/allocate/activity-dashboard-1')
 				}
 				else if (req.session.data.setupTaskType == 'creation'){
 						if (req.session.data.setupCategories == 'yes'){
@@ -17,13 +17,13 @@ router.post(version +'/setup', function(req, res) {
 		}
 	});
 
-	router.post(version +'/allocate/activity-dashboard', function(req, res) {
+	router.post(version +'/allocate/activity-dashboard-1', function(req, res) {
 		{
 			res.redirect(version +'/create/activity-type-select-with-category')
 		}
 	});
 
-	router.post(version +'/allocate/activity-dashboard-filtered', function(req, res) {
+	router.post(version +'/allocate/activity-dashboard-1-filtered', function(req, res) {
 		{
 			res.redirect(version +'/create/activity-type-select-with-category')
 		}
@@ -68,7 +68,7 @@ router.post(version +'/create/activity-start-date', function(req, res) {
 		{
 			if (req.session.data.setupLocation == 'dashboard')
 			{
-				res.redirect(version +'/create/activity-location-dashboard')
+				res.redirect(version +'/create/activity-location-dashboard-1')
 			}
 			else {
 				res.redirect(version +'/create/activity-location-dropdown')
@@ -261,7 +261,7 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 		}
 	});
 
-	router.post(version +'/create/check/activity-location-dashboard', function(req, res) {
+	router.post(version +'/create/check/activity-location-dashboard-1', function(req, res) {
 		{
 			res.redirect(version +'/create/activity-repeat-check-your-answers')
 		}
@@ -386,21 +386,21 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 
 ///////END CREATE//////////
 
-router.post(version +'/allocate/searchAllocationDashboard', function(req, res) {
+router.post(version +'/allocate/searchAllocationDashboard-1', function(req, res) {
 	{
-		res.redirect(version +'/allocate/activity-dashboard-search-results')
+		res.redirect(version +'/allocate/activity-dashboard-1-search-results')
 	}
 });
 
-router.post(version +'/allocate/searchAllocationDashboard', function(req, res) {
+router.post(version +'/allocate/searchAllocationDashboard-1', function(req, res) {
 	{
-		res.redirect(version +'/allocate/activity-dashboard-search-results')
+		res.redirect(version +'/allocate/activity-dashboard-1-search-results')
 	}
 });
 
 router.post(version +'/allocate/clearSearchAllocate', function(req, res) {
 	{
-		res.redirect(version +'/allocate/activity-dashboard')
+		res.redirect(version +'/allocate/activity-dashboard-1')
 	}
 });
 
