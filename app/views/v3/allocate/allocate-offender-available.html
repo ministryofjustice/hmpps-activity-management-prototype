@@ -10,7 +10,7 @@ Activities Management prototype
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-thirds">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      View, create, edit and allocate activities
+      Select people to allocate them to an activity
     </h1>
   </div><br />
 <!--  <form method="post">
@@ -48,22 +48,22 @@ Activities Management prototype
         <ul class="moj-primary-navigation__list">
           <ul class="moj-sub-navigation__list" >
             <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" href="activity-list-dashboard">All activities (5)</a>
+              <a class="moj-sub-navigation__link" href="offender-view">All Prisoners (500)</a>
             </li>
             <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" aria-current="page" href="activity-list-dashboard-filtered">Activities with space (3)</a>
+              <a class="moj-sub-navigation__link" aria-current="page" href="#">Prisoners with availability (35)</a>
             </li>
-            
+
           <li class="moj-primary-navigation__item">
-            <form method="post">
+          <!--  <form method="post">
             <button class="govuk-button" data-module="govuk-button" style="margin:-8px 0 0 200px;">Create new activity</button>
-          </form>
+          </form>-->
         </li>
         </ul>
       </nav>
     </div>
     <div class="moj-primary-navigation__search">
-      <div class="moj-search-toggle" data-module="moj-search-toggle" data-moj-search-toggle-text="Search for activity">
+      <div class="moj-search-toggle" data-module="moj-search-toggle" data-moj-search-toggle-text="Search for prisoner">
         <div class="moj-search-toggle__toggle"></div>
         <div class="moj-search-toggle__search">
           <div class="moj-search moj-search--ondark moj-search--toggle moj-js-hidden">
@@ -73,7 +73,7 @@ Activities Management prototype
                   Search
                 </label>
                 <div id="search2-hint" class="govuk-hint moj-search__hint ">
-                    Enter activity, location or facilitator<br />Or try  <a href="test">Advanced search</a>
+                    Enter name, prisoner ID or location<br />Or try  <a href="test">Advanced search</a>
                 </div>
                 <input class="govuk-input moj-search__input " id="search2" name="search2" type="search" aria-describedby="search2-hint">
               </div>
@@ -96,13 +96,12 @@ Activities Management prototype
 <table class="govuk-table" data-module="moj-sortable-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity name</th>
-      <th scope="col" class="govuk-table__header app-custom-class" >Location</th>
-      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="ascending">Capacity</th>
-      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Allocated</th>
-      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Free space</th>
-            <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Waitlist</th>
-      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Percentage filled</th>
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Prisoner name</th>
+      <th scope="col" class="govuk-table__header app-custom-class" aria-sort="none">Primary location</th>
+            <th scope="col" class="govuk-table__header app-custom-class" aria-sort="none">Secondary location</th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="ascending">Availability</th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Remaining Sentence </th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">On waitlist</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -110,72 +109,64 @@ Activities Management prototype
 
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-allocation-list" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-          English level 1
-        </a></h3>
-          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">Once only</span>
+          Leroy Smithe
+        </h3>
+          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">ID: A773622</span>
       </th>
-      <td class="govuk-table__cell">B wing</td>
-      <td class="govuk-table__cell">15</td>
-      <td class="govuk-table__cell">11</td>
-        <td class="govuk-table__cell">4</td>
-      <td class="govuk-table__cell">0</td>
-      <td class="govuk-table__cell">
-        <div style="height:26px; border:1px solid black; width:140px;">
-        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
-          <span style="padding-right:60px;">80%</span>
-        </span>
-        </strong>
-      </div>
-        <br />
-      </td>
+      <td class="govuk-table__cell">House block 4</td>
+        <td class="govuk-table__cell">Wing 2</td>
+      <td class="govuk-table__cell">Available</td>
+      <td class="govuk-table__cell">11 years, 4 months</td>
+        <td class="govuk-table__cell">Yes</td>
     </tr>
+
+
+
+
+
+
+
+
+
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-allocation-list" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-          Food prep 2
-        </a></h3>
-          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">Days: M,F</span>
+          Bill Board
+        </h3>
+          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">ID: A193884</span>
       </th>
-      <td class="govuk-table__cell">A wing</td>
-      <td class="govuk-table__cell">16</td>
-      <td class="govuk-table__cell">8</td>
-        <td class="govuk-table__cell">8<br />
+      <td class="govuk-table__cell">House block 2</td>
+      <td class="govuk-table__cell">Wing 1</td>
+      <td class="govuk-table__cell">Available</td>
+      <td class="govuk-table__cell">1 year, 6 months</td>
 
         </td>
-      <td class="govuk-table__cell">2</td>
-      <td class="govuk-table__cell">
-        <div style="height:26px; border:1px solid black; width:140px;">
-        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
-          <span style="padding-right:20px;">50%</span>
-        </span>
-        </strong>
-      </div>
-        <br />
-      </td>
+      <td class="govuk-table__cell">No</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-allocation-list" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-          Gardening and design
-        </a></h3>
-          <span class="govuk-hint" style="font-size:.85em;">Days: M,T,W</span>
+          Brock Lee
+        </h3>
+          <span class="govuk-hint" style="font-size:.85em;">ID: A663522</span>
       </th>
-      <td class="govuk-table__cell">C wing</td>
-      <td class="govuk-table__cell">50</td>
-      <td class="govuk-table__cell">20</td>
-      <td class="govuk-table__cell">30</td>
-        <td class="govuk-table__cell">2</td>
-      <td class="govuk-table__cell">
-        <div style="height:26px; border:1px solid black; width:140px;">
-        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
-          <span style="padding-right:5px;">40%</span>
-        </span>
-        </strong>
-      </div>
-        <br />
-      </td>
+      <td class="govuk-table__cell">House block 1</td>
+      <td class="govuk-table__cell">Wing 1</td>
+      <td class="govuk-table__cell">Available</td>
+      <td class="govuk-table__cell">1 week</td>
+      <td class="govuk-table__cell">Yes</td>
+
           </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                      Raj Damodaran
+                    </h3>
+                      <span class="govuk-hint" style="font-size:.85em;">ID: A3290129</span>
+                  </th>
+                  <td class="govuk-table__cell">House block 4</td>
+                  <td class="govuk-table__cell">Wing 2</td>
+                  <td class="govuk-table__cell">Unavailable</td>
+                  <td class="govuk-table__cell">2 months</td>
+                  <td class="govuk-table__cell">Yes</td>
+                      </tr>
   </tbody>
 </table>
 </div>
