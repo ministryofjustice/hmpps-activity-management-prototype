@@ -8,10 +8,13 @@ Activities Management prototype
 
 {% block content %}
 
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-thirds">
+
+
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      View, create, edit and allocate activities
+      Allocate someone to an activity
     </h1>
   </div><br />
 <!--  <form method="post">
@@ -52,6 +55,11 @@ Activities Management prototype
     <option value="comments">Most comments</option>
   </select>
 </div>-->
+
+<p class="govuk-body">Use the dashboard to identify activities with spaces or search for an activity by name.</p>
+<p class="govuk-body">You can also <a href="../create/activity-type-select-with-category">create activities</a> and add activity schedules.</p>
+
+  <h2 class="govuk-heading-m">Activities dashboard</h2>
 <div class="moj-primary-navigation">
   <div class="moj-primary-navigation__container">
     <div class="moj-primary-navigation__nav">
@@ -59,17 +67,17 @@ Activities Management prototype
         <ul class="moj-primary-navigation__list">
           <ul class="moj-sub-navigation__list" >
             <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" aria-current="page" href="#1">All categories (7)</a>
+              <a class="moj-sub-navigation__link" aria-current="page" href="#1">Show all categories (7)</a>
             </li>
             <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" href="activity-dashboard-1-filtered">Categories with space (4)</a>
+              <a class="moj-sub-navigation__link" href="activity-dashboard-1-filtered">Show categories with spaces (4)</a>
             </li>
 
-          <li class="moj-primary-navigation__item">
+          <!--<li class="moj-primary-navigation__item">
             <form method="post">
             <button class="govuk-button" data-module="govuk-button" style="margin:-8px 0 0 175px;">Create new activity</button>
           </form>
-          </li>
+          </li>-->
         </ul>
       </nav>
     </div>
@@ -84,7 +92,7 @@ Activities Management prototype
                   Search
                 </label>
                 <div id="search2-hint" class="govuk-hint moj-search__hint ">
-                  Enter activity, location <br />or try  <a href="test">Advanced search</a>
+                  <span style="font-size:.85em;">Enter activity, location, or try <a href="test">Advanced search</a></span>
                 </div>
                 <input class="govuk-input moj-search__input " id="search2" name="search2" type="search" aria-describedby="search2-hint">
               </div>
@@ -104,28 +112,30 @@ Activities Management prototype
 
 
 <table class="govuk-table" data-module="moj-sortable-table">
+
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity category</th>
-      <th scope="col" class="govuk-table__header" aria-sort="ascending">Number of activities</th>
-      <th scope="col" class="govuk-table__header" aria-sort="ascending">Capacity</th>
-      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Allocated</th>
-      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Spaces</th>
-            <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Waitlist</th>
+    <!--  <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="ascending">Count</th>-->
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="ascending">Capacity</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric"  aria-sort="none">Percentage allocated</th>
+    <!--   <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Spaces</th>-->
+      <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Waitlist</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric"  aria-sort="none">Spaces</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row" >
-      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-          All activities
-        </a></h3>
+      <th scope="row" class="govuk-table__header">
+        <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+          Total</h3>
       </th>
-      <td class="govuk-table__cell">129</td>
-      <td class="govuk-table__cell">1,399</td>
-        <td class="govuk-table__cell">1,388</td>
-      <td class="govuk-table__cell">11</td>
-          <td class="govuk-table__cell">12</td>
+  <!--      <td class="govuk-table__cell govuk-table__cell--numeric"><strong>129</strong></td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong>1,399</strong></td>
+        <td class="govuk-table__cell govuk-table__cell--numeric"><strong>97%</strong></td>
+    <!--   <td class="govuk-table__cell govuk-table__cell--numeric"><strong>11</strong></td>-->
+          <td class="govuk-table__cell govuk-table__cell--numeric"><strong>29</strong></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><strong>36</strong></td>
     </tr>
 
     <tr class="govuk-table__row" >
@@ -133,26 +143,41 @@ Activities Management prototype
         <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
           Education
         </a></h3>
-          <span class="govuk-hint" style="font-size:.85em;"></span>
+
       </th>
-      <td class="govuk-table__cell ">20</td>
-      <td class="govuk-table__cell">400</td>
-      <td class="govuk-table__cell">399</td>
-        <td class="govuk-table__cell">1</td>
-        <td class="govuk-table__cell">0</td>
+    <!--    <td class="govuk-table__cell govuk-table__cell--numeric">20</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">400</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">96%</td>
+      <!--   <td class="govuk-table__cell govuk-table__cell--numeric">1</td>-->
+        <td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+        <div>
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+          <span style="text-transform: lowercase;">15</span>
+        </span>
+        </strong>
+      </div>
+      </td>
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
               <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
                 Gym, sport and fitness
               </a></h3>
-                <span class="govuk-hint" style="font-size:.85em;"></span>
+
             </th>
-            <td class="govuk-table__cell">18</td>
-            <td class="govuk-table__cell">100</td>
-            <td class="govuk-table__cell">100</td>
-              <td class="govuk-table__cell">0</td>
-              <td class="govuk-table__cell">9</td>
+        <!--      <td class="govuk-table__cell govuk-table__cell--numeric">18</td>-->
+            <td class="govuk-table__cell govuk-table__cell--numeric">100</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+            <!--   <td class="govuk-table__cell govuk-table__cell--numeric">0</td>-->
+              <td class="govuk-table__cell govuk-table__cell--numeric">9</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">
+              <div>
+              <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+                <span style="text-transform: lowercase;">0</span>
+              </span>
+              </strong>
+              </td>
 
                 </tr>
     <tr class="govuk-table__row">
@@ -161,25 +186,35 @@ Activities Management prototype
           Induction
         </a></h3>
       </th>
-      <td class="govuk-table__cell">3</td>
-      <td class="govuk-table__cell">60</td>
-        <td class="govuk-table__cell">60</td>
-      <td class="govuk-table__cell">0</td>
-      <td class="govuk-table__cell">2</td>
-
-    </tr>
+  <!--      <td class="govuk-table__cell govuk-table__cell--numeric">3</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">60</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+    <!--   <td class="govuk-table__cell govuk-table__cell--numeric">0</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">
+      <div>
+      <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+        <span style="text-transform: lowercase;">0</span>
+      </span>
+      </strong>
+      </td>    </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
         <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
           Intervention programmes
         </a></h3>
       </th>
-      <td class="govuk-table__cell">4</td>
-      <td class="govuk-table__cell">80</td>
-        <td class="govuk-table__cell">75</td>
-      <td class="govuk-table__cell">5</td>
-      <td class="govuk-table__cell">0</td>
-
+    <!--    <td class="govuk-table__cell govuk-table__cell--numeric">4</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">80</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">94%</td>
+    <!--   <td class="govuk-table__cell govuk-table__cell--numeric">5</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">  <div>
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+          <span>5</span>
+        </span>
+        </strong>
+      </div></td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
@@ -187,14 +222,19 @@ Activities Management prototype
           Leisure and social
         </a></h3>
       </th>
-      <td class="govuk-table__cell">33</td>
-      <td class="govuk-table__cell">330</td>
-        <td class="govuk-table__cell">330</td>
-      <td class="govuk-table__cell">0</td>
-      <td class="govuk-table__cell">2</td>
-
-
-    </tr>
+    <!--    <td class="govuk-table__cell govuk-table__cell--numeric">33</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">330</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+    <!--  <td class="govuk-table__cell govuk-table__cell--numeric">0</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">
+      <div>
+      <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+        <span style="text-transform: lowercase;">0</span>
+      </span>
+      </strong>
+      </td>
+        </tr>
 
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
@@ -202,11 +242,17 @@ Activities Management prototype
           Prison industry work
         </a></h3>
       </th>
-      <td class="govuk-table__cell">32</td>
-      <td class="govuk-table__cell">250</td>
-        <td class="govuk-table__cell">249</td>
-      <td class="govuk-table__cell">1</td>
-        <td class="govuk-table__cell">1</td>
+  <!--      <td class="govuk-table__cell govuk-table__cell--numeric">32</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">250</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">95%</td>
+      <!--   <td class="govuk-table__cell govuk-table__cell--numeric">1</td>-->
+        <td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">  <div>
+          <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+            <span>12</span>
+          </span>
+          </strong>
+        </div></td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
@@ -214,12 +260,17 @@ Activities Management prototype
           Prison maintenance and services
         </a></h3>
       </th>
-      <td class="govuk-table__cell">19</td>
-      <td class="govuk-table__cell">179</td>
-        <td class="govuk-table__cell">175</td>
-      <td class="govuk-table__cell">4</td>
-        <td class="govuk-table__cell">0</td>
-
+    <!--    <td class="govuk-table__cell govuk-table__cell--numeric">29</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">179</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">98%</td>
+      <!--   <td class="govuk-table__cell govuk-table__cell--numeric">4</td>-->
+        <td class="govuk-table__cell govuk-table__cell--numeric">15</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">  <div>
+          <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+            <span>4</span>
+          </span>
+          </strong>
+        </div></td>
     </tr>
 
   </tbody>
