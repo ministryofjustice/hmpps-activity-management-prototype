@@ -73,7 +73,21 @@ Activities Management prototype
                   Search
                 </label>
                 <div id="search2-hint" class="govuk-hint moj-search__hint ">
-                    Enter activity, location or facilitator<br />Or try  <a href="test">Advanced search</a>
+                  <span style="font-size:.85em;">Enter activity, location, or try <a href="test">Advanced search</a></span>
+                  <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      </legend>
+                      <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                          <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                          <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                            <span style="font-size:.85em;" class="govuk-hint moj-search__hint ">Only search in activities with spaces</span>
+                          </label>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
                 </div>
                 <input class="govuk-input moj-search__input " id="search2" name="search2" type="search" aria-describedby="search2-hint">
               </div>
@@ -91,68 +105,391 @@ Activities Management prototype
 
 <br /><br />
 
-<table class="govuk-table" data-module="moj-sortable-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
+
+
+
+<div class="govuk-grid-column-three-third">
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-4">
+    Wing cleaning 1
+  </h2>
+  <div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Contents
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#past-day">
+        Activity schedule
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#past-week">
+        Currently allocated people
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#past-month">
+        Allocate more people
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#past-year">
+        Alerts
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="past-day">
+    <h2 class="govuk-heading-m">Wing cleaning 1 schedule</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Days</th>
+          <th scope="col" class="govuk-table__header">AM</th>
+          <th scope="col" class="govuk-table__header">PM</th>
+          <th scope="col" class="govuk-table__header">ED</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Monday</td>
+          <td class="govuk-table__cell">Yes</td>
+          <td class="govuk-table__cell">No</td>
+          <td class="govuk-table__cell">Yes</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Tuesday</td>
+          <td class="govuk-table__cell">Yes</td>
+          <td class="govuk-table__cell">No</td>
+          <td class="govuk-table__cell">Yes</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Wednesday</td>
+          <td class="govuk-table__cell">Yes</td>
+          <td class="govuk-table__cell">No</td>
+          <td class="govuk-table__cell">Yes</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Thursday</td>
+          <td class="govuk-table__cell">Yes</td>
+          <td class="govuk-table__cell">No</td>
+          <td class="govuk-table__cell">Yes</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Friday</td>
+          <td class="govuk-table__cell">Yes</td>
+          <td class="govuk-table__cell">No</td>
+          <td class="govuk-table__cell">Yes</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Saturday</td>
+          <td class="govuk-table__cell">Yes</td>
+          <td class="govuk-table__cell">No</td>
+          <td class="govuk-table__cell">Yes</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Sunday</td>
+          <td class="govuk-table__cell">Yes</td>
+          <td class="govuk-table__cell">No</td>
+          <td class="govuk-table__cell">Yes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-week">
+    <h2 class="govuk-heading-m">Currently allocated people</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Name</th>
+          <th scope="col" class="govuk-table__header">Prison ID</th>
+          <th scope="col" class="govuk-table__header">Wing</th>
+          <th scope="col" class="govuk-table__header">Remove from activity</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">David Francis</td>
+          <td class="govuk-table__cell">A552622</td>
+          <td class="govuk-table__cell">AB</td>
+          <td class="govuk-table__cell"><a href="allocate-remove-offender">Remove</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Paul Farmer</td>
+          <td class="govuk-table__cell">A877211</td>
+          <td class="govuk-table__cell">A</td>
+          <td class="govuk-table__cell"><a href="allocate-remove-offender">Remove</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Rita Patel</td>
+          <td class="govuk-table__cell">A132498</td>
+          <td class="govuk-table__cell">A</td>
+          <td class="govuk-table__cell"><a href="allocate-remove-offender">Remove</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-month">
+    <h2 class="govuk-heading-m">Allocate more people</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Name</th>
+          <th scope="col" class="govuk-table__header">Prison ID</th>
+          <th scope="col" class="govuk-table__header">Wing</th>
+          <th scope="col" class="govuk-table__header">Add</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">David Francis</td>
+          <td class="govuk-table__cell">A552622</td>
+          <td class="govuk-table__cell">AB</td>
+          <td class="govuk-table__cell"><a href="allocate-remove-offender">Add</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Paul Farmer</td>
+          <td class="govuk-table__cell">A877211</td>
+          <td class="govuk-table__cell">A</td>
+          <td class="govuk-table__cell"><a href="allocate-remove-offender">Add</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Rita Patel</td>
+          <td class="govuk-table__cell">A132498</td>
+          <td class="govuk-table__cell">A</td>
+          <td class="govuk-table__cell"><a href="allocate-remove-offender">Add</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-year">
+    <h2 class="govuk-heading-m">Alerts</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Name</th>
+          <th scope="col" class="govuk-table__header">Prison ID</th>
+          <th scope="col" class="govuk-table__header">Wing</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">David Francis</td>
+          <td class="govuk-table__cell">A552622</td>
+          <td class="govuk-table__cell">A</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Paul Farmer</td>
+          <td class="govuk-table__cell">A877211</td>
+          <td class="govuk-table__cell">A</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Rita Patel</td>
+          <td class="govuk-table__cell">A132498</td>
+          <td class="govuk-table__cell">A</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<h2 class="govuk-heading-m govuk-!-margin-bottom-4">
+  Wing cleaning 2
+</h2>
+<div class="govuk-tabs" data-module="govuk-tabs">
+<h2 class="govuk-tabs__title">
+  Contents
+</h2>
+<ul class="govuk-tabs__list">
+  <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+    <a class="govuk-tabs__tab" href="#past-day2">
+      Activity schedule
+    </a>
+  </li>
+  <li class="govuk-tabs__list-item">
+    <a class="govuk-tabs__tab" href="#past-week2">
+      Currently allocated people
+    </a>
+  </li>
+  <li class="govuk-tabs__list-item">
+    <a class="govuk-tabs__tab" href="#past-month2">
+      Allocate more people
+    </a>
+  </li>
+  <li class="govuk-tabs__list-item">
+    <a class="govuk-tabs__tab" href="#past-year2">
+      Alerts
+    </a>
+  </li>
+</ul>
+<div class="govuk-tabs__panel" id="past-day2">
+  <h2 class="govuk-heading-m">Wing cleaning 2 schedule</h2>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header">Days</th>
-      <th scope="col" class="govuk-table__header">Monday</th>
-      <th scope="col" class="govuk-table__header app-custom-class">Tuesday</th>
-      <th scope="col" class="govuk-table__header app-custom-class">Wednesday</th>
-      <th scope="col" class="govuk-table__header app-custom-class">Thursday</th>
-      <th scope="col" class="govuk-table__header app-custom-class">Friday</th>
-      <th scope="col" class="govuk-table__header app-custom-class">Saturday</th>
-      <th scope="col" class="govuk-table__header app-custom-class">Sunday</th>
-      <th scope="col" class="govuk-table__header app-custom-class">Space</th>
+        <th scope="col" class="govuk-table__header">AM</th>
+        <th scope="col" class="govuk-table__header">PM</th>
+        <th scope="col" class="govuk-table__header">ED</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Monday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Tuesday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Wednesday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Thursday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Friday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Saturday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Sunday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-week2">
+  <h2 class="govuk-heading-m">Currently allocated people</h2>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Name</th>
+        <th scope="col" class="govuk-table__header">Prison ID</th>
+        <th scope="col" class="govuk-table__header">Wing</th>
+        <th scope="col" class="govuk-table__header">Remove from activity</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">David Francis</td>
+        <td class="govuk-table__cell">A552622</td>
+        <td class="govuk-table__cell">AB</td>
+        <td class="govuk-table__cell"><a href="allocate-remove-offender">Remove</a></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Paul Farmer</td>
+        <td class="govuk-table__cell">A877211</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell"><a href="allocate-remove-offender">Remove</a></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Rita Patel</td>
+        <td class="govuk-table__cell">A132498</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell"><a href="allocate-remove-offender">Remove</a></td>
+      </tr>
+    </tbody>
+  </table>
 
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-s govuk-!-margin-bottom-3">
-        AM
-        </h3>
-      </th>
-      <td class="govuk-table__cell">X</td>
-      <td class="govuk-table__cell">X</td>
-      <td class="govuk-table__cell">X</td>
-      <td class="govuk-table__cell"><strong class="govuk-tag">
-  Y
-</strong></td>
-      <td class="govuk-table__cell">X</td>
-      <td class="govuk-table__cell">X
-      </td>
-      <td class="govuk-table__cell">X
-      </td>
-      <td class="govuk-table__cell">Allocate
-      </td>
-    </tr>
+</div>
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-month2">
+  <h2 class="govuk-heading-m">Allocate more people</h2>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Name</th>
+        <th scope="col" class="govuk-table__header">Prison ID</th>
+        <th scope="col" class="govuk-table__header">Wing</th>
+        <th scope="col" class="govuk-table__header">Add</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">David Francis</td>
+        <td class="govuk-table__cell">A552622</td>
+        <td class="govuk-table__cell">AB</td>
+        <td class="govuk-table__cell"><a href="allocate-remove-offender">Add</a></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Paul Farmer</td>
+        <td class="govuk-table__cell">A877211</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell"><a href="allocate-remove-offender">Add</a></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Rita Patel</td>
+        <td class="govuk-table__cell">A132498</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell"><a href="allocate-remove-offender">Add</a></td>
+      </tr>
+    </tbody>
+  </table>
 
+</div>
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-year2">
+  <h2 class="govuk-heading-m">Alerts</h2>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Name</th>
+        <th scope="col" class="govuk-table__header">Prison ID</th>
+        <th scope="col" class="govuk-table__header">Wing</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">David Francis</td>
+        <td class="govuk-table__cell">A552622</td>
+        <td class="govuk-table__cell">A</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Paul Farmer</td>
+        <td class="govuk-table__cell">A877211</td>
+        <td class="govuk-table__cell">A</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Rita Patel</td>
+        <td class="govuk-table__cell">A132498</td>
+        <td class="govuk-table__cell">A</td>
+      </tr>
+    </tbody>
+  </table>
 
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-s govuk-!-margin-bottom-3">
-        PM
-        </h3>
-      </th>
-      <td class="govuk-table__cell">X</td>
-      <td class="govuk-table__cell">X</td>
-      <td class="govuk-table__cell"><strong class="govuk-tag">
-  Y
-</strong></td>
-        <td class="govuk-table__cell">X</td>
-      <td class="govuk-table__cell">X</td>
-      <td class="govuk-table__cell">X
-      </td>
-      <td class="govuk-table__cell">X
-      </td>
-      <td class="govuk-table__cell">Space
-      </td>
-    </tr>
-  </tbody>
-</table>
+</div>
+</div>
 
-
-
-
+</div>
+</div>
 
 
 
