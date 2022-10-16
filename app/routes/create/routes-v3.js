@@ -388,19 +388,25 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 
 router.post(version +'/allocate/searchAllocationDashboard-1', function(req, res) {
 	{
-		res.redirect(version +'/allocate/activity-dashboard-1-search-results')
+		res.redirect(version +'/allocate/activity-dashboard-3-search')
+	}
+});
+
+router.post(version +'/allocate/searchAllocationDashboard', function(req, res) {
+	{
+		res.redirect(version +'/allocate/activity-dashboard-3-search')
 	}
 });
 
 router.post(version +'/allocate/searchAllocationDashboard-1', function(req, res) {
 	{
-		res.redirect(version +'/allocate/activity-dashboard-1-search-results')
+		res.redirect(version +'/allocate/activity-dashboard-3-search')
 	}
 });
 
 router.post(version +'/allocate/clearSearchAllocate', function(req, res) {
 	{
-		res.redirect(version +'/allocate/activity-dashboard-1')
+		res.redirect(version +'/allocate/activity-dashboard-3-search')
 	}
 });
 
