@@ -270,12 +270,11 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
 
-  
-
-        <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-
-
-
+    {% if data.setupAllocationJourneyLevel == "garden" %}
+    <a href="activity-dashboard-4-garden" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+      {% else %}
+      <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+      {% endif %}
           Prison maintenance and services
         </a></h3>
       </th>
