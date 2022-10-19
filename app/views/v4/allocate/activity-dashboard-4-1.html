@@ -1,0 +1,460 @@
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Allocate suitable people to wing cleaning
+    </h1>
+  </div><br />
+<div class="moj-primary-navigation">
+  <div class="moj-primary-navigation__container">
+    <div class="moj-primary-navigation__nav">
+      <nav class="moj-primary-navigation" aria-label="Primary navigation">
+        <ul class="moj-primary-navigation__list">
+          <ul class="moj-sub-navigation__list" >
+            <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link" aria-current="page" href="#">Wing cleaning 1</a>
+            </li>
+            <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link" href="activity-dashboard-3">All wing cleaning</a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="moj-primary-navigation__search">
+      <div class="moj-search-toggle" data-module="moj-search-toggle" data-moj-search-toggle-text="Search for activity">
+        <div class="moj-search-toggle__toggle"></div>
+        <div class="moj-search-toggle__search">
+          <div class="moj-search moj-search--ondark moj-search--toggle moj-js-hidden">
+            <form action="searchAllocationDashboard" method="post">
+              <div class="govuk-form-group">
+                <label class="govuk-label moj-search__label govuk-visually-hidden" for="search2">
+                  Search
+                </label>
+                <div id="search2-hint" class="govuk-hint moj-search__hint ">
+                  <span style="font-size:.85em;">Enter activity, location, or try <a href="allocate-offender-dashboard-search-view">Advanced search</a></span>
+                  <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      </legend>
+                      <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                          <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                          <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                            <span style="font-size:.85em;" class="govuk-hint moj-search__hint ">Only search in activities with spaces</span>
+                          </label>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+                <input class="govuk-input moj-search__input " id="search2" name="search2" type="search" aria-describedby="search2-hint">
+              </div>
+              <form method="post" action="">
+              <button class="govuk-button moj-search__button " data-module="govuk-button">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br /><br />
+
+
+
+
+<div class="govuk-grid-column-three-third">
+<h2 class="govuk-heading-m govuk-!-margin-bottom-4">
+  Wing cleaning 1 <span style="margin-left:30px;">
+    <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+      <span>1 space available</span>
+    </strong>
+  </span>
+</h2>
+<div class="govuk-tabs" data-module="govuk-tabs">
+<h2 class="govuk-tabs__title">
+  Contents
+</h2>
+<ul class="govuk-tabs__list">
+  <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+    <a class="govuk-tabs__tab" href="#allocate">
+      Allocate candidates
+    </a>
+  </li>
+  <li class="govuk-tabs__list-item">
+    <a class="govuk-tabs__tab" href="#allocated">
+      People allocated now
+    </a>
+  </li>
+  <li class="govuk-tabs__list-item">
+    <a class="govuk-tabs__tab" href="#schedule">
+      Wing cleaning 1 schedule
+    </a>
+  </li>
+  <li class="govuk-tabs__list-item">
+    <a class="govuk-tabs__tab" href="#criteria">
+      Activity risk and requirements
+    </a>
+  </li>
+</ul>
+
+
+
+<div class="govuk-tabs__panel" id="schedule">
+  <h2 class="govuk-heading-m">Wing cleaning 1 schedule</h2>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Days</th>
+        <th scope="col" class="govuk-table__header">AM</th>
+        <th scope="col" class="govuk-table__header">PM</th>
+        <th scope="col" class="govuk-table__header">ED</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Monday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Tuesday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Wednesday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Thursday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Friday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Saturday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Sunday</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">No</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="govuk-button" data-module="govuk-button">
+  Edit schedule times
+  </button>
+</div>
+
+
+
+
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocated">
+  <h2 class="govuk-heading-m">People allocated now</h2>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Name</th>
+        <th scope="col" class="govuk-table__header">Prison number</th>
+        <th scope="col" class="govuk-table__header">Wing</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+        <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+        <label class="govuk-label govuk-checkboxes__label" for="organisation">
+          <a href="prisoner-profile">David Francis</a>
+        </label>
+      </div>
+    </td>
+        <td class="govuk-table__cell">A552622</td>
+        <td class="govuk-table__cell">AB</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Paul Smith</a>
+                </label>
+              </div>
+            </td>
+        <td class="govuk-table__cell">A877211</td>
+        <td class="govuk-table__cell">A</td>
+              </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Ritesh Patel</a>
+                </label>
+              </div>
+            </td>
+        <td class="govuk-table__cell">A132498</td>
+        <td class="govuk-table__cell">A</td>
+              </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Francois Butelle</a>
+                </label>
+              </div>
+            </td>
+            <td class="govuk-table__cell">A552622</td>
+        <td class="govuk-table__cell">AB</td>
+              </tr>
+
+    </tbody>
+  </table>
+  <button class="govuk-button" data-module="govuk-button">
+  Remove Selected from activity
+  </button>
+</div>
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocate">
+  <h2 class="govuk-heading-m">Allocate candidates</h2>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+
+        <th scope="col" class="govuk-table__header">Name</th>
+        <th scope="col" class="govuk-table__header">Prison number</th>
+        <th scope="col" class="govuk-table__header">Wing</th>
+          <th scope="col" class="govuk-table__header">Available</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Neil Rudge</a>
+                </label>
+              </div>
+            </td>
+        <td class="govuk-table__cell">A771611</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell">No</td>
+              </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Lionel Messer</a>
+                </label>
+              </div>
+            </td>
+        <td class="govuk-table__cell">A132448</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell">Yes</td>
+              </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Eric Sykes</a>
+                </label>
+              </div>
+            </td>
+            <td class="govuk-table__cell">A552622</td>
+        <td class="govuk-table__cell">AB</td>
+        <td class="govuk-table__cell">Yes</td>
+              </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Rajesh Damodaran</a>
+                </label>
+              </div>
+            </td>
+            <td class="govuk-table__cell">A877211</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell">No</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Leonel Massiha</a>
+                </label>
+              </div>
+            </td>        <td class="govuk-table__cell">A132498</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell">No</td>
+              </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Lennie Kravitz</a>
+                </label>
+              </div>
+            </td>
+            <td class="govuk-table__cell">A552622</td>
+        <td class="govuk-table__cell">AB</td>
+        <td class="govuk-table__cell">No</td>
+              </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Marco Van Bronkhurst</a>
+                </label>
+              </div>
+            </td>
+            <td class="govuk-table__cell">A877211</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell">Yes</td>
+              </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Jack Dawson</a>
+                </label>
+              </div>
+            </td>        <td class="govuk-table__cell">A132498</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell">Yes</td>
+              </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Davey Jones</a>
+                </label>
+              </div>
+            </td>
+            <td class="govuk-table__cell">A552622</td>
+        <td class="govuk-table__cell">AB</td>
+        <td class="govuk-table__cell">Yes</td>
+              </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Leroy Smithe</a>
+                </label>
+              </div>
+            </td>
+            <td class="govuk-table__cell">A877211</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell">Yes</td>
+              </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  <a href="prisoner-profile">Wayne Rooner</a>
+                </label>
+              </div>
+            </td>
+            <td class="govuk-table__cell">A132498</td>
+        <td class="govuk-table__cell">A</td>
+        <td class="govuk-table__cell">No</td>
+              </tr>
+    </tbody>
+  </table>
+  <button class="govuk-button" data-module="govuk-button">
+  Allocate selected candidates
+  </button>
+</div>
+
+
+
+
+
+
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="criteria">
+  <h2 class="govuk-heading-m">Activity risk and requirements</h2>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Alert</th>
+        <th scope="col" class="govuk-table__header">Description</th>
+        <th scope="col" class="govuk-table__header">Risk</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><a href="prisoner-profile">Chemicals</a></td>
+        <td class="govuk-table__cell">Use of chemicals whilst cleaning</td>
+        <td class="govuk-table__cell">High</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><a href="prisoner-profile">Weapons</a></td>
+        <td class="govuk-table__cell">Use of potential weapons whilst cleaning</td>
+        <td class="govuk-table__cell">Medium</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+</div>
+{% endblock %}

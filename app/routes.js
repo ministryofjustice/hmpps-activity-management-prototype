@@ -6,6 +6,7 @@ const router = express.Router()
 require('./routes/create/routes-v1')(router);
 require('./routes/create/routes-v2')(router);
 require('./routes/create/routes-v3')(router);
+require('./routes/create/routes-v4')(router);
 
 //UNLOCK
 router.use(/\/unlock\/version-([0-9]+)/, (req, res, next) => {
@@ -15,4 +16,4 @@ router.use(/\/unlock\/version-([0-9]+)/, (req, res, next) => {
 })
 
 
-module.exports = router 
+module.exports = router
