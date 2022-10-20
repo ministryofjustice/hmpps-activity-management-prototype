@@ -68,8 +68,9 @@ GOV.UK Prototype Kit
 
 {% include './includes/dps-header.html' %}
 
-
+{% block primaryNavigation %}
 {{ mojPrimaryNavigation({
+  classes: "govuk-!-display-none-print",
   label: 'Primary navigation',
   items: [
     {
@@ -87,13 +88,18 @@ GOV.UK Prototype Kit
     }
   ]
 }) }}
+{% endblock %}
 
+{% block identityBar %}
+<div class="govuk-width-container">
 {{ mojIdentityBar({
+  classes: "govuk-!-display-none-print",
   title: {
-    html: "<b>" + (data['user']['first-name'] or 'A') + ' ' + (data['user']['surname'] or 'George') + "</b>"
+    html: "<span class='govuk-tag govuk-tag--red govuk-!-margin-right-2'>Prototype</span><b class='govuk-!-font-size-19'>" + (data['prison']['name'] or 'HMP Leeds') + "</b>"
   }
 }) }}
-{% block keyDetails %}{% endblock %}
+</div>
+{% endblock %}
 {% endblock %}
 
 {% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}
