@@ -1,0 +1,171 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "#"
+	}
+	]
+}) }}
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-l">
+	Select unlock list details
+</h1>
+
+<form method="post">
+	<div class="govuk-grid-row">
+		<div class="govuk-form-group govuk-grid-column-one-third">
+			<label class="govuk-label govuk-label--m" for="date">
+				Date
+			</label>
+			<div class="govuk-hint">
+				Today's date is 13/10/2022
+			</div>
+			<input class="govuk-input date-input undefined hasDatepicker" id="date" name="date" type="text" value="13/10/2022" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
+		</div>
+	</div>
+
+	{{ govukRadios({
+		name: "times",
+		fieldset: {
+			legend: {
+				text: "Time period",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "england",
+			text: "Morning (AM)"
+		},
+		{
+			value: "scotland",
+			text: "Afternoon (PM)"
+		},
+		{
+			value: "wales",
+			text: "Evening (ED)"
+		}
+		]
+	}) }}
+
+	{% set wingsHtml %}
+	{{ govukCheckboxes({
+		name: "sublocations",
+		classes: "govuk-checkboxes--small",
+		fieldset: {
+			legend: {
+				text: "Sub-locations",
+				classes: "govuk-fieldset__legend--s"
+			}
+		},
+		items: [
+		{
+			value: "1",
+			text: "Wing A"
+		},
+		{
+			value: "2",
+			text: "Wing B"
+		},
+		{
+			value: "3",
+			text: "Wing C"
+		}
+		]
+	}) }}
+	{% endset %}
+
+	{{ govukCheckboxes({
+		name: "locations",
+		fieldset: {
+			legend: {
+				text: "Locations",
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "carcasses",
+			text: "Houseblock 1",
+			conditional: {
+				html: wingsHtml
+			}
+		},
+		{
+			value: "mines",
+			text: "Houseblock 2",
+			conditional: {
+				html: wingsHtml
+			}
+		},
+		{
+			value: "farm",
+			text: "Houseblock 3",
+			conditional: {
+				html: wingsHtml
+			}
+		}
+		]
+	}) }}
+
+	{{ govukCheckboxes({
+		name: "staying-or-leaving",
+		fieldset: {
+			legend: {
+				text: "Staying or leaving wing",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "staying",
+			text: "Staying"
+		},
+		{
+			value: "leaving",
+			text: "Leaving"
+		}
+		]
+	}) }}
+
+	<p class="govuk-inset-text">
+		Prisoners will be listed by sub-location (prison wing).
+	</p>
+
+	<div class="govuk-button-group">
+		{{govukButton({
+			text: "View selection"
+		})}}
+
+		{{govukButton({
+			text: "Print selection",
+			href: "example-list",
+			classes: "govuk-button--secondary",
+			attributes: {
+				target: "_blank"
+			}
+		})}}
+	</div>
+</form>
+{% endblock %}
