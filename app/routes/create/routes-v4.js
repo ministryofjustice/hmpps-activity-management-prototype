@@ -1,6 +1,6 @@
 module.exports = function (router) {
 
-var version = '/v3';
+var version = '/v4';
 
 
 router.post(version +'/setup', function(req, res) {
