@@ -17,7 +17,7 @@ Activities Management prototype
       Allocate someone to an activity
     </h1>
   </div><br />
-<p class="govuk-body">Use the dashboard to identify activities with spaces or search for an activity by name.</p>
+<p class="govuk-body">Use the dashboard to identify activities with vacancies or search for an activity by name.</p>
 <p class="govuk-body">You can also <a href="../create/activity-type-select-with-category">create activities</a> and add activity schedules.</p>
   <h2 class="govuk-heading-m">Activities dashboard</h2>
 <div class="moj-primary-navigation">
@@ -30,7 +30,7 @@ Activities Management prototype
               <a class="moj-sub-navigation__link" aria-current="page" href="#1">Show all categories (7)</a>
             </li>
             <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" href="activity-dashboard-1-filtered">Show categories with spaces (4)</a>
+              <a class="moj-sub-navigation__link" href="activity-dashboard-1-filtered">Show categories with vacancies (4)</a>
             </li>
         </ul>
       </nav>
@@ -55,7 +55,7 @@ Activities Management prototype
                         <div class="govuk-checkboxes__item">
                           <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
                           <label class="govuk-label govuk-checkboxes__label" for="organisation">
-                            <span style="font-size:.85em;" class="govuk-hint moj-search__hint ">Only search in activities with spaces</span>
+                            <span style="font-size:.85em;" class="govuk-hint moj-search__hint ">Only search in activities with vacancies</span>
                           </label>
                         </div>
                       </div>
@@ -85,7 +85,7 @@ Activities Management prototype
       <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Allocated</th>
       <th scope="col" class="govuk-table__header govuk-table__header--numeric"  aria-sort="none">Percentage allocated</th>
       <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Waitlist</th>
-      <th scope="col" class="govuk-table__header govuk-table__header--numeric"  aria-sort="none">Spaces</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric"  aria-sort="none">Vacancies</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -124,6 +124,46 @@ Activities Management prototype
       </div>
       </td>
           </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+                Industries
+              </a></h3>
+            </th>
+            <td class="govuk-table__cell govuk-table__cell--numeric">250</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric">238</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">95%</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">  <div>
+                <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+                  <span>12</span>
+                </span>
+                </strong>
+              </div></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+
+          {% if data.setupAllocationJourneyLevel == "garden"  %}
+          <a href="activity-dashboard-4-garden" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+            {% else %}
+            <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+            {% endif %}
+                Services
+              </a></h3>
+            </th>
+            <td class="govuk-table__cell govuk-table__cell--numeric">179</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric">175</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">98%</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">15</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">  <div>
+                <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+                  <span>4</span>
+                </span>
+                </strong>
+              </div></td>
+          </tr>
+
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
               <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
@@ -205,45 +245,7 @@ Activities Management prototype
       </td>
         </tr>
 
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-          Industries
-        </a></h3>
-      </th>
-      <td class="govuk-table__cell govuk-table__cell--numeric">250</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">238</td>
-        <td class="govuk-table__cell govuk-table__cell--numeric">95%</td>
-        <td class="govuk-table__cell govuk-table__cell--numeric">1</td>
-        <td class="govuk-table__cell govuk-table__cell--numeric">  <div>
-          <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
-            <span>12</span>
-          </span>
-          </strong>
-        </div></td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
 
-    {% if data.setupAllocationJourneyLevel == "garden"  %}
-    <a href="activity-dashboard-4-garden" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-      {% else %}
-      <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-      {% endif %}
-          Services
-        </a></h3>
-      </th>
-      <td class="govuk-table__cell govuk-table__cell--numeric">179</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">175</td>
-        <td class="govuk-table__cell govuk-table__cell--numeric">98%</td>
-        <td class="govuk-table__cell govuk-table__cell--numeric">15</td>
-        <td class="govuk-table__cell govuk-table__cell--numeric">  <div>
-          <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
-            <span>4</span>
-          </span>
-          </strong>
-        </div></td>
-    </tr>
 
   </tbody>
 </table>
