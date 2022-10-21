@@ -1,19 +1,27 @@
 
 {% extends "layout.html" %}
-{% set serviceName = "" %}
 
 {% block pageTitle %}
 Activities Management prototype
 {% endblock %}
 
 {% block header %}
-{% from "moj/components/header/macro.njk"                import mojHeader %}
-{{ govukHeader({
-  homepageUrl: "/",
-  serviceName: serviceName,
-  serviceUrl: "/",
-  containerClasses: "govuk-width-container"
-}) }}
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: serviceName,
+    serviceUrl: "/",
+    containerClasses: "govuk-width-container",
+    navigation: [
+    {
+      text: "Create and allocate",
+      href: "/"
+    },
+    {
+      text: "Unlock and attend",
+      href: "/unlock",
+      active: true
+    }]
+  }) }}
 
 <div class="app-masthead">
   <div class="govuk-width-container">
@@ -68,14 +76,11 @@ Activities Management prototype
         </span>
       </summary>
       <div class="govuk-details__text">
-        <p class="govuk-body govuk-!-margin-bottom-2">Experimental designs</p>
+        <h3 class="govuk-heading-s">Experimental designs</h3>
         <ul class="govuk-list govuk-list--bullet">
-          <li><a href="/experimental/activity-add-recurrence-datetime-html" class="govuk-link govuk-link--no-visited-state">Date and time calendar selectors</a></li>
-
-        </ul>
-        <p class="govuk-body govuk-!-margin-bottom-2">Ideas</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>Adding 'meta data' to activity, ability for user to add a list of descriptive words, which may not be appropriate in the title of the activity to aid in searching for an activity, such as 'kitchen', 'cooking', 'piecework', 'personal development'</li>
+          <li><a href="experimental/whereabouts" class="govuk-link govuk-link--no-visited-state">Whereabouts home page</a></li>
+          <li><a href="experimental/select-residential-locations" class="govuk-link govuk-link--no-visited-state">Generate multiple unlock lists</a></li>
+          <li><a href="experimental/select-activity-locations" class="govuk-link govuk-link--no-visited-state">Generate multiple activity attendance lists</a></li>
         </ul>
       </div>
     </details>

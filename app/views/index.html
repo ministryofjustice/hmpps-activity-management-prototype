@@ -1,13 +1,30 @@
 
 {% extends "layout.html" %}
-{% set serviceName = "" %}
 
 {% block pageTitle %}
 Activities Management prototype
 {% endblock %}
 
-{% block content %}
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: serviceName,
+    serviceUrl: "/",
+    containerClasses: "govuk-width-container",
+    navigation: [
+    {
+      text: "Create and allocate",
+      href: "/",
+      active: true
+    },
+    {
+      text: "Unlock and attend",
+      href: "/unlock/"
+    }]
+  }) }}
+{% endblock %}
 
+{% block content %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-thirds">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
@@ -15,52 +32,53 @@ Activities Management prototype
     </h1>
   </div>
 </div>
+
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <details class="govuk-details" data-module="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">
-            User research, content docs and flow diagrams
-          </span>
-        </summary>
-        <div class="govuk-details__text">
+  <div class="govuk-grid-column-full">
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          User research, content docs and flow diagrams
+        </span>
+      </summary>
+      <div class="govuk-details__text">
 
-          <p class="govuk-body govuk-!-margin-bottom-2">User research:</p>
-          <ul class="govuk-list govuk-list--bullet">
-            <li><a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">UR</a></li>
+        <p class="govuk-body govuk-!-margin-bottom-2">User research:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">UR</a></li>
 
-          </ul>
+        </ul>
 
-          <p class="govuk-body govuk-!-margin-bottom-2">Copydecks:</p>
-          <ul class="govuk-list govuk-list--bullet">
-            <li><a href="" target="_blank" class="govuk-link govuk-link--no-visited-state">View the content docs </a></li>
-          </ul>
+        <p class="govuk-body govuk-!-margin-bottom-2">Copydecks:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="" target="_blank" class="govuk-link govuk-link--no-visited-state">View the content docs </a></li>
+        </ul>
 
-          <p class="govuk-body govuk-!-margin-bottom-2">Flow diagrams:</p>
-          <ul class="govuk-list govuk-list--bullet">
-            <li><a href="#">View the flow diagrams</a></li>
-          </ul>
+        <p class="govuk-body govuk-!-margin-bottom-2">Flow diagrams:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="#">View the flow diagrams</a></li>
+        </ul>
 
-        </div>
-      </details>
-      <details class="govuk-details" data-module="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">
-            Experimental designs &amp; ideas
-          </span>
-        </summary>
-        <div class="govuk-details__text">
-          <p class="govuk-body govuk-!-margin-bottom-2">Experimental designs</p>
-          <ul class="govuk-list govuk-list--bullet">
-            <li><a href="/experimental/activity-add-recurrence-datetime-html" class="govuk-link govuk-link--no-visited-state">Date and time calendar selectors</a></li>
+      </div>
+    </details>
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Experimental designs &amp; ideas
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p class="govuk-body govuk-!-margin-bottom-2">Experimental designs</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="/experimental/activity-add-recurrence-datetime-html" class="govuk-link govuk-link--no-visited-state">Date and time calendar selectors</a></li>
 
-          </ul>
-          <p class="govuk-body govuk-!-margin-bottom-2">Ideas</p>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>Adding 'meta data' to activity, ability for user to add a list of descriptive words, which may not be appropriate in the title of the activity to aid in searching for an activity, such as 'kitchen', 'cooking', 'piecework', 'personal development'</li>
-          </ul>
-        </div>
-      </details>
+        </ul>
+        <p class="govuk-body govuk-!-margin-bottom-2">Ideas</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>Adding 'meta data' to activity, ability for user to add a list of descriptive words, which may not be appropriate in the title of the activity to aid in searching for an activity, such as 'kitchen', 'cooking', 'piecework', 'personal development'</li>
+        </ul>
+      </div>
+    </details>
     <table class="govuk-table">
       <thead class="govuk-table__head" >
         <tr class="govuk-table__row">
@@ -73,89 +91,89 @@ Activities Management prototype
         <tr class="govuk-table__row">
           <td class="govuk-table__cell" >
             <a href="/v4/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 4</a> </td>
-          <td class="govuk-table__cell" >
-            <strong class="govuk-tag govuk-tag--green">
-              I<span style="text-transform:lowercase;">n design </span>
-            </strong>
-          </td>
-          <td class="govuk-table__cell" >
-            <ul class="govuk-list govuk-list--bullet">
+            <td class="govuk-table__cell" >
+              <strong class="govuk-tag govuk-tag--green">
+                I<span style="text-transform:lowercase;">n design </span>
+              </strong>
+            </td>
+            <td class="govuk-table__cell" >
+              <ul class="govuk-list govuk-list--bullet">
 
-              <li>Iteration of allocation journey, Trello 221, 232</li>
-              <li>Restored 'allocated amount' back into L1 and L2 dashboard</li>
-              <li>Descriptive signpost text in 'session' tabs</li>
-              <li>CTA on allocate tab changed to 'Review selected candidates'</li>
-              <li>Renaming of categories to 'Industries' and 'Services' for allocate and create journeys</li>
+                <li>Iteration of allocation journey, Trello 221, 232</li>
+                <li>Restored 'allocated amount' back into L1 and L2 dashboard</li>
+                <li>Descriptive signpost text in 'session' tabs</li>
+                <li>CTA on allocate tab changed to 'Review selected candidates'</li>
+                <li>Renaming of categories to 'Industries' and 'Services' for allocate and create journeys</li>
 
-            </ul>
-          </td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell" >
-            <a href="/v3/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 3</a>          </td>
-          <td class="govuk-table__cell" >
-            <strong class="govuk-tag govuk-tag--blue">
-              R<span style="text-transform:lowercase;">eady for </span>UR
-            </strong>
-          </td>
-          <td class="govuk-table__cell" >
-            <li>Iteration of create journey from UR w/c 12/9/22. Trello <a target="_blank" href="https://trello.com/c/nQajhg89/211-iteration-of-activity-creation-prototype-joe-writing-this-ticket-in-progress">211</a></li>
-            <li>Added CTA link on confirmation page - back to category selection (start of create journey)</li>
-            <li>Allocation journey
-              <ul>
-                <li>Rework of dashbords</li>
-                <li>Creation of muli-tier dashboards, category down to session</li>
-                <li>Search function - searches and returns a flat 1 tier result</li>
-                <li>Addition of advanced search under 'search'</li>
-                <li>Tab design for session/instance of activity</li>
-                <li>Removal of 'Create activity' CTA button in filter navbar</li>
-                <li>Addition of text on L1 dashboard linking to craete journey</li>
-                <li>Addition of alternate journey (2 tier) for Services > Gardening
               </ul>
-            </li>
-            <li>Link to alternative '<a href="/v3/allocate/allocate-offender-dashboard-search-view">search view</a> - search criteria on left nav' for UR</li>
-          </ul>
-          </td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell" >
-            <a href="/v2/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a>
-          <!--  <a href="/2-0/setup?r=t" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a>-->
-          </td>
-          <td class="govuk-table__cell" >
-            <strong class="govuk-tag govuk-tag--blue">
-              R<span style="text-transform:lowercase;">eady for </span>UR
-            </strong>
-          </td>
-          <td class="govuk-table__cell" >
-            <ul class="govuk-list govuk-list--bullet">
-              <li>First design and iteration of allocation and dashboard for both. Trello: <a href="https://trello.com/c/ys57BPOO/189-create-prototype-for-key-areas-of-event-allocation-for-work-and-education" target="_blank">189</a>, <a target="_blank" href="https://trello.com/c/uZ3VmUEW/206-iteration-of-allocation-and-create-dashboard-prototype">206</a></li>
-            </ul>
-          </td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell" >
-            <a href="/v1/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 1</a>
-          <!--  <a href="/2-0/setup?r=t" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a>-->
-          </td>
-          <td class="govuk-table__cell" >
-            <strong class="govuk-tag govuk-tag--blue">
-              R<span style="text-transform:lowercase;">eady for </span>UR
-            </strong>
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell" >
+              <a href="/v3/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 3</a>          </td>
+              <td class="govuk-table__cell" >
+                <strong class="govuk-tag govuk-tag--blue">
+                  R<span style="text-transform:lowercase;">eady for </span>UR
+                </strong>
+              </td>
+              <td class="govuk-table__cell" >
+                <li>Iteration of create journey from UR w/c 12/9/22. Trello <a target="_blank" href="https://trello.com/c/nQajhg89/211-iteration-of-activity-creation-prototype-joe-writing-this-ticket-in-progress">211</a></li>
+                <li>Added CTA link on confirmation page - back to category selection (start of create journey)</li>
+                <li>Allocation journey
+                  <ul>
+                    <li>Rework of dashbords</li>
+                    <li>Creation of muli-tier dashboards, category down to session</li>
+                    <li>Search function - searches and returns a flat 1 tier result</li>
+                    <li>Addition of advanced search under 'search'</li>
+                    <li>Tab design for session/instance of activity</li>
+                    <li>Removal of 'Create activity' CTA button in filter navbar</li>
+                    <li>Addition of text on L1 dashboard linking to craete journey</li>
+                    <li>Addition of alternate journey (2 tier) for Services > Gardening
+                    </ul>
+                  </li>
+                  <li>Link to alternative '<a href="/v3/allocate/allocate-offender-dashboard-search-view">search view</a> - search criteria on left nav' for UR</li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell" >
+                <a href="/v2/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a>
+                <!--  <a href="/2-0/setup?r=t" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a>-->
+              </td>
+              <td class="govuk-table__cell" >
+                <strong class="govuk-tag govuk-tag--blue">
+                  R<span style="text-transform:lowercase;">eady for </span>UR
+                </strong>
+              </td>
+              <td class="govuk-table__cell" >
+                <ul class="govuk-list govuk-list--bullet">
+                  <li>First design and iteration of allocation and dashboard for both. Trello: <a href="https://trello.com/c/ys57BPOO/189-create-prototype-for-key-areas-of-event-allocation-for-work-and-education" target="_blank">189</a>, <a target="_blank" href="https://trello.com/c/uZ3VmUEW/206-iteration-of-allocation-and-create-dashboard-prototype">206</a></li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell" >
+                <a href="/v1/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 1</a>
+                <!--  <a href="/2-0/setup?r=t" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a>-->
+              </td>
+              <td class="govuk-table__cell" >
+                <strong class="govuk-tag govuk-tag--blue">
+                  R<span style="text-transform:lowercase;">eady for </span>UR
+                </strong>
 
-          </td>
-          <td class="govuk-table__cell" >
-            <ul class="govuk-list govuk-list--bullet">
-              <li>Activity creation. Trello <a target="_blank" href="https://trello.com/c/QfozP8Zm/142-create-low-fi-prototype-for-event-creation-of-education-and-work">142</a>, <a target="_blank" href="https://trello.com/c/sHGPYgDm/161-create-moj-cloud-hi-fi-prototype-for-event-creation-of-education-and-work">161</a></li>
-            </ul>
-          </td>
-        </tr>
+              </td>
+              <td class="govuk-table__cell" >
+                <ul class="govuk-list govuk-list--bullet">
+                  <li>Activity creation. Trello <a target="_blank" href="https://trello.com/c/QfozP8Zm/142-create-low-fi-prototype-for-event-creation-of-education-and-work">142</a>, <a target="_blank" href="https://trello.com/c/sHGPYgDm/161-create-moj-cloud-hi-fi-prototype-for-event-creation-of-education-and-work">161</a></li>
+                </ul>
+              </td>
+            </tr>
 
-    </tbody>
-  </table>
+          </tbody>
+        </table>
 
 
-  </div>
-</div>
+      </div>
+    </div>
 
-{% endblock %}
+    {% endblock %}
