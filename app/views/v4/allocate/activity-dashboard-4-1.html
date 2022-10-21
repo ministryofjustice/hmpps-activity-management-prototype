@@ -10,7 +10,7 @@ Activities Management prototype
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-thirds">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      Allocate suitable people to wing cleaning
+      Identify candidates for Wing cleaning 1
     </h1>
   </div><br />
 <div class="moj-primary-navigation">
@@ -23,7 +23,7 @@ Activities Management prototype
               <a class="moj-sub-navigation__link" aria-current="page" href="#">Wing cleaning 1</a>
             </li>
             <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" href="activity-dashboard-3">All wing cleaning</a>
+              <a class="moj-sub-navigation__link" href="activity-dashboard-3">All Wing cleaning</a>
             </li>
         </ul>
       </nav>
@@ -48,7 +48,7 @@ Activities Management prototype
                         <div class="govuk-checkboxes__item">
                           <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
                           <label class="govuk-label govuk-checkboxes__label" for="organisation">
-                            <span style="font-size:.85em;" class="govuk-hint moj-search__hint ">Only search in activities with spaces</span>
+                            <span style="font-size:.85em;" class="govuk-hint moj-search__hint ">Only search in activities with vacancies</span>
                           </label>
                         </div>
                       </div>
@@ -86,24 +86,24 @@ Activities Management prototype
   Contents
 </h2>
 <ul class="govuk-tabs__list">
-  <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-    <a class="govuk-tabs__tab" href="#allocate">
-      Allocate candidates
-    </a>
-  </li>
   <li class="govuk-tabs__list-item">
     <a class="govuk-tabs__tab" href="#allocated">
       People allocated now
     </a>
   </li>
-  <li class="govuk-tabs__list-item">
-    <a class="govuk-tabs__tab" href="#schedule">
-      Wing cleaning 1 schedule
+  <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+    <a class="govuk-tabs__tab" href="#allocate">
+      Identify candidates
     </a>
   </li>
   <li class="govuk-tabs__list-item">
     <a class="govuk-tabs__tab" href="#criteria">
       Activity risk and requirements
+    </a>
+  </li>
+  <li class="govuk-tabs__list-item">
+    <a class="govuk-tabs__tab" href="#schedule">
+      Wing cleaning 1 schedule
     </a>
   </li>
 </ul>
@@ -180,7 +180,7 @@ Activities Management prototype
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header">Prisoner name</th>
-        <th scope="col" class="govuk-table__header">prison number</th>
+        <th scope="col" class="govuk-table__header">Prison number</th>
         <th scope="col" class="govuk-table__header">Wing</th>
       </tr>
     </thead>
@@ -245,13 +245,13 @@ Activities Management prototype
   </button>
 </div>
 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocate">
-  <h2 class="govuk-heading-m">Allocate candidates</h2><p>Check each candidate's suitability for wing cleaning 1. Use the filters to help identify the best match.</p>
+  <h2 class="govuk-heading-m">Allocate candidates</h2><p>Check each candidate's suitability for Wing cleaning 1. Use the filters to help identify the best match.</p>
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
 
         <th scope="col" class="govuk-table__header">Prisoner name</th>
-        <th scope="col" class="govuk-table__header">prison number</th>
+        <th scope="col" class="govuk-table__header">Prison number</th>
         <th scope="col" class="govuk-table__header">Wing</th>
           <th scope="col" class="govuk-table__header">Available</th>
       </tr>
@@ -424,27 +424,82 @@ Activities Management prototype
 
 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="criteria">
   <h2 class="govuk-heading-m">Activity risk and requirements</h2><p>Check the risk level, any exclusions and entry criteria.</p>
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Alert</th>
-        <th scope="col" class="govuk-table__header">Description</th>
-        <th scope="col" class="govuk-table__header">Risk</th>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><a href="prisoner-profile">Chemicals</a></td>
-        <td class="govuk-table__cell">Use of chemicals whilst cleaning</td>
-        <td class="govuk-table__cell">High</td>
-      </tr>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><a href="prisoner-profile">Weapons</a></td>
-        <td class="govuk-table__cell">Use of potential weapons whilst cleaning</td>
-        <td class="govuk-table__cell">Medium</td>
-      </tr>
-    </tbody>
-  </table>
+
+
+  <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Capacity
+      </dt>
+      <dd class="govuk-summary-list__value">
+        10
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Category
+      </dt>
+      <dd class="govuk-summary-list__value">
+        Services
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Location
+      </dt>
+      <dd class="govuk-summary-list__value">
+        Wing 2
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Risk level
+      </dt>
+      <dd class="govuk-summary-list__value">
+        High
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Education level
+      </dt>
+      <dd class="govuk-summary-list__value">
+        None
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Technical qualifications
+      </dt>
+      <dd class="govuk-summary-list__value">
+        None
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Risk factors
+      </dt>
+      <dd class="govuk-summary-list__value">
+        ??
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Health factors
+      </dt>
+      <dd class="govuk-summary-list__value">
+        Chemicals, Dust
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Incentive level
+      </dt>
+      <dd class="govuk-summary-list__value">
+        Standard
+      </dd>
+    </div>
+  </dl>
 
 </div>
 </div>
