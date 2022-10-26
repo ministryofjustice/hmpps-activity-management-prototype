@@ -1,0 +1,63 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Select activity type
+    </h1>
+  </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <form method="post">
+
+        <div class="govuk-form-group">
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+
+              </legend>
+              <div id="contact-hint" class="govuk-hint">
+                Select one option.
+              </div>
+              <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                 <input class="govuk-radios__input" id="appointment" name="contact" type="radio" value="email" checked data-aria-controls="conditional-contact">
+                  <label class="govuk-label govuk-radios__label" for="appointment">
+                    Appointment
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="contact" name="contact" type="radio" value="email"  data-aria-controls="conditional-contact">
+                  <label class="govuk-label govuk-radios__label" for="contact">
+                    Activity
+                  </label>
+                </div>
+                <div class="govuk-radios__conditional" id="conditional-contact">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="contact-by-email">
+                      Category
+                    </label>
+                  <!--  <p id="contact-by-email-error" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span> Email address cannot be blank
+                    </p>-->
+                  <!--  <input class="govuk-input govuk-!-width-one-half" id="contact-by-email" name="contact-by-email" type="email" spellcheck="false" aria-describedby="contact-by-email-error" autocomplete="email">-->
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+    <br />
+  <button class="govuk-button" data-module="govuk-button">Continue</button>
+  </div>
+</div>
+
+{% endblock %}
