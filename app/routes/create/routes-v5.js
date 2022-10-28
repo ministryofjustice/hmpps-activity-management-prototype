@@ -410,5 +410,24 @@ router.post(version +'/allocate/clearSearchAllocate', function(req, res) {
 	}
 });
 
+router.post(version +'/allocate/activityConfirmedAllocation', function(req, res) {
+	if (req.session.data.activityConfirmedAllocation == 'yes')
+	{
+		res.redirect(version +'/allocate/allocate-confirmation')
+	}
+	else {
+		res.redirect(version +'/allocate/allocate-cancel')
+	}
+});
+
+router.post(version +'/allocate/allocate-cancel', function(req, res) {
+	if (req.session.data.allocateCancel == 'yes')
+	{
+		res.redirect(version +'/allocate/activity-dashboard-4-1#allocate')
+	}
+	else {
+		res.redirect(version +'/allocate/activity-dashboard-5-1')
+	}
+});
 
 }
