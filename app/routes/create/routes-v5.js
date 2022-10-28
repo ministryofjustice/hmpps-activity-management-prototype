@@ -430,4 +430,22 @@ router.post(version +'/allocate/allocate-cancel', function(req, res) {
 	}
 });
 
+router.post(version +'/allocate/AllocateRemove', function(req, res) {
+	{
+		res.redirect(version +'/allocate/allocate-remove-offender')
+	}
+});
+
+
+
+router.post(version +'/allocate/allocate-remove-offender', function(req, res) {
+	if (req.session.data.activityConfirmRemoval == 'yes')
+	{
+		res.redirect(version +'/allocate/activity-dashboard-4-1#allocated')
+	}
+	else {
+		res.redirect(version +'/allocate/activity-dashboard-4-1#allocated')
+	}
+});
+
 }
