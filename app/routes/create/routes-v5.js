@@ -421,10 +421,20 @@ router.post(version +'/allocate/activityConfirmedAllocation', function(req, res)
 });
 
 router.post(version +'/allocate/allocate-cancel', function(req, res) {
-	if (req.session.data.allocateCancel == 'yes')
-	{
-		res.redirect(version +'/allocate/activity-dashboard-4-1#allocate')
-	}
+	if (req.session.data.allocateCancel == 'yes'){
+			if (req.session.data.activityAllocateName == 'Gardening'){
+				res.redirect(version +'/allocate/activity-dashboard-4-garden')
+			}
+			if (req.session.data.activityAllocateName == 'Wing cleaning 1'){
+				res.redirect(version +'/allocate/activity-dashboard-4-1')
+			}
+			if (req.session.data.activityAllocateName == 'Wing cleaning 2'){
+				res.redirect(version +'/allocate/activity-dashboard-4-2')
+			}
+			else{
+				res.redirect(version +'/allocate/activity-dashboard-1')
+			}
+		}
 	else {
 		res.redirect(version +'/allocate/activity-dashboard-5-1')
 	}
