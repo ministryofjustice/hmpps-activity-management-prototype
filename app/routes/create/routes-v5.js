@@ -448,4 +448,15 @@ router.post(version +'/allocate/allocate-remove-offender', function(req, res) {
 	}
 });
 
+//Offender dashbaord allocations
+
+router.post(version +'/allocate/Dashboard4', function(req, res) {
+	{
+		res.redirect(version +'/allocate/activity-dashboard-5-1')
+	}
+});
+
+
+
+
 }
