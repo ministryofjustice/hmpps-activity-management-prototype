@@ -431,6 +431,24 @@ router.post(version +'/allocate/allocate-cancel', function(req, res) {
 			if (req.session.data.activityAllocateName == 'Wing cleaning 2'){
 				res.redirect(version +'/allocate/activity-dashboard-4-2')
 			}
+			if (req.session.data.activityAllocateName == 'Wing cleaning 3'){
+				res.redirect(version +'/allocate/activity-dashboard-4-3')
+			}
+			if (req.session.data.activityAllocateName == 'Wing cleaning 4'){
+				res.redirect(version +'/allocate/activity-dashboard-4-4')
+			}
+			if (req.session.data.activityAllocateName == 'Wing cleaning 5'){
+				res.redirect(version +'/allocate/activity-dashboard-4-5')
+			}
+			if (req.session.data.activityAllocateName == 'Wing cleaning 6'){
+				res.redirect(version +'/allocate/activity-dashboard-4-6')
+			}
+			if (req.session.data.activityAllocateName == 'Wing cleaning 7'){
+				res.redirect(version +'/allocate/activity-dashboard-4-7')
+			}
+			if (req.session.data.activityAllocateName == 'Wing cleaning 8'){
+				res.redirect(version +'/allocate/activity-dashboard-4-8')
+			}
 			else{
 				res.redirect(version +'/allocate/activity-dashboard-1')
 			}
