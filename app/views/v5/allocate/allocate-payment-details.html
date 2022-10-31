@@ -38,11 +38,11 @@ Activities Management prototype
             </label>
             £ <input class="govuk-input govuk-input--width-5" id="paymentEnhanced" name="paymentEnhanced" type="text" value="1.81">
           </div>
-        {% endif %}
+
 
 
     <!--10 payments-->
-    {% if data.setupPayments == "ten" %}
+    {% elseif data.setupPayments == "ten" %}
           <div class="govuk-form-group">
             <label class="govuk-label govuk-label" for="paymentA">A rate
             </label>
@@ -93,7 +93,30 @@ Activities Management prototype
             </label>
             £ <input class="govuk-input govuk-input--width-5" id="paymentJ" name="paymentJ" type="text" value="1.91">
           </div>
+
+          {% else %}
+          <!--3 payments-->
+          <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-label" for="paymentBasic">Basic rate
+              </label>
+              £ <input class="govuk-input govuk-input--width-5" id="paymentBasic" name="paymentBasic" type="text" value="1.21">
+            </div>
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-label" for="paymentStandard">Standard rate
+              </label>
+              £ <input class="govuk-input govuk-input--width-5" id="paymentStandard" name="paymentStandard" type="text" value="1.51">
+            </div>
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-label" for="paymentEnhanced">Enhanced rate
+              </label>
+              £ <input class="govuk-input govuk-input--width-5" id="paymentEnhanced" name="paymentEnhanced" type="text" value="1.81">
+            </div>
+
+
+
   {% endif %}
+
 
         </fieldset>
       </div>
