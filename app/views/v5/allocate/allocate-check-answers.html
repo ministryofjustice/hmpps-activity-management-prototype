@@ -1,0 +1,232 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block back %}
+{% endblock %}
+{% block content %}
+
+<div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
+          Check the activity allocation details
+        </h1><br />
+      </div>
+
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">Activity details</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Category
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.category or 'Education' }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-type-select-with-category">
+              Change  <span class="govuk-visually-hidden"> name</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Name
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.activityName or 'Maths level 3' }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-name">
+                <span class="govuk-visually-hidden"> name</span>
+              </a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Start date
+            </dt>
+            <dd class="govuk-summary-list__value">
+              20 October 2022
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-date">
+                <span class="govuk-visually-hidden"> address</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Start and end time
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">1.30pm to 5.00pm</p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time-2">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Days
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">
+                Monday<br />
+                Tuesday<br />
+                Wednesday<br />
+                Thursday<br />
+              </p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time-2">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Repeats
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">
+                Weekly<br />
+              </p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Location
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">Room 2</p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              {% if data.setupLocation == "dashboard" %}
+              <a class="govuk-link" href="check/activity-location-list-dashboard">
+                {% else %}
+                <a class="govuk-link" href="check/activity-location-list-dropdown">
+                {% endif %}
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+
+
+
+        <h2 class="govuk-heading-m">Allocated person 1</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Name
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">Raj Damodaran</p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time-2">
+                Remove<span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Prison number
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">
+              A122345
+              </p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time-2">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Location
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">
+              House block 1<br />
+                Wing 1<br />
+              </p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time-2">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+        <h2 class="govuk-heading-m">Allocated person 2</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Name
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">Leroy Smithe</p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time-2">
+                Remove<span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Prison number
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">
+              A773622
+              </p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time-2">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Location
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">
+              House block 4<br />
+                Wing 3<br />
+              </p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time-2">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+
+
+        <form method="post">
+          <button class="govuk-button" data-module="govuk-button">
+            Allocate to the activity
+          </button>
+        </form>
+      </div>
+</div>
+{% endblock %}

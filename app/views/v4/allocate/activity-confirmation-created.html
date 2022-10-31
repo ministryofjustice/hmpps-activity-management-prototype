@@ -22,7 +22,7 @@ Activities Management prototype
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-panel govuk-panel--confirmation">
           <h1 class="govuk-panel__title">
-              Activity allocation complete
+              {{data.activityName or 'Maths level 3' }} created
           </h1>
         <!--  <div class="govuk-panel__body">
             Your reference number<br><strong>HDJ2123F</strong>
@@ -32,9 +32,9 @@ Activities Management prototype
         <h2 class="govuk-heading-m">What happens next</h2>
 
         <p class="govuk-body">
-          The allocation for Wing cleaning has been completed.
+          Your activity has been created and you can <a href="../allocate/activity-list-dashboard">allocate people</a> to it.
         </p>
-        <p class="govuk-body">You can view the allocation and allocate more people on the <a href="activity-dashboard-1">activity dashboard</a>.</p>
+        <p class="govuk-body">You can edit, view or delete this or other activities on the <a href="../allocate/activity-list-dashboard">activity dashboard<a/>.</p>
         <p class="govuk-body">
           <a href="#" class="govuk-link">What did you think of this service?</a> (takes 30 seconds)
         </p>
@@ -43,6 +43,8 @@ Activities Management prototype
   </main>
 </div>
       </div>
-
+      <form method="post" >
+    <button class="govuk-button" data-module="govuk-button">Create another activity</button>
+  </form>
 </div>
 {% endblock %}

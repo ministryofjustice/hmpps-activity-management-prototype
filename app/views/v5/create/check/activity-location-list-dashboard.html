@@ -1,0 +1,128 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Find a location for the activity
+    </h1>
+  </div>
+
+  <nav class="moj-sub-navigation" aria-label="Sub navigation" style="margin-top:20px;">
+    <ul class="moj-sub-navigation__list" >
+      <li class="moj-sub-navigation__item" style="float:left; list-style-type:none; margin-left:-40px; margin-top:15px;">
+        <a class="moj-sub-navigation__link" aria-current="page" href="#1" style=" text-decoration:none; color:black; border-bottom: 4px solid #1d70b8; padding-bottom:12px;">Show all locations</a>
+      </li>
+
+      <li class="moj-sub-navigation__item" style="float:left; margin-left:20px; list-style-type:none;  margin-top:15px;">
+        <a class="moj-sub-navigation__link" href="#2" style=" text-decoration:none;">Show only available locations</a>
+      </li>
+    </ul>
+
+<ul class="moj-sub-navigation__list" style="margin-bottom:0px;">
+ <li class="moj-sub-navigation__item" style=" float:right; list-style-type:none;" >
+   <input class="govuk-input moj-search__input;" style="font-size:.8em;" size="51" id="search" name="search" type="search" aria-describedby="search-hint"
+    placeholder="You can search by location name, wing or area" >
+</li>
+</ul>
+</nav>
+<hr style="margin-top:70px;" />
+<table class="govuk-table" data-module="moj-sortable-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Location name</th>
+      <th scope="col" class="govuk-table__header app-custom-class" >Wing</th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="ascending">Capacity</th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Repair status</th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Availability</th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Location actions</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Cateen
+        </a></h3>
+          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">Area: AW9</span>
+      </th>
+      <td class="govuk-table__cell">A wing</td>
+      <td class="govuk-table__cell">15</td>
+      <td class="govuk-table__cell">OK</td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--red">N<span style="text-transform: lowercase;">ot available</span></strong>
+      </td>
+      <td class="govuk-table__cell"><a href="#">Show details</button></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="check/activity-check-your-answers" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Room 2
+        </a></h3>
+          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">Area: BS4</span>
+      </th>
+      <td class="govuk-table__cell">B wing</td>
+      <td class="govuk-table__cell">20</td>
+      <td class="govuk-table__cell">OK</td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">A<span style="text-transform: lowercase;">vailable</span></strong>
+      </td>
+      <td class="govuk-table__cell"><a href="../activity-repeat-check-your-answers">Book</button></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="release-date-attention" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Training room
+        </a></h3>
+          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">Area: BS4</span>
+      </th>
+      <td class="govuk-table__cell">C wing</td>
+      <td class="govuk-table__cell">30</td>
+      <td class="govuk-table__cell">Under repair</td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--red">N<span style="text-transform: lowercase;">ot available</span></strong><br />
+
+      </td>
+      <td class="govuk-table__cell"><a href="#"></button></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="release-date-attention" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Kitchen
+        </a></h3>
+          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">Area: BS4</span>
+      </th>
+      <td class="govuk-table__cell">B wing</td>
+      <td class="govuk-table__cell">25</td>
+      <td class="govuk-table__cell">OK</td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">A<span style="text-transform: lowercase;">vailable</span></strong>
+      </td>
+      <td class="govuk-table__cell"><a href="#">Book</button></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="release-date-attention" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Training room 2
+        </a></h3>
+          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">Area: AW1</span>
+      </th>
+      <td class="govuk-table__cell">A wing</td>
+      <td class="govuk-table__cell">35</td>
+      <td class="govuk-table__cell">OK</td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">A<span style="text-transform: lowercase;">vailable</span></strong>
+      </td>
+      <td class="govuk-table__cell"><a href="#">Book</button></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+{% endblock %}
