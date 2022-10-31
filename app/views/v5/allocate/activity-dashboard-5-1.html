@@ -12,13 +12,12 @@ Activities Management prototype
 <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-thirds">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
-        Review and confirm you want to allocate {{ data.offenderAllocate }}
+        Check the person you're allocating meets the requirements
         </h1><br />
       </div>
 
 
-
-      <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <!--    <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
   <div class="govuk-notification-banner__header">
     <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
       Important
@@ -40,65 +39,46 @@ Activities Management prototype
         <dt class="govuk-summary-list__key">
           Learning pathways
         </dt>
-
         <dd class="govuk-summary-list__value">
           <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</strong>
         </dd>
       </div>
-      <!--<a class="govuk-notification-banner__link" href="#">View mismatches</a>.-->
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Non association
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</strong>
+        </dd>
+      </div>
 
 
     </p>
   </div>
-</div>
+</div>-->
 
 
 
 
-<h2 class="govuk-heading-s">You are allocating {{ data.offenderAllocate }} to {{ data.activityAllocateName }}. Review their suitability for this activity.</h2><br />
+<h2 class="govuk-heading-s">You're reviewing {{ data.offenderAllocate }}, <strong>A430914</strong>, as a candidate for {{ data.activityAllocateName }}. This person may be unsuitable for this activity - check the following risks and requirements before you proceed.</h2><br />
 
-<div class="govuk-grid-column-three-thirds">
-  <h2 class="govuk-heading-m">Activity details</h2>
-  <dl class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Activity
-      </dt>
-      <dd class="govuk-summary-list__value">
-        {{ data.activityAllocateName }}
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Location
-      </dt>
-      <dd class="govuk-summary-list__value">
-        Wing 1
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Risk
-      </dt>
-      <dd class="govuk-summary-list__value">
-      High
-      </dd>
-    </div>
-  </dl>
-</div>
+
 
       <div class="govuk-grid-column-three-thirds">
-        <h2 class="govuk-heading-m">Review requirements for this activity</h2>
+        <h2 class="govuk-heading-m"></h2>
         <dl class="govuk-summary-list">
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
 
             </dt>
             <dd class="govuk-summary-list__value" style="width:35%;">
-            <strong>Details for {{ data.offenderAllocate }} </strong>
+            <strong>Details for {{ data.offenderAllocate }}, A430914</strong>
             </dd>
             <dd class="govuk-summary-list__value" style="width:22%;">
               <strong>Activity requirements</strong>
+            </dd>
+            <dd class="govuk-summary-list__value" style="width:22%;">
+              <strong>Mismatch</strong>
             </dd>
           </div>
           <div class="govuk-summary-list__row">
@@ -115,29 +95,8 @@ Activities Management prototype
               <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</strong>
             </dd>
           </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Educational qualifications
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Maths Level 1
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Technical qualifications
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Maintenance foundation skills
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None
-            </dd>
 
-          </div>
+
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
             Learning pathways
@@ -152,40 +111,17 @@ Activities Management prototype
               <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</strong>
             </dd>
           </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Alerts
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Racist,<br />
-              Arsonist<br />
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Learning difficulties, <br />disabilities and health
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Asthma,<br />
-              Dislexia
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None
-            </dd>
-          </div>
-        </dl>
 
 
-        <form method="post" action="activityConfirmedAllocation">
+        </dl><div id="event-name-hint" class="govuk-hint">
+          If you don't want to proceed with allocating {{ data.offenderAllocate }}, you can <a href="activity-dashboard-4-1">cancel and return to the list of candidates</a>.
+      </div>
+      <br />
+        <form method="post" action="allocate-payment-details">
           <button class="govuk-button" data-module="govuk-button" value="yes" name="activityConfirmedAllocation">
-            Confirm allocation
+            Continue to set pay rates
           </button>
-              <a href="" style="margin-left:20px;">
-            Cancel allocation
-            </a>
+
         </form>
 
       </div>
