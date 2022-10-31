@@ -77,7 +77,11 @@ Activities Management prototype
 <h2 class="govuk-heading-m govuk-!-margin-bottom-4">
   Wing cleaning 1 <span style="margin-left:30px;">
     <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
-      <span>1 space available</span>
+      {% if (data.LanceArm != 'NotAllocated')%}
+        <span>1 space available</span>
+      {% else %}
+        <span>2 spaces available</span>
+      {% endif %}
     </strong>
   </span>
 </h2>
@@ -194,7 +198,7 @@ Activities Management prototype
       </tr>
     </thead>
     <tbody class="govuk-table__body">
-
+{% if (data.LanceArm != 'NotAllocated')%}
       <tr class="govuk-table__row">
         <td>
                 <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
@@ -211,6 +215,8 @@ Activities Management prototype
         <td class="">23 Sept 2023</td>
         <td class="">2 Aug 2022</td>
         </tr>
+
+
 <tr>
   <td colspan="7"  class="govuk-table__cell">
     <details class="hods-expandable-banner">
@@ -275,7 +281,7 @@ Activities Management prototype
 </details>
 </td>
 </tr>
-
+{% endif %}
       <tr class="govuk-table__row">
         <td>
                 <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">

@@ -465,16 +465,30 @@ router.post(version +'/allocate/AllocateRemove', function(req, res) {
 });
 
 
-
+//Removal
 router.post(version +'/allocate/allocate-remove-offender', function(req, res) {
 	if (req.session.data.activityConfirmRemoval == 'yes')
 	{
-		res.redirect(version +'/allocate/activity-dashboard-4-1#allocated')
+		 if (req.session.data.RemoveOffenderName[0]=='Lance Arm')
+		 {
+			var LanceArm = 'NotAllocated'
+			req.session.data.LanceArm = LanceArm
+			 res.redirect(version +'/allocate/activity-dashboard-4-1#allocated')
+		 }
+		 else {
+
+	 		 res.redirect(version +'/allocate/activity-dashboard-4-1#allocated')
+	 	}
+
 	}
 	else {
 		res.redirect(version +'/allocate/activity-dashboard-4-1#allocated')
 	}
 });
+
+
+
+
 
 //Offender dashbaord allocations
 
@@ -483,7 +497,6 @@ router.post(version +'/allocate/Dashboard4', function(req, res) {
 		res.redirect(version +'/allocate/activity-dashboard-5-1')
 	}
 });
-
 
 
 
