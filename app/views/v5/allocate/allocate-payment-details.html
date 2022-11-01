@@ -11,10 +11,10 @@ Activities Management prototype
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-thirds">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-    Select how much you want to pay {{ data.offenderAllocate }}, <strong>A430914</strong>.</h2><br />
+    Select a pay rate for {{ data.offenderAllocate }}, <strong>A4309BB</strong></h2><br />
 
     </h1>
-    <p class="govuk-body">{{ data.offenderAllocate }}'s current incentive rate is Basic. His pay has been previously set for this activity at a daily rate of £1.21.</p>
+    <p class="govuk-body">{{ data.offenderAllocate }}'s current incentive level is <strong>Basic</strong>. </p>
     <p class="govuk-body">If the rate you need is not listed you can <a href="#">add or change rates for this activity.</a></p>
   </div>
 
@@ -26,7 +26,7 @@ Activities Management prototype
   <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
 
     <div id="contact-hint" class="govuk-hint">
-      Select one option.
+      Choose daily or piecework rate and select the correct pay level
     </div>
     <div class="govuk-radios" data-module="govuk-radios">
       <div class="govuk-radios__item">
@@ -49,7 +49,8 @@ Activities Management prototype
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21">
                 <label class="govuk-label govuk-radios__label" for="where-do-you-live">
-                  Basic rate: &pound;1.21
+                  Basic rate: &pound;1.21  <strong class="govuk-tag govuk-tag--orange">C<span style="text-transform:lowercase;">urrent rate</strong>
+
                 </label>
               </div>
               <div class="govuk-radios__item">
@@ -85,7 +86,7 @@ Activities Management prototype
           <div class="govuk-radios__item">
             <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21">
             <label class="govuk-label govuk-radios__label" for="where-do-you-live">
-              Basic rate: &pound;1.21
+              Basic rate: &pound;1.21 <strong class="govuk-tag govuk-tag--orange">C<span style="text-transform:lowercase;">urrent rate</strong>
             </label>
           </div>
           <div class="govuk-radios__item">
@@ -150,7 +151,7 @@ Activities Management prototype
           <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                <h1 class="govuk-fieldset__heading"> Basic rate
+                <h1 class="govuk-fieldset__heading">
 
                 </h1>
               </legend>
@@ -158,49 +159,48 @@ Activities Management prototype
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21">
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live">
-                    &pound;1.21
+                    Rate A: &pound;1.21 <strong style="margin-left:20px;" class="govuk-tag govuk-tag--yellow">C<span style="text-transform:lowercase;">urrent rate</strong>
                   </label>
                 </div>
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="where-do-you-live-2" name="AllocatePayment" type="radio" value="1.51">
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
-                    &pound;1.51
+                    Rate B: &pound;1.51
                   </label>
                 </div>
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="1.81">
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
-                  &pound;1.81
+                  Rate C: &pound;1.81
                   </label>
                 </div>
               </div><br /><br />
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                <h1 class="govuk-fieldset__heading"> Standard rate
-
+                <h1 class="govuk-fieldset__heading">
                 </h1>
               </legend>
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21">
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live">
-                    1.31
+                    Rate D: &pound;1.31
                   </label>
                 </div>
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="where-do-you-live-2" name="AllocatePayment" type="radio" value="1.51">
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
-                    1.61
+                    Rate E: &pound;1.61
                   </label>
                 </div>
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="1.81">
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
-                  &pound;1.91
+                  Rate F: &pound;1.91
                   </label>
                 </div>
               </div><br /><br />
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                <h1 class="govuk-fieldset__heading"> Enhanced rate
+                <h1 class="govuk-fieldset__heading">
 
                 </h1>
               </legend>
@@ -208,25 +208,19 @@ Activities Management prototype
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21">
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live">
-                    &pound;1.41
+                    Rate G: &pound;1.41
                   </label>
                 </div>
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="where-do-you-live-2" name="AllocatePayment" type="radio" value="1.51">
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
-                    &pound;1.71
+                    Rate H: &pound;1.71
                   </label>
                 </div>
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="1.81">
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
-                  &pound;2.01
-                  </label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="1.81">
-                  <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
-                   &pound;2.31
+                  Rate I: &pound;2.01
                   </label>
                 </div>
               </div>
