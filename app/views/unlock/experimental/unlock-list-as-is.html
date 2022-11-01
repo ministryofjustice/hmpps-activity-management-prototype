@@ -1,0 +1,175 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts"
+	}
+	]
+}) }}
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-l">Houseblock 2 - All</h1>
+
+<span class="govuk-heading-s govuk-visually-hidden">Monday 31st October - PM</span>
+<div class="horizontal-information govuk-!-display-none-print">
+	<div class="horizontal-information__item">
+		<a href="/manage-prisoner-whereabouts/select-residential-location" class="govuk-link">Select another residential location</a>
+	</div>
+
+	<div class="horizontal-information__item">
+		<div id="buttons" class="buttons pull-right">
+			<a id="printButton" data-test="print-button" class="">Print this page</a>
+		</div>
+	</div>
+</div>
+
+<hr class="print-only">
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-three-quarters">
+		<form class="form-background govuk-!-padding-3 govuk-!-margin-bottom-5 govuk-!-display-none-print">
+			<h2 class="govuk-heading-m">View by</h2>
+			<div class="horizontal-form">
+				<div class="govuk-form-group">
+					<label class="govuk-label" for="housing-location-select">Select sub-location</label>
+					<select id="housing-location-select" name="housing-location-select" class="govuk-select">
+						<option value="--">All</option>
+						<option value="A-Wing">A-Wing</option>
+						<option value="B-Wing">B-Wing</option>
+						<option value="C-Wing">C-Wing</option>
+					</select>
+				</div>
+
+				<div class="govuk-form-group">
+					<label class="govuk-label" for="search-date">
+						Date
+					</label>
+					<input type="text" class="govuk-input" name="search-date" id="search-date" placeholder="Select" readonly="" value="31/10/2022" style="height: 38px;">
+				</div>
+
+				<div class="govuk-form-group">
+					<label class="govuk-label" for="period-select">Choose period</label>
+					<select id="period-select" name="period-select" class="govuk-select">
+						<option value="AM">Morning (AM)</option>
+						<option value="PM">Afternoon (PM)</option>
+						<option value="ED">Evening (ED)</option>
+					</select>
+				</div>
+
+				<div class="govuk-form-group">
+					<label class="govuk-label" for="period-select">Staying or leaving wing</label>
+					<select id="staying-leaving-select" name="staying-leaving-select" class="govuk-select">
+						<option value="all">All</option>
+						<option value="staying">Staying</option>
+						<option value="leaving">Leaving</option>
+					</select>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="govuk-grid-column-one-quarter">
+		<span class="sc-eDvSVe gxwuQD">Prisoners listed:</span> <span name="total-number">96</span>
+		<span class="sc-eDvSVe gxwuQD">Sessions attended:</span> <span name="total-number">0</span>
+	</div>
+
+	<a tabindex="0" role="link" class="sc-bcXHqe cVsHYs pull-right govuk-!-display-none-print" href="">Check for updates to the list</a>
+</div>
+
+<div class="govuk-form-group">
+	<label class="govuk-label" name="sort-select">
+		Order the list
+	</label>
+	<select id="sort-select" class="govuk-select">
+		<option value="lastName_ASC">Name (A-Z)</option>
+		<option value="lastName_DESC">Name (Z-A)</option>
+		<option value="cellLocation_ASC">Location (ascending)</option>
+		<option value="cellLocation_DESC">Location (descending)</option>
+		<option value="activity_ASC">Activity name (A-Z)</option>
+		<option value="activity_DESC">Activity name (Z-A)</option>
+	</select>
+</div>
+
+<table class="govuk-table app-whereabouts-table">
+	<thead class="govuk-table__head">
+		<tr>
+			<th class="govuk-table__cell">
+				Name
+			</th>
+			<th class="govuk-table__cell">
+				Location
+			</th>
+			<th class="govuk-table__cell">
+				Prison number
+			</th>
+			<th class="govuk-table__cell">
+				Relevant alerts
+			</th>
+			<th class="govuk-table__cell">
+				Activities
+			</th>
+			<th class="govuk-table__cell">
+				Other activities
+			</th>
+			<th class="govuk-table__cell">
+				Attendance
+			</th>
+		</tr>
+	</thead>
+	<tbody class="govuk-table__body">
+		{% for row in range(0, 17) %}
+		<tr class="govuk-table__row">
+			<td class="govuk-table__cell">
+				Surnanme, Forename
+			</td>
+			<td class="govuk-table__cell">
+				2-3-014
+			</td>
+			<td class="govuk-table__cell">
+				G9545GV
+			</td>
+			<td class="govuk-table__cell">
+				<div class="alerts"></div>
+			</td>
+			<td class="govuk-table__cell">
+				13:15 - Waste Management PM
+			</td>
+			<td class="govuk-table__cell">
+				<ul></ul>
+			</td>
+			<td class="govuk-table__cell">
+				<div class="govuk-radios__item">
+					<input class="govuk-radios__input" id="where-do-you-live" name="where-do-you-live" type="radio" value="england">
+					<label class="govuk-label govuk-radios__label" for="where-do-you-live"></label>
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+<div class="padding-top">
+	<div id="buttons" class="pure-u-md-12-12 padding-bottom">
+		<div id="buttons" class="buttons pull-right"><a id="printButton" data-test="print-button" class="sc-bcXHqe sc-ipEyDJ cVsHYs cQzbjF">Print this page</a></div>
+	</div>
+</div>
+{% endblock %}
+{% block pageScripts %}
+<script src="/public/javascripts/cards.js"></script>
+{% endblock %}
