@@ -488,8 +488,6 @@ router.post(version +'/allocate/allocate-remove-offender', function(req, res) {
 
 
 
-
-
 //Offender dashbaord allocations
 
 router.post(version +'/allocate/Dashboard4', function(req, res) {
@@ -497,6 +495,24 @@ router.post(version +'/allocate/Dashboard4', function(req, res) {
 		res.redirect(version +'/allocate/activity-dashboard-5-1')
 	}
 });
+
+router.post(version +'/allocate/activity-dashboard-5-1', function(req, res) {
+	{
+		res.redirect(version +'/allocate/allocate-payment-details')
+	}
+});
+
+router.post(version +'/allocate/allocate-payment-details', function(req, res) {
+	{
+		res.redirect(version +'/allocate/allocate-check-answers')
+	}
+});
+router.post(version +'/allocate/allocate-check-answers', function(req, res) {
+	{
+		res.redirect(version +'/allocate/allocate-confirmation')
+	}
+});
+
 
 
 
