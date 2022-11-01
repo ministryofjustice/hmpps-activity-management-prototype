@@ -1,0 +1,44 @@
+{%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{#- If an id 'prefix' is not passed, fall back to using the name attribute
+   instead. We need this for error messages and hints as well -#}
+{%- set idPrefix = params.idPrefix if params.idPrefix else params.name -%}
+
+{%- if params.filter %}
+{%- set filter %}
+<label for="{{ idPrefix + '-option-select__filter-input' }}" class="govuk-label govuk-visually-hidden">
+  {{- params.filter.html | safe if params.filter.html else params.filter.text -}}
+</label>
+<input name="option-select-filter" id="{{ idPrefix + '-option-select__filter-input' }}" class="govuk-pub-option-select__filter-input govuk-input" type="text" aria-describedby="{{ idPrefix + '-checkboxes-count' }}" aria-controls="{{ idPrefix + '-checkboxes' }}">
+{% endset -%}
+{#- This is a little bit of a hack. Surely the `escape` filter should work -#}
+{%- set filter = filter | replace('<','&lt;') | replace('>','&gt;') | replace('"','&quot;') -%}
+{% endif -%}
+
+<div id="{{ idPrefix }}" class="govuk-pub-option-select {{- ' ' + params.classes if params.classes }}" data-module="option-select" data-closed-on-load="{{ params.closedOnLoad | default('false') }}" {%- if params.filter %} data-filter-element="{{ filter }}"{% endif %} {%- for attribute, value in params.attributes %} {{ attribute }}="{{ value }}"{% endfor %}>
+  
+  <h2 class="govuk-pub-option-select__heading js-container-heading">
+    <span class="govuk-pub-option-select__title js-container-button" id="{{ idPrefix + '-option-select-title' }}">
+      {{- params.heading.html | safe if params.heading.html else params.heading.text -}}
+    </span>    
+    <svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="govuk-pub-option-select__icon govuk-pub-option-select__icon--up" aria-hidden="true" focusable="false"><path d="m798.16 609.84l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.84-225.84 225.84 225.84c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path></svg>
+    <svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="govuk-pub-option-select__icon govuk-pub-option-select__icon--down" aria-hidden="true" focusable="false"><path d="m225.84 414.16l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.84 225.84-225.84-225.84c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path></svg>
+  </h2>
+
+  <div role="group" aria-labelledby="{{ idPrefix + '-option-select-title' }}" class="govuk-pub-option-select__container js-options-container" id="{{ idPrefix + '-list-of-options' }}" tabindex="-1">
+    <div class="govuk-pub-option-select__container-inner js-auto-height-inner">
+      
+      {{ govukCheckboxes({
+        idPrefix: params.idPrefix,
+        name: params.name,
+        fieldset: params.fieldset,
+        hint: params.hint,
+        errorMessage: params.errorMessage,
+        items: params.items,
+        classes: "govuk-checkboxes--small"
+      }) }}
+      
+    </div>
+  </div>
+  
+</div>
