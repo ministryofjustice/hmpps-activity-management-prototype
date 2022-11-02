@@ -1,0 +1,86 @@
+{% from "govuk/components/button/macro.njk"              import govukButton %}
+{% from "govuk/components/checkboxes/macro.njk"          import govukCheckboxes %}
+{% from "govuk/components/fieldset/macro.njk"            import govukFieldset %}
+{% from "govuk/components/input/macro.njk"               import govukInput %}
+{% from "govuk/components/radios/macro.njk"              import govukRadios %}
+{% from "govuk/components/textarea/macro.njk"            import govukTextarea %}
+
+<div id="attendance-modal" class="modal">
+	<form>
+		{{ govukRadios({
+			name: "attend",
+			classes: "govuk-radios--inline",
+			fieldset: {
+				legend: {
+					text: "Did Giancarlo Biaz attend?",
+					classes: "govuk-fieldset__legend--m"
+				}
+			},
+			items: [
+			{
+				value: "yes",
+				text: "Yes"
+			},
+			{
+				value: "no",
+				text: "No"
+			}
+			]
+		}) }}
+
+		{{ govukRadios({
+			name: "pay",
+			classes: "govuk-radios--inline",
+			fieldset: {
+				legend: {
+					text: "Do you want to pay Giancarlo Biaz?",
+					classes: "govuk-fieldset__legend--m"
+				}
+			},
+			items: [
+			{
+				value: "yes",
+				text: "Yes"
+			},
+			{
+				value: "no",
+				text: "No"
+			}
+			]
+		}) }}
+
+		{{ govukTextarea({
+			name: "more-detail",
+			id: "more-detail",
+			label: {
+				text: "Enter more details"
+			}
+		}) }}
+
+		<div class="govuk-button-group">
+			{{govukButton({
+				text: "Confirm",
+				href: "#",
+				attributes: {
+					disabled: true
+				}
+			})}}
+
+			{{govukButton({
+				text: "Cancel",
+				href: "#",
+				attributes: {
+					rel: "modal:close"
+				},
+				classes: "govuk-button--secondary"
+			})}}
+		</div>
+	</form>
+
+	<!-- <div class="app-modal-bar app-modal-bar--bottom">
+		{{ govukButton({
+			text: "Remove attendance details",
+			classes: "govuk-button--warning govuk-!-margin-bottom-0"
+		}) }}
+	</div> -->
+</div>
