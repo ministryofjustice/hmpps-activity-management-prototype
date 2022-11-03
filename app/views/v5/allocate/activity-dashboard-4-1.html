@@ -12,79 +12,13 @@ Activities Management prototype
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
       Identify candidates for Wing cleaning 1
     </h1>
-  </div><br />
-<div class="moj-primary-navigation">
-  <div class="moj-primary-navigation__container">
-    <div class="moj-primary-navigation__nav">
-      <nav class="moj-primary-navigation" aria-label="Primary navigation">
-        <ul class="moj-primary-navigation__list">
-          <ul class="moj-sub-navigation__list" >
-            <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" aria-current="page" href="#">Wing cleaning 1</a>
-            </li>
-            <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" href="activity-dashboard-3">All Wing cleaning</a>
-            </li>
-        </ul>
-      </nav>
-    </div>
-    <div class="moj-primary-navigation__search">
-      <div class="moj-search-toggle" data-module="moj-search-toggle" data-moj-search-toggle-text="Search for activity">
-        <div class="moj-search-toggle__toggle"></div>
-        <div class="moj-search-toggle__search">
-          <div class="moj-search moj-search--ondark moj-search--toggle moj-js-hidden">
-            <form action="searchAllocationDashboard" method="post">
-              <div class="govuk-form-group">
-                <label class="govuk-label moj-search__label govuk-visually-hidden" for="search2">
-                  Search
-                </label>
-                <div id="search2-hint" class="govuk-hint moj-search__hint ">
-                  <span style="font-size:.85em;">Enter activity, location, or try <a href="allocate-offender-dashboard-search-view">Advanced search</a></span>
-                  <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                      </legend>
-                      <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                          <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
-                          <label class="govuk-label govuk-checkboxes__label" for="organisation">
-                            <span style="font-size:.85em;" class="govuk-hint moj-search__hint ">Only search in activities with vacancies</span>
-                          </label>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </div>
-                </div>
-                <input class="govuk-input moj-search__input " id="search2" name="search2" type="search" aria-describedby="search2-hint">
-              </div>
-              <form method="post" action="">
-              <button class="govuk-button moj-search__button " data-module="govuk-button">
-                Search
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
-</div>
-<br /><br />
 
 
 
 
 <div class="govuk-grid-column-three-third">
-<h2 class="govuk-heading-m govuk-!-margin-bottom-4">
-  Wing cleaning 1 <span style="margin-left:30px;">
-    <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
-      {% if (data.LanceArm != 'NotAllocated')%}
-        <span>1 </span><span style="text-transform:lowercase">vacancy</span>
-      {% else %}
-        <span>2 </span><span style="text-transform:lowercase">vacancies</span>
-      {% endif %}
-    </strong>
-  </span>
-</h2>
+
 <div class="govuk-tabs" data-module="govuk-tabs">
 <h2 class="govuk-tabs__title">
   Contents
@@ -98,6 +32,14 @@ Activities Management prototype
   <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
     <a class="govuk-tabs__tab" href="#allocate">
       Identify candidates
+      <strong class="govuk-tag govuk-tag--red" style="margin-left:15px;">
+        {% if (data.LanceArm != 'NotAllocated')%}
+          <span>1 </span><span style="text-transform:lowercase">vacancy</span>
+        {% else %}
+          <span>2 </span><span style="text-transform:lowercase">vacancies</span>
+        {% endif %}
+      </strong>
+
     </a>
   </li>
   <li class="govuk-tabs__list-item">
@@ -115,7 +57,7 @@ Activities Management prototype
 
 
 <div class="govuk-tabs__panel" id="schedule">
-  <h2 class="govuk-heading-m">Wing cleaning 1 schedule</h2><p>Check the schedule is compatible with the candidate's current allocations if they have any.</p>
+  <h2 class="govuk-heading-m">Wing cleaning 1 schedule</h2><p>Check the schedule is compatible with the candidate's current allocations if they have any. </p>
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
@@ -181,14 +123,14 @@ Activities Management prototype
 <!--allocate-->
 
 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocated">
-  <h2 class="govuk-heading-m">People allocated now</h2><p>Review the list of people currently allocated to identify any non-associations or other risks.</p>
+  <h2 class="govuk-heading-m">People allocated now</h2><p>Review the list of people currently allocated to identify any non-associations or other risks. You can also remove someone from the activity by selecting their name.</p>
 
 <form method="post" action="AllocateRemove">
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
 
-        <th scope="col" class="govuk-table__header" style="width:15%;">Prisoner name</th>
+        <th scope="col" class="govuk-table__header" style="width:15%;">Name</th>
         <th scope="col" class="govuk-table__header" style="width:15%;">Prison number</th>
         <th scope="col" class="govuk-table__header" style="width:15%;">Location</th>
         <th scope="col" class="govuk-table__header" style="width:15%;">Allocation</th>
@@ -453,32 +395,26 @@ Activities Management prototype
 </form>
 </div>
 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocate">
-  <h2 class="govuk-heading-m">Identify candidates</h2><p>Check each candidate's suitability for Wing cleaning 1. Click the 'Show or hide filters' link below to use filters to help identify the best match.</p>
-<span>
-  <div style="background-color:#f1f1f1;">
+  <h2 class="govuk-heading-m">Identify candidates</h2><p>Check each candidate's suitability for Wing cleaning 1. Apply filters to narrow down the number of candidates.</p>
+
+  <div>
+
+  <details class="hods-expandable-banner" style="background-color:#f1f1f1; margin:0 0px 15px 10px;">
+<summary class="hods-expandable-banner__summary" style="color:#00008B; font-size:1.2em; font-family:GDS Transport, arial, sans-serif;" >
+  Advanced search and filter options
+</summary><br />
+<div class="hods-expandable-banner__text" style="background-color:#f1f1f1; padding:0px 0 0 15px;">
+</div>
 <div class="govuk-form-group" style="background-color:#f1f1f1; margin:5px 0px 15px 10px;">
   <h2 class="govuk-label-wrapper"><label class="govuk-label govuk-label--s" for="event-name">
-      Search by name or prison ID or use the filters to narrow down your list of candidates:
+      Search by name or prison ID:
     </label>
   </h2>
-  <input class="govuk-input govuk-!-width-two-thirds" id="event-name" name="event-name" type="text" >
+  <input class="govuk-input govuk-input--width-20" id="event-name" name="event-name" type="text" >
   <button class="govuk-button" data-module="govuk-button" style="margin-left:-4px;">
   Search
   </button>
 
-
-
-
-
-</div>
-</span>
-  <details class="hods-expandable-banner" style="background-color:#f1f1f1; margin:0 0px 15px 10px;">
-<summary class="hods-expandable-banner__summary" style="color:#00008B; font-size:1.2em; font-family:GDS Transport, arial, sans-serif; margin:-30px 0px 15px 10px;">
-  Advanced search and filter options
-</summary><br />
-
-
-<div class="hods-expandable-banner__text" style="background-color:#f1f1f1; padding:0px 0 0 15px;">
 </div>
   <div style="height:350px; width:100%; padding:10px 0 0 10px; ">
   <div class="govuk-form-group" >
@@ -692,13 +628,13 @@ Activities Management prototype
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
 
-        <th scope="col" class="govuk-table__header" style="width:13%;">Prisoner name</th>
+        <th scope="col" class="govuk-table__header" style="width:16%;">Name</th>
         <th scope="col" class="govuk-table__header" style="width:14%;">Prison number</th>
         <th scope="col" class="govuk-table__header" style="width:10%;">Location</th>
-        <th scope="col" class="govuk-table__header" style="width:15%;">Allocation</th>
+        <th scope="col" class="govuk-table__header" style="width:18%;">Allocation</th>
         <th scope="col" class="govuk-table__header" style="width:18%;">Earliest release date</th>
         <th scope="col" class="govuk-table__header" style="width:15%;">Application date</th>
-        <th scope="col" class="govuk-table__header" style="width:25%;">Select</th>
+        <th scope="col" class="govuk-table__header" style="width:5%;"></th>
 
       </tr>
     </thead>
@@ -727,7 +663,7 @@ Activities Management prototype
             <input type="hidden" name="offenderIDAllocate" value="A9121FA" />
           <a href="activity-dashboard-5-1">
           <button class="govuk-button" data-module="govuk-button" style="font-size:.95em; margin-bottom:-20px;"">
-          Review candidate
+          Select
           </button>
           </form>
 
@@ -744,6 +680,21 @@ Activities Management prototype
             <dl class="govuk-summary-list govuk-summary-list--no-border">
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
+                  Non-associations
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <strong class="govuk-tag govuk-tag--orange">L<span style="text-transform:lowercase;">ance</span> A<span style="text-transform:lowercase;">rm</span>, A4509GH</strong>
+                  <strong class="govuk-tag govuk-tag--orange" style="margin-left:10px;">S<span style="text-transform:lowercase;">teve</span> S<span style="text-transform:lowercase;">panner</span>, A4509GH</strong>
+
+                </dd>
+
+              </div>
+            </dl>
+
+
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
 
                 </dt>
                 <dd class="govuk-summary-list__value">
@@ -753,9 +704,12 @@ Activities Management prototype
                   <strong>Activity requirements</strong>
                 </dd>
                 <dd class="govuk-summary-list__value">
-                  <strong>Match or mismatch</strong>
+                  <strong>Mismatch</strong>
                 </dd>
               </div>
+
+
+
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Incentive level
@@ -766,6 +720,12 @@ Activities Management prototype
                 <dd class="govuk-summary-list__value">
                   Standard
                 </dd>
+                <dd class="govuk-summary-list__value">
+                  <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</span> </strong>
+                </dd>
+
+
+
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -799,6 +759,9 @@ Activities Management prototype
                 </dd>
                 <dd class="govuk-summary-list__value">
                   Cleaning
+                </dd>
+                <dd class="govuk-summary-list__value">
+                  <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</span> </strong>
                 </dd>
               </div>
               <div class="govuk-summary-list__row">
@@ -836,7 +799,7 @@ Activities Management prototype
         <td>
                 <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
                 <label class="govuk-label govuk-checkboxes__label" for="organisation">
-                Steven Seagul
+                Ivor Norisk
                 </label>
             </td>
             <td class="">A9121FA</td>
@@ -844,16 +807,17 @@ Activities Management prototype
             <td class="">Maths Level 2</td>
             <td class="">2 Jan 2023</td>
             <td class="">N/A</td>
-            <form method="post" action="Dashboard4">
+
             <td class="">
               <input type="hidden" name="activityAllocateName" value="Wing cleaning 1" />
-              <input type="hidden" name="offenderAllocate" value="Steven Segul" />
+              <input type="hidden" name="offenderAllocate" value="Ivor Norisk" />
               <input type="hidden" name="offenderIDAllocate" value="A9121FA" />
-              <a href="activity-dashboard-5-1">
+              <a href="allocate-payment-details">
               <button class="govuk-button" data-module="govuk-button" style="font-size:.95em; margin-bottom:-20px;"">
-              Review candidate
+              Select
               </button>
-              </form>
+              </a>
+
             </td>
             </tr>
             <tr>
@@ -894,7 +858,7 @@ Activities Management prototype
                       Maths Level 1
                     </dd>
                     <dd class="govuk-summary-list__value">
-                      None
+                      Maths Level 1
                     </dd>
                   </div>
                   <div class="govuk-summary-list__row">
@@ -902,7 +866,7 @@ Activities Management prototype
                       Technical qualifications
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      Maintenance foundation skills
+                      Wing cleaning
                     </dd>
                     <dd class="govuk-summary-list__value">
                       None
@@ -914,7 +878,7 @@ Activities Management prototype
                     Learning pathways
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      Maintenance
+                      Cleaning
                     </dd>
                     <dd class="govuk-summary-list__value">
                       Cleaning
@@ -925,8 +889,7 @@ Activities Management prototype
                       Alerts
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      Racist,<br />
-                      Arsonist<br />
+                      None
                     </dd>
                     <dd class="govuk-summary-list__value">
                       None
@@ -934,11 +897,10 @@ Activities Management prototype
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
-                      Learning difficulties, <br />disabilities and health
+                      None
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      Asthma,<br />
-                      Dyslexia
+                      None
                     </dd>
                     <dd class="govuk-summary-list__value">
                       None
@@ -970,7 +932,7 @@ Activities Management prototype
                 <input type="hidden" name="offenderIDAllocate" value="A1291AZ" />
               <a href="activity-dashboard-5-1">
               <button class="govuk-button" data-module="govuk-button" style="font-size:.95em; margin-bottom:-20px;"">
-              Review candidate
+              Select
               </button>
               </form>
             </td>
@@ -1072,11 +1034,10 @@ Activities Management prototype
 
 
     <tr class="govuk-table__row">
-      <td>
-              <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
-              <label class="govuk-label govuk-checkboxes__label" for="organisation">
-              Lionel Messer
-              </label>
+        <td>
+          <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+          <label class="govuk-label govuk-checkboxes__label" for="organisation">Lionel Messer
+          </label>
           </td>
           <td class="">A7716WS</td>
           <td class="">2-4-032</td>
@@ -1091,7 +1052,7 @@ Activities Management prototype
 
             <a href="activity-dashboard-5-1">
             <button class="govuk-button" data-module="govuk-button" style="font-size:.95em; margin-bottom:-20px;"">
-            Review candidate
+            Select
             </button>
             </form>
           </td>
