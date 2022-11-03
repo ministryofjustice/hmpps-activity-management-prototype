@@ -39,5 +39,33 @@ $govuk-assets-path: '/govuk/assets/';
 @import "unlock-print";
 
 .form-background {
-    background-color: #f3f2f1;
+  background-color: #f3f2f1;
+}
+
+.app-unlock-list {
+  .moj-filter-layout__filter {
+
+    @include govuk-media-query(desktop) {
+      max-width: 285px;
+      min-width: 260px;
+    }
+  }
+}
+
+.govuk-tag--filter {
+  $colour: govuk-shade(govuk-colour("black"), 50);
+  color: $colour;
+  background: govuk-tint(govuk-colour("dark-grey", $legacy: "grey-1"), 90);
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: normal;
+  padding: govuk-spacing(2);
+  border: 1px solid $colour;
+  border-radius: 4px;
+
+  &:before {
+    content: "✕";
+    margin-right: govuk-spacing(1);
+    font-weight: bold;
+  }
 }

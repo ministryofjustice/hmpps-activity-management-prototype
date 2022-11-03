@@ -1,0 +1,201 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts-concept-2"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+<main class="govuk-main-wrapper " id="main-content" role="main">
+	<h1 class="govuk-heading-l">Prisoner lists</h1>
+	<form action="/manage-prisoner-whereabouts/select-location" method="POST">
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-one-third">
+				<div class="govuk-grid-row">
+					<div class="govuk-grid-column-one-half">
+						<div class="date-picker-container ">
+							<div class="govuk-form-group">
+								<label class="govuk-label govuk-!-font-weight-bold" for="date">
+									Date
+								</label>
+								<input class="govuk-input date-input undefined hasDatepicker" id="date" name="date" type="text" value="31/10/2022" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
+							</div>
+						</div>
+					</div>
+					<div class="govuk-grid-column-one-half">
+						<div class="govuk-form-group">
+							<label class="govuk-label govuk-!-font-weight-bold" for="period">
+								Period
+							</label>
+							<select class="govuk-select" id="period" name="period">
+								<option value="">Select</option>
+								<option value="AM">Morning (AM)</option>
+								<option value="PM" selected="">Afternoon (PM)</option>
+								<option value="ED">Evening (ED)</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-two-thirds">
+				{% set activityHtml %}
+				<div class="govuk-form-group">
+					<label class="govuk-label govuk-!-font-weight-bold" for="current-location">
+						Select an activity
+					</label>
+					<div id="current-location-hint" class="govuk-hint">
+						Not all activities will show in this list. You’ll only see the activities happening at this time.
+					</div>
+					<select class="govuk-select" id="current-location" name="currentLocation" aria-describedby="current-location-hint">
+						<option value="" selected="">--Select--</option>
+						<option value="721771">Activity Hub List</option>
+						<option value="27187">Adj</option>
+						<option value="27219">Cardio</option>
+						<option value="26152">Chapel</option>
+						<option value="197683">Exercise</option>
+						<option value="26999">Farms/gardens</option>
+						<option value="26149">Gym</option>
+						<option value="27233">Gym Orderly</option>
+						<option value="26145">Health Care</option>
+						<option value="721768">Houseblock 1 Workers</option>
+						<option value="721767">Houseblock 2 Workers</option>
+						<option value="721766">Houseblock 3 Workers</option>
+						<option value="721765">Houseblock 4 Workers</option>
+						<option value="721764">Houseblock 5 Workers</option>
+						<option value="721763">Houseblock 6 Workers</option>
+						<option value="721769">Houseblock 7 Workers</option>
+						<option value="357595">Interview Room</option>
+						<option value="27002">Kitchen - Closed Until 30.7.2019</option>
+						<option value="26151">Library</option>
+						<option value="27001">Main/stores</option>
+						<option value="721772">Reception Workers</option>
+						<option value="26141">Res 1 Education</option>
+						<option value="26142">Res 2 Education</option>
+						<option value="721773">Safer Custody</option>
+						<option value="200532">Sports Hall</option>
+						<option value="27004">Workshop 1 - Vt Catering</option>
+						<option value="27020">Workshop 10 - Bricks</option>
+						<option value="27022">Workshop 12 - Furniture Repair</option>
+						<option value="27023">Workshop 13 - Waste Management</option>
+						<option value="27024">Workshop 14 - Yard Party</option>
+						<option value="27025">Workshop 15 - Clothing Exchange Store</option>
+						<option value="27026">Workshop 16 - Joinery</option>
+						<option value="27027">Workshop 17 - DHL</option>
+						<option value="27028">Workshop 18 - Breakfast Packs</option>
+						<option value="27029">Workshop 19 - Braille</option>
+						<option value="27008">Workshop 2</option>
+						<option value="27009">Workshop 3 - Plastics</option>
+						<option value="27010">Workshop 4 - PICTA</option>
+						<option value="27012">Workshop 6 - Painting &amp; Decorating</option>
+						<option value="27018">Workshop 8 - TV Repair</option>
+					</select>
+				</div>
+				{% endset %}
+
+				{% set locationHtml %}
+				<div class="govuk-form-group">
+					<label class="govuk-label govuk-!-font-weight-bold" for="current-location">
+						Select a location
+					</label>
+					<div id="current-location-hint" class="govuk-hint">
+						Not all locations will show in this list. You’ll only see the locations where there are activities or appointments happening at this time.
+					</div>
+					<select class="govuk-select" id="current-location" name="currentLocation" aria-describedby="current-location-hint">
+						<option value="" selected="">--Select--</option>
+						<option value="721771">Activity Hub List</option>
+						<option value="27187">Adj</option>
+						<option value="27219">Cardio</option>
+						<option value="26152">Chapel</option>
+						<option value="197683">Exercise</option>
+						<option value="26999">Farms/gardens</option>
+						<option value="26149">Gym</option>
+						<option value="27233">Gym Orderly</option>
+						<option value="26145">Health Care</option>
+						<option value="721768">Houseblock 1 Workers</option>
+						<option value="721767">Houseblock 2 Workers</option>
+						<option value="721766">Houseblock 3 Workers</option>
+						<option value="721765">Houseblock 4 Workers</option>
+						<option value="721764">Houseblock 5 Workers</option>
+						<option value="721763">Houseblock 6 Workers</option>
+						<option value="721769">Houseblock 7 Workers</option>
+						<option value="357595">Interview Room</option>
+						<option value="27002">Kitchen - Closed Until 30.7.2019</option>
+						<option value="26151">Library</option>
+						<option value="27001">Main/stores</option>
+						<option value="721772">Reception Workers</option>
+						<option value="26141">Res 1 Education</option>
+						<option value="26142">Res 2 Education</option>
+						<option value="721773">Safer Custody</option>
+						<option value="200532">Sports Hall</option>
+						<option value="27004">Workshop 1 - Vt Catering</option>
+						<option value="27020">Workshop 10 - Bricks</option>
+						<option value="27022">Workshop 12 - Furniture Repair</option>
+						<option value="27023">Workshop 13 - Waste Management</option>
+						<option value="27024">Workshop 14 - Yard Party</option>
+						<option value="27025">Workshop 15 - Clothing Exchange Store</option>
+						<option value="27026">Workshop 16 - Joinery</option>
+						<option value="27027">Workshop 17 - DHL</option>
+						<option value="27028">Workshop 18 - Breakfast Packs</option>
+						<option value="27029">Workshop 19 - Braille</option>
+						<option value="27008">Workshop 2</option>
+						<option value="27009">Workshop 3 - Plastics</option>
+						<option value="27010">Workshop 4 - PICTA</option>
+						<option value="27012">Workshop 6 - Painting &amp; Decorating</option>
+						<option value="27018">Workshop 8 - TV Repair</option>
+					</select>
+				</div>
+				{% endset %}
+
+				{{ govukRadios({
+					name: "where-do-you-live",
+					fieldset: {
+						legend: {
+							text: "View prisoners by activity or location?",
+							classes: "govuk-fieldset__legend--s"
+						}
+					},
+					items: [
+					{
+						value: "england",
+						text: "Activity",
+						conditional: {
+							html: activityHtml
+						}
+					},
+					{
+						value: "abroad",
+						text: "Location",
+						conditional: {
+							html: locationHtml
+						}
+					}
+					]
+				}) }}
+
+				<button type="submit" class="govuk-button" data-module="govuk-button">
+					Continue
+				</button>
+			</div>
+		</div>
+	</form>
+</main>
+{% endblock %}
