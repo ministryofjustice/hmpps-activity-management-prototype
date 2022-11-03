@@ -24,7 +24,7 @@ Activities Management prototype
 {% block content %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-three-quarters">
-		<h1 class="govuk-heading-xl">
+		<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
 			Houseblock A - All
 			<span class="govuk-caption-l">Monday 31st October - PM</span>
 		</h1>
@@ -35,120 +35,123 @@ Activities Management prototype
 		</p>
 	</div>
 </div>
-<div class="govuk-grid-row">
-	<div class="govuk-grid-column-one-quarter">
-		{%- from "moj/components/filter/macro.njk" import mojFilter -%}
-		{%- set filterOptionsHtml %}
-<!-- {{ govukInput({
-			id: 'keywords',
-			name: 'keywords',
-			label: {
-				text: 'Keywords',
-				classes: 'govuk-label--m'
-			}
-		}) }} -->
-		{{ govukCheckboxes({
-			idPrefix: 'type',
-			name: 'type',
-			classes: "govuk-checkboxes--small",
-			fieldset: {
-				legend: {
-					text: 'Activity',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			items: [
-			{
-				value: '1',
-				text: '08:15 - D WING PID FT',
-				checked: true
-			},
-			{
-				value: '2',
-				text: '08:15 - AM AWAITING ALLOCATION',
-				checked: true
-			},
-			{
-				value: '3',
-				text: '08:15 - A WING AM CLEANER'
-			}
-			]
-		}) }}
-		{{ govukCheckboxes({
-			idPrefix: 'status',
-			name: 'status',
-			classes: "govuk-checkboxes--small",
-			fieldset: {
-				legend: {
-					text: 'Attendance',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			items: [
-			{
-				value: 'complete',
-				text: 'Attended'
-			},
-			{
-				value: 'incomplete',
-				text: 'Not attended'
-			},
-			{
-				value: 'inprogress',
-				text: 'Unaccounted for',
-				checked: true
-			}
-			]
-		}) }}
-		{{ govukCheckboxes({
-			idPrefix: 'status',
-			name: 'status',
-			classes: "govuk-checkboxes--small",
-			fieldset: {
-				legend: {
-					text: 'Sub-location',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			items: [
-			{
-				value: 'complete',
-				text: 'Landing 1',
-				checked: true
-			},
-			{
-				value: 'incomplete',
-				text: 'Landing 2'
-			},
-			{
-				value: 'inprogress',
-				text: 'Landing 3',
-				checked: false
-			}
-			]
-		}) }}
-		{{ govukCheckboxes({
-			idPrefix: 'status',
-			name: 'status',
-			classes: "govuk-checkboxes--small",
-			fieldset: {
-				legend: {
-					text: 'Staying or leaving wing',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			items: [
-			{
-				value: 'complete',
-				text: 'Staying'
-			},
-			{
-				value: 'incomplete',
-				text: 'Leaving'
-			}
-			]
-		}) }}
-		{% endset -%}
+
+{%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
+{%- from "moj/components/filter/macro.njk" import mojFilter -%}
+{%- set filterOptionsHtml %}
+{{ govukInput({
+	id: 'keywords',
+	name: 'keywords',
+	label: {
+		text: 'Keywords',
+		classes: 'govuk-label--m'
+	}
+}) }}
+{{ govukCheckboxes({
+	idPrefix: 'type',
+	name: 'type',
+	classes: "govuk-checkboxes--small",
+	fieldset: {
+		legend: {
+			text: 'Activity',
+			classes: 'govuk-fieldset__legend--m'
+		}
+	},
+	items: [
+	{
+		value: '1',
+		text: '08:15 - D WING PID FT',
+		checked: true
+	},
+	{
+		value: '2',
+		text: '08:15 - AM AWAITING ALLOCATION',
+		checked: true
+	},
+	{
+		value: '3',
+		text: '08:15 - A WING AM CLEANER'
+	}
+	]
+}) }}
+{{ govukCheckboxes({
+	idPrefix: 'status',
+	name: 'status',
+	classes: "govuk-checkboxes--small",
+	fieldset: {
+		legend: {
+			text: 'Attendance',
+			classes: 'govuk-fieldset__legend--m'
+		}
+	},
+	items: [
+	{
+		value: 'complete',
+		text: 'Attended'
+	},
+	{
+		value: 'incomplete',
+		text: 'Not attended'
+	},
+	{
+		value: 'inprogress',
+		text: 'Unaccounted for',
+		checked: true
+	}
+	]
+}) }}
+{{ govukCheckboxes({
+	idPrefix: 'status',
+	name: 'status',
+	classes: "govuk-checkboxes--small",
+	fieldset: {
+		legend: {
+			text: 'Sub-location',
+			classes: 'govuk-fieldset__legend--m'
+		}
+	},
+	items: [
+	{
+		value: 'complete',
+		text: 'Landing 1',
+		checked: true
+	},
+	{
+		value: 'incomplete',
+		text: 'Landing 2'
+	},
+	{
+		value: 'inprogress',
+		text: 'Landing 3',
+		checked: false
+	}
+	]
+}) }}
+{{ govukCheckboxes({
+	idPrefix: 'status',
+	name: 'status',
+	classes: "govuk-checkboxes--small",
+	fieldset: {
+		legend: {
+			text: 'Staying or leaving wing',
+			classes: 'govuk-fieldset__legend--m'
+		}
+	},
+	items: [
+	{
+		value: 'complete',
+		text: 'Staying'
+	},
+	{
+		value: 'incomplete',
+		text: 'Leaving'
+	}
+	]
+}) }}
+{% endset -%}
+
+<div class="moj-filter-layout app-unlock-list">
+	<div class="moj-filter-layout__filter">
 		{{ mojFilter({
 			heading: {
 				text: 'Filter'
@@ -187,37 +190,64 @@ Activities Management prototype
 			optionsHtml: filterOptionsHtml
 		}) }}
 	</div>
-	<div class="govuk-grid-column-three-quarters">
-		<div class="govuk-grid-row">
-			<div class="govuk-grid-column-three-quarters">
-				<p class="govuk-body-l govuk-!-font-weight-bold">23 prisoners</p>
-				<div class="govuk-form-group">
-					<label class="govuk-label" name="sort-select">
-						Order the list
-					</label>
-					<select id="sort-select" class="govuk-select">
-						<option value="lastName_ASC">Name (A-Z)</option>
-						<option value="lastName_DESC">Name (Z-A)</option>
-						<option value="cellLocation_ASC">Location (ascending)</option>
-						<option value="cellLocation_DESC">Location (descending)</option>
-						<option value="activity_ASC">Activity name (A-Z)</option>
-						<option value="activity_DESC">Activity name (Z-A)</option>
-					</select>
-				</div>
+
+	<div class="moj-filter-layout__content">
+		<div class="moj-action-bar">
+			<div class="moj-action-bar__filter"></div>
+			{{ mojButtonMenu({
+				classes: "govuk-!-margin-top-5",
+				items: [{
+					attributes: {
+						id: "multi-attendance-btn",
+						"data-modal": "#attendance-modal",
+						"data-href": "modal-bulk"
+					},
+					text: "Quick attendance",
+					classes: "govuk-button--secondary"
+				},
+				{
+					text: 'Another action',
+					classes: 'govuk-button--secondary'
+				}]
+			}) }}
+		</div>
+
+		<div style="text-align: right;">
+			<div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-margin-bottom-0" style="text-align: left">
+				<label class="govuk-label" name="sort-select">
+					Order by
+				</label>
+				<select id="sort-select" class="govuk-select">
+					<option value="lastName_ASC">Name (A-Z)</option>
+					<option value="lastName_DESC">Name (Z-A)</option>
+					<option value="cellLocation_ASC">Location (ascending)</option>
+					<option value="cellLocation_DESC">Location (descending)</option>
+					<option value="activity_ASC">Activity name (A-Z)</option>
+					<option value="activity_DESC">Activity name (Z-A)</option>
+				</select>
+			</div>
+			<div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-margin-bottom-0" style="text-align: left">
+				<label class="govuk-label">
+					Group by
+				</label>
+				<select class="govuk-select" id="group-by" name="select-grouping">
+					<option value="ungrouped" selected>No grouping</option>
+					<option value="sublocation">Sublocation</option>
+					<option value="activity">Activity</option>
+				</select>
 			</div>
 		</div>
-		<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-		<table class="govuk-table app-whereabouts-table">
+
+		<h2 class="govuk-heading-m govuk-!-margin-top-0">23 prisoners</h2>
+		<table class="govuk-table app-whereabouts-table" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
 			<thead class="govuk-table__head">
 				<tr>
+					<th class="govuk-table__header" scope="col" id="select-all"></th>
 					<th class="govuk-table__cell">
 						<a href="#">Name</a>
 					</th>
 					<th class="govuk-table__cell">
 						<a href="#">Location</a>
-					</th>
-					<th class="govuk-table__cell">
-						Prison number
 					</th>
 					<th class="govuk-table__cell">
 						Relevant alerts
@@ -234,203 +264,80 @@ Activities Management prototype
 				</tr>
 			</thead>
 			<tbody class="govuk-table__body">
-				{% for row in range(0, 17) %}
+				{% for row in range(0, 23) %}
 				<tr class="govuk-table__row">
+					<td class="govuk-table__cell">
+						<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+							<input type="checkbox" class="govuk-checkboxes__input" id="mountain-aconcagua">
+							<label class="govuk-label govuk-checkboxes__label" for="mountain-aconcagua">
+								<span class="govuk-visually-hidden">Select Surname, Forename</span>
+							</label>
+						</div>
+					</td>
 					<td class="govuk-table__cell" width="180">
-						<b>Surname</b>, Forename
+						<b>Surname</b>, Forename<br>
+						<span class="govuk-hint govuk-!-font-size-16">G9545GV</span>
 					</td>
 					<td class="govuk-table__cell">
 						2-3-014
 					</td>
 					<td class="govuk-table__cell">
-						G9545GV
-					</td>
-					<td class="govuk-table__cell">
 						<div class="alerts"></div>
 					</td>
 					<td class="govuk-table__cell">
-						13:15 - Waste Management PM
+						{% if loop.index == 4 or loop.index == 5 or loop.index == 12 %}
+						D WING PID FT
+						{% elif loop.index == 7 or loop.index == 9 %}
+						AM AWAITING ALLOCATION
+						{% else %}
+						A WING AM CLEANER
+						{% endif %}
+						<br>
+						<span class="govuk-hint govuk-!-font-size-16">08:15&thinsp;–&thinsp;10:45</span>
 					</td>
 					<td class="govuk-table__cell">
 						<ul></ul>
 					</td>
 					<td class="govuk-table__cell">
-						<a href="#">Record attendance</a>
+						{% if loop.index == 2 %}
+						<a href="modal-attended" class="govuk-link--no-visited-state" data-modal>Refused to attend</a>
+						{% else %}
+						<a href="modal-empty" class="govuk-link--no-visited-state govuk-button govuk-!-margin-bottom-0 govuk-!-font-size-16" data-modal>Add</a>
+						{% endif %}
 					</td>
 				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+
+
 		<div class="padding-top">
 			<div id="buttons" class="pure-u-md-12-12 padding-bottom">
 				<div id="buttons" class="buttons pull-right"><a id="printButton" data-test="print-button" class="sc-bcXHqe sc-ipEyDJ cVsHYs cQzbjF">Print this page</a></div>
 			</div>
 		</div>
-		{% endblock %}
-		{% block pageScripts %}
-		<script type="text/javascript">
-			window.GOVUK = window.GOVUK || {};
-			window.GOVUK.Modules = window.GOVUK.Modules || {};
+	</div>
+</div>
+{% endblock %}
 
-			(function(Modules) {
-        /* This JavaScript provides two functional enhancements to option-select components:
-          1) A count that shows how many results have been checked in the option-container
-          2) Open/closing of the list of checkboxes
-          */
-          function OptionSelect($module) {
-          	this.$optionSelect = $module;
-          	this.$options = this.$optionSelect.querySelectorAll(
-          		"input[type='checkbox']"
-          		);
-          	this.$optionsContainer = this.$optionSelect.querySelector(
-          		".js-options-container"
-          		);
-          	this.$optionList = this.$optionsContainer.querySelector(
-          		".js-auto-height-inner"
-          		);
-          	this.$allCheckboxes = this.$optionsContainer.querySelectorAll(
-          		".govuk-checkboxes__item"
-          		);
-
-          	this.checkedCheckboxes = [];
-          }
-
-          OptionSelect.prototype.init = function() {
-            // Replace div.container-head with a button
-            this.replaceHeadingSpanWithButton();
-
-            // Add js-collapsible class to parent for CSS
-            this.$optionSelect.classList.add("js-collapsible");
-
-            // Add open/close listeners
-            var button = this.$optionSelect.querySelector(".js-container-button");
-            button.addEventListener("click", this.toggleOptionSelect.bind(this));
-
-            var closedOnLoad = this.$optionSelect.getAttribute("data-closed-on-load");
-            if (closedOnLoad === "true") {
-            	this.close();
-            }
-        };
-
-        OptionSelect.prototype.cleanString = function cleanString(text) {
-        	text = text.replace(/&/g, "and");
-            text = text.replace(/[’',:–-]/g, ""); // remove punctuation characters
-            text = text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // escape special characters
-            return text.trim().replace(/\s\s+/g, " ").toLowerCase(); // replace multiple spaces with one
-        };
-
-        OptionSelect.prototype.getAllCheckedCheckboxes =
-        function getAllCheckedCheckboxes() {
-        	this.checkedCheckboxes = [];
-
-        	for (var i = 0; i < this.$options.length; i++) {
-        		if (this.$options[i].checked) {
-        			this.checkedCheckboxes.push(i);
-        		}
-        	}
-        };
-
-        OptionSelect.prototype.replaceHeadingSpanWithButton =
-        function replaceHeadingSpanWithButton() {
-                /* Replace the span within the heading with a button element. This is based on feedback from Léonie Watson.
-                 * The button has all of the accessibility hooks that are used by screen readers and etc.
-                 * We do this in the JavaScript because if the JavaScript is not active then the button shouldn't
-                 * be there as there is no JS to handle the click event.
-                 */
-                 var containerHead = this.$optionSelect.querySelector(
-                 	".js-container-button"
-                 	);
-                 var jsContainerHeadHTML = containerHead.innerHTML;
-
-                // Create button and replace the preexisting html with the button.
-                var button = document.createElement("button");
-                button.setAttribute(
-                	"class",
-                	"js-container-button app-c-option-select__title app-c-option-select__button"
-                	);
-                // Add type button to override default type submit when this component is used within a form
-                button.setAttribute("type", "button");
-                button.setAttribute("aria-expanded", true);
-                button.setAttribute("id", containerHead.getAttribute("id"));
-                button.setAttribute(
-                	"aria-controls",
-                	this.$optionsContainer.getAttribute("id")
-                	);
-                button.innerHTML = jsContainerHeadHTML;
-                containerHead.parentNode.replaceChild(button, containerHead);
-            };
-
-            OptionSelect.prototype.toggleOptionSelect = function toggleOptionSelect(e) {
-            	if (this.isClosed()) {
-            		this.open();
-            	} else {
-            		this.close();
-            	}
-            	e.preventDefault();
-            };
-
-            OptionSelect.prototype.open = function open() {
-            	if (this.isClosed()) {
-            		this.$optionSelect
-            		.querySelector(".js-container-button")
-            		.setAttribute("aria-expanded", true);
-            		this.$optionSelect.classList.remove("js-closed");
-            		this.$optionSelect.classList.add("js-opened");
-            	}
-            };
-
-            OptionSelect.prototype.close = function close() {
-            	this.$optionSelect.classList.remove("js-opened");
-            	this.$optionSelect.classList.add("js-closed");
-            	this.$optionSelect
-            	.querySelector(".js-container-button")
-            	.setAttribute("aria-expanded", false);
-            };
-
-            OptionSelect.prototype.isClosed = function isClosed() {
-            	return this.$optionSelect.classList.contains("js-closed");
-            };
-
-            OptionSelect.prototype.setContainerHeight = function setContainerHeight(
-            	height
-            	) {
-            	this.$optionsContainer.style.height = height + "px";
-            };
-
-            OptionSelect.prototype.isCheckboxVisible = function isCheckboxVisible(
-            	option
-            	) {
-            	var initialOptionContainerHeight = this.$optionsContainer.clientHeight;
-            	var optionListOffsetTop = this.$optionList.getBoundingClientRect().top;
-            	var distanceFromTopOfContainer =
-            	option.getBoundingClientRect().top - optionListOffsetTop;
-            	return distanceFromTopOfContainer < initialOptionContainerHeight;
-            };
-
-            OptionSelect.prototype.getVisibleCheckboxes =
-            function getVisibleCheckboxes() {
-            	var visibleCheckboxes = [];
-            	for (var i = 0; i < this.$options.length; i++) {
-            		if (this.isCheckboxVisible(this.$options[i])) {
-            			visibleCheckboxes.push(this.$options[i]);
-            		}
-            	}
-
-                // add an extra checkbox, if the label of the first is too long it collapses onto itself
-                if (this.$options[visibleCheckboxes.length]) {
-                	visibleCheckboxes.push(this.$options[visibleCheckboxes.length]);
-                }
-                return visibleCheckboxes;
-            };
-
-            Modules.OptionSelect = OptionSelect;
-        })(window.GOVUK.Modules);
-
-        var $optionsSelect = document.querySelectorAll('[data-module="option-select"]');
-        if ($optionsSelect) {
-        	$optionsSelect.forEach((el) =>
-        		new window.GOVUK.Modules.OptionSelect(el).init()
-        		);
-        }
-    </script>
-    {% endblock%}
+{% block pageScripts %}
+<script type="text/javascript">
+	new MOJFrontend.FilterToggleButton({
+		bigModeMediaQuery: "(min-width: 48.063em)",
+		startHidden: true,
+		toggleButton: {
+			container: $(".moj-action-bar__filter"),
+			showText: "Show filter",
+			hideText: "Hide filter",
+			classes: "govuk-button--secondary",
+		},
+		closeButton: {
+			container: $(".moj-filter__header-action"),
+			text: "Close",
+		},
+		filter: {
+			container: $(".moj-filter"),
+		},
+	});
+</script>
+{% endblock%}

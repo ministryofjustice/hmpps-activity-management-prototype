@@ -1,0 +1,115 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+{% block beforeContent %}
+<div class="govuk-width-container">
+	<a href="/" class="govuk-back-link">Digital Prison Services</a>
+	<h1 class="govuk-heading-l govuk-!-margin-top-7">Manage prisoner whereabouts</h1>
+</div>
+{% endblock %}
+<div class="homepage-content">
+	<div class="govuk-width-container">
+		<div class="govuk-grid-row card-group govuk-!-margin-bottom-0">
+			<div class="govuk-grid-column-full card-group__item">
+				<div class="card govuk-!-margin-bottom-3" data-test="view-residential-location" style="border-bottom-width: 5px;">
+					<div class="govuk-grid-row">
+						<div class="govuk-grid-column-one-third-from-desktop">
+							<h2 class="govuk-heading-m card__heading govuk-!-margin-bottom-1">
+								<span class="govuk-caption-m">Daily summary</span>
+								12 October 2022
+							</h2>
+							<p class="govuk-hint govuk-!-font-size-16">Last updated at 11.38pm on 11 October 2022</p>
+							<p class="govuk-!-margin-bottom-0 govuk-!-font-size-16"><a href="#" class="govuk-!-font-weight-bold">All people due to leave</a></p>
+						</div>
+						<div class="govuk-grid-column-two-thirds govuk-!-padding-top-2">
+							<div class="govuk-grid-row">
+								<div class="govuk-grid-column-one-third">
+									<h3 class="govuk-body govuk-!-margin-bottom-0 govuk-!-font-size-16">
+										Court appearances
+									</h3>
+									<p class="govuk-body govuk-!-font-size-24"><a href="#">2</a></p>
+								</div>
+								<div class="govuk-grid-column-one-third">
+									<h3 class="govuk-body govuk-!-margin-bottom-0 govuk-!-font-size-16">
+										Releases
+									</h3>
+									<p class="govuk-body govuk-!-font-size-24"><a href="#">1</a></p>
+								</div>
+								<div class="govuk-grid-column-one-third">
+									<h3 class="govuk-body govuk-!-margin-bottom-0 govuk-!-font-size-16">
+										Transfers
+									</h3>
+									<p class="govuk-body govuk-!-font-size-24">None</p>
+								</div>
+							</div>
+							<div class="govuk-grid-row">
+								<div class="govuk-grid-column-one-third">
+									<h3 class="govuk-body govuk-!-margin-bottom-0 govuk-!-font-size-16">
+										Prisoners unaccounted for
+									</h3>
+									<p class="govuk-body govuk-!-font-size-24"><a href="#">11</a></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<ul class="govuk-grid-row card-group">
+			<li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-activity-location">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="select-activity-locations">Record attendance</a>
+					</h2>
+					<p class="govuk-body card__description">Record prisoner attendance at a scheduled activity or appointment.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-activity-location">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="whereabouts-concept-3__prisoner-lists">Prisoner lists</a>
+					</h2>
+					<p class="govuk-body card__description">Get a list of prisoners by residential location, activity location, activity or appointment.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-all-appointments">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="/view-all-appointments">Prisoners leaving</a>
+					</h2>
+					<p class="govuk-body card__description">View all prisoners leaving the prison on a selected date.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-attendance-statistics">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="/manage-prisoner-whereabouts/attendance-reason-statistics">Attendance data</a>
+					</h2>
+					<p class="govuk-body card__description">View a breakdown of attendance statistics.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-bulk-appointments">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="/bulk-appointments/need-to-upload-file">Add bulk appointments</a>
+					</h2>
+					<p class="govuk-body card__description">Upload a spreadsheet to add appointments for multiple people.</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script src="/public/javascripts/cards.js"></script>
+{% endblock %}

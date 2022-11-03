@@ -159,3 +159,105 @@ table.expanding-rows-2 {
     white-space: nowrap;
   }
 }
+
+// .app-checkbox-tags {
+//   .govuk-checkboxes__item {
+//     padding-left: 15px;
+//     display: inline-block;
+//     float: none;
+//     background: govuk-colour("white");
+
+//     &:hover {
+//       .govuk-checkboxes__input:not(:disabled) + .govuk-checkboxes__label:before {
+//         box-shadow: none;
+//       }
+//     }
+
+//     .govuk-checkboxes__input:checked + .govuk-checkboxes__label:before {
+//       z-index: 1;
+//       background-color: #888;
+//     }
+
+//     .govuk-checkboxes__label {
+//       &:before {
+//         width: 100%;
+//         height: 100%;
+//         top: 0;
+//         z-index: -3;
+//       }
+//       &:after {
+//         z-index: 0;
+//         left: 12px;
+//         top: 16px;
+//       }
+//     }
+//   }
+// }
+
+.app-checkbox-tags {
+  .govuk-checkboxes {
+    margin-left: 10px;
+  }
+  .govuk-checkboxes__item {
+    display: inline-block;
+    float: none;
+    margin-right: govuk-spacing(4);
+    margin-bottom: govuk-spacing(2);
+
+    &:hover {
+      .govuk-checkboxes__input:not(:disabled) + .govuk-checkboxes__label:before {
+        box-shadow: none;
+      }
+      .govuk-checkboxes__input + .govuk-checkboxes__label {
+        box-shadow: 0 0 0 10px #b1b4b6;
+      }
+    }
+
+    .govuk-checkboxes__input {
+      & + .govuk-checkboxes__label {
+        padding: 6px 12px 8px 0px;
+        $lefty: 45px;
+        padding-left: $lefty;
+        margin-left: - ($lefty);
+        border: 2px solid transparent;
+
+        &:before {
+          top: 7px
+        }
+        &:after {
+          top: 14px
+        }
+      }
+
+      &:checked {
+        & + .govuk-checkboxes__label {
+          background-color: govuk-colour('white');
+          $lefty: 45px;
+          padding-left: $lefty;
+          margin-left: - ($lefty);
+          outline: 2px solid govuk-colour('black');
+        }
+
+        &:focus {
+          box-shadow: none;
+
+          & + .govuk-checkboxes__label {
+            border: 2px solid govuk-colour('black');
+            outline: 3px solid transparent;
+            outline-offset: 0px;
+            box-shadow: 0 0 0 3px #ffdd00;
+
+            &:before {
+              box-shadow: none;
+            }
+          }
+        }
+      }
+
+      .govuk-checkboxes__label {
+        &:before {}
+        &:after {}
+      }
+    }
+  }
+}
