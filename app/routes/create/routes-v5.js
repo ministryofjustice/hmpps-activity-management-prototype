@@ -12,7 +12,7 @@ router.post(version +'/setup', function(req, res) {
 							res.redirect(version +'/create/activity-type-select-with-category')
 						}
 			else {
-				res.redirect(version +'/create/activity-name')
+				res.redirect(version +'/create/activity-type-select-with-category')
 			}
 		}
 	});

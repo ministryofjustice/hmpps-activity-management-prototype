@@ -8,6 +8,7 @@ require('./routes/create/routes-v2')(router);
 require('./routes/create/routes-v3')(router);
 require('./routes/create/routes-v4')(router);
 require('./routes/create/routes-v5')(router);
+require('./routes/create/routes-v6')(router);
 
 //UNLOCK
 router.use(/\/unlock\/version-([0-9]+)/, (req, res, next) => {
