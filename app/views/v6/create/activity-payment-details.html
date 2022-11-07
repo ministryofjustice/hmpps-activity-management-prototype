@@ -1,0 +1,104 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+    Enter the payment rate
+    </h1>
+  </div>
+  <div id="event-name-hint" class="govuk-hint">
+
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+
+        {% if data.setupPayments == "three" %}
+        <!--3 payments-->
+        <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentBasic">Basic rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentBasic" name="paymentBasic" type="text" value="1.21">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentStandard">Standard rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentStandard" name="paymentStandard" type="text" value="1.51">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentEnhanced">Enhanced rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentEnhanced" name="paymentEnhanced" type="text" value="1.81">
+          </div>
+        {% endif %}
+
+
+    <!--10 payments-->
+    {% if data.setupPayments == "ten" %}
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentA">A rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentA" name="paymentA" type="text" value="1.01">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentB">B rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentB" name="paymentB" type="text" value="1.11">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentC">C rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentC" name="paymentC" type="text" value="1.21">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentD">D rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentD" name="paymentD" type="text" value="1.31">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentE">E rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentE" name="paymentE" type="text" value="1.41">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentF">F rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentF" name="paymentF" type="text" value="1.51">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentG">G rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentG" name="paymentG" type="text" value="1.61">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentH">H rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentH" name="paymentH" type="text" value="1.71">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentI">I rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentI" name="paymentI" type="text" value="1.81">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="paymentJ">J rate
+            </label>
+            £ <input class="govuk-input govuk-input--width-5" id="paymentJ" name="paymentJ" type="text" value="1.91">
+          </div>
+  {% endif %}
+
+        </fieldset>
+      </div>
+      <br />
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+</div>
+
+{% endblock %}

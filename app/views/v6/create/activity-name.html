@@ -1,0 +1,34 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+    Enter the name of the activity
+    </h1>
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+          <div id="search2-hint" class="govuk-hint moj-search__hint ">
+            Make event names short and descriptive, for example Maths level 1 or Maths level 2
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="event-name">
+            </label>
+            <input maxlength="20" class="govuk-input govuk-input--width-30" id="event-name" name="activityName" type="text">
+          </div>
+        </fieldset>
+      </div>
+      <br />
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+</div>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-m">Activities prototype setup</h1>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    </div>
+</div>
+<br />
+<form method="post" >
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+
+      <h3 class="govuk-label" ><strong>Choose the user journey</strong></h3><br />
+      <div class="govuk-radios" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="setupTaskCreation" name="setupTaskType" type="radio" value="creation" >
+          <label class="govuk-label govuk-radios__label" for="setupTaskCreation">
+         Activity creation
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="setupTaskAllocation" name="setupTaskType" type="radio" value="allocation" checked="checked">
+        <label class="govuk-label govuk-radios__label" for="setupTaskAllocation">
+          Activity allocation
+        </label>
+      </div>
+    </div>
+  </div>
+</div><br />
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+
+      <h3 class="govuk-label" ><strong>Choose the navigation structure (Allocation journey)</strong></h3><br />
+      <div class="govuk-radios" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="setupAllocationWing" name="setupAllocationJourneyLevel" type="radio" value="wing" checked="checked">
+          <label class="govuk-label govuk-radios__label" for="setupAllocationWing">
+         3-level hierarchy: Wing cleaning
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="setupAllocationGarden" name="setupAllocationJourneyLevel" type="radio" value="garden">
+        <label class="govuk-label govuk-radios__label" for="setupAllocationGarden">
+        1-level hierarchy: Gardening
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<br /><br />
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+        <h3 class="govuk-label" ><strong>Number of payment rates to show (Create and Allocate journeys)</strong></h3><br />
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="setupPayments3" name="setupPayments" type="radio" value="three" checked="checked">
+            <label class="govuk-label govuk-radios__label" for="setupPayments3">
+           3 payment rates
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="setupPayments10" name="setupPayments" type="radio" value="ten">
+          <label class="govuk-label govuk-radios__label" for="setupPayments10">
+            9 payment rates
+          </label>
+        </div>
+      </div>
+        <br /><br />
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <button class="govuk-button" data-module="govuk-button">Start prototype</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,33 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      What is the capacity of the activity?
+    </h1>
+  </div>
+  <div id="event-name-hint" class="govuk-hint">
+    Enter how many people can go on the activity
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="event-capacity">
+            </label>
+            <input class="govuk-input govuk-input--width-5" id="event-capacity" name="eventCapacity" type="text">
+          </div>
+        </fieldset>
+      </div>
+      <br />
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      What is the start of the activity?
+    </h1>
+  </div>
+  <div id="event-name-hint" class="govuk-hint">
+    Enter a end date for the activity
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+        {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+        {{ govukDateInput({
+          id: "end-date",
+          namePrefix: "end-date",
+          fieldset: {
+            legend: {
+              text: "What is the end date for the activity?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          hint: {
+            text: "For example, 27 8 2022"
+          }
+        }) }}
+      </div>
+      <br />
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+</div>
+{% endblock %}

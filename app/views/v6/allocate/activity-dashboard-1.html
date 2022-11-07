@@ -1,0 +1,257 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Activities dashboard
+    </h1>
+  </div><br />
+<p class="govuk-body">Use the dashboard to identify activities with vacancies or search for an activity by name.</p>
+<p class="govuk-body">You can also <a href="../create/activity-type-select-with-category">create activities</a> and add activity schedules.</p>
+  <h2 class="govuk-heading-m">Activities dashboard</h2>
+<div class="moj-primary-navigation">
+  <div class="moj-primary-navigation__container">
+    <div class="moj-primary-navigation__nav">
+      <nav class="moj-primary-navigation" aria-label="Primary navigation">
+        <ul class="moj-primary-navigation__list">
+          <ul class="moj-sub-navigation__list" >
+            <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link" aria-current="page" href="#1">Show all categories (7)</a>
+            </li>
+            <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link" href="activity-dashboard-1-filtered">Show categories with vacancies (4)</a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="moj-primary-navigation__search">
+      <div class="moj-search-toggle" data-module="moj-search-toggle" data-moj-search-toggle-text="Search for activity">
+        <div class="moj-search-toggle__toggle"></div>
+        <div class="moj-search-toggle__search">
+          <div class="moj-search moj-search--ondark moj-search--toggle moj-js-hidden">
+            <form action="searchAllocationDashboard" method="post">
+              <div class="govuk-form-group">
+                <label class="govuk-label moj-search__label govuk-visually-hidden" for="search2">
+                  Search
+                </label>
+                <div id="search2-hint" class="govuk-hint moj-search__hint ">
+                  <span style="font-size:.85em;">Enter activity, location, or try <a href="allocate-offender-dashboard-search-view">Advanced search</a></span>
+                  <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      </legend>
+                      <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                          <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                          <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                            <span style="font-size:.85em;" class="govuk-hint moj-search__hint ">Only search in activities with vacancies</span>
+                          </label>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+                <input class="govuk-input moj-search__input " id="search2" name="search2" type="search" aria-describedby="search2-hint">
+              </div>
+              <button class="govuk-button moj-search__button " data-module="govuk-button">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<br /><br />
+<table class="govuk-table" data-module="moj-sortable-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity category</th>
+    <!--  <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="ascending">Count</th>-->
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="ascending">Capacity</th>
+      <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Allocated</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric"  aria-sort="none">Percentage allocated</th>
+      <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Waitlist</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric"  aria-sort="none">Vacancies</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row" >
+      <th scope="row" class="govuk-table__header">
+        <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+          Total</h3>
+      </th>
+  <!--      <td class="govuk-table__cell govuk-table__cell--numeric"><strong>129</strong></td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong>1,399</strong></td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong>1,363</strong></td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong>97%</strong></td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong>29</strong></td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong>36</strong></td>
+    </tr>
+
+    <tr class="govuk-table__row" >
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Education
+        </a></h3>
+
+      </th>
+    <!--    <td class="govuk-table__cell govuk-table__cell--numeric">20</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">400</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">385</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">96%</td>
+      <!--   <td class="govuk-table__cell govuk-table__cell--numeric">1</td>-->
+        <td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+        <div>
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+          <span style="text-transform: lowercase;">15</span>
+        </span>
+        </strong>
+      </div>
+      </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+                Industries
+              </a></h3>
+            </th>
+            <td class="govuk-table__cell govuk-table__cell--numeric">250</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric">238</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">95%</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">  <div>
+                <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+                  <span>12</span>
+                </span>
+                </strong>
+              </div></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+
+          {% if data.setupAllocationJourneyLevel == "garden"  %}
+          <a href="activity-dashboard-4-garden" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+            {% else %}
+            <a href="activity-dashboard-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+            {% endif %}
+                Services
+              </a></h3>
+            </th>
+            <td class="govuk-table__cell govuk-table__cell--numeric">179</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric">175</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">98%</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">15</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">  <div>
+                <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+                  <span>4</span>
+                </span>
+                </strong>
+              </div></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+                Gym, sport and fitness
+              </a></h3>
+
+            </th>
+        <!--      <td class="govuk-table__cell govuk-table__cell--numeric">18</td>-->
+            <td class="govuk-table__cell govuk-table__cell--numeric">100</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric">100</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+            <!--   <td class="govuk-table__cell govuk-table__cell--numeric">0</td>-->
+              <td class="govuk-table__cell govuk-table__cell--numeric">9</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">
+              <div>
+              <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+                <span style="text-transform: lowercase;">0</span>
+              </span>
+              </strong>
+              </td>
+
+                </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Induction
+        </a></h3>
+      </th>
+  <!--      <td class="govuk-table__cell govuk-table__cell--numeric">3</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">60</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">60</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+    <!--   <td class="govuk-table__cell govuk-table__cell--numeric">0</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">
+      <div>
+      <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+        <span style="text-transform: lowercase;">0</span>
+      </span>
+      </strong>
+      </td>    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Intervention programmes
+        </a></h3>
+      </th>
+    <!--    <td class="govuk-table__cell govuk-table__cell--numeric">4</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">80</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">75</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">94%</td>
+    <!--   <td class="govuk-table__cell govuk-table__cell--numeric">5</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">  <div>
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+          <span>5</span>
+        </span>
+        </strong>
+      </div></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Leisure and social
+        </a></h3>
+      </th>
+    <!--    <td class="govuk-table__cell govuk-table__cell--numeric">33</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">330</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">330</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+    <!--  <td class="govuk-table__cell govuk-table__cell--numeric">0</td>-->
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">
+      <div>
+      <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+        <span style="text-transform: lowercase;">0</span>
+      </span>
+      </strong>
+      </td>
+        </tr>
+
+
+
+  </tbody>
+</table>
+</div>
+{% endblock %}
