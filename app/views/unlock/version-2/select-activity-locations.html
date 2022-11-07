@@ -1,0 +1,135 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts-concept-2"
+	}
+	]
+}) }}
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-l">
+	Select activity or appointment locations
+</h1>
+
+<form method="post">
+	<div class="govuk-grid-row">
+		<div class="govuk-form-group govuk-grid-column-one-third">
+			<label class="govuk-label govuk-label--m" for="date">
+				Date
+			</label>
+			<div class="govuk-hint">
+				Today's date is 13/10/2022
+			</div>
+			<input class="govuk-input date-input undefined hasDatepicker" id="date" name="date" type="text" value="13/10/2022" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
+		</div>
+	</div>
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			{{ govukRadios({
+				name: "times",
+				fieldset: {
+					legend: {
+						text: "Time period",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "england",
+					text: "Morning (AM)"
+				},
+				{
+					value: "scotland",
+					text: "Afternoon (PM)"
+				},
+				{
+					value: "wales",
+					text: "Evening (ED)"
+				}
+				]
+			}) }}
+
+			{{ govukCheckboxes({
+				name: "waste",
+				classes: "govuk-checkboxes--small",
+				fieldset: {
+					legend: {
+						text: "Locations",
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				hint: {
+					html: "<p class=\"govuk-hint\">You’ll only be able to select locations where there are activities or appointments happening at the time you selected.</p>"
+				},
+				items: [
+				{
+					value: "carcasses",
+					text: "Chapel (no classes at the selected time)",
+					disabled: true
+				},
+				{
+					value: "mines",
+					text: "Classroom 2"
+				},
+				{
+					value: "farm",
+					text: "Classroom 3"
+				},
+				{
+					value: "farm",
+					text: "Classroom 4"
+				},
+				{
+					value: "farm",
+					text: "Kitchen 1"
+				},
+				{
+					value: "farm",
+					text: "Kitchen 2 (no classes at the selected time)",
+					disabled: true
+				},
+				{
+					value: "farm",
+					text: "Workshop"
+				}
+				]
+			}) }}
+		</div>
+	</div>
+
+	<div class="govuk-button-group">
+		{{govukButton({
+			text: "View selection"
+		})}}
+
+		{{govukButton({
+			text: "Print selection",
+			classes: "govuk-button--secondary",
+			attributes: {
+				onClick: "window.print();"
+			}
+		})}}
+	</div>
+</form>
+{% endblock %}
