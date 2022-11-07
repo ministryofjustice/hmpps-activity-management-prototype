@@ -14,9 +14,9 @@ router.use(/\/unlock\/version-([0-9]+)/, (req, res, next) => {
 	req.version = req.originalUrl.split('/')[2]
 	require(`./views/unlock/version-${req.params[0]}/routes`)(req, res, next);
 })
-router.use(/\/unlock\/experimental-([0-9]+)/, (req, res, next) => {
+router.use(/\/unlock\/experimental/, (req, res, next) => {
 	req.version = req.originalUrl.split('/')[2]
-	require(`./views/unlock/experimental-${req.params[0]}/routes`)(req, res, next);
+	require(`./views/unlock/experimental/routes`)(req, res, next);
 })
 
 module.exports = router

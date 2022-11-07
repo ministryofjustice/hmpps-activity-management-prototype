@@ -1,0 +1,94 @@
+.dropdown {
+  &, * {
+    box-sizing: border-box;
+  }
+  
+  @include govuk-font(19);
+  position: relative;
+  z-index: 1;
+
+  .dropdown-list {
+    z-index: 99;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-y: scroll;
+    padding: 5px;
+    border: 2px solid #0b0c0c;
+    color: #0b0c0c;
+    background-color: #ffffff;
+
+    padding: 0 govuk-spacing(2);
+    background: #fff;
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    right: 0px;
+    transform-origin: 50% 0;
+    transform: scale(1, 0);
+    max-height: 20vh;
+    overflow-y: scroll;
+
+    .govuk-checkboxes__item,
+    .govuk-checkboxes__label {
+      width: 100%;
+    }
+  }
+  
+  .dropdown-option {
+    display: block;
+    padding: 8px 12px;
+    opacity: 0;
+  }
+  
+  .dropdown-label {
+    display: block;
+    padding: 6px 12px;
+    cursor: pointer;
+    box-sizing: border-box;
+    
+    max-width: 100%;
+    width: 100%;
+    height: 40px;
+
+    padding: govuk-spacing(1) govuk-spacing(2);
+    background-color: govuk-colour("white");
+
+    border: $govuk-border-width-form-element solid $govuk-input-border-colour;
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    
+    &:before {
+      content: '▼';
+      float: right;
+    }
+  }
+  
+  &.on {
+   .dropdown-list {
+    border-top: none;
+    transform: scale(1, 1);
+
+    .dropdown-option {
+      opacity: 1;
+    }
+  }
+
+  .dropdown-label {
+    border-bottom: none;
+  }
+
+  .dropdown-label:before {
+    content: '▲';
+  }
+}
+
+[type="checkbox"] {
+  // position: relative;
+}
+}
