@@ -1,0 +1,243 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts-concept-2"
+	}
+	]
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-l">
+			Choose unlock list details
+		</h1>
+
+		<form method="post">
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-label--m" for="date">
+					Date
+				</label>
+				<div class="govuk-hint">
+					Today's date is 13/10/2022
+				</div>
+				<input class="govuk-input govuk-input--width-20 date-input undefined hasDatepicker" id="date" name="date" type="text" value="13/10/2022" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
+			</div>
+
+			{{ govukRadios({
+				name: "times",
+				fieldset: {
+					legend: {
+						text: "Time period",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "england",
+					text: "Morning (AM)"
+				},
+				{
+					value: "scotland",
+					text: "Afternoon (PM)"
+				},
+				{
+					value: "wales",
+					text: "Evening (ED)"
+				}
+				]
+			}) }}
+
+			{% set wingsHtml %}
+			{{ govukCheckboxes({
+				name: "sublocations",
+				classes: "govuk-checkboxes--small",
+				fieldset: {
+					legend: {
+						text: "Sub-locations",
+						classes: "govuk-fieldset__legend--s"
+					}
+				},
+				items: [
+				{
+					value: "1",
+					text: "Wing A"
+				},
+				{
+					value: "2",
+					text: "Wing B"
+				},
+				{
+					value: "3",
+					text: "Wing C"
+				}
+				]
+			}) }}
+			{% endset %}
+
+			{{ govukCheckboxes({
+				formGroup: {
+					classes: "govuk-!-margin-bottom-2"
+				},
+				attributes: {
+					id: "locations-checkboxes"
+				},
+				name: "locations",
+				hint: {
+					text: "You can select more than one location if you need to"
+				},
+				fieldset: {
+					legend: {
+						text: "Locations",
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "carcasses",
+					text: "Houseblock 1",
+					conditional: {
+						html: wingsHtml
+					}
+				},
+				{
+					value: "mines",
+					text: "Houseblock 2",
+					conditional: {
+						html: wingsHtml
+					}
+				},
+				{
+					value: "farm",
+					text: "Houseblock 3",
+					conditional: {
+						html: wingsHtml
+					}
+				}
+				]
+			}) }}
+			<p class="govuk-body govuk-!-margin-bottom-6">
+				<a href="#" class="govuk-link govuk-link--no-visited-state" id="check-all-locations">Select all<span class="govuk-visually-hidden"> locations</span></a>
+			</p>
+
+			{{ govukCheckboxes({
+				name: "staying-or-leaving",
+				fieldset: {
+					legend: {
+						text: "Staying or leaving wing",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "staying",
+					text: "Staying"
+				},
+				{
+					value: "leaving",
+					text: "Leaving"
+				}
+				]
+			}) }}
+
+			<p class="govuk-inset-text">
+				Prisoners will be listed by sub-location (prison wing).
+			</p>
+
+			<div class="govuk-button-group">
+				{{govukButton({
+					text: "View selection"
+				})}}
+
+				{{govukButton({
+					text: "Print selection",
+					href: "example-list",
+					classes: "govuk-button--secondary",
+					attributes: {
+						target: "_blank"
+					}
+				})}}
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script>
+	let button = $('#check-all-locations')
+	let buttonHtml = button.html()
+	let checkboxes = $('#locations-checkboxes input[type=checkbox]');
+
+	function toggleButton() {
+		if (checkboxes.filter(":checked").length) {
+			buttonHtml = buttonHtml.replace("Select", "Deselect")
+			button.addClass("uncheck-all").removeClass("check-all")
+		} else {
+			buttonHtml = buttonHtml.replace("Deselect", "Select")
+			button.addClass("check-all").removeClass("uncheck-all")
+		}
+
+		button.html(buttonHtml)
+	}
+
+	$.each(checkboxes, function(){
+		$(this).on('change', function() {
+			if (checkboxes.filter(":checked").length) {
+				toggleButton()
+			} else {
+				toggleButton()
+			}
+		})
+	})
+
+	$(document).ready(function(){
+		if (checkboxes.filter(":checked").length) {
+			button.addClass("uncheck-all")
+		} else {
+			button.addClass("check-all")
+		}
+	})
+
+	$('body').on('click', '.check-all', function(event){
+		event.preventDefault()
+		
+		$.each(checkboxes, function(){
+			if($(this).not(":checked")){
+				$(this).click()
+			}
+		})
+	})
+
+	$('body').on('click', '.uncheck-all', function(event){
+		event.preventDefault()
+
+		$.each(checkboxes, function(){
+			if($(this).is(":checked")){
+				$(this).click()
+			}
+		})
+	})
+</script>
+{% endblock %}
