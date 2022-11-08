@@ -10,7 +10,13 @@ const router = express.Router()
 		res.redirect('unlock-list')
 	});
 
+	router.post('/select-refusals-locations', function(req, res) {
+		res.redirect('refusals-list')
+	});
+
 	router.post('/select-activity', function(req, res) {
+		req.session.data['activity-date'] = req.session.data['date'].split("/")
+		
 		res.redirect('attendance-list')
 	});
 	

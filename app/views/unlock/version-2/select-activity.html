@@ -31,35 +31,40 @@ Activities Management prototype
 </h1>
 
 <form method="post">
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-one-third">
-			<div class="govuk-grid-row">
-				<div class="govuk-grid-column-one-half">
-					<div class="date-picker-container ">
-						<div class="govuk-form-group">
-							<label class="govuk-label govuk-label--m" for="date">
-								Date
-							</label>
-							<input class="govuk-input date-input undefined hasDatepicker" id="date" name="date" type="text" value="31/10/2022" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
-						</div>
-					</div>
-				</div>
-				<div class="govuk-grid-column-one-half">
-					<div class="govuk-form-group">
-						<label class="govuk-label govuk-label--m" for="period">
-							Period
-						</label>
-						<select class="govuk-select" id="period" name="period">
-							<option value="">Select</option>
-							<option value="AM">Morning (AM)</option>
-							<option value="PM" selected="">Afternoon (PM)</option>
-							<option value="ED">Evening (ED)</option>
-						</select>
-					</div>
-				</div>
-			</div>
+	<div class="govuk-form-group">
+		<label class="govuk-label govuk-label--m" for="date">
+			Date
+		</label>
+		<div class="govuk-hint">
+			Today's date is {{ "_" | currentDate('d/M/yyyy') }}
 		</div>
+		<input class="govuk-input govuk-input--width-20 date-input undefined hasDatepicker" id="date" name="date" type="text" value="{{ "_" | currentDate('d/M/yyyy') }}" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
 	</div>
+
+<!-- 	{{ govukRadios({
+		name: "times",
+		fieldset: {
+			legend: {
+				text: "Time period",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "morning",
+			text: "Morning (AM)"
+		},
+		{
+			value: "afternoon",
+			text: "Afternoon (PM)"
+		},
+		{
+			value: "evening",
+			text: "Evening (ED)"
+		}
+		]
+	}) }} -->
 
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
@@ -131,61 +136,61 @@ Activities Management prototype
 				</div>
 				<select class="govuk-select" id="by-location" name="location" aria-describedby="by-location-hint">
 					<option value="" selected=""></option>
-					<option value="26152">Chapel</option>
-					<option value="26999">Farms/gardens</option>
-					<option value="26149">Gym</option>
-					<option value="26145">Health Care</option>
-					<option value="721768">Houseblock 1</option>
-					<option value="721767">Houseblock 2</option>
-					<option value="721766">Houseblock 3</option>
-					<option value="721765">Houseblock 4</option>
-					<option value="721764">Houseblock 5</option>
-					<option value="721763">Houseblock 6</option>
-					<option value="721769">Houseblock 7</option>
-					<option value="357595">Interview Room</option>
-					<option value="27002">Kitchen</option>
-					<option value="26151">Library</option>
-					<option value="27001">Main/stores</option>
-					<option value="26141">Res 1 Education</option>
-					<option value="26142">Res 2 Education</option>
-					<option value="200532">Sports Hall</option>
-					<option value="27004">Workshop 1</option>
-					<option value="27020">Workshop 10</option>
-					<option value="27022">Workshop 12</option>
-					<option value="27023">Workshop 13</option>
-					<option value="27024">Workshop 14</option>
-					<option value="27025">Workshop 15</option>
-					<option value="27026">Workshop 16</option>
-					<option value="27027">Workshop 17</option>
-					<option value="27028">Workshop 18</option>
-					<option value="27029">Workshop 19</option>
-					<option value="27008">Workshop 2</option>
-					<option value="27009">Workshop 3</option>
-					<option value="27010">Workshop 4</option>
-					<option value="27012">Workshop 6</option>
-					<option value="27018">Workshop 8</option>
+					<option value="Chapel">Chapel</option>
+					<option value="Farms/gardens">Farms/gardens</option>
+					<option value="Gym">Gym</option>
+					<option value="Health Care">Health Care</option>
+					<option value="Houseblock 1">Houseblock 1</option>
+					<option value="Houseblock 2">Houseblock 2</option>
+					<option value="Houseblock 3">Houseblock 3</option>
+					<option value="Houseblock 4">Houseblock 4</option>
+					<option value="Houseblock 5">Houseblock 5</option>
+					<option value="Houseblock 6">Houseblock 6</option>
+					<option value="Houseblock 7">Houseblock 7</option>
+					<option value="Interview Room">Interview Room</option>
+					<option value="Kitchen">Kitchen</option>
+					<option value="Library">Library</option>
+					<option value="Main/stores">Main/stores</option>
+					<option value="Res 1 Education">Res 1 Education</option>
+					<option value="Res 2 Education">Res 2 Education</option>
+					<option value="Sports Hall">Sports Hall</option>
+					<option value="Workshop 1">Workshop 1</option>
+					<option value="Workshop 10">Workshop 10</option>
+					<option value="Workshop 12">Workshop 12</option>
+					<option value="Workshop 13">Workshop 13</option>
+					<option value="Workshop 14">Workshop 14</option>
+					<option value="Workshop 15">Workshop 15</option>
+					<option value="Workshop 16">Workshop 16</option>
+					<option value="Workshop 17">Workshop 17</option>
+					<option value="Workshop 18">Workshop 18</option>
+					<option value="Workshop 19">Workshop 19</option>
+					<option value="Workshop 2">Workshop 2</option>
+					<option value="Workshop 3">Workshop 3</option>
+					<option value="Workshop 4">Workshop 4</option>
+					<option value="Workshop 6">Workshop 6</option>
+					<option value="Workshop 8">Workshop 8</option>
 				</select>
 			</div>
 			{% endset %}
 
 			{{ govukRadios({
-				name: "where-do-you-live",
+				name: "attendance",
 				fieldset: {
 					legend: {
-						text: "Attend prisoners by activity or location?",
+						text: "Choose an activity or location",
 						classes: "govuk-fieldset__legend--m"
 					}
 				},
 				items: [
 				{
-					value: "england",
+					value: "by-activity",
 					text: "Activity",
 					conditional: {
 						html: activityHtml
 					}
 				},
 				{
-					value: "abroad",
+					value: "by-location",
 					text: "Location",
 					conditional: {
 						html: locationHtml
