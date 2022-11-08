@@ -31,21 +31,21 @@ Activities Management prototype
 </h1>
 
 <form method="post">
-	<div class="govuk-form-group">
+	<!-- <div class="govuk-form-group">
 		<label class="govuk-label govuk-label--m" for="date">
-			Date
+			Date of activity
 		</label>
 		<div class="govuk-hint">
 			Today's date is {{ "_" | currentDate('d/M/yyyy') }}
 		</div>
 		<input class="govuk-input govuk-input--width-20 date-input undefined hasDatepicker" id="date" name="date" type="text" value="{{ "_" | currentDate('d/M/yyyy') }}" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
-	</div>
+	</div> -->
 
-	<!-- {{ govukRadios({
+	{{ govukRadios({
 		name: "times",
 		fieldset: {
 			legend: {
-				text: "Date",
+				text: "Date of activity",
 				isPageHeading: false,
 				classes: "govuk-fieldset__legend--m"
 			}
@@ -56,11 +56,15 @@ Activities Management prototype
 			text: "Today"
 		},
 		{
+			value: "morning",
+			text: "Yesterday"
+		},
+		{
 			value: "afternoon",
 			text: "A different date"
 		}
 		]
-	}) }} -->
+	}) }}
 
 <!-- 	{{ govukRadios({
 		name: "times",
@@ -198,7 +202,7 @@ Activities Management prototype
 				name: "attendance",
 				fieldset: {
 					legend: {
-						text: "Choose an activity or location",
+						text: "Search by activity or location",
 						classes: "govuk-fieldset__legend--m"
 					}
 				},

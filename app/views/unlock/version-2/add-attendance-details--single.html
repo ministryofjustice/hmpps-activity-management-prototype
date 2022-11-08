@@ -25,12 +25,12 @@ Activities Management prototype
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-three-quarters">
 		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-			Record attendance for Giancarlo Biaz
+			Record attendance for {{(data['firstname'] + " " + data['surname']) if data['firstname'].length and data['surname'].length else "James Hendricks"}}
 		</h1>
 
 		<form>
 			<div class="govuk-inset-text">
-				Workshop, 13:00&thinsp;&ndash;&thinsp;15:30
+				{{data['activity'] or "Workshop"}}, 13:00&thinsp;&ndash;&thinsp;15:30
 			</div>
 
 			{{ govukRadios({
