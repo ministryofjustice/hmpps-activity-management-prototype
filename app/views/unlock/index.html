@@ -6,22 +6,22 @@ Activities Management prototype
 {% endblock %}
 
 {% block header %}
-  {{ govukHeader({
-    homepageUrl: "/",
-    serviceName: serviceName,
-    serviceUrl: "/",
-    containerClasses: "govuk-width-container",
-    navigation: [
-    {
-      text: "Create and allocate",
-      href: "/"
-    },
-    {
-      text: "Unlock and attend",
-      href: "/unlock",
-      active: true
-    }]
-  }) }}
+{{ govukHeader({
+  homepageUrl: "/",
+  serviceName: serviceName,
+  serviceUrl: "/",
+  containerClasses: "govuk-width-container",
+  navigation: [
+  {
+    text: "Create and allocate",
+    href: "/"
+  },
+  {
+    text: "Unlock and attend",
+    href: "/unlock",
+    active: true
+  }]
+}) }}
 
 <div class="app-masthead">
   <div class="govuk-width-container">
@@ -53,37 +53,10 @@ Activities Management prototype
         <p class="govuk-body govuk-!-margin-bottom-2">User research:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li><a href="https://miro.com/app/board/uXjVPQEiC2s=/?moveToWidget=3458764536474157615&cot=14" target="_blank" class="govuk-link govuk-link--no-visited-state">UR</a></li>
-
         </ul>
-
-        <!-- <p class="govuk-body govuk-!-margin-bottom-2">Copydecks:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li><a href="" target="_blank" class="govuk-link govuk-link--no-visited-state">View the content docs </a></li>
-        </ul> -->
-
-        <!-- <p class="govuk-body govuk-!-margin-bottom-2">Flow diagrams:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li><a href="#">View the flow diagrams</a></li>
-        </ul> -->
 
       </div>
     </details>
-
-    <!-- <details class="govuk-details" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          Experimental designs &amp; ideas
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        <h3 class="govuk-heading-s">Experimental designs</h3>
-        <ul class="govuk-list govuk-list--bullet">
-          <li><a href="experimental/whereabouts" class="govuk-link govuk-link--no-visited-state">Whereabouts home page</a></li>
-          <li><a href="experimental/select-residential-locations" class="govuk-link govuk-link--no-visited-state">Generate multiple unlock lists</a></li>
-          <li><a href="experimental/select-activity-locations" class="govuk-link govuk-link--no-visited-state">Generate multiple activity attendance lists</a></li>
-        </ul>
-      </div>
-    </details> -->
 
     <h2 class="govuk-heading-l govuk-!-margin-bottom-4">
       Prototype versions
@@ -100,13 +73,48 @@ Activities Management prototype
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <td class="govuk-table__cell" >
-            <!-- <a href="/unlock/version-1" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 1</a> -->
+            <a href="/unlock/version-2" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a>
+          </td>
+
+          <td class="govuk-table__cell" >
+            <strong class="govuk-tag govuk-tag--blue">
+              In design
+            </strong>
+          </td>
+
+          <td class="govuk-table__cell" >
+            <h3 class="govuk-heading-s">
+              Whereabouts tiles
+            </h3>
+            <p>
+              Navigation tiles on the <a href="version-2/whereabouts" class="govuk-link--no-visited-state">main Whereabouts page</a> have been updated:
+            </p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li><a href="version-2/select-unlock-locations" class="govuk-link--no-visited-state">Get unlock list</a></li>
+              <li><a href="version-2/view-daily-schedules" class="govuk-link--no-visited-state">View daily schedules</a></li>
+              <li><a href="version-2/select-activity" class="govuk-link--no-visited-state">Attend an activity</a></li>
+              <li><a href="version-2/select-refusals-locations" class="govuk-link--no-visited-state">Mark refusals and sickness</a></li>
+              <li>Attendance data</li>
+              <li>Add bulk appointments</li>
+            </ul>
+
+            <p>
+              Some tiles link to revised 'selection' pages where users can choose the parameters for the subsequent 'list' pages.
+            </p>
+            <p>
+              List pages all follow a similar design, but with small differences to cater for different user needs.
+            </p>
+          </td>
+        </tr>
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
             Version 1
           </td>
 
           <td class="govuk-table__cell" >
             <strong class="govuk-tag govuk-tag--green">
-              In design
+              Ready for UR
             </strong>
           </td>
 
@@ -118,21 +126,21 @@ Activities Management prototype
               A few concepts showing how filters could be iterated upon, including more filter parameters and left-aligned filter components.
             </p>
             <ul class="govuk-list govuk-list--bullet">
-              <li><a href="version-1/unlock-list--left-filters-1">Left-aligned vertical filters – concept 1</a></li>
-              <li><a href="version-1/unlock-list--left-filters-2">Left-aligned vertical filters – concept 2</a></li>
-              <li><a href="version-1/unlock-list--horizontal-filters">Horizontal filters (with toggle)</a></li>
+              <li><a href="version-1/unlock-list--left-filters-1" class="govuk-link--no-visited-state">Left-aligned vertical filters – concept 1</a></li>
+              <li><a href="version-1/unlock-list--left-filters-2" class="govuk-link--no-visited-state">Left-aligned vertical filters – concept 2</a></li>
+              <li><a href="version-1/unlock-list--horizontal-filters" class="govuk-link--no-visited-state">Horizontal filters (with toggle)</a></li>
             </ul>
             
-             <h3 class="govuk-heading-s">
+            <h3 class="govuk-heading-s">
               Whereabouts navigation tiles:
             </h3>
             <p>
               How could we present Whereabouts functionality?
             </p>
             <ul class="govuk-list govuk-list--bullet">
-              <li><a href="version-1/whereabouts-as-is">Whereabouts as-is</a></li>
-              <li><a href="version-1/whereabouts-concept-1">Whereabouts tiles concept 1</a></li>
-              <li><a href="version-1/whereabouts-concept-2">Whereabouts tiles concept 2</a></li>
+              <li><a href="version-1/whereabouts-as-is" class="govuk-link--no-visited-state">Whereabouts as-is</a></li>
+              <li><a href="version-1/whereabouts-concept-1" class="govuk-link--no-visited-state">Whereabouts tiles concept 1</a></li>
+              <li><a href="version-1/whereabouts-concept-2" class="govuk-link--no-visited-state">Whereabouts tiles concept 2</a></li>
             </ul>
 
             <h3 class="govuk-heading-s">
@@ -145,11 +153,10 @@ Activities Management prototype
               Make sure to use your browser's print functionality to see the print version rather than the web one.
             </p>
             <ul class="govuk-list govuk-list--bullet">
-              <li><a href="version-1/print-table-concept-1">Printable table concept</a></li>
+              <li><a href="version-1/print-table-concept-1" class="govuk-link--no-visited-state">Printable table concept</a></li>
             </ul>
           </td>
         </tr>
-
       </tbody>
     </table>
 
