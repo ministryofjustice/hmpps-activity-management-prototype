@@ -6,6 +6,13 @@ const router = express.Router()
 		res.redirect(req.version + '/whereabouts')
 	});
 
+	router.post('/select-unlock-locations', function(req, res) {
+		res.redirect('unlock-list')
+	});
+
+	router.post('/select-activity', function(req, res) {
+		res.redirect('attendance-list')
+	});
 	
 	
-module.exports = router
+	module.exports = router

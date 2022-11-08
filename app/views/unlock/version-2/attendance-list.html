@@ -25,13 +25,15 @@ Activities Management prototype
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-three-quarters">
 		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-			Unlock list
+			Attendance list
 			<span class="govuk-caption-l">Monday 31st October - AM</span>
 		</h1>
 		<!-- <p class="govuk-!-margin-top-0">
 			<a href="#">Select another residential location</a>
 		</p> -->
 	</div>
+
+	{{periodStart}}
 	<div class="govuk-grid-column-one-quarter">
 		<p class="govuk-body" style="text-align: right;">
 			{{govukButton({
@@ -66,9 +68,6 @@ Activities Management prototype
 			<th class="govuk-table__cell">
 				<a href="#">Location</a>
 			</th>
-            <!-- <th class="govuk-table__cell">
-				Prison number
-			</th> -->
 			<th class="govuk-table__cell">
 				Relevant alerts
 			</th>
@@ -78,9 +77,9 @@ Activities Management prototype
 			<th class="govuk-table__cell">
 				<a href="#">Other activities</a>
 			</th>
-			<!-- <th class="govuk-table__cell">
+			<th class="govuk-table__cell">
 				<a href="#">Attendance</a>
-			</th> -->
+			</th>
 		</tr>
 	</thead>
 	<tbody class="govuk-table__body">
@@ -103,9 +102,6 @@ Activities Management prototype
 			<td class="govuk-table__cell">
 				2-3-014
 			</td>
-            <!-- <td class="govuk-table__cell">
-				
-            </td> -->
             <td class="govuk-table__cell">
             	<div class="alerts"></div>
             </td>
@@ -123,13 +119,13 @@ Activities Management prototype
             <td class="govuk-table__cell">
             	<ul></ul>
             </td>
-            <!-- <td class="govuk-table__cell">
+            <td class="govuk-table__cell">
             	{% if loop.index == 2 %}
             	<a href="modal-attended" class="govuk-link--no-visited-state" data-modal>Refused to attend</a>
             	{% else %}
             	<a href="modal-empty" class="govuk-link--no-visited-state govuk-button govuk-!-margin-bottom-0 govuk-!-font-size-16" data-modal>Add</a>
             	{% endif %}
-            </td> -->
+            </td>
         </tr>
         {% endfor %}
     </tbody>
