@@ -23,22 +23,30 @@ Activities Management prototype
 {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-three-quarters">
+	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 			Unlock list
-			<span class="govuk-caption-l">Monday 31st October - AM</span>
+			<span class="govuk-caption-l">Monday 31st October - {{data['time-period'] or "AM"}}</span>
 		</h1>
 		<!-- <p class="govuk-!-margin-top-0">
 			<a href="#">Select another residential location</a>
 		</p> -->
 	</div>
-	<div class="govuk-grid-column-one-quarter">
-		<p class="govuk-body" style="text-align: right;">
+	<div class="govuk-grid-column-one-third">
+		<div class="govuk-button-group" style="text-align: right;">
+			{{ govukButton({
+				text: "Download list",
+				classes: "govuk-button--secondary",
+				attributes: {
+					style: "margin-left: auto;"
+				}
+			}) }}
+
 			{{govukButton({
 				text: "Print this page",
 				classes: "govuk-button--secondary"
 			})}}
-		</p>
+		</div>
 	</div>
 </div>
 
@@ -53,14 +61,6 @@ Activities Management prototype
 						id: "filter-toggle"
 					}
 				}) }}
-				<!-- {{ govukButton({
-					attributes: {
-						id: "attendance-btn"
-					},
-					text: "Record attendance",
-					classes: "govuk-!-margin-bottom-0",
-					href: "attendance-concept-1"
-				}) }} -->
 			</div>
 		</div>
 	</div>
@@ -93,217 +93,211 @@ Activities Management prototype
 	</div>
 </div>
 <div class="app-filter-area" id="filters" tabindex=0>
-	<fieldset class="govuk-fieldset">
-		<legend class="govuk-visually-hidden">
-			Card brand
-		</legend>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+			<h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+				Filters
+			</h2>
+			<div class="govuk-grid-row govuk-!-margin-bottom-2">
+				<div class="govuk-grid-column-full govuk-!-margin-bottom-1" style="vertical-align: top;">
+					{{govukInput({
+						formGroup: {
+							classes: "govuk-!-display-inline-block"
+						},
+						classes: "govuk-input--width-10",
+						value: "01/11/2022",
+						label: {
+							text: "Date",
+							classes: "govuk-label--s"
+						}
+					})}}
+					{{ govukSelect({
+						attributes: {
+							"data-enhance-multiple": ""
+						},
+						formGroup: {
+							classes: "govuk-!-display-inline-block"
+						},
+						label: {
+							text: "Period",
+							classes: "govuk-label--s"
+						},
+						idPrefix: 'period',
+						name: 'period[]',
+						heading: {
+							text: 'Period'
+						},
+						items: [{
+							text: 'All',
+							id: 'bulgaria',
+							value: 'bulgaria'
+						},
+						{
+							text: 'Morning (AM)',
+							id: 'all',
+							value: 'all'
+						},
+						{
+							text: 'Afternoon (PM)',
+							id: 'austria',
+							value: 'austria'
+						},
+						{
+							text: 'Evening (ED)',
+							id: 'belgium',
+							value: 'belgium'
+						}]
+					}) }}
 
-		<div class="govuk-grid-row">
-			<div class="govuk-grid-column-full">
-				<h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
-					Filters
-				</h2>
-				<div class="govuk-grid-row govuk-!-margin-bottom-2">
-					<div class="govuk-grid-column-full govuk-!-margin-bottom-1" style="vertical-align: top;">
-						{{govukInput({
-							formGroup: {
-								classes: "govuk-!-display-inline-block"
-							},
-							classes: "govuk-input--width-10",
-							value: "01/11/2022",
-							label: {
-								text: "Date",
-								classes: "govuk-label--s"
-							}
-						})}}
-						{{ govukSelect({
-							attributes: {
-								"data-enhance-multiple": ""
-							},
-							formGroup: {
-								classes: "govuk-!-display-inline-block"
-							},
-							label: {
-								text: "Period",
-								classes: "govuk-label--s"
-							},
-							idPrefix: 'period',
-							name: 'period[]',
-							heading: {
-								text: 'Period'
-							},
-							items: [{
-								text: 'All',
-								id: 'bulgaria',
-								value: 'bulgaria'
-							},
-							{
-								text: 'Morning (AM)',
-								id: 'all',
-								value: 'all'
-							},
-							{
-								text: 'Afternoon (PM)',
-								id: 'austria',
-								value: 'austria'
-							},
-							{
-								text: 'Evening (ED)',
-								id: 'belgium',
-								value: 'belgium'
-							}]
-						}) }}
-
-						<fieldset class="govuk-fieldset govuk-!-display-inline-block" style="width: 280px; position: relative; top: 14px;">
-							<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-								Sub-locations
-							</legend>
-							<div class="dropdown" data-control="checkbox-dropdown">
-								<label class="dropdown-label">All sub-locations</label>
-								<div class="dropdown-list">
-									{{ govukCheckboxes({
-										formGroup: {
-											classes: "govuk-!-margin-0"
-										},
-										classes: "govuk-checkboxes--small",
-										name: "waste",
-										items: [
-										{
-											text: 'Landing 1',
-											id: 'landing-1',
-											value: '1'
-										},
-										{
-											text: 'Landing 2',
-											id: 'landing-2',
-											value: '2'
-										},
-										{
-											text: 'Landing 3',
-											id: 'landing-3',
-											value: '3'
-										},
-										{
-											text: 'Landing 4',
-											id: 'landing-4',
-											value: '4'
-										},
-										{
-											text: 'Landing 5',
-											id: 'landing-5',
-											value: '5'
-										}]
-									}) }}
-								</div>
+					<fieldset class="govuk-fieldset govuk-!-display-inline-block" style="width: 280px; position: relative; top: 14px;">
+						<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+							Sub-locations
+						</legend>
+						<div class="dropdown" data-control="checkbox-dropdown">
+							<label class="dropdown-label">All sub-locations</label>
+							<div class="dropdown-list">
+								{{ govukCheckboxes({
+									formGroup: {
+										classes: "govuk-!-margin-0"
+									},
+									classes: "govuk-checkboxes--small",
+									name: "waste",
+									items: [
+									{
+										text: 'Landing 1',
+										id: 'landing-1',
+										value: '1'
+									},
+									{
+										text: 'Landing 2',
+										id: 'landing-2',
+										value: '2'
+									},
+									{
+										text: 'Landing 3',
+										id: 'landing-3',
+										value: '3'
+									},
+									{
+										text: 'Landing 4',
+										id: 'landing-4',
+										value: '4'
+									},
+									{
+										text: 'Landing 5',
+										id: 'landing-5',
+										value: '5'
+									}]
+								}) }}
 							</div>
-						</fieldset>
+						</div>
+					</fieldset>
 
-						{{ govukSelect({
-							formGroup: {
-								classes: "govuk-!-display-inline-block"
-							},
-							label: {
-								text: "Activities",
-								classes: "govuk-label--s"
-							},
-							idPrefix: 'activities',
-							name: 'activity[]',
-							heading: {
-								text: 'Activities'
-							},
-							items: [{
-								text: 'All activities',
-								id: 'all',
-								value: 'all'
-							},
-							{
-								text: '08:15 - D WING PID FT',
-								id: 'austria',
-								value: 'austria'
-							},
-							{
-								text: '08:15 - AM AWAITING ALLOCATION',
-								id: 'belgium',
-								value: 'belgium'
-							},
-							{
-								text: '08:15 - A WING AM CLEANER',
-								id: 'bulgaria',
-								value: 'bulgaria'
-							}]
-						}) }}
-						{{ govukSelect({
-							formGroup: {
-								classes: "govuk-!-display-inline-block"
-							},
-							label: {
-								text: "Attendance",
-								classes: "govuk-label--s"
-							},
-							idPrefix: 'attendance',
-							name: 'attendance[]',
-							heading: {
-								text: 'Attendance'
-							},
-							items: [{
-								text: 'All',
-								id: 'all',
-								value: 'all'
-							},
-							{
-								text: 'Attended',
-								id: 'attended',
-								value: 'austria'
-							},
-							{
-								text: 'Not attended',
-								id: 'not-attended',
-								value: 'belgium'
-							},
-							{
-								text: 'Unaccounted for',
-								id: 'unaccounted-for',
-								value: 'bulgaria'
-							}]
-						}) }}
-						{{ govukSelect({
-							formGroup: {
-								classes: "govuk-!-display-inline-block"
-							},
-							label: {
-								text: "Staying or leaving",
-								classes: "govuk-label--s"
-							},
-							idPrefix: 'attendance',
-							name: 'attendance[]',
-							heading: {
-								text: 'Staying or leaving'
-							},
-							items: [{
-								text: 'All',
-								id: 'all',
-								value: 'all'
-							},
-							{
-								text: 'Staying',
-								id: 'attended',
-								value: 'austria'
-							},
-							{
-								text: 'Leaving',
-								id: 'not-attended',
-								value: 'belgium'
-							}]
-						}) }}
-					</div>
+					{{ govukSelect({
+						formGroup: {
+							classes: "govuk-!-display-inline-block"
+						},
+						label: {
+							text: "Activities",
+							classes: "govuk-label--s"
+						},
+						idPrefix: 'activities',
+						name: 'activity[]',
+						heading: {
+							text: 'Activities'
+						},
+						items: [{
+							text: 'All activities',
+							id: 'all',
+							value: 'all'
+						},
+						{
+							text: '08:15 - D WING PID FT',
+							id: 'austria',
+							value: 'austria'
+						},
+						{
+							text: '08:15 - AM AWAITING ALLOCATION',
+							id: 'belgium',
+							value: 'belgium'
+						},
+						{
+							text: '08:15 - A WING AM CLEANER',
+							id: 'bulgaria',
+							value: 'bulgaria'
+						}]
+					}) }}
+					{{ govukSelect({
+						formGroup: {
+							classes: "govuk-!-display-inline-block"
+						},
+						label: {
+							text: "Attendance",
+							classes: "govuk-label--s"
+						},
+						idPrefix: 'attendance',
+						name: 'attendance[]',
+						heading: {
+							text: 'Attendance'
+						},
+						items: [{
+							text: 'All',
+							id: 'all',
+							value: 'all'
+						},
+						{
+							text: 'Attended',
+							id: 'attended',
+							value: 'austria'
+						},
+						{
+							text: 'Not attended',
+							id: 'not-attended',
+							value: 'belgium'
+						},
+						{
+							text: 'Unaccounted for',
+							id: 'unaccounted-for',
+							value: 'bulgaria'
+						}]
+					}) }}
+					{{ govukSelect({
+						formGroup: {
+							classes: "govuk-!-display-inline-block"
+						},
+						label: {
+							text: "Staying or leaving",
+							classes: "govuk-label--s"
+						},
+						idPrefix: 'attendance',
+						name: 'attendance[]',
+						heading: {
+							text: 'Staying or leaving'
+						},
+						items: [{
+							text: 'All',
+							id: 'all',
+							value: 'all'
+						},
+						{
+							text: 'Staying',
+							id: 'attended',
+							value: 'austria'
+						},
+						{
+							text: 'Leaving',
+							id: 'not-attended',
+							value: 'belgium'
+						}]
+					}) }}
 				</div>
-				{{govukButton({
-					text: "Apply filters",
-					classes: "govuk-!-margin-bottom-2"
-				})}}
 			</div>
+			{{govukButton({
+				text: "Apply filters",
+				classes: "govuk-!-margin-bottom-2"
+			})}}
 		</div>
-	</fieldset>
+	</div>
 </div>
 
 <h2 class="govuk-heading-m govuk-!-margin-top-0">23 prisoners</h2>
@@ -311,10 +305,40 @@ Activities Management prototype
 <div class="app-filter-area" id="filters" tabindex=0>
 	<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold">Showing</span>
 	<ul class="app-filter-tag-list">
-		<li class="govuk-tag govuk-tag--filter">D WING PID FT</li>
-		<li class="govuk-tag govuk-tag--filter">Landing 1</li>
-		<li class="govuk-tag govuk-tag--filter">Landing 2</li>
-		<li class="govuk-tag govuk-tag--filter">Unaccounted for</li>
+		{% for location in data['locations'] %}
+		{% if location == "Houseblock 1" %}
+		
+		{% if data['houseblock-1-sublocations'].length %}
+		{% for sublocation in data['houseblock-1-sublocations'] %}
+		<li class="govuk-tag govuk-tag--filter">{{location}} - {{sublocation}}</li>
+		{% endfor %}
+		{% else %}
+		<li class="govuk-tag govuk-tag--filter">{{location}}</li>
+		{% endif %}
+
+		{% elif location == "Houseblock 2" %}
+		
+		{% if data['houseblock-2-sublocations'].length %}
+		{% for sublocation in data['houseblock-2-sublocations'] %}
+		<li class="govuk-tag govuk-tag--filter">{{location}} - {{sublocation}}</li>
+		{% endfor %}
+		{% else %}
+		<li class="govuk-tag govuk-tag--filter">{{location}}</li>
+		{% endif %}
+		
+		{% elif location == "Houseblock 3" %}
+		
+		{% if data['houseblock-3-sublocations'].length %}
+		{% for sublocation in data['houseblock-3-sublocations'] %}
+		<li class="govuk-tag govuk-tag--filter">{{location}} - {{sublocation}}</li>
+		{% endfor %}
+		{% else %}
+		<li class="govuk-tag govuk-tag--filter">{{location}}</li>
+		{% endif %}
+		
+		{% endif %}
+
+		{% endfor %}
 	</ul>
 </div>
 
@@ -328,21 +352,15 @@ Activities Management prototype
 			<th class="govuk-table__cell">
 				<a href="#">Location</a>
 			</th>
-            <!-- <th class="govuk-table__cell">
-				Prison number
-			</th> -->
 			<th class="govuk-table__cell">
 				Relevant alerts
 			</th>
 			<th class="govuk-table__cell">
-				<a href="#">Activities</a>
+				<a href="#">Session</a>
 			</th>
 			<th class="govuk-table__cell">
 				<a href="#">Other activities</a>
 			</th>
-			<!-- <th class="govuk-table__cell">
-				<a href="#">Attendance</a>
-			</th> -->
 		</tr>
 	</thead>
 	<tbody class="govuk-table__body">
