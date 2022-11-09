@@ -41,6 +41,13 @@ Activities Management prototype
 				id: "mark-all-attended"
 			}
 		})}}
+		{{govukButton({
+			text: "Mark all as not attended",
+			classes: "govuk-button--secondary govuk-!-margin-bottom-0 govuk-!-margin-left-2",
+			attributes: {
+				id: "mark-all-not-attended"
+			}
+		})}}
 		{% endif %}
 
 		<form>
@@ -99,12 +106,25 @@ Activities Management prototype
 					]
 				}) }}
 
+				{% set bonusTextHtml %}
+				{{ govukTextarea({
+					name: "more-detail",
+					id: "more-detail",
+					label: {
+						text: "Can you provide more detail?"
+					}
+				}) }}
+				{% endset %}
+
 				{{ govukCheckboxes({
 					name: "bonus-" + prisoner._id,
 					items: [
 					{
 						value: "true",
-						text: "Award " + prisoner.name.firstname + " " + prisoner.name.surname + " a bonus payment"
+						text: "Award " + prisoner.name.firstname + " " + prisoner.name.surname + " a bonus payment",
+						conditional: {
+							html: bonusTextHtml
+						}
 					}
 					]
 				}) }}
@@ -181,13 +201,37 @@ Activities Management prototype
 			}
 		})
 
-		$('#mark-all-attended').on('click', function (event) {
-			event.preventDefault()
-
+		function markAllAttended() {
 			$(attendanceRadio + "[value='yes']").each(function(){
 				$(this).click().attr('checked', true)
 			})
+		}
+		function markAllNotAttended() {
+			$(attendanceRadio + "[value='no']").each(function(){
+				$(this).click().attr('checked', true)
+			})
+		}
+		$('#mark-all-attended').on('click', function (event) {
+			event.preventDefault()
+			markAllAttended()
 		})
+		$('#mark-all-not-attended').on('click', function (event) {
+			event.preventDefault()
+			markAllNotAttended()
+		})
+	})
+</script>
+
+{% if data['config']['record-attendance-pattern'] == 'dropdown-button' %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		let attendAll = "{{data['attendance-action']}}"
+		if(attendAll == "attended"){
+			markAllAttended()
+		} else if(attendAll == "not-attended"){
+			markAllNotAttended()
+		}
 	});
 </script>
+{% endif %}
 {% endblock %}
