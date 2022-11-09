@@ -37,81 +37,25 @@ router.post(version +'/create/activity-type-select-with-category', function(req,
 
 router.post(version +'/create/activity-name', function(req, res) {
 	{
-		res.redirect(version +'/create/activity-start-date')
+		res.redirect(version +'/create/activity-name-2')
 	}
 });
 
-router.post(version +'/create/activity-start-date', function(req, res) {
+router.post(version +'/create/activity-name-2', function(req, res) {
 	{
-		res.redirect(version +'/create/activity-start-time')
+		res.redirect(version +'/create/activity-incentive-level')
 	}
-		});
+});
 
-	//Start of recurring times / sessions
-	router.post(version +'/create/addTime', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-start-time-one-added')
-		}
-	});
-	router.post(version +'/create/addTime2', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-start-time-two-added')
-		}
-	});
-	router.post(version +'/create/addTime3', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-start-time-three-added')
-		}
-	});
-
-	router.post(version +'/create/activity-start-time', function(req, res) {
-		{
-			if (req.session.data.setupLocation == 'dashboard')
-			{
-				res.redirect(version +'/create/activity-location-dashboard-1')
-			}
-			else {
-				res.redirect(version +'/create/activity-location-dropdown')
-			}
-		}
-	});
-
-//if dashboard view clicked on setup page
+router.post(version +'/create/activity-incentive-level', function(req, res) {
+	{
+		res.redirect(version +'/create/activity-risk-assessment')
+	}
+});
 
 
-	router.post(version +'/create/activity-start-time-one-added', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-location-dropdown')
-		}
-	});
-	router.post(version +'/create/activity-start-time-two-added', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-location-dropdown')
-		}
-	});
-	router.post(version +'/create/activity-start-time-three-added', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-location-dropdown')
-		}
-	});
 
-	router.post(version +'/create/activity-location-dropdown', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-capacity')
-		}
-	});
 
-	router.post(version +'/create/activity-capacity', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-incentive-level')
-		}
-	});
-
-	router.post(version +'/create/activity-capacity', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-incentive-level')
-		}
-	});
 
 
 	router.post(version +'/create/activity-incentive-level', function(req, res) {
@@ -204,6 +148,8 @@ router.post(version +'/create/activity-start-date', function(req, res) {
 			res.redirect(version +'/create/activity-repeat-check-your-answers')
 		}
 	});
+
+
 
 
 
@@ -382,6 +328,81 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 	});
 
 ///////END CREATE CHECK YOUR ANSWERS///////////////
+
+
+
+
+
+//OLD CREATE TIME FUNCTIONS
+
+//TIME
+	//Start of recurring times / sessions
+	router.post(version +'/create/addTime', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-start-time-one-added')
+		}
+	});
+	router.post(version +'/create/addTime2', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-start-time-two-added')
+		}
+	});
+	router.post(version +'/create/addTime3', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-start-time-three-added')
+		}
+	});
+
+	router.post(version +'/create/activity-start-time', function(req, res) {
+		{
+			if (req.session.data.setupLocation == 'dashboard')
+			{
+				res.redirect(version +'/create/activity-location-dashboard-1')
+			}
+			else {
+				res.redirect(version +'/create/activity-location-dropdown')
+			}
+		}
+	});
+
+//if dashboard view clicked on setup page
+
+
+	router.post(version +'/create/activity-start-time-one-added', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-location-dropdown')
+		}
+	});
+	router.post(version +'/create/activity-start-time-two-added', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-location-dropdown')
+		}
+	});
+	router.post(version +'/create/activity-start-time-three-added', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-location-dropdown')
+		}
+	});
+
+	router.post(version +'/create/activity-location-dropdown', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-capacity')
+		}
+	});
+
+	router.post(version +'/create/activity-capacity', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-incentive-level')
+		}
+	});
+
+	router.post(version +'/create/activity-capacity', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-incentive-level')
+		}
+	});
+
+	//TIME
 
 
 ///////END CREATE//////////
