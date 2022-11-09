@@ -1,0 +1,114 @@
+
+{% extends "layout.html" %}
+{% set serviceName = "" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Choose an existing activity for 'Maths' or create a new one
+    </h1>
+    <p>We have found the following existing activities which may match the name you entered. Either build a new schedule for an existing activity or continue to <a href="#">create a new activity</a>.</p>
+  </div>
+
+
+<table class="govuk-table" data-module="moj-sortable-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:25%">Activity name</th>
+      <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:25%">Number of schedules</th>
+      <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:22%">Status</th>
+      <th scope="col" class="govuk-table__header">Select exisiting activity</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__cell">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Maths beginner
+        </a>
+      </td>
+      <td scope="row" class="govuk-table__cell"> 1</td>
+      <td scope="row" class="govuk-table__cell">Active</td>
+      <td scope="row" class="govuk-table__cell">
+      <form method="post" action="">
+        <input type="hidden" name="activityCreateName" value="Maths beginner" />
+        <a href="activity-dashboard-5-1">
+        <button class="govuk-button" data-module="govuk-button" style="margin-bottom:5px;">
+        Build a new schedule for this activity
+        </button>
+        </form>
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__cell">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Maths Level 1
+        </a>
+      </td>
+      <td scope="row" class="govuk-table__cell"> 1</td>
+      <td scope="row" class="govuk-table__cell">Active</td>
+      <td scope="row" class="govuk-table__cell">
+      <form method="post" action="">
+        <input type="hidden" name="activityCreateName" value="Maths Level 1" />
+        <a href="activity-dashboard-5-1">
+        <button class="govuk-button" data-module="govuk-button" style="margin-bottom:5px;">
+        Build a new schedule for this activity
+        </button>
+        </form>
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__cell">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Maths Level 2
+        </a>
+      </td>
+      <td scope="row" class="govuk-table__cell"> 4</td>
+      <td scope="row" class="govuk-table__cell">Active</td>
+      <td scope="row" class="govuk-table__cell">
+      <form method="post" action="">
+        <input type="hidden" name="activityCreateName" value="Maths Level 2" />
+        <a href="activity-dashboard-5-1">
+        <button class="govuk-button" data-module="govuk-button" style="margin-bottom:5px;">
+        Build a new schedule for this activity
+        </button>
+        </form>
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__cell">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Maths Level 3
+        </a>
+      </td>
+      <td scope="row" class="govuk-table__cell"> 3</td>
+      <td scope="row" class="govuk-table__cell">Active</td>
+      <td scope="row" class="govuk-table__cell">
+      <form method="post" action="">
+        <input type="hidden" name="activityCreateName" value="Maths Level 2" />
+        <a href="activity-dashboard-5-1">
+        <button class="govuk-button" data-module="govuk-button" style="margin-bottom:5px;">
+        Build a new schedule for this activity
+        </button>
+        </form>
+      </td>
+    </tr>
+
+
+  </tbody>
+</table>
+<form method="post" action="">
+  <input type="hidden" name="activityCreateName" value="Maths Level 1" />
+  <a href="activity-dashboard-5-1">
+  <button class="govuk-button" data-module="govuk-button" style="margin-bottom:5px;">
+  Create a new activity
+  </button>
+  </form>
+</div>
+{% endblock %}
