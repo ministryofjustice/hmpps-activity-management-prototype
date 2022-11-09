@@ -34,12 +34,15 @@ const prisoners = require('../../../data/prisoners-list-1')
 
 	// ATTENDANCE DETAILS
 	router.get('/add-attendance-details', function(req, res) {
-		let selectedPrisoners = req.session.data['selected-prisoners']
-		let filteredPrisoners = prisoners.filter(function(prisoner){
-			return selectedPrisoners.indexOf(prisoner._id) > -1;
-		});
+		let filteredPrisoners = []
 
-		res.render('unlock/' + req.version + '/add-attendance-details', { filteredPrisoners, selectedPrisoners })
+		if( req.session.data['selected-prisoners'] ) {
+			filteredPrisoners = prisoners.filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
+		} else {
+			filteredPrisoners = prisoners.slice(0,3)
+		}
+
+		res.render('unlock/' + req.version + '/add-attendance-details', { filteredPrisoners })
 	});
 
 	// ATTENDANCE DETAILS MULTIPLE

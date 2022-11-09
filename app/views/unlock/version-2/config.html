@@ -13,55 +13,15 @@ Activities Management prototype
 	<h1 class="govuk-heading-xl">
 		Prototype settings
 	</h1>
-	{{ govukRadios({
-		name: "config[attend-pattern]",
-		fieldset: {
-			legend: {
-				text: "Attendance pattern",
-				isPageHeading: true,
-				classes: "govuk-fieldset__legend--m"
-			}
-		},
-		items: [
-		{
-			value: "separate",
-			html: 'Separate journey <span class="govuk-tag govuk-tag--blue">Default</span>'
-		},
-		{
-			value: "modals",
-			text: "Modals"
-		}
-		]
-	}) }}
-
-	{{ govukRadios({
-		name: "config[select-activity-pattern]",
-		fieldset: {
-			legend: {
-				text: "Select activity pattern",
-				isPageHeading: true,
-				classes: "govuk-fieldset__legend--m"
-			}
-		},
-		items: [
-		{
-			value: "typeahead",
-			html: 'Typeahead search <span class="govuk-tag govuk-tag--blue">Default</span>'
-		},
-		{
-			value: "table",
-			text: "Table (by date)"
-		}
-		]
-	}) }}
-
+	{% set attendancePatternHtml %}
 	{{ govukRadios({
 		name: "config[record-attendance-pattern]",
+		classes: "govuk-radios--small",
 		fieldset: {
 			legend: {
 				text: "Record attendance pattern",
-				isPageHeading: true,
-				classes: "govuk-fieldset__legend--m"
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--s"
 			}
 		},
 		items: [
@@ -76,6 +36,52 @@ Activities Management prototype
 		{
 			value: "buttons",
 			text: "Separate buttons"
+		}
+		]
+	}) }}
+	{% endset %}
+
+	{{ govukRadios({
+		name: "config[attend-pattern]",
+		fieldset: {
+			legend: {
+				text: "Attendance pattern",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "separate",
+			html: 'Separate journey <span class="govuk-tag govuk-tag--blue">Default</span>',
+			conditional: {
+				html: attendancePatternHtml
+			}
+		},
+		{
+			value: "modals",
+			text: "Modals"
+		}
+		]
+	}) }}
+
+	{{ govukRadios({
+		name: "config[select-activity-pattern]",
+		fieldset: {
+			legend: {
+				text: "Select activity pattern",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "typeahead",
+			html: 'Typeahead search <span class="govuk-tag govuk-tag--blue">Default</span>'
+		},
+		{
+			value: "table",
+			text: "Table (by date)"
 		}
 		]
 	}) }}

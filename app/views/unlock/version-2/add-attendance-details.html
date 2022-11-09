@@ -33,6 +33,16 @@ Activities Management prototype
 			{% endif %}
 		</h1>
 
+		{% if filteredPrisoners.length > 1 %}
+		{{govukButton({
+			text: "Mark all as attended",
+			classes: "govuk-button--secondary govuk-!-margin-bottom-0",
+			attributes: {
+				id: "mark-all-attended"
+			}
+		})}}
+		{% endif %}
+
 		<form>
 			{% for prisoner in filteredPrisoners %}
 			<div class="prisoner">
@@ -156,6 +166,7 @@ Activities Management prototype
 			} else if ($(this).val() == 'yes') {
 				$(this).closest('.prisoner').find($(bonusCheckbox)).closest(formGroup).show()
 				$(this).closest('.prisoner').find($(paymentRadio)).attr('checked', false).closest(formGroup).hide()
+				$(this).closest('.prisoner').find($(payOverrideSelect)).closest(formGroup).hide()
 			} else {
 				$(this).closest('.prisoner').find($(bonusCheckbox)).attr('checked', false).closest(formGroup).hide()
 				$(this).closest('.prisoner').find($(paymentRadio)).attr('checked', false).closest(formGroup).hide()
@@ -168,6 +179,14 @@ Activities Management prototype
 			} else {
 				$(this).closest('.prisoner').find($(payOverrideSelect)).val($(payOverrideSelect + " option:first").val()).closest(formGroup).hide()
 			}
+		})
+
+		$('#mark-all-attended').on('click', function (event) {
+			event.preventDefault()
+
+			$(attendanceRadio + "[value='yes']").each(function(){
+				$(this).click().attr('checked', true)
+			})
 		})
 	});
 </script>
