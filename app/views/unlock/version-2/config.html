@@ -1,0 +1,42 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form method="post">
+	<h1 class="govuk-heading-xl">
+		Prototype settings
+	</h1>
+	{{ govukRadios({
+		name: "config[attend-pattern]",
+		fieldset: {
+			legend: {
+				text: "Attendance pattern",
+				isPageHeading: true,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "modals",
+			text: "Modals"
+		},
+		{
+			value: "separate",
+			text: "Separate journey (default)",
+			checked: true
+		}
+		]
+	}) }}
+
+	{{govukButton({
+		text: "Save and continue"
+	})}}
+</form>
+{% endblock %}

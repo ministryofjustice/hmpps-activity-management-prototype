@@ -1,0 +1,101 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts-concept-2"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-three-quarters">
+		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+			Record attendance
+			<span class="govuk-caption-l">3 prisoners</span>
+		</h1>
+
+		<form>
+			{% for row in range(0, 3) %}
+			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+			
+			<h2 class="govuk-heading-l">
+				<span class="govuk-caption-l">Prisoner {{loop.index}}</span>
+				Biaz, Giancarlo
+				<span class="govuk-caption-m">G6128WK</span>
+			</h2>
+
+			<div class="govuk-inset-text">
+				Workshop, 13:00&thinsp;&ndash;&thinsp;15:30
+			</div>
+
+			{{ govukRadios({
+				name: "attend-" + loop.index,
+				classes: "govuk-radios--inline",
+				fieldset: {
+					legend: {
+						text: "Did Giancarlo Biaz attend?"			}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes"
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
+
+				{{ govukRadios({
+					name: "pay-" + loop.index,
+					classes: "govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Do you want to pay Giancarlo Biaz?"			}
+						},
+						items: [
+						{
+							value: "yes",
+							text: "Yes"
+						},
+						{
+							value: "no",
+							text: "No"
+						}
+						]
+					}) }}
+
+					{{ govukTextarea({
+						name: "more-detail",
+						id: "more-detail",
+						label: {
+							text: "Enter more details"
+						}
+					}) }}
+					{% endfor %}
+
+					<div class="govuk-button-group">
+						{{govukButton({
+							text: "Continue"
+						})}}
+					</div>
+				</form>
+			</div>
+		</div>
+		{% endblock %}

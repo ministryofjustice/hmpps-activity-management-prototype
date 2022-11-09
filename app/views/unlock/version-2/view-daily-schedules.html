@@ -1,0 +1,72 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+<div class="govuk-width-container">
+	{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+	{{ govukBreadcrumbs({
+		classes: "govuk-!-display-none-print",
+		items: [
+		{
+			text: "Digital Prison Services",
+			href: "#"
+		},
+		{
+			text: "Manage prisoner whereabouts",
+			href: "whereabouts-concept-2"
+		}
+		]
+	}) }}
+</div>
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-l">
+	View daily schedules
+</h1>
+<ul class="govuk-grid-row card-group">
+	<li class="govuk-grid-column-one-third card-group__item">
+		<div class="card card--clickable" data-test="view-activity-location">
+			<h2 class="govuk-heading-m card__heading">
+				<a class="govuk-link card__link" href="select-activity-locations">View by residential location</a>
+			</h2>
+			<p class="govuk-body card__description">View all activities for people living in a residential location.</p>
+		</div>
+	</li>
+	<li class="govuk-grid-column-one-third card-group__item">
+		<div class="card card--clickable" data-test="view-activity-location">
+			<h2 class="govuk-heading-m card__heading">
+				<a class="govuk-link card__link" href="/manage-prisoner-whereabouts/select-location">View by activity or appointment location</a>
+			</h2>
+			<p class="govuk-body card__description">View all activities in an activity or appointment location.</p>
+		</div>
+	</li>
+	<li class="govuk-grid-column-one-third card-group__item">
+		<div class="card card--clickable" data-test="view-all-appointments">
+			<h2 class="govuk-heading-m card__heading">
+				<a class="govuk-link card__link" href="/view-all-appointments">View all appointments</a>
+			</h2>
+			<p class="govuk-body card__description">View all appointments in your establishment.</p>
+		</div>
+	</li>
+	<li class="govuk-grid-column-one-third card-group__item">
+		<div class="card card--clickable" data-test="view-attendance-statistics">
+			<h2 class="govuk-heading-m card__heading">
+				<a class="govuk-link card__link" href="/manage-prisoner-whereabouts/attendance-reason-statistics">View prisoners unaccounted for</a>
+			</h2>
+			<p class="govuk-body card__description">View all prisoners not marked as attended or not attended.</p>
+		</div>
+	</li>
+</ul>
+{% endblock %}
+
+{% block pageScripts %}
+<script src="/public/javascripts/cards.js"></script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts-concept-2"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-three-quarters">
+		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+			Record attendance for {{(data['firstname'] + " " + data['surname']) if data['firstname'].length and data['surname'].length else "James Hendricks"}}
+		</h1>
+
+		<form>
+			<div class="govuk-inset-text">
+				{{data['activity'] or "Workshop"}}, 13:00&thinsp;&ndash;&thinsp;15:30
+			</div>
+
+			{{ govukRadios({
+				name: "attend-" + loop.index,
+				classes: "govuk-radios--inline",
+				fieldset: {
+					legend: {
+						text: "Did Giancarlo Biaz attend?"			}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes"
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
+
+				{{ govukRadios({
+					name: "pay-" + loop.index,
+					classes: "govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Do you want to pay Giancarlo Biaz?"			}
+						},
+						items: [
+						{
+							value: "yes",
+							text: "Yes"
+						},
+						{
+							value: "no",
+							text: "No"
+						}
+						]
+					}) }}
+
+					{{ govukTextarea({
+						name: "more-detail",
+						id: "more-detail",
+						label: {
+							text: "Enter more details"
+						}
+					}) }}
+
+					<div class="govuk-button-group">
+						{{govukButton({
+							text: "Continue"
+						})}}
+					</div>
+				</form>
+			</div>
+		</div>
+		{% endblock %}

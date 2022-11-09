@@ -195,6 +195,9 @@ if (useV6) {
   app.use('/public/v6/javascripts/govuk/', express.static(path.join(__dirname, '/node_modules/govuk_frontend_toolkit/javascripts/govuk/')))
 }
 
+app.locals.prisoners = require('./app/data/prisoners-list-1')
+
+
 // Automatically store all data users enter
 if (useAutoStoreData === 'true') {
   app.use(utils.autoStoreData)

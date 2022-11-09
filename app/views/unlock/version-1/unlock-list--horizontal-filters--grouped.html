@@ -1,0 +1,385 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts-concept-2"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-three-quarters">
+		<h1 class="govuk-heading-xl">
+			Houseblock A - All
+			<span class="govuk-caption-l">Monday 31st October - AM</span>
+		</h1>
+	</div>
+	<div class="govuk-grid-column-one-quarter">
+		<p class="govuk-body" style="text-align: right;">
+			⎙ <a href="#">Print this page</a>
+		</p>
+	</div>
+</div>
+
+<div class="govuk-!-padding-4 govuk-!-margin-bottom-5" style="background-color: #eee">
+	<h2 class="govuk-heading-m govuk-!-margin-top-0">
+		View by
+	</h2>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full govuk-!-margin-bottom-1">
+			{{govukInput({
+				formGroup: {
+					classes: "govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-margin-bottom-3"
+				},
+				classes: "govuk-input--width-10",
+				value: "01/11/2022",
+				label: {
+					text: "Date"
+				}
+			})}}
+			{{ govukSelect({
+				formGroup: {
+					classes: "govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-margin-bottom-3"
+				},
+				label: {
+					text: "Period"
+				},
+				idPrefix: 'period',
+				name: 'period[]',
+				heading: {
+					text: 'Period'
+				},
+				items: [{
+					text: 'All',
+					id: 'bulgaria',
+					value: 'bulgaria'
+				},
+				{
+					text: 'Morning (AM)',
+					id: 'all',
+					value: 'all'
+				},
+				{
+					text: 'Afternoon (PM)',
+					id: 'austria',
+					value: 'austria'
+				},
+				{
+					text: 'Evening (ED)',
+					id: 'belgium',
+					value: 'belgium'
+				}]
+			}) }}
+			{{ govukSelect({
+				formGroup: {
+					classes: "govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-margin-bottom-3"
+				},
+				label: {
+					text: "Activities"
+				},
+				idPrefix: 'activities',
+				name: 'activity[]',
+				heading: {
+					text: 'Activities'
+				},
+				items: [{
+					text: 'All activities',
+					id: 'all',
+					value: 'all'
+				},
+				{
+					text: '08:15 - D WING PID FT',
+					id: 'austria',
+					value: 'austria'
+				},
+				{
+					text: '08:15 - AM AWAITING ALLOCATION',
+					id: 'belgium',
+					value: 'belgium'
+				},
+				{
+					text: '08:15 - A WING AM CLEANER',
+					id: 'bulgaria',
+					value: 'bulgaria'
+				}]
+			}) }}
+			{{ govukSelect({
+				formGroup: {
+					classes: "govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-margin-bottom-3"
+				},
+				label: {
+					text: "Sub-locations"
+				},
+				idPrefix: 'sub-locations',
+				name: 'sub-locations[]',
+				heading: {
+					text: 'Sub-locations'
+				},
+				items: [{
+					text: 'All',
+					id: 'all',
+					value: 'all'
+				},
+				{
+					text: 'Landing 1',
+					id: 'landing-1',
+					value: 'austria'
+				},
+				{
+					text: 'Landing 2',
+					id: 'landing-2',
+					value: 'belgium'
+				},
+				{
+					text: 'Landing 3',
+					id: 'landing-3',
+					value: 'bulgaria'
+				},
+				{
+					text: 'Landing 4',
+					id: 'landing-4',
+					value: 'bulgaria'
+				},
+				{
+					text: 'Landing 5',
+					id: 'landing-5',
+					value: 'bulgaria'
+				}]
+			}) }}
+			{{ govukSelect({
+				formGroup: {
+					classes: "govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-margin-bottom-3"
+				},
+				label: {
+					text: "Attendance"
+				},
+				idPrefix: 'attendance',
+				name: 'attendance[]',
+				heading: {
+					text: 'Attendance'
+				},
+				items: [{
+					text: 'All',
+					id: 'all',
+					value: 'all'
+				},
+				{
+					text: 'Attended',
+					id: 'attended',
+					value: 'austria'
+				},
+				{
+					text: 'Not attended',
+					id: 'not-attended',
+					value: 'belgium'
+				},
+				{
+					text: 'Unaccounted for',
+					id: 'unaccounted-for',
+					value: 'bulgaria'
+				}]
+			}) }}
+		</div>
+	</div>
+
+	{{ govukButton({
+		text: "Filter",
+		classes: "govuk-!-margin-bottom-0"
+	})}}
+</div>
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-one-half">
+		<div class="govuk-button-group govuk-!-margin-top-5">
+			{{ govukButton({
+				attributes: {
+					id: "multi-attendance-btn",
+					"data-modal": "#attendance-modal",
+					"data-href": "modal-1"
+				},
+				text: "Quick attendance",
+				classes: "govuk-button--secondary"
+			}) }}
+
+			<!-- {{ govukButton({
+				text: "Save as draft",
+				classes: "govuk-button--secondary"
+			}) }} -->
+		</div>
+	</div>
+
+	<div class="govuk-grid-column-one-half">
+		<div style="text-align: right;">
+			<div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-left-3 govuk-!-margin-bottom-0" style="text-align: left">
+				<label class="govuk-label" name="sort-select">
+					Order by
+				</label>
+				<select id="sort-select" class="govuk-select">
+					<option value="lastName_ASC">Name (A-Z)</option>
+					<option value="lastName_DESC">Name (Z-A)</option>
+					<option value="cellLocation_ASC">Location (ascending)</option>
+					<option value="cellLocation_DESC">Location (descending)</option>
+					<option value="activity_ASC">Activity name (A-Z)</option>
+					<option value="activity_DESC">Activity name (Z-A)</option>
+				</select>
+			</div>
+			<div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-left-3 govuk-!-margin-bottom-0" style="text-align: left">
+				<label class="govuk-label">
+					Group by
+				</label>
+				<select class="govuk-select" id="group-by" name="select-grouping">
+					<option value="ungrouped">No grouping</option>
+					<option value="sublocation" selected>Sublocation</option>
+					<option value="activity">Activity</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% for row in range(0, 3) %}
+<h2 class="govuk-heading-m govuk-!-margin-top-0">Landing {{loop.index}} – 3 prisoners</h2>
+
+<table class="govuk-table app-whereabouts-table" data-module="moj-multi-select" data-multi-select-checkbox="#select-all-{{loop.index}}">
+	<thead class="govuk-table__head">
+		<tr>
+			<th class="govuk-table__header" scope="col" id="select-all-{{loop.index}}"></th>
+			<th class="govuk-table__cell">
+				<a href="#">Name</a>
+			</th>
+			<th class="govuk-table__cell">
+				<a href="#">Location</a>
+			</th>
+			<th class="govuk-table__cell">
+				Prison number
+			</th>
+			<th class="govuk-table__cell">
+				Relevant alerts
+			</th>
+			<th class="govuk-table__cell">
+				<a href="#">Activities</a>
+			</th>
+			<th class="govuk-table__cell">
+				<a href="#">Other activities</a>
+			</th>
+			<th class="govuk-table__cell">
+				<a href="#">Attendance</a>
+			</th>
+		</tr>
+	</thead>
+	<tbody class="govuk-table__body">
+		{% for row in range(0, 3) %}
+		<tr class="govuk-table__row">
+			<td class="govuk-table__cell">
+				<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+					<input type="checkbox" class="govuk-checkboxes__input" id="mountain-aconcagua">
+					<label class="govuk-label govuk-checkboxes__label" for="mountain-aconcagua">
+						<span class="govuk-visually-hidden">Select Surname, Forename</span>
+					</label>
+				</div>
+			</td>
+			<td class="govuk-table__cell" width="180">
+				<b>Surname</b>, Forename
+			</td>
+			<td class="govuk-table__cell">
+				2-3-014
+			</td>
+			<td class="govuk-table__cell">
+				G9545GV
+			</td>
+			<td class="govuk-table__cell">
+				<div class="alerts"></div>
+			</td>
+			<td class="govuk-table__cell">
+				{% if loop.index == 4 or loop.index == 5 or loop.index == 12 %}
+				08:15 - D WING PID FT
+				{% elif loop.index == 7 or loop.index == 9 %}
+				08:15 - AM AWAITING ALLOCATION
+				{% else %}
+				08:15 - A WING AM CLEANER
+				{% endif %}
+			</td>
+			<td class="govuk-table__cell">
+				<ul></ul>
+			</td>
+			<td class="govuk-table__cell">
+				<a href="modal-1" class="govuk-link--no-visited-state" data-modal>Record attendance</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endfor %}
+
+<div class="padding-top">
+	<div id="buttons" class="pure-u-md-12-12 padding-bottom">
+		<div id="buttons" class="buttons pull-right"><a id="printButton" data-test="print-button" class="sc-bcXHqe sc-ipEyDJ cVsHYs cQzbjF">Print this page</a></div>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a[data-modal]').click(function(event) {
+			event.preventDefault();
+			this.blur(); 
+			$.get(this.href, function(html) {
+				$(html).appendTo('body').modal({
+					showClose: false,
+					clickClose: false
+				});
+			});
+		});
+
+		$('#group-by').on('change', function() {
+			window.location = 'unlock-list--horizontal-filters'
+		})
+
+		$('#multi-attendance-btn:not(:disabled)').on('click', function(event) {
+			event.preventDefault();
+			this.blur(); 
+			$.get($(this).data('href'), function(html) {
+				$(html).appendTo('body').modal({
+					showClose: false,
+					clickClose: false
+				});
+			});
+		});
+
+		function toggleButtonState(btn) {
+			let checkbox = $('.app-whereabouts-table input[type="checkbox"]')
+			let count = checkbox.filter(':checked').length - $('th .moj-multi-select__checkbox input:checkbox:checked').length
+
+			if(checkbox.is(':checked')) {
+				btn.attr('disabled', false)
+				btn.html("Quick attendance (" + count + ")")
+			} else {
+				btn.attr('disabled', true)
+				btn.html("Quick attendance")
+			}
+		}
+
+		toggleButtonState($('#multi-attendance-btn'))
+		$('.app-whereabouts-table input[type="checkbox"]').on('change', function(){
+			toggleButtonState($('#multi-attendance-btn'))
+		})
+	})
+</script>
+{% endblock %}

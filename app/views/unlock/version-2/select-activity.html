@@ -1,0 +1,260 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts-concept-2"
+	}
+	]
+}) }}
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-l">
+	Choose activity or appointment details
+</h1>
+
+<form method="post">
+	<!-- <div class="govuk-form-group">
+		<label class="govuk-label govuk-label--m" for="date">
+			Date of activity
+		</label>
+		<div class="govuk-hint">
+			Today's date is {{ "_" | currentDate('d/M/yyyy') }}
+		</div>
+		<input class="govuk-input govuk-input--width-20 date-input undefined hasDatepicker" id="date" name="date" type="text" value="{{ "_" | currentDate('d/M/yyyy') }}" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
+	</div> -->
+
+	{{ govukRadios({
+		name: "times",
+		fieldset: {
+			legend: {
+				text: "Date of activity",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "morning",
+			text: "Today"
+		},
+		{
+			value: "morning",
+			text: "Yesterday"
+		},
+		{
+			value: "afternoon",
+			text: "A different date"
+		}
+		]
+	}) }}
+
+<!-- 	{{ govukRadios({
+		name: "times",
+		fieldset: {
+			legend: {
+				text: "Time period",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "morning",
+			text: "Morning (AM)"
+		},
+		{
+			value: "afternoon",
+			text: "Afternoon (PM)"
+		},
+		{
+			value: "evening",
+			text: "Evening (ED)"
+		}
+		]
+	}) }} -->
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			{% set activityHtml %}
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-!-font-weight-bold" for="by-activity">
+					Select an activity
+				</label>
+				<div id="by-activity-hint" class="govuk-hint">
+					Not all activities will show in this list. You’ll only see the activities happening at this time.
+				</div>
+				<select class="govuk-select" id="by-activity" name="activity" aria-describedby="by-activity-hint">
+					<option value="" selected=""></option>
+					<option value="Employability">Employability</option>
+					<option value="English">English</option>
+					<option value="Financial Capabilities">Financial Capabilities</option>
+					<option value="IT">IT</option>
+					<option value="Maths">Maths</option>
+					<option value="Practical Cleaning">Practical Cleaning</option>
+					<option value="Conferencing">Conferencing</option>
+					<option value="Coffee Shop wkend">Coffee Shop wkend</option>
+					<option value="Coffee Shop ED">Coffee Shop ED</option>
+					<option value="Grange Mentor">Grange Mentor</option>
+					<option value="Grange Mentor weekend">Grange Mentor weekend</option>
+					<option value="Visits Tea Bar">Visits Tea Bar</option>
+					<option value="Visits Cleaner">Visits Cleaner</option>
+					<option value="Community Work">Community Work</option>
+					<option value="Paid work">Paid work</option>
+					<option value="Kitchen wkend">Kitchen wkend</option>
+					<option value="Education Orderly">Education Orderly</option>
+					<option value="Laundry">Laundry</option>
+					<option value="Library">Library</option>
+					<option value="Library ED">Library ED</option>
+					<option value="Reception Orderly">Reception Orderly</option>
+					<option value="House cleaning">House cleaning</option>
+					<option value="Buddhist Grp">Buddhist Grp</option>
+					<option value="Jewish Religious Service">Jewish Religious Service</option>
+					<option value="Muslim Grp">Muslim Grp</option>
+					<option value="R/C Group">R/C Group</option>
+					<option value="Rastafarian Grp">Rastafarian Grp</option>
+					<option value="Art">Art</option>
+					<option value="Barbering new">Barbering new</option>
+					<option value="English Entry">English Entry</option>
+					<option value="Maths L1">Maths L1</option>
+					<option value="Maths L2">Maths L2</option>
+					<option value="Maths Entry">Maths Entry</option>
+					<option value="Music tech">Music tech</option>
+					<option value="Virtual Campus">Virtual Campus</option>
+					<option value="Gardens">Gardens</option>
+					<option value="Gardens Orderly">Gardens Orderly</option>
+					<option value="Bike Repair">Bike Repair</option>
+					<option value="Recycling">Recycling</option>
+					<option value="Laundrette">Laundrette</option>
+					<option value="Laundry">Laundry</option>
+					<option value="Laundry Orderly">Laundry Orderly</option>
+					<option value="Design tech new">Design tech new</option>
+					<option value="Kitchen">Kitchen</option>
+				</select>
+			</div>
+			{% endset %}
+
+			{% set locationHtml %}
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-!-font-weight-bold" for="by-location">
+					Select a location
+				</label>
+				<div id="by-location-hint" class="govuk-hint">
+					Not all locations will show in this list. You’ll only see the locations where there are activities or appointments happening at this time.
+				</div>
+				<select class="govuk-select" id="by-location" name="location" aria-describedby="by-location-hint">
+					<option value="" selected=""></option>
+					<option value="Chapel">Chapel</option>
+					<option value="Farms/gardens">Farms/gardens</option>
+					<option value="Gym">Gym</option>
+					<option value="Health Care">Health Care</option>
+					<option value="Houseblock 1">Houseblock 1</option>
+					<option value="Houseblock 2">Houseblock 2</option>
+					<option value="Houseblock 3">Houseblock 3</option>
+					<option value="Houseblock 4">Houseblock 4</option>
+					<option value="Houseblock 5">Houseblock 5</option>
+					<option value="Houseblock 6">Houseblock 6</option>
+					<option value="Houseblock 7">Houseblock 7</option>
+					<option value="Interview Room">Interview Room</option>
+					<option value="Kitchen">Kitchen</option>
+					<option value="Library">Library</option>
+					<option value="Main/stores">Main/stores</option>
+					<option value="Res 1 Education">Res 1 Education</option>
+					<option value="Res 2 Education">Res 2 Education</option>
+					<option value="Sports Hall">Sports Hall</option>
+					<option value="Workshop 1">Workshop 1</option>
+					<option value="Workshop 10">Workshop 10</option>
+					<option value="Workshop 12">Workshop 12</option>
+					<option value="Workshop 13">Workshop 13</option>
+					<option value="Workshop 14">Workshop 14</option>
+					<option value="Workshop 15">Workshop 15</option>
+					<option value="Workshop 16">Workshop 16</option>
+					<option value="Workshop 17">Workshop 17</option>
+					<option value="Workshop 18">Workshop 18</option>
+					<option value="Workshop 19">Workshop 19</option>
+					<option value="Workshop 2">Workshop 2</option>
+					<option value="Workshop 3">Workshop 3</option>
+					<option value="Workshop 4">Workshop 4</option>
+					<option value="Workshop 6">Workshop 6</option>
+					<option value="Workshop 8">Workshop 8</option>
+				</select>
+			</div>
+			{% endset %}
+
+			{{ govukRadios({
+				name: "attendance",
+				fieldset: {
+					legend: {
+						text: "Search by activity or location",
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "by-activity",
+					text: "Activity",
+					conditional: {
+						html: activityHtml
+					}
+				},
+				{
+					value: "by-location",
+					text: "Location",
+					conditional: {
+						html: locationHtml
+					}
+				}
+				]
+			}) }}
+
+			<div class="govuk-button-group">
+				{{govukButton({
+					text: "View selection"
+				})}}
+
+				{{govukButton({
+					text: "Print selection",
+					href: "example-print-dialog",
+					classes: "govuk-button--secondary",
+					attributes: {
+						target: "_blank"
+					}
+				})}}
+			</div>
+		</div>
+	</div>
+</form>
+{% endblock %}
+
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-location'),
+		showAllValues: true
+	})
+
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-activity'),
+		showAllValues: true
+	})
+</script>
+{% endblock %}
