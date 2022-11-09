@@ -1,0 +1,174 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts-concept-2"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-three-quarters">
+		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+			{% if filteredPrisoners.length > 1 %}
+			Record attendance
+			<span class="govuk-caption-l">{{filteredPrisoners.length or "3"}} prisoners</span>
+			{% else %}
+			Record attendance for {{filteredPrisoners[0].name.firstname}} {{filteredPrisoners[0].name.surname}}
+			{% endif %}
+		</h1>
+
+		<form>
+			{% for prisoner in filteredPrisoners %}
+			<div class="prisoner">
+				{% if filteredPrisoners.length > 1 %}
+				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+				<h2 class="govuk-heading-l">
+					<span class="govuk-caption-l">Prisoner {{loop.index}}</span>
+					{{prisoner.name.surname}}, {{prisoner.name.firstname}}
+					<span class="govuk-caption-m">{{prisoner._id}}</span>
+				</h2>
+				{% endif %}
+
+				<div class="govuk-inset-text">
+					{{data['activity'] or "Workshop"}}, 13:00&thinsp;&ndash;&thinsp;15:30
+				</div>
+
+				{{ govukRadios({
+					name: "attend-" + prisoner._id,
+					classes: "govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Did " + prisoner.name.firstname + " " + prisoner.name.surname + " attend?"			
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes"
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
+
+				{{ govukRadios({
+					name: "pay-" + prisoner._id,
+					classes: "govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Do you want to pay " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes"
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
+
+				{{ govukCheckboxes({
+					name: "bonus-" + prisoner._id,
+					items: [
+					{
+						value: "true",
+						text: "Award " + prisoner.name.firstname + " " + prisoner.name.surname + " a bonus payment"
+					}
+					]
+				}) }}
+
+				{{ govukSelect({
+					id: "pay-override-" + prisoner._id,
+					name: "pay-override-" + prisoner._id,
+					label: {
+						text: "Why are you paying " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
+					},
+					items: [
+					{
+						value: "choose",
+						text: "Choose reason",
+						selected: true
+					},
+					{
+						value: "reason-1",
+						text: "Reason 1 description"
+					}
+					]
+
+				}) }}
+			</div>
+			{% endfor %}
+
+			<div class="govuk-button-group">
+				{{govukButton({
+					text: "Continue"
+				})}}
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		let attendanceRadio = 'input[type="radio"][id^="attend"]'
+		let paymentRadio = 'input[type="radio"][id^="pay"]'
+		let bonusCheckbox = 'input[type="checkbox"][id^="bonus"]'
+		let payOverrideSelect = 'select[id^="pay-override"]'
+		let formGroup = '.govuk-form-group'
+
+		function hideInputFormGroup(input) {
+			$(input).each(function() {
+				$(this).closest('.govuk-form-group').hide()
+			});
+		}
+		hideInputFormGroup(paymentRadio)
+		hideInputFormGroup(bonusCheckbox)
+		hideInputFormGroup(payOverrideSelect)
+
+		$(attendanceRadio).on('change', function () {
+			if($(this).val() == 'no'){
+				$(this).closest('.prisoner').find($(paymentRadio)).closest(formGroup).show()
+				$(this).closest('.prisoner').find($(bonusCheckbox)).attr('checked', false).closest(formGroup).hide()
+			} else if ($(this).val() == 'yes') {
+				$(this).closest('.prisoner').find($(bonusCheckbox)).closest(formGroup).show()
+				$(this).closest('.prisoner').find($(paymentRadio)).attr('checked', false).closest(formGroup).hide()
+			} else {
+				$(this).closest('.prisoner').find($(bonusCheckbox)).attr('checked', false).closest(formGroup).hide()
+				$(this).closest('.prisoner').find($(paymentRadio)).attr('checked', false).closest(formGroup).hide()
+			}
+		})
+
+		$(paymentRadio).on('change', function () {
+			if($(this).val() == 'yes'){
+				$(this).closest('.prisoner').find($(payOverrideSelect)).closest(formGroup).show()
+			} else {
+				$(this).closest('.prisoner').find($(payOverrideSelect)).val($(payOverrideSelect + " option:first").val()).closest(formGroup).hide()
+			}
+		})
+	});
+</script>
+{% endblock %}

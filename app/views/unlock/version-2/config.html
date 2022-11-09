@@ -24,13 +24,58 @@ Activities Management prototype
 		},
 		items: [
 		{
-			value: "modals",
-			text: "Modals"
+			value: "separate",
+			html: 'Separate journey <span class="govuk-tag govuk-tag--blue">Default</span>'
 		},
 		{
-			value: "separate",
-			text: "Separate journey (default)",
-			checked: true
+			value: "modals",
+			text: "Modals"
+		}
+		]
+	}) }}
+
+	{{ govukRadios({
+		name: "config[select-activity-pattern]",
+		fieldset: {
+			legend: {
+				text: "Select activity pattern",
+				isPageHeading: true,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "typeahead",
+			html: 'Typeahead search <span class="govuk-tag govuk-tag--blue">Default</span>'
+		},
+		{
+			value: "table",
+			text: "Table (by date)"
+		}
+		]
+	}) }}
+
+	{{ govukRadios({
+		name: "config[record-attendance-pattern]",
+		fieldset: {
+			legend: {
+				text: "Record attendance pattern",
+				isPageHeading: true,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "dropdown-button",
+			html: 'Dropdown button <span class="govuk-tag govuk-tag--blue">Default</span>'
+		},
+		{
+			value: "single-button",
+			text: "Single button"
+		},
+		{
+			value: "buttons",
+			text: "Separate buttons"
 		}
 		]
 	}) }}

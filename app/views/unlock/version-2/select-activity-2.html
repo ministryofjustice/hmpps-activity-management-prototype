@@ -1,0 +1,118 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts-concept-2"
+	}
+	]
+}) }}
+{% endblock %}
+
+{% block content %}
+<form method="post">
+	<!-- <div class="govuk-form-group">
+		<label class="govuk-label govuk-label--m" for="date">
+			Date of activity
+		</label>
+		<div class="govuk-hint">
+			Today's date is {{ "_" | currentDate('d/M/yyyy') }}
+		</div>
+		<input class="govuk-input govuk-input--width-20 date-input undefined hasDatepicker" id="date" name="date" type="text" value="{{ "_" | currentDate('d/M/yyyy') }}" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
+	</div> -->
+
+	{{ govukRadios({
+		name: "chosen-date",
+		fieldset: {
+			legend: {
+				text: "Select activity or appointment date",
+				isPageHeading: true,
+				classes: "govuk-fieldset__legend--l"
+			}
+		},
+		items: [
+		{
+			talue: "Today",
+			text: "Today"
+		},
+		{
+			value: "yesterday",
+			text: "Yesterday"
+		},
+		{
+			value: "DATE",
+			text: "A different date"
+		}
+		]
+	}) }}
+
+<!-- 	{{ govukRadios({
+		name: "times",
+		fieldset: {
+			legend: {
+				text: "Time period",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "morning",
+			text: "Morning (AM)"
+		},
+		{
+			value: "afternoon",
+			text: "Afternoon (PM)"
+		},
+		{
+			value: "evening",
+			text: "Evening (ED)"
+		}
+		]
+	}) }} -->
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			
+
+			<div class="govuk-button-group">
+				{{govukButton({
+					text: "Search activities"
+				})}}
+			</div>
+		</div>
+	</div>
+</form>
+{% endblock %}
+
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-location'),
+		showAllValues: true
+	})
+
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-activity'),
+		showAllValues: true
+	})
+</script>
+{% endblock %}

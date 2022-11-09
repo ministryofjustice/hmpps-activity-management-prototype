@@ -1,0 +1,242 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts-concept-2"
+	}
+	]
+}) }}
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-l">
+	Schedule for {{data['chosen-date'] or "today"}}
+</h1>
+
+<form method="post">
+	{% set activitiesHtml %}
+	<h2 class="govuk-heading-m">7 activities</h2>
+	{{ govukTable({
+		head: [
+		{
+			text: "Activity"
+		},
+		{
+			text: "Location"
+		},
+		{
+			text: "Time"
+		},
+		{
+			text: "Prisoners"
+		}
+		],
+		rows: [
+		[
+		{
+			html: '<a href="attendance-list?attendance=by-activity&activity=Employability" class="govuk-link--no-visited-state">Employability</a>'
+		},
+		{
+			text: "Res 1 Education"
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "4"
+		}
+		],
+		[
+		{
+			html: '<a href="attendance-list?attendance=by-activity&activity=English" class="govuk-link--no-visited-state">English</a>'
+		},
+		{
+			text: "Res 2 Education"
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "19"
+		}
+		],
+		[
+		{
+			html: '<a href="attendance-list?attendance=by-activity&activity=Financial Capabilities" class="govuk-link--no-visited-state">Financial Capabilities</a>'
+		},
+		{
+			text: "Workshop 15"
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "9"
+		}
+		],
+		[
+		{
+			html: '<a href="attendance-list?attendance=by-activity&activity=IT" class="govuk-link--no-visited-state">IT</a>'
+		},
+		{
+			text: "Workshop 17"
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "7"
+		}
+		],
+		[
+		{
+			html: '<a href="attendance-list?attendance=by-activity&activity=Maths" class="govuk-link--no-visited-state">Maths</a>'
+		},
+		{
+			text: "Workshop 2"
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "16"
+		}
+		],
+		[
+		{
+			html: '<a href="attendance-list?attendance=by-activity&activity=Practical Cleaning" class="govuk-link--no-visited-state">Practical Cleaning</a>'
+		},
+		{
+			text: "Houseblock 1"
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "13"
+		}
+		],
+		[
+		{
+			html: '<a href="attendance-list?attendance=by-activity&activity=Conferencing" class="govuk-link--no-visited-state">Conferencing</a>'
+		},
+		{
+			text: "Workshop 4"
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "14"
+		}
+		]
+		]
+	}) }}
+	{% endset -%}
+
+	{% set locationsHtml %}
+	<h2 class="govuk-heading-m">6 locations</h2>
+	{{ govukTable({
+		head: [
+		{
+			text: "Case manager"
+		},
+		{
+			text: "Cases opened"
+		},
+		{
+			text: "Cases closed"
+		}
+		],
+		rows: [
+		[
+		{
+			text: "David Francis"
+		},
+		{
+			text: "1380"
+		},
+		{
+			text: "1472"
+		}
+		],
+		[
+		{
+			text: "Paul Farmer"
+		},
+		{
+			text: "1129"
+		},
+		{
+			text: "1083"
+		}
+		],
+		[
+		{
+			text: "Rita Patel"
+		},
+		{
+			text: "1539"
+		},
+		{
+			text: "1265"
+		}
+		]
+		]
+	}) }}
+	{% endset -%}
+
+	{{ govukTabs({
+		items: [
+
+		{
+			label: "Activities",
+			id: "activities",
+			panel: {
+				html: activitiesHtml
+			}
+		},
+		{
+			label: "Locations",
+			id: "locations",
+			panel: {
+				html: locationsHtml
+			}
+		}
+		]
+	}) }}
+</form>
+{% endblock %}
+
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-location'),
+		showAllValues: true
+	})
+
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-activity'),
+		showAllValues: true
+	})
+</script>
+{% endblock %}
