@@ -43,62 +43,22 @@ router.post(version +'/create/activity-name', function(req, res) {
 
 router.post(version +'/create/activity-name-2', function(req, res) {
 	{
-		res.redirect(version +'/create/activity-incentive-level')
-	}
-});
-
-router.post(version +'/create/activity-incentive-level', function(req, res) {
-	{
 		res.redirect(version +'/create/activity-risk-assessment')
 	}
 });
 
-
-
-
-
+router.post(version +'/create/activity-risk-assessment', function(req, res) {
+	{
+		res.redirect(version +'/create/activity-incentive-level')
+	}
+});
 
 	router.post(version +'/create/activity-incentive-level', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-risk-assessment')
-		}
-	});
-
-	router.post(version +'/create/activity-risk-assessment', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-add-alerts')
-		}
-	});
-	//Add another submit button
-	router.post(version +'/create/addAlert', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-add-alerts-one-added')
-		}
-	});
-
-	router.post(version +'/create/addAlert2', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-add-alerts-two-added')
-		}
-	});
-
-	router.post(version +'/create/activity-add-alerts-one-added', function(req, res) {
-		{
 			res.redirect(version +'/create/activity-payment-details')
 		}
 	});
 
-	router.post(version +'/create/activity-add-alerts-two-added', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-payment-details')
-		}
-	});
-
-	router.post(version +'/create/activity-add-alerts', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-payment-details')
-		}
-	});
 
 	router.post(version +'/create/activity-payment-details', function(req, res) {
 		{
@@ -123,27 +83,27 @@ router.post(version +'/create/activity-incentive-level', function(req, res) {
 
 	router.post(version +'/create/activity-add-education', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-repeat-check-your-answers')
+			res.redirect(version +'/create/activity-add-alerts')
 		}
 	});
 
 	router.post(version +'/create/activity-add-education-one-added', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-repeat-check-your-answers')
+			res.redirect(version +'/create/activity-add-alerts')
 		}
 	});
 	router.post(version +'/create/activity-add-education-two-added', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-repeat-check-your-answers')
+			res.redirect(version +'/create/activity-add-alerts')
 		}
 	});
 	router.post(version +'/create/activity-add-education-three-added', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-repeat-check-your-answers')
+			res.redirect(version +'/create/activity-add-alerts')
 		}
 	});
 
-	router.post(version +'/create/activity-add-education-three-added', function(req, res) {
+	router.post(version +'/create/activity-add-alerts', function(req, res) {
 		{
 			res.redirect(version +'/create/activity-repeat-check-your-answers')
 		}
