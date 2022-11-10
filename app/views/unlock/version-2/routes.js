@@ -19,7 +19,11 @@ const prisoners = require('../../../data/prisoners-list-1')
 		if(req.session.data['config'] && req.session.data['config']['attend-pattern'] == 'modals') {
 			res.redirect('attendance-list--modals')
 		} else {
-			res.render('unlock/' + req.version + '/attendance-list')
+			if(req.session.data['config'] && req.session.data['config']['attendance-list-layout'] == 'sub-navigation') {
+				res.render('unlock/' + req.version + '/attendance-list-2')
+			} else {
+				res.render('unlock/' + req.version + '/attendance-list')
+			}
 		}
 	});
 	router.post('/attendance-list', function(req, res) {

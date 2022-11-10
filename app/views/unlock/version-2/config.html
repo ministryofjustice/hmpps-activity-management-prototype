@@ -31,11 +31,29 @@ Activities Management prototype
 		},
 		{
 			value: "single-button",
-			html: 'Single button <span class="govuk-tag govuk-tag--blue">Default</span>'
+			html: 'Single button <span class="moj-badge moj-badge--grey">Default</span>'
+		}
+		]
+	}) }}
+
+	{{ govukRadios({
+		name: "config[attendance-list-layout]",
+		classes: "govuk-radios--small",
+		fieldset: {
+			legend: {
+				text: "Attendance list layout",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--s"
+			}
+		},
+		items: [
+		{
+			value: "tabs",
+			html: 'Tabs <span class="moj-badge moj-badge--grey">Default</span>'
 		},
 		{
-			value: "buttons",
-			text: "Separate buttons"
+			value: "sub-navigation",
+			html: 'Sub-navigation'
 		}
 		]
 	}) }}
@@ -53,7 +71,7 @@ Activities Management prototype
 		items: [
 		{
 			value: "separate",
-			html: 'Separate journey <span class="govuk-tag govuk-tag--blue">Default</span>',
+			html: 'Separate journey <span class="moj-badge moj-badge--grey">Default</span>',
 			conditional: {
 				html: attendancePatternHtml
 			}
@@ -77,7 +95,7 @@ Activities Management prototype
 		items: [
 		{
 			value: "typeahead",
-			html: 'Typeahead search <span class="govuk-tag govuk-tag--blue">Default</span>'
+			html: 'Typeahead search <span class="moj-badge moj-badge--grey">Default</span>'
 		},
 		{
 			value: "table",
