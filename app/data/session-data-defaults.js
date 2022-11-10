@@ -20,5 +20,9 @@ Example usage:
 module.exports = {
 
   // Insert values here
-
+  "config": {
+    "record-attendance-pattern": "single-button",
+    "attend-pattern": "separate",
+    "select-activity-pattern": "typeahead",
+  }
 }

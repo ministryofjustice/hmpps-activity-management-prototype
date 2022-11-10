@@ -44,6 +44,9 @@ const prisoners = require('../../../data/prisoners-list-1')
 
 		res.render('unlock/' + req.version + '/add-attendance-details', { filteredPrisoners })
 	});
+	router.post('/add-attendance-details', function(req, res) {
+		res.redirect('check-attendance-details')
+	});
 
 	// ATTENDANCE DETAILS MULTIPLE
 	router.get('/add-attendance-details--multiple', function(req, res) {
@@ -53,6 +56,11 @@ const prisoners = require('../../../data/prisoners-list-1')
 		});
 
 		res.render('unlock/' + req.version + '/add-attendance-details--multiple', { filteredPrisoners, selectedPrisoners })
+	});
+
+	// CHECK ATTENDANCE DETAILS
+	router.post('/check-attendance-details', function(req, res) {
+		res.redirect('attendance-confirmation')
 	});
 
 	// REFUSALS LIST

@@ -6,20 +6,10 @@ Activities Management prototype
 {% block primaryNavigation %}
 {% endblock %}
 {% block beforeContent %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{{ govukBreadcrumbs({
-	classes: "govuk-!-display-none-print",
-	items: [
-	{
-		text: "Digital Prison Services",
-		href: "#"
-	},
-	{
-		text: "Manage prisoner whereabouts",
-		href: "whereabouts-concept-2"
-	}
-	]
-}) }}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
 {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
@@ -35,14 +25,14 @@ Activities Management prototype
 
 		{% if filteredPrisoners.length > 1 %}
 		{{govukButton({
-			text: "Mark all as attended",
+			text: "Mark all " + filteredPrisoners.length + " as attended",
 			classes: "govuk-button--secondary govuk-!-margin-bottom-0",
 			attributes: {
 				id: "mark-all-attended"
 			}
 		})}}
 		{{govukButton({
-			text: "Mark all as not attended",
+			text: "Mark all " + filteredPrisoners.length + " as not attended",
 			classes: "govuk-button--secondary govuk-!-margin-bottom-0 govuk-!-margin-left-2",
 			attributes: {
 				id: "mark-all-not-attended"
@@ -50,7 +40,7 @@ Activities Management prototype
 		})}}
 		{% endif %}
 
-		<form>
+		<form method="post">
 			{% for prisoner in filteredPrisoners %}
 			<div class="prisoner">
 				{% if filteredPrisoners.length > 1 %}
@@ -67,7 +57,7 @@ Activities Management prototype
 				</div>
 
 				{{ govukRadios({
-					name: "attend-" + prisoner._id,
+					name: "attendance-details[" + prisoner._id + "][attended]",
 					classes: "govuk-radios--inline",
 					fieldset: {
 						legend: {
@@ -87,7 +77,7 @@ Activities Management prototype
 				}) }}
 
 				{{ govukRadios({
-					name: "pay-" + prisoner._id,
+					name: "attendance-details[" + prisoner._id + "][payment][pay-override]",
 					classes: "govuk-radios--inline",
 					fieldset: {
 						legend: {
@@ -108,8 +98,8 @@ Activities Management prototype
 
 				{% set bonusTextHtml %}
 				{{ govukTextarea({
-					name: "more-detail",
-					id: "more-detail",
+					name: "attendance-details[" + prisoner._id + "][bonus][bonus-detail]",
+					id: "bonus-detail-" + prisoner._id,
 					label: {
 						text: "Can you provide more detail?"
 					}
@@ -117,10 +107,10 @@ Activities Management prototype
 				{% endset %}
 
 				{{ govukCheckboxes({
-					name: "bonus-" + prisoner._id,
+					name: "attendance-details[" + prisoner._id + "][bonus][bonus-awarded]",
 					items: [
 					{
-						value: "true",
+						value: "yes",
 						text: "Award " + prisoner.name.firstname + " " + prisoner.name.surname + " a bonus payment",
 						conditional: {
 							html: bonusTextHtml
@@ -131,13 +121,13 @@ Activities Management prototype
 
 				{{ govukSelect({
 					id: "pay-override-" + prisoner._id,
-					name: "pay-override-" + prisoner._id,
+					name: "attendance-details[" + prisoner._id + "][payment][pay-override-reason]",
 					label: {
 						text: "Why are you paying " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
 					},
 					items: [
 					{
-						value: "choose",
+						value: "",
 						text: "Choose reason",
 						selected: true
 					},
@@ -164,10 +154,10 @@ Activities Management prototype
 {% block pageScripts %}
 <script type="text/javascript">
 	$(document).ready(function(){
-		let attendanceRadio = 'input[type="radio"][id^="attend"]'
-		let paymentRadio = 'input[type="radio"][id^="pay"]'
-		let bonusCheckbox = 'input[type="checkbox"][id^="bonus"]'
-		let payOverrideSelect = 'select[id^="pay-override"]'
+		let attendanceRadio = 'input[type="radio"][id*="attended"]'
+		let paymentRadio = 'input[type="radio"][id*="payment"]'
+		let bonusCheckbox = 'input[type="checkbox"][id*="bonus"]'
+		let payOverrideSelect = 'select[id*="pay-override"]'
 		let formGroup = '.govuk-form-group'
 
 		function hideInputFormGroup(input) {
@@ -175,21 +165,32 @@ Activities Management prototype
 				$(this).closest('.govuk-form-group').hide()
 			});
 		}
-		hideInputFormGroup(paymentRadio)
-		hideInputFormGroup(bonusCheckbox)
-		hideInputFormGroup(payOverrideSelect)
+		
+		[paymentRadio, bonusCheckbox, payOverrideSelect].forEach(hideInputFormGroup)
+
+		function markAttended(el){
+			let container = el.closest('.prisoner')
+
+			container.find($(bonusCheckbox)).closest(formGroup).show()
+			container.find($(paymentRadio)).attr('checked', false).closest(formGroup).hide()
+			container.find($(payOverrideSelect)).closest(formGroup).hide()
+		}
+
+		function markNotAttended(el){
+			let container = el.closest('.prisoner')
+
+			container.find($(paymentRadio)).closest(formGroup).show()
+			container.find($(bonusCheckbox)).attr('checked', false).closest(formGroup).hide()
+			container.find($(bonusCheckbox)).attr('aria-expanded', false).parent().siblings('.govuk-checkboxes__conditional').addClass('govuk-checkboxes__conditional--hidden')
+		}
 
 		$(attendanceRadio).on('change', function () {
+			let container = $(this).closest('.prisoner')
+
 			if($(this).val() == 'no'){
-				$(this).closest('.prisoner').find($(paymentRadio)).closest(formGroup).show()
-				$(this).closest('.prisoner').find($(bonusCheckbox)).attr('checked', false).closest(formGroup).hide()
+				markNotAttended($(this))
 			} else if ($(this).val() == 'yes') {
-				$(this).closest('.prisoner').find($(bonusCheckbox)).closest(formGroup).show()
-				$(this).closest('.prisoner').find($(paymentRadio)).attr('checked', false).closest(formGroup).hide()
-				$(this).closest('.prisoner').find($(payOverrideSelect)).closest(formGroup).hide()
-			} else {
-				$(this).closest('.prisoner').find($(bonusCheckbox)).attr('checked', false).closest(formGroup).hide()
-				$(this).closest('.prisoner').find($(paymentRadio)).attr('checked', false).closest(formGroup).hide()
+				markAttended($(this))
 			}
 		})
 
@@ -201,14 +202,20 @@ Activities Management prototype
 			}
 		})
 
-		function markAllAttended() {
+		function markAllAttended(el) {
 			$(attendanceRadio + "[value='yes']").each(function(){
 				$(this).click().attr('checked', true)
 			})
+			$(bonusCheckbox).each(function(){
+				$(this).attr('aria-expanded', false).parent().siblings('.govuk-checkboxes__conditional').addClass('govuk-checkboxes__conditional--hidden')
+			})
 		}
-		function markAllNotAttended() {
+		function markAllNotAttended(el) {
 			$(attendanceRadio + "[value='no']").each(function(){
 				$(this).click().attr('checked', true)
+			})
+			$(bonusCheckbox).each(function(){
+				$(this).attr('aria-expanded', false).parent().siblings('.govuk-checkboxes__conditional').addClass('govuk-checkboxes__conditional--hidden')
 			})
 		}
 		$('#mark-all-attended').on('click', function (event) {
