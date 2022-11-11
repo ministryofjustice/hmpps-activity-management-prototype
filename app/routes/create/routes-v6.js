@@ -41,12 +41,6 @@ router.post(version +'/create/activity-name', function(req, res) {
 	}
 });
 
-router.post(version +'/create/activity-name-2', function(req, res) {
-	{
-		res.redirect(version +'/create/activity-risk-assessment')
-	}
-});
-
 router.post(version +'/create/activity-risk-assessment', function(req, res) {
 	{
 		res.redirect(version +'/create/activity-incentive-level')
@@ -109,9 +103,33 @@ router.post(version +'/create/activity-risk-assessment', function(req, res) {
 		}
 	});
 
+//SCHEDULING//
 
-
-
+router.post(version +'/create/activity-name-2', function(req, res) {
+	{
+		res.redirect(version +'/create/activity-start-date')
+	}
+});
+router.post(version +'/create/activity-start-date', function(req, res) {
+	{
+		res.redirect(version +'/create/activity-start-time')
+	}
+});
+router.post(version +'/create/activity-start-time', function(req, res) {
+	{
+		res.redirect(version +'/create/activity-location-dropdown')
+	}
+});
+router.post(version +'/create/activity-location-dropdown', function(req, res) {
+	{
+		res.redirect(version +'/create/activity-capacity')
+	}
+});
+router.post(version +'/create/activity-capacity', function(req, res) {
+	{
+		res.redirect(version +'/create/activity-check-your-answers')
+	}
+});
 
 ///////CREATE CHECK YOUR ANSWERS///////////////
 
@@ -142,6 +160,12 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 		res.redirect(version +'/create/activity-start-date')
 	}
 });
+
+
+
+
+
+
 		//Not recurring
 		router.post(version +'/create/check/activity-start-date', function(req, res) {
 			{
@@ -156,16 +180,6 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 			}
 		});
 
-	router.post(version +'/create/check/activity-start-time', function(req, res) {
-		{
-			if (req.session.data.setupLocation == 'dashboard'){
-				res.redirect(version +'/create/activity-check-your-answers')
-			}
-			else{
-				res.redirect(version +'/create/activity-check-your-answers')
-			}
-		}
-	});
 
 	router.post(version +'/create/check/activity-location-dashboard-1', function(req, res) {
 		{
@@ -313,17 +327,6 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 		}
 	});
 
-	router.post(version +'/create/activity-start-time', function(req, res) {
-		{
-			if (req.session.data.setupLocation == 'dashboard')
-			{
-				res.redirect(version +'/create/activity-location-dashboard-1')
-			}
-			else {
-				res.redirect(version +'/create/activity-location-dropdown')
-			}
-		}
-	});
 
 //if dashboard view clicked on setup page
 
@@ -344,23 +347,6 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 		}
 	});
 
-	router.post(version +'/create/activity-location-dropdown', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-capacity')
-		}
-	});
-
-	router.post(version +'/create/activity-capacity', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-incentive-level')
-		}
-	});
-
-	router.post(version +'/create/activity-capacity', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-incentive-level')
-		}
-	});
 
 	//TIME
 
