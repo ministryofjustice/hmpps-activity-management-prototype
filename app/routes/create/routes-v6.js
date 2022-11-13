@@ -41,6 +41,13 @@ router.post(version +'/create/activity-name', function(req, res) {
 	}
 });
 
+// On activity-name-2 the continue creatong activity butotn is pressed.
+router.post(version +'/create/activity-name-2-create', function(req, res) {
+	{
+		res.redirect(version +'/create/activity-risk-assessment')
+	}
+});
+
 router.post(version +'/create/activity-risk-assessment', function(req, res) {
 	{
 		res.redirect(version +'/create/activity-incentive-level')
