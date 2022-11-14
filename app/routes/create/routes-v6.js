@@ -41,7 +41,7 @@ router.post(version +'/create/activity-name', function(req, res) {
 	}
 });
 
-// On activity-name-2 the continue creatong activity butotn is pressed.
+// On activity-name-2 the continue creatong activity button is pressed.
 router.post(version +'/create/activity-name-2-create', function(req, res) {
 	{
 		res.redirect(version +'/create/activity-risk-assessment')
@@ -134,7 +134,7 @@ router.post(version +'/create/activity-location-dropdown', function(req, res) {
 });
 router.post(version +'/create/activity-capacity', function(req, res) {
 	{
-		res.redirect(version +'/create/activity-check-your-answers')
+		res.redirect(version +'/create/schedule-check-your-answers')
 	}
 });
 
