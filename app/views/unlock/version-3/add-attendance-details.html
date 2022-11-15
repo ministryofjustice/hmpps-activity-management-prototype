@@ -1,0 +1,212 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-three-quarters">
+		<h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+			{% if filteredPrisoners.length > 1 %}
+			Add pay details for {{filteredPrisoners.length or "3"}} prisoners
+			{% else %}
+			Add pay details for {{filteredPrisoners[0].name.firstname}} {{filteredPrisoners[0].name.surname}}
+			{% endif %}
+		</h1>
+
+		<form method="post">
+			{% for prisoner in filteredPrisoners %}
+			<div class="prisoner">
+				{% if filteredPrisoners.length > 1 %}
+				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+				<h2 class="govuk-heading-m">
+					{{prisoner.name.surname}}, {{prisoner.name.firstname}}
+					<span class="govuk-caption-m">{{prisoner._id}}</span>
+				</h2>
+				{% endif %}
+
+				<input type="hidden" name="attendance-details[{{loop.index0}}][_id]" value="{{prisoner._id}}">
+
+				{% if data['attendance-action'] == 'attended' %}
+
+				{% set bonusTextHtml %}
+				{{ govukTextarea({
+					name: "attendance-details[" + loop.index0 + "][bonus][bonus-detail]",
+					id: "bonus-detail-" + prisoner._id,
+					label: {
+						text: "Can you provide more detail?"
+					}
+				}) }}
+				{% endset %}
+
+				{{ govukCheckboxes({
+					id: "bonus-awarded-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][bonus][bonus-awarded]",
+					items: [
+					{
+						value: "yes",
+						text: "Award " + prisoner.name.firstname + " " + prisoner.name.surname + " a bonus payment",
+						conditional: {
+							html: bonusTextHtml
+						}
+					}
+					]
+				}) }}
+
+				{% else %}
+
+				{{ govukRadios({
+					id: "pay-override-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][payment][pay-override]",
+					classes: "govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Do you want to pay " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes"
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
+
+				{{ govukSelect({
+					id: "pay-override-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][payment][pay-override-reason]",
+					label: {
+						text: "Why are you paying " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
+					},
+					items: [
+					{
+						value: "",
+						text: "Choose reason",
+						selected: true
+					},
+					{
+						value: "reason-1",
+						text: "Reason 1 description"
+					}
+					]
+
+				}) }}
+
+				{% endif %}
+			</div>
+			{% endfor %}
+
+			<div class="govuk-button-group govuk-!-margin-top-9">
+				{{govukButton({
+					text: "Record attendance and finish"
+				})}}
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		let attendanceRadio = 'input[type="radio"][id*="attended"]'
+		let paymentRadio = 'input[type="radio"][id*="payment"]'
+		let bonusCheckbox = 'input[type="checkbox"][id*="bonus"]'
+		let payOverrideSelect = 'select[id*="pay-override"]'
+		let formGroup = '.govuk-form-group'
+
+		function hideInputFormGroup(input) {
+			$(input).each(function() {
+				$(this).closest('.govuk-form-group').hide()
+			});
+		}
+		
+		// [paymentRadio, bonusCheckbox, payOverrideSelect].forEach(hideInputFormGroup)
+		[payOverrideSelect].forEach(hideInputFormGroup)
+
+		function markAttended(el){
+			let container = el.closest('.prisoner')
+
+			// container.find($(bonusCheckbox)).closest(formGroup).show()
+			container.find($(paymentRadio)).attr('checked', false).closest(formGroup).hide()
+			container.find($(payOverrideSelect)).closest(formGroup).hide()
+		}
+
+		function markNotAttended(el){
+			let container = el.closest('.prisoner')
+
+			container.find($(paymentRadio)).closest(formGroup).show()
+			// container.find($(bonusCheckbox)).attr('checked', false).closest(formGroup).hide()
+			// container.find($(bonusCheckbox)).attr('aria-expanded', false).parent().siblings('.govuk-checkboxes__conditional').addClass('govuk-checkboxes__conditional--hidden')
+		}
+
+		$(attendanceRadio).on('change', function () {
+			let container = $(this).closest('.prisoner')
+
+			if($(this).val() == 'no'){
+				markNotAttended($(this))
+			} else if ($(this).val() == 'yes') {
+				markAttended($(this))
+			}
+		})
+
+		$(paymentRadio).on('change', function () {
+			if($(this).val() == 'yes'){
+				$(this).closest('.prisoner').find($(payOverrideSelect)).closest(formGroup).show()
+			} else {
+				$(this).closest('.prisoner').find($(payOverrideSelect)).val($(payOverrideSelect + " option:first").val()).closest(formGroup).hide()
+			}
+		})
+
+		function markAllAttended(el) {
+			$(attendanceRadio + "[value='yes']").each(function(){
+				$(this).click().attr('checked', true)
+			})
+			$(bonusCheckbox).each(function(){
+				$(this).attr('aria-expanded', false).parent().siblings('.govuk-checkboxes__conditional').addClass('govuk-checkboxes__conditional--hidden')
+			})
+		}
+		function markAllNotAttended(el) {
+			$(attendanceRadio + "[value='no']").each(function(){
+				$(this).click().attr('checked', true)
+			})
+			$(bonusCheckbox).each(function(){
+				$(this).attr('aria-expanded', false).parent().siblings('.govuk-checkboxes__conditional').addClass('govuk-checkboxes__conditional--hidden')
+			})
+		}
+		$('#mark-all-attended').on('click', function (event) {
+			event.preventDefault()
+			markAllAttended()
+		})
+		$('#mark-all-not-attended').on('click', function (event) {
+			event.preventDefault()
+			markAllNotAttended()
+		})
+	})
+</script>
+
+{% if data['config']['record-attendance-pattern'] == 'dropdown-button' %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		let attendAll = "{{data['attendance-action']}}"
+		if(attendAll == "attended"){
+			markAllAttended()
+		} else if(attendAll == "not-attended"){
+			markAllNotAttended()
+		}
+	});
+</script>
+{% endif %}
+{% endblock %}

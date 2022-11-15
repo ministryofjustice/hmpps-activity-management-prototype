@@ -26,5 +26,6 @@ module.exports = {
     "attend-pattern": "separate",
     "select-activity-pattern": "select-date-table",
   },
-  prisoners: require('./prisoners-list-1')
+  prisoners: require('./prisoners-list-1'),
+  activities: require('./activities-list-1')
 }

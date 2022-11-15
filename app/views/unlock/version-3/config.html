@@ -1,0 +1,132 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form method="post">
+	<h1 class="govuk-heading-xl">
+		Prototype settings
+	</h1>
+	{% set attendancePatternHtml %}
+	{{ govukRadios({
+		name: "config[record-attendance-pattern]",
+		classes: "govuk-radios--small",
+		fieldset: {
+			legend: {
+				text: "Record attendance pattern",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--s"
+			}
+		},
+		items: [
+		{
+			value: "dropdown-button",
+			html: 'Dropdown button'
+		},
+		{
+			value: "single-button",
+			html: 'Single button <span class="moj-badge moj-badge--grey">Default</span>'
+		}
+		]
+	}) }}
+
+	{{ govukRadios({
+		name: "config[attendance-list-layout]",
+		classes: "govuk-radios--small",
+		fieldset: {
+			legend: {
+				text: "Attendance list layout",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--s"
+			}
+		},
+		items: [
+		{
+			value: "tabs",
+			html: 'Tabs'
+		},
+		{
+			value: "sub-navigation",
+			html: 'Sub-navigation'
+		},
+		{
+			value: "toolbar",
+			html: 'Toolbar <span class="moj-badge moj-badge--grey">Default</span>'
+		},
+		{
+			value: "basic",
+			html: 'Basic'
+		}
+		]
+	}) }}
+	{% endset %}
+
+	{{ govukRadios({
+		name: "config[attend-pattern]",
+		fieldset: {
+			legend: {
+				text: "Attendance pattern",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "separate",
+			html: 'Separate journey <span class="moj-badge moj-badge--grey">Default</span>',
+			conditional: {
+				html: attendancePatternHtml
+			}
+		},
+		{
+			value: "modals",
+			text: "Modals"
+		}
+		]
+	}) }}
+
+	{{ govukRadios({
+		name: "config[select-activity-pattern]",
+		fieldset: {
+			legend: {
+				text: "Select activity pattern",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		{
+			value: "typeahead",
+			html: 'Typeahead search',
+			hint: {
+				text: "Select a date and search for an activity or location"
+			}
+		},
+		{
+			value: "select-date-table",
+			html: 'By date <span class="moj-badge moj-badge--grey">Default</span>',
+			hint: {
+				text: "Select a date and then choose an activity from a list"
+			}
+		},
+		{
+			value: "table",
+			text: "Table (day-by-day)",
+			hint: {
+				text: "Select a date and then choose an activity from a list"
+			}
+		}
+		]
+	}) }}
+
+	{{govukButton({
+		text: "Save and continue"
+	})}}
+</form>
+{% endblock %}

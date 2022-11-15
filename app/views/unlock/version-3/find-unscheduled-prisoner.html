@@ -1,0 +1,38 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<form method="post">	
+	{{ govukInput({
+		classes: "govuk-input--width-20",
+		label: {
+			text: "Search for a prisoner to add to the activity",
+			classes: "govuk-label--l",
+			isPageHeading: true
+		},
+		hint: {
+			text: "The prisoner’s name or prison number"
+		},
+		id: "event-name",
+		name: "event-name"
+	}) }}
+
+	{{govukButton({
+		text: "Search"
+	})}}
+</form>
+{% endblock %}

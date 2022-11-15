@@ -25,18 +25,12 @@ Activities Management prototype
 			}
 			]
 		}) }}
-		
+
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 			<div class="govuk-grid-row govuk-!-margin-bottom-5">
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-						{% if data['attendance'] == 'by-activity' %}
-						{{ data['activity'] }}
-						{% elif data['attendance'] == 'by-location' %}
-						{{ data['location'] }}
-						{% else %}
-						Workshop
-						{% endif %}
+						{{ data['activity'] or 'Workshop' }}
 						<span class="govuk-caption-l">{{ {
 							"day": data['activity-date'][0],
 							"month": data['activity-date'][1],
@@ -142,8 +136,10 @@ Activities Management prototype
 					{% endfor %}
 				</tbody>
 			</table>
+
 		</main>
 	</div>
+
 	{% include './_includes/filter-area-3.html' %}
 </form>
 {% endblock %}
