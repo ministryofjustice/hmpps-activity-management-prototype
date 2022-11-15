@@ -14,18 +14,26 @@ router.post('/config', function(req, res) {
 	res.redirect('whereabouts')
 });
 
+function getFilteredPrisoners(selectedPrisoners, prisonerList) {
+	let filteredPrisoners = []
+
+	if( selectedPrisoners ) {
+		filteredPrisoners = prisonerList.filter(prisoner => selectedPrisoners.includes(prisoner._id))
+	} else {
+		filteredPrisoners = prisonerList.slice(0,3)
+	}
+
+	return filteredPrisoners
+}
+
 	// ATTENDANCE LIST
 router.get('/attendance-list', function(req, res) {
+	// remove the confirmation notification on refreshing the page
 	if(req.session.data['attendance-confirmation'] == 'true'){
 		delete req.session.data['attendance-confirmation']
 	}
 
-	let filteredPrisoners = []
-	if( req.session.data['selected-prisoners'] ) {
-		filteredPrisoners = req.session.data['prisoners'].filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
-	} else {
-		filteredPrisoners = req.session.data['prisoners'].slice(0,3)
-	}
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
 	res.render('unlock/' + req.version + '/attendance-list', { filteredPrisoners })
 });
@@ -33,30 +41,26 @@ router.post('/attendance-list', function(req, res) {
 	res.redirect('add-attendance-details')
 });
 
-	// ATTENDANCE DETAILS MULTIPLE
-router.get('/add-attendance-details--multiple', function(req, res) {
-	let selectedPrisoners = req.session.data['selected-prisoners']
-	let filteredPrisoners = req.session.data['prisoners'].filter(function(prisoner){
-		return selectedreq.session.data['prisoners'].indexOf(prisoner._id) > -1;
-	});
-
-	res.render('unlock/' + req.version + '/add-attendance-details--multiple', { filteredPrisoners, selectedPrisoners })
-});
-
 	// ATTENDANCE DETAILS
 router.get('/add-attendance-details', function(req, res) {
 	delete req.session.data['attendance-details']
-	let filteredPrisoners = []
-
-	if( req.session.data['selected-prisoners'] ) {
-		filteredPrisoners = req.session.data['prisoners'].filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
-	} else {
-		filteredPrisoners = req.session.data['prisoners'].slice(0,3)
-	}
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
 	res.render('unlock/' + req.version + '/add-attendance-details', { filteredPrisoners })
 });
 router.post('/add-attendance-details', function(req, res) {
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
+
+	// set prisoner attendance
+	req.session.data['attendance-details'].forEach(( attendance ) => {
+		let payment = attendance['absence-payment']
+		const prisoner = req.session.data['prisoners'].find(prisoner => prisoner._id == attendance._id);
+
+		prisoner['attendance'] = "not-attended"
+		prisoner['absence-payment'] = payment
+	})
+
+	// set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
 	res.redirect('attendance-list')
 });
@@ -64,21 +68,23 @@ router.post('/add-attendance-details', function(req, res) {
 
 // check variable pay
 router.get('/check-variable-pay', function(req, res) {
-	let filteredPrisoners = []
-
-	if( req.session.data['selected-prisoners'] ) {
-		filteredPrisoners = req.session.data['prisoners'].filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
-	} else {
-		filteredPrisoners = req.session.data['prisoners'].slice(0,3)
-	}
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
 	res.render('unlock/' + req.version + '/check-variable-pay', { filteredPrisoners })
 });
 router.post('/check-variable-pay', function(req, res) {
-	if(req.session.data['non-standard-pay'] == 'no'){
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
+
+	if(req.session.data['standard-pay-all'] == 'no'){
 		res.redirect('add-attendance-details')
 	} else {
+		// set prisoner attendance
+		filteredPrisoners.forEach((prisoner, index) => {
+			prisoner.attendance = "attended"
+		})
+
 		req.session.data['attendance-confirmation'] = 'true'
+
 		res.redirect('attendance-list')
 	}
 });
@@ -86,13 +92,7 @@ router.post('/check-variable-pay', function(req, res) {
 	// CHECK ATTENDANCE DETAILS
 router.get('/check-attendance-details', function(req, res) {
 	let attendanceDetails = req.session.data['attendance-details']
-	let filteredPrisoners = []
-
-	if( req.session.data['selected-prisoners'] ) {
-		filteredPrisoners = req.session.data['prisoners'].filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
-	} else {
-		filteredPrisoners = req.session.data['prisoners'].slice(0,3)
-	}		
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])		
 
 	res.render('unlock/' + req.version + '/check-attendance-details', { attendanceDetails })
 });
