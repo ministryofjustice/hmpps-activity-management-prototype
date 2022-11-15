@@ -25,5 +25,6 @@ module.exports = {
     "attendance-list-layout": "toolbar",
     "attend-pattern": "separate",
     "select-activity-pattern": "select-date-table",
-  }
+  },
+  prisoners: require('./prisoners-list-1')
 }

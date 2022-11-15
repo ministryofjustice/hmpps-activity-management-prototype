@@ -1,223 +1,212 @@
 module.exports = [
   {
-    "_id": "B6777F",
+    "_id": "D4002A",
     "name": {
-      "firstname": "Wade",
-      "surname": "Patel"
+      "surname": "Petty",
+      "firstname": "Thornton"
     },
     "location": {
-      "cell": 139,
-      "landing": 3,
-      "houseblock": 3
+      "cell": 169,
+      "landing": 2,
+      "houseblock": 4
     },
-    "dateOfBirth": "1983-10-23T02:52:09 -00:00"
+    "attendance": null,
+    "dateOfBirth": "1957-02-26"
   },
   {
-    "_id": "B6697D",
+    "_id": "C4500D",
     "name": {
-      "firstname": "Becker",
-      "surname": "Clark"
+      "surname": "Moon",
+      "firstname": "Bennett"
     },
     "location": {
-      "cell": 141,
-      "landing": 0,
+      "cell": 147,
+      "landing": 3,
+      "houseblock": 2
+    },
+    "attendance": "attended",
+    "dateOfBirth": "1983-12-24"
+  },
+  {
+    "_id": "E8482E",
+    "name": {
+      "surname": "Melton",
+      "firstname": "Hurst"
+    },
+    "location": {
+      "cell": 144,
+      "landing": 1,
       "houseblock": 1
     },
-    "dateOfBirth": "1984-03-29T08:07:08 -01:00"
+    "attendance": null,
+    "dateOfBirth": "1991-09-09"
   },
   {
-    "_id": "B5751F",
+    "_id": "E9440B",
     "name": {
-      "firstname": "Valdez",
-      "surname": "Vargas"
+      "surname": "Atkins",
+      "firstname": "Hendricks"
     },
     "location": {
-      "cell": 126,
-      "landing": 0,
-      "houseblock": 3
+      "cell": 127,
+      "landing": 3,
+      "houseblock": 1
     },
-    "dateOfBirth": "1961-03-09T10:31:24 -00:00"
+    "attendance": null,
+    "dateOfBirth": "1971-02-28"
   },
   {
-    "_id": "G4909A",
+    "_id": "E7260A",
     "name": {
-      "firstname": "Soto",
-      "surname": "Ashley"
-    },
-    "location": {
-      "cell": 164,
-      "landing": 2,
-      "houseblock": 3
-    },
-    "dateOfBirth": "1972-10-15T01:34:43 -01:00"
-  },
-  {
-    "_id": "E9601B",
-    "name": {
-      "firstname": "Wilkinson",
-      "surname": "Jackson"
+      "surname": "Jarvis",
+      "firstname": "Mcdonald"
     },
     "location": {
       "cell": 102,
-      "landing": 1,
-      "houseblock": 1
-    },
-    "dateOfBirth": "1973-07-05T01:14:23 -01:00"
-  },
-  {
-    "_id": "G1256C",
-    "name": {
-      "firstname": "Cobb",
-      "surname": "Wyatt"
-    },
-    "location": {
-      "cell": 101,
-      "landing": 1,
-      "houseblock": 3
-    },
-    "dateOfBirth": "1985-09-07T06:16:23 -01:00"
-  },
-  {
-    "_id": "D8541E",
-    "name": {
-      "firstname": "Beach",
-      "surname": "Logan"
-    },
-    "location": {
-      "cell": 123,
-      "landing": 2,
-      "houseblock": 2
-    },
-    "dateOfBirth": "1969-08-27T07:49:37 -01:00"
-  },
-  {
-    "_id": "B1646B",
-    "name": {
-      "firstname": "Schneider",
-      "surname": "Webb"
-    },
-    "location": {
-      "cell": 111,
-      "landing": 0,
-      "houseblock": 2
-    },
-    "dateOfBirth": "1948-05-23T02:34:53 -01:00"
-  },
-  {
-    "_id": "D7593C",
-    "name": {
-      "firstname": "Kelley",
-      "surname": "Stevenson"
-    },
-    "location": {
-      "cell": 149,
-      "landing": 0,
+      "landing": 3,
       "houseblock": 4
     },
-    "dateOfBirth": "1982-09-16T11:14:48 -01:00"
+    "attendance": "attended",
+    "dateOfBirth": "1962-08-05"
   },
   {
-    "_id": "D8227C",
+    "_id": "G8575F",
     "name": {
-      "firstname": "Gaines",
-      "surname": "Howard"
-    },
-    "location": {
-      "cell": 191,
-      "landing": 3,
-      "houseblock": 3
-    },
-    "dateOfBirth": "1994-02-06T05:46:28 -00:00"
-  },
-  {
-    "_id": "G4970B",
-    "name": {
-      "firstname": "Freeman",
-      "surname": "Golden"
-    },
-    "location": {
-      "cell": 194,
-      "landing": 2,
-      "houseblock": 3
-    },
-    "dateOfBirth": "2002-11-13T02:45:49 -00:00"
-  },
-  {
-    "_id": "D8102E",
-    "name": {
-      "firstname": "Moore",
-      "surname": "Emerson"
-    },
-    "location": {
-      "cell": 105,
-      "landing": 2,
-      "houseblock": 2
-    },
-    "dateOfBirth": "1968-01-02T09:47:02 -00:00"
-  },
-  {
-    "_id": "F7902E",
-    "name": {
-      "firstname": "Livingston",
-      "surname": "Bernard"
+      "surname": "Drake",
+      "firstname": "Pena"
     },
     "location": {
       "cell": 179,
+      "landing": 1,
+      "houseblock": 4
+    },
+    "attendance": "attended",
+    "dateOfBirth": "1949-01-14"
+  },
+  {
+    "_id": "F2208B",
+    "name": {
+      "surname": "Hood",
+      "firstname": "Mcmahon"
+    },
+    "location": {
+      "cell": 107,
       "landing": 3,
-      "houseblock": 4
+      "houseblock": 3
     },
-    "dateOfBirth": "1997-05-09T09:24:23 -01:00"
+    "attendance": null,
+    "dateOfBirth": "1961-07-29"
   },
   {
-    "_id": "B4971A",
+    "_id": "F7551E",
     "name": {
-      "firstname": "Avila",
-      "surname": "Rosa"
+      "surname": "Hines",
+      "firstname": "Nolan"
     },
     "location": {
-      "cell": 157,
+      "cell": 122,
       "landing": 0,
-      "houseblock": 4
+      "houseblock": 3
     },
-    "dateOfBirth": "1953-10-16T01:50:37 -00:00"
+    "attendance": "not-attended",
+    "dateOfBirth": "1979-02-05"
   },
   {
-    "_id": "B7724A",
+    "_id": "B7157A",
     "name": {
-      "firstname": "Conley",
-      "surname": "Zamora"
+      "surname": "Moran",
+      "firstname": "Mullins"
     },
     "location": {
-      "cell": 164,
-      "landing": 2,
-      "houseblock": 4
+      "cell": 123,
+      "landing": 1,
+      "houseblock": 2
     },
-    "dateOfBirth": "1952-11-10T07:50:46 -00:00"
+    "attendance": "attended",
+    "dateOfBirth": "1964-02-03"
   },
   {
-    "_id": "F3674B",
+    "_id": "B4480F",
     "name": {
-      "firstname": "Aguirre",
-      "surname": "Rodgers"
+      "surname": "Heath",
+      "firstname": "Gaines"
     },
     "location": {
-      "cell": 104,
+      "cell": 125,
       "landing": 3,
       "houseblock": 1
     },
-    "dateOfBirth": "1959-06-09T10:32:19 -01:00"
+    "attendance": "",
+    "dateOfBirth": "1999-04-24"
   },
   {
-    "_id": "C6753A",
+    "_id": "B8136C",
     "name": {
-      "firstname": "Head",
-      "surname": "Mullen"
+      "surname": "Emerson",
+      "firstname": "Vazquez"
     },
     "location": {
-      "cell": 100,
-      "landing": 1,
+      "cell": 143,
+      "landing": 3,
       "houseblock": 3
     },
-    "dateOfBirth": "1975-06-05T06:16:57 -01:00"
+    "attendance": "",
+    "dateOfBirth": "1992-12-23"
+  },
+  {
+    "_id": "E4089B",
+    "name": {
+      "surname": "Fischer",
+      "firstname": "Miller"
+    },
+    "location": {
+      "cell": 146,
+      "landing": 0,
+      "houseblock": 1
+    },
+    "attendance": "not-attended",
+    "dateOfBirth": "1958-04-01"
+  },
+  {
+    "_id": "C9517A",
+    "name": {
+      "surname": "Dodson",
+      "firstname": "Cole"
+    },
+    "location": {
+      "cell": 152,
+      "landing": 0,
+      "houseblock": 3
+    },
+    "attendance": "",
+    "dateOfBirth": "1987-04-20"
+  },
+  {
+    "_id": "C2452A",
+    "name": {
+      "surname": "Wilson",
+      "firstname": "Patterson"
+    },
+    "location": {
+      "cell": 114,
+      "landing": 2,
+      "houseblock": 3
+    },
+    "attendance": "not-attended",
+    "dateOfBirth": "1999-07-10"
+  },
+  {
+    "_id": "D6342D",
+    "name": {
+      "surname": "Morgan",
+      "firstname": "Wilcox"
+    },
+    "location": {
+      "cell": 171,
+      "landing": 0,
+      "houseblock": 1
+    },
+    "attendance": "",
+    "dateOfBirth": "1968-01-26"
   }
 ]
