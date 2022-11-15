@@ -16,6 +16,17 @@ router.post('/config', function(req, res) {
 
 	// ATTENDANCE LIST
 router.get('/attendance-list', function(req, res) {
+	if(req.session.data['attendance-confirmation'] == 'true'){
+		delete req.session.data['attendance-confirmation']
+	}
+
+	let filteredPrisoners = []
+	if( req.session.data['selected-prisoners'] ) {
+		filteredPrisoners = req.session.data['prisoners'].filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
+	} else {
+		filteredPrisoners = req.session.data['prisoners'].slice(0,3)
+	}
+
 	if(req.session.data['config'] && req.session.data['config']['attend-pattern'] == 'modals') {
 		res.redirect('attendance-list--modals')
 	} else {
@@ -26,25 +37,19 @@ router.get('/attendance-list', function(req, res) {
 		} else if(req.session.data['config'] && req.session.data['config']['attendance-list-layout'] == 'basic') {
 			res.render('unlock/' + req.version + '/attendance-list--basic')
 		} else {
-			res.render('unlock/' + req.version + '/attendance-list--toolbar')
+			res.render('unlock/' + req.version + '/attendance-list--toolbar', { filteredPrisoners })
 		}
 	}
 });
 router.post('/attendance-list', function(req, res) {
-		// if(req.session.data['selected-prisoners'].length > 1) {
-		// 	res.redirect('add-attendance-details--multiple')
-		// } else {
-		// 	res.redirect('add-attendance-details--single')
-		// }
-
 	res.redirect('add-attendance-details')
 });
 
 	// ATTENDANCE DETAILS MULTIPLE
 router.get('/add-attendance-details--multiple', function(req, res) {
 	let selectedPrisoners = req.session.data['selected-prisoners']
-	let filteredPrisoners = prisoners.filter(function(prisoner){
-		return selectedPrisoners.indexOf(prisoner._id) > -1;
+	let filteredPrisoners = req.session.data['prisoners'].filter(function(prisoner){
+		return selectedreq.session.data['prisoners'].indexOf(prisoner._id) > -1;
 	});
 
 	res.render('unlock/' + req.version + '/add-attendance-details--multiple', { filteredPrisoners, selectedPrisoners })
@@ -56,9 +61,9 @@ router.get('/add-attendance-details', function(req, res) {
 	let filteredPrisoners = []
 
 	if( req.session.data['selected-prisoners'] ) {
-		filteredPrisoners = prisoners.filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
+		filteredPrisoners = req.session.data['prisoners'].filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
 	} else {
-		filteredPrisoners = prisoners.slice(0,3)
+		filteredPrisoners = req.session.data['prisoners'].slice(0,3)
 	}
 
 	if(req.session.data['config'] && req.session.data['config']['attendance-list-layout'] == 'toolbar') {
@@ -69,7 +74,8 @@ router.get('/add-attendance-details', function(req, res) {
 });
 router.post('/add-attendance-details', function(req, res) {
 	if(req.session.data['config'] && req.session.data['config']['attendance-list-layout'] == 'toolbar') {
-		res.redirect('attendance-confirmation')
+		req.session.data['attendance-confirmation'] = 'true'
+		res.redirect('attendance-list')
 	} else {
 		res.redirect('check-attendance-details')
 	}
@@ -81,9 +87,9 @@ router.get('/check-variable-pay', function(req, res) {
 	let filteredPrisoners = []
 
 	if( req.session.data['selected-prisoners'] ) {
-		filteredPrisoners = prisoners.filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
+		filteredPrisoners = req.session.data['prisoners'].filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
 	} else {
-		filteredPrisoners = prisoners.slice(0,3)
+		filteredPrisoners = req.session.data['prisoners'].slice(0,3)
 	}
 
 	res.render('unlock/' + req.version + '/check-variable-pay', { filteredPrisoners })
@@ -92,7 +98,8 @@ router.post('/check-variable-pay', function(req, res) {
 	if(req.session.data['non-standard-pay'] == 'no'){
 		res.redirect('add-attendance-details')
 	} else {
-		res.redirect('attendance-confirmation')
+		req.session.data['attendance-confirmation'] = 'true'
+		res.redirect('attendance-list')
 	}
 });
 
@@ -102,9 +109,9 @@ router.get('/check-attendance-details', function(req, res) {
 	let filteredPrisoners = []
 
 	if( req.session.data['selected-prisoners'] ) {
-		filteredPrisoners = prisoners.filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
+		filteredPrisoners = req.session.data['prisoners'].filter(prisoner => req.session.data['selected-prisoners'].includes(prisoner._id))
 	} else {
-		filteredPrisoners = prisoners.slice(0,3)
+		filteredPrisoners = req.session.data['prisoners'].slice(0,3)
 	}		
 
 	res.render('unlock/' + req.version + '/check-attendance-details', { attendanceDetails })

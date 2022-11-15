@@ -36,6 +36,8 @@ Activities Management prototype
 
 				<input type="hidden" name="attendance-details[{{loop.index0}}][_id]" value="{{prisoner._id}}">
 
+				{% if data['attendance-action'] == 'attended' %}
+
 				{% set bonusTextHtml %}
 				{{ govukTextarea({
 					name: "attendance-details[" + loop.index0 + "][bonus][bonus-detail]",
@@ -59,6 +61,51 @@ Activities Management prototype
 					}
 					]
 				}) }}
+
+				{% else %}
+
+				{{ govukRadios({
+					id: "pay-override-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][payment][pay-override]",
+					classes: "govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Do you want to pay " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes"
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
+
+				{{ govukSelect({
+					id: "pay-override-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][payment][pay-override-reason]",
+					label: {
+						text: "Why are you paying " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
+					},
+					items: [
+					{
+						value: "",
+						text: "Choose reason",
+						selected: true
+					},
+					{
+						value: "reason-1",
+						text: "Reason 1 description"
+					}
+					]
+
+				}) }}
+
+				{% endif %}
 			</div>
 			{% endfor %}
 
@@ -88,7 +135,7 @@ Activities Management prototype
 		}
 		
 		// [paymentRadio, bonusCheckbox, payOverrideSelect].forEach(hideInputFormGroup)
-		[paymentRadio, payOverrideSelect].forEach(hideInputFormGroup)
+		[payOverrideSelect].forEach(hideInputFormGroup)
 
 		function markAttended(el){
 			let container = el.closest('.prisoner')
