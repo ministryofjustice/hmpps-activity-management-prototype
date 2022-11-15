@@ -51,7 +51,7 @@ metadata:
     external-dns.alpha.kubernetes.io/set-identifier: prototype-ingress-${BRANCH}-${KUBE_NAMESPACE}-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
 spec:
-  ingressClassName: default OR modsec
+  ingressClassName: modsec
   tls:
   - hosts:
     - ${KUBE_NAMESPACE}-${BRANCH}.apps.live.cloud-platform.service.justice.gov.uk
