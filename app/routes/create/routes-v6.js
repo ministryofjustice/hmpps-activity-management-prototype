@@ -137,6 +137,12 @@ router.post(version +'/create/activity-capacity', function(req, res) {
 		res.redirect(version +'/create/schedule-check-your-answers')
 	}
 });
+router.post(version +'/create/schedule-check-your-answers', function(req, res) {
+	{
+		res.redirect(version +'/create/schedule-confirmation-created')
+	}
+});
+
 
 ///////CREATE CHECK YOUR ANSWERS///////////////
 
