@@ -10,10 +10,13 @@ Activities Management prototype
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-thirds">
+    <span class="govuk-caption-m">Education | Risk level: High | Minimum incentive: Basic</span>
+    <h1 class="govuk-heading-m">{{data.activityCreateScheduleName}}</h1>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      What is the date of the activity?
+      Enter the start and end dates for this schedule
     </h1>
   </div>
+  <p>Give the date the schedule is due to start. You can add an end date if you want to.</p>
 
     <form method="post">
       <div class="govuk-form-group">
@@ -23,12 +26,30 @@ Activities Management prototype
           id: "start-date",
           name:startDate,
           fieldset: {
-
+            legend: {
+              text: "Start date"
+            }
           },
           hint: {
-            text: "For example, 27 8 2022. If this activity repeats, enter the first date it takes place."
+            text: "For example, 29 12 2022"
           }
         }) }}
+        {{ govukDateInput({
+          id: "end-date",
+          fieldset: {
+            legend: {
+              text: "End date"
+            }
+          },
+          name:startDate,
+          hint: {
+            text: "For example, 31 01 2023"
+          }
+        }) }}
+
+        {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+
       </div>
       <br />
     <button class="govuk-button" data-module="govuk-button">Continue</button>
