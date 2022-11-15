@@ -16,87 +16,25 @@ Activities Management prototype
 	<div class="govuk-grid-column-three-quarters">
 		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 			{% if filteredPrisoners.length > 1 %}
-			Record attendance
-			<span class="govuk-caption-l">{{filteredPrisoners.length or "3"}} prisoners</span>
+			Add pay details for {{filteredPrisoners.length or "3"}} prisoners
 			{% else %}
-			Record attendance for {{filteredPrisoners[0].name.firstname}} {{filteredPrisoners[0].name.surname}}
+			Add pay details for {{filteredPrisoners[0].name.firstname}} {{filteredPrisoners[0].name.surname}}
 			{% endif %}
 		</h1>
-
-		{% if filteredPrisoners.length > 1 %}
-		{{govukButton({
-			text: "Mark all " + filteredPrisoners.length + " as attended",
-			classes: "govuk-button--secondary govuk-!-margin-bottom-0",
-			attributes: {
-				id: "mark-all-attended"
-			}
-		})}}
-		{{govukButton({
-			text: "Mark all " + filteredPrisoners.length + " as not attended",
-			classes: "govuk-button--secondary govuk-!-margin-bottom-0 govuk-!-margin-left-2",
-			attributes: {
-				id: "mark-all-not-attended"
-			}
-		})}}
-		{% endif %}
 
 		<form method="post">
 			{% for prisoner in filteredPrisoners %}
 			<div class="prisoner">
 				{% if filteredPrisoners.length > 1 %}
 				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-				<h2 class="govuk-heading-l">
-					<span class="govuk-caption-l">Prisoner {{loop.index}}</span>
+				<h2 class="govuk-heading-m">
+					<!-- <span class="govuk-caption-m">Prisoner {{loop.index}}</span> -->
 					{{prisoner.name.surname}}, {{prisoner.name.firstname}}
 					<span class="govuk-caption-m">{{prisoner._id}}</span>
 				</h2>
 				{% endif %}
 
-				<div class="govuk-inset-text">
-					{{data['activity'] or "Workshop"}}, 13:00&thinsp;&ndash;&thinsp;15:30
-				</div>
 				<input type="hidden" name="attendance-details[{{loop.index0}}][_id]" value="{{prisoner._id}}">
-				{{ govukRadios({
-					id: "attended-" + prisoner._id,
-					name: "attendance-details[" + loop.index0 + "][attended]",
-					classes: "govuk-radios--inline",
-					fieldset: {
-						legend: {
-							text: "Did " + prisoner.name.firstname + " " + prisoner.name.surname + " attend?"			
-						}
-					},
-					items: [
-					{
-						value: "yes",
-						text: "Yes"
-					},
-					{
-						value: "no",
-						text: "No"
-					}
-					]
-				}) }}
-
-				{{ govukRadios({
-					id: "pay-override-" + prisoner._id,
-					name: "attendance-details[" + loop.index0 + "][payment][pay-override]",
-					classes: "govuk-radios--inline",
-					fieldset: {
-						legend: {
-							text: "Do you want to pay " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
-						}
-					},
-					items: [
-					{
-						value: "yes",
-						text: "Yes"
-					},
-					{
-						value: "no",
-						text: "No"
-					}
-					]
-				}) }}
 
 				{% set bonusTextHtml %}
 				{{ govukTextarea({
@@ -121,32 +59,12 @@ Activities Management prototype
 					}
 					]
 				}) }}
-
-				{{ govukSelect({
-					id: "pay-override-" + prisoner._id,
-					name: "attendance-details[" + loop.index0 + "][payment][pay-override-reason]",
-					label: {
-						text: "Why are you paying " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
-					},
-					items: [
-					{
-						value: "",
-						text: "Choose reason",
-						selected: true
-					},
-					{
-						value: "reason-1",
-						text: "Reason 1 description"
-					}
-					]
-
-				}) }}
 			</div>
 			{% endfor %}
 
-			<div class="govuk-button-group">
+			<div class="govuk-button-group govuk-!-margin-top-9">
 				{{govukButton({
-					text: "Continue"
+					text: "Record attendance and finish"
 				})}}
 			</div>
 		</form>
@@ -169,12 +87,13 @@ Activities Management prototype
 			});
 		}
 		
-		[paymentRadio, bonusCheckbox, payOverrideSelect].forEach(hideInputFormGroup)
+		// [paymentRadio, bonusCheckbox, payOverrideSelect].forEach(hideInputFormGroup)
+		[paymentRadio, payOverrideSelect].forEach(hideInputFormGroup)
 
 		function markAttended(el){
 			let container = el.closest('.prisoner')
 
-			container.find($(bonusCheckbox)).closest(formGroup).show()
+			// container.find($(bonusCheckbox)).closest(formGroup).show()
 			container.find($(paymentRadio)).attr('checked', false).closest(formGroup).hide()
 			container.find($(payOverrideSelect)).closest(formGroup).hide()
 		}
@@ -183,8 +102,8 @@ Activities Management prototype
 			let container = el.closest('.prisoner')
 
 			container.find($(paymentRadio)).closest(formGroup).show()
-			container.find($(bonusCheckbox)).attr('checked', false).closest(formGroup).hide()
-			container.find($(bonusCheckbox)).attr('aria-expanded', false).parent().siblings('.govuk-checkboxes__conditional').addClass('govuk-checkboxes__conditional--hidden')
+			// container.find($(bonusCheckbox)).attr('checked', false).closest(formGroup).hide()
+			// container.find($(bonusCheckbox)).attr('aria-expanded', false).parent().siblings('.govuk-checkboxes__conditional').addClass('govuk-checkboxes__conditional--hidden')
 		}
 
 		$(attendanceRadio).on('change', function () {

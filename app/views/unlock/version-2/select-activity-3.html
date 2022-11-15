@@ -30,8 +30,6 @@ Activities Management prototype
 	7 activities scheduled for {{data['chosen-date'] or "today"}}
 </h1>
 
-<p><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></p>
-
 <form method="post">
 	{{ govukTable({
 		head: [
@@ -150,6 +148,22 @@ Activities Management prototype
 		]
 	}) }}
 </form>
+
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+{{ govukPagination({
+  previous: {
+  	text: "Previous day",
+    labelText: "3rd November 2022",
+    href: "#",
+    classes: "govuk-link--no-visited-state"
+  },
+  next: {
+  	text: "Next day",
+    labelText: "5th November 2022",
+    href: "#",
+    classes: "govuk-link--no-visited-state"
+  }
+}) }}
 {% endblock %}
 
 

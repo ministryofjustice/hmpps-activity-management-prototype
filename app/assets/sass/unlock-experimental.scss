@@ -270,3 +270,79 @@ table.expanding-rows-2 {
     }
   }
 }
+
+
+
+
+// Blue button variables
+$button-shadow-size: 2px;
+$govuk-blue-button-colour: govuk-colour('blue');
+$govuk-blue-button-hover-colour: govuk-shade($govuk-blue-button-colour, 20%);
+$govuk-blue-button-shadow-colour: govuk-shade($govuk-blue-button-colour, 60%);
+$govuk-blue-button-text-colour: govuk-colour("white");
+.govuk-button--blue {
+  background-color: $govuk-blue-button-colour;
+  box-shadow: 0 $button-shadow-size 0 $govuk-blue-button-shadow-colour;
+
+  &,
+  &:link,
+  &:visited,
+  &:active,
+  &:hover {
+    color: $govuk-blue-button-text-colour;
+  }
+
+    // alphagov/govuk_template includes a specific a:link:focus selector
+    // designed to make unvisited links a slightly darker blue when focussed, so
+    // we need to override the text colour for that combination of selectors so
+    // so that unvisited links styled as buttons do not end up with dark blue
+    // text when focussed.
+    // @include govuk-compatibility(govuk_template) {
+    //   &:link:focus {
+    //     color: $govuk-blue-button-text-colour;
+    //   }
+    // }
+
+    &:hover {
+      background-color: $govuk-blue-button-hover-colour;
+
+      &[disabled] {
+        background-color: $govuk-blue-button-colour;
+      }
+    }
+  }
+  $govuk-white-button-colour: govuk-colour("white");
+  $govuk-white-button-hover-colour: lighten(govuk-colour('blue'), 50%);
+  $govuk-white-button-shadow-colour: govuk-shade(govuk-colour('blue'), 50%);
+  $govuk-white-button-text-colour: govuk-shade(govuk-colour('blue'), 50%);
+  .govuk-button--white {
+    background-color: $govuk-white-button-colour;
+    box-shadow: 0 $button-shadow-size 0 $govuk-white-button-shadow-colour;
+
+    &,
+    &:link,
+    &:visited,
+    &:active,
+    &:hover {
+      color: $govuk-white-button-text-colour;
+    }
+
+    // alphagov/govuk_template includes a specific a:link:focus selector
+    // designed to make unvisited links a slightly darker white when focussed, so
+    // we need to override the text colour for that combination of selectors so
+    // so that unvisited links styled as buttons do not end up with dark white
+    // text when focussed.
+    // @include govuk-compatibility(govuk_template) {
+    //   &:link:focus {
+    //     color: $govuk-white-button-text-colour;
+    //   }
+    // }
+
+    &:hover {
+      background-color: $govuk-white-button-hover-colour;
+
+      &[disabled] {
+        background-color: $govuk-white-button-colour;
+      }
+    }
+  }

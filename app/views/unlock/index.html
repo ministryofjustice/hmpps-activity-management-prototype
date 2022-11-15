@@ -6,19 +6,27 @@ Activities Management prototype
 {% endblock %}
 
 {% block header %}
+{% set homepageUrl %}
+{% if data['prototype'] == 'create' %}
+/?prototype=create
+{% else %}
+/unlock?prototype=unklock
+{% endif %}
+{% endset %}
+
 {{ govukHeader({
-  homepageUrl: "/",
+  homepageUrl: homepageUrl,
   serviceName: serviceName,
-  serviceUrl: "/",
+  serviceUrl: homepageUrl,
   containerClasses: "govuk-width-container",
   navigation: [
   {
     text: "Create and allocate",
-    href: "/"
+    href: "/?prototype=create"
   },
   {
     text: "Unlock and attend",
-    href: "/unlock",
+    href: "/unlock?prototype=unlock",
     active: true
   }]
 }) }}
@@ -28,7 +36,7 @@ Activities Management prototype
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="app-masthead__title govuk-heading-xl govuk-!-margin-bottom-3">
-          Unlock &amp; attend
+          Unlock and attend
         </h1>
         <h3 class="app-masthead__subtitle govuk-heading-l">Prototype</h3>
       </div>

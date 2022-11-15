@@ -22,7 +22,8 @@ module.exports = {
   // Insert values here
   "config": {
     "record-attendance-pattern": "single-button",
+    "attendance-list-layout": "toolbar",
     "attend-pattern": "separate",
-    "select-activity-pattern": "typeahead",
+    "select-activity-pattern": "select-date-table",
   }
 }
