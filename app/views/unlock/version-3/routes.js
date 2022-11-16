@@ -6,7 +6,7 @@ const prisoners = require('../../../data/prisoners-list-1')
 
 	//redirect the root url to the start page
 router.get('/', function(req, res) {
-	res.redirect(req.version + '/config')
+	res.redirect(req.version + '/whereabouts')
 });
 
 	// CONFIG
