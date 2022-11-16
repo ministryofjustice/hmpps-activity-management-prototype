@@ -51,11 +51,6 @@ Activities Management prototype
 	</div>
 </div>
 
-{% for houseblock in data['locations'].houseblocks %}
-{{houseblock}}<br>
-{% endfor %}
-
-
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-one-half">
 		<div class="govuk-button-group govuk-!-margin-top-5">
@@ -306,7 +301,7 @@ Activities Management prototype
 	</div>
 </div>
 
-{% set totalPrisoners = data['prisoners'] | selectattr("activity") | length %}
+{% set totalPrisoners = filteredPrisoners|length %}
 {% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 <h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
 
@@ -371,7 +366,7 @@ Activities Management prototype
 		</tr>
 	</thead>
 	<tbody class="govuk-table__body">
-		{% for prisoner in data['prisoners'] | selectattr("activity") | sort(false, true, ('location.full')) %}
+		{% for prisoner in filteredPrisoners | sort(false, true, ('location.full')) %}
 		<tr class="govuk-table__row">
 			<td class="govuk-table__cell" width="180" scope="col">
 				<a href="#" class="govuk-link--no-visited-state"><b>{{prisoner.name.surname}}</b>, {{prisoner.name.firstname}}</a><br>

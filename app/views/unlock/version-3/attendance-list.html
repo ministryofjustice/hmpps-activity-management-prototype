@@ -71,7 +71,7 @@ Activities Management prototype
 			{% endif %}
 			{% endblock %}
 
-			{% set totalPrisoners = activity.prisoners %}
+			{% set totalPrisoners = activity.count %}
 			{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 			{% include './_includes/table-navbar.html' %}
 
@@ -109,8 +109,8 @@ Activities Management prototype
 				</thead>
 				<tbody class="govuk-table__body">
 					{% set sortOrder = data['sort-by'] %}
-					{% for prisoner in data['prisoners'] %}
-					{% if (loop.index <= activity.prisoners) %}
+					{% for prisoner in filteredPrisoners %}
+					{% if (loop.index <= activity.count) %}
 					<tr class="govuk-table__row">
 						{% if notRecorded > 0 %}
 						<td class="govuk-table__cell">

@@ -33,6 +33,13 @@ router.post('/attendance-list', function(req, res) {
 });
 
 router.get('/attendance-list/:activityId', function(req, res) {
+	req.session.data['activities'].forEach(( activity ) => {
+		const id = activity.id;
+		const count = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id).length;
+
+		activity['count'] = count
+	})
+
 	let activityId = req.params.activityId;
 	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
 
@@ -41,8 +48,7 @@ router.get('/attendance-list/:activityId', function(req, res) {
 		delete req.session.data['attendance-confirmation']
 	}
 
-	let filteredPrisoners = req.session.data['prisoners']
-
+	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
 	let notAttendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'not-attended').length
 	let attendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'attended').length
 
@@ -150,11 +156,19 @@ router.post('/select-unlock-locations', function(req, res) {
 
 // unlock list
 router.get('/unlock-list', function(req, res) {
-	res.render('unlock/' + req.version + '/unlock-list')
+	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity);
+
+	if(req.session.data['selected-locations']){
+		filteredPrisoners = filteredPrisoners.filter(function(prisoner){
+			return req.session.data['selected-locations']['houseblocks'].indexOf(prisoner.location.houseblock.toString()) > -1;
+		});
+	}
+
+	res.render('unlock/' + req.version + '/unlock-list', { filteredPrisoners })
 });
 
 router.get('/unlock-list/download', function(req, res){
-  const file = `public/downloads/List concept.pdf`;
+	const file = `public/downloads/List concept.pdf`;
   res.download(file); // Set disposition and send it.
 });
 
@@ -169,6 +183,17 @@ router.get('/select-activity', function(req, res) {
 });
 router.post('/select-activity', function(req, res) {
 	res.redirect('select-activity-results')
+});
+// SELECT ACTIVITY RESULTS
+router.get('/select-activity-results', function(req, res) {
+	req.session.data['activities'].forEach(( activity ) => {
+		const id = activity.id;
+		const count = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id).length;
+
+		activity['count'] = count
+	})
+
+	res.render('unlock/' + req.version + '/select-activity-results')
 });
 
 	// SELECT-ACTIVITY-2

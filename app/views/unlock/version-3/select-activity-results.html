@@ -42,24 +42,10 @@ Activities Management prototype
 				<td class="govuk-table__cell"><a href="attendance-list/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
 				<td class="govuk-table__cell">{{activity.location}}</td>
 				<td class="govuk-table__cell">13:00 – 15:30</td>
-				<td class="govuk-table__cell">{{activity.prisoners}}</td>
+				<td class="govuk-table__cell">{{activity.count}}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 </form>
-{% endblock %}
-{% block pageScripts %}
-<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
-<script>
-	accessibleAutocomplete.enhanceSelectElement({
-		selectElement: document.querySelector('#by-location'),
-		showAllValues: true
-	})
-
-	accessibleAutocomplete.enhanceSelectElement({
-		selectElement: document.querySelector('#by-activity'),
-		showAllValues: true
-	})
-</script>
 {% endblock %}
