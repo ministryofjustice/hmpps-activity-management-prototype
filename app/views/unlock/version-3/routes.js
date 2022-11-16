@@ -27,24 +27,7 @@ function getFilteredPrisoners(selectedPrisoners, prisonerList) {
 }
 
 	// ATTENDANCE LIST
-router.get('/attendance-list', function(req, res) {
-	// remove the confirmation notification on refreshing the page
-	if(req.session.data['attendance-confirmation'] == 'true'){
-		delete req.session.data['attendance-confirmation']
-	}
-
-	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
-
-	let notAttendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'not-attended').length
-	let attendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'attended').length
-
-	res.render('unlock/' + req.version + '/attendance-list', { filteredPrisoners, notAttendedCount, attendedCount })
-});
-router.post('/attendance-list', function(req, res) {
-	res.redirect('add-attendance-details')
-});
-
-// router.get('/attendance-list/:activityId', function(req, res) {
+// router.get('/attendance-list', function(req, res) {
 // 	// remove the confirmation notification on refreshing the page
 // 	if(req.session.data['attendance-confirmation'] == 'true'){
 // 		delete req.session.data['attendance-confirmation']
@@ -57,6 +40,28 @@ router.post('/attendance-list', function(req, res) {
 
 // 	res.render('unlock/' + req.version + '/attendance-list', { filteredPrisoners, notAttendedCount, attendedCount })
 // });
+router.post('/attendance-list', function(req, res) {
+	res.redirect('add-attendance-details')
+});
+
+router.get('/attendance-list/:activityId', function(req, res) {
+	let activityId = req.params.activityId;
+	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
+
+	// remove the confirmation notification on refreshing the page
+	if(req.session.data['attendance-confirmation'] == 'true'){
+		delete req.session.data['attendance-confirmation']
+	}
+
+	let filteredPrisoners = req.session.data['prisoners']
+
+	let notAttendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'not-attended').length
+	let attendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'attended').length
+
+	res.render('unlock/' + req.version + '/attendance-list', { activity, filteredPrisoners, notAttendedCount, attendedCount })
+});
+
+
 
 	// ATTENDANCE DETAILS
 router.get('/add-attendance-details', function(req, res) {
