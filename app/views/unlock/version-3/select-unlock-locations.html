@@ -1,13 +1,10 @@
 {% extends "layout_hmpps.html" %}
 {% set serviceName = "Activities Management" %}
-
 {% block pageTitle %}
 Activities Management prototype
 {% endblock %}
-
 {% block primaryNavigation %}
 {% endblock %}
-
 {% block beforeContent %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {{ govukBreadcrumbs({
@@ -24,27 +21,42 @@ Activities Management prototype
 	]
 }) }}
 {% endblock %}
-
 {% block content %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-l">
 			Choose unlock list details
 		</h1>
-
 		<form method="post">
-			<div class="govuk-form-group">
-				<label class="govuk-label govuk-label--m" for="date">
-					Date
-				</label>
-				<div class="govuk-hint">
-					Today's date is 13/10/2022
-				</div>
-				<input class="govuk-input govuk-input--width-20 date-input undefined hasDatepicker" id="date" name="date" type="text" value="13/10/2022" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
-			</div>
-
 			{{ govukRadios({
-				name: "time-period",
+				name: "chosen-date",
+				fieldset: {
+					legend: {
+						text: "Date",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "today",
+					text: "Today"
+				},
+				{
+					value: "yesterday",
+					text: "Yesterday"
+				},
+				{
+					value: "DATE",
+					text: "A different date",
+					conditional: {
+						html: dateHtml
+					}
+				}
+				]
+			}) }}
+			{{ govukRadios({
+				name: "times",
 				fieldset: {
 					legend: {
 						text: "Time period",
@@ -54,145 +66,62 @@ Activities Management prototype
 				},
 				items: [
 				{
-					value: "Morning",
+					value: "morning",
 					text: "Morning (AM)"
 				},
 				{
-					value: "Afternoon",
+					value: "afternoon",
 					text: "Afternoon (PM)"
 				},
 				{
-					value: "Evening",
+					value: "evening",
 					text: "Evening (ED)"
 				}
 				]
 			}) }}
-
-			{% set houseblock1WingsHtml %}
-			{{ govukCheckboxes({
-				name: "houseblock-1-sublocations",
-				classes: "govuk-checkboxes--small",
-				fieldset: {
-					legend: {
-						text: "Sub-locations",
-						classes: "govuk-fieldset__legend--s"
-					}
-				},
-				items: [
-				{
-					value: "Wing A",
-					text: "Wing A"
-				},
-				{
-					value: "Wing B",
-					text: "Wing B"
-				},
-				{
-					value: "Wing C",
-					text: "Wing C"
-				}
-				]
-			}) }}
-			{% endset %}
-			{% set houseblock2WingsHtml %}
-			{{ govukCheckboxes({
-				name: "houseblock-2-sublocations",
-				classes: "govuk-checkboxes--small",
-				fieldset: {
-					legend: {
-						text: "Sub-locations",
-						classes: "govuk-fieldset__legend--s"
-					}
-				},
-				items: [
-				{
-					value: "Wing A",
-					text: "Wing A"
-				},
-				{
-					value: "Wing B",
-					text: "Wing B"
-				},
-				{
-					value: "Wing C",
-					text: "Wing C"
-				}
-				]
-			}) }}
-			{% endset %}
-			{% set houseblock3WingsHtml %}
-			{{ govukCheckboxes({
-				name: "houseblock-3-sublocations",
-				classes: "govuk-checkboxes--small",
-				fieldset: {
-					legend: {
-						text: "Sub-locations",
-						classes: "govuk-fieldset__legend--s"
-					}
-				},
-				items: [
-				{
-					value: "Wing A",
-					text: "Wing A"
-				},
-				{
-					value: "Wing B",
-					text: "Wing B"
-				},
-				{
-					value: "Wing C",
-					text: "Wing C"
-				}
-				]
-			}) }}
-			{% endset %}
-
-			{{ govukCheckboxes({
-				formGroup: {
-					classes: "govuk-!-margin-bottom-2"
-				},
-				attributes: {
-					id: "locations-checkboxes"
-				},
-				name: "locations",
-				hint: {
-					text: "You can select more than one location if you need to"
-				},
-				fieldset: {
-					legend: {
-						text: "Locations",
-						classes: "govuk-fieldset__legend--m"
-					}
-				},
-				items: [
-				{
-					value: "Houseblock 1",
-					text: "Houseblock 1",
-					conditional: {
-						html: houseblock1WingsHtml
-					}
-				},
-				{
-					value: "Houseblock 2",
-					text: "Houseblock 2",
-					conditional: {
-						html: houseblock2WingsHtml
-					}
-				},
-				{
-					value: "Houseblock 3",
-					text: "Houseblock 3",
-					conditional: {
-						html: houseblock3WingsHtml
-					}
-				}
-				]
-			}) }}
+			<div class="govuk-form-group govuk-!-margin-bottom-2">
+				<fieldset class="govuk-fieldset" aria-describedby="locations-hint">
+					<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+						Locations
+					</legend>
+					<div id="locations-hint" class="govuk-hint">
+						You can select more than one location if you need to
+					</div>
+					<div class="govuk-checkboxes" id="locations-checkboxes" data-module="govuk-checkboxes">
+						{% for houseblock in data['residential-locations'] %}
+						<div class="govuk-checkboxes__item">
+							<input class="govuk-checkboxes__input" id="locations-{{houseblock._id}}" name="selected-locations[{{houseblock._id}}]" type="checkbox" value="{{houseblock._id}}" aria-controls="conditional-locations-{{houseblock._id}}" aria-expanded="false">
+							<label class="govuk-label govuk-checkboxes__label" for="locations-{{houseblock._id}}">
+								{{houseblock.name}}
+							</label>
+						</div>
+						<div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-locations-{{houseblock._id}}">
+							<div class="govuk-form-group">
+								<fieldset class="govuk-fieldset">
+									<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+										Sub-locations
+									</legend>
+									<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+										{% for wing in houseblock.wings %}
+										<div class="govuk-checkboxes__item">
+											<input class="govuk-checkboxes__input" id="houseblock-{{houseblock._id}}-sublocations-{{wing._id}}" name="selected-locations[{{houseblock._id}}]" type="checkbox" value="{{wing._id}}">
+											<label class="govuk-label govuk-checkboxes__label" for="houseblock-{{houseblock._id}}-sublocations-{{wing._id}}">
+												{{wing.name}}
+											</label>
+										</div>
+										{% endfor %}
+									</div>
+								</fieldset>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</fieldset>
+			</div>
 			<p class="govuk-body govuk-!-margin-bottom-6">
 				<a href="#" class="govuk-link govuk-link--no-visited-state" id="check-all-locations">Select all<span class="govuk-visually-hidden"> locations</span></a>
 			</p>
-
-			<!-- {{ govukCheckboxes({
+            <!-- {{ govukCheckboxes({
 				name: "staying-or-leaving",
 				fieldset: {
 					legend: {
@@ -212,16 +141,13 @@ Activities Management prototype
 				}
 				]
 			}) }} -->
-
 			<p class="govuk-inset-text">
 				Prisoners will be listed by sub-location (prison wing).
 			</p>
-
 			<div class="govuk-button-group">
 				{{govukButton({
 					text: "View selection"
 				})}}
-
 				{{govukButton({
 					text: "Print selection",
 					href: "example-print-dialog",
@@ -235,7 +161,6 @@ Activities Management prototype
 	</div>
 </div>
 {% endblock %}
-
 {% block pageScripts %}
 <script>
 	let button = $('#check-all-locations')
@@ -254,7 +179,7 @@ Activities Management prototype
 		button.html(buttonHtml)
 	}
 
-	$.each(checkboxes, function(){
+	$.each(checkboxes, function() {
 		$(this).on('change', function() {
 			if (checkboxes.filter(":checked").length) {
 				toggleButton()
@@ -264,7 +189,7 @@ Activities Management prototype
 		})
 	})
 
-	$(document).ready(function(){
+	$(document).ready(function() {
 		if (checkboxes.filter(":checked").length) {
 			button.addClass("uncheck-all")
 		} else {
@@ -272,21 +197,21 @@ Activities Management prototype
 		}
 	})
 
-	$('body').on('click', '.check-all', function(event){
+	$('body').on('click', '.check-all', function(event) {
 		event.preventDefault()
-		
-		$.each(checkboxes, function(){
-			if($(this).not(":checked")){
+
+		$.each(checkboxes, function() {
+			if ($(this).not(":checked")) {
 				$(this).click()
 			}
 		})
 	})
 
-	$('body').on('click', '.uncheck-all', function(event){
+	$('body').on('click', '.uncheck-all', function(event) {
 		event.preventDefault()
 
-		$.each(checkboxes, function(){
-			if($(this).is(":checked")){
+		$.each(checkboxes, function() {
+			if ($(this).is(":checked")) {
 				$(this).click()
 			}
 		})

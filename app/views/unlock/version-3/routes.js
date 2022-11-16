@@ -44,6 +44,20 @@ router.post('/attendance-list', function(req, res) {
 	res.redirect('add-attendance-details')
 });
 
+// router.get('/attendance-list/:activityId', function(req, res) {
+// 	// remove the confirmation notification on refreshing the page
+// 	if(req.session.data['attendance-confirmation'] == 'true'){
+// 		delete req.session.data['attendance-confirmation']
+// 	}
+
+// 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
+
+// 	let notAttendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'not-attended').length
+// 	let attendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'attended').length
+
+// 	res.render('unlock/' + req.version + '/attendance-list', { filteredPrisoners, notAttendedCount, attendedCount })
+// });
+
 	// ATTENDANCE DETAILS
 router.get('/add-attendance-details', function(req, res) {
 	delete req.session.data['attendance-details']
@@ -139,6 +153,16 @@ router.post('/refusals-list', function(req, res) {
 	// SELECT UNLOCK LOCATIONS	
 router.post('/select-unlock-locations', function(req, res) {
 	res.redirect('unlock-list')
+});
+
+// unlock list
+router.get('/unlock-list', function(req, res) {
+	res.render('unlock/' + req.version + '/unlock-list')
+});
+
+router.get('/unlock-list/download', function(req, res){
+  const file = `public/downloads/List concept.pdf`;
+  res.download(file); // Set disposition and send it.
 });
 
 	// SELECT REFUSALS LOCATIONS

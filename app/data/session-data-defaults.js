@@ -28,5 +28,6 @@ module.exports = {
   },
   "activity": "Workshop",
   prisoners: require('./prisoners-list-1'),
-  activities: require('./activities-list-1')
+  activities: require('./activities-list-1'),
+  'residential-locations': require('./residential-list-1')
 }
