@@ -27,15 +27,17 @@ Activities Management prototype
 
 {% block content %}
 <form method="post">
-	<!-- <div class="govuk-form-group">
-		<label class="govuk-label govuk-label--m" for="date">
-			Date of activity
+	{% set dateHtml %}
+	<div class="govuk-form-group">
+		<label class="govuk-label" for="date">
+			Date
 		</label>
 		<div class="govuk-hint">
-			Today's date is {{ "_" | currentDate('d/M/yyyy') }}
+			Today's date is 13/10/2022
 		</div>
-		<input class="govuk-input govuk-input--width-20 date-input undefined hasDatepicker" id="date" name="date" type="text" value="{{ "_" | currentDate('d/M/yyyy') }}" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
-	</div> -->
+		<input class="govuk-input govuk-input--width-10" id="date" name="date" type="text" value="13/10/2022" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
+	</div>
+	{% endset %}
 
 	{{ govukRadios({
 		name: "chosen-date",
@@ -57,7 +59,10 @@ Activities Management prototype
 		},
 		{
 			value: "DATE",
-			text: "A different date"
+			text: "A different date",
+			conditional: {
+				html: dateHtml
+			}
 		}
 		]
 	}) }}

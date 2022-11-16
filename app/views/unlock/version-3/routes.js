@@ -35,7 +35,10 @@ router.get('/attendance-list', function(req, res) {
 
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
-	res.render('unlock/' + req.version + '/attendance-list', { filteredPrisoners })
+	let notAttendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'not-attended').length
+	let attendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'attended').length
+
+	res.render('unlock/' + req.version + '/attendance-list', { filteredPrisoners, notAttendedCount, attendedCount })
 });
 router.post('/attendance-list', function(req, res) {
 	res.redirect('add-attendance-details')
@@ -53,11 +56,19 @@ router.post('/add-attendance-details', function(req, res) {
 
 	// set prisoner attendance
 	req.session.data['attendance-details'].forEach(( attendance ) => {
-		let payment = attendance['absence-payment']
 		const prisoner = req.session.data['prisoners'].find(prisoner => prisoner._id == attendance._id);
 
-		prisoner['attendance'] = "not-attended"
-		prisoner['absence-payment'] = payment
+		if(req.session.data['attendance-action'] == 'not-attended'){
+			let absencePayment = attendance['absence-payment']
+
+			prisoner['attendance'] = "not-attended"
+			prisoner['absence-payment'] = absencePayment
+		} else {
+			let bonus = attendance['bonus']
+			
+			prisoner['attendance'] = "attended"
+			prisoner['bonus'] = bonus
+		}
 	})
 
 	// set the confirmation dialog to display
@@ -99,6 +110,15 @@ router.get('/check-attendance-details', function(req, res) {
 router.post('/check-attendance-details', function(req, res) {
 	res.redirect('attendance-confirmation')
 });
+
+
+// attendance  details
+router.get('/attendance-details/:prisonerId', function (req, res) {
+	let prisonerId = req.params.prisonerId;
+	let prisoner = req.session.data['prisoners'].find(prisoner => prisoner._id === prisonerId)
+
+	res.render('unlock/' + req.version + '/attendance-details', {prisoner})
+})
 
 	// REFUSALS LIST
 router.get('/refusals-list', function(req, res) {
