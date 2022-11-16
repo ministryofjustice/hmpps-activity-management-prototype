@@ -1,0 +1,27 @@
+<div class="app-attendance-sticky-bar--bottom">
+	<div class="govuk-width-container">
+		<p class="govuk-!-margin-bottom-0" id="app-selected-count">
+			No prisoners selected. Select prisoners to begin marking attendance.
+		</p>
+		<div class="govuk-button-group govuk-!-margin-bottom-0">
+			{{ govukButton({
+				text: "Mark as attended",
+				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
+				value: "attended",
+				name: "attendance-action",
+				attributes: {
+					formAction: "check-variable-pay"
+				}
+			}) }}
+			{{ govukButton({
+				text: "Mark as not attended",
+				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
+				value: "not-attended",
+				name: "attendance-action",
+				attributes: {
+					formAction: "add-attendance-details"
+				}
+			}) }}
+		</div>
+	</div>
+</div>

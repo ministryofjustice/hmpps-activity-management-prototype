@@ -1,0 +1,65 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+<h1 class="govuk-heading-l">
+	{{data['activities'].length}} activities scheduled for {{data['chosen-date'] or "today"}} ({{data['times'] or "morning"}})
+</h1>
+<p><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></p>
+<form method="post">
+	<table class="govuk-table" data-module="moj-sortable-table">
+		<thead class="govuk-table__head">
+			<tr class="govuk-table__row">
+				<th scope="col" class="govuk-table__header" aria-sort="ascending">Activity</th>
+				<th scope="col" class="govuk-table__header" aria-sort="none">Location</th>
+				<th scope="col" class="govuk-table__header">Time</th>
+				<th scope="col" class="govuk-table__header">Prisoners</th>
+			</tr>
+		</thead>
+		<tbody class="govuk-table__body">
+			{% for activity in data['activities'] | sort(false, true, 'name') %}
+			<tr class="govuk-table__row">
+				<td class="govuk-table__cell"><a href="attendance-list?attendance=by-activity&amp;activity={{activity.name}}&prisonerCount={{activity.prisoners}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
+				<td class="govuk-table__cell">{{activity.location}}</td>
+				<td class="govuk-table__cell">13:00 – 15:30</td>
+				<td class="govuk-table__cell">{{activity.prisoners}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</form>
+{% endblock %}
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-location'),
+		showAllValues: true
+	})
+
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-activity'),
+		showAllValues: true
+	})
+</script>
+{% endblock %}

@@ -27,7 +27,10 @@ Activities Management prototype
 
 {% block content %}
 <h1 class="govuk-heading-l">
-	7 activities scheduled for {{data['chosen-date'] or "today"}}
+	{% set str %}
+	{{data['chosen-date']}} ({{data['times']}})
+	{% endset %}
+	7 activities scheduled for {{str}}
 </h1>
 
 <p><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></p>
