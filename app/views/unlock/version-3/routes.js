@@ -28,7 +28,7 @@ function getFilteredPrisoners(selectedPrisoners, prisonerList) {
 
 	// ATTENDANCE LIST
 
-router.post('/attendance-list', function(req, res) {
+router.post('/attendance-list/:activityId', function(req, res) {
 	res.redirect('add-attendance-details')
 });
 
@@ -52,7 +52,7 @@ router.get('/attendance-list/:activityId', function(req, res) {
 	let notAttendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'not-attended').length
 	let attendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'attended').length
 
-	res.render('unlock/' + req.version + '/attendance-list', { activity, filteredPrisoners, notAttendedCount, attendedCount })
+	res.render('unlock/' + req.version + '/attendance-list', { activity, filteredPrisoners, notAttendedCount, attendedCount, activityId })
 });
 
 
@@ -84,9 +84,11 @@ router.post('/add-attendance-details', function(req, res) {
 		}
 	})
 
+	let activityId = req.session.data['activity-id']
+
 	// set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
-	res.redirect('attendance-list')
+	res.redirect('attendance-list/'+activityId)
 });
 
 
@@ -108,8 +110,8 @@ router.post('/check-variable-pay', function(req, res) {
 		})
 
 		req.session.data['attendance-confirmation'] = 'true'
-
-		res.redirect('attendance-list')
+		let activityId = req.session.data['activity-id']
+		res.redirect('attendance-list/'+activityId)
 	}
 });
 
