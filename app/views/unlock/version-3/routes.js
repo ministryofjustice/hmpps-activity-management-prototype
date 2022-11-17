@@ -64,6 +64,15 @@ router.get('/activities/:activityId', function(req, res) {
 });
 
 
+// attendance  details
+router.get('/activities/:activityId/:prisonerId', function (req, res) {
+	let prisonerId = req.params.prisonerId;
+	let prisoner = req.session.data['prisoners'].find(prisoner => prisoner._id === prisonerId)
+
+	res.render('unlock/' + req.version + '/attendance-details', {prisoner})
+})
+
+
 
 	// ATTENDANCE DETAILS
 router.get('/add-attendance-details', function(req, res) {
@@ -134,15 +143,6 @@ router.post('/check-attendance-details', function(req, res) {
 	res.redirect('attendance-confirmation')
 });
 
-
-// attendance  details
-router.get('/attendance-details/:prisonerId', function (req, res) {
-	let prisonerId = req.params.prisonerId;
-	let prisoner = req.session.data['prisoners'].find(prisoner => prisoner._id === prisonerId)
-
-	res.render('unlock/' + req.version + '/attendance-details', {prisoner})
-})
-
 	// REFUSALS LIST
 router.get('/refusals-list', function(req, res) {
 	if(req.session.data['config'] && req.session.data['config']['attend-pattern'] == 'modals') {
@@ -168,7 +168,7 @@ router.post('/select-unlock-locations', function(req, res) {
 router.get('/unlock-list', function(req, res) {
 	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity);
 
-	if(req.session.data['selected-locations']){
+	if(req.session.data['selected-locations'] && req.session.data['selected-locations']['houseblocks']){
 		filteredPrisoners = filteredPrisoners.filter(function(prisoner){
 			return req.session.data['selected-locations']['houseblocks'].indexOf(prisoner.location.houseblock.toString()) > -1;
 		});
