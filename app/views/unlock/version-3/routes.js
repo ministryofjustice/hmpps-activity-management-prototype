@@ -26,19 +26,27 @@ function getFilteredPrisoners(selectedPrisoners, prisonerList) {
 	return filteredPrisoners
 }
 
-	// ATTENDANCE LIST
+function updateAttendanceList(req, res) {
+	req.session.data['activities'].forEach(( activity ) => {
+		const id = activity.id;
+		const scheduledPrisoners = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id);
 
+		const attendedPrisoners = scheduledPrisoners.filter((prisoner) => prisoner.attendance == 'attended');
+		const notAttendedPrisoners = scheduledPrisoners.filter((prisoner) => prisoner.attendance == 'not-attended');;
+
+		activity['count'] = scheduledPrisoners.length
+		activity['attended-count'] = attendedPrisoners.length
+		activity['not-attended-count'] = notAttendedPrisoners.length
+	})
+}
+
+	// ATTENDANCE LIST
 router.post('/activities/:activityId', function(req, res) {
 	res.redirect('add-attendance-details')
 });
 
 router.get('/activities/:activityId', function(req, res) {
-	req.session.data['activities'].forEach(( activity ) => {
-		const id = activity.id;
-		const count = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id).length;
-
-		activity['count'] = count
-	})
+	updateAttendanceList(req, res)
 
 	let activityId = req.params.activityId;
 	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
@@ -188,12 +196,7 @@ router.post('/select-activity', function(req, res) {
 });
 // SELECT ACTIVITY RESULTS
 router.get('/activities', function(req, res) {
-	req.session.data['activities'].forEach(( activity ) => {
-		const id = activity.id;
-		const count = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id).length;
-
-		activity['count'] = count
-	})
+	updateAttendanceList(req, res)
 
 	res.render('unlock/' + req.version + '/activities')
 });
