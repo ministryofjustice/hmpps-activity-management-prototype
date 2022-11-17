@@ -33,33 +33,23 @@ Activities Management prototype
 				<th scope="col" class="govuk-table__header" aria-sort="ascending">Activity</th>
 				<th scope="col" class="govuk-table__header" aria-sort="none">Location</th>
 				<th scope="col" class="govuk-table__header">Time</th>
-				<th scope="col" class="govuk-table__header">Prisoners</th>
+				<th scope="col" class="govuk-table__header">Scheduled</th>
+				<th scope="col" class="govuk-table__header">Attended</th>
+				<th scope="col" class="govuk-table__header">Not attended</th>
 			</tr>
 		</thead>
 		<tbody class="govuk-table__body">
 			{% for activity in data['activities'] | sort(false, true, 'name') %}
 			<tr class="govuk-table__row">
-				<td class="govuk-table__cell"><a href="attendance-list?attendance=by-activity&amp;activity={{activity.name}}&prisonerCount={{activity.prisoners}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
+				<td class="govuk-table__cell"><a href="activities/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
 				<td class="govuk-table__cell">{{activity.location}}</td>
 				<td class="govuk-table__cell">13:00 – 15:30</td>
-				<td class="govuk-table__cell">{{activity.prisoners}}</td>
+				<td class="govuk-table__cell">{{activity.count}}</td>
+				<td class="govuk-table__cell">{{activity['attended-count']}}</td>
+				<td class="govuk-table__cell">{{activity['not-attended-count']}}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 </form>
-{% endblock %}
-{% block pageScripts %}
-<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
-<script>
-	accessibleAutocomplete.enhanceSelectElement({
-		selectElement: document.querySelector('#by-location'),
-		showAllValues: true
-	})
-
-	accessibleAutocomplete.enhanceSelectElement({
-		selectElement: document.querySelector('#by-activity'),
-		showAllValues: true
-	})
-</script>
 {% endblock %}

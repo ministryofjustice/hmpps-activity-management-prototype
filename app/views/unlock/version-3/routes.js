@@ -26,23 +26,44 @@ function getFilteredPrisoners(selectedPrisoners, prisonerList) {
 	return filteredPrisoners
 }
 
+function updateAttendanceList(req, res) {
+	req.session.data['activities'].forEach(( activity ) => {
+		const id = activity.id;
+		const scheduledPrisoners = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id);
+
+		const attendedPrisoners = scheduledPrisoners.filter((prisoner) => prisoner.attendance == 'attended');
+		const notAttendedPrisoners = scheduledPrisoners.filter((prisoner) => prisoner.attendance == 'not-attended');;
+
+		activity['count'] = scheduledPrisoners.length
+		activity['attended-count'] = attendedPrisoners.length
+		activity['not-attended-count'] = notAttendedPrisoners.length
+	})
+}
+
 	// ATTENDANCE LIST
-router.get('/attendance-list', function(req, res) {
+router.post('/activities/:activityId', function(req, res) {
+	res.redirect('add-attendance-details')
+});
+
+router.get('/activities/:activityId', function(req, res) {
+	updateAttendanceList(req, res)
+
+	let activityId = req.params.activityId;
+	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
+
 	// remove the confirmation notification on refreshing the page
 	if(req.session.data['attendance-confirmation'] == 'true'){
 		delete req.session.data['attendance-confirmation']
 	}
 
-	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
+	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
+	let notAttendedCount = filteredPrisoners.filter(prisoner => prisoner.attendance == 'not-attended').length
+	let attendedCount = filteredPrisoners.filter(prisoner => prisoner.attendance == 'attended').length
 
-	let notAttendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'not-attended').length
-	let attendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'attended').length
+	res.render('unlock/' + req.version + '/activity-list', { activity, filteredPrisoners, notAttendedCount, attendedCount, activityId })
+});
 
-	res.render('unlock/' + req.version + '/attendance-list', { filteredPrisoners, notAttendedCount, attendedCount })
-});
-router.post('/attendance-list', function(req, res) {
-	res.redirect('add-attendance-details')
-});
+
 
 	// ATTENDANCE DETAILS
 router.get('/add-attendance-details', function(req, res) {
@@ -71,9 +92,11 @@ router.post('/add-attendance-details', function(req, res) {
 		}
 	})
 
+	let activityId = req.session.data['activity-id']
+
 	// set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
-	res.redirect('attendance-list')
+	res.redirect('activities/'+activityId)
 });
 
 
@@ -95,8 +118,8 @@ router.post('/check-variable-pay', function(req, res) {
 		})
 
 		req.session.data['attendance-confirmation'] = 'true'
-
-		res.redirect('attendance-list')
+		let activityId = req.session.data['activity-id']
+		res.redirect('activities/'+activityId)
 	}
 });
 
@@ -141,6 +164,24 @@ router.post('/select-unlock-locations', function(req, res) {
 	res.redirect('unlock-list')
 });
 
+// unlock list
+router.get('/unlock-list', function(req, res) {
+	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity);
+
+	if(req.session.data['selected-locations']){
+		filteredPrisoners = filteredPrisoners.filter(function(prisoner){
+			return req.session.data['selected-locations']['houseblocks'].indexOf(prisoner.location.houseblock.toString()) > -1;
+		});
+	}
+
+	res.render('unlock/' + req.version + '/unlock-list', { filteredPrisoners })
+});
+
+router.get('/unlock-list/download', function(req, res){
+	const file = `public/downloads/List concept.pdf`;
+  res.download(file); // Set disposition and send it.
+});
+
 	// SELECT REFUSALS LOCATIONS
 router.post('/select-refusals-locations', function(req, res) {
 	res.redirect('refusals-list')
@@ -151,7 +192,13 @@ router.get('/select-activity', function(req, res) {
 	res.render('unlock/' + req.version + '/select-activity')
 });
 router.post('/select-activity', function(req, res) {
-	res.redirect('select-activity-results')
+	res.redirect('activities')
+});
+// SELECT ACTIVITY RESULTS
+router.get('/activities', function(req, res) {
+	updateAttendanceList(req, res)
+
+	res.render('unlock/' + req.version + '/activities')
 });
 
 	// SELECT-ACTIVITY-2

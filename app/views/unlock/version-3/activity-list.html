@@ -21,7 +21,7 @@ Activities Management prototype
 			},
 			{
 				text: "Manage prisoner whereabouts",
-				href: "whereabouts"
+				href: "../whereabouts"
 			}
 			]
 		}) }}
@@ -30,7 +30,8 @@ Activities Management prototype
 			<div class="govuk-grid-row govuk-!-margin-bottom-5">
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-						{{ data['activity'] or 'Workshop' }}
+						{{prisoner}}
+						{{ activity.name or 'Workshop' }}
 						<span class="govuk-caption-l">{{ {
 							"day": data['activity-date'][0],
 							"month": data['activity-date'][1],
@@ -39,7 +40,7 @@ Activities Management prototype
 
 					<ul class="govuk-list">
 						<li>
-							<a href="select-activity" class="govuk-link--no-visited-state">Choose a different activity</a>
+							<a href="../select-activity" class="govuk-link--no-visited-state">Choose a different activity</a>
 						</li>
 					</ul>
 				</div>
@@ -61,7 +62,7 @@ Activities Management prototype
 			<h3 class="govuk-notification-banner__heading">
 				Attendance recorded
 			</h3>
-			<p class="govuk-body">We've saved attendance details for {{filteredPrisoners.length + " prisoners" if filteredPrisoners.length > 1 else filteredPrisoners[0].name.firstname + " " + filteredPrisoners[0].name.surname}}.</p>
+			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else data['selected-prisoners'][0].name.firstname + " " + data['selected-prisoners'][0].name.surname}}.</p>
 			{% endset %}
 			{{ govukNotificationBanner({
 				html: html,
@@ -70,7 +71,7 @@ Activities Management prototype
 			{% endif %}
 			{% endblock %}
 
-			{% set totalPrisoners = data['prisonerCount'] %}
+			{% set totalPrisoners = activity.count %}
 			{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 			{% include './_includes/table-navbar.html' %}
 
@@ -108,8 +109,8 @@ Activities Management prototype
 				</thead>
 				<tbody class="govuk-table__body">
 					{% set sortOrder = data['sort-by'] %}
-					{% for prisoner in data['prisoners'] %}
-					{% if (loop.index <= data['prisonerCount']) %}
+					{% for prisoner in filteredPrisoners %}
+					{% if (loop.index <= activity.count) %}
 					<tr class="govuk-table__row">
 						{% if notRecorded > 0 %}
 						<td class="govuk-table__cell">
@@ -139,9 +140,9 @@ Activities Management prototype
 						</td>
 						<td class="govuk-table__cell">
 							{% if prisoner.attendance == "attended" %}
-							<a href="attendance-details/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--green">Attended</span></a>
+							<a href="../attendance-details/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--green">Attended</span></a>
 							{% elif prisoner.attendance == "not-attended" %}
-							<a href="attendance-details/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--red">Absent</span></a>
+							<a href="../attendance-details/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--red">Absent</span></a>
 							{% else %}
 							<span class="govuk-hint">Not recorded yet</span>
 							{% endif %}
