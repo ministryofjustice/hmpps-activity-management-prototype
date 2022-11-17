@@ -41,9 +41,9 @@ Activities Management prototype
 		<tbody class="govuk-table__body">
 			{% for activity in data['activities'] | sort(false, true, 'name') %}
 			<tr class="govuk-table__row">
-				<td class="govuk-table__cell"><a href="activities/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
-				<td class="govuk-table__cell">{{activity.location}}</td>
-				<td class="govuk-table__cell">13:00 – 15:30</td>
+				<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}"><a href="activities/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
+				<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
+				<td class="govuk-table__cell">13:00&thinsp;–&thinsp;15:30</td>
 				<td class="govuk-table__cell">{{activity.count}}</td>
 				<td class="govuk-table__cell govuk-hint">{{activity['attended-count']}}</td>
 				<td class="govuk-table__cell govuk-hint">{{activity['not-attended-count']}}</td>
