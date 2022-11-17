@@ -45,6 +45,14 @@ module.exports = function (env) {
     return DateTime.local().setLocale('en-GB').toFormat(format);
   }
 
+  filters.getActivity = function(activityId) {
+    const activities = require('./data/activities-list-1')
+    let match = activities.filter(activity => activity.id == activityId);
+    let activity = match[0]
+
+    return activity
+  }
+
   filters.formatDate = object => {
     if (object) {
       const month = object.month.padStart(2, '0')

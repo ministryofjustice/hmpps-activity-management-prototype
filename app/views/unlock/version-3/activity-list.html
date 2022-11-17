@@ -140,9 +140,9 @@ Activities Management prototype
 						</td>
 						<td class="govuk-table__cell">
 							{% if prisoner.attendance == "attended" %}
-							<a href="../attendance-details/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--green">Attended</span></a>
+							<a href="{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--green">Attended</span></a>
 							{% elif prisoner.attendance == "not-attended" %}
-							<a href="../attendance-details/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--red">Absent</span></a>
+							<a href="{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--red">Absent</span></a>
 							{% else %}
 							<span class="govuk-hint">Not recorded yet</span>
 							{% endif %}
