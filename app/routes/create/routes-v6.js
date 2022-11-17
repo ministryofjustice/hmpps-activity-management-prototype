@@ -124,6 +124,11 @@ router.post(version +'/create/activity-start-date', function(req, res) {
 });
 router.post(version +'/create/activity-start-time', function(req, res) {
 	{
+		res.redirect(version +'/create/activity-start-time-repeat')
+	}
+});
+router.post(version +'/create/activity-start-time-repeat', function(req, res) {
+	{
 		res.redirect(version +'/create/activity-location-dropdown')
 	}
 });
