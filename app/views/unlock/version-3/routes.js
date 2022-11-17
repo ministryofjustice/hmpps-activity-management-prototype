@@ -28,11 +28,11 @@ function getFilteredPrisoners(selectedPrisoners, prisonerList) {
 
 	// ATTENDANCE LIST
 
-router.post('/attendance-list/:activityId', function(req, res) {
+router.post('/activities/:activityId', function(req, res) {
 	res.redirect('add-attendance-details')
 });
 
-router.get('/attendance-list/:activityId', function(req, res) {
+router.get('/activities/:activityId', function(req, res) {
 	req.session.data['activities'].forEach(( activity ) => {
 		const id = activity.id;
 		const count = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id).length;
@@ -49,10 +49,10 @@ router.get('/attendance-list/:activityId', function(req, res) {
 	}
 
 	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
-	let notAttendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'not-attended').length
-	let attendedCount = req.session.data['prisoners'].filter(prisoner => prisoner.attendance == 'attended').length
+	let notAttendedCount = filteredPrisoners.filter(prisoner => prisoner.attendance == 'not-attended').length
+	let attendedCount = filteredPrisoners.filter(prisoner => prisoner.attendance == 'attended').length
 
-	res.render('unlock/' + req.version + '/attendance-list', { activity, filteredPrisoners, notAttendedCount, attendedCount, activityId })
+	res.render('unlock/' + req.version + '/activity-list', { activity, filteredPrisoners, notAttendedCount, attendedCount, activityId })
 });
 
 
@@ -88,7 +88,7 @@ router.post('/add-attendance-details', function(req, res) {
 
 	// set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
-	res.redirect('attendance-list/'+activityId)
+	res.redirect('activities/'+activityId)
 });
 
 
@@ -111,7 +111,7 @@ router.post('/check-variable-pay', function(req, res) {
 
 		req.session.data['attendance-confirmation'] = 'true'
 		let activityId = req.session.data['activity-id']
-		res.redirect('attendance-list/'+activityId)
+		res.redirect('activities/'+activityId)
 	}
 });
 
@@ -184,10 +184,10 @@ router.get('/select-activity', function(req, res) {
 	res.render('unlock/' + req.version + '/select-activity')
 });
 router.post('/select-activity', function(req, res) {
-	res.redirect('select-activity-results')
+	res.redirect('activities')
 });
 // SELECT ACTIVITY RESULTS
-router.get('/select-activity-results', function(req, res) {
+router.get('/activities', function(req, res) {
 	req.session.data['activities'].forEach(( activity ) => {
 		const id = activity.id;
 		const count = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id).length;
@@ -195,7 +195,7 @@ router.get('/select-activity-results', function(req, res) {
 		activity['count'] = count
 	})
 
-	res.render('unlock/' + req.version + '/select-activity-results')
+	res.render('unlock/' + req.version + '/activities')
 });
 
 	// SELECT-ACTIVITY-2

@@ -40,7 +40,7 @@ Activities Management prototype
 
 					<ul class="govuk-list">
 						<li>
-							<a href="select-activity" class="govuk-link--no-visited-state">Choose a different activity</a>
+							<a href="../select-activity" class="govuk-link--no-visited-state">Choose a different activity</a>
 						</li>
 					</ul>
 				</div>
@@ -62,7 +62,7 @@ Activities Management prototype
 			<h3 class="govuk-notification-banner__heading">
 				Attendance recorded
 			</h3>
-			<p class="govuk-body">We've saved attendance details for {{filteredPrisoners.length + " prisoners" if filteredPrisoners.length > 1 else filteredPrisoners[0].name.firstname + " " + filteredPrisoners[0].name.surname}}.</p>
+			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else data['selected-prisoners'][0].name.firstname + " " + data['selected-prisoners'][0].name.surname}}.</p>
 			{% endset %}
 			{{ govukNotificationBanner({
 				html: html,

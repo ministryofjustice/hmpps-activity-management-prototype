@@ -381,12 +381,25 @@ Activities Management prototype
             <td class="govuk-table__cell">
             	<div class="alerts"></div>
             </td>
-            <td class="govuk-table__cell" scope="col">
+            {% set activityName -%}
+            {% for activity in data['activities'] -%}
+            {% if activity.id == prisoner.activity -%}
+            {{activity.name}}
+            {%- endif %}
+            {%- endfor %}
+            {%- endset %}
+            <td class="govuk-table__cell" data-sort-value="{{activityName}}" scope="col">
             	{% for activity in data['activities'] %}
             	{% if activity.id == prisoner.activity %}
-            	<a href="attendance-list/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+            	<a href="activities/{{activity.id}}" class="govuk-link--no-visited-state">{{activityName}}</a>
             	{% endif %}
             	{% endfor %}
+
+            	{% if prisoner.attendance == "attended" %}
+            	<a href="../attendance-details/{{prisoner._id}}"><span class="moj-badge moj-badge--green">Attended</span></a>
+            	{% elif prisoner.attendance == "not-attended" %}
+            	<a href="../attendance-details/{{prisoner._id}}"><span class="moj-badge moj-badge--red">Absent</span></a>
+            	{% endif %}
             	<br>
             	<span class="govuk-hint govuk-!-font-size-16">08:15&thinsp;–&thinsp;10:45</span>
             </td>
