@@ -53,6 +53,14 @@ module.exports = function (env) {
     return activity
   }
 
+  filters.getPrisoner = function(prisonerId) {
+    const prisoners = require('./data/prisoners-list-1')
+    let match = prisoners.filter(prisoner => prisoner._id == prisonerId);
+    let prisoner = match[0]
+
+    return prisoner
+  }
+
   filters.formatDate = object => {
     if (object) {
       const month = object.month.padStart(2, '0')

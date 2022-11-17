@@ -66,10 +66,13 @@ router.get('/activities/:activityId', function(req, res) {
 
 // attendance  details
 router.get('/activities/:activityId/:prisonerId', function (req, res) {
+	let activityId = req.params.activityId;
+	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
+
 	let prisonerId = req.params.prisonerId;
 	let prisoner = req.session.data['prisoners'].find(prisoner => prisoner._id === prisonerId)
 
-	res.render('unlock/' + req.version + '/attendance-details', {prisoner})
+	res.render('unlock/' + req.version + '/attendance-details', {prisoner, activity})
 })
 
 
