@@ -143,7 +143,13 @@ Activities Management prototype
 							{{prisoner.location.houseblock}}-{{prisoner.location.landing}}-{{prisoner.location.cell}}
 						</td>
 						<td class="govuk-table__cell">
-							<div class="alerts"></div>
+							{% if prisoner.alerts.length > 0 %}
+							<ul class="govuk-list">
+								{% for alert in prisoner.alerts %}
+								<li><span class="moj-badge moj-badge--grey">{{alert}}</span></li>        
+								{% endfor %}
+							</ul>
+							{% endif %}
 						</td>
 						<td class="govuk-table__cell">
 							{% if prisoner.attendance == "attended" %}

@@ -1,7 +1,7 @@
 module.exports = [
   {
     "id": 1,
-    "name": "Houseblock A",
+    "name": "Houseblock 1",
     "wings": [
       {
         "id": 1,
@@ -69,7 +69,7 @@ module.exports = [
   },
   {
     "id": 2,
-    "name": "Houseblock B",
+    "name": "Houseblock 2",
     "wings": [
       {
         "id": 1,
@@ -135,7 +135,7 @@ module.exports = [
   },
   {
     "id": 3,
-    "name": "Houseblock C",
+    "name": "Houseblock 3",
     "wings": [
       {
         "id": 1,
@@ -197,7 +197,7 @@ module.exports = [
   },
   {
     "id": 4,
-    "name": "Houseblock D",
+    "name": "Houseblock 4",
     "wings": [
       {
         "id": 1,
