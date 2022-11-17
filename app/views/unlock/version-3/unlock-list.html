@@ -301,6 +301,7 @@ Activities Management prototype
 	</div>
 </div>
 
+
 {% set totalPrisoners = filteredPrisoners|length %}
 {% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 <h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
@@ -308,39 +309,9 @@ Activities Management prototype
 <div class="app-filter-area" id="filters" tabindex=0>
 	<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold">Showing</span>
 	<ul class="app-filter-tag-list">
-		{% for location in data['locations'] %}
-		{% if location == "Houseblock 1" %}
-		
-		{% if data['houseblock-1-sublocations'].length %}
-		{% for sublocation in data['houseblock-1-sublocations'] %}
-		<li class="govuk-tag govuk-tag--filter">{{location}} - {{sublocation}}</li>
-		{% endfor %}
-		{% else %}
-		<li class="govuk-tag govuk-tag--filter">{{location}}</li>
-		{% endif %}
-
-		{% elif location == "Houseblock 2" %}
-		
-		{% if data['houseblock-2-sublocations'].length %}
-		{% for sublocation in data['houseblock-2-sublocations'] %}
-		<li class="govuk-tag govuk-tag--filter">{{location}} - {{sublocation}}</li>
-		{% endfor %}
-		{% else %}
-		<li class="govuk-tag govuk-tag--filter">{{location}}</li>
-		{% endif %}
-		
-		{% elif location == "Houseblock 3" %}
-		
-		{% if data['houseblock-3-sublocations'].length %}
-		{% for sublocation in data['houseblock-3-sublocations'] %}
-		<li class="govuk-tag govuk-tag--filter">{{location}} - {{sublocation}}</li>
-		{% endfor %}
-		{% else %}
-		<li class="govuk-tag govuk-tag--filter">{{location}}</li>
-		{% endif %}
-		
-		{% endif %}
-
+		{% for id in data['selected-locations']['houseblocks'] %}
+		{% set houseblock = id|getHouseblock %}
+		<li class="govuk-tag govuk-tag--filter">{{houseblock.name}}</li>
 		{% endfor %}
 	</ul>
 </div>

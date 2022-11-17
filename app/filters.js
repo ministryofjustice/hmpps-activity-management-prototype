@@ -61,6 +61,14 @@ module.exports = function (env) {
     return prisoner
   }
 
+  filters.getHouseblock = function(houseblockId) {
+    const locations = require('./data/residential-list-1')
+    let match = locations.filter(location => location.id == houseblockId);
+    let houseblock = match[0]
+
+    return houseblock
+  }
+
   filters.formatDate = object => {
     if (object) {
       const month = object.month.padStart(2, '0')
