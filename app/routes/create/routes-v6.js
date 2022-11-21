@@ -127,11 +127,22 @@ router.post(version +'/create/activity-start-time', function(req, res) {
 		res.redirect(version +'/create/activity-start-time-repeat')
 	}
 });
+
+//If 'will this schedule repeat is YES'
 router.post(version +'/create/activity-start-time-repeat', function(req, res) {
 	{
-		res.redirect(version +'/create/activity-location-dropdown')
+		if (req.session.data.activityWillItRecur == 'yes')
+		{
+			res.redirect(version +'/create/activity-start-time-repeat2')
+		}
+		else {
+			res.redirect(version +'/create/activity-location-dropdown')
+		}
+
+
 	}
 });
+
 router.post(version +'/create/activity-location-dropdown', function(req, res) {
 	{
 		res.redirect(version +'/create/activity-capacity')
