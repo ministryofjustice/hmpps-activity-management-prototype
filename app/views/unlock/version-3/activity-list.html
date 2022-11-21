@@ -9,7 +9,6 @@ Activities Management prototype
 {% block main %}
 <form>
 	<div class="govuk-width-container">
-
 		{% block beforeContent %}
 		{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 		{{ govukBreadcrumbs({
@@ -25,6 +24,7 @@ Activities Management prototype
 			}
 			]
 		}) }}
+		{% endblock %}
 
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 			<div class="govuk-grid-row govuk-!-margin-bottom-5">
@@ -76,7 +76,6 @@ Activities Management prototype
 				type: 'success'
 			}) }}
 			{% endif %}
-			{% endblock %}
 
 			{% set totalPrisoners = activity.count %}
 			{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}

@@ -146,13 +146,22 @@ router.post('/check-attendance-details', function(req, res) {
 	res.redirect('attendance-confirmation')
 });
 
+	// SELECT REFUSALS LOCATIONS
+router.post('/select-refusals-locations', function(req, res) {
+	res.redirect('refusals-list')
+});
+
 	// REFUSALS LIST
 router.get('/refusals-list', function(req, res) {
-	if(req.session.data['config'] && req.session.data['config']['attend-pattern'] == 'modals') {
-		res.redirect('refusals-list--modals')
-	} else {
-		res.render('unlock/' + req.version + '/refusals-list')
+	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity);
+
+	if(req.session.data['selected-locations'] && req.session.data['selected-locations']['houseblocks']){
+		filteredPrisoners = filteredPrisoners.filter(function(prisoner){
+			return req.session.data['selected-locations']['houseblocks'].indexOf(prisoner.location.houseblock.toString()) > -1;
+		});
 	}
+
+	res.render('unlock/' + req.version + '/refusals-list', { filteredPrisoners })
 });
 router.post('/refusals-list', function(req, res) {
 	if(req.session.data['selected-prisoners'].length > 1) {
@@ -185,10 +194,6 @@ router.get('/unlock-list/download', function(req, res){
   res.download(file); // Set disposition and send it.
 });
 
-	// SELECT REFUSALS LOCATIONS
-router.post('/select-refusals-locations', function(req, res) {
-	res.redirect('refusals-list')
-});
 
 	// SELECT-ACTIVITY
 router.get('/select-activity', function(req, res) {
