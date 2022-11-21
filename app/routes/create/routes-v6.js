@@ -2,7 +2,6 @@ module.exports = function (router) {
 
 var version = '/v6';
 
-
 router.post(version +'/setup', function(req, res) {
 			if (req.session.data.setupTaskType == 'allocation'){
 					//Allocate an activity
