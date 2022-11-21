@@ -5,15 +5,23 @@ var version = '/v6';
 
 router.post(version +'/setup', function(req, res) {
 			if (req.session.data.setupTaskType == 'allocation'){
+					//Allocate an activity
 					res.redirect(version +'/allocate/activity-dashboard-1')
 				}
+
 				else if (req.session.data.setupTaskType == 'creation'){
+						//Create an activity
+
 						if (req.session.data.setupCategories == 'yes'){
 							res.redirect(version +'/create/activity-type-select-with-category')
 						}
 			else {
 				res.redirect(version +'/create/activity-type-select-with-category')
 			}
+		}
+		else {
+			//Schedule an activity
+			res.redirect(version +'/create/activity-start-date')
 		}
 	});
 
