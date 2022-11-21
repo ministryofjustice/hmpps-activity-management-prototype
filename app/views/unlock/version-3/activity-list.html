@@ -89,10 +89,11 @@ Activities Management prototype
 				<li>Not recorded: <b>{{notRecorded}}</b></li>
 			</ul>
 			{% endset %}
-			{{ govukDetails({
+			<!-- {{ govukDetails({
 				summaryText: "Attendance summary",
 				html: attendanceDetailsHtml
-			}) }}
+			}) }} -->
+			{{attendanceDetailsHtml|safe}}
 
 			<table class="govuk-table app-whereabouts-table app-whereabouts-table--sticky-head app-whereabouts-table--font-size-normal govuk-!-margin-bottom-0" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
 				<thead class="govuk-table__head">
