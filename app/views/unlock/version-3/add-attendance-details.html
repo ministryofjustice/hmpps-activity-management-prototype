@@ -15,10 +15,18 @@ Activities Management prototype
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-three-quarters">
 		<h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+			{% set prisonersNoun %}
 			{% if filteredPrisoners.length > 1 %}
-			Add pay details for {{filteredPrisoners.length or "3"}} prisoners
+			{{filteredPrisoners.length or "3"}} prisoners
 			{% else %}
-			Add pay details for {{filteredPrisoners[0].name.firstname}} {{filteredPrisoners[0].name.surname}}
+			{{filteredPrisoners[0].name.firstname}} {{filteredPrisoners[0].name.surname}}
+			{% endif %}
+			{% endset %}
+
+			{% if data['attendance-action'] == 'not-attended' %}
+			Select a reason why {{prisonersNoun}} did not attend
+			{% else %}
+			Add pay details for {{prisonersNoun}}
 			{% endif %}
 		</h1>
 
