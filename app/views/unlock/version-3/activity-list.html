@@ -30,11 +30,18 @@ Activities Management prototype
 			<div class="govuk-grid-row govuk-!-margin-bottom-5">
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-						{{ activity.name or 'Workshop' }}: record attendance
-						<span class="govuk-caption-l">{{ {
+						<span class="govuk-caption-l">
+							{{ {
 							"day": data['activity-date'][0],
 							"month": data['activity-date'][1],
-						"year": data['activity-date'][2] } | formatDate if data['activity-date'] else "2 November 2022"}}</span>
+						"year": data['activity-date'][2] } | formatDate if data['activity-date'] else "2 November 2022"}}
+					</span>
+
+						{{ activity.name or 'Workshop' }}: record attendance
+
+						<span class="govuk-caption-l">
+							{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
+					</span>
 					</h1>
 
 					<ul class="govuk-list">
