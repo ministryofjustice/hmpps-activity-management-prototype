@@ -32,7 +32,7 @@ Activities Management prototype
 			<tr class="govuk-table__row">
 				<th scope="col" class="govuk-table__header" aria-sort="ascending">Activity</th>
 				<th scope="col" class="govuk-table__header" aria-sort="none">Location</th>
-				<th scope="col" class="govuk-table__header">Time</th>
+				<th scope="col" class="govuk-table__header" aria-sort="none">Time</th>
 				<th scope="col" class="govuk-table__header">Scheduled</th>
 				<th scope="col" class="govuk-table__header govuk-hint">Attended</th>
 				<th scope="col" class="govuk-table__header govuk-hint">Not attended</th>
@@ -43,7 +43,7 @@ Activities Management prototype
 			<tr class="govuk-table__row">
 				<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}"><a href="activities/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
 				<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
-				<td class="govuk-table__cell">
+				<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
 
 				<!-- {% if data['times'] == 'am' %}
 				9:00&thinsp;–&thinsp;11:30
@@ -57,7 +57,7 @@ Activities Management prototype
 			</td>
 				<td class="govuk-table__cell">{{activity.count}}</td>
 				<td class="govuk-table__cell govuk-hint">{{activity['attended-count']}}</td>
-				<td class="govuk-table__cell govuk-hint">{{activity['not-attended-count']}}</td>
+				<td class="govuk-table__cell govuk-hint"><span class="govuk-tag {{'govuk-tag--red' if activity['not-attended-count'] > 0 else 'govuk-tag--green'}}">{{activity['not-attended-count']}}</span></td>
 			</tr>
 			{% endfor %}
 		</tbody>
