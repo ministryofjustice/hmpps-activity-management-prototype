@@ -140,7 +140,7 @@ router.post(version +'/create/activity-start-time-repeat', function(req, res) {
 	{
 		if (req.session.data.activityWillItRecur == 'yes')
 		{
-			res.redirect(version +'/create/activity-start-time-repeat2')
+			res.redirect(version +'/create/activity-location-dropdown')
 		}
 		else {
 			res.redirect(version +'/create/activity-location-dropdown')
@@ -149,23 +149,23 @@ router.post(version +'/create/activity-start-time-repeat', function(req, res) {
 });
 
 //If repeat
-router.post(version +'/create/activity-start-time-repeat2', function(req, res) {
-	{
-		if (req.session.data.activityRecurSame == 'yes')
-		{
-			res.redirect(version +'/create/activity-repeat-check')
-		}
-		else {
-			res.redirect(version +'/create/activity-repeat-check')
-		}
-	}
-});
+//router.post(version +'/create/activity-start-time-repeat2', function(req, res) {
+	//{
+		//if (req.session.data.activityRecurSame == 'yes')
+	//	{
+	//		res.redirect(version +'/create/activity-repeat-check')
+	//	}
+	//	else {
+	//		res.redirect(version +'/create/activity-repeat-check')
+	//	}
+	//}
+//});
 
-router.post(version +'/create/activity-repeat-check', function(req, res) {
-	{
-		res.redirect(version +'/create/activity-location-dropdown')
-	}
-});
+//router.post(version +'/create/activity-repeat-check', function(req, res) {
+//	{
+//		res.redirect(version +'/create/activity-location-dropdown')
+//	}
+//});
 
 router.post(version +'/create/activity-location-dropdown', function(req, res) {
 	{
