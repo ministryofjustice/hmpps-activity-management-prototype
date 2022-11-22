@@ -44,16 +44,16 @@ router.post(version +'/create/activity-type-select-with-category', function(req,
 
 router.post(version +'/create/activity-name', function(req, res) {
 	{
-		res.redirect(version +'/create/activity-name-2')
+		res.redirect(version +'/create/activity-risk-assessment')
 	}
 });
 
 // On activity-name-2 the continue creatong activity button is pressed.
-router.post(version +'/create/activity-name-2-create', function(req, res) {
-	{
-		res.redirect(version +'/create/activity-risk-assessment')
-	}
-});
+//router.post(version +'/create/activity-name-2-create', function(req, res) {
+	//{
+		//res.redirect(version +'/create/activity-risk-assessment')
+	//}
+//});
 
 router.post(version +'/create/activity-risk-assessment', function(req, res) {
 	{
