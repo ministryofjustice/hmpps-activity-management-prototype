@@ -2,18 +2,25 @@ module.exports = function (router) {
 
 var version = '/v6';
 
-
 router.post(version +'/setup', function(req, res) {
 			if (req.session.data.setupTaskType == 'allocation'){
+					//Allocate an activity
 					res.redirect(version +'/allocate/activity-dashboard-1')
 				}
+
 				else if (req.session.data.setupTaskType == 'creation'){
+						//Create an activity
+
 						if (req.session.data.setupCategories == 'yes'){
 							res.redirect(version +'/create/activity-type-select-with-category')
 						}
 			else {
 				res.redirect(version +'/create/activity-type-select-with-category')
 			}
+		}
+		else {
+			//Schedule an activity
+			res.redirect(version +'/create/activity-start-date')
 		}
 	});
 
@@ -133,15 +140,32 @@ router.post(version +'/create/activity-start-time-repeat', function(req, res) {
 	{
 		if (req.session.data.activityWillItRecur == 'yes')
 		{
-			res.redirect(version +'/create/activity-start-time-repeat2')
+			res.redirect(version +'/create/activity-location-dropdown')
 		}
 		else {
 			res.redirect(version +'/create/activity-location-dropdown')
 		}
-
-
 	}
 });
+
+//If repeat
+//router.post(version +'/create/activity-start-time-repeat2', function(req, res) {
+	//{
+		//if (req.session.data.activityRecurSame == 'yes')
+	//	{
+	//		res.redirect(version +'/create/activity-repeat-check')
+	//	}
+	//	else {
+	//		res.redirect(version +'/create/activity-repeat-check')
+	//	}
+	//}
+//});
+
+//router.post(version +'/create/activity-repeat-check', function(req, res) {
+//	{
+//		res.redirect(version +'/create/activity-location-dropdown')
+//	}
+//});
 
 router.post(version +'/create/activity-location-dropdown', function(req, res) {
 	{
