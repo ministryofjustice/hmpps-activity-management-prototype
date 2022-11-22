@@ -26,8 +26,11 @@ Activities Management prototype
     <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
   <div class="grid-row">
     <div class="column-two-thirds">
+      <div class="back">
+        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+        </div>
       <span class="govuk-caption-m">Education | Risk level: High | Minimum incentive: Basic</span>
-      <h1 class="govuk-heading-m">Maths level 4</h1>
+      <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 3'}}</h1>
       <form class="form" method="post" autocomplete="off" action="addEducation">
         <div class="form-group">
           <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
