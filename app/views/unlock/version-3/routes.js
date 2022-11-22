@@ -178,13 +178,21 @@ router.post('/select-unlock-locations', function(req, res) {
 
 // unlock list
 router.get('/unlock-list', function(req, res) {
-	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity);
+	let period = req.session.data['times'].toUpperCase()
+	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
+	let filteredPrisoners = req.session.data['prisoners'];
 
-	if(req.session.data['selected-locations'] && req.session.data['selected-locations']['houseblocks']){
-		filteredPrisoners = filteredPrisoners.filter(function(prisoner){
-			return req.session.data['selected-locations']['houseblocks'].indexOf(prisoner.location.houseblock.toString()) > -1;
-		});
+	if(req.session.data['selected-locations'] && req.session.data['selected-locations']['houseblocks'] && req.session.data['selected-locations']['houseblocks'].length > 0){
+		let houseblocks = req.session.data['selected-locations']['houseblocks'];
+
+		filteredPrisoners = filteredPrisoners.filter( prisoner => houseblocks.includes( prisoner.location.houseblock.toString() ) )
 	}
+
+	filteredPrisoners = filteredPrisoners.filter((prisoner) => {
+		return filteredActivities.some((activity) => {
+			return activity.id === prisoner.activity;
+		});
+	});
 
 	res.render('unlock/' + req.version + '/unlock-list', { filteredPrisoners })
 });
@@ -206,7 +214,10 @@ router.post('/select-activity', function(req, res) {
 router.get('/activities', function(req, res) {
 	updateAttendanceList(req, res)
 
-	res.render('unlock/' + req.version + '/activities')
+	let period = req.session.data['times'].toUpperCase()
+	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
+
+	res.render('unlock/' + req.version + '/activities', {filteredActivities})
 });
 
 	// SELECT-ACTIVITY-2

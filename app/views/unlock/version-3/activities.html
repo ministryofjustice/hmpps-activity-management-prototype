@@ -23,7 +23,7 @@ Activities Management prototype
 {% endblock %}
 {% block content %}
 <h1 class="govuk-heading-l">
-	{{data['activities'].length}} activities scheduled for {{data['chosen-date'] or "today"}} ({{data['times']|upper or "morning"}})
+	{{filteredActivities.length}} activities scheduled for {{data['chosen-date'] or "today"}} ({{data['times']|upper or "morning"}})
 </h1>
 <p><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></p>
 <form method="post">
@@ -39,19 +39,21 @@ Activities Management prototype
 			</tr>
 		</thead>
 		<tbody class="govuk-table__body">
-			{% for activity in data['activities'] | sort(false, true, 'name') %}
+			{% for activity in filteredActivities | sort(false, true, 'name') %}
 			<tr class="govuk-table__row">
 				<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}"><a href="activities/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
 				<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
 				<td class="govuk-table__cell">
 
-				{% if data['times'] == 'am' %}
+				<!-- {% if data['times'] == 'am' %}
 				9:00&thinsp;–&thinsp;11:30
 				{% elif data['times'] == 'pm' %}
 				13:00&thinsp;–&thinsp;15:30
 				{% else %}
 				18:00&thinsp;–&thinsp;20:30
-				{% endif %}
+				{% endif %} -->
+
+				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
 			</td>
 				<td class="govuk-table__cell">{{activity.count}}</td>
 				<td class="govuk-table__cell govuk-hint">{{activity['attended-count']}}</td>
