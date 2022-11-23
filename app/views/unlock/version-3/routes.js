@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
 
 	// CONFIG
 router.post('/config', function(req, res) {
-	res.redirect('whereabouts')
+	res.redirect('dps-home')
 });
 
 function getFilteredPrisoners(selectedPrisoners, prisonerList) {
