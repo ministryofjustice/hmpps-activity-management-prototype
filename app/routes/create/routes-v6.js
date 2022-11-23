@@ -200,7 +200,7 @@ router.post(version +'/create/check/activity-name', function(req, res) {
 
 router.post(version +'/create/check/activity-capacity', function(req, res) {
 	{
-		res.redirect(version +'/create/activity-check-your-answers')
+		res.redirect(version +'/create/schedule-check-your-answers')
 	}
 });
 
@@ -222,7 +222,7 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 		//Not recurring
 		router.post(version +'/create/check/activity-start-date', function(req, res) {
 			{
-				res.redirect(version +'/create/activity-check-your-answers')
+				res.redirect(version +'/create/schedule-check-your-answers')
 			}
 		});
 
@@ -400,11 +400,12 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 		}
 	});
 
-
-	//TIME
-
-
 ///////END CREATE//////////
+
+
+
+
+//////ALLOCATE////////
 
 router.post(version +'/allocate/searchAllocationDashboard-1', function(req, res) {
 	{
@@ -527,6 +528,10 @@ router.post(version +'/allocate/allocate-payment-details', function(req, res) {
 		res.redirect(version +'/allocate/allocate-check-answers')
 	}
 });
+
+
+
+
 router.post(version +'/allocate/allocate-check-answers', function(req, res) {
 	{
 		res.redirect(version +'/allocate/allocate-confirmation')
