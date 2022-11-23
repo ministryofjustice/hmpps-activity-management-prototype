@@ -26,10 +26,10 @@ Activities Management prototype
               Start date
             </dt>
             <dd class="govuk-summary-list__value">
-              1 December 2022
+            {{data.startDate or '1 December 2022'}}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-risk-assessment">
+              <a class="govuk-link" href="check/activity-start-date">
                 Change<span class="govuk-visually-hidden"> licence type</span>
               </a>
             </dd>
@@ -39,11 +39,11 @@ Activities Management prototype
               End date
             </dt>
             <dd class="govuk-summary-list__value">
-              10 January 2023
+              {{data.endDate or '10 January 2023'}}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-risk-assessment">
-                Change<span class="govuk-visually-hidden"> licence type</span>
+              <a class="govuk-link" href="check/activity-start-time">
+                <span class="govuk-visually-hidden"> licence type</span>
               </a>
             </dd>
           </div>
@@ -57,7 +57,7 @@ Activities Management prototype
               Wednesday am<br />
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-risk-assessment">
+              <a class="govuk-link" href="check/activity-start-time">
                 Change<span class="govuk-visually-hidden"> licence type</span>
               </a>
             </dd>
@@ -70,7 +70,7 @@ Activities Management prototype
               Room 2
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-risk-assessment">
+              <a class="govuk-link" href="check/activity-location-dropdown">
                 Change<span class="govuk-visually-hidden"> licence type</span>
               </a>
             </dd>
@@ -80,10 +80,10 @@ Activities Management prototype
             Capacity
             </dt>
             <dd class="govuk-summary-list__value">
-              15
+              {{data.ActivityCapacity or '15'}}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-risk-assessment">
+              <a class="govuk-link" href="check/activity-capacity">
                 Change<span class="govuk-visually-hidden"> licence type</span>
               </a>
             </dd>
@@ -187,13 +187,16 @@ Activities Management prototype
             </dd>
           </div>
         </dl>
-
+        <div id="event-name-hint" class="govuk-hint">
+        <a href="../allocate/activity-dashboard-1">Cancel and return to activities dashboard</a>
+        </div><br />
 
         <form method="post">
           <button class="govuk-button" data-module="govuk-button">
             Create schedule
           </button>
         </form>
+
       </div>
 </div>
 {% endblock %}

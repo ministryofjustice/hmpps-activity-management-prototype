@@ -37,19 +37,19 @@ Activities Management prototype
               </div>
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                 <input class="govuk-radios__input" id="incentiveLevelBasic" name="incentiveLevel" type="radio" value="basic" checked data-aria-controls="conditional-contact">
+                 <input class="govuk-radios__input" id="incentiveLevelBasic" name="incentiveLevel" type="radio" {% if data.incentiveLevel=='basic' %}checked {% endif %} value="basic" checked data-aria-controls="conditional-contact">
                   <label class="govuk-label govuk-radios__label" for="incentiveLevelBasic">
                     High
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="incentiveLevelStandard" name="incentiveLevel" type="radio" value="standard"  data-aria-controls="conditional-contact">
+                  <input class="govuk-radios__input" id="incentiveLevelStandard" name="incentiveLevel" {% if data.incentiveLevel=='standard' %}checked {% endif %}type="radio" value="standard"  data-aria-controls="conditional-contact">
                   <label class="govuk-label govuk-radios__label" for="incentiveLevelStandard">
                     Medium
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="incentiveLevelAdvanced" name="incentiveLevel" type="radio" value="advanced"  data-aria-controls="conditional-contact">
+                  <input class="govuk-radios__input" id="incentiveLevelAdvanced" name="incentiveLevel" type="radio" value="advanced" {% if data.incentiveLevel=='advanced' %}checked {% endif %} data-aria-controls="conditional-contact">
                   <label class="govuk-label govuk-radios__label" for="incentiveLevelAdvanced">
                     Low
                   </label>

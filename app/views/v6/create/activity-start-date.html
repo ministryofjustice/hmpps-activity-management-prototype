@@ -21,13 +21,14 @@ Activities Management prototype
   </div>
   <p>Give the date the schedule is due to start. You can add an end date if you want to.</p>
 
-    <form method="post">
       <div class="govuk-form-group">
+        <form method="post">
         {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 
         {{ govukDateInput({
           id: "start-date",
           name:startDate,
+          value:startDate,
           fieldset: {
             legend: {
               text: "Start date"
@@ -39,12 +40,13 @@ Activities Management prototype
         }) }}
         {{ govukDateInput({
           id: "end-date",
+          name:endDate,
+          value:endDate,
           fieldset: {
             legend: {
               text: "End date (optional)"
             }
           },
-          name:startDate,
           hint: {
             text: "For example, 31 01 2023"
           }
@@ -52,9 +54,10 @@ Activities Management prototype
 
         {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 
-
       </div>
       <br />
-    <button class="govuk-button" data-module="govuk-button">Continue</button>
+      <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
 </div>
+
 {% endblock %}
