@@ -27,18 +27,11 @@ Activities Management prototype
 					Residential location
 				</label>
 				<select class="govuk-select" id="location" name="location" data-test="homepage-search-location">
-					<option value="MDI">Moorland (HMP &amp; YOI)</option>
-					<option value="MDI-1">Houseblock 1</option>
-					<option value="MDI-2">Houseblock 2</option>
-					<option value="MDI-3">Houseblock 3</option>
-					<option value="MDI-4">Houseblock 4</option>
-					<option value="MDI-5">Houseblock 5</option>
-					<option value="MDI-6">Houseblock 6</option>
-					<option value="MDI-7">Houseblock 7</option>
-					<option value="MDI-8">Houseblock 8</option>
+					<option value="MDI">{{data['prison-name']}}</option>
+					{% for houseblock in data['residential-locations'] %}
+					<option value="MDI-1">{{houseblock.name}}</option>
+					{% endfor %}
 					<option value="MDI-RECEP">Reception</option>
-					<option value="MDI-RECV">Recv</option>
-					<option value="MDI-MCASU">Segregation MPU</option>
 				</select>
 			</div>
 			<button type="submit" class="govuk-button" data-module="govuk-button">
@@ -53,7 +46,7 @@ Activities Management prototype
 			<li class="govuk-grid-column-one-third card-group__item">
 				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
 					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="#">Manage prisoner whereabouts</a>
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="whereabouts">Manage prisoner whereabouts</a>
 					</h2>
 					<p class="govuk-body card__description">View unlock lists, all appointments and COVID units, manage attendance and add bulk appointments.</p>
 				</div>
