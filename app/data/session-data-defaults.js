@@ -25,6 +25,16 @@ module.exports = {
     "attendance-list-layout": "toolbar",
     "attend-pattern": "separate",
     "select-activity-pattern": "select-date-table",
+    "navigation-tiles": [{
+      "linkText": "Manage prisoner whereabouts",
+      "descriptionText":"View unlock lists, all appointments and COVID units, manage attendance and add bulk appointments.",
+      "linkURL":"/unlock/version-3/whereabouts"
+    },
+    {
+      "linkText":"Manage schedules and activities",
+      "descriptionText":"Create and manage prisoner schedules. Allocate prisoners to activities.",
+      "linkURL":"/v6/create/activity-type-select-with-category"
+    }]
   },
   "activity": "Workshop",
   'prisoners': require('./prisoners-list-1'),
@@ -32,5 +42,5 @@ module.exports = {
   'residential-locations': require('./residential-list-1'),
   "times": "AM",
   "selected-locations": {},
-  "prison-name": "HMP Leeds"
+  "prison-name": "HMP Leeds",
 }

@@ -43,14 +43,17 @@ Activities Management prototype
 <div class="homepage-content">
 	<div class="govuk-width-container">
 		<ul class="govuk-grid-row card-group">
+			{% for tile in data['config']['navigation-tiles'] %}
 			<li class="govuk-grid-column-one-third card-group__item">
 				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
 					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="whereabouts">Manage prisoner whereabouts</a>
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{tile.linkURL}}">{{tile.linkText}}</a>
 					</h2>
-					<p class="govuk-body card__description">View unlock lists, all appointments and COVID units, manage attendance and add bulk appointments.</p>
+					<p class="govuk-body card__description">{{tile.descriptionText}}</p>
 				</div>
 			</li>
+			{% endfor %}
+			
 			<li class="govuk-grid-column-one-third card-group__item">
 				<div class="card card--clickable" data-test="change-someones-cell">
 					<h2 class="govuk-heading-m card__heading">
