@@ -22,7 +22,14 @@ Activities Management prototype
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-panel govuk-panel--confirmation">
           <h1 class="govuk-panel__title">
-              {{data.activityName or 'Maths level 3' }} created
+              {{data.activityName or 'Maths level 3' }}
+
+              {% if data['edit']=='true' %}
+                changes completed
+                {% else %}
+                  created
+              {% endif %}
+
           </h1>
         <!--  <div class="govuk-panel__body">
             Your reference number<br><strong>HDJ2123F</strong>
@@ -32,7 +39,14 @@ Activities Management prototype
         <h2 class="govuk-heading-m">What you can do next</h2>
 
         <p class="govuk-body">
-          Your activity has been created and you can <a href="activity-start-date">start building schedules</a> for it.
+          Your activity has been
+          {% if data['edit']=='true' %}
+            changed
+            {% else %}
+              created
+          {% endif %}
+
+           and you can {% if data['edit']=='true' %}<a href="schedule-check-your-answers">return to the schedule</a> you were building or <a href="activity-start-date?edit=false">{% endif %}start building new schedules</a> for it.
         </p>
         <p class="govuk-body">You can edit, view or delete this or other activities on the <a href="../allocate/activity-list-dashboard">activity dashboard<a/>.</p>
         <p class="govuk-body">

@@ -96,10 +96,10 @@ Activities Management prototype
               Category
             </dt>
             <dd class="govuk-summary-list__value">
-              Education
+              {{data.category or 'Education'}}
             </dd>
             <dd class="govuk-summary-list__actions" style="width:30%;">
-              <a class="govuk-link" href="activity-check-your-answers-edit">
+              <a class="govuk-link" href="activity-check-your-answers?edit=true">
                 Edit activity details<span class="govuk-visually-hidden"> name</span>
               </a>
             </dd>
@@ -109,7 +109,7 @@ Activities Management prototype
               Name
             </dt>
             <dd class="govuk-summary-list__value">
-              Maths level 3
+              {{data.activityName or 'Maths level 3'}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-name">
@@ -122,7 +122,7 @@ Activities Management prototype
               Risk level
             </dt>
             <dd class="govuk-summary-list__value">
-              Low
+                {{data.riskLevel or 'Low'}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-risk-assessment">
@@ -135,7 +135,7 @@ Activities Management prototype
               Incentive level
             </dt>
             <dd class="govuk-summary-list__value">
-              Basic
+              {{data.incentiveLevel or 'Basic'}}
 
             </dd>
             <dd class="govuk-summary-list__actions">

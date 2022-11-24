@@ -15,7 +15,13 @@ Activities Management prototype
           <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
           </div>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
-          Check details for {{data.activityCreateScheduleName or 'Maths level 3'}}
+
+          {% if data['edit']=='true' %}
+            Edit
+            {% else %}
+              Check
+          {% endif %}
+           details for {{data.activityCreateScheduleName or 'Maths level 3'}}
         </h1><br />
       </div>
       <div class="govuk-grid-column-two-thirds">
@@ -108,7 +114,7 @@ Activities Management prototype
             </dt>
             <dd class="govuk-summary-list__value">
               Sight impairment<br/ >Little English spoken
-              
+
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-add-alerts">
@@ -120,7 +126,12 @@ Activities Management prototype
         </dl>
         <form method="post">
           <button class="govuk-button" data-module="govuk-button">
-            Create activity
+            {% if data['edit']=='true' %}
+              Confirm changes to activity
+              {% else %}
+                Create activity
+            {% endif %}
+          
           </button>
         </form>
       </div>
