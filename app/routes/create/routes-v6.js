@@ -179,6 +179,7 @@ router.post(version +'/create/activity-capacity', function(req, res) {
 });
 router.post(version +'/create/schedule-check-your-answers', function(req, res) {
 	{
+		req.session.data['edit'] = 'false'
 		res.redirect(version +'/create/schedule-confirmation-created')
 	}
 });
@@ -361,7 +362,11 @@ router.post(version +'/create/check/activity-start-time', function(req, res) {
 
 
 	router.post(version +'/create/activity-confirmation-created', function(req, res) {
+		if (req.session.data['edit'] == 'true')
 		{
+			res.redirect(version +'/create/schedule-check-your-answers')
+		}
+		else {
 			res.redirect(version +'/create/activity-type-select-with-category')
 		}
 	});
