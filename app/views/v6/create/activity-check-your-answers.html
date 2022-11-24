@@ -26,10 +26,10 @@ Activities Management prototype
               Category
             </dt>
             <dd class="govuk-summary-list__value">
-              Education
+              {{data.category or 'Education'}}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-name">
+              <a class="govuk-link" href="check/activity-type-select-with-category">
                 Change<span class="govuk-visually-hidden"> name</span>
               </a>
             </dd>
@@ -39,7 +39,7 @@ Activities Management prototype
               Name
             </dt>
             <dd class="govuk-summary-list__value">
-              {{data.activityCreateScheduleName or 'Maths level 3'}}
+              {{data.activityName or 'Maths level 3'}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-name">
@@ -52,7 +52,7 @@ Activities Management prototype
               Risk level
             </dt>
             <dd class="govuk-summary-list__value">
-              High
+              {{data.riskLevel or 'High'}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-risk-assessment">
@@ -65,7 +65,7 @@ Activities Management prototype
               Minimum incentive level
             </dt>
             <dd class="govuk-summary-list__value">
-              Basic
+              {{data.incentiveLevel or 'Basic'}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-incentive-level">
@@ -78,7 +78,7 @@ Activities Management prototype
               Education level
             </dt>
             <dd class="govuk-summary-list__value">
-              Maths level 3<br />English level 1
+              Maths level 2<br />English level 1
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-add-education">
@@ -108,6 +108,7 @@ Activities Management prototype
             </dt>
             <dd class="govuk-summary-list__value">
               Sight impairment<br/ >Little English spoken
+              
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-add-alerts">
@@ -115,10 +116,6 @@ Activities Management prototype
               </a>
             </dd>
           </div>
-
-
-
-
 
         </dl>
         <form method="post">

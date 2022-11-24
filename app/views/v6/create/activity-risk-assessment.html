@@ -36,24 +36,27 @@ Activities Management prototype
                 Select the most recent risk assessment level for this activity.
               </div>
               <div class="govuk-radios" data-module="govuk-radios">
+                <form method="post">
                 <div class="govuk-radios__item">
-                 <input class="govuk-radios__input" id="incentiveLevelBasic" name="incentiveLevel" type="radio" {% if data.incentiveLevel=='basic' %}checked {% endif %} value="basic" data-aria-controls="conditional-contact">
+
+                 <input class="govuk-radios__input" id="incentiveLevelBasic" name="riskLevel" type="radio" {% if data.riskLevel=='High' %}checked {% endif %} value="High" data-aria-controls="conditional-contact">
                   <label class="govuk-label govuk-radios__label" for="incentiveLevelBasic">
                     High
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="incentiveLevelStandard" name="incentiveLevel" {% if data.incentiveLevel=='standard' %}checked {% endif %}type="radio" value="standard"  data-aria-controls="conditional-contact">
+                  <input class="govuk-radios__input" id="incentiveLevelStandard" name="riskLevel" {% if data.riskLevel=='Medium' %}checked {% endif %}type="radio" value="Medium"  data-aria-controls="conditional-contact">
                   <label class="govuk-label govuk-radios__label" for="incentiveLevelStandard">
                     Medium
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="incentiveLevelAdvanced" name="incentiveLevel" type="radio" value="advanced" {% if data.incentiveLevel=='advanced' %}checked {% endif %} data-aria-controls="conditional-contact">
+                  <input class="govuk-radios__input" id="incentiveLevelAdvanced" name="riskLevel" type="radio" value="Low" {% if data.riskLevel=='Low' %}checked {% endif %} data-aria-controls="conditional-contact">
                   <label class="govuk-label govuk-radios__label" for="incentiveLevelAdvanced">
                     Low
                   </label>
                 </div>
+                </form>
               </div>
             </fieldset>
           </div>

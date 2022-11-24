@@ -13,7 +13,7 @@ Activities Management prototype
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
-    <span class="govuk-caption-m">Education | Risk level: High | Minimum incentive: Basic</span>
+    <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'High'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
     <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 3'}}</h1>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
     Enter the pay rates
@@ -29,24 +29,23 @@ Activities Management prototype
         <div data-module="moj-add-another">
           <form method="post">
             <fieldset class="govuk-fieldset moj-add-another__item">
-
               <div class="govuk-form-group">
-                <label class="govuk-label govuk-!-font-weight-bold" for="person[0][first_name]">
+                <label class="govuk-label govuk-!-font-weight-bold" for="paymentName">
                   Pay rate name
                 </label>
-                <input class="govuk-input govuk-input--width-10" id="paymentA" name="paymentA" type="text" value="">
+                <input class="govuk-input govuk-input--width-10" id="paymentName" name="paymentName" type="text" value="{{ data.paymentName }}">
               </div>
               <div class="govuk-form-group">
-                <label class="govuk-label govuk-!-font-weight-bold" for="person[0][last_name]">
+                <label class="govuk-label govuk-!-font-weight-bold" for="paymentAmount">
                   Pay rate amount
                 </label>
-              <strong></strong>  <input class="govuk-input govuk-input--width-5" id="paymentA" name="paymentA" type="text" value="">
+              <input class="govuk-input govuk-input--width-5" id="paymentAmount" name="paymentAmount" type="text" value="{{ data.paymentAmount }}">
               </div>
               <div class="govuk-form-group">
-                <label class="govuk-label govuk-!-font-weight-bold" for="person[0][last_name]">
+                <label class="govuk-label govuk-!-font-weight-bold" for="piecework">
                   Piecework rate
                 </label>
-              <strong></strong>  <input class="govuk-input govuk-input--width-5" id="paymentA" name="paymentA" type="text" value="">
+              <strong></strong>  <input class="govuk-input govuk-input--width-5" id="piecework" name="piecework" type="text" value="">
               </div>
               <br />
               <hr />
