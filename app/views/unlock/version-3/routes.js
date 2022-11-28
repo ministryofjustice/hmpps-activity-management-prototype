@@ -31,6 +31,25 @@ function getFilteredPrisoners(selectedPrisoners, prisonerList) {
 	return filteredPrisoners
 }
 
+function getWings(req, res) {
+	let locations = {};
+	let data = req.session.data['selected-locations']
+
+	data.houseblocks.forEach(houseblock => {
+		locations[houseblock] = []
+	})
+
+	if(data.wings.length > 0){
+		data.wings.forEach(string => {
+			const [houseblock, wing] = string.split("-");
+			if(locations.hasOwnProperty(houseblock)){
+				locations[houseblock].push(wing);
+			}
+		});
+	}
+	return locations
+}
+
 function updateAttendanceList(req, res) {
 	req.session.data['activities'].forEach(( activity ) => {
 		const id = activity.id;
@@ -166,27 +185,10 @@ router.get('/refusals-list', function(req, res) {
 	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
 	let filteredPrisoners = req.session.data['prisoners'];
 	let houseblocks = req.session.data['selected-locations']['houseblocks'];
-	let locations = {};
-
-	function getWings(data) {
-		houseblocks.forEach(houseblock => {
-			locations[houseblock] = []
-		})
-
-		if(data.wings.length > 0){
-			data.wings.forEach(string => {
-				const [houseblock, wing] = string.split("-");
-				if(locations.hasOwnProperty(houseblock)){
-					locations[houseblock].push(wing);
-				}
-			});
-		}
-		return locations
-	}
+	let locations = {}
 
 	if(req.session.data['selected-locations'] && req.session.data['selected-locations']['houseblocks'] && req.session.data['selected-locations']['houseblocks'].length > 0){
-		locations = getWings(req.session.data['selected-locations'])
-		console.log(houseblocks)
+		locations = getWings(req, res)
 		filteredPrisoners = filteredPrisoners.filter( prisoner => houseblocks.includes( prisoner.location.houseblock.toString() ) )
 	}
 
@@ -216,10 +218,11 @@ router.get('/unlock-list', function(req, res) {
 	let period = req.session.data['times'].toUpperCase()
 	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
 	let filteredPrisoners = req.session.data['prisoners'];
+	let houseblocks = req.session.data['selected-locations']['houseblocks'];
+	let locations = {}
 
 	if(req.session.data['selected-locations'] && req.session.data['selected-locations']['houseblocks'] && req.session.data['selected-locations']['houseblocks'].length > 0){
-		let houseblocks = req.session.data['selected-locations']['houseblocks'];
-
+		locations = getWings(req, res)
 		filteredPrisoners = filteredPrisoners.filter( prisoner => houseblocks.includes( prisoner.location.houseblock.toString() ) )
 	}
 
@@ -229,7 +232,7 @@ router.get('/unlock-list', function(req, res) {
 		});
 	});
 
-	res.render('unlock/' + req.version + '/unlock-list', { filteredPrisoners })
+	res.render('unlock/' + req.version + '/unlock-list', { filteredPrisoners, locations })
 });
 
 router.get('/unlock-list/download', function(req, res){
