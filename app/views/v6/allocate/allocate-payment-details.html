@@ -33,8 +33,8 @@ Activities Management prototype
     </div>
     <div class="govuk-radios" data-module="govuk-radios">
       <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="contact" name="contact" type="radio" value="email" data-aria-controls="conditional-contact">
-        <label class="govuk-label govuk-radios__label" for="contact">
+        <input class="govuk-radios__input" id="dailyRate" name="dailyRate" type="radio" value="yes" data-aria-controls="conditional-contact"  {% if data.dailyRate=="yes" %} checked="checked" {% endif %}>
+        <label class="govuk-label govuk-radios__label" for="dailyRate">
           Daily rate
         </label>
       </div>
@@ -50,7 +50,7 @@ Activities Management prototype
             </legend>
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="AllocatePaymentCurrent" name="AllocatePayment" type="radio" value="1.21" {% if data.AllocatePayment=="1.21" %} checked {% endif %}>
+                <input class="govuk-radios__input" id="AllocatePaymentCurrent" name="AllocatePayment" type="radio" value="1.21" {% if data.AllocatePayment=="1.21" %} checked="checked" {% endif %}>
                 <label class="govuk-label govuk-radios__label" for="AllocatePaymentCurrent">
                   &pound;1.21  <strong style="margin-left:20px;" class="govuk-tag govuk-tag--yellow">C<span style="text-transform:lowercase;">urrent rate</strong>
 
@@ -82,24 +82,23 @@ Activities Management prototype
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">
-
           </h1>
         </legend>
         <div class="govuk-radios" data-module="govuk-radios">
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21">
+            <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21" {% if data.AllocatePayment=="1.21" %} checked="checked" {% endif %}>
             <label class="govuk-label govuk-radios__label" for="where-do-you-live">
-              Basic rate: &pound;1.21 <strong class="govuk-tag govuk-tag--yellow" style="margin-left:20px;" >C<span style="text-transform:lowercase;">urrent rate</strong>
+              Basic rate: &pound;1.33 <strong class="govuk-tag govuk-tag--yellow" style="margin-left:20px;" >C<span style="text-transform:lowercase;">urrent rate</strong>
             </label>
           </div>
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="where-do-you-live-2" name="AllocatePayment" type="radio" value="1.51">
+            <input class="govuk-radios__input" id="where-do-you-live-2" name="AllocatePayment" type="radio" value="1.51" {% if data.AllocatePayment=="1.51" %} checked="checked" {% endif %}>
             <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
               Standard rate: &pound;1.51
             </label>
           </div>
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="1.81">
+            <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="1.81" {% if data.AllocatePayment=="1.81" %} checked="checked" {% endif %}>
             <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
             Advanced rate: &pound;1.81
             </label>
@@ -160,19 +159,19 @@ Activities Management prototype
               </legend>
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21">
+                  <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21" {% if data.AllocatePayment=="1.21" %} checked="checked" {% endif %}>
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live">
                     Rate A: &pound;1.21 <strong style="margin-left:20px;" class="govuk-tag govuk-tag--yellow">C<span style="text-transform:lowercase;">urrent rate</strong>
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="where-do-you-live-2" name="AllocatePayment" type="radio" value="1.51">
+                  <input class="govuk-radios__input" id="where-do-you-live-2" name="AllocatePayment" type="radio" value="1.51" {% if data.AllocatePayment=="1.51" %} checked="checked" {% endif %}>
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
                     Rate B: &pound;1.51
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="1.81">
+                  <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="1.81" {% if data.AllocatePayment=="1.81" %} checked="checked" {% endif %}>
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
                   Rate C: &pound;1.81
                   </label>
@@ -184,19 +183,19 @@ Activities Management prototype
               </legend>
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21">
+                  <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.31"  {% if data.AllocatePayment=="1.31" %} checked="checked" {% endif %}>
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live">
                     Rate D: &pound;1.31
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="where-do-you-live-2" name="AllocatePayment" type="radio" value="1.51">
+                  <input class="govuk-radios__input" id="where-do-you-live-2" name="AllocatePayment" type="radio" value="1.51"  {% if data.AllocatePayment=="1.61" %} checked="checked" {% endif %}>
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
                     Rate E: &pound;1.61
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="1.81">
+                  <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="1.91" {% if data.AllocatePayment=="1.91" %} checked="checked" {% endif %}>
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
                   Rate F: &pound;1.91
                   </label>
@@ -209,19 +208,19 @@ Activities Management prototype
               </legend>
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21">
+                  <input class="govuk-radios__input" id="where-do-you-live" name="AllocatePayment" type="radio" value="1.21" {% if data.AllocatePayment=="1.41" %} checked="checked" {% endif %}>
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live">
                     Rate G: &pound;1.41
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="where-do-you-live-2" name="AllocatePayment" type="radio" value="1.51">
+                  <input class="govuk-radios__input" id="where-do-you-live-2" name="AllocatePayment" type="radio" value="1.71" {% if data.AllocatePayment=="1.71" %} checked="checked" {% endif %}>
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
                     Rate H: &pound;1.71
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="1.81">
+                  <input class="govuk-radios__input" id="where-do-you-live-3" name="AllocatePayment" type="radio" value="2.01" {% if data.AllocatePayment=="2.01" %} checked="checked" {% endif %}>
                   <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
                   Rate I: &pound;2.01
                   </label>

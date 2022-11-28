@@ -11,19 +11,19 @@ Activities Management prototype
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-thirds">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-    Enter the name of the activity
+      What's the activity called?
     </h1>
   </div>
     <form method="post">
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
           <div id="search2-hint" class="govuk-hint moj-search__hint ">
-            Make event names short and descriptive, for example Maths level 1 or Maths level 2
+            Say what the activity is in plain English. You'll be able to add more details like location and schedules later.
           </div>
           <div class="govuk-form-group">
             <label class="govuk-label govuk-label" for="event-name" maxlength="20">
             </label>
-            <input class="govuk-input govuk-input--width-30" id="event-name" name="activityName" type="text" value="Maths level 3">
+            <input class="govuk-input govuk-input--width-30" id="event-name" name="activityName" type="text" value="{{data.activityName or 'Maths level 3'}}">
           </div>
         </fieldset>
       </div>

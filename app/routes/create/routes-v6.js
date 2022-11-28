@@ -179,6 +179,7 @@ router.post(version +'/create/activity-capacity', function(req, res) {
 });
 router.post(version +'/create/schedule-check-your-answers', function(req, res) {
 	{
+		req.session.data['edit'] = 'false'
 		res.redirect(version +'/create/schedule-confirmation-created')
 	}
 });
@@ -215,7 +216,11 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 });
 
 
-
+router.post(version +'/create/check/activity-start-time', function(req, res) {
+	{
+		res.redirect(version +'/create/schedule-check-your-answers')
+	}
+});
 
 
 
@@ -242,7 +247,7 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 
 	router.post(version +'/create/check/activity-location-dropdown', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-check-your-answers')
+			res.redirect(version +'/create/schedule-check-your-answers')
 		}
 	});
 
@@ -348,8 +353,20 @@ router.post(version +'/create/check/activity-will-it-recur', function(req, res) 
 		}
 	});
 
-	router.post(version +'/create/activity-confirmation-created', function(req, res) {
+//EDIT current activity
+	router.post(version +'/create/activity-check-your-answers-edit', function(req, res) {
 		{
+			res.redirect(version +'/create/activity-confirmation-edited')
+		}
+	});
+
+
+	router.post(version +'/create/activity-confirmation-created', function(req, res) {
+		if (req.session.data['edit'] == 'true')
+		{
+			res.redirect(version +'/create/schedule-check-your-answers')
+		}
+		else {
 			res.redirect(version +'/create/activity-type-select-with-category')
 		}
 	});
