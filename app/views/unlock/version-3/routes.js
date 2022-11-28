@@ -31,22 +31,24 @@ function getFilteredPrisoners(selectedPrisoners, prisonerList) {
 	return filteredPrisoners
 }
 
-function getWings(req, res) {
+function getWings(data) {
 	let locations = {};
-	let data = req.session.data['selected-locations']
 
-	data.houseblocks.forEach(houseblock => {
-		locations[houseblock] = []
-	})
+	if(data.hasOwnProperty('houseblocks')){
+		data.houseblocks.forEach(houseblock => {
+			locations[houseblock] = []
+		})
 
-	if(data.wings.length > 0){
-		data.wings.forEach(string => {
-			const [houseblock, wing] = string.split("-");
-			if(locations.hasOwnProperty(houseblock)){
-				locations[houseblock].push(wing);
-			}
-		});
+		if(data.wings.length > 0){
+			data.wings.forEach(string => {
+				const [houseblock, wing] = string.split("-");
+				if(locations.hasOwnProperty(houseblock)){
+					locations[houseblock].push(wing);
+				}
+			});
+		}
 	}
+
 	return locations
 }
 
@@ -183,20 +185,29 @@ router.post('/select-refusals-locations', function(req, res) {
 router.get('/refusals-list', function(req, res) {
 	let period = req.session.data['times'].toUpperCase()
 	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
-	let filteredPrisoners = req.session.data['prisoners'];
-	let houseblocks = req.session.data['selected-locations']['houseblocks'];
-	let locations = {}
+	
+	let prisoners = req.session.data['prisoners'];
+	let filteredPrisoners;
 
-	if(req.session.data['selected-locations'] && req.session.data['selected-locations']['houseblocks'] && req.session.data['selected-locations']['houseblocks'].length > 0){
-		locations = getWings(req, res)
-		filteredPrisoners = filteredPrisoners.filter( prisoner => houseblocks.includes( prisoner.location.houseblock.toString() ) )
-	}
+	let selectedLocations = req.session.data['selected-locations']
 
-	filteredPrisoners = filteredPrisoners.filter((prisoner) => {
+	let locations = getWings(selectedLocations)
+
+	filteredPrisoners = prisoners.filter((prisoner) => {
 		return filteredActivities.some((activity) => {
 			return activity.id === prisoner.activity;
 		});
 	});
+
+	if( Object.keys(locations).length !== 0 ){
+		filteredPrisoners = filteredPrisoners.filter( prisoner => req.session.data['selected-locations']['houseblocks'].includes( prisoner.location.houseblock.toString() ) )
+	}
+
+
+	// remove the confirmation notification on loading the page
+	if(req.session.data['attendance-confirmation'] == 'true'){
+		delete req.session.data['attendance-confirmation']
+	}
 
 	res.render('unlock/' + req.version + '/refusals-list', { filteredPrisoners, locations })
 });
@@ -217,20 +228,28 @@ router.post('/select-unlock-locations', function(req, res) {
 router.get('/unlock-list', function(req, res) {
 	let period = req.session.data['times'].toUpperCase()
 	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
-	let filteredPrisoners = req.session.data['prisoners'];
-	let houseblocks = req.session.data['selected-locations']['houseblocks'];
-	let locations = {}
+	
+	let prisoners = req.session.data['prisoners'];
+	let filteredPrisoners;
 
-	if(req.session.data['selected-locations'] && req.session.data['selected-locations']['houseblocks'] && req.session.data['selected-locations']['houseblocks'].length > 0){
-		locations = getWings(req, res)
-		filteredPrisoners = filteredPrisoners.filter( prisoner => houseblocks.includes( prisoner.location.houseblock.toString() ) )
-	}
+	let selectedLocations = req.session.data['selected-locations']
 
-	filteredPrisoners = filteredPrisoners.filter((prisoner) => {
+	let locations = getWings(selectedLocations)
+
+	filteredPrisoners = prisoners.filter((prisoner) => {
 		return filteredActivities.some((activity) => {
 			return activity.id === prisoner.activity;
 		});
 	});
+
+	if( Object.keys(locations).length !== 0 ){
+		filteredPrisoners = filteredPrisoners.filter( prisoner => req.session.data['selected-locations']['houseblocks'].includes( prisoner.location.houseblock.toString() ) )
+	}
+
+	// remove the confirmation notification on loading the page
+	if(req.session.data['attendance-confirmation'] == 'true'){
+		delete req.session.data['attendance-confirmation']
+	}
 
 	res.render('unlock/' + req.version + '/unlock-list', { filteredPrisoners, locations })
 });
