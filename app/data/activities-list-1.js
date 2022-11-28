@@ -16,7 +16,7 @@ module.exports = [
     "id": 1
   },
   {
-    "name": "Coffee Shop",
+    "name": "Thinking skills",
     "period": "AM",
     "startTime": "8:15",
     "endTime": "11:30",
