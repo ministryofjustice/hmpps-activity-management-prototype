@@ -52,6 +52,7 @@ Activities Management prototype
               Schedule
             </dt>
             <dd class="govuk-summary-list__value">
+              <!--Check days entered on time enter page-->
               {% if data.timeMonday =='timeMonday' %}
                 {% if data.timeAMMonday =='timeAMMonday' %}Monday am <br /> {% endif %}
                 {% if data.timePMMonday =='timePMMonday' %}Monday pm <br />{% endif %}
@@ -65,7 +66,7 @@ Activities Management prototype
             {% endif %}
 
             {% if data.timeWednesday =='timeWednesday' %}
-              {% if data.timeAMWednesday =='timeAMWednesday' %}Wednesday am <br />{% endif %}
+              {% if data.timeAMWednesday =='timeAMWednesday'  %}Wednesday am <br />{% endif %}
               {% if data.timePMWednesday =='timePMWednesday' %}Wednesday pm <br />{% endif %}
               {% if data.timeEDWednesday =='timeEDWednesday' %}Wednesday ed <br />{% endif %}
             {% endif %}
@@ -94,6 +95,17 @@ Activities Management prototype
               {% if data.timeEDSunday =='timeEDSunday' %}Sunday ed <br />{% endif %}
             {% endif %}
 
+            <!--IF nothing has been entered show a default value-->
+              {% if data.timeSunday !='timeSunday'
+              and data.timeMonday !='timeMonday'
+              and data.timeTuesday !='timeTuesday'
+              and data.timeWednesday !='timeWednesday'
+              and data.timeThursday !='timeThursday'
+              and data.timeFriday !='timeFriday'
+              and data.timeSaturday !='timeSaturday'
+              and data.timeSunday !='timeSunday' %}
+                Monday am<br /> Tuesday am
+              {% endif %}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-start-time">
