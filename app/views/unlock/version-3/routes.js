@@ -113,7 +113,11 @@ router.post('/add-attendance-details', function(req, res) {
 
 	// set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
-	res.redirect('activities/'+activityId)
+
+	let referrer = req.session.data['attendance-url']
+	let url = (referrer == 'refusals') ? ('refusals-list') : ('activities/'+activityId)
+
+	res.redirect(url)
 });
 
 
@@ -161,10 +165,28 @@ router.get('/refusals-list', function(req, res) {
 	let period = req.session.data['times'].toUpperCase()
 	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
 	let filteredPrisoners = req.session.data['prisoners'];
+	let houseblocks = req.session.data['selected-locations']['houseblocks'];
+	let locations = {};
+
+	function getWings(data) {
+		houseblocks.forEach(houseblock => {
+			locations[houseblock] = []
+		})
+
+		if(data.wings.length > 0){
+			data.wings.forEach(string => {
+				const [houseblock, wing] = string.split("-");
+				if(locations.hasOwnProperty(houseblock)){
+					locations[houseblock].push(wing);
+				}
+			});
+		}
+		return locations
+	}
 
 	if(req.session.data['selected-locations'] && req.session.data['selected-locations']['houseblocks'] && req.session.data['selected-locations']['houseblocks'].length > 0){
-		let houseblocks = req.session.data['selected-locations']['houseblocks'];
-
+		locations = getWings(req.session.data['selected-locations'])
+		console.log(houseblocks)
 		filteredPrisoners = filteredPrisoners.filter( prisoner => houseblocks.includes( prisoner.location.houseblock.toString() ) )
 	}
 
@@ -174,7 +196,7 @@ router.get('/refusals-list', function(req, res) {
 		});
 	});
 
-	res.render('unlock/' + req.version + '/refusals-list', { filteredPrisoners })
+	res.render('unlock/' + req.version + '/refusals-list', { filteredPrisoners, locations })
 });
 router.post('/refusals-list', function(req, res) {
 	if(req.session.data['selected-prisoners'].length > 1) {
@@ -231,11 +253,6 @@ router.get('/activities', function(req, res) {
 	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period && activity.count > 0);
 
 	res.render('unlock/' + req.version + '/activities', {filteredActivities})
-});
-
-	// SELECT-ACTIVITY-2
-router.post('/select-activity-2', function(req, res) {		
-	res.redirect('select-activity-2__results')
 });
 
 module.exports = router
