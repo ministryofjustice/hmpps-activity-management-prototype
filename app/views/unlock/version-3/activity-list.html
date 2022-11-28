@@ -31,17 +31,18 @@ Activities Management prototype
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 						<span class="govuk-caption-l">
-							{{ {
-							"day": data['activity-date'][0],
-							"month": data['activity-date'][1],
-						"year": data['activity-date'][2] } | formatDate if data['activity-date'] else "2 November 2022"}}
-					</span>
+							{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}} on {{ {
+								"day": data['activity-date'][0],
+								"month": data['activity-date'][1],
+								"year": data['activity-date'][2] 
+							} | formatDate if data['activity-date'] else "2 November 2022"}}
+						</span>
 
 						{{ activity.name or 'Workshop' }}: record attendance
 
 						<span class="govuk-caption-l">
-							{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
-					</span>
+							{{activity.location}}
+						</span>
 					</h1>
 
 					<ul class="govuk-list">
@@ -175,7 +176,7 @@ Activities Management prototype
 		</main>
 	</div>
 
-	{% include './_includes/filter-area-3.html' %}
+	{% include './_includes/attendance-toolbar.html' %}
 </form>
 {% endblock %}
 
