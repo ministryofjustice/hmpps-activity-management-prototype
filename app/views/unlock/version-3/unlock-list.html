@@ -306,9 +306,14 @@ Activities Management prototype
 <div class="app-filter-area" id="filters" tabindex=0>
 	<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold">Showing</span>
 	<ul class="app-filter-tag-list">
-		{% for id in data['selected-locations']['houseblocks'] %}
-		{% set houseblock = id|getHouseblock %}
-		<li class="govuk-tag govuk-tag--filter">{{houseblock.name}}</li>
+		{% for houseblock, wings in locations %}
+		{% if wings.length > 0 %}
+		{% for wing in wings %}
+		<li class="govuk-tag govuk-tag--filter">Houseblock {{houseblock}} - Wing {{wing}}</li>
+		{% endfor %}
+		{% else %}
+		<li class="govuk-tag govuk-tag--filter">Houseblock {{houseblock}}</li>
+		{% endif %}
 		{% endfor %}
 	</ul>
 </div>
