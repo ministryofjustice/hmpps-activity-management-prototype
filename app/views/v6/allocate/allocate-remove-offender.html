@@ -15,15 +15,14 @@ Activities Management prototype
           <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
           </div>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
+
+
+          {% if data.cancelAllocation=="true" %}
+            Are you sure you wish to cancel allocating {{ data.offenderAllocate }} to {{ data.activityAllocateName }}?
+          
+          {% else %}
           Are you sure you wish to remove {{ data.RemoveOffenderName[0] }} from {{ data.activityAllocateName }}?
-
-
-
-
-
-
-
-
+          {% endif %}
         </h1><br />
       </div>
       <div class="govuk-grid-column-two-thirds">
@@ -50,11 +49,8 @@ Activities Management prototype
                 </label>
               </div>
             </div>
-
           </fieldset>
         </div>
-
-
           <button class="govuk-button" data-module="govuk-button">
             Confirm
           </button>

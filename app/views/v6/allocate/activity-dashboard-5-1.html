@@ -63,8 +63,8 @@ Activities Management prototype
 
 
 
-<h2 class="govuk-heading-s">{{ data.offenderAllocate }}, <strong>{{ data.offenderIDAllocate }} </strong>may be unsuitable for {{ data.activityAllocateName }}. Check the mismatched risks and requirements before you proceed.</h2><br />
 
+<h2 class="govuk-heading-s">{{ data.offenderAllocate }}, <strong>{{ data.offenderIDAllocate }} </strong>may be unsuitable for {{ data.activityAllocateName }}. Check the mismatched risks and requirements before you proceed.</h2><br />
 
 
       <div class="govuk-grid-column-three-thirds">
@@ -132,19 +132,16 @@ Activities Management prototype
               <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</strong>
             </dd>
           </div>
-
-
         </dl><div id="event-name-hint" class="govuk-hint">
-          If you don't want to proceed with allocating {{ data.offenderAllocate }}, you can <a href="activity-dashboard-4-1#allocate">cancel and return to the list of candidates</a>.
+          If you don't want to proceed with allocating {{ data.offenderAllocate }}, you can <a href="allocate-remove-offender?cancelAllocation=true">cancel and return to the list of candidates</a>.
       </div>
+
       <br />
         <form method="post">
           <button class="govuk-button" data-module="govuk-button" value="yes" name="activityConfirmedAllocation">
             Continue to set pay rates
           </button>
-
         </form>
-
       </div>
 </div>
 {% endblock %}
