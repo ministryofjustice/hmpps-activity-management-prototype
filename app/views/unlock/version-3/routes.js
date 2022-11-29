@@ -39,13 +39,14 @@ function getWings(data) {
 			locations[houseblock] = []
 		})
 
-		if(data.wings.length > 0){
+		if(data.hasOwnProperty('wings')){
 			data.wings.forEach(string => {
 				const [houseblock, wing] = string.split("-");
 				if(locations.hasOwnProperty(houseblock)){
 					locations[houseblock].push(wing);
 				}
 			});
+			console.log(data)
 		}
 	}
 
@@ -185,15 +186,8 @@ router.post('/select-refusals-locations', function(req, res) {
 router.get('/refusals-list', function(req, res) {
 	let period = req.session.data['times'].toUpperCase()
 	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
-	
-	let prisoners = req.session.data['prisoners'];
-	let filteredPrisoners;
-
-	let selectedLocations = req.session.data['selected-locations']
-
-	let locations = getWings(selectedLocations)
-
-	filteredPrisoners = prisoners.filter((prisoner) => {
+	let locations = getWings(req.session.data['selected-locations'])
+	let filteredPrisoners = req.session.data['prisoners'].filter((prisoner) => {
 		return filteredActivities.some((activity) => {
 			return activity.id === prisoner.activity;
 		});
@@ -202,7 +196,6 @@ router.get('/refusals-list', function(req, res) {
 	if( Object.keys(locations).length !== 0 ){
 		filteredPrisoners = filteredPrisoners.filter( prisoner => req.session.data['selected-locations']['houseblocks'].includes( prisoner.location.houseblock.toString() ) )
 	}
-
 
 	// remove the confirmation notification on loading the page
 	if(req.session.data['attendance-confirmation'] == 'true'){
@@ -228,15 +221,8 @@ router.post('/select-unlock-locations', function(req, res) {
 router.get('/unlock-list', function(req, res) {
 	let period = req.session.data['times'].toUpperCase()
 	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
-	
-	let prisoners = req.session.data['prisoners'];
-	let filteredPrisoners;
-
-	let selectedLocations = req.session.data['selected-locations']
-
-	let locations = getWings(selectedLocations)
-
-	filteredPrisoners = prisoners.filter((prisoner) => {
+	let locations = getWings(req.session.data['selected-locations'])
+	let filteredPrisoners = req.session.data['prisoners'].filter((prisoner) => {
 		return filteredActivities.some((activity) => {
 			return activity.id === prisoner.activity;
 		});
