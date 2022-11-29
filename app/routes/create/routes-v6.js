@@ -516,11 +516,12 @@ router.post(version +'/allocate/allocate-remove-offender', function(req, res) {
 			 res.redirect(version +'/allocate/activity-dashboard-4-1#allocated')
 		 }
 		 else {
-
 	 		 res.redirect(version +'/allocate/activity-dashboard-4-1#allocated')
-	 	}
-
-	}
+	 		}
+		}
+		else if (req.session.data.cancelAllocation=="no" ){
+			res.redirect(version +'/allocate/activity-dashboard-5-1')
+		}
 	else {
 		res.redirect(version +'/allocate/activity-dashboard-4-1#allocated')
 	}
@@ -532,7 +533,12 @@ router.post(version +'/allocate/allocate-remove-offender', function(req, res) {
 
 router.post(version +'/allocate/Dashboard4', function(req, res) {
 	{
+		if (req.session.data.offenderAllocate=="Ivor Norisk" ){
+			res.redirect(version +'/allocate/allocate-payment-details')
+		}
+		else{
 		res.redirect(version +'/allocate/activity-dashboard-5-1')
+		}
 	}
 });
 
