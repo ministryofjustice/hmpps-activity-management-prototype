@@ -32,7 +32,7 @@ Activities Management prototype
 			<a href="#">Select another residential location</a>
 		</p> -->
 	</div>
-	<div class="govuk-grid-column-one-third">
+	<div class="govuk-grid-column-one-third govuk-!-display-none-print">
 		<div class="govuk-button-group" style="text-align: right;">
 			{{ govukButton({
 				text: "Download list",
@@ -51,7 +51,7 @@ Activities Management prototype
 	</div>
 </div>
 
-<div class="govuk-grid-row">
+<div class="govuk-grid-row govuk-!-display-none-print">
 	<div class="govuk-grid-column-one-half">
 		<div class="govuk-button-group govuk-!-margin-top-5">
 			<div class="govuk-button-group">
@@ -93,7 +93,7 @@ Activities Management prototype
 		</div>
 	</div>
 </div>
-<div class="app-filter-area" id="filters" tabindex=0>
+<div class="app-filter-area govuk-!-display-none-print" id="filters" tabindex=0>
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-full">
 			<h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
@@ -304,7 +304,7 @@ Activities Management prototype
 {% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 <h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
 <div class="app-filter-area" id="filters" tabindex=0>
-	<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold">Showing</span>
+	<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold govuk-!-display-none-print">Showing</span>
 	<ul class="app-filter-tag-list">
 		{% for houseblock, wings in locations %}
 		{% if wings.length > 0 %}
@@ -379,7 +379,7 @@ Activities Management prototype
 	</tbody>
 </table>
 
-<div class="govuk-grid-row">
+<div class="govuk-grid-row govuk-!-display-none-print">
 	<div class="govuk-grid-column-one-quarter">
 		<p class="govuk-body">
 			{{govukButton({
