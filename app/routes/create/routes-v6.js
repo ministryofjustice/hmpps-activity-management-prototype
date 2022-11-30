@@ -505,10 +505,9 @@ router.post(version +'/allocate/AllocateRemove', function(req, res) {
 });
 
 
-//Removal
+//Removal of offender ALREADY allocated to an activity
 router.post(version +'/allocate/allocate-remove-offender', function(req, res) {
-	if (req.session.data.activityConfirmRemoval == 'yes')
-	{
+	if (req.session.data.activityConfirmRemoval == 'yes'){
 		 if (req.session.data.RemoveOffenderName[0]=='Lance Arm')
 		 {
 			var LanceArm = 'NotAllocated'
@@ -519,14 +518,17 @@ router.post(version +'/allocate/allocate-remove-offender', function(req, res) {
 	 		 res.redirect(version +'/allocate/activity-dashboard-4-1#allocated')
 	 		}
 		}
-		else if (req.session.data.cancelAllocation=="no" ){
-			res.redirect(version +'/allocate/activity-dashboard-5-1')
-		}
-	else {
-		res.redirect(version +'/allocate/activity-dashboard-4-1#allocated')
-	}
 });
 
+//If cancel offender on the identify candidates route of allocation, not yet allocated
+router.post(version +'/allocate/allocate-cancel-offender', function(req, res) {
+	if (req.session.data.cancelAllocationYesNo == 'yes'){
+			 res.redirect(version +'/allocate/activity-dashboard-4-1#allocate')
+		 }
+		 else {
+	 		 res.redirect(version +'/allocate/activity-dashboard-5-1')
+	 		}
+});
 
 
 //Offender dashbaord allocations
