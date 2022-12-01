@@ -1,0 +1,388 @@
+
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+<!--[if lt IE 9]><html class="lte-ie8" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <!--[if gt IE 8]><!--><link href="/public/stylesheets/govuk-template.css?0.19.2" media="screen" rel="stylesheet" /><!--<![endif]-->
+    <!--[if IE 6]><link href="/public/stylesheets/govuk-template-ie6.css?0.19.2" media="screen" rel="stylesheet" /><![endif]-->
+    <!--[if IE 7]><link href="/public/stylesheets/govuk-template-ie7.css?0.19.2" media="screen" rel="stylesheet" /><![endif]-->
+    <!--[if IE 8]><link href="/public/stylesheets/govuk-template-ie8.css?0.19.2" media="screen" rel="stylesheet" /><![endif]-->
+    <link href="/public/stylesheets/govuk-template-print.css?0.19.2" media="print" rel="stylesheet" />
+    <!--[if IE 8]><link href="/public/stylesheets/fonts-ie8.css?0.19.2" media="all" rel="stylesheet" /><![endif]-->
+    <!--[if gte IE 9]><!--><link href="/public/stylesheets/fonts.css?0.19.2" media="all" rel="stylesheet" /><!--<![endif]-->
+    <!--[if lt IE 9]><script src="/public/javascripts/ie.js?0.19.2"></script><![endif]-->
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+    <div class="column-two-thirds">
+      <div class="back">
+        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+        </div>
+      <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'High'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
+      <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 3'}}</h1>
+      <form method="post">
+          <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+            Select reasons someone might be unsuitable for this activity
+          </h1>
+
+
+        <!--Start risk-->
+          <div class="govuk-form-group" style="">
+            <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <h1 class="govuk-fieldset__heading">
+                Risk to staff and others
+                </h1>
+              </legend>
+              <div id="waste-hint" class="govuk-hint">
+                Select all that apply.
+              </div>
+              <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste" name="alertRisk" type="checkbox" value="No 1 to 1s with this prisoner">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste">
+                    No 1 to 1s with this prisoner
+                  </label>
+                </div>
+
+            </fieldset>
+          </div>
+          <!--End risk-->
+
+
+
+          <!--Start security-->
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <h1 class="govuk-fieldset__heading">
+                Security
+                </h1>
+              </legend>
+              <div id="waste-hint" class="govuk-hint">
+                Select all that apply.
+              </div>
+              <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste" name="alertSecurity" type="checkbox" value="Internal Secretor">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste">
+                    Internal Secretor
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste" name="alertSecurity" type="checkbox" value="Arsonist">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste">
+                    Arsonist
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste-2" name="alertSecurity" type="checkbox" value="Known Brewer of Alcohol">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste-2">
+                    Known Brewer of Alcohol
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste-3" name="alertSecurity" type="checkbox" value="Do Not X-ray Body Scan">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+                  Do Not X-ray Body Scan
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste-3" name="alertSecurity" type="checkbox" value="Violent">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+                Violent
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste-3" name="alertSecurity" type="checkbox" value="Chemical Attacker">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+                    Chemical Attacker
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste-3" name="alertSecurity" type="checkbox" value="Cyber Capable Individual">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+                    Cyber Capable Individual
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste-3" name="alertSecurity" type="checkbox" value="No access to IT">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+                    No access to IT
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste-3" name="alertSecurity" type="checkbox" value="Cyber Dependent Offender - Do not share">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+                    Cyber Dependent Offender - Do not share
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste-3" name="alertSecurity" type="checkbox" value="Cyber Enabled Offender - Do not share">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+                    Cyber Enabled Offender - Do not share
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <!--End security-->
+
+          <!--Start vuln-->
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <h1 class="govuk-fieldset__heading">
+                Vulnerability
+                </h1>
+              </legend>
+              <div id="waste-hint" class="govuk-hint">
+                Select all that apply.
+              </div>
+              <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste" name="alertVulnerability" type="checkbox" checked value="Little English Spoken">
+                  <label class="govuk-label govuk-checkboxes__label" for="waste">
+                    Little English Spoken
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <!--End vuln-->
+
+
+
+<!--Start medical-->
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+      Medical
+      </h1>
+    </legend>
+    <div id="waste-hint" class="govuk-hint">
+      Select all that apply.
+    </div>
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertMedical" type="checkbox" value="Asthmatic">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          Asthmatic
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste-2" name="alertMedical" type="checkbox" value="Epileptic">
+        <label class="govuk-label govuk-checkboxes__label" for="waste-2">
+          Epileptic
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste-3" name="alertMedical" type="checkbox" value="False Limbs">
+        <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+          False Limbs
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste-3" name="alertMedical" type="checkbox" value="Hidden Disability">
+        <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+        Hidden Disability
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste-3" name="alertMedical" type="checkbox" value="Hearing Impaired">
+        <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+          Hearing Impaired
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste-3" name="alertMedical" type="checkbox" value="Speech Impediment">
+        <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+          Speech Impediment
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste-3" name="alertMedical" type="checkbox" checked value="Sight impaired">
+        <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+          Sight impaired
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+<!--End medical-->
+
+
+
+<!--Start self harm-->
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+      Self harm
+      </h1>
+    </legend>
+    <div id="waste-hint" class="govuk-hint">
+      Select all that apply.
+    </div>
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertSelfHarm" type="checkbox" value="ACCT Closed (HMPPS)">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          ACCT Closed (HMPPS)
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertSelfHarm" type="checkbox" value="ACCT Open (HMPPS)">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          ACCT Open (HMPPS)
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertSelfHarm" type="checkbox" value="ACCT Post Closure (HMPPS)">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          ACCT Post Closure (HMPPS)
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertSelfHarm" type="checkbox" value="Self harm">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          Self harm
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertSelfHarm" type="checkbox" value="Self harm custody">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          Self harm custody
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+<!--End self harm-->
+
+<!--Start sexual offence-->
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+      Sexual offences
+      </h1>
+    </legend>
+    <div id="waste-hint" class="govuk-hint">
+      Select all that apply.
+    </div>
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertSexual" type="checkbox" value="On Sex Offender Register">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          On Sex Offender Register
+        </label>
+      </div>
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertSexual" type="checkbox" value="Registered sex offender">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          Registered sex offender
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertSexual" type="checkbox" value="Risk to Children">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          Risk to Children
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertSexual" type="checkbox" value="RSHO or SRO">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          RSHO or SRO
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertSexual" type="checkbox" value="Sex offender not required to register">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          Sex offender not required to register
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertSexual" type="checkbox" value="Sexual Offence Not on Sex Offender Reg">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          Sexual Offence Not on Sex Offender Reg
+        </label>
+      </div>
+  </fieldset>
+</div>
+<!--End sexual offence->
+
+
+
+<!--Start danger to chi-->
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+      Vulnerability
+      </h1>
+    </legend>
+    <div id="waste-hint" class="govuk-hint">
+      Select all that apply.
+    </div>
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertVulnerability" type="checkbox" value="Little English Spoken">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          Little English Spoken
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+<!--End vuln-->
+
+
+
+
+<!--Start other-->
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+      Other
+      </h1>
+    </legend>
+    <div id="waste-hint" class="govuk-hint">
+      Select all that apply.
+    </div>
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertOther" type="checkbox" value="Food Refusal">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          Food Refusal
+        </label>
+      </div>
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="waste" name="alertOther" type="checkbox" value="Custodial Violence Management">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          Custodial Violence Management
+        </label>
+      </div>
+  </fieldset>
+</div><br />
+<!--End other-->
+<button class="govuk-button" data-module="govuk-button">Continue</button>
+
+
+</form>
+</div>
+  </body>
+</html>
+{% endblock %}

@@ -1,0 +1,50 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+
+  </div>
+  <div id="event-name-hint" class="govuk-hint">
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+        <div class="govuk-width-container">
+  <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+              {{data.activityName or 'Maths level 3' }} created
+          </h1>
+        <!--  <div class="govuk-panel__body">
+            Your reference number<br><strong>HDJ2123F</strong>
+          </div>-->
+        </div>
+
+        <h2 class="govuk-heading-m">What happens next</h2>
+
+        <p class="govuk-body">
+          Your activity has been created and you can <a href="../allocate/activity-list-dashboard">allocate people</a> to it.
+        </p>
+        <p class="govuk-body">You can edit, view or delete this or other activities on the <a href="../allocate/activity-list-dashboard">activity dashboard<a/>.</p>
+        <p class="govuk-body">
+          <a href="#" class="govuk-link">What did you think of this service?</a> (takes 30 seconds)
+        </p>
+      </div>
+    </div>
+  </main>
+</div>
+      </div>
+      <form method="post" >
+    <button class="govuk-button" data-module="govuk-button">Create another activity</button>
+  </form>
+</div>
+{% endblock %}

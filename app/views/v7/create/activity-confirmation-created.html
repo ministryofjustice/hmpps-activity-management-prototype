@@ -1,0 +1,68 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+
+  </div>
+  <div id="event-name-hint" class="govuk-hint">
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+        <div class="govuk-width-container">
+  <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+              {{data.activityName or 'Maths level 3' }}
+
+              {% if data['edit']=='true' %}
+                changes completed
+                {% else %}
+                  created
+              {% endif %}
+
+          </h1>
+        <!--  <div class="govuk-panel__body">
+            Your reference number<br><strong>HDJ2123F</strong>
+          </div>-->
+        </div>
+
+        <h2 class="govuk-heading-m">What you can do next</h2>
+
+        <p class="govuk-body">
+          Your activity has been
+          {% if data['edit']=='true' %}
+            changed
+            {% else %}
+              created
+          {% endif %}
+
+           and you can {% if data['edit']=='true' %}<a href="schedule-check-your-answers">return to the schedule</a> you were building.{% else %} or <a href="activity-start-date?edit=false">start building new schedules</a> for it.
+        </p>
+        <p class="govuk-body">You can edit, view or delete this or other activities on the <a href="../allocate/activity-dashboard-1">activity dashboard<a/>.</p>
+        <p class="govuk-body">
+          <a href="#" class="govuk-link">What did you think of this service?</a>
+        </p>{% endif %}
+      </div>
+    </div>
+  </main>
+</div>
+      </div>
+      <form method="post" >
+        {% if data['edit']=='true' %}
+            <button class="govuk-button" data-module="govuk-button" style="margin-right:15px;">Return to schedule creation</button>
+          {% else %}
+          <button class="govuk-button" data-module="govuk-button">Create another activity</button>
+        {% endif %}
+  </form>
+</div>
+{% endblock %}
