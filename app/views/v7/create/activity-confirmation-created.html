@@ -22,7 +22,7 @@ Activities Management prototype
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-panel govuk-panel--confirmation">
           <h1 class="govuk-panel__title">
-              {{data.activityName or 'Maths level 3' }}
+              {{data.activityName or 'Maths level 1'}}
 
               {% if data['edit']=='true' %}
                 changes completed
@@ -37,21 +37,16 @@ Activities Management prototype
         </div>
 
         <h2 class="govuk-heading-m">What you can do next</h2>
-
         <p class="govuk-body">
-          Your activity has been
           {% if data['edit']=='true' %}
-            changed
-            {% else %}
-              created
+          Your activity has been changed
           {% endif %}
 
-           and you can {% if data['edit']=='true' %}<a href="schedule-check-your-answers">return to the schedule</a> you were building.{% else %} or <a href="activity-start-date?edit=false">start building new schedules</a> for it.
+          <p class="govuk-body">You need to <a href="activity-start-date?edit=false">build a schedule</a> for it so you can start allocating people.</p>
+            <p class="govuk-body">You can also <a href="activity-type-select-with-category">create new activities</a> or <a href="joypad">change details of existing activities</a>.</p>
+            {% if data['edit']=='true' %}<p class="govuk-body">You can <a href="schedule-check-your-answers">return to the schedule</a> you were building.
         </p>
-        <p class="govuk-body">You can edit, view or delete this or other activities on the <a href="../allocate/activity-dashboard-1">activity dashboard<a/>.</p>
-        <p class="govuk-body">
-          <a href="#" class="govuk-link">What did you think of this service?</a>
-        </p>{% endif %}
+      {% endif %}
       </div>
     </div>
   </main>
@@ -61,7 +56,7 @@ Activities Management prototype
         {% if data['edit']=='true' %}
             <button class="govuk-button" data-module="govuk-button" style="margin-right:15px;">Return to schedule creation</button>
           {% else %}
-          <button class="govuk-button" data-module="govuk-button">Create another activity</button>
+          <button class="govuk-button" data-module="govuk-button">Build a schedule for   {{data.activityName or 'Maths level 1'}}</button>
         {% endif %}
   </form>
 </div>
