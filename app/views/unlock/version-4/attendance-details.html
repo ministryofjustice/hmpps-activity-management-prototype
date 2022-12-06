@@ -1,0 +1,105 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-l">
+			Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+		</h1>
+
+		<dl class="govuk-summary-list">
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Activity
+				</dt>
+				<dd class="govuk-summary-list__value">
+					<a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+				</dd>
+			</div>
+
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Activity date
+				</dt>
+				<dd class="govuk-summary-list__value">
+					2 November 2022
+				</dd>
+			</div>
+
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Attendance
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{% if prisoner.attendance == "attended" %}
+					<span class="moj-badge moj-badge--large moj-badge--green">Attended</span>
+					{% elif prisoner.attendance == "not-attended" %}
+					<span class="moj-badge moj-badge--large moj-badge--red">Absent</span>
+					{% endif %}
+				</dd>
+			</div>
+
+			{% if prisoner.attendance == "attended" and prisoner.bonus['bonus-awarded'].length == 2 %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Bonus
+				</dt>
+				<dd class="govuk-summary-list__value">
+					Yes
+					{% if prisoner.bonus['bonus-detail'] %}
+					<br><br>
+					{{prisoner.bonus['bonus-detail']}}
+					{% endif %}
+				</dd>
+			</div>
+			{% elif prisoner.attendance == "attended" and prisoner.bonus['bonus-awarded'].length != 2 %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Bonus
+				</dt>
+				<dd class="govuk-summary-list__value">
+					None
+				</dd>
+			</div>
+			{% endif %}
+			
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Recorded date
+				</dt>
+				<dd class="govuk-summary-list__value">
+					11:03am on 2 November 2022
+				</dd>
+			</div>
+
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Recorded by
+				</dt>
+				<dd class="govuk-summary-list__value">
+					Bal Patel
+				</dd>
+			</div>
+		</dl>
+
+		{{govukButton({
+			text: "Change attendance record",
+			classes: "govuk-button--secondary"
+		})}}
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}

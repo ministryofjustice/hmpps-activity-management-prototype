@@ -1,0 +1,371 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-three-quarters">
+		<h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+			{% set prisonersNoun %}
+			{% if filteredPrisoners.length > 1 %}
+			{{filteredPrisoners.length or "3"}} prisoners
+			{% else %}
+			{{filteredPrisoners[0].name.firstname}} {{filteredPrisoners[0].name.surname}}
+			{% endif %}
+			{% endset %}
+
+			{% if data['attendance-action'] == 'not-attended' %}
+			Select a reason why {{prisonersNoun}} did not attend
+			{% else %}
+			Add pay details for {{prisonersNoun}}
+			{% endif %}
+		</h1>
+
+		<form method="post">
+			{% for prisoner in filteredPrisoners %}
+			<div class="prisoner">
+				{% if filteredPrisoners.length > 1 %}
+				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+				<h2 class="govuk-heading-m">
+					{{prisoner.name.surname}}, {{prisoner.name.firstname}}
+					<span class="govuk-caption-m">{{prisoner._id}}</span>
+				</h2>
+				{% endif %}
+
+				<input type="hidden" name="attendance-details[{{loop.index0}}][_id]" value="{{prisoner._id}}">
+
+				{% if data['attendance-action'] == 'attended' %}
+
+				{% set bonusTextHtml %}
+				{{ govukTextarea({
+					name: "attendance-details[" + loop.index0 + "][bonus][bonus-detail]",
+					id: "bonus-detail-" + prisoner._id,
+					label: {
+						text: "Provide a short explanation for your decision, this will be added to their case notes."
+					}
+				}) }}
+				{% endset %}
+
+				{{ govukCheckboxes({
+					id: "bonus-awarded-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][bonus][bonus-awarded]",
+					items: [
+					{
+						value: "yes",
+						text: "Award " + prisoner.name.firstname + " " + prisoner.name.surname + " a bonus payment",
+						conditional: {
+							html: bonusTextHtml
+						}
+					}
+					]
+				}) }}
+
+				{% else %}
+				{% set warningTextHtml %}
+				{{ govukTextarea({
+					name: "attendance-details[" + loop.index0 + "][incentive-level-warning-detail]",
+					id: "incentive-level-warning-detail-" + prisoner._id,
+					label: {
+						text: "Incentive level warning detail"
+					}
+				}) }}
+				{% endset %}
+
+				{% set unacceptableAbsenceHtml %}
+				{{ govukRadios({
+					id: "incentive-level-warning-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][incentive-level-warning]",
+					classes: "govuk-radios--small",
+					fieldset: {
+						legend: {
+							text: "Do you want give " + prisoner.name.firstname + " " + prisoner.name.surname + " an incentive level warning?"
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes",
+						conditional: {
+							html: warningTextHtml
+						}
+
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
+				{% endset %}
+
+				{{ govukRadios({
+					id: "absence-reason-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][absence-reason]",
+					classes: "govuk-radios",
+					fieldset: {
+						legend: {
+							text: "Why did " + prisoner.name.firstname + " " + prisoner.name.surname + " not attend?"
+						}
+					},
+					items: [
+					{
+						value: "Rest day",
+						text: "Rest day"
+					},
+					{
+						value: "Rest in cell or sick",
+						text: "Rest in cell or sick"
+					},
+					{
+						value: "Refused to attend",
+						text: "Refused to attend"
+					},
+					{
+						value: "Unacceptable absence",
+						text: "Unacceptable absence",
+						conditional: {
+							html: unacceptableAbsenceHtml
+						}
+					},
+					{
+						value: "Approved course",
+						text: "Approved course"
+					},
+					{
+						value: "Not required to attend",
+						text: "Not required to attend"
+					},
+					{
+						value: "Activities and education",
+						text: "Activities and education"
+					},
+					{
+						value: "Behaviour",
+						text: "Behaviour"
+					},
+					{
+						value: "Courses, programmes and interventions",
+						text: "Courses, programmes and interventions"
+					},
+					{
+						value: "External moves",
+						text: "External moves"
+					},
+					{
+						value: "Healthcare",
+						text: "Healthcare"
+					},
+					{
+						value: "Operational",
+						text: "Operational"
+					},
+					{
+						value: "Over allocated or schedule clash",
+						text: "Over allocated or schedule clash"
+					},
+					{
+						value: "Visits",
+						text: "Visits"
+					},
+					{
+						value: "Not listed",
+						text: "Not listed"
+					}
+					]
+				}) }}
+
+				{% set absencePaymentHtml %}
+				{{ govukSelect({
+					id: "pay-override-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][absence-payment][reason]",
+					label: {
+						text: "Why are you paying " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
+					},
+					items: [
+					{
+						value: "",
+						text: "Choose reason",
+						selected: true
+					},
+					{
+						value: "Approved course",
+						text: "Approved course"
+					},
+					{
+						value: "Not required to attend",
+						text: "Not required to attend"
+					},
+					{
+						value: "Activities and education",
+						text: "Activities and education"
+					},
+					{
+						value: "Courses, programmes and interventions",
+						text: "Courses, programmes and interventions"
+					},
+					{
+						value: "External moves",
+						text: "External moves"
+					},
+					{
+						value: "Healthcare",
+						text: "Healthcare"
+					},
+					{
+						value: "Operational",
+						text: "Operational"
+					},
+					{
+						value: "Over allocated or schedule clash",
+						text: "Over allocated or schedule clash"
+					},
+					{
+						value: "Visits",
+						text: "Visits"
+					},
+					{
+						value: "Not listed",
+						text: "Not listed"
+					}
+					]
+				}) }}
+				{% endset %}
+
+				<!-- {{ govukRadios({
+					id: "pay-override-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][absence-payment][pay]",
+					fieldset: {
+						legend: {
+							text: "Do you want to pay " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes",
+						conditional: {
+							html: absencePaymentHtml
+						}
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }} -->
+
+				{% endif %}
+			</div>
+			{% endfor %}
+
+			<div class="govuk-button-group govuk-!-margin-top-9">
+				{{govukButton({
+					text: "Record attendance and finish"
+				})}}
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		let attendanceRadio = 'input[type="radio"][id*="attended"]'
+		let paymentRadio = 'input[type="radio"][id*="payment"]'
+		let bonusCheckbox = 'input[type="checkbox"][id*="bonus"]'
+		let payOverrideSelect = 'select[id*="pay-override"]'
+		let formGroup = '.govuk-form-group'
+
+		function hideInputFormGroup(input) {
+			$(input).each(function() {
+				$(this).closest('.govuk-form-group').hide()
+			});
+		}
+		
+		// [paymentRadio, bonusCheckbox, payOverrideSelect].forEach(hideInputFormGroup)
+		[payOverrideSelect].forEach(hideInputFormGroup)
+
+		function markAttended(el){
+			let container = el.closest('.prisoner')
+
+			// container.find($(bonusCheckbox)).closest(formGroup).show()
+			container.find($(paymentRadio)).attr('checked', false).closest(formGroup).hide()
+			container.find($(payOverrideSelect)).closest(formGroup).hide()
+		}
+
+		function markNotAttended(el){
+			let container = el.closest('.prisoner')
+
+			container.find($(paymentRadio)).closest(formGroup).show()
+			// container.find($(bonusCheckbox)).attr('checked', false).closest(formGroup).hide()
+			// container.find($(bonusCheckbox)).attr('aria-expanded', false).parent().siblings('.govuk-checkboxes__conditional').addClass('govuk-checkboxes__conditional--hidden')
+		}
+
+		$(attendanceRadio).on('change', function () {
+			let container = $(this).closest('.prisoner')
+
+			if($(this).val() == 'no'){
+				markNotAttended($(this))
+			} else if ($(this).val() == 'yes') {
+				markAttended($(this))
+			}
+		})
+
+		$(paymentRadio).on('change', function () {
+			if($(this).val() == 'yes'){
+				$(this).closest('.prisoner').find($(payOverrideSelect)).closest(formGroup).show()
+			} else {
+				$(this).closest('.prisoner').find($(payOverrideSelect)).val($(payOverrideSelect + " option:first").val()).closest(formGroup).hide()
+			}
+		})
+
+		function markAllAttended(el) {
+			$(attendanceRadio + "[value='yes']").each(function(){
+				$(this).click().attr('checked', true)
+			})
+			$(bonusCheckbox).each(function(){
+				$(this).attr('aria-expanded', false).parent().siblings('.govuk-checkboxes__conditional').addClass('govuk-checkboxes__conditional--hidden')
+			})
+		}
+		function markAllNotAttended(el) {
+			$(attendanceRadio + "[value='no']").each(function(){
+				$(this).click().attr('checked', true)
+			})
+			$(bonusCheckbox).each(function(){
+				$(this).attr('aria-expanded', false).parent().siblings('.govuk-checkboxes__conditional').addClass('govuk-checkboxes__conditional--hidden')
+			})
+		}
+		$('#mark-all-attended').on('click', function (event) {
+			event.preventDefault()
+			markAllAttended()
+		})
+		$('#mark-all-not-attended').on('click', function (event) {
+			event.preventDefault()
+			markAllNotAttended()
+		})
+	})
+</script>
+
+{% if data['config']['record-attendance-pattern'] == 'dropdown-button' %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		let attendAll = "{{data['attendance-action']}}"
+		if(attendAll == "attended"){
+			markAllAttended()
+		} else if(attendAll == "not-attended"){
+			markAllNotAttended()
+		}
+	});
+</script>
+{% endif %}
+{% endblock %}

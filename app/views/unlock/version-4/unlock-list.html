@@ -1,0 +1,464 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+			Unlock list
+			<span class="govuk-caption-l">Monday 31st October - {{data['times']|upper or "AM"}}</span>
+		</h1>
+		<!-- <p class="govuk-!-margin-top-0">
+			<a href="#">Select another residential location</a>
+		</p> -->
+	</div>
+	<div class="govuk-grid-column-one-third govuk-!-display-none-print">
+		<div class="govuk-button-group" style="text-align: right;">
+			{{ govukButton({
+				text: "Download list",
+				classes: "govuk-button--secondary",
+				attributes: {
+					style: "margin-left: auto;"
+				},
+				href: "unlock-list/download"
+			}) }}
+
+			{{govukButton({
+				text: "Print list",
+				classes: "govuk-button--secondary"
+			})}}
+		</div>
+	</div>
+</div>
+
+<div class="govuk-grid-row govuk-!-display-none-print">
+	<div class="govuk-grid-column-one-half">
+		<div class="govuk-button-group govuk-!-margin-top-5">
+			<div class="govuk-button-group">
+				{{ govukButton({
+					text: "Show filters",
+					classes: "govuk-button--secondary govuk-!-margin-bottom-0",
+					attributes: {
+						id: "filter-toggle"
+					}
+				}) }}
+			</div>
+		</div>
+	</div>
+	<div class="govuk-grid-column-one-half">
+		<div style="text-align: right;">
+			<div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-left-3 govuk-!-margin-bottom-0" style="text-align: left">
+				<label class="govuk-label" name="sort-select">
+					Order by
+				</label>
+				<select id="sort-select" class="govuk-select">
+					<option value="lastName_ASC">Name (A-Z)</option>
+					<option value="lastName_DESC">Name (Z-A)</option>
+					<option value="cellLocation_ASC">Location (ascending)</option>
+					<option value="cellLocation_DESC">Location (descending)</option>
+					<option value="activity_ASC">Activity name (A-Z)</option>
+					<option value="activity_DESC">Activity name (Z-A)</option>
+				</select>
+			</div>
+			<div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-left-3 govuk-!-margin-bottom-0" style="text-align: left">
+				<label class="govuk-label">
+					Group by
+				</label>
+				<select class="govuk-select" id="group-by" name="select-grouping">
+					<option value="ungrouped" selected>No grouping</option>
+					<option value="sublocation">Sublocation</option>
+					<option value="activity">Activity</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="app-filter-area govuk-!-display-none-print" id="filters" tabindex=0>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+			<h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+				Filters
+			</h2>
+			<div class="govuk-grid-row govuk-!-margin-bottom-2">
+				<div class="govuk-grid-column-full govuk-!-margin-bottom-1" style="vertical-align: top;">
+					{{govukInput({
+						formGroup: {
+							classes: "govuk-!-display-inline-block"
+						},
+						classes: "govuk-input--width-10",
+						value: "01/11/2022",
+						label: {
+							text: "Date",
+							classes: "govuk-label--s"
+						}
+					})}}
+					{{ govukSelect({
+						attributes: {
+							"data-enhance-multiple": ""
+						},
+						formGroup: {
+							classes: "govuk-!-display-inline-block"
+						},
+						label: {
+							text: "Period",
+							classes: "govuk-label--s"
+						},
+						idPrefix: 'period',
+						name: 'period[]',
+						heading: {
+							text: 'Period'
+						},
+						items: [{
+							text: 'All',
+							id: 'bulgaria',
+							value: 'bulgaria'
+						},
+						{
+							text: 'Morning (AM)',
+							id: 'all',
+							value: 'all'
+						},
+						{
+							text: 'Afternoon (PM)',
+							id: 'austria',
+							value: 'austria'
+						},
+						{
+							text: 'Evening (ED)',
+							id: 'belgium',
+							value: 'belgium'
+						}]
+					}) }}
+
+					<fieldset class="govuk-fieldset govuk-!-display-inline-block" style="width: 280px; position: relative; top: 14px;">
+						<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+							Sub-locations
+						</legend>
+						<div class="dropdown" data-control="checkbox-dropdown">
+							<label class="dropdown-label">All sub-locations</label>
+							<div class="dropdown-list">
+								{{ govukCheckboxes({
+									formGroup: {
+										classes: "govuk-!-margin-0"
+									},
+									classes: "govuk-checkboxes--small",
+									name: "waste",
+									items: [
+									{
+										text: 'Landing 1',
+										id: 'landing-1',
+										value: '1'
+									},
+									{
+										text: 'Landing 2',
+										id: 'landing-2',
+										value: '2'
+									},
+									{
+										text: 'Landing 3',
+										id: 'landing-3',
+										value: '3'
+									},
+									{
+										text: 'Landing 4',
+										id: 'landing-4',
+										value: '4'
+									},
+									{
+										text: 'Landing 5',
+										id: 'landing-5',
+										value: '5'
+									}]
+								}) }}
+							</div>
+						</div>
+					</fieldset>
+
+					{{ govukSelect({
+						formGroup: {
+							classes: "govuk-!-display-inline-block"
+						},
+						label: {
+							text: "Activities",
+							classes: "govuk-label--s"
+						},
+						idPrefix: 'activities',
+						name: 'activity[]',
+						heading: {
+							text: 'Activities'
+						},
+						items: [{
+							text: 'All activities',
+							id: 'all',
+							value: 'all'
+						},
+						{
+							text: '08:15 - D WING PID FT',
+							id: 'austria',
+							value: 'austria'
+						},
+						{
+							text: '08:15 - AM AWAITING ALLOCATION',
+							id: 'belgium',
+							value: 'belgium'
+						},
+						{
+							text: '08:15 - A WING AM CLEANER',
+							id: 'bulgaria',
+							value: 'bulgaria'
+						}]
+					}) }}
+					{{ govukSelect({
+						formGroup: {
+							classes: "govuk-!-display-inline-block"
+						},
+						label: {
+							text: "Attendance",
+							classes: "govuk-label--s"
+						},
+						idPrefix: 'attendance',
+						name: 'attendance[]',
+						heading: {
+							text: 'Attendance'
+						},
+						items: [{
+							text: 'All',
+							id: 'all',
+							value: 'all'
+						},
+						{
+							text: 'Attended',
+							id: 'attended',
+							value: 'austria'
+						},
+						{
+							text: 'Not attended',
+							id: 'not-attended',
+							value: 'belgium'
+						},
+						{
+							text: 'Unaccounted for',
+							id: 'unaccounted-for',
+							value: 'bulgaria'
+						}]
+					}) }}
+					{{ govukSelect({
+						formGroup: {
+							classes: "govuk-!-display-inline-block"
+						},
+						label: {
+							text: "Staying or leaving",
+							classes: "govuk-label--s"
+						},
+						idPrefix: 'attendance',
+						name: 'attendance[]',
+						heading: {
+							text: 'Staying or leaving'
+						},
+						items: [{
+							text: 'All',
+							id: 'all',
+							value: 'all'
+						},
+						{
+							text: 'Staying',
+							id: 'attended',
+							value: 'austria'
+						},
+						{
+							text: 'Leaving',
+							id: 'not-attended',
+							value: 'belgium'
+						}]
+					}) }}
+				</div>
+			</div>
+			{{govukButton({
+				text: "Apply filters",
+				classes: "govuk-!-margin-bottom-2"
+			})}}
+		</div>
+	</div>
+</div>
+{% set totalPrisoners = filteredPrisoners|length %}
+{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
+<h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
+<div class="app-filter-area" id="filters" tabindex=0>
+	<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold govuk-!-display-none-print">Showing</span>
+	<ul class="app-filter-tag-list">
+		{% for houseblock, wings in locations %}
+		{% if wings.length > 0 %}
+		{% for wing in wings %}
+		<li class="govuk-tag govuk-tag--filter">Houseblock {{houseblock}} - Wing {{wing}}</li>
+		{% endfor %}
+		{% else %}
+		<li class="govuk-tag govuk-tag--filter">Houseblock {{houseblock}}</li>
+		{% endif %}
+		{% endfor %}
+	</ul>
+</div>
+
+<table class="govuk-table app-whereabouts-table app-whereabouts-table--font-size-normal" data-module="moj-sortable-table">
+	<thead class="govuk-table__head">
+		<tr>
+			<th class="govuk-table__cell" aria-sort="none">
+				Name
+			</th>
+			<th class="govuk-table__cell" aria-sort="ascending">
+				Location
+			</th>
+			<th class="govuk-table__cell">
+				Relevant alerts
+			</th>
+			<th class="govuk-table__cell" aria-sort="none">
+				Session
+			</th>
+			<th class="govuk-table__cell" aria-sort="none">
+				Status
+			</th>
+		</tr>
+	</thead>
+	<tbody class="govuk-table__body">
+		{% for prisoner in filteredPrisoners | sort(false, true, ('location.full')) %}
+		{% set activity =  prisoner.activity | getActivity %}
+		<tr class="govuk-table__row">
+			<td class="govuk-table__cell" width="180" scope="col">
+				<a href="#" class="govuk-link--no-visited-state"><b>{{prisoner.name.surname}}</b>, {{prisoner.name.firstname}}</a><br>
+				<span class="govuk-hint govuk-!-font-size-16">{{prisoner._id}}</span>
+			</td>
+			<td class="govuk-table__cell" data-sort-value="{{prisoner.location.houseblock}}{{prisoner.location.landing}}{{prisoner.location.cell}}" scope="col">
+				{{prisoner.location.houseblock}}-{{prisoner.location.landing}}-{{prisoner.location.cell}}
+			</td>
+			<td class="govuk-table__cell">
+				{% if prisoner.alerts.length > 0 %}
+				<ul class="govuk-list">
+					{% for alert in prisoner.alerts %}
+					<li><span class="moj-badge moj-badge--grey">{{alert}}</span></li>        
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</td>
+			<td class="govuk-table__cell" data-sort-value="{{activityName}}" scope="col">
+				<div>
+				<a href="activities/{{activity.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ activity.name }}</a>
+				<br>
+				<span class="govuk-hint govuk-!-font-size-16">{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}</span>
+				<br>
+				<span class="govuk-hint govuk-!-font-size-16">{{ activity.location }}</span>
+				</div>
+
+				<!-- <br>
+				
+				<div>
+				<a href="activities/{{activity.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ activity.name }}</a>
+				<br>
+				<span class="govuk-hint govuk-!-font-size-16">{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}</span>
+				<br>
+				<span class="govuk-hint govuk-!-font-size-16">{{ activity.location }}</span>
+				</div> -->
+			</td>
+			<td class="govuk-table__cell" data-sort-value="{{'9' if prisoner.attendance == 'attended'}}{{'1' if prisoner.attendance == 'not-attended'}}{{'5' if not prisoner.attendance}}" scope="col">
+				{% if prisoner.attendance == "attended" %}
+				<a href="activities/{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--green">Attended</span></a>
+				{% elif prisoner.attendance == "not-attended" %}
+				<a href="activities/{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--red">Absent</span></a>
+				{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+<div class="govuk-grid-row govuk-!-display-none-print">
+	<div class="govuk-grid-column-one-quarter">
+		<p class="govuk-body">
+			{{govukButton({
+				text: "Print list",
+				classes: "govuk-button--secondary"
+			})}}
+		</p>
+	</div>
+</div>
+
+{% endblock %}
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
+<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a[data-modal]').on('click', function(event) {
+			event.preventDefault();
+			this.blur();
+			$.get(this.href, function(html) {
+				$(html).appendTo('body').modal({
+					showClose: false,
+					clickClose: false
+				});
+			});
+		});
+
+		$('#group-by').on('change', function() {
+			window.location = 'unlock-list--horizontal-filters--' + $(this).val()
+		})
+
+		function toggleButtonState(btn) {
+			let checkbox = $('.app-whereabouts-table input[type="checkbox"]')
+			let count = checkbox.filter(':checked').length - $('th .moj-multi-select__checkbox input:checkbox:checked').length
+
+			if (checkbox.is(':checked')) {
+				btn.attr('disabled', false)
+				btn.html("Record attendance (" + count + ")")
+			} else {
+				btn.attr('disabled', true)
+				btn.html("Record attendance")
+			}
+		}
+
+		toggleButtonState($('#attendance-btn'))
+		$('.app-whereabouts-table input[type="checkbox"]').on('change', function() {
+			toggleButtonState($('#attendance-btn'))
+		})
+
+		let filters = $('#filters');
+		let filterToggle = $("#filter-toggle");
+		function filterToggleBntText() {
+			if (filters.is(':visible')) {
+				filterToggle.html('Hide filters')
+			} else {
+				filterToggle.html('Show filters')
+			}
+		}
+		function toggleFilters() {
+			if (filters.is(':visible')) {
+				filters.hide();
+			} else {
+				filters.show().focus();
+			}
+			filterToggleBntText()
+		}
+		toggleFilters()
+		filterToggleBntText()
+		filterToggle.on('click', toggleFilters)
+	})
+</script>
+{% endblock %}
