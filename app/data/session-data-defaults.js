@@ -28,7 +28,7 @@ module.exports = {
     "navigation-tiles": [{
       "linkText": "Manage prisoner whereabouts",
       "descriptionText":"View unlock lists, all appointments and COVID units, manage attendance and add bulk appointments.",
-      "linkURL":"/unlock/version-3/whereabouts"
+      "linkURL":""
     },
     {
       "linkText":"Manage activities and schedules",

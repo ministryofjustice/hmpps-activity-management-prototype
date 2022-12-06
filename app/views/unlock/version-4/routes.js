@@ -10,6 +10,11 @@ router.get('/', function(req, res) {
 });
 
 	// CONFIG
+router.get('/config', function(req, res) {
+	let version = req.version
+	req.session.data["config"]["navigation-tiles"][0]["linkURL"] = "/unlock/"+version+"/whereabouts"
+	res.render('unlock/' + req.version + '/config', {version})
+});
 router.post('/config', function(req, res) {
 	res.redirect('dps-home')
 });
