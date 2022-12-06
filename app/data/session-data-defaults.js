@@ -31,8 +31,8 @@ module.exports = {
       "linkURL":"/unlock/version-3/whereabouts"
     },
     {
-      "linkText":"Manage schedules and activities",
-      "descriptionText":"Create and manage prisoner schedules. Allocate prisoners to activities.",
+      "linkText":"Manage activities and schedules",
+      "descriptionText":"Create and manage activities and schedules. Allocate people in prison to activities.",
       "linkURL":"/v6/create/activity-type-select-with-category"
     }]
   },

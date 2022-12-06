@@ -43,8 +43,8 @@ Activities Management prototype
 					text: "Today"
 				},
 				{
-					value: "yesterday",
-					text: "Yesterday"
+					value: "tomorrow",
+					text: "Tomorrow"
 				},
 				{
 					value: "DATE",
@@ -121,7 +121,7 @@ Activities Management prototype
 			<p class="govuk-body govuk-!-margin-bottom-6">
 				<a href="#" class="govuk-link govuk-link--no-visited-state" id="check-all-locations">Select all<span class="govuk-visually-hidden"> locations</span></a>
 			</p>
-            <!-- {{ govukCheckboxes({
+            {{ govukCheckboxes({
 				name: "staying-or-leaving",
 				fieldset: {
 					legend: {
@@ -140,10 +140,33 @@ Activities Management prototype
 					text: "Leaving"
 				}
 				]
-			}) }} -->
-			<p class="govuk-inset-text">
-				Prisoners will be listed by sub-location (prison wing).
-			</p>
+			}) }}
+
+			{{ govukRadios({
+				name: "staying-or-leaving",
+				fieldset: {
+					legend: {
+						text: "Group prisoners by",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "staying",
+					text: "Sub-location (for example, landing)"
+				},
+				{
+					value: "leaving",
+					text: "Activity"
+				},
+				{
+					value: "leaving",
+					text: "Don't group prisoners"
+				}
+				]
+			}) }}
+
 			<div class="govuk-button-group">
 				{{govukButton({
 					text: "View selection"
