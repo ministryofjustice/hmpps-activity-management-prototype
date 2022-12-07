@@ -1,0 +1,160 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% set sessionName %}
+{% if data['attendance'] == 'by-activity' %}
+{{ data['activity'] }}
+{% elif data['attendance'] == 'by-location' %}
+{{ data['location'] }}
+{% else %}
+Workshop
+{% endif %}
+{% endset %}
+
+{% block content %}
+<h1 class="govuk-heading-l">
+	{{sessionName}} session history
+</h1>
+
+<!-- <p><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></p> -->
+
+<form method="post">
+	{{ govukTable({
+		head: [
+		{
+			text: "Session"
+		},
+		{
+			text: "Time"
+		},
+		{
+			text: "Attended"
+		},
+		{
+			text: "Not attended"
+		},
+		{
+			text: ""
+		}
+		],
+		rows: [
+		[
+		{
+			html: "2022-10-31"|date("cccc, d MMMM yyyy")
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "4"
+		},
+		{
+			text: "2"
+		},
+		{
+			html: "<a href='#'>View session</a>"
+		}
+		],
+		[
+		{
+			html: "2022-10-28"|date("cccc, d MMMM yyyy")
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "19"
+		},
+		{
+			text: "2"
+		},
+		{
+			html: "<a href='#'>View session</a>"
+		}
+		],
+		[
+		{
+			html: "2022-10-26"|date("cccc, d MMMM yyyy")
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "9"
+		},
+		{
+			text: "2"
+		},
+		{
+			html: "<a href='#'>View session</a>"
+		}
+		],
+		[
+		{
+			html: "2022-10-24"|date("cccc, d MMMM yyyy")
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "7"
+		},
+		{
+			text: "2"
+		},
+		{
+			html: "<a href='#'>View session</a>"
+		}
+		],
+		[
+		{
+			html: "2022-10-21"|date("cccc, d MMMM yyyy")
+		},
+		{
+			html: "13:00&thinsp;&ndash;&thinsp;15:30"
+		},
+		{
+			text: "16"
+		},
+		{
+			text: "2"
+		},
+		{
+			html: "<a href='#'>View session</a>"
+		}
+		]
+		]
+	}) }}
+</form>
+{% endblock %}
+
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-location'),
+		showAllValues: true
+	})
+
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-activity'),
+		showAllValues: true
+	})
+</script>
+{% endblock %}

@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
 	// CONFIG
 router.get('/config', function(req, res) {
 	let version = req.version
-	req.session.data["config"]["navigation-tiles"][0]["linkURL"] = "/unlock/"+version+"/whereabouts"	
+	req.session.data["config"]["navigation-tiles"][0]["linkURL"] = "/unlock/"+version+"/whereabouts"
 	res.render('unlock/' + req.version + '/config', {version})
 });
 router.post('/config', function(req, res) {
@@ -154,7 +154,7 @@ router.get('/check-variable-pay', function(req, res) {
 
 	res.render('unlock/' + req.version + '/check-variable-pay', { filteredPrisoners })
 });
-router.post('/check-variable-pay', function(req, res) {
+router.post('/mark-as-attended', function(req, res) {
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
 	if(req.session.data['standard-pay-all'] == 'no'){

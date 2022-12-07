@@ -1,0 +1,66 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "dps-home"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+<h1 class="govuk-heading-l">
+	{{filteredActivities.length}} activities scheduled for {{data['chosen-date'] or "today"}} ({{data['times']|upper or "morning"}})
+</h1>
+<p><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></p>
+<form method="post">
+	<table class="govuk-table" data-module="moj-sortable-table">
+		<thead class="govuk-table__head">
+			<tr class="govuk-table__row">
+				<th scope="col" class="govuk-table__header" aria-sort="ascending">Activity</th>
+				<th scope="col" class="govuk-table__header" aria-sort="none">Location</th>
+				<th scope="col" class="govuk-table__header" aria-sort="none">Time</th>
+				<th scope="col" class="govuk-table__header">Scheduled</th>
+				<th scope="col" class="govuk-table__header govuk-hint">Attended</th>
+				<th scope="col" class="govuk-table__header govuk-hint">Not attended</th>
+			</tr>
+		</thead>
+		<tbody class="govuk-table__body">
+			{% for activity in filteredActivities | sort(false, true, 'name') %}
+			<tr class="govuk-table__row">
+				<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}"><a href="activities/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
+				<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
+				<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
+
+				<!-- {% if data['times'] == 'am' %}
+				9:00&thinsp;–&thinsp;11:30
+				{% elif data['times'] == 'pm' %}
+				13:00&thinsp;–&thinsp;15:30
+				{% else %}
+				18:00&thinsp;–&thinsp;20:30
+				{% endif %} -->
+
+				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
+			</td>
+				<td class="govuk-table__cell">{{activity.count}}</td>
+				<td class="govuk-table__cell govuk-hint">{{activity['attended-count']}}</td>
+				<td class="govuk-table__cell govuk-hint"><span class="{{'govuk-tag govuk-tag--red' if activity['not-attended-count'] > 0 }}">{{activity['not-attended-count']}}</span></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</form>
+{% endblock %}

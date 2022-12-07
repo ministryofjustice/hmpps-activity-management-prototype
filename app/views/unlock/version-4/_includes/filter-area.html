@@ -1,0 +1,311 @@
+<div class="govuk-grid-row" id="actions">
+		<div class="govuk-grid-column-one-half govuk-!-margin-top-5 govuk-!-margin-bottom-0">
+			{% if data['config']['record-attendance-pattern'] == 'dropdown-button' %}
+			{%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
+			{{ mojButtonMenu({
+				attributes: {
+					id: "attendance-button"
+				},
+				items: [
+				{
+					text: "Attended",
+					value: "attended",
+					name: "attendance-action",
+					classes: "govuk-button--secondary"
+				},
+				{
+					text: "Not attended",
+					value: "not-attended",
+					name: "attendance-action",
+					classes: "govuk-button--secondary"
+				}
+				]
+			}) }}
+
+			{% elif data['config']['record-attendance-pattern'] == 'single-button' %}
+
+			{{ govukButton({
+				attributes: {
+					id: "attendance-btn"
+				},
+				text: "Record attendance",
+				classes: "govuk-!-margin-bottom-0 govuk-!-margin-right-2"
+			}) }}
+
+			{% elif data['config']['record-attendance-pattern'] == 'buttons' %}
+
+			{{ govukButton({
+				attributes: {
+					id: "attendance-btn"
+				},
+				text: "Attended",
+				classes: "govuk-!-margin-bottom-0 govuk-!-margin-right-2 govuk-button--secondary"
+			}) }}
+			{{ govukButton({
+				attributes: {
+					id: "attendance-btn"
+				},
+				text: "Not attended",
+				classes: "govuk-!-margin-bottom-0 govuk-!-margin-right-2 govuk-button--secondary"
+			}) }}			
+
+			{% else %}
+
+			{% endif %}
+
+			{{ govukButton({
+				text: "Show filters",
+				classes: "govuk-button--secondary govuk-!-margin-bottom-",
+				attributes: {
+					id: "filter-toggle"
+				}
+			}) }}
+		</div>
+		<div class="govuk-grid-column-one-half">
+			<div style="text-align: right;">
+				<div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-left-3 govuk-!-margin-bottom-0" style="text-align: left">
+					<label class="govuk-label" name="sort-select">
+						Order by
+					</label>
+					<select id="sort-select" class="govuk-select">
+						<option value="lastName_ASC">Name (A-Z)</option>
+						<option value="lastName_DESC">Name (Z-A)</option>
+						<option value="cellLocation_ASC">Location (ascending)</option>
+						<option value="cellLocation_DESC">Location (descending)</option>
+						<option value="activity_ASC">Activity name (A-Z)</option>
+						<option value="activity_DESC">Activity name (Z-A)</option>
+					</select>
+				</div>
+				<div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-left-3 govuk-!-margin-bottom-0" style="text-align: left">
+					<label class="govuk-label">
+						Group by
+					</label>
+					<select class="govuk-select" id="group-by" name="select-grouping">
+						<option value="ungrouped" selected>No grouping</option>
+						<option value="grouped">Sublocation</option>
+						<option value="activity">Activity</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="app-filter-area" id="filters" tabindex=0>
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-full">
+				<h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+					Filters
+				</h2>
+				<div class="govuk-grid-row govuk-!-margin-bottom-2">
+					<div class="govuk-grid-column-full govuk-!-margin-bottom-1" style="vertical-align: top;">
+						{{govukInput({
+							formGroup: {
+								classes: "govuk-!-display-inline-block"
+							},
+							classes: "govuk-input--width-10",
+							value: "01/11/2022",
+							label: {
+								text: "Date",
+								classes: "govuk-label--s"
+							}
+						})}}
+						{{ govukSelect({
+							attributes: {
+								"data-enhance-multiple": ""
+							},
+							formGroup: {
+								classes: "govuk-!-display-inline-block"
+							},
+							label: {
+								text: "Period",
+								classes: "govuk-label--s"
+							},
+							idPrefix: 'period',
+							name: 'period[]',
+							heading: {
+								text: 'Period'
+							},
+							items: [{
+								text: 'All',
+								id: 'bulgaria',
+								value: 'bulgaria'
+							},
+							{
+								text: 'Morning (AM)',
+								id: 'all',
+								value: 'all'
+							},
+							{
+								text: 'Afternoon (PM)',
+								id: 'austria',
+								value: 'austria'
+							},
+							{
+								text: 'Evening (ED)',
+								id: 'belgium',
+								value: 'belgium'
+							}]
+						}) }}
+
+						<fieldset class="govuk-fieldset govuk-!-display-inline-block" style="width: 280px; position: relative; top: 14px;">
+							<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+								Sub-locations
+							</legend>
+							<div class="dropdown" data-control="checkbox-dropdown">
+								<label class="dropdown-label">All sub-locations</label>
+								<div class="dropdown-list">
+									{{ govukCheckboxes({
+										formGroup: {
+											classes: "govuk-!-margin-0"
+										},
+										classes: "govuk-checkboxes--small",
+										name: "waste",
+										items: [
+										{
+											text: 'Landing 1',
+											id: 'landing-1',
+											value: '1'
+										},
+										{
+											text: 'Landing 2',
+											id: 'landing-2',
+											value: '2'
+										},
+										{
+											text: 'Landing 3',
+											id: 'landing-3',
+											value: '3'
+										},
+										{
+											text: 'Landing 4',
+											id: 'landing-4',
+											value: '4'
+										},
+										{
+											text: 'Landing 5',
+											id: 'landing-5',
+											value: '5'
+										}]
+									}) }}
+								</div>
+							</div>
+						</fieldset>
+
+						{{ govukSelect({
+							formGroup: {
+								classes: "govuk-!-display-inline-block"
+							},
+							label: {
+								text: "Activities",
+								classes: "govuk-label--s"
+							},
+							idPrefix: 'activities',
+							name: 'activity[]',
+							heading: {
+								text: 'Activities'
+							},
+							items: [{
+								text: 'All activities',
+								id: 'all',
+								value: 'all'
+							},
+							{
+								text: '08:15 - D WING PID FT',
+								id: 'austria',
+								value: 'austria'
+							},
+							{
+								text: '08:15 - AM AWAITING ALLOCATION',
+								id: 'belgium',
+								value: 'belgium'
+							},
+							{
+								text: '08:15 - A WING AM CLEANER',
+								id: 'bulgaria',
+								value: 'bulgaria'
+							}]
+						}) }}
+						{{ govukSelect({
+							formGroup: {
+								classes: "govuk-!-display-inline-block"
+							},
+							label: {
+								text: "Attendance",
+								classes: "govuk-label--s"
+							},
+							idPrefix: 'attendance',
+							name: 'attendance[]',
+							heading: {
+								text: 'Attendance'
+							},
+							items: [{
+								text: 'All',
+								id: 'all',
+								value: 'all'
+							},
+							{
+								text: 'Attended',
+								id: 'attended',
+								value: 'austria'
+							},
+							{
+								text: 'Not attended',
+								id: 'not-attended',
+								value: 'belgium'
+							},
+							{
+								text: 'Unaccounted for',
+								id: 'unaccounted-for',
+								value: 'bulgaria'
+							}]
+						}) }}
+						{{ govukSelect({
+							formGroup: {
+								classes: "govuk-!-display-inline-block"
+							},
+							label: {
+								text: "Staying or leaving",
+								classes: "govuk-label--s"
+							},
+							idPrefix: 'attendance',
+							name: 'attendance[]',
+							heading: {
+								text: 'Staying or leaving'
+							},
+							items: [{
+								text: 'All',
+								id: 'all',
+								value: 'all'
+							},
+							{
+								text: 'Staying',
+								id: 'attended',
+								value: 'austria'
+							},
+							{
+								text: 'Leaving',
+								id: 'not-attended',
+								value: 'belgium'
+							}]
+						}) }}
+					</div>
+				</div>
+
+				{{govukButton({
+					text: "Apply filters",
+					classes: "govuk-!-margin-bottom-2"
+				})}}
+			</div>
+		</div>
+	</div>
+
+	{% if data['filters-applied'] %}
+	<div class="app-filter-area" id="filters" tabindex=0>
+		<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold">Showing</span>
+		<ul class="app-filter-tag-list">
+			<li class="govuk-tag govuk-tag--filter">D WING PID FT</li>
+			<li class="govuk-tag govuk-tag--filter">Landing 1</li>
+			<li class="govuk-tag govuk-tag--filter">Landing 2</li>
+			<li class="govuk-tag govuk-tag--filter">Unaccounted for</li>
+		</ul>
+	</div>
+	{% endif %}
