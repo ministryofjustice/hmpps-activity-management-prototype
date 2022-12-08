@@ -14,10 +14,13 @@ router.post(version +'/setup', function(req, res) {
 						if (req.session.data.setupCategories == 'yes'){
 							res.redirect(version +'/create/activity-type-select-with-category')
 						}
-			else {
-				res.redirect(version +'/create/activity-type-select-with-category')
+							else {
+							res.redirect(version +'/create/activity-type-select-with-category')
+							}
+						}
+			else if  (req.session.data.setupTaskType == 'activityDashboard'){
+				res.redirect(version +'/create/activity-dashboard')
 			}
-		}
 		else {
 			//Schedule an activity
 			res.redirect(version +'/create/activity-start-date')

@@ -1,0 +1,84 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Activities dashboard
+    </h1>
+  </div>
+  <div class="govuk-grid-column-one-third">
+  <p class="govuk-body"><strong>Popular links</strong><br />
+  <a href="activity-type-select-with-category">Create an new activity</a><br />
+  <a href="../allocate/activity-dashboard-1">See vacancies and allocate people</a>
+    </p>
+  </div>
+
+    <div class="govuk-grid-column-three-thirds">
+<p class="govuk-body">Search for an activity and select to view details including schedules, or suspend or delete it.</p>
+</div>
+
+<table class="govuk-table" data-module="moj-sortable-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity name</th>
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Date created</th>
+      <th scope="col" class="govuk-table__header"  aria-sort="none">Activity category</th>
+      <th scope="col" class="govuk-table__header"  aria-sort="none">Number of schedules</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row" >
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="activity-check-your-answers?activityNameDashboard=Maths&nbsp;Level&nbsp;1&fromActivityDashboard=true" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Maths level 1
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell">2 Sept 2022</td>
+          <td class="govuk-table__cell">Education</td>
+      <td class="govuk-table__cell">
+        <span>
+        0</span>
+        <span>
+        <form method="post" action="activity-start-date">
+          <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+          Build schedule
+          </button></span>
+        </form>
+      </td>
+    </tr>
+    <tr class="govuk-table__row" >
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Maths level 2
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell">3 Sept 2022</td>
+          <td class="govuk-table__cell">Education</td>
+      <td class="govuk-table__cell">3</td>
+    </tr>
+    <tr class="govuk-table__row" >
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Wing cleaning
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell">28 Oct 2022</td>
+          <td class="govuk-table__cell">Prison jobs</td>
+      <td class="govuk-table__cell">8</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+{% endblock %}
