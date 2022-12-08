@@ -9,8 +9,10 @@ Activities Management prototype
 {% set homepageUrl %}
 {% if data['prototype'] == 'create' %}
 /?prototype=create
-{% else %}
+{% elseif data['prototype'] == 'unlock' %}
 /unlock?prototype=unklock
+{% elseif data['prototype'] == 'appointments' %}
+/appointments?prototype=appointments
 {% endif %}
 {% endset %}
 
@@ -28,6 +30,10 @@ Activities Management prototype
     text: "Unlock and attend",
     href: "/unlock?prototype=unlock",
     active: true
+  },
+  {
+    text: "appointments",
+    href: "/appointments/?prototype=appointments"
   }]
 }) }}
 

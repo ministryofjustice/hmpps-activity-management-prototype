@@ -1,0 +1,55 @@
+
+{% extends "layout.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+   
+    {{ govukRadios({
+      idPrefix: "appointment-type",
+      name: "appointment-type",
+      fieldset: {
+        legend: {
+          text: "Choose appointment type",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--xl"
+        }
+      },
+     
+      items: [
+        {
+          value: "Value",
+          text: "Text"
+        },
+        {
+          value: "Value",
+          text: "Text"
+        },
+        {
+          value: "Value",
+          text: "Text"
+        },
+        {
+          value: "Value",
+          text: "Text"
+        },
+        {
+          value: "Value",
+          text: "Text"
+        }
+      ]
+    }) }}
+    {{ govukButton({
+      text: "Continue",
+      href: "search-prisoner"
+    }) }}
+  </div>
+</div>
+{% endblock %}

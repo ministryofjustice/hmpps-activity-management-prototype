@@ -1,0 +1,37 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-xl">
+        Search prisoner
+      </h1>
+   
+    {{ govukInput({
+      id: "search-prisoner",
+      name: "search-prisoner",
+      label: {
+        text: "Label text"
+      },
+      hint: {
+        text: "Hint text"
+      }
+    }) }}
+    
+    {{ govukButton({
+      text: "Continue",
+      href: "prisoner-schedule"
+    }) }}
+  </div>
+</div>
+{% endblock %}
