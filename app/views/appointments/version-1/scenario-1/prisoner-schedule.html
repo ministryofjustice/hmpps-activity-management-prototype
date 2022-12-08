@@ -1,0 +1,63 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-xl">
+       Paul Blake's schedule
+       <span class="govuk-caption-l">Sunday 11 December to Saturday 17 December</span>
+      </h1>
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Print this page</a>
+      </p>
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Change date of appointment</a>
+      </p>
+   
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Saturday the 11th of month</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Morning</th>
+            <th scope="col" class="govuk-table__header">Afternoon</th>
+            <th scope="col" class="govuk-table__header">evening</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">£109.80 per week</td>
+            <td class="govuk-table__cell">£109.80 per week</td>
+            <td class="govuk-table__cell">£109.80 per week</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">£109.80 per week</td>
+            <td class="govuk-table__cell">£109.80 per week</td>
+            <td class="govuk-table__cell">£109.80 per week</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">£109.80 per week</td>
+            <td class="govuk-table__cell">£4,282.20</td>
+            <td class="govuk-table__cell">£109.80 per week</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+    
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </div>
+</div>
+{% endblock %}
