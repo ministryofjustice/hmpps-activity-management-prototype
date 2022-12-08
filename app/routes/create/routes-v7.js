@@ -27,6 +27,12 @@ router.post(version +'/setup', function(req, res) {
 		}
 	});
 
+	router.post(version +'/create/activity-dashboard', function(req, res) {
+		{
+			res.redirect(version +'/create/activity-start-date')
+		}
+	});
+
 	router.post(version +'/allocate/activity-dashboard-1', function(req, res) {
 		{
 			res.redirect(version +'/create/activity-type-select-with-category')
