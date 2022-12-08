@@ -369,7 +369,7 @@ router.post(version +'/create/check/activity-start-time', function(req, res) {
 			res.redirect(version +'/create/schedule-check-your-answers')
 		}
 		else {
-			res.redirect(version +'/create/activity-type-select-with-category')
+			res.redirect(version +'/create/activity-start-date?edit=false')
 		}
 	});
 
