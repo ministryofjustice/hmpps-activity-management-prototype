@@ -360,20 +360,17 @@ router.post(version +'/create/check/activity-start-time', function(req, res) {
 	});
 
 	router.post(version +'/create/activity-check-your-answers', function(req, res) {
-		{
 			if (req.session.data.returnToDashboard=='false'){
 				res.redirect(version +'/create/activity-confirmation-created')
 			}
-			else{
+			else if (req.session.data.fromActivityDashboard=='true'){
 					res.redirect(version +'/create/activity-dashboard')
 			}
-		}
+			else {
+				res.redirect(version +'/create/activity-confirmation-created')
+			}
 	});
-	router.post(version +'/create/activity-check-your-answers', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-confirmation-created')
-		}
-	});
+
 
 //EDIT current activity
 	router.post(version +'/create/activity-check-your-answers-edit', function(req, res) {
