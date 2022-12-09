@@ -1,0 +1,69 @@
+// override the default page width
+$govuk-page-width: 1170px; // DPS currently 1170px
+$moj-page-width: $govuk-page-width;
+
+$moj-images-path: "/public/images/";
+
+// global styles for <a> and <p> tags
+$govuk-global-styles: true;
+$govuk-new-link-styles: true;
+
+// We can't mount GOV.UK Frontend's assets at root as it's done automatically by the extensions framework.
+$govuk-assets-path: '/govuk/assets/';
+
+// Import GOV.UK Frontend and any extension styles if extensions have been configured
+@import ".tmp/sass/extensions";
+
+// Patterns that aren't in Frontend
+@import "patterns/contents-list";
+@import "patterns/mainstream-guide";
+@import "patterns/pagination";
+@import "patterns/related-items";
+@import "patterns/step-by-step-header";
+@import "patterns/step-by-step-nav";
+@import "patterns/step-by-step-related";
+@import "patterns/task-list";
+
+// Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+@import "components/app-masthead";
+@import "components/dps-header";
+@import "components/cards";
+@import "components/option-select";
+@import "components/option-select-v2";
+@import "components/jquery.modal";
+@import "components/checkbox-dropdown.scss";
+@import "components/autocomplete.scss";
+@import "components/app-attendance-toolbar.scss";
+
+@import "patterns/horizontal-form";
+@import "patterns/whereabouts-table";
+
+@import "unlock-experimental";
+@import "unlock-print";
+
+.form-background {
+  background-color: #f3f2f1;
+}
+
+.app-unlock-list {
+  .moj-filter-layout__filter {
+
+    @include govuk-media-query(desktop) {
+      max-width: 285px;
+      min-width: 260px;
+    }
+  }
+}
+ul.appointment-even{
+  margin:0px;
+  margin-block-start: 1em;
+}
+ul.appointment-event li{
+  border: #000 1pt solid;
+  list-style-type: none;
+  margin:0px 0px 10px -35px;
+  padding:5px;
+  width:85%;
+}
+
+

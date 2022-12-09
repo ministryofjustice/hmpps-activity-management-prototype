@@ -1,8 +1,10 @@
 {% set homepageUrl %}
 {% if data['prototype'] == 'create' %}
 /?prototype=create
-{% else %}
+{% elseif data['prototype'] == 'unlock' %}
 /unlock?prototype=unklock
+{% elseif data['prototype'] == 'appointments' %}
+/appointments?prototype=appointments
 {% endif %}
 {% endset %}
 

@@ -11,81 +11,70 @@ Appointments prototype
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds-from-desktop">
-            <h1 class="govuk-heading-l">Check your appointment details before you accept and save</h1>
-            <h2 class="govuk-heading-m">Appointment details</h2>
+            <h1 class="govuk-heading-l">Check your answers before sending your application</h1>
+            <h2 class="govuk-heading-m">Personal details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Name of prisoner 
+                  Name
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['prisoner-name']}} 
+                  Sarah Philips
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Name of prisoner</span>
+                    Change<span class="govuk-visually-hidden"> name</span>
                   </a>
                 </dd>
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Appointment type
+                  Date of birth
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['appointment-type']}} 
+                  5 January 1978
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Appointment type</span>
+                    Change<span class="govuk-visually-hidden"> date of birth</span>
                   </a>
                 </dd>
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Appointment location
+                  Address
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['appointment-location']}} 
+                  72 Guild Street<br>London<br>SE23 6FH
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Appointment location</span>
+                    Change<span class="govuk-visually-hidden"> address</span>
                   </a>
                 </dd>
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Date
+                  Contact details
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['appointment-date-day']}} {{ data['appointment-date-month']}}  {{ data['appointment-date-year']}} 
+                  <p class="govuk-body">07700 900457</p>
+                  <p class="govuk-body">sarah.phillips@example.com</p>
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Date</span>
-                  </a>
-                </dd>
-              </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Time
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  {{ data['appointment-time']}} 
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Time</span>
+                    Change<span class="govuk-visually-hidden"> contact details</span>
                   </a>
                 </dd>
               </div>
             </dl>
             
-            
+            <h2 class="govuk-heading-m">Now send your application</h2>
+            <p class="govuk-body">By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
             <form action="confirmation" method="post" novalidate>
               <input type="hidden" name="answers-checked" value="true">
               <button class="govuk-button" data-module="govuk-button">
-                Accept and save
+                Accept and send
               </button>
             </form>
           </div>

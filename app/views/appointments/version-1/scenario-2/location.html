@@ -5,7 +5,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="prisoner-schedule">
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
@@ -17,8 +17,8 @@ Appointments prototype
        </h1>
          
        {{ govukSelect({
-        id: "appointment-location",
-        name: "appointment-location",
+        id: "appointment-type",
+        name: "appointment-type",
         hint: {
           text: "Select a location"
         },
@@ -31,9 +31,9 @@ Appointments prototype
         ]
        }) }}
     {{ govukButton({
-      text: "Continue"
+      text: "Continue",
+      href: "prisoner-schedule"
     }) }}
   </div>
 </div>
-</form>
 {% endblock %}
