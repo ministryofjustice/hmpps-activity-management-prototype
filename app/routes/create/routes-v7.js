@@ -361,7 +361,12 @@ router.post(version +'/create/check/activity-start-time', function(req, res) {
 
 	router.post(version +'/create/activity-check-your-answers', function(req, res) {
 		{
-			res.redirect(version +'/create/activity-confirmation-created')
+			if (req.session.data.returnToDashboard=='false'){
+				res.redirect(version +'/create/activity-confirmation-created')
+			}
+			else{
+					res.redirect(version +'/create/activity-dashboard')
+			}
 		}
 	});
 	router.post(version +'/create/activity-check-your-answers', function(req, res) {
