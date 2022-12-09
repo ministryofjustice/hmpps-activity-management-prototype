@@ -200,6 +200,12 @@ router.post(version +'/create/schedule-check-your-answers', function(req, res) {
 
 router.post(version +'/create/check/activity-type-select-with-category', function(req, res) {
 	{
+		if (req.session.data.temp !== req.session.data.category){
+			var changedCategory
+			req.session.data.changedCategory='changed'
+			res.redirect(version +'/create/activity-check-your-answers')
+
+		}
 		res.redirect(version +'/create/activity-check-your-answers')
 	}
 });

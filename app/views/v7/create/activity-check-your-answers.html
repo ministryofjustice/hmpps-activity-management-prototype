@@ -41,8 +41,14 @@ Activities Management prototype
             <dd class="govuk-summary-list__value">
               {{data.category or 'Education'}}
             </dd>
+            <dd class="govuk-summary-list__value"> {% if (data.changedCategory)%}
+              <strong class="govuk-tag govuk-tag--blue">
+                C<span style="text-transform:lowercase;">hanged</span>
+              </strong>
+              {% endif %}
+            </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-type-select-with-category">
+              <a class="govuk-link" href="check/activity-type-select-with-category?temp={{data.category}}">
                 Change<span class="govuk-visually-hidden"> name</span>
               </a>
             </dd>
@@ -53,6 +59,9 @@ Activities Management prototype
             </dt>
             <dd class="govuk-summary-list__value">
               {{data.activityName or 'Maths level 1'}}
+            </dd>
+            <dd class="govuk-summary-list__value">
+              {{data.temp2}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-name">
@@ -67,8 +76,12 @@ Activities Management prototype
             <dd class="govuk-summary-list__value">
               {{data.riskLevel or 'High'}}
             </dd>
+            <dd class="govuk-summary-list__value">
+              {{data.temp2}}
+            </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-risk-assessment">
+            <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
+                  <a class="govuk-link" href="check/activity-risk-assessment">
                 Change<span class="govuk-visually-hidden"> licence type</span>
               </a>
             </dd>
@@ -79,6 +92,9 @@ Activities Management prototype
             </dt>
             <dd class="govuk-summary-list__value">
               {{data.incentiveLevel or 'Basic'}}
+            </dd>
+            <dd class="govuk-summary-list__value">
+              {{data.temp2}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-incentive-level">
@@ -92,6 +108,9 @@ Activities Management prototype
             </dt>
             <dd class="govuk-summary-list__value">
               Maths level 2<br />English level 1
+            </dd>
+            <dd class="govuk-summary-list__value">
+              {{data.temp2}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-add-education">
@@ -108,6 +127,9 @@ Activities Management prototype
               Rate B: &pound;1.51<br />
               Rate C: &pound;1.81
             </dd>
+            <dd class="govuk-summary-list__value">
+              {{data.temp2}}
+            </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-payment-details">
                 Change<span class="govuk-visually-hidden"> licence period</span>
@@ -121,7 +143,9 @@ Activities Management prototype
             </dt>
             <dd class="govuk-summary-list__value">
               Sight impairment<br/ >Little English spoken
-
+            </dd>
+            <dd class="govuk-summary-list__value">
+              {{data.temp2}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-add-alerts">
