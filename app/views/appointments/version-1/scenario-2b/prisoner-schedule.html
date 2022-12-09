@@ -7,7 +7,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="date-and-time">
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <div class="back">
@@ -41,7 +41,7 @@ Appointments prototype
         <a href="#" class="govuk-link">Change date and time of appointment</a>
       </p>-->
    
-     
+      
       <table class="govuk-table">
         <caption class="govuk-table__caption govuk-table__caption--m">Monday  12  December</caption>
         <thead class="govuk-table__head">
@@ -56,6 +56,11 @@ Appointments prototype
             <td class="govuk-table__cell">
               <ul class="appointment-event">
                 <li>
+                  {{ govukTag({
+                    text: "Lower priority",
+                    classes: "govuk-tag--green"
+                  }) }}<br><br>
+                  
               <b>Kitchen</b><br>
               8:30am to 12pm<br>
               Created by: John Smith
@@ -64,23 +69,14 @@ Appointments prototype
             </td>
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Drugs misuse programme</b><br>
-                  1pm to 4:30pm<br>
-                  Created by: John Smith<br>
-{{ govukTag({
-  text: "clash"
-}) }}
-
-                </li>
-                <li>
-                  <b>Kitchen</b><br>
-                  1pm to 4:30pm<br>
-                  Created by: Bill Jones<br>
-                  {{ govukTag({
-                    text: "clash"	
-                  }) }}
-                </li>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+              <b>Kitchen</b><br>
+              1pm to 4:30pm<br>
+              Created by: John Smith
+              </li>
               </ul>
             </td>
             <td class="govuk-table__cell">
@@ -102,17 +98,37 @@ Appointments prototype
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
               8:30am to 12pm<br>
-              Created by: John Smith
+              Created by: John Smith<br>
+              {{ govukTag({
+                text: "Clash"
+              }) }}
               </li>
+              <li> {{ govukTag({
+                text: "Higher priority",
+                classes: "govuk-tag--red"
+              }) }}<br><br>
+            <b>Visit</b><br>
+            9am to 11pm<br>
+            Created by: Bill jones<br>
+            {{ govukTag({
+              text: "Clash"
+            }) }}
+            </li>
               </ul>
             </td>
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
               1pm to 4:30pm<br>
               Created by: John Smith
               </li>
@@ -137,8 +153,11 @@ Appointments prototype
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
               8:30am to 12pm<br>
               Created by: John Smith
               </li>
@@ -146,8 +165,11 @@ Appointments prototype
             </td>
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
               1pm to 4:30pm<br>
               Created by: John Smith
               </li>
@@ -172,8 +194,11 @@ Appointments prototype
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
               8:30am to 12pm<br>
               Created by: John Smith
               </li>
@@ -181,8 +206,11 @@ Appointments prototype
             </td>
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
               1pm to 4:30pm<br>
               Created by: John Smith
               </li>
@@ -207,8 +235,11 @@ Appointments prototype
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
               8:30am to 12pm<br>
               Created by: John Smith
               </li>
@@ -216,8 +247,11 @@ Appointments prototype
             </td>
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
               1pm to 4:30pm<br>
               Created by: John Smith
               </li>
@@ -242,8 +276,11 @@ Appointments prototype
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
               8:30am to 12pm<br>
               Created by: John Smith
               </li>
@@ -251,8 +288,11 @@ Appointments prototype
             </td>
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
               1pm to 4:30pm<br>
               Created by: John Smith
               </li>
@@ -265,7 +305,7 @@ Appointments prototype
         </tbody>
       </table>
       <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m">Sunday  18  December</caption>
+        <caption class="govuk-table__caption govuk-table__caption--m">Sunday 18 December</caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Morning</th>
@@ -277,8 +317,11 @@ Appointments prototype
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
               <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+              Kit<b>Kitchen</b>chen<br>
               8:30am to 12pm<br>
               Created by: John Smith
             
@@ -288,16 +331,23 @@ Appointments prototype
             <td class="govuk-table__cell">
               <ul class="appointment-event">
                 <li>
+                  {{ govukTag({
+                    text: "Higher priority",
+                    classes: "govuk-tag--red"
+                  }) }}<br><br>
                   <b>Drugs misuse programme</b><br>
                   1pm to 4:30pm<br>
                   Created by: John Smith<br>
-                {{ govukTag({
-                  text: "clash"
-                }) }}
+{{ govukTag({
+  text: "clash"
+}) }}
 
                 </li>
-                <li>
-                  <b>Kitchen</b><br>
+                <li> {{ govukTag({
+                  text: "Lower priority",
+                  classes: "govuk-tag--green"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
                   1pm to 4:30pm<br>
                   Created by: Bill Jones<br>
                   {{ govukTag({
@@ -315,12 +365,12 @@ Appointments prototype
         </tbody>
       </table>
     {{ govukButton({
-      text: "Continue"
+      text: "Continue",
+      href: "date-and-time"
     }) }}
     <!--<p class="govuk-body">
       <a href="#" class="govuk-link">Change date and time of appointment</a>
     </p>-->
   </div>
 </div>
-</form>
 {% endblock %}

@@ -1,11 +1,11 @@
 
-{% extends "layout.html" %}
+{% extends "layout_hmpps-no-nav.html" %}
 {% block pageTitle %}
 Appointments prototype
 {% endblock %}
 
 {% block content %}
-
+<form id="form" method="post" action="prisoner-schedule">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
@@ -13,24 +13,43 @@ Appointments prototype
       </div>
    
       <h1 class="govuk-heading-l">
-        Choose location
+        Where is the appointment?
        </h1>
          
        {{ govukSelect({
-        id: "appointment-type",
-        name: "appointment-type",
+        id: "appointment-location",
+        name: "appointment-location",
+        hint: {
+          text: "Select a location"
+        },
         items: [
-          {
-            value: "Value",
-            text: "Text",
-            selected: true
-          }
-        ]
-       }) }}
+      {
+        value: "Select a location",
+        text: "Select a location",
+        selected: true
+      },
+      {
+        value: "Classroom 4",
+        text: "Classroom 4"
+      },
+      {
+        value: "Example appointment location",
+        text: "Example appointment location"
+      },
+      {
+        value: "Gym 1",
+        text: "Gym 1"
+      },
+      {
+        value: "Kitchen",
+        text: "Kitchen"
+      }
+    ]
+   }) }}
     {{ govukButton({
-      text: "Continue",
-      href: "date-and-time"
+      text: "Continue"
     }) }}
   </div>
 </div>
+</form>
 {% endblock %}
