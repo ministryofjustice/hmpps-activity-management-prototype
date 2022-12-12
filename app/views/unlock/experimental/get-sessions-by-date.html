@@ -1,0 +1,95 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts-concept-2"
+	}
+	]
+}) }}
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-l">
+	Select activity or appointment locations
+</h1>
+
+<form>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			{{ govukInput({
+				label: {
+					text: "Date"
+				},
+				hint: {
+					text: "For example, 2022-09-28"
+				},
+				id: "date",
+				name: "date",
+				value: data['date']
+			}) }}
+
+			{{ govukRadios({
+				name: "period",
+				fieldset: {
+					legend: {
+						text: "Time period",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "AM",
+					text: "Morning (AM)",
+					checked: true if data['period'] == "AM"
+				},
+				{
+					value: "PM",
+					text: "Afternoon (PM)",
+					checked: true if data['period'] == "PM"
+				},
+				{
+					value: "ED",
+					text: "Evening (ED)",
+					checked: true if data['period'] == "ED"
+				}
+				]
+			}) }}
+		</div>
+	</div>
+
+	<ul class="govuk-list">
+		{% for session in sessions %}
+		<li><h2 class="govuk-heading-s">Activity {{session.activity_id}} from {{session.time}} to {{session.end_time}} in {{session.location}}:</h2></li>
+		<ul class="govuk-list govuk-list--bullet">
+			{% for prisoner in session.prisoners %}
+			<li>{{prisoner.id}}</li>
+			{% endfor %}
+		</ul>
+		{% endfor %}
+	</ul>
+
+	<div class="govuk-button-group">
+		{{govukButton({
+			text: "View selection"
+		})}}
+	</div>
+</form>
+{% endblock %}
