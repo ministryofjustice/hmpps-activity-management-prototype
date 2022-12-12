@@ -246,7 +246,7 @@ router.get('/unlock-list', function(req, res) {
 });
 
 router.get('/unlock-list/download', function(req, res){
-	const file = `public/downloads/List concept.pdf`;
+	const file = `public/downloads/Unlock list concept.pdf`;
   res.download(file); // Set disposition and send it.
 });
 
