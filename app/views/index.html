@@ -9,8 +9,10 @@ Activities Management prototype
 {% set homepageUrl %}
 {% if data['prototype'] == 'create' %}
 /?prototype=create
-{% else %}
+{% elseif data['prototype'] == 'unlock' %}
 /unlock?prototype=unklock
+{% elseif data['prototype'] == 'appointments' %}
+/appointments?prototype=appointments
 {% endif %}
 {% endset %}
 
@@ -28,6 +30,10 @@ Activities Management prototype
   {
     text: "Unlock and attend",
     href: "/unlock/?prototype=unlock"
+  },
+  {
+    text: "appointments",
+    href: "/appointments/?prototype=appointments"
   }]
 }) }}
 {% endblock %}
@@ -91,8 +97,10 @@ Activities Management prototype
             </td>
             <td class="govuk-table__cell" >
               <ul class="govuk-list govuk-list--bullet">
-                <li><a href="vhttps://trello.com/c/ccAZKCWn/318-create-v7-refinements">Trello 318</a> - Create v7 refinements</li>
-
+                <li><a href="https://trello.com/c/JvlkMGUz/309-design-and-content-iterations-based-on-alpha-ur">Trello 318</a> - Design and content iterations - based on Alpha UR</li>
+                <li><a href="https://trello.com/c/ccAZKCWn/309-create-v7-refinements">Trello 309</a> - Create v7 refinements </li>
+                <li>Activity dashboard</li>
+                <li>New conditional view for check answers</li>
             </td>
           </tr>
         <tr class="govuk-table__row">

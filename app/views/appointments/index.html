@@ -1,0 +1,134 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block header %}
+{% set homepageUrl %}
+{% if data['prototype'] == 'create' %}
+/?prototype=create
+{% elseif data['prototype'] == 'unlock' %}
+/unlock?prototype=unklock
+{% elseif data['prototype'] == 'appointments' %}
+/appointments?prototype=appointments
+{% endif %}
+{% endset %}
+
+{{ govukHeader({
+  homepageUrl: homepageUrl,
+  serviceName: serviceName,
+  serviceUrl: homepageUrl,
+  containerClasses: "govuk-width-container",
+  navigation: [
+  {
+    text: "Create and allocate",
+    href: "/?prototype=create"
+  },
+  {
+    text: "Unlock and attend",
+    href: "/unlock/?prototype=unlock"
+  },
+  {
+    text: "Appointments",
+    href: "/appointments/?prototype=appointments",
+    active: true
+  }]
+}) }}
+
+<div class="app-masthead">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="app-masthead__title govuk-heading-xl govuk-!-margin-bottom-3">
+          Appointments
+        </h1>
+        <h3 class="app-masthead__subtitle govuk-heading-l">Prototype</h3>
+      </div>
+      <div class="govuk-grid-column-one-third">
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          User research, content docs and flow diagrams
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+
+        <p class="govuk-body govuk-!-margin-bottom-2">User research:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="https://miro.com/app/board/uXjVPQEiC2s=/?moveToWidget=3458764536474157615&cot=14" target="_blank" class="govuk-link govuk-link--no-visited-state">UR</a></li>
+        </ul>
+
+      </div>
+    </details>
+
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-4">
+      Prototype versions
+    </h2>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head" >
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" width="15%">Version</th>
+          <th scope="col" class="govuk-table__header" width="15%">Status</th>
+          <th scope="col" class="govuk-table__header">Description</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p><a href="/appointments/version-1/scenario-1/appointment-start" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 1</a></p>
+
+          </td>
+
+          <td class="govuk-table__cell" >
+            <strong class="govuk-tag govuk-tag--green">
+              Ready for UR
+            </strong>
+          </td>
+
+          <td class="govuk-table__cell" >
+            Scheduling - including appointment host details as well as information around priority
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <h2 class="govuk-heading-s">
+              Schedule scenarios
+            </h2>
+            <p><a href="/appointments/version-1/scenario-1/prisoner-schedule" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 1</a></p>
+            <p><a href="/appointments/version-1/scenario-2/prisoner-schedule" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2a</a></p>
+            <p><a href="/appointments/version-1/scenario-2b/prisoner-schedule" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2b</a></p>
+            <p><a href="/appointments/version-1/scenario-3/prisoner-schedule" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 3</a></p>
+          </td>
+
+          <td class="govuk-table__cell" >
+            <strong class="govuk-tag govuk-tag--green">
+              Ready for UR
+            </strong>
+          </td>
+          <td class="govuk-table__cell" >
+           Various versions and scenarios of the schedule page
+          </td>
+         
+        </tr>
+
+        
+      </tbody>
+    </table>
+
+
+  </div>
+</div>
+
+{% endblock %}

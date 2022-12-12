@@ -28,19 +28,19 @@ Activities Management prototype
               </div>
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                 <input class="govuk-radios__input" id="incentiveLevelBasic" name="riskLevel" type="radio" value="High" checked data-aria-controls="conditional-contact">
+                 <input class="govuk-radios__input" id="incentiveLevelBasic" name="riskLevel" {% if data.riskLevel=="High"%}checked{% endif %} type="radio" value="High" data-aria-controls="conditional-contact">
                   <label class="govuk-label govuk-radios__label" for="incentiveLevelBasic">
                     High
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="incentiveLevelStandard" name="riskLevel" type="radio" value="Medium"  data-aria-controls="conditional-contact">
+                  <input class="govuk-radios__input" id="incentiveLevelStandard" name="riskLevel"  {% if data.riskLevel=="Medium"%}checked{% endif %} type="radio" value="Medium"  data-aria-controls="conditional-contact">
                   <label class="govuk-label govuk-radios__label" for="incentiveLevelStandard">
                     Medium
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="incentiveLevelAdvanced" name="riskLevel" type="radio" value="Low"  data-aria-controls="conditional-contact">
+                  <input class="govuk-radios__input" id="incentiveLevelAdvanced" name="riskLevel" {% if data.riskLevel=="Low"%}checked{% endif %} type="radio" value="Low"  data-aria-controls="conditional-contact">
                   <label class="govuk-label govuk-radios__label" for="incentiveLevelAdvanced">
                     Low
                   </label>

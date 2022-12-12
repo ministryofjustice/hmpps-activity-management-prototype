@@ -21,4 +21,12 @@ router.use(/\/unlock\/experimental/, (req, res, next) => {
 	require(`./views/unlock/experimental/routes`)(req, res, next);
 })
 
+
+//APPOINTMENTS
+router.use(/\/appointments\/version-([0-9]+)/, (req, res, next) => {
+	req.version = req.originalUrl.split('/')[2]
+	require(`./views/appointments/version-${req.params[0]}/routes`)(req, res, next);
+})
+
+
 module.exports = router
