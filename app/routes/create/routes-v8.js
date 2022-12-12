@@ -1,6 +1,6 @@
 module.exports = function (router) {
 
-var version = '/v7';
+var version = '/v8';
 
 router.post(version +'/setup', function(req, res) {
 			if (req.session.data.setupTaskType == 'allocation'){
