@@ -52,6 +52,9 @@ Activities Management prototype
 						<li>
 							<a href="../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
 						</li>
+						<li>
+							<a href="#" class="govuk-link--no-visited-state">View {{ activity.name }} session history</a>
+						</li>
 					</ul>
 				</div>
 
@@ -103,7 +106,7 @@ Activities Management prototype
 			}) }} -->
 			{{attendanceDetailsHtml|safe}}
 
-			<table class="govuk-table app-whereabouts-table app-whereabouts-table--sticky-head app-whereabouts-table--font-size-normal govuk-!-margin-bottom-0" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+			<table class="govuk-table app-whereabouts-table app-whereabouts-table--sticky-head app-whereabouts-table--font-size-normal govuk-!-margin-bottom-5" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
 				<thead class="govuk-table__head">
 					<tr>
 						{% if notRecorded > 0 %}<th class="govuk-table__header govuk-!-padding-left-2" scope="col" id="select-all"></th>{% endif %}
@@ -173,6 +176,21 @@ Activities Management prototype
 				</tbody>
 			</table>
 
+			{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+			{{ govukPagination({
+				previous: {
+					text: "Previous session",
+					labelText: "3rd November 2022",
+					href: "#",
+					classes: "govuk-link--no-visited-state"
+				},
+				next: {
+					text: "Next session",
+					labelText: "5th November 2022",
+					href: "#",
+					classes: "govuk-link--no-visited-state"
+				}
+			}) }}
 		</main>
 	</div>
 

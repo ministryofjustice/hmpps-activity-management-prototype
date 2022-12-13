@@ -7,6 +7,7 @@ module.exports = router
 router.get('/get-sessions-by-date', function(req, res) {
 	const timetable = req.session.data['timetable']
 	const activitySeriesData = timetable.activitySeries
+	const activityData = timetable.activities
 	const sessionsData = timetable.sessions
 
 	function getSessionsByDateAndPeriod(timetable, date, period) {
@@ -36,10 +37,12 @@ router.get('/get-sessions-by-date', function(req, res) {
 		// Map the matching sessions to their session details
 		return matchingSessions.map(session => {
 			// Find the activity series associated with the current session
-			const activity = filteredActivities.find(act => act.activity_series_id === session.activity_series_id);
+			const activitySeries = filteredActivities.find(act => act.activity_series_id === session.activity_series_id);
+			// Find the activity associated with the current activity series
+			const activity = timetable.activities.find(act => act.activity_id === activitySeries.activity_id);
 
 			// Calculate the duration of the session in milliseconds
-			const duration = activity.duration * 60 * 1000;
+			const duration = activitySeries.duration * 60 * 1000;
 
 			// Calculate the start and end times of the session
 			const startTime = new Date(date + " " + session.time);
@@ -47,7 +50,7 @@ router.get('/get-sessions-by-date', function(req, res) {
 
 			// Filter the prisoners to only include those attending the current session
 			const attendingPrisoners = timetable.prisonerActivities.filter(prisoner => {
-				if (prisoner.activities && prisoner.activities.includes(activity.activity_series_id)) {
+				if (prisoner.activities && prisoner.activities.includes(activitySeries.activity_series_id)) {
 					return true;
 				}
 				return false;
@@ -56,12 +59,14 @@ router.get('/get-sessions-by-date', function(req, res) {
 			// Return the session details object
 			return {
 				session_id: session.session_id,
-				activity_id: session.activity_series_id,
+				activity_series_id: session.activity_series_id,
+				activity_id: activity.activity_id,
+				activity_name: activity.activity_name,
 				period: session.period,
 				time: startTime.toLocaleTimeString('en-us', {timeStyle: 'short'}),
 				end_time: endTime.toLocaleTimeString('en-us', {timeStyle: 'short'}),
 				capacity: session.capacity,
-				location: activity.location,
+				location: activitySeries.location,
 				prisoners: attendingPrisoners
 			};
 		});
@@ -70,4 +75,56 @@ router.get('/get-sessions-by-date', function(req, res) {
 	const sessions = getSessionsByDateAndPeriod(timetable, req.session.data['date'], req.session.data['period']);
 
 	res.render('unlock/' + req.version + '/get-sessions-by-date', { sessions })
+})
+
+
+router.get('/get-sessions-by-date-2', function(req, res) {
+	const timetable = req.session.data['timetable-2']
+	const activityLocations = req.session.data['activity-locations-2']
+	const activities = req.session.data['activities-2']
+
+	const getActivities = (inputDate, time) => {
+		let date = new Date(inputDate);
+		let day = date.getDay();
+		let matchingActivities = [];
+
+		for (let i = 0; i < timetable.length; i++) {
+			let activity = timetable[i];
+			let activityStartDate = new Date(activity.startDate)
+			let activityEndDate = new Date(activity.endDate)
+
+			if (activity.timesAndDays.filter(item => item.day === day && item.time === time).length > 0) {
+				if (activityStartDate <= date && activityEndDate >= date) {
+					matchingActivities.push(activity);
+				}
+			}
+		}
+
+		return matchingActivities;
+	}
+
+	// Create a new Set to store the locations
+	let locations = new Set();
+	// Iterate over the objects in the data array
+	for (const obj of activities) {
+  		// Add the location of each object to the Set
+		locations.add(obj.location);
+	}
+	// Convert the Set to an array and log it
+	locations = Array.from(locations)
+
+	// Create a new Set to store the locations
+	let sessionNames = new Set();
+	// Iterate over the objects in the data array
+	for (const obj of activities) {
+  		// Add the location of each object to the Set
+		sessionNames.add(obj.name);
+	}
+	// Convert the Set to an array and log it
+	sessionNames = Array.from(sessionNames)
+
+
+	const sessions = getActivities(req.session.data['date'], req.session.data['period'])
+	
+	res.render('unlock/' + req.version + '/get-sessions-by-date-2', { sessions, sessionNames, locations })
 })
