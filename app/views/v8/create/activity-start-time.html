@@ -1,0 +1,296 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'Low'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}} | Start date: {{data.activityCreateScheduleStartDate or '3 Jan 2023'}} | End date: {{data.activityCreateScheduleStartDate or 'Not set'}}</span>
+      <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+       Enter the times and days for the first week of the schedule
+    </h1>
+    <p>Select all days that the activity will run, then select the times the activity will run on that day.<br />
+  </p>
+    <div id="passport-issued-hint" class="govuk-hint">
+
+    </div>
+    <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+      <form class="form" method="post" autocomplete="off">
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" {% if data.timeMonday =='timeMonday' %}checked {% endif %} id="timeMonday" name="timeMonday" type="checkbox" value="timeMonday" data-aria-controls="conditional-contact">
+        <label class="govuk-label govuk-checkboxes__label" for="timeMonday">
+        <strong> Monday</strong>
+        </label>
+      </div>
+      <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-contact">
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" {% if data.timeAMMonday =='timeAMMonday' %}checked {% endif %} id="timeAMMonday" name="timeAMMonday" type="checkbox" value="timeAMMonday">
+                <label class="govuk-label govuk-checkboxes__label" for="timeAMMonday">
+                  AM session
+                </label>
+              </div>
+            </div><br />
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" {% if data.timePMMonday =='timePMMonday' %}checked {% endif %} id="timePMMonday" name="timePMMonday" type="checkbox" value="timePMMonday">
+                <label class="govuk-label govuk-checkboxes__label" for="timePMMonday">
+                  PM session
+                </label>
+              </div>
+            </div><br />
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" {% if data.timeEDMonday =='timeEDMonday' %}checked {% endif %} id="timeEDMonday" name="timeEDMonday" type="checkbox" value="timeEDMonday">
+                <label class="govuk-label govuk-checkboxes__label" for="timeEDMonday">
+                  ED session
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+  <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input" {% if data.timeTuesday =='timeTuesday' %}checked {% endif %} id="timeTuesday" name="timeTuesday" type="checkbox" value="timeTuesday" data-aria-controls="conditional-contact2">
+      <label class="govuk-label govuk-checkboxes__label" for="timeTuesday">
+      <strong>Tuesday</strong>
+      </label>
+    </div>
+    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-contact2">
+
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input"  {% if data.timeAMTuesday =='timeAMTuesday' %}checked {% endif %} id="timeAMTuesday" name="timeAMTuesday" type="checkbox" value="timeAMTuesday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeAMTuesday">
+                AM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" {% if data.timePMTuesday =='timePMTuesday' %}checked {% endif %} id="timePMTuesday" name="timePMTuesday" type="checkbox" value="timePMTuesday">
+              <label class="govuk-label govuk-checkboxes__label" for="timePMTuesday">
+                PM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" {% if data.timeEDTuesday =='timeEDTuesday' %}checked {% endif %}  id="timeEDTuesday" name="timeEDTuesday" type="checkbox" value="timeEDTuesday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeEDTuesday">
+                ED session
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input" {% if data.timeWednesday =='timeWednesday' %}checked {% endif %}  id="timeWednesday" name="timeWednesday" type="checkbox" value="timeWednesday" data-aria-controls="conditional-contact3">
+      <label class="govuk-label govuk-checkboxes__label" for="timeWednesday">
+      <strong>   Wednesday</strong>
+      </label>
+    </div>
+    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-contact3">
+
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" {% if data.timeWednesday =='timeWednesday' %}checked {% endif %}  id="timeAMWednesday" name="timeAMWednesday" type="checkbox" value="timeAMWednesday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeAMWednesday">
+                AM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" {% if data.timePMWednesday =='timePMWednesday' %}checked {% endif %} id="timePMWednesday" name="timePMWednesday" type="checkbox" value="timePMWednesday">
+              <label class="govuk-label govuk-checkboxes__label" for="timePMWednesday">
+                PM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" {% if data.timeEDWednesday =='timeEDWednesday' %}checked {% endif %} id="timeEDWednesday" name="timeEDWednesday" type="checkbox" value="timeEDWednesday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeEDWednesday">
+                ED session
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input" {% if data.timeThursday =='timeThursday' %}checked {% endif %} id="timeThursday" name="timeThursday" type="checkbox" value="timeThursday" data-aria-controls="conditional-contact4">
+      <label class="govuk-label govuk-checkboxes__label" for="timeThursday">
+        <strong> Thursday</strong>
+      </label>
+    </div>
+    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-contact4">
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" {% if data.timeAMThursday =='timeAMThursday' %}checked {% endif %}  id="timeAMThursday" name="timeAMThursday" type="checkbox" value="timeAMThursday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeAMThursday">
+                AM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" {% if data.timePMThursday =='timePMThursday' %}checked {% endif %}  id="timePMThursday" name="timePMThursday" type="checkbox" value="timePMThursday">
+              <label class="govuk-label govuk-checkboxes__label" for="timePMThursday">
+                PM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" {% if data.timeEDThursday =='timeEDThursday' %}checked {% endif %}  id="timeEDThursday" name="timeEDThursday" type="checkbox" value="timeEDThursday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeEDThursday">
+                ED session
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input" id="timeFriday" name="timeFriday" {% if data.timeFriday =='timeFriday' %}checked {% endif %} type="checkbox" value="timeFriday" data-aria-controls="conditional-contact5">
+      <label class="govuk-label govuk-checkboxes__label" for="timeFriday">
+        <strong> Friday</strong>
+      </label>
+    </div>
+    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-contact5">
+
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="timeAMFriday" {% if data.timeAMFriday =='timeAMFriday' %}checked {% endif %}  name="timeAMFriday" type="checkbox" value="timeAMFriday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeAMFriday">
+                AM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="timePMFriday" {% if data.timePMFriday =='timePMFriday' %}checked {% endif %} name="timePMFriday" type="checkbox" value="timePMFriday">
+              <label class="govuk-label govuk-checkboxes__label" for="timePMFriday">
+                PM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="timeEDFriday" {% if data.timeEDFriday =='timeEDFriday' %}checked {% endif %}  name="timeEDFriday" type="checkbox" value="timeEDFriday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeEDFriday">
+                ED session
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input" id="timeSaturday" name="timeSaturday" {% if data.timeSaturday =='timeSaturday' %}checked {% endif %}   type="checkbox" value="timeSaturday" data-aria-controls="conditional-contact6">
+      <label class="govuk-label govuk-checkboxes__label" for="timeSaturday">
+        <strong> Saturday</strong>
+      </label>
+    </div>
+    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-contact6">
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="timeAMSaturday" {% if data.timeAMSaturday =='timeAMSaturday' %}checked {% endif %}    name="timeAMSaturday" type="checkbox" value="timeAMSaturday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeAMSaturday">
+                AM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" {% if data.timePMSaturday =='timePMSaturday' %}checked {% endif %}  id="timePMSaturday" name="timePMSaturday" type="checkbox" value="timePMSaturday">
+              <label class="govuk-label govuk-checkboxes__label" for="timePMSaturday">
+                PM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" {% if data.timeEDSaturday =='timeEDSaturday' %}checked {% endif %}  id="timeEDSaturday" name="timeEDSaturday" type="checkbox" value="timeEDSaturday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeEDSaturday">
+                ED session
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input" id="timeSunday" name="timeSunday" {% if data.timeSunday =='timeSunday' %}checked {% endif %} type="checkbox" value="timeSunday" data-aria-controls="conditional-contact7">
+      <label class="govuk-label govuk-checkboxes__label" for="timeSunday">
+        <strong> Sunday</strong>
+      </label>
+    </div>
+    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-contact7">
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="timeAMSunday" {% if data.timeAMSunday =='timeAMSunday' %}checked {% endif %} name="timeAMSunday" type="checkbox" value="timeAMSunday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeAMSunday">
+                AM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="timePMSunday" {% if data.timePMSunday =='timePMSunday' %}checked {% endif %} name="timePMSunday" type="checkbox" value="timePMSunday">
+              <label class="govuk-label govuk-checkboxes__label" for="timePMSunday">
+                PM session
+              </label>
+            </div>
+          </div><br />
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="timeEDSunday" {% if data.timeEDSunday =='timeEDSunday' %}checked {% endif %}  name="timeEDSunday" type="checkbox" value="timeEDSunday">
+              <label class="govuk-label govuk-checkboxes__label" for="timeEDSunday">
+                ED session
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+<!--  <div id="event-name-hint" class="govuk-hint">
+    Enter start and endtimes for the activity
+  </div>
+    <form class="form" method="post" autocomplete="off" action="addTime">
+
+        <button class="govuk-button govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4" data-module="govuk-button">Add this activity session</button>
+      </form>-->
+
+      <br /><br /><br />
+
+        <button class="govuk-button" data-module="govuk-button">Confirm week 1 schedule</button>
+      </form>
+    </form>
+</div>
+{% endblock %}

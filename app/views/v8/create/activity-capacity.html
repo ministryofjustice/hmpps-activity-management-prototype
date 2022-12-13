@@ -1,0 +1,41 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'Low'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}} | Start date: {{data.activityCreateScheduleStartDate or '3 Jan 2023'}} | End date: {{data.activityCreateScheduleStartDate or 'Not set'}}</span>
+      <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      How many people can be allocated to this activity?
+    </h1>
+
+  </div>
+
+  <div id="event-name-hint" class="govuk-hint">
+  Enter the maximum number (known as capacity) of people who can be allocated.
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label" for="ActivityCapacity">
+            </label>
+            <input class="govuk-input govuk-input--width-5" id="ActivityCapacity" name="ActivityCapacity" type="text">
+          </div>
+        </fieldset>
+      </div>
+      <br />
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+</div>
+{% endblock %}

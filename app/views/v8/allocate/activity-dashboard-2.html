@@ -1,0 +1,261 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Allocation dashboard: activities view
+    </h1>
+  </div><br />
+<div class="moj-primary-navigation">
+  <div class="moj-primary-navigation__container">
+    <div class="moj-primary-navigation__nav">
+      <nav class="moj-primary-navigation" aria-label="Primary navigation">
+        <ul class="moj-primary-navigation__list">
+          <ul class="moj-sub-navigation__list" >
+            <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link" aria-current="page" href="#1">All activities (9)</a>
+            </li>
+            <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link" href="#">Activities with vacancies (5)</a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="moj-primary-navigation__search">
+      <div class="moj-search-toggle" data-module="moj-search-toggle" data-moj-search-toggle-text="Search for activity">
+        <div class="moj-search-toggle__toggle"></div>
+        <div class="moj-search-toggle__search">
+          <div class="moj-search moj-search--ondark moj-search--toggle moj-js-hidden">
+            <form action="searchAllocationDashboard" method="post">
+              <div class="govuk-form-group">
+                <label class="govuk-label moj-search__label govuk-visually-hidden" for="search2">
+                  Search
+                </label>
+                <div id="search2-hint" class="govuk-hint moj-search__hint ">
+                  <span style="font-size:.85em;">Enter activity, location, or try <a href="allocate-offender-dashboard-search-view">Advanced search</a></span>
+                  <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      </legend>
+                      <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                          <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                          <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                            <span style="font-size:.85em;" class="govuk-hint moj-search__hint ">Only search in activities with vacancies</span>
+                          </label>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+                <input class="govuk-input moj-search__input " id="search2" name="search2" type="search" aria-describedby="search2-hint">
+              </div>
+              <button class="govuk-button moj-search__button " data-module="govuk-button">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br /><br />
+
+
+<table class="govuk-table" data-module="moj-sortable-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity name</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="ascending">Capacity</th>
+      <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Allocated</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric"  aria-sort="none">Percentage allocated</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric"  aria-sort="none">Vacancies</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Servery work
+        </a></h3>
+      </th>
+        <td class="govuk-table__cell govuk-table__cell--numeric">8</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">8</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><div>
+          <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+            <span>0</span>
+          </span>
+          </strong>
+        </div></td>
+
+    </tr>
+    <tr class="govuk-table__row" >
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="activity-dashboard-3" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Wing cleaning
+        </a></h3>
+          <span class="govuk-hint" style="font-size:.85em;"></span>
+      </th>
+
+      <td class="govuk-table__cell govuk-table__cell--numeric">30</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">27</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">90%</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+        <div>
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+          <span>3</span>
+        </span>
+        </strong>
+      </div>
+      </td>
+          </tr>
+
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#"  class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Kitchen cleaning
+        </a></h3>
+      </th>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric">15</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">14</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">95%</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">
+      <div>
+      <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+        <span>1</span>
+      </span>
+      </strong>
+    </div>
+    </td>
+    </tr>
+
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#"class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Waste recycling
+        </a></h3>
+      </th>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">67%</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+        <div>
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+          <span>1</span>
+        </span>
+        </strong>
+      </div>
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Furniture repair
+        </a></h3>
+      </th>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric">8</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">8</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><div>
+          <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+            <span>0</span>
+          </span>
+          </strong>
+        </div></td>
+
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#"class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Farms and gardens
+        </a></h3>
+      </th>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric">19</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">15</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">75%</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+        <div>
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+          <span>4</span>
+        </span>
+        </strong>
+      </div>
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Stores replenshing
+        </a></h3>
+      </th>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><div>
+          <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+            <span>0</span>
+          </span>
+          </strong>
+        </div></td>
+
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Shower cleaning
+        </a></h3>
+      </th>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric">16</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">16</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><div>
+          <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+            <span>0</span>
+          </span>
+          </strong>
+        </div></td>
+
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#"class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Painting and decorating
+        </a></h3>
+      </th>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric">30</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">21</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">70%</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+        <div>
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+          <span>9</span>
+        </span>
+        </strong>
+      </div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+{% endblock %}
