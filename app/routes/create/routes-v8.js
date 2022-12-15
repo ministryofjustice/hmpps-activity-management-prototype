@@ -36,7 +36,7 @@ router.post(version +'/setup', function(req, res) {
 	router.post(version +'/create/activity-dashboard', function(req, res) {
 
 		if (req.session.data.editDashboard == 'schedule'){
-				res.redirect(version +'/create/activity-dashboard-1')
+				res.redirect(version +'/create/activity-start-date')
 			}
 			else if (req.session.data.editDashboard == 'archive'){
 					res.redirect(version +'/create/activity-action?action=archiveActivity')
@@ -49,7 +49,7 @@ router.post(version +'/setup', function(req, res) {
 	router.post(version +'/create/activity-dashboard-multi-select', function(req, res) {
 
 		if (req.session.data.editDashboard == 'schedule'){
-				res.redirect(version +'/create/activity-dashboard-1')
+				res.redirect(version +'/create/activity-start-date')
 			}
 			else if (req.session.data.editDashboard == 'archive'){
 					res.redirect(version +'/create/activity-action?action=archiveActivity')
