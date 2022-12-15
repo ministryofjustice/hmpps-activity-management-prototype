@@ -21,6 +21,11 @@ router.post(version +'/setup', function(req, res) {
 			else if  (req.session.data.setupTaskType == 'activityDashboard'){
 				res.redirect(version +'/create/activity-dashboard')
 			}
+			else if  (req.session.data.setupTaskType == 'activityDashboardMulti'){
+				res.redirect(version +'/create/activity-dashboard-multi-select')
+			}
+
+
 		else {
 			//Schedule an activity
 			res.redirect(version +'/create/activity-start-date')
