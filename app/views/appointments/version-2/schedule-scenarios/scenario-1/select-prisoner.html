@@ -1,0 +1,36 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="appointment-type">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+   
+    <h1 class="govuk-heading-l">
+      What is the prisoner's name?
+    </h1>
+
+    {{ govukInput({
+      id: "prisoner-name",
+      name: "prisoner-name",
+      label:{
+        text:"Search for the name of the prisoner"
+      },
+
+      classes: "govuk-input--width-20"
+    }) }}
+    
+
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </div>
+</div>
+</form>
+{% endblock %}
