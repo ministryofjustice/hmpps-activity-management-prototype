@@ -27,10 +27,18 @@ router.post(version +'/setup', function(req, res) {
 		}
 	});
 
+	//From activity dashboard, if schedule, delete (archive or suspend)
 	router.post(version +'/create/activity-dashboard', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-start-date')
-		}
+
+		if (req.session.data.editDashboard == 'schedule'){
+				res.redirect(version +'/create/activity-dashboard-1')
+			}
+			else if (req.session.data.editDashboard == 'archive'){
+					res.redirect(version +'/create/activity-action?action=archiveActivity')
+					}
+				else if  (req.session.data.editDashboard == 'suspend'){
+					res.redirect(version +'/create/activity-action?action=suspendActivity')
+				}
 	});
 
 	router.post(version +'/allocate/activity-dashboard-1', function(req, res) {
