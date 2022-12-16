@@ -1,13 +1,10 @@
 {% extends "layout_hmpps.html" %}
 {% set serviceName = "Activities Management" %}
-
 {% block pageTitle %}
 Activities Management prototype
 {% endblock %}
-
 {% block primaryNavigation %}
 {% endblock %}
-
 {% block beforeContent %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {{ govukBreadcrumbs({
@@ -24,37 +21,60 @@ Activities Management prototype
 	]
 }) }}
 {% endblock %}
-
 {% block content %}
 <h1 class="govuk-heading-l">
-	Select activity or appointment locations
+	Activities and appointments
 </h1>
-
 <form>
 	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-two-thirds">
+		<div class="govuk-grid-column-one-quarter">
 			{{ govukInput({
 				label: {
-					text: "Date"
+					text: "Filter by date"
 				},
-				hint: {
-					text: "For example, 2022-09-28"
-				},
+				classes: "govuk-input--width-10",
 				id: "date",
 				name: "date",
 				value: data['date']
 			}) }}
-
-			{{ govukRadios({
-				name: "period",
-				fieldset: {
-					legend: {
-						text: "Time period",
-						isPageHeading: false,
-						classes: "govuk-fieldset__legend--m"
-					}
+		</div>
+		<div class="govuk-grid-column-one-quarter">
+			{{ govukSelect({
+				name: "locations",
+				label: {
+					text: "Filter by location"
 				},
 				items: [
+				{
+					value: "AM",
+					text: "All locations",
+					checked: true if data['period'] == "AM"
+				},
+				{
+					value: "PM",
+					text: "Gym",
+					checked: true if data['period'] == "PM"
+				},
+				{
+					value: "ED",
+					text: "Workshop 1",
+					checked: true if data['period'] == "ED"
+				}
+				]
+			}) }}
+		</div>
+		<div class="govuk-grid-column-one-quarter">
+			{{ govukSelect({
+				name: "period",
+				label: {
+					text: "Filter by time period"
+				},
+				items: [
+				{
+					value: "all",
+					text: "All time periods",
+					checked: true if data['period'] == "AM"
+				},
 				{
 					value: "AM",
 					text: "Morning (AM)",
@@ -74,25 +94,89 @@ Activities Management prototype
 			}) }}
 		</div>
 	</div>
-
 	{{govukButton({
-		text: "View selection"
+		text: "Apply filters"
 	})}}
-
-	<ul class="govuk-list">
+	<div class="app-application-cards">
+		<h2 class="govuk-heading-m app-application-cards__heading">Morning sessions (AM)</h2>
 		{% for session in sessions %}
-		<li>
-			<h2 class="govuk-heading-m">
-				{{session.activity_id}}
-				<span class="govuk-caption-m">{{session.location_id}} with MS J SMITH</span>
-			</h2>
-			<ul class="govuk-list govuk-list--bullet">
-				{% for prisoner in session.prisoners %}
-				<li>{{prisoner.id}}</li>
-				{% endfor %}
-			</ul>
-		</li>
+		<section class="app-application-card">
+			<header class="app-application-card__header">
+				<h3 class="govuk-heading-m">
+					<a href="/applications/3464" class="govuk-link govuk-link--no-visited-state">{{session.name}}</a>
+					<span class="app-application-card__caption">
+						{{session.location}}
+					</span>
+				</h3>
+				{% if loop.index != 3 %}
+				<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-1 govuk-!-font-size-14">
+					Running
+				</strong>
+				{% else %}
+				<strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1 govuk-!-font-size-14">
+					Cancelled
+				</strong>
+				{% endif %}
+			</header>
+			<div class="govuk-grid-row app-grid-row--flex">
+				<div class="govuk-grid-column-two-thirds">
+					<dl class="app-application-card__list">
+						<dt class="govuk-visually-hidden">Course</dt>
+						<dd class="govuk-body-s govuk-!-margin-bottom-1">Gym, sport and fitness</dd>
+						<dt class="govuk-visually-hidden">Provider</dt>
+						<dd class="govuk-body-s govuk-!-font-size-16">
+							Mr A Smith
+						</dd>
+					</dl>
+				</div>
+				<div class="govuk-grid-column-one-third">
+					<dl class="app-application-card__list app-application-card__list--secondary">
+						<dt class="govuk-visually-hidden">Days left to respond</dt>
+						<dd class="govuk-body-s">{{session.prisoner_ids | length }} prisoners scheduled</dd>
+						<dt class="govuk-visually-hidden">Cycle</dt>
+						<dd class="govuk-hint govuk-!-font-size-16">2 refused</dd>
+						<dt class="govuk-visually-hidden">Cycle</dt>
+						<dd class="govuk-hint govuk-!-font-size-16">{{session.prisoner_ids | length - 2 }} not recorded yet</dd>
+					</dl>
+				</div>
+			</div>
+		</section>
 		{% endfor %}
-	</ul>
+		<h2 class="govuk-heading-m app-application-cards__heading">Awaiting review</h2>
+		<section class="app-application-card">
+			<header class="app-application-card__header">
+				<h3 class="govuk-heading-s">
+					<a href="/applications/46436" class="govuk-link govuk-link--no-visited-state">Jane Smith</a>
+					<span class="app-application-card__caption">
+						46436
+					</span>
+				</h3>
+				<strong class="govuk-tag govuk-tag--purple govuk-!-margin-bottom-1 govuk-!-font-size-14">
+					Received
+				</strong>
+			</header>
+			<div class="govuk-grid-row app-grid-row--flex">
+				<div class="govuk-grid-column-two-thirds">
+					<dl class="app-application-card__list">
+						<dt class="govuk-visually-hidden">Course</dt>
+						<dd class="govuk-body-s govuk-!-margin-bottom-1">Mathematics (MA14) – full time at Main site</dd>
+						<dt class="govuk-visually-hidden">Provider</dt>
+						<dd class="govuk-body-s govuk-!-font-size-16">
+							<span data-qa="provider">Birmingham SCITT</span>
+							Birmingham SCITT
+						</dd>
+					</dl>
+				</div>
+				<div class="govuk-grid-column-one-third">
+					<dl class="app-application-card__list app-application-card__list--secondary">
+						<dt class="govuk-visually-hidden">Days left to respond</dt>
+						<dd class="govuk-body-s">5 days to make decision</dd>
+						<dt class="govuk-visually-hidden">Cycle</dt>
+						<dd class="govuk-hint govuk-!-font-size-16">Current cycle (2022 to 2023)</dd>
+					</dl>
+				</div>
+			</div>
+		</section>
+	</div>
 </form>
 {% endblock %}

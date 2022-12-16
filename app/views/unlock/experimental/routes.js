@@ -82,49 +82,225 @@ router.get('/get-sessions-by-date-2', function(req, res) {
 	const timetable = req.session.data['timetable-2']
 	const activityLocations = req.session.data['activity-locations-2']
 	const activities = req.session.data['activities-2']
+	const prisoners = req.session.data['prisoners-2']
 
-	const getActivities = (inputDate, time) => {
-		let date = new Date(inputDate);
-		let day = date.getDay();
-		let matchingActivities = [];
-
-		for (let i = 0; i < timetable.length; i++) {
-			let activity = timetable[i];
-			let activityStartDate = new Date(activity.startDate)
-			let activityEndDate = new Date(activity.endDate)
-
-			if (activity.timesAndDays.filter(item => item.day === day && item.time === time).length > 0) {
-				if (activityStartDate <= date && activityEndDate >= date) {
-					matchingActivities.push(activity);
+	function getScheduledActivities(date,time,activitiesList,locationsList,prisoners) {
+		var scheduledActivities = [];
+		var d = new Date(date);
+		var day = d.getDay();
+		timetable.forEach(activity => {
+			var startDate = new Date(activity.startDate);
+			var endDate = new Date(activity.endDate);
+			if (d >= startDate && d <= endDate) {
+				for (var j = 0; j < activity.timesAndDays.length; j++) {
+					var timeAndDay = activity.timesAndDays[j];
+					if (time == timeAndDay.time && day == timeAndDay.day) {
+						var scheduledActivity = {
+							"activity_id": activity.activity_id,
+							"location_id": activity.location_id,
+							"startDate": activity.startDate,
+							"endDate": activity.endDate,
+							"timesAndDays": activity.timesAndDays,
+							"prisoner_ids": []
+						};
+						for (var k = 0; k < activitiesList.length; k++) {
+							var activityListItem = activitiesList[k];
+							if (activityListItem.id == activity.activity_id) {
+								scheduledActivity.name = activityListItem.name;
+								break;
+							}
+						}
+						for (var l = 0; l < locationsList.length; l++) {
+							var locationListItem = locationsList[l];
+							if (locationListItem.id == activity.location_id) {
+								scheduledActivity.location = locationListItem.name;
+								break;
+							}
+						}
+						prisoners.forEach(prisoner => {
+							if (prisoner.activities && prisoner.activities.includes(activity.activity_id)) {
+								scheduledActivity.prisoner_ids.push(prisoner.id);
+							}
+						});
+						scheduledActivities.push(scheduledActivity);
+					}
 				}
 			}
-		}
-
-		return matchingActivities;
+		});
+		return scheduledActivities;
 	}
 
-	// Create a new Set to store the locations
-	let locations = new Set();
-	// Iterate over the objects in the data array
-	for (const obj of activities) {
-  		// Add the location of each object to the Set
-		locations.add(obj.location);
+
+	const sessions = getScheduledActivities(req.session.data['date'], req.session.data['period'], activities, activityLocations, prisoners)
+
+	res.render('unlock/' + req.version + '/get-sessions-by-date-2', { sessions })
+})
+
+router.get('/get-prisoners-by-date', function(req, res) {
+	const timetable = req.session.data['timetable-2']
+	const activityLocations = req.session.data['activity-locations-2']
+	const activities = req.session.data['activities-2']
+	const prisonersList = req.session.data['prisoners-2']
+
+	// function getScheduledPrisoners(date,time,activitiesList,locationsList,prisoners) {
+	// 	var scheduledPrisoners = [];
+	// 	var d = new Date(date);
+	// 	var day = d.getDay();
+	// 	timetable.forEach(activity => {
+	// 		var startDate = new Date(activity.startDate);
+	// 		var endDate = new Date(activity.endDate);
+	// 		if (d >= startDate && d <= endDate) {
+	// 			for (var j = 0; j < activity.timesAndDays.length; j++) {
+	// 				var timeAndDay = activity.timesAndDays[j];
+	// 				if (time == timeAndDay.time && day == timeAndDay.day) {
+	// 					for (var k = 0; k < prisoners.length; k++) {
+	// 						var prisoner = prisoners[k];
+	// 						if (prisoner.activities && prisoner.activities.includes(activity.activity_id)) {
+	// 							scheduledPrisoners.push(prisoner);
+	// 						}
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	});
+	// 	return scheduledPrisoners;
+	// }
+
+
+	function getScheduledPrisoners(date,time,activitiesList,locationsList,prisoners) {
+		var scheduledPrisoners = [];
+		var d = new Date(date);
+		var day = d.getDay();
+		timetable.forEach(activity => {
+			var startDate = new Date(activity.startDate);
+			var endDate = new Date(activity.endDate);
+			if (d >= startDate && d <= endDate) {
+				for (var j = 0; j < activity.timesAndDays.length; j++) {
+					var timeAndDay = activity.timesAndDays[j];
+					if (time == timeAndDay.time && day == timeAndDay.day) {
+						for (var k = 0; k < prisoners.length; k++) {
+							var prisoner = prisoners[k];
+							if (prisoner.activities && prisoner.activities.includes(activity.activity_id)) {
+								var scheduledPrisoner = {
+									"id": prisoner.id,
+									"first_name": prisoner.first_name,
+									"last_name": prisoner.last_name,
+									"alerts": prisoner.alerts,
+									"location": prisoner.location,
+									"activity_id": activity.activity_id,
+									"activity_name": "",
+									"location_id": activity.location_id,
+									"location_name": ""
+								};
+								for (var l = 0; l < activitiesList.length; l++) {
+									var activityListItem = activitiesList[l];
+									if (activityListItem.id == activity.activity_id) {
+										scheduledPrisoner.activity_name = activityListItem.name;
+										break;
+									}
+								}
+								for (var m = 0; m < activitiesList.length; m++) {
+									var locationsListItem = locationsList[m];
+									if (locationsListItem.id == activity.location_id) {
+										scheduledPrisoner.location_name = locationsListItem.name;
+										break;
+									}
+								}
+								scheduledPrisoners.push(scheduledPrisoner);
+							}
+						}
+					}
+				}
+			}
+		})
+		return scheduledPrisoners;
 	}
-	// Convert the Set to an array and log it
-	locations = Array.from(locations)
 
-	// Create a new Set to store the locations
-	let sessionNames = new Set();
-	// Iterate over the objects in the data array
-	for (const obj of activities) {
-  		// Add the location of each object to the Set
-		sessionNames.add(obj.name);
+	function getScheduledActivities(date,time,activitiesList,locationsList,prisoners) {
+		var scheduledActivities = [];
+		var d = new Date(date);
+		var day = d.getDay();
+		timetable.forEach(activity => {
+			var startDate = new Date(activity.startDate);
+			var endDate = new Date(activity.endDate);
+			if (d >= startDate && d <= endDate) {
+				for (var j = 0; j < activity.timesAndDays.length; j++) {
+					var timeAndDay = activity.timesAndDays[j];
+					if (time == timeAndDay.time && day == timeAndDay.day) {
+						var scheduledActivity = {
+							"activity_id": activity.activity_id,
+							"location_id": activity.location_id,
+							"startDate": activity.startDate,
+							"endDate": activity.endDate,
+							"timesAndDays": activity.timesAndDays,
+							"prisoner_ids": []
+						};
+						for (var k = 0; k < activitiesList.length; k++) {
+							var activityListItem = activitiesList[k];
+							if (activityListItem.id == activity.activity_id) {
+								scheduledActivity.name = activityListItem.name;
+								break;
+							}
+						}
+						for (var l = 0; l < locationsList.length; l++) {
+							var locationListItem = locationsList[l];
+							if (locationListItem.id == activity.location_id) {
+								scheduledActivity.location = locationListItem.name;
+								break;
+							}
+						}
+						prisoners.forEach(prisoner => {
+							if (prisoner.activities && prisoner.activities.includes(activity.activity_id)) {
+								scheduledActivity.prisoner_ids.push(prisoner.id);
+							}
+						});
+						scheduledActivities.push(scheduledActivity);
+					}
+				}
+			}
+		});
+		return scheduledActivities;
 	}
-	// Convert the Set to an array and log it
-	sessionNames = Array.from(sessionNames)
+
+	function getPrisonersWithScheduledActivities(date, time, activitiesList, locationsList, prisoners, houseblocks, landing) {
+		var scheduledActivities = getScheduledActivities(date, time, activitiesList, locationsList, prisoners);
+		var prisonerIds = [];
+		var prisonersWithScheduledActivities = [];
+		scheduledActivities.forEach(scheduledActivity => {
+			scheduledActivity.prisoner_ids.forEach(prisonerId => {
+				if (!prisonerIds.includes(prisonerId)) {
+					var prisoner = prisoners.find(prisoner => prisoner.id == prisonerId);
+					if (houseblocks==undefined || houseblocks.includes(prisoner.location.houseblock)) {
+						if (landing==undefined ||prisoner.location.landing == landing) {
+							prisonerIds.push(prisonerId);
+							var prisonerWithScheduledActivity = {
+								id: prisonerId,
+								first_name: prisoner.first_name,
+								last_name: prisoner.last_name,
+								location: prisoner.location,
+								scheduled_activities: []
+							};
+							scheduledActivities.forEach(scheduledActivity => {
+								if (scheduledActivity.prisoner_ids.includes(prisonerId)) {
+									prisonerWithScheduledActivity.scheduled_activities.push({
+										scheduled_activity_id: scheduledActivity.activity_id,
+										scheduled_activity_name: scheduledActivity.name,
+										scheduled_activity_location: scheduledActivity.location
+									});
+								}
+							});
+							prisonersWithScheduledActivities.push(prisonerWithScheduledActivity)
+						}
+					}
+				}
+			})
+		});
+		return prisonersWithScheduledActivities.reduce((a, c) => (a[c.location.houseblock] = a[c.location.houseblock] || {}, a[c.location.houseblock][c.location.landing] = a[c.location.houseblock][c.location.landing] || [], a[c.location.houseblock][c.location.landing].push(c), a), {});
+	}
 
 
-	const sessions = getActivities(req.session.data['date'], req.session.data['period'])
-	
-	res.render('unlock/' + req.version + '/get-sessions-by-date-2', { sessions, sessionNames, locations })
+
+	const prisoners = getPrisonersWithScheduledActivities(req.session.data['date'], req.session.data['period'], activities, activityLocations, prisonersList)
+
+	res.render('unlock/' + req.version + '/get-prisoners-by-date', { prisoners })
 })

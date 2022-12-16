@@ -107,6 +107,16 @@ Activities Management prototype
 				}) }}
 				{% endset %}
 
+				{% set notListedHtml %}
+				{{ govukTextarea({
+					name: "more-detail",
+					id: "more-detail",
+					label: {
+						text: "Can you provide more detail?"
+					}
+				}) }}
+				{% endset %}
+
 				{{ govukRadios({
 					id: "absence-reason-" + prisoner._id,
 					name: "attendance-details[" + loop.index0 + "][absence-reason]",
@@ -118,16 +128,27 @@ Activities Management prototype
 					},
 					items: [
 					{
+						value: "Sick",
+						text: "Sick"
+					},
+					{
+						value: "Refused",
+						text: "Refused"
+					},
+					{
+						value: "Not required/excused",
+						text: "Not required/excused"
+					},
+					{
+						value: "Not listed",
+						text: "Not listed",
+						conditional: {
+							html: notListedHtml
+						}
+					},
+					{
 						value: "Rest day",
 						text: "Rest day"
-					},
-					{
-						value: "Rest in cell or sick",
-						text: "Rest in cell or sick"
-					},
-					{
-						value: "Refused to attend",
-						text: "Refused to attend"
 					},
 					{
 						value: "Unacceptable absence",
@@ -135,50 +156,6 @@ Activities Management prototype
 						conditional: {
 							html: unacceptableAbsenceHtml
 						}
-					},
-					{
-						value: "Approved course",
-						text: "Approved course"
-					},
-					{
-						value: "Not required to attend",
-						text: "Not required to attend"
-					},
-					{
-						value: "Activities and education",
-						text: "Activities and education"
-					},
-					{
-						value: "Behaviour",
-						text: "Behaviour"
-					},
-					{
-						value: "Courses, programmes and interventions",
-						text: "Courses, programmes and interventions"
-					},
-					{
-						value: "External moves",
-						text: "External moves"
-					},
-					{
-						value: "Healthcare",
-						text: "Healthcare"
-					},
-					{
-						value: "Operational",
-						text: "Operational"
-					},
-					{
-						value: "Over allocated or schedule clash",
-						text: "Over allocated or schedule clash"
-					},
-					{
-						value: "Visits",
-						text: "Visits"
-					},
-					{
-						value: "Not listed",
-						text: "Not listed"
 					}
 					]
 				}) }}

@@ -22,45 +22,80 @@ Activities Management prototype
 }) }}
 {% endblock %}
 {% block content %}
-<h1 class="govuk-heading-l">
-	{{filteredActivities.length}} activities scheduled for {{data['chosen-date'] or "today"}} ({{data['times']|upper or "morning"}})
-</h1>
-<p><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></p>
-<form method="post">
-	<table class="govuk-table" data-module="moj-sortable-table">
-		<thead class="govuk-table__head">
-			<tr class="govuk-table__row">
-				<th scope="col" class="govuk-table__header" aria-sort="ascending">Activity</th>
-				<th scope="col" class="govuk-table__header" aria-sort="none">Location</th>
-				<th scope="col" class="govuk-table__header" aria-sort="none">Time</th>
-				<th scope="col" class="govuk-table__header">Scheduled</th>
-				<th scope="col" class="govuk-table__header govuk-hint">Attended</th>
-				<th scope="col" class="govuk-table__header govuk-hint">Not attended</th>
-			</tr>
-		</thead>
-		<tbody class="govuk-table__body">
-			{% for activity in filteredActivities | sort(false, true, 'name') %}
-			<tr class="govuk-table__row">
-				<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}"><a href="activities/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
-				<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
-				<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+			{{filteredActivities.length}} activities scheduled for {{relativeDate or selectedDate|longDateFormat(selectedDate)}} ({{data['times']|upper or "morning"}})
+		</h1>
 
-				<!-- {% if data['times'] == 'am' %}
-				9:00&thinsp;–&thinsp;11:30
-				{% elif data['times'] == 'pm' %}
-				13:00&thinsp;–&thinsp;15:30
-				{% else %}
-				18:00&thinsp;–&thinsp;20:30
-				{% endif %} -->
+		<p class="govuk-!-margin-bottom-6"><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></p>
 
+		<div class="app-search govuk-!-margin-bottom-6">
+			<form action="/applications" method="get" novalidate="">
+				<div class="govuk-form-group">
+					<label class="govuk-label app-search__label govuk-label--m" for="keywords">
+						Search by activity name
+					</label>
+					<input class="govuk-input app-search__input " id="keywords" name="keywords" type="search">
+				</div>
+				<button class="govuk-button app-search__button" data-module="govuk-button">
+					Search
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% set tableHtml %}
+<table class="govuk-table" data-module="moj-sortable-table">
+	<thead class="govuk-table__head">
+		<tr class="govuk-table__row">
+			<th scope="col" class="govuk-table__header" aria-sort="ascending">Activity</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none">Location</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none">Time</th>
+			<th scope="col" class="govuk-table__header">Scheduled</th>
+			<th scope="col" class="govuk-table__header govuk-hint">Attended</th>
+			<th scope="col" class="govuk-table__header govuk-hint">Not attended</th>
+		</tr>
+	</thead>
+	<tbody class="govuk-table__body">
+		{% for activity in filteredActivities | sort(false, true, 'name') %}
+		<tr class="govuk-table__row">
+			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}"><a href="activities/{{activity.id}}?date={{selectedDate|shortDateFormat(selectedDate)}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
+			<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
+			<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
 				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
 			</td>
-				<td class="govuk-table__cell">{{activity.count}}</td>
-				<td class="govuk-table__cell govuk-hint">{{activity['attended-count']}}</td>
-				<td class="govuk-table__cell govuk-hint"><span class="{{'govuk-tag govuk-tag--red' if activity['not-attended-count'] > 0 }}">{{activity['not-attended-count']}}</span></td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-</form>
+			<td class="govuk-table__cell">{{activity.count}}</td>
+			<td class="govuk-table__cell govuk-hint">{{activity['attended-count']}}</td>
+			<td class="govuk-table__cell govuk-hint"><span class="{{'govuk-tag govuk-tag--red' if activity['not-attended-count'] > 0 }}">{{activity['not-attended-count']}}</span></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endset %}
+
+<h2 class="govuk-heading-m">
+	{{"Morning sessions (" + filteredActivities|length + ")"}}
+</h2>
+{{tableHtml|safe}}
+
+<h2 class="govuk-heading-m">
+	{{"Afternoon sessions (" + filteredActivities|length + ")"}}
+</h2>
+{{tableHtml|safe}}
+		
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+{{ govukPagination({
+	previous: {
+		text: "Previous day",
+		labelText: selectedDate|dayBefore(selectedDate),
+		href: "#"
+	},
+	next: {
+		text: "Next day",
+		labelText: selectedDate|dayAfter(selectedDate),
+		href: "#"
+	}
+}) }}
 {% endblock %}

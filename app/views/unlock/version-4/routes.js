@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const { DateTime } = require('luxon')
 
 // app data
 const prisoners = require('../../../data/prisoners-list-1')
@@ -256,7 +257,18 @@ router.get('/select-activity', function(req, res) {
 	res.render('unlock/' + req.version + '/select-activity')
 });
 router.post('/select-activity', function(req, res) {
-	res.redirect('activities')
+	let chosenDate = req.session.data['chosen-date']
+	let today = new Date()
+
+	if(chosenDate == 'other-date'){
+		if(req.session.data['other-date-year'] !== undefined && req.session.data['other-date-month'] !== undefined && req.session.data['other-date-day'] !== undefined){
+			res.redirect('activities')
+		} else {
+			res.redirect('select-activity');
+		}
+	} else {
+		res.redirect('activities')
+	}
 });
 // SELECT ACTIVITY RESULTS
 router.get('/activities', function(req, res) {
@@ -265,7 +277,27 @@ router.get('/activities', function(req, res) {
 	let period = req.session.data['times'].toUpperCase()
 	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period && activity.count > 0);
 
-	res.render('unlock/' + req.version + '/activities', {filteredActivities})
+	let selectedDate;
+	let chosenDate = req.session.data['chosen-date']
+	let today = new Date()
+
+	if( chosenDate == 'yesterday' ){
+		today.setDate(today.getDate() - 1);
+		selectedDate = today.toISOString().split('T')[0];
+	} else if( chosenDate == 'other-date' ){
+		let date = new Date(req.session.data['other-date-year']+'-'+req.session.data['other-date-month']+'-'+req.session.data['other-date-day'])
+		selectedDate = date.toISOString().split('T')[0];
+	} else {
+		selectedDate = today.toISOString().split('T')[0];
+	}
+
+	let relativeDate;
+	let selectedDateString = new Date(selectedDate)
+	if (Math.abs(today - selectedDateString) < 86400000) {
+		relativeDate = DateTime.fromFormat(selectedDate, "yyyy-M-d").toRelativeCalendar();
+	}
+
+	res.render('unlock/' + req.version + '/activities', {filteredActivities, relativeDate, selectedDate})
 });
 
 module.exports = router

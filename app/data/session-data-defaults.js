@@ -42,6 +42,7 @@ module.exports = {
   'timetable': require('./timetable-1'),
   'activities-2': require('./activities-list-2'),
   'timetable-2': require('./timetable-2'),
+  'prisoners-2': require('./prisoners-list-2'),
   'activity-locations-2': require('./activity-locations-list-2'),
   'residential-locations': require('./residential-list-1'),
   "times": "AM",
