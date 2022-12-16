@@ -1,0 +1,288 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Allocation dashboard
+    </h1>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+      Showing search results for "Wing cleaning"
+    </h1>
+  </div><br />
+<!--  <form method="post">
+  <button class="govuk-button" data-module="govuk-button">Create new activity</button>
+</form>-->
+
+<!--
+  <nav class="moj-sub-navigation" aria-label="Sub navigation" style="margin-top:20px;">
+    <ul class="moj-sub-navigation__list" >
+      <li class="moj-sub-navigation__item" style="float:left; list-style-type:none; margin-left:-40px; margin-top:15px;">
+        <a class="moj-sub-navigation__link" aria-current="page" href="#1" style=" text-decoration:none; color:black; border-bottom: 4px solid #1d70b8; padding-bottom:12px;">Show all activities (5)</a>
+      </li>
+
+      <li class="moj-sub-navigation__item" style="float:left; margin-left:20px; list-style-type:none;  margin-top:15px;">
+        <a class="moj-sub-navigation__link" href="activity-list-dashboard-filtered" style=" text-decoration:none;">Show only activities with space (3)</a>
+      </li>
+    </ul>
+
+<ul class="moj-sub-navigation__list" style="margin-bottom:0px;">
+  <li class="moj-sub-navigation__item" style=" float:right; list-style-type:none; margin-left:10px;" >
+  <button class="govuk-button" data-module="govuk-button">Search</button>
+  </li>
+ <li class="moj-sub-navigation__item" style=" float:right; list-style-type:none;" >
+   <input class="govuk-input moj-search__input;" style="font-size:.8em;" size="51" id="search" name="search" type="search" aria-describedby="search-hint"
+    placeholder="Search by activity, location, wing or facilitator" >
+</li>
+
+</ul>
+</nav>-->
+<!--<div class="govuk-form-group">
+  <label class="govuk-label" for="sort">
+    Show activites in category:
+  </label>
+  <select class="govuk-select" id="sort" name="sort">
+    <option value="published">Recently published</option>
+    <option value="updated" selected>Recently updated</option>
+    <option value="views">Most views</option>
+    <option value="comments">Most comments</option>
+  </select>
+</div>-->
+<div class="moj-primary-navigation">
+  <div class="moj-primary-navigation__container">
+    <div class="moj-primary-navigation__nav">
+      <nav class="moj-primary-navigation" aria-label="Primary navigation">
+        <ul class="moj-primary-navigation__list">
+          <ul class="moj-sub-navigation__list" >
+            <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link" aria-current="page" href="#1">All activities (8)</a>
+            </li>
+            <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link" href="#">Activities with space (5)</a>
+            </li>
+
+          <li class="moj-primary-navigation__item">
+          <!--  <form method="post">
+            <button class="govuk-button" data-module="govuk-button" style="margin:-8px 0 0 175px;">Create new activity</button>
+          </form>-->
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="moj-primary-navigation__search">
+      <div class="moj-search-toggle" data-module="moj-search-toggle" data-moj-search-toggle-text="Search for activity">
+        <div class="moj-search-toggle__toggle"></div>
+        <div class="moj-search-toggle__search">
+          <div class="moj-search moj-search--ondark moj-search--toggle moj-js-hidden">
+            <form action="searchAllocationDashboard" method="post">
+              <div class="govuk-form-group">
+                <label class="govuk-label moj-search__label govuk-visually-hidden" for="search2">
+                  Search
+                </label>
+                <div id="search2-hint" class="govuk-hint moj-search__hint ">
+                  <span style="font-size:.85em;">Enter activity, location, or try <a href="allocate-offender-dashboard-search-view">Advanced search</a></span>
+                  <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      </legend>
+                      <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                          <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                          <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                            <span style="font-size:.85em;" class="govuk-hint moj-search__hint ">Only search in activities with vacancies</span>
+                          </label>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+                <input class="govuk-input moj-search__input " id="search2" name="search2" type="search" aria-describedby="search2-hint">
+              </div>
+              <button class="govuk-button moj-search__button " data-module="govuk-button">
+                Search
+              </button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br /><br />
+
+
+<table class="govuk-table" data-module="moj-sortable-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity instance</th>
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Location</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="ascending">Capacity</th>
+      <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Percentage allocated</th>
+      <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Waitlist</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric"  aria-sort="none">Vacancies</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row" >
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <strong>All Wing cleaning</strong>
+      </h3>
+      </th>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong></strong> </td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong>32</strong> </td>
+        <td class="govuk-table__cell govuk-table__cell--numeric"><strong>96%</strong> </td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong> 2</strong> </td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><strong>8</strong> </td>
+    </tr>
+
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="activity-dashboard-4-1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Wing cleaning 1
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell ">House block 1</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">5</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">80%</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+          <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+            <span>1</span>
+          </strong>
+        </td>
+    </tr>
+    <tr class="govuk-table__row" >
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="activity-dashboard-4-2" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Wing Cleaning 2
+        </a></h3>
+          <span class="govuk-hint" style="font-size:.85em;"></span>
+      </th>
+      <td class="govuk-table__cell ">House block 2</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">90%</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+          <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+            <span>1</span>
+          </strong>
+        </td>
+      </tr>
+
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#"  class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Wing cleaning 3
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell ">House block 3</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">4</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+              <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+                <span>0</span>
+              </strong>
+            </td>
+    </tr>
+
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#"class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Wing cleaning 4
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell ">House block 4</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">50%</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+              <span>1</span>
+            </strong>
+          </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Wing cleaning 5
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell ">House block 6</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+              <span>0</span>
+            </strong>
+          </td>
+
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#"class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Wing cleaning 6
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell ">House block 6</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">4</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">50%</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">
+            <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+              <span>2</span>
+            </strong>
+          </td>
+
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Wing cleaning 7
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell ">House block 7</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">0%</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">
+            <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+              <span>3</span>
+            </strong>
+          </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="#"class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        Wing cleaning 8
+        </a></h3>
+      </th>
+      <td class="govuk-table__cell ">House block 8</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">5</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">100%</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">
+          <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+            <span>0</span>
+          </strong>
+        </td>
+
+    </tr>
+
+  </tbody>
+</table>
+</div>
+{% endblock %}

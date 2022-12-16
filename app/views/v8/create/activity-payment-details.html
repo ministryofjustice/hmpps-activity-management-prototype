@@ -1,0 +1,76 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'High'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
+    <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+    Enter the pay rates
+    </h1>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+
+  <div id="event-name-hint" class="govuk-hint">
+  You can add as many pay rates as you need.
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+        <div data-module="moj-add-another">
+          <form method="post">
+            <fieldset class="govuk-fieldset moj-add-another__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-!-font-weight-bold" for="paymentName">
+                  Pay rate name
+                </label>
+                <input class="govuk-input govuk-input--width-10" id="paymentName" name="paymentName" type="text" value="{{ data.paymentName }}">
+              </div>
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-!-font-weight-bold" for="paymentAmount">
+                  Pay rate amount
+                </label>
+              <input class="govuk-input govuk-input--width-5" id="paymentAmount" name="paymentAmount" type="text" value="{{ data.paymentAmount }}">
+              </div>
+                <h2 class="govuk-heading-l govuk-!-margin-bottom-4">
+              If you want to pay someone for each item instead
+              </h2>
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-!-font-weight-bold" for="piecework">
+                  Piecework rate
+                </label>
+              <strong></strong>  <input class="govuk-input govuk-input--width-5" id="piecework" name="piecework" type="text" value="">
+              </div>
+              <br />
+              <hr />
+            </fieldset>
+            <br />
+            <div class="moj-button-action">
+              <button class="govuk-button govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4" data-module="govuk-button">
+                Add another pay rate
+              </button>
+            </div>
+            <div class="moj-button-action">
+              <button class="govuk-button" data-module="govuk-button">
+                Continue
+              </button>
+            </div>
+          </form>
+        </div>
+        <br /><br />
+        </fieldset>
+      </div>
+      <br />
+</div>
+</div>
+
+{% endblock %}
