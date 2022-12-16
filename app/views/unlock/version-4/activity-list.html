@@ -64,9 +64,11 @@ Activities Management prototype
 						<li>
 							<a href="../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
 						</li>
+						{% if activity.cancelled != true %}
 						<li>
 							<a href="{{activity.id}}/cancel" class="govuk-link--no-visited-state">Cancel this session</a>
 						</li>
+						{% endif %}
 					</ul>
 				</div>
 

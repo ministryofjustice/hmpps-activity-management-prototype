@@ -116,6 +116,10 @@ router.post('/activities/:activityId/confirm-cancellation', function (req, res) 
 		if (activity) {
 			activity.cancelled = true;
 		}
+		let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
+		filteredPrisoners.forEach((prisoner) => {
+			prisoner.attendance = "not-attended"
+		})
 	}
 	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId)
 })
@@ -303,20 +307,27 @@ router.get('/activities', function(req, res) {
 	let chosenDate = req.session.data['chosen-date']
 
 	if(chosenDate == 'other-date'){
-		console.log('sdjsd')
 		chosenDate = req.session.data['other-date-year'] + '-' + req.session.data['other-date-month'] + '-' + req.session.data['other-date-day']
 	}
 
 	let today = new Date()	
 
-	function withinOneDay(dateString1, dateString2) {
-		let date1 = new Date(Date.parse(dateString1));
-		let date2 = new Date(Date.parse(dateString2));
-		let differenceInMilliseconds = Math.abs(date1 - date2);
-		let differenceInDays = Math.floor(differenceInMilliseconds / 1000 / 60 / 60 / 24);
-		return differenceInDays <= 1;
-	}
-	if (withinOneDay(chosenDate, today)) {
+    function compareDays(date1, date2) {
+        // Convert the date strings to Date objects
+        const dateObj1 = new Date(date1);
+        const dateObj2 = new Date(date2);
+
+        // Get the day of the week for each date (0-6, with 0 being Sunday)
+        const day1 = dateObj1.getDay();
+        const day2 = dateObj2.getDay();
+
+        // Calculate the difference in days
+        const dayDiff = Math.abs(day1 - day2);
+
+        // Check if the difference is greater than 1
+        return dayDiff <= 1;
+    }
+	if (compareDays(chosenDate, today)) {
 		relativeDate = DateTime.fromFormat(chosenDate, "yyyy-M-d").toRelativeCalendar();
 	}
 
