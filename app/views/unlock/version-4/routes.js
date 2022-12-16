@@ -181,7 +181,7 @@ router.get('/check-variable-pay', function(req, res) {
 
 	res.render('unlock/' + req.version + '/check-variable-pay', { filteredPrisoners })
 });
-router.post('/mark-as-attended', function(req, res) {
+router.post('/check-variable-pay', function(req, res) {
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
 	if(req.session.data['standard-pay-all'] == 'no'){

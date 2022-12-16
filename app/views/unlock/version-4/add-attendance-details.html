@@ -45,9 +45,9 @@ Activities Management prototype
 
 				{% if data['attendance-action'] == 'attended' %}
 
-				{% set bonusTextHtml %}
+				{% set caseNoteHtml %}
 				{{ govukTextarea({
-					name: "attendance-details[" + loop.index0 + "][bonus][bonus-detail]",
+					name: "attendance-details[" + loop.index0 + "][pay][pay-detail]",
 					id: "bonus-detail-" + prisoner._id,
 					label: {
 						text: "Provide a short explanation for your decision, this will be added to their case notes."
@@ -55,21 +55,41 @@ Activities Management prototype
 				}) }}
 				{% endset %}
 
-				{{ govukCheckboxes({
-					id: "bonus-awarded-" + prisoner._id,
-					name: "attendance-details[" + loop.index0 + "][bonus][bonus-awarded]",
+				{{ govukRadios({
+					id: "pay-details-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][pay]",
+					fieldset: {
+						legend: {
+							text: "What should " + prisoner.name.firstname + " " + prisoner.name.surname + " be paid?"
+						}
+					},
 					items: [
 					{
-						value: "yes",
-						text: "Award " + prisoner.name.firstname + " " + prisoner.name.surname + " a bonus payment",
+						value: "bonus",
+						text: "Bonus pay",
 						conditional: {
-							html: bonusTextHtml
+							html: caseNoteHtml
+						}
+					},
+					{
+						value: "standard",
+						text: "Standard pay"
+					},
+					{
+						divider: "or"
+					},
+					{
+						value: "none",
+						text: "No payment",
+						conditional: {
+							html: caseNoteHtml
 						}
 					}
 					]
 				}) }}
 
 				{% else %}
+
 				{% set warningTextHtml %}
 				{{ govukTextarea({
 					name: "attendance-details[" + loop.index0 + "][incentive-level-warning-detail]",
