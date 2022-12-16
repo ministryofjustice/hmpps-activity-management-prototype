@@ -14,7 +14,7 @@ Activities Management prototype
 {% block content %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-three-quarters">
-		<h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+		<h1 class="govuk-heading-l">
 			{% set prisonersNoun %}
 			{% if filteredPrisoners.length > 1 %}
 			{{filteredPrisoners.length or "3"}} prisoners
@@ -29,6 +29,20 @@ Activities Management prototype
 			Add pay details for {{prisonersNoun}}
 			{% endif %}
 		</h1>
+
+		<div class="app-search">
+			<form action="/applications" method="get" novalidate="">
+				<div class="govuk-form-group">
+					<label class="govuk-label app-search__label govuk-label--m" for="keywords">
+						Search by prisoner name
+					</label>
+					<input class="govuk-input app-search__input " id="keywords" name="keywords" type="search">
+				</div>
+				<button class="govuk-button app-search__button" data-module="govuk-button">
+					Search
+				</button>
+			</form>
+		</div>
 
 		<form method="post">
 			{% for prisoner in filteredPrisoners %}
