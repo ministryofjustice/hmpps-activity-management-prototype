@@ -312,21 +312,27 @@ router.get('/activities', function(req, res) {
 
 	let today = new Date()	
 
-    function compareDays(date1, date2) {
+	function compareDays(date1, date2) {
         // Convert the date strings to Date objects
-        const dateObj1 = new Date(date1);
-        const dateObj2 = new Date(date2);
+		let dateObj1 = new Date(date1);
+		let dateObj2 = new Date(date2);
 
         // Get the day of the week for each date (0-6, with 0 being Sunday)
-        const day1 = dateObj1.getDay();
-        const day2 = dateObj2.getDay();
+		let day1 = dateObj1.getDay();
+		let day2 = dateObj2.getDay();
 
         // Calculate the difference in days
-        const dayDiff = Math.abs(day1 - day2);
+		let dayDiff = Math.abs(day1 - day2);
+
+         // Calculate the difference in milliseconds between the two dates
+		let timeDiff = Math.abs(dateObj1.getTime() - dateObj2.getTime());
+
+  		// Convert the difference in milliseconds to hours
+		let hourDiff = timeDiff / (1000 * 60 * 60);
 
         // Check if the difference is greater than 1
-        return dayDiff <= 1;
-    }
+		return hourDiff <= 48 && dayDiff <= 1;
+	}
 	if (compareDays(chosenDate, today)) {
 		relativeDate = DateTime.fromFormat(chosenDate, "yyyy-M-d").toRelativeCalendar();
 	}
