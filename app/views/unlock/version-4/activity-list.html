@@ -26,12 +26,28 @@ Activities Management prototype
 		}) }}
 		{% endblock %}
 
+		{% set date = data['date'] or date|today() %}
+
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+			{% if activity.cancelled == true %}
+			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+			{% set cancelledHtml %}
+			<h3 class="govuk-notification-banner__heading">
+				Session cancelled
+			</h3>
+			<p class="govuk-body">This activity session has been cancelled for the following reason: [REASON]</p>
+			{% endset %}
+			{{ govukNotificationBanner({
+				html: cancelledHtml,
+				type: 'error'
+			}) }}
+			{% endif %}
+
 			<div class="govuk-grid-row govuk-!-margin-bottom-5">
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 						<span class="govuk-caption-l">
-							{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}} on {{data['date']|convertShortDateToLongDate(data['date']) or "2 November 2022"}}
+							{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}} on {{date|convertShortDateToLongDate(date) or "2 November 2022"}}
 						</span>
 
 						{{ activity.name or 'Workshop' }}: record attendance
@@ -49,7 +65,7 @@ Activities Management prototype
 							<a href="../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
 						</li>
 						<li>
-							<a href="#" class="govuk-link--no-visited-state">View {{ activity.name }} session history</a>
+							<a href="{{activity.id}}/cancel" class="govuk-link--no-visited-state">Cancel this session</a>
 						</li>
 					</ul>
 				</div>
@@ -172,19 +188,22 @@ Activities Management prototype
 				</tbody>
 			</table>
 
+			{% set dayBefore = date | dayBefore() %}
+			{% set dayAfter = date | dayAfter() %}
 			{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 			{{ govukPagination({
 				previous: {
 					text: "Previous day",
-					labelText: data['date']|dayBefore(data['date']),
+					labelText: dayBefore | convertShortDateToVeryLongDate(dayBefore),
 					href: "#"
 				},
 				next: {
 					text: "Next day",
-					labelText: data['date']|dayAfter(data['date']),
+					labelText: dayAfter | convertShortDateToVeryLongDate(),
 					href: "#"
 				}
 			}) }}
+
 		</main>
 	</div>
 

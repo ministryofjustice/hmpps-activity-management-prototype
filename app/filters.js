@@ -81,12 +81,20 @@ module.exports = function (env) {
     return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("d MMMM yyyy")
   }
 
+  filters.convertShortDateToVeryLongDate = function(inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("DDDD")
+  }
+
+  filters.today = function(inputDate) {
+    return DateTime.now().toFormat("yyyy-M-d")
+  }
+
   filters.dayBefore = function(inputDate) {
-    return DateTime.fromFormat(inputDate, "yyyy-M-d").minus({ days: 1 }).setLocale('en-GB').toFormat("DDDD")
+    return DateTime.fromFormat(inputDate, "yyyy-M-d").minus({ days: 1 }).setLocale('en-GB').toFormat("yyyy-M-d")
   }
 
   filters.dayAfter = function(inputDate) {
-    return DateTime.fromFormat(inputDate, "yyyy-M-d").plus({ days: 1 }).setLocale('en-GB').toFormat("DDDD")
+    return DateTime.fromFormat(inputDate, "yyyy-M-d").plus({ days: 1 }).setLocale('en-GB').toFormat("yyyy-M-d")
   }
 
   filters.formatDate = object => {

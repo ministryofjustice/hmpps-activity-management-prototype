@@ -22,10 +22,16 @@ Activities Management prototype
 }) }}
 {% endblock %}
 {% block content %}
+
+{% if data['chosen-date'] == 'other-date' %}
+{% set date = data['other-date-year'] + '-' + data['other-date-month'] + '-' + data['other-date-day'] %}
+{% else %}
+{% set date = data['chosen-date'] %}
+{% endif %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
-			{{filteredActivities.length}} activities scheduled for {{relativeDate or selectedDate|longDateFormat(selectedDate)}} ({{data['times']|upper or "morning"}})
+			{{filteredActivities.length}} activities scheduled for {{relativeDate or date|longDateFormat(date)}} ({{data['times']|upper or "morning"}})
 		</h1>
 
 		<p class="govuk-!-margin-bottom-6"><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></p>
@@ -61,7 +67,7 @@ Activities Management prototype
 	<tbody class="govuk-table__body">
 		{% for activity in filteredActivities | sort(false, true, 'name') %}
 		<tr class="govuk-table__row">
-			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}"><a href="activities/{{activity.id}}?date={{selectedDate|shortDateFormat(selectedDate)}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
+			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}"><a href="activities/{{activity.id}}?date={{date|shortDateFormat(date)}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
 			<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
 			<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
 				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
@@ -84,17 +90,19 @@ Activities Management prototype
 	{{"Afternoon sessions (" + filteredActivities|length + ")"}}
 </h2>
 {{tableHtml|safe}}
-		
+
+{% set dayBefore = date | dayBefore() %}
+{% set dayAfter = date | dayAfter() %}
 {% from "govuk/components/pagination/macro.njk" import govukPagination %}
 {{ govukPagination({
 	previous: {
 		text: "Previous day",
-		labelText: selectedDate|dayBefore(selectedDate),
+		labelText: dayBefore | convertShortDateToVeryLongDate(dayBefore),
 		href: "#"
 	},
 	next: {
 		text: "Next day",
-		labelText: selectedDate|dayAfter(selectedDate),
+		labelText: dayAfter | convertShortDateToVeryLongDate(),
 		href: "#"
 	}
 }) }}

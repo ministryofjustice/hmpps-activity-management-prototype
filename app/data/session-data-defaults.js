@@ -48,4 +48,5 @@ module.exports = {
   "times": "AM",
   "selected-locations": {},
   "prison-name": "HMP Leeds",
+  "chosen-date": "today"
 }

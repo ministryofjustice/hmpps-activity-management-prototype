@@ -96,6 +96,29 @@ router.get('/activities/:activityId', function(req, res) {
 	res.render('unlock/' + req.version + '/activity-list', { activity, filteredPrisoners, notAttendedCount, attendedCount, activityId })
 });
 
+// cancellation  details
+router.get('/activities/:activityId/cancel', function (req, res) {
+	let activityId = req.params.activityId;
+	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
+
+	res.render('unlock/' + req.version + '/choose-cancellation-reason', {activity})
+})
+router.post('/activities/:activityId/cancel', function (req, res) {
+	res.redirect('confirm-cancellation')
+})
+router.get('/activities/:activityId/confirm-cancellation', function (req, res) {
+	res.render('unlock/' + req.version + '/confirm-cancellation')
+})
+router.post('/activities/:activityId/confirm-cancellation', function (req, res) {
+	if(req.session.data['confirm-cancellation'] == 'yes'){
+		let activityId = req.params.activityId;
+		let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId);
+		if (activity) {
+			activity.cancelled = true;
+		}
+	}
+	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId)
+})
 
 // attendance  details
 router.get('/activities/:activityId/:prisonerId', function (req, res) {
@@ -108,8 +131,6 @@ router.get('/activities/:activityId/:prisonerId', function (req, res) {
 	res.render('unlock/' + req.version + '/attendance-details', {prisoner, activity})
 })
 
-
-
 	// ATTENDANCE DETAILS
 router.get('/add-attendance-details', function(req, res) {
 	delete req.session.data['attendance-details']
@@ -117,6 +138,7 @@ router.get('/add-attendance-details', function(req, res) {
 
 	res.render('unlock/' + req.version + '/add-attendance-details', { filteredPrisoners })
 });
+
 router.post('/add-attendance-details', function(req, res) {
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
@@ -277,24 +299,25 @@ router.get('/activities', function(req, res) {
 	let period = req.session.data['times'].toUpperCase()
 	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period && activity.count > 0);
 
-	let selectedDate;
+	let selectedDate, relativeDate;
 	let chosenDate = req.session.data['chosen-date']
-	let today = new Date()
 
-	if( chosenDate == 'yesterday' ){
-		today.setDate(today.getDate() - 1);
-		selectedDate = today.toISOString().split('T')[0];
-	} else if( chosenDate == 'other-date' ){
-		let date = new Date(req.session.data['other-date-year']+'-'+req.session.data['other-date-month']+'-'+req.session.data['other-date-day'])
-		selectedDate = date.toISOString().split('T')[0];
-	} else {
-		selectedDate = today.toISOString().split('T')[0];
+	if(chosenDate == 'other-date'){
+		console.log('sdjsd')
+		chosenDate = req.session.data['other-date-year'] + '-' + req.session.data['other-date-month'] + '-' + req.session.data['other-date-day']
 	}
 
-	let relativeDate;
-	let selectedDateString = new Date(selectedDate)
-	if (Math.abs(today - selectedDateString) < 86400000) {
-		relativeDate = DateTime.fromFormat(selectedDate, "yyyy-M-d").toRelativeCalendar();
+	let today = new Date()	
+
+	function withinOneDay(dateString1, dateString2) {
+		let date1 = new Date(Date.parse(dateString1));
+		let date2 = new Date(Date.parse(dateString2));
+		let differenceInMilliseconds = Math.abs(date1 - date2);
+		let differenceInDays = Math.floor(differenceInMilliseconds / 1000 / 60 / 60 / 24);
+		return differenceInDays <= 1;
+	}
+	if (withinOneDay(chosenDate, today)) {
+		relativeDate = DateTime.fromFormat(chosenDate, "yyyy-M-d").toRelativeCalendar();
 	}
 
 	res.render('unlock/' + req.version + '/activities', {filteredActivities, relativeDate, selectedDate})
