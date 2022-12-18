@@ -20,8 +20,22 @@ Activities Management prototype
   </div>
   <div class="govuk-grid-row">
 <div class="govuk-grid-column-three-thirds" >
+
+  {% if data.dashboardView=="live" or data.dashboardView=="all" %}
   <p class="govuk-body">Select an activity to change details and add schedules.</p>
   <p class="govuk-body">You can also choose to see lists of live, suspended or archived activities, and change their state.</p>
+  {% endif %}
+
+  {% if data.dashboardView=="suspended" %}
+  <p class="govuk-body">You're viewing the list of suspended activities for HMP Leeds. You can't change activity details or allocate people to schedules when an activity is suspended.</p>
+  <p class="govuk-body">Select one or more activities to unsuspend or archive it.</p>
+  {% endif %}
+
+
+  {% if data.dashboardView=="archived" %}
+  <p class="govuk-body">You're viewing the list of archived activities for HMP Leeds. You can select an activity to see its details, for example pay rates and risk levels.</p>
+  {% endif %}
+
 </div>
 </div>
 <div class="govuk-grid-row">
@@ -247,8 +261,7 @@ Activities Management prototype
               <label class="govuk-label govuk-checkboxes__label" for="organisation">
                 <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
                   <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level maths, level 1&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
-                    Entry level maths, level 1
-                  </a>
+                  </a>Entry level maths, level 1
                 </h3>
               </label>
             </div>
@@ -271,8 +284,8 @@ Activities Management prototype
               <label class="govuk-label govuk-checkboxes__label" for="organisation">
                 <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
                   <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level English, level 1&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
-                    Entry level English, level 1
-                  </a>
+
+                  </a>  Entry level English, level 1
                 </h3>
               </label>
             </div>
@@ -295,8 +308,8 @@ Activities Management prototype
               <label class="govuk-label govuk-checkboxes__label" for="organisation">
                 <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
                   <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Window cleaning&fromActivityDashboard=true&riskLevel=High&category=Other&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
-                    Window cleaning
-                  </a>
+
+                  </a>Window cleaning
                 </h3>
               </label>
             </div>
