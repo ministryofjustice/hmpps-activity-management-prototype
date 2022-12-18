@@ -14,7 +14,7 @@ Activities Management prototype
 {% block content %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-three-quarters">
-		<h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+		<h1 class="govuk-heading-l">
 			{% set prisonersNoun %}
 			{% if filteredPrisoners.length > 1 %}
 			{{filteredPrisoners.length or "3"}} prisoners
@@ -29,6 +29,20 @@ Activities Management prototype
 			Add pay details for {{prisonersNoun}}
 			{% endif %}
 		</h1>
+
+		<div class="app-search">
+			<form action="/applications" method="get" novalidate="">
+				<div class="govuk-form-group">
+					<label class="govuk-label app-search__label govuk-label--m" for="keywords">
+						Search by prisoner name
+					</label>
+					<input class="govuk-input app-search__input " id="keywords" name="keywords" type="search">
+				</div>
+				<button class="govuk-button app-search__button" data-module="govuk-button">
+					Search
+				</button>
+			</form>
+		</div>
 
 		<form method="post">
 			{% for prisoner in filteredPrisoners %}
@@ -45,9 +59,9 @@ Activities Management prototype
 
 				{% if data['attendance-action'] == 'attended' %}
 
-				{% set bonusTextHtml %}
+				{% set caseNoteHtml %}
 				{{ govukTextarea({
-					name: "attendance-details[" + loop.index0 + "][bonus][bonus-detail]",
+					name: "attendance-details[" + loop.index0 + "][pay][pay-detail]",
 					id: "bonus-detail-" + prisoner._id,
 					label: {
 						text: "Provide a short explanation for your decision, this will be added to their case notes."
@@ -55,21 +69,41 @@ Activities Management prototype
 				}) }}
 				{% endset %}
 
-				{{ govukCheckboxes({
-					id: "bonus-awarded-" + prisoner._id,
-					name: "attendance-details[" + loop.index0 + "][bonus][bonus-awarded]",
+				{{ govukRadios({
+					id: "pay-details-" + prisoner._id,
+					name: "attendance-details[" + loop.index0 + "][pay]",
+					fieldset: {
+						legend: {
+							text: "What should " + prisoner.name.firstname + " " + prisoner.name.surname + " be paid?"
+						}
+					},
 					items: [
 					{
-						value: "yes",
-						text: "Award " + prisoner.name.firstname + " " + prisoner.name.surname + " a bonus payment",
+						value: "bonus",
+						text: "Bonus pay",
 						conditional: {
-							html: bonusTextHtml
+							html: caseNoteHtml
+						}
+					},
+					{
+						value: "standard",
+						text: "Standard pay"
+					},
+					{
+						divider: "or"
+					},
+					{
+						value: "none",
+						text: "No payment",
+						conditional: {
+							html: caseNoteHtml
 						}
 					}
 					]
 				}) }}
 
 				{% else %}
+
 				{% set warningTextHtml %}
 				{{ govukTextarea({
 					name: "attendance-details[" + loop.index0 + "][incentive-level-warning-detail]",
@@ -107,6 +141,16 @@ Activities Management prototype
 				}) }}
 				{% endset %}
 
+				{% set notListedHtml %}
+				{{ govukTextarea({
+					name: "more-detail",
+					id: "more-detail",
+					label: {
+						text: "Can you provide more detail?"
+					}
+				}) }}
+				{% endset %}
+
 				{{ govukRadios({
 					id: "absence-reason-" + prisoner._id,
 					name: "attendance-details[" + loop.index0 + "][absence-reason]",
@@ -118,16 +162,27 @@ Activities Management prototype
 					},
 					items: [
 					{
+						value: "Sick",
+						text: "Sick"
+					},
+					{
+						value: "Refused",
+						text: "Refused"
+					},
+					{
+						value: "Not required/excused",
+						text: "Not required/excused"
+					},
+					{
+						value: "Not listed",
+						text: "Not listed",
+						conditional: {
+							html: notListedHtml
+						}
+					},
+					{
 						value: "Rest day",
 						text: "Rest day"
-					},
-					{
-						value: "Rest in cell or sick",
-						text: "Rest in cell or sick"
-					},
-					{
-						value: "Refused to attend",
-						text: "Refused to attend"
 					},
 					{
 						value: "Unacceptable absence",
@@ -137,48 +192,11 @@ Activities Management prototype
 						}
 					},
 					{
-						value: "Approved course",
-						text: "Approved course"
+						divider: "or"
 					},
 					{
-						value: "Not required to attend",
-						text: "Not required to attend"
-					},
-					{
-						value: "Activities and education",
-						text: "Activities and education"
-					},
-					{
-						value: "Behaviour",
-						text: "Behaviour"
-					},
-					{
-						value: "Courses, programmes and interventions",
-						text: "Courses, programmes and interventions"
-					},
-					{
-						value: "External moves",
-						text: "External moves"
-					},
-					{
-						value: "Healthcare",
-						text: "Healthcare"
-					},
-					{
-						value: "Operational",
-						text: "Operational"
-					},
-					{
-						value: "Over allocated or schedule clash",
-						text: "Over allocated or schedule clash"
-					},
-					{
-						value: "Visits",
-						text: "Visits"
-					},
-					{
-						value: "Not listed",
-						text: "Not listed"
+						value: "Not known",
+						text: "Not known"
 					}
 					]
 				}) }}

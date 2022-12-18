@@ -69,6 +69,34 @@ module.exports = function (env) {
     return houseblock
   }
 
+  filters.longDateFormat = function(inputDate ) {
+    return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("DDDD")
+  }
+
+  filters.shortDateFormat = function(inputDate ) {
+    return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("yyyy-M-d")
+  }
+
+  filters.convertShortDateToLongDate = function(inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("d MMMM yyyy")
+  }
+
+  filters.convertShortDateToVeryLongDate = function(inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("DDDD")
+  }
+
+  filters.today = function(inputDate) {
+    return DateTime.now().toFormat("yyyy-M-d")
+  }
+
+  filters.dayBefore = function(inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-M-d").minus({ days: 1 }).setLocale('en-GB').toFormat("yyyy-M-d")
+  }
+
+  filters.dayAfter = function(inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-M-d").plus({ days: 1 }).setLocale('en-GB').toFormat("yyyy-M-d")
+  }
+
   filters.formatDate = object => {
     if (object) {
       const month = object.month.padStart(2, '0')
@@ -121,7 +149,7 @@ module.exports = function (env) {
     }
   }
 
-   filters.push = (array, item) => {
+  filters.push = (array, item) => {
     array.push(item)
     return array
   }

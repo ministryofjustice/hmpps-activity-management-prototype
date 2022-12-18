@@ -39,8 +39,14 @@ module.exports = {
   "activity": "Workshop",
   'prisoners': require('./prisoners-list-1'),
   'activities': require('./activities-list-1'),
+  'timetable': require('./timetable-1'),
+  'activities-2': require('./activities-list-2'),
+  'timetable-2': require('./timetable-2'),
+  'prisoners-2': require('./prisoners-list-2'),
+  'activity-locations-2': require('./activity-locations-list-2'),
   'residential-locations': require('./residential-list-1'),
   "times": "AM",
   "selected-locations": {},
   "prison-name": "HMP Leeds",
+  "chosen-date": "today"
 }

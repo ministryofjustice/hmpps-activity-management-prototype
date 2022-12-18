@@ -26,16 +26,28 @@ Activities Management prototype
 		}) }}
 		{% endblock %}
 
+		{% set date = data['date'] or date|today() %}
+
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+			{% if activity.cancelled == true %}
+			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+			{% set cancelledHtml %}
+			<h3 class="govuk-notification-banner__heading">
+				Session cancelled
+			</h3>
+			<p class="govuk-body">This activity session has been cancelled for the following reason: [REASON]</p>
+			{% endset %}
+			{{ govukNotificationBanner({
+				html: cancelledHtml,
+				type: 'error'
+			}) }}
+			{% endif %}
+
 			<div class="govuk-grid-row govuk-!-margin-bottom-5">
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 						<span class="govuk-caption-l">
-							{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}} on {{ {
-								"day": data['activity-date'][0],
-								"month": data['activity-date'][1],
-								"year": data['activity-date'][2] 
-							} | formatDate if data['activity-date'] else "2 November 2022"}}
+							{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}} on {{date|convertShortDateToLongDate(date) or "2 November 2022"}}
 						</span>
 
 						{{ activity.name or 'Workshop' }}: record attendance
@@ -52,6 +64,11 @@ Activities Management prototype
 						<li>
 							<a href="../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
 						</li>
+						{% if activity.cancelled != true %}
+						<li>
+							<a href="{{activity.id}}/cancel" class="govuk-link--no-visited-state">Cancel this session</a>
+						</li>
+						{% endif %}
 					</ul>
 				</div>
 
@@ -103,7 +120,7 @@ Activities Management prototype
 			}) }} -->
 			{{attendanceDetailsHtml|safe}}
 
-			<table class="govuk-table app-whereabouts-table app-whereabouts-table--sticky-head app-whereabouts-table--font-size-normal govuk-!-margin-bottom-0" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+			<table class="govuk-table app-whereabouts-table app-whereabouts-table--sticky-head app-whereabouts-table--font-size-normal govuk-!-margin-bottom-5" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
 				<thead class="govuk-table__head">
 					<tr>
 						{% if notRecorded > 0 %}<th class="govuk-table__header govuk-!-padding-left-2" scope="col" id="select-all"></th>{% endif %}
@@ -172,6 +189,22 @@ Activities Management prototype
 					{% endfor %}
 				</tbody>
 			</table>
+
+			{% set dayBefore = date | dayBefore() %}
+			{% set dayAfter = date | dayAfter() %}
+			{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+			{{ govukPagination({
+				previous: {
+					text: "Previous day",
+					labelText: dayBefore | convertShortDateToVeryLongDate(dayBefore),
+					href: "#"
+				},
+				next: {
+					text: "Next day",
+					labelText: dayAfter | convertShortDateToVeryLongDate(),
+					href: "#"
+				}
+			}) }}
 
 		</main>
 	</div>

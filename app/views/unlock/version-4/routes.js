@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const { DateTime } = require('luxon')
 
 // app data
 const prisoners = require('../../../data/prisoners-list-1')
@@ -95,6 +96,33 @@ router.get('/activities/:activityId', function(req, res) {
 	res.render('unlock/' + req.version + '/activity-list', { activity, filteredPrisoners, notAttendedCount, attendedCount, activityId })
 });
 
+// cancellation  details
+router.get('/activities/:activityId/cancel', function (req, res) {
+	let activityId = req.params.activityId;
+	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
+
+	res.render('unlock/' + req.version + '/choose-cancellation-reason', {activity})
+})
+router.post('/activities/:activityId/cancel', function (req, res) {
+	res.redirect('confirm-cancellation')
+})
+router.get('/activities/:activityId/confirm-cancellation', function (req, res) {
+	res.render('unlock/' + req.version + '/confirm-cancellation')
+})
+router.post('/activities/:activityId/confirm-cancellation', function (req, res) {
+	if(req.session.data['confirm-cancellation'] == 'yes'){
+		let activityId = req.params.activityId;
+		let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId);
+		if (activity) {
+			activity.cancelled = true;
+		}
+		let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
+		filteredPrisoners.forEach((prisoner) => {
+			prisoner.attendance = "not-attended"
+		})
+	}
+	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId)
+})
 
 // attendance  details
 router.get('/activities/:activityId/:prisonerId', function (req, res) {
@@ -107,8 +135,6 @@ router.get('/activities/:activityId/:prisonerId', function (req, res) {
 	res.render('unlock/' + req.version + '/attendance-details', {prisoner, activity})
 })
 
-
-
 	// ATTENDANCE DETAILS
 router.get('/add-attendance-details', function(req, res) {
 	delete req.session.data['attendance-details']
@@ -116,6 +142,7 @@ router.get('/add-attendance-details', function(req, res) {
 
 	res.render('unlock/' + req.version + '/add-attendance-details', { filteredPrisoners })
 });
+
 router.post('/add-attendance-details', function(req, res) {
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
@@ -154,7 +181,7 @@ router.get('/check-variable-pay', function(req, res) {
 
 	res.render('unlock/' + req.version + '/check-variable-pay', { filteredPrisoners })
 });
-router.post('/mark-as-attended', function(req, res) {
+router.post('/check-variable-pay', function(req, res) {
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
 	if(req.session.data['standard-pay-all'] == 'no'){
@@ -246,7 +273,7 @@ router.get('/unlock-list', function(req, res) {
 });
 
 router.get('/unlock-list/download', function(req, res){
-	const file = `public/downloads/List concept.pdf`;
+	const file = `public/downloads/Unlock list concept.pdf`;
   res.download(file); // Set disposition and send it.
 });
 
@@ -256,7 +283,18 @@ router.get('/select-activity', function(req, res) {
 	res.render('unlock/' + req.version + '/select-activity')
 });
 router.post('/select-activity', function(req, res) {
-	res.redirect('activities')
+	let chosenDate = req.session.data['chosen-date']
+	let today = new Date()
+
+	if(chosenDate == 'other-date'){
+		if(req.session.data['other-date-year'] !== undefined && req.session.data['other-date-month'] !== undefined && req.session.data['other-date-day'] !== undefined){
+			res.redirect('activities')
+		} else {
+			res.redirect('select-activity');
+		}
+	} else {
+		res.redirect('activities')
+	}
 });
 // SELECT ACTIVITY RESULTS
 router.get('/activities', function(req, res) {
@@ -265,7 +303,41 @@ router.get('/activities', function(req, res) {
 	let period = req.session.data['times'].toUpperCase()
 	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period && activity.count > 0);
 
-	res.render('unlock/' + req.version + '/activities', {filteredActivities})
+	let selectedDate, relativeDate;
+	let chosenDate = req.session.data['chosen-date']
+
+	if(chosenDate == 'other-date'){
+		chosenDate = req.session.data['other-date-year'] + '-' + req.session.data['other-date-month'] + '-' + req.session.data['other-date-day']
+	}
+
+	let today = new Date()	
+
+	function compareDays(date1, date2) {
+        // Convert the date strings to Date objects
+		let dateObj1 = new Date(date1);
+		let dateObj2 = new Date(date2);
+
+        // Get the day of the week for each date (0-6, with 0 being Sunday)
+		let day1 = dateObj1.getDay();
+		let day2 = dateObj2.getDay();
+
+        // Calculate the difference in days
+		let dayDiff = Math.abs(day1 - day2);
+
+         // Calculate the difference in milliseconds between the two dates
+		let timeDiff = Math.abs(dateObj1.getTime() - dateObj2.getTime());
+
+  		// Convert the difference in milliseconds to hours
+		let hourDiff = timeDiff / (1000 * 60 * 60);
+
+        // Check if the difference is greater than 1
+		return hourDiff <= 48 && dayDiff <= 1;
+	}
+	if (compareDays(chosenDate, today)) {
+		relativeDate = DateTime.fromFormat(chosenDate, "yyyy-M-d").toRelativeCalendar();
+	}
+
+	res.render('unlock/' + req.version + '/activities', {filteredActivities, relativeDate, selectedDate})
 });
 
 module.exports = router

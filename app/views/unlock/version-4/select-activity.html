@@ -26,39 +26,43 @@ Activities Management prototype
 {% endblock %}
 
 {% block content %}
-<form method="post">
+<form action="activities">
 	{% set dateHtml %}
-	<div class="govuk-form-group">
-		<label class="govuk-label" for="date">
-			Date
-		</label>
-		<div class="govuk-hint">
-			Today's date is 13/10/2022
-		</div>
-		<input class="govuk-input govuk-input--width-10" id="date" name="date" type="text" value="13/10/2022" autocomplete="off" placeholder="DD/MM/YYYY" readonly="readonly">
-	</div>
+	{{ govukDateInput({
+		id: "other-date",
+		namePrefix: "other-date",
+		fieldset: {
+			legend: {
+				text: "Date"
+			}
+		},
+		hint: {
+			text: "For example, 27 3 2022"
+		}
+	}) }}
 	{% endset %}
 
+	{% set today = '_'|today() %}
 	{{ govukRadios({
 		name: "chosen-date",
 		fieldset: {
 			legend: {
-				text: "Select activity or appointment date",
+				text: "Select activity date",
 				isPageHeading: true,
 				classes: "govuk-fieldset__legend--l"
 			}
 		},
 		items: [
 		{
-			value: "today",
+			value: today,
 			text: "Today"
 		},
 		{
-			value: "yesterday",
+			value: today|dayBefore(today),
 			text: "Yesterday"
 		},
 		{
-			value: "DATE",
+			value: "other-date",
 			text: "A different date",
 			conditional: {
 				html: dateHtml
@@ -71,7 +75,7 @@ Activities Management prototype
 		name: "times",
 		fieldset: {
 			legend: {
-				text: "Time period",
+				text: "Time period (optional)",
 				isPageHeading: false,
 				classes: "govuk-fieldset__legend--m"
 			}
@@ -84,10 +88,6 @@ Activities Management prototype
 		{
 			value: "pm",
 			text: "Afternoon (PM)"
-		},
-		{
-			value: "ed",
-			text: "Evening (ED)"
 		}
 		]
 	}) }}
