@@ -30,178 +30,695 @@ Activities Management prototype
       <label class="govuk-label" for="sort">
         Show activities which are:
       </label>
-      <select class="govuk-select" id="sort" name="sort">
-        <option value="updated" selected>Live </option>
-        <option value="views">Suspended</option>
-        <option value="comments">Archived</option>
-        <option value="published">All</option>
+      <select class="govuk-select" id="show" name="show-grouping">
+        <option value="all" {% if data.dashboardView=="all" %}selected{% endif %}>All</option>
+        <option value="live" {% if data.dashboardView=="live" %}selected{% endif %}>Live </option>
+        <option value="suspended" {% if data.dashboardView=="suspended" %}selected{% endif %}>Suspended</option>
+        <option value="archived" {% if data.dashboardView=="archived" %}selected{% endif %}>Archived</option>
       </select>
     </div>
     <div class="govuk-form-group">
     <label class="govuk-label" for="sort">
       Show activity category:
     </label>
-    <select class="govuk-select" id="sort" name="sort">
-      <option value="published" selected>All</option>
-      <option value="updated" >Education </option>
-      <option value="views">Industries</option>
-      <option value="comments">Prison jobs</option>
-      <option value="comments">Gym, sports and fitness</option>
-      <option value="comments">Induction</option>
-      <option value="comments">Intervention programmes</option>
-      <option value="comments">Faith</option>
-      <option value="comments">Other</option>
+    <select class="govuk-select" id="show2" name="show-grouping"">
+      <option value="All" {% if data.dashboardCategory=="All" %}selected{% endif %}>All</option>
+      <option value="Education"  {% if data.dashboardCategory=="Education" %}selected{% endif %}>Education </option>
+      <option value="Industries" {% if data.dashboardCategory=="Industries" %}selected{% endif %}>Industries</option>
+      <option value="Prison" {% if data.dashboardCategory=="Prison" %}selected{% endif %}>Prison jobs</option>
+      <option value="Gym" {% if data.dashboardCategory=="Gym" %}selected{% endif %}>Gym, sports and fitness</option>
+      <option value="Induction" {% if data.dashboardCategory=="Induction" %}selected{% endif %}>Induction</option>
+      <option value="Intervention" {% if data.dashboardCategory=="Intervention" %}selected{% endif %}>Intervention programmes</option>
+      <option value="Faith" {% if data.dashboardCategory=="Faith" %}selected{% endif %}>Faith</option>
+      <option value="Other" {% if data.dashboardCategory=="Other" %}selected{% endif %}>Other</option>
     </select>
     </div>
   </div>
   <div class="govuk-grid-column-one-quarter">
       &nbsp;
   </div>
+  <div class="govuk-grid-column-one-third" style="border:2px solid black; padding:10px; margin:20px 0 0 200px; padding-left:20px;">
+      <p class="govuk-body"><strong>Related tasks</strong><br />
+      <a href="activity-type-select-with-category">Create an activity</a><br />
+      <a href="../allocate/activity-dashboard-1">See vacancies and allocate people</a></p>
+  </div>
+  </div>
+  <form method="post">
+  <table class="govuk-table" data-module="moj-sortable-table" style="margin:0 0 0 10px;">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header" style="width:34%;"  aria-sort="ascending" >Activity name</th>
+        <th scope="col" class="govuk-table__header" style="width:15%;"aria-sort="none">Date created</th>
+        <th scope="col" class="govuk-table__header" style="width:21%;" aria-sort="none">Activity category</th>
+        <th scope="col" class="govuk-table__header" style="width:13%;" aria-sort="none">State</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Number of schedules</th>
+      </tr>
+    </thead>
+    </form>
 
-<div class="govuk-grid-column-one-third" style="border:2px solid black; padding:10px; margin:20px 0 0 200px; padding-left:20px;">
-    <p class="govuk-body"><strong>Related tasks</strong><br />
-    <a href="activity-type-select-with-category">Create an activity</a><br />
-            <a href="activity-start-date">Create a schedule</a><br />
-    <a href="../allocate/activity-dashboard-1">See vacancies and allocate people</a></p>
-</div>
-</div>
 
 
-<form method="post">
-<table class="govuk-table" data-module="moj-sortable-table" style="margin:0 0 0 10px;">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header" style="width:30%;"  aria-sort="ascending" >Activity name</th>
-      <th scope="col" class="govuk-table__header" style="width:15%;"aria-sort="none">Date created</th>
-      <th scope="col" class="govuk-table__header" style="width:25%;" aria-sort="none">Activity category</th>
-      <th scope="col" class="govuk-table__header" style="width:13%;" aria-sort="none">State</th>
-      <th scope="col" class="govuk-table__header" aria-sort="none">Number of schedules</th>
-    </tr>
-  </thead>
 
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell" data-sort-value="Maths level 1">
-        <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-          <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Maths&nbsp;level&nbsp;1&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
-            Maths level 1
-          </a>
-        </h3>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="20220902">2 Sept 2022</td>
-      <td class="govuk-table__cell" data-sort-value="Education">Education</td>
-      <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
-      <td class="govuk-table__cell" data-sort-value="0">
-        0  <button class="govuk-button govuk-button--secondary" name="editDashboard" value="schedule" data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
-        </button>
-      </td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell" data-sort-value="Entry level English, level 3">
-        <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-          <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level English, level 3&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
-            Entry level English, level 3
-          </a>
-        </h3>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="20220918">18 Sept 2022</td>
-      <td class="govuk-table__cell" data-sort-value="Education">Education</td>
-      <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
-      <td class="govuk-table__cell" data-sort-value="1">
-        1
-      </td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell" data-sort-value="Entry level Maths">
-        <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-          <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level maths, level 3&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
-            Entry level maths, level 3
-          </a>
-        </h3>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="20231215">15 Dec 2023</td>
-      <td class="govuk-table__cell" data-sort-value="Education">Education</td>
-      <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
-      <td class="govuk-table__cell" data-sort-value="1">
-        1
-      </td>
-    </tr>
-    <tr class="govuk-table__row" >
-      <td class="govuk-table__cell" data-sort-value="Maths level 2">
-        <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
-          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Maths level 2&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
-              Maths level 2
-            </a>
-          </h3>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="20220903">3 Sept 2022</td>
+
+
+
+
+  {% if data.dashboardView=="live" %}
+  <form>
+      <tbody class="govuk-table__body">
+        {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" data-sort-value="Maths level 1">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Maths&nbsp;level&nbsp;1&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Maths level 11
+              </a>
+            </h3>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="20220902">2 Sept 2022</td>
           <td class="govuk-table__cell" data-sort-value="Education">Education</td>
           <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
-      <td class="govuk-table__cell" data-sort-value="3">3</td>
-    </tr>
-    <tr class="govuk-table__row" >
-      <td class="govuk-table__cell" data-sort-value="Wing cleaning">
-        <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-          <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Wing cleaning&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
-            Wing cleaning
-          </a>
-        </h3>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="20221028">28 Oct 2022</td>
+          <td class="govuk-table__cell" data-sort-value="0">
+            0  <button class="govuk-button govuk-button--secondary" name="editDashboard" value="schedule" data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
+            </button>
+          </td>
+        </tr>
+        {% endif %}
+        {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" data-sort-value="Entry level English, level 3">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level English, level 3&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Entry level English, level 3
+              </a>
+            </h3>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="20220918">18 Sept 2022</td>
+          <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+          <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+          <td class="govuk-table__cell" data-sort-value="1">
+            1
+          </td>
+        </tr>
+        {% endif %}
+        {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" data-sort-value="Entry level Maths">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level maths, level 3&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Entry level maths, level 3
+              </a>
+            </h3>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="20221215">15 Dec 2022</td>
+          <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+          <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+          <td class="govuk-table__cell" data-sort-value="1">
+            1
+          </td>
+        </tr>
+        {% endif %}
+        {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+        <tr class="govuk-table__row" >
+          <td class="govuk-table__cell" data-sort-value="Maths level 2">
+            <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Maths level 2&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                  Maths level 2
+                </a>
+              </h3>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="20220903">3 Sept 2022</td>
+              <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+              <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+          <td class="govuk-table__cell" data-sort-value="3">3</td>
+        </tr>
+        {% endif %}
+        {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+        <tr class="govuk-table__row" >
+          <td class="govuk-table__cell" data-sort-value="Wing cleaning">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Wing cleaning&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Wing cleaning
+              </a>
+            </h3>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="20221028">28 Oct 2022</td>
+              <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+              <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+          <td class="govuk-table__cell" data-sort-value="8">8</td>
+        </tr>
+        {% endif %}
+        {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+        <tr class="govuk-table__row" >
+          <td class="govuk-table__cell" data-sort-value="Advanced cleaning">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Advanced cleaning&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Advanced cleaning
+              </a>
+            </h3>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="20221104">4 Nov 2022</td>
+              <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+              <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+          <td class="govuk-table__cell" data-sort-value="2">2</td>
+        </tr>
+          {% endif %}
+          {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+        <tr class="govuk-table__row" >
+          <td class="govuk-table__cell" data-sort-value="Servery work">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Servery work&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Servery work
+              </a>
+            </h3>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="20221128">28 Nov 2022</td>
           <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
           <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
-      <td class="govuk-table__cell" data-sort-value="8">8</td>
-    </tr>
-    <tr class="govuk-table__row" >
-      <td class="govuk-table__cell" data-sort-value="General cleaning">
-        <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-          <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=General cleaning&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
-            General cleaning
-          </a>
-        </h3>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="20221104">4 Nov 2022</td>
-          <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
-          <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
-      <td class="govuk-table__cell" data-sort-value="2">2</td>
-    </tr>
-    <tr class="govuk-table__row" >
-      <td class="govuk-table__cell" data-sort-value="Servery work">
-        <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-          <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Servery work&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
-            Servery work
-          </a>
-        </h3>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="20221128">28 Nov 2022</td>
-      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
-      <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
-      <td class="govuk-table__cell" data-sort-value="0">
-        0  <button class="govuk-button govuk-button--secondary"  name="editDashboard" value="schedule"  data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
-        </button>
-      </td>
-    </tr>
-    <tr class="govuk-table__row" >
-      <td class="govuk-table__cell" data-sort-value="Gardening">
-        <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-          <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Gardening&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
-            Gardening
-          </a>
-        </h3>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="20220809">9 Aug 2022</td>
-          <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
-          <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
-      <td class="govuk-table__cell" data-sort-value="2">2</td>
-    </tr>
-  </tbody>
-</table>
-<br />
+          <td class="govuk-table__cell" data-sort-value="0">
+            0  <button class="govuk-button govuk-button--secondary"  name="editDashboard" value="schedule"  data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
+            </button>
+          </td>
+        </tr>
+        {% endif %}
+        {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+        <tr class="govuk-table__row" >
+          <td class="govuk-table__cell" data-sort-value="Gardening">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Gardening&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Gardening
+              </a>
+            </h3>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="20220809">9 Aug 2022</td>
+              <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+              <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+          <td class="govuk-table__cell" data-sort-value="2">2</td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+    <br />
 
-<button class="govuk-button" data-module="govuk-button" name="editDashboard" value="suspend">
-Suspend all activities
-</button>
+    <button class="govuk-button" data-module="govuk-button" name="editDashboard" value="suspend">
+    Suspend all activities
+    </button>
+    </form>
+{% endif %}
+
+
+
+
+
+
+
+
+
+{% if data.dashboardView=="suspended"%}
+    <form>
+    <tbody class="govuk-table__body">
+      {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Maths level 1">
+          <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="Maths Level 1">
+              <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                  <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level maths, level 1&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                    Entry level maths, level 1
+                  </a>
+                </h3>
+              </label>
+            </div>
+          </div>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20220902">2 Sept 2022</td>
+        <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+        <td class="govuk-table__cell" data-sort-value="Suspended"> <strong class="govuk-tag govuk-tag--grey">Suspended</strong></td>
+        <td class="govuk-table__cell" data-sort-value="0">
+          0
+        </td>
+      </tr>
+        {% endif %}
+        {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Entry level English, level 3">
+          <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="Entry level English, level 3">
+              <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                  <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level English, level 1&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                    Entry level English, level 1
+                  </a>
+                </h3>
+              </label>
+            </div>
+          </div>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20220918">18 Sept 2022</td>
+        <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+        <td class="govuk-table__cell" data-sort-value="Suspended"> <strong class="govuk-tag govuk-tag--grey">Suspended</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Other" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Wing cleaning">
+          <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="Wing cleaning">
+              <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                  <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Window cleaning&fromActivityDashboard=true&riskLevel=High&category=Other&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                    Window cleaning
+                  </a>
+                </h3>
+              </label>
+            </div>
+          </div>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20221215">15 Dec 2022</td>
+        <td class="govuk-table__cell" data-sort-value="Education">Other</td>
+        <td class="govuk-table__cell" data-sort-value="Suspended"> <strong class="govuk-tag govuk-tag--grey">Suspended</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+
+    </tbody>
+    </table>
+    <br />
+
+    <button class="govuk-button" data-module="govuk-button" name="editDashboard" value="unsuspend">
+    Unsuspend selected activities
+    </button>
+    <button class="govuk-button govuk-button--warning" data-module="govuk-button" name="editDashboard" value="archive" style="margin-left:30px;">
+    Archive selected activities
+    </button>
+    </form>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+{% if data.dashboardView=="archived"%}
+    <form>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        {% if data.dashboardCategory=="Other" or data.dashboardCategory=="All" %}
+        <td class="govuk-table__cell" data-sort-value="Floristry">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Floristry&fromActivityDashboard=true&riskLevel=High&category=Other&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Floristry
+              </a>
+            </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20210321">21 Mar 2021</td>
+        <td class="govuk-table__cell" data-sort-value="Other">Other</td>
+        <td class="govuk-table__cell" data-sort-value="Archived"> <strong class="govuk-tag govuk-tag--grey">Archived</strong></td>
+        <td class="govuk-table__cell" data-sort-value="0">
+          0
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Other" or data.dashboardCategory=="All" %}
+
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Entry level English, level 3">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Car washing&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Car washing
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20200903">3 Sept 2020</td>
+        <td class="govuk-table__cell" data-sort-value="Other">Other</td>
+        <td class="govuk-table__cell" data-sort-value="Archived"> <strong class="govuk-tag govuk-tag--grey">Archived</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Prison jobs" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="General cleaning">
+
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                  <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=General cleaning&fromActivityDashboard=true&riskLevel=High&category=Prison jobs&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                    General cleaning
+                  </a>
+                </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="19900420">20 Apr 1990</td>
+        <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+        <td class="govuk-table__cell" data-sort-value="Archived"> <strong class="govuk-tag govuk-tag--grey">Archived</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Food prep, level 1">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Food prep, level 1fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Food prep, level 1
+              </a>
+            </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20200509">9 May 2020</td>
+        <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+        <td class="govuk-table__cell" data-sort-value="Archived"> <strong class="govuk-tag govuk-tag--grey">Archived</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+
+    </tbody>
+    </table>
+    <br />
+
+    <button class="govuk-button" data-module="govuk-button" name="editDashboard" value="unarchive">
+    Unarchive selected activities
+    </button>
+    </button>
+    </form>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+{% if data.dashboardView=="all"%}
+<form>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 1">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Maths&nbsp;level&nbsp;1&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Maths level 1
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20220902">2 Sept 2022</td>
+        <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+        <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+        <td class="govuk-table__cell" data-sort-value="0">
+          0  <button class="govuk-button govuk-button--secondary" name="editDashboard" value="schedule" data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
+          </button>
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Entry level English, level 3">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level English, level 3&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Entry level English, level 3
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20220918">18 Sept 2022</td>
+        <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+        <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Entry level Maths">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level maths, level 3&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Entry level maths, level 3
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20221215">15 Dec 2022</td>
+        <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+        <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row" >
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">
+          <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Maths level 2&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Maths level 2
+              </a>
+            </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20220903">3 Sept 2022</td>
+            <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+            <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+        <td class="govuk-table__cell" data-sort-value="3">3</td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row" >
+        <td class="govuk-table__cell" data-sort-value="Wing cleaning">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Wing cleaning&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Wing cleaning
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20221028">28 Oct 2022</td>
+            <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+            <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+        <td class="govuk-table__cell" data-sort-value="8">8</td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row" >
+        <td class="govuk-table__cell" data-sort-value="Advanced cleaning">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Advanced cleaning&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Advanced cleaning
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20221104">4 Nov 2022</td>
+            <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+            <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+        <td class="govuk-table__cell" data-sort-value="2">2</td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row" >
+        <td class="govuk-table__cell" data-sort-value="Servery work">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Servery work&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Servery work
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20221128">28 Nov 2022</td>
+        <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+        <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+        <td class="govuk-table__cell" data-sort-value="0">
+          0  <button class="govuk-button govuk-button--secondary"  name="editDashboard" value="schedule"  data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
+          </button>
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row" >
+        <td class="govuk-table__cell" data-sort-value="Gardening">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Gardening&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Gardening
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20220809">9 Aug 2022</td>
+            <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+            <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
+        <td class="govuk-table__cell" data-sort-value="2">2</td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Entry level Maths, level 1">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level maths, level 1&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Entry level maths, level 1
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20220902">2 Sept 2022</td>
+        <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+        <td class="govuk-table__cell" data-sort-value="Suspended"> <strong class="govuk-tag govuk-tag--grey">Suspended</strong></td>
+        <td class="govuk-table__cell" data-sort-value="0">
+          0
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Entry level English, level 1">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level English, level 1&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Entry level English, level 1
+              </a>
+            </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20220918">18 Sept 2022</td>
+        <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+        <td class="govuk-table__cell" data-sort-value="Suspended"> <strong class="govuk-tag govuk-tag--grey">Suspended</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Other" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Wing cleaning">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Window cleaning&fromActivityDashboard=true&riskLevel=High&category=Other&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Window cleaning
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20221215">15 Dec 2022</td>
+        <td class="govuk-table__cell" data-sort-value="Other">Other</td>
+        <td class="govuk-table__cell" data-sort-value="Suspended"> <strong class="govuk-tag govuk-tag--grey">Suspended</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Other" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Floristry">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Floristry&fromActivityDashboard=true&riskLevel=High&category=Other&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Floristry
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20210321">21 Mar 2021</td>
+        <td class="govuk-table__cell" data-sort-value="Other">Other</td>
+        <td class="govuk-table__cell" data-sort-value="Archived"> <strong class="govuk-tag govuk-tag--grey">Archived</strong></td>
+        <td class="govuk-table__cell" data-sort-value="0">
+          0
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Other" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Car washing">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Car washing&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                Car washing
+              </a>
+            </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20200903">3 Sept 2020</td>
+        <td class="govuk-table__cell" data-sort-value="Other">Other</td>
+        <td class="govuk-table__cell" data-sort-value="Archived"> <strong class="govuk-tag govuk-tag--grey">Archived</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Prison jobs" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="General cleaning">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+              <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=General cleaning&fromActivityDashboard=true&riskLevel=High&category=Prison jobs&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                General cleaning
+              </a>
+            </h3>
+          </div>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="19900420">20 Apr 1990</td>
+        <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+        <td class="govuk-table__cell" data-sort-value="Archived"> <strong class="govuk-tag govuk-tag--grey">Archived</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+      {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Food prep, level 1">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+            <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Food prep, level 1fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+              Food prep, level 1
+            </a>
+          </h3>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="20200509">9 May 2020</td>
+        <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+        <td class="govuk-table__cell" data-sort-value="Archived"> <strong class="govuk-tag govuk-tag--grey">Archived</strong></td>
+        <td class="govuk-table__cell" data-sort-value="1">
+          1
+        </td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+  <br />
+
+  <button class="govuk-button" data-module="govuk-button" name="editDashboard" value="suspend">
+  Suspend all activities
+  </button>
   </form>
 
+{% endif %}
+
+
+
+
+{% endblock %}
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
+<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a[data-modal]').on('click', function(event) {
+			event.preventDefault();
+			this.blur();
+			$.get(this.href, function(html) {
+				$(html).appendTo('body').modal({
+					showClose: false,
+					clickClose: false
+				});
+			});
+		});
+
+		$('#show').on('change', function() {
+			window.location = 'activity-dashboard?dashboardView=' + $(this).val()
+		})
+    $('#show2').on('change', function() {
+			window.location = 'activity-dashboard?dashboardCategory=' + $(this).val()
+		})
+	})
+</script>
 {% endblock %}
