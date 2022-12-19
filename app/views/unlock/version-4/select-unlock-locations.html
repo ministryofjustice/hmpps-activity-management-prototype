@@ -27,27 +27,28 @@ Activities Management prototype
 		<h1 class="govuk-heading-l">
 			Choose unlock list details
 		</h1>
-		<form method="post">
+		<form action="unlock-list">
+			{% set today = '_'|today() %}
 			{{ govukRadios({
 				name: "chosen-date",
 				fieldset: {
 					legend: {
-						text: "Date",
+						text: "Select unlock date",
 						isPageHeading: false,
 						classes: "govuk-fieldset__legend--m"
 					}
 				},
 				items: [
 				{
-					value: "today",
+					value: today,
 					text: "Today"
 				},
 				{
-					value: "tomorrow",
+					value: today|dayAfter(today),
 					text: "Tomorrow"
 				},
 				{
-					value: "DATE",
+					value: "other-date",
 					text: "A different date",
 					conditional: {
 						html: dateHtml
@@ -55,6 +56,7 @@ Activities Management prototype
 				}
 				]
 			}) }}
+
 			{{ govukRadios({
 				name: "times",
 				fieldset: {
@@ -121,7 +123,7 @@ Activities Management prototype
 			<p class="govuk-body govuk-!-margin-bottom-6">
 				<a href="#" class="govuk-link govuk-link--no-visited-state" id="check-all-locations">Select all<span class="govuk-visually-hidden"> locations</span></a>
 			</p>
-            {{ govukCheckboxes({
+			{{ govukCheckboxes({
 				name: "staying-or-leaving",
 				fieldset: {
 					legend: {

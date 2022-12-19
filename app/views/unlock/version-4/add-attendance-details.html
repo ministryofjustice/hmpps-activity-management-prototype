@@ -31,7 +31,7 @@ Activities Management prototype
 		</h1>
 
 		<div class="app-search">
-			<form action="/applications" method="get" novalidate="">
+			<form action="/applications" method="get" novalidate="" class="govuk-!-margin-bottom-8">
 				<div class="govuk-form-group">
 					<label class="govuk-label app-search__label govuk-label--m" for="keywords">
 						Search by prisoner name
@@ -79,15 +79,15 @@ Activities Management prototype
 					},
 					items: [
 					{
+						value: "standard",
+						text: "Standard pay"
+					},
+					{
 						value: "bonus",
 						text: "Bonus pay",
 						conditional: {
 							html: caseNoteHtml
 						}
-					},
-					{
-						value: "standard",
-						text: "Standard pay"
 					},
 					{
 						divider: "or"

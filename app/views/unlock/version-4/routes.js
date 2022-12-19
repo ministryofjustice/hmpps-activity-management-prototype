@@ -60,7 +60,7 @@ function getWings(data) {
 }
 
 function updateAttendanceList(req, res) {
-	req.session.data['activities'].forEach(( activity ) => {
+	req.session.data['timetable-3'].forEach(( activity ) => {
 		const id = activity.id;
 		const scheduledPrisoners = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id);
 
@@ -82,7 +82,8 @@ router.get('/activities/:activityId', function(req, res) {
 	updateAttendanceList(req, res)
 
 	let activityId = req.params.activityId;
-	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
+	let date = req.session.data['date']
+	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
 	// remove the confirmation notification on refreshing the page
 	if(req.session.data['attendance-confirmation'] == 'true'){
@@ -90,16 +91,110 @@ router.get('/activities/:activityId', function(req, res) {
 	}
 
 	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
-	let notAttendedCount = filteredPrisoners.filter(prisoner => prisoner.attendance == 'not-attended').length
-	let attendedCount = filteredPrisoners.filter(prisoner => prisoner.attendance == 'attended').length
+	
+	let notAttendedCount = 0;
+	let attendedCount = 0;
 
-	res.render('unlock/' + req.version + '/activity-list', { activity, filteredPrisoners, notAttendedCount, attendedCount, activityId })
+	filteredPrisoners.forEach((prisoner) => {
+		if (prisoner.attendance) {
+			prisoner.attendance.forEach((attendance) => {
+				if (attendance.activityId === activityId) {
+					if (attendance.date === date) {
+						if (attendance.status === 'not-attended') {
+							notAttendedCount++;
+						} else if (attendance.status === 'attended') {
+							attendedCount++;
+						}
+					}
+				}
+			});
+		}
+	});
+
+    function getNextSessionDate(date, activity) {
+        // Get the current day of the week as a number (0 for Sunday, 1 for Monday, etc.)
+    	const currentDay = new Date(date).getDay();
+
+        // Find the next session day for the activity
+    	let nextSessionDay;
+    	for (const timeAndDay of activity.timesAndDays) {
+    		if (timeAndDay.day > currentDay) {
+    			nextSessionDay = timeAndDay.day;
+    			break;
+    		}
+    	}
+
+        // If no next session day was found, it means the next session is in the following week
+    	if (!nextSessionDay) {
+    		nextSessionDay = activity.timesAndDays[0].day;
+    	}
+
+        // Check if the next session day is in the same week as the current day
+    	const nextSessionDate = new Date(date);
+    	if (nextSessionDay < currentDay) {
+    		nextSessionDate.setDate(nextSessionDate.getDate() + (7 - currentDay + nextSessionDay));
+    	} else {
+    		nextSessionDate.setDate(nextSessionDate.getDate() + (nextSessionDay - currentDay));
+    	}
+
+        // Return the date in the desired format
+    	const year = nextSessionDate.getFullYear();
+        const month = nextSessionDate.getMonth() + 1; // months are 0-based
+        const day = nextSessionDate.getDate();
+        return `${year}-${month}-${day}`;
+    }
+
+    function getPreviousSessionDate(date, activity) {
+        // Get the current day of the week as a number (0 for Sunday, 1 for Monday, etc.)
+    	const currentDay = new Date(date).getDay();
+
+        // Find the previous session day for the activity
+    	let previousSessionDay;
+    	for (let i = activity.timesAndDays.length - 1; i >= 0; i--) {
+    		if (activity.timesAndDays[i].day < currentDay) {
+    			previousSessionDay = activity.timesAndDays[i].day;
+    			break;
+    		}
+    	}
+
+        // If no previous session day was found, it means the previous session is in the previous week
+    	if (!previousSessionDay) {
+    		previousSessionDay = activity.timesAndDays[activity.timesAndDays.length - 1].day;
+    	}
+
+        // Check if the previous session day is in the same week as the current day
+    	const previousSessionDate = new Date(date);
+    	if (previousSessionDay > currentDay) {
+    		previousSessionDate.setDate(previousSessionDate.getDate() - (currentDay + (7 - previousSessionDay)));
+    	} else {
+    		previousSessionDate.setDate(previousSessionDate.getDate() - (currentDay - previousSessionDay));
+    	}
+
+        // Return the date in the desired format
+    	const year = previousSessionDate.getFullYear();
+        const month = previousSessionDate.getMonth() + 1; // months are 0-based
+        const day = previousSessionDate.getDate();
+        return `${year}-${month}-${day}`;
+    }
+
+    let nextSessionDate = getNextSessionDate(date, activity)
+    let previousSessionDate = getPreviousSessionDate(date, activity)
+
+    res.render('unlock/' + req.version + '/activity-list', {
+    	activity,
+    	filteredPrisoners,
+    	notAttendedCount,
+    	attendedCount,
+    	activityId,
+    	nextSessionDate,
+    	previousSessionDate
+    })
 });
 
 // cancellation  details
 router.get('/activities/:activityId/cancel', function (req, res) {
 	let activityId = req.params.activityId;
-	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
+	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
 	res.render('unlock/' + req.version + '/choose-cancellation-reason', {activity})
 })
@@ -112,22 +207,29 @@ router.get('/activities/:activityId/confirm-cancellation', function (req, res) {
 router.post('/activities/:activityId/confirm-cancellation', function (req, res) {
 	if(req.session.data['confirm-cancellation'] == 'yes'){
 		let activityId = req.params.activityId;
-		let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId);
+		let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId);
 		if (activity) {
 			activity.cancelled = true;
 		}
 		let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
-		filteredPrisoners.forEach((prisoner) => {
-			prisoner.attendance = "not-attended"
+
+		// set prisoner attendance
+		filteredPrisoners.forEach((prisoner, index) => {
+			prisoner.attendance = [];
+			prisoner.attendance.push({
+				activityId: req.session.data['activity-id'],
+				date: req.session.data['date'],
+				attendance: "not-attended"
+			});
 		})
 	}
-	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId)
+	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId + '?date=' + req.session.data['date'])
 })
 
 // attendance  details
 router.get('/activities/:activityId/:prisonerId', function (req, res) {
 	let activityId = req.params.activityId;
-	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
+	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
 	let prisonerId = req.params.prisonerId;
 	let prisoner = req.session.data['prisoners'].find(prisoner => prisoner._id === prisonerId)
@@ -153,13 +255,23 @@ router.post('/add-attendance-details', function(req, res) {
 		if(req.session.data['attendance-action'] == 'not-attended'){
 			let absencePayment = attendance['absence-payment']
 
-			prisoner['attendance'] = "not-attended"
-			prisoner['absence-payment'] = absencePayment
+			prisoner.attendance = [];
+			prisoner.attendance.push({
+				activityId: req.session.data['activity-id'],
+				date: req.session.data['date'],
+				attendance: "not-attended",
+				'absence-payment': absencePayment
+			});
 		} else {
 			let bonus = attendance['bonus']
 			
-			prisoner['attendance'] = "attended"
-			prisoner['bonus'] = bonus
+			prisoner.attendance = [];
+			prisoner.attendance.push({
+				activityId: req.session.data['activity-id'],
+				date: req.session.data['date'],
+				attendance: "attended",
+				bonus: bonus
+			});
 		}
 	})
 
@@ -189,7 +301,12 @@ router.post('/check-variable-pay', function(req, res) {
 	} else {
 		// set prisoner attendance
 		filteredPrisoners.forEach((prisoner, index) => {
-			prisoner.attendance = "attended"
+			prisoner.attendance = [];
+			prisoner.attendance.push({
+				activityId: req.session.data['activity-id'],
+				date: req.session.data['date'],
+				attendance: "attended"
+			});
 		})
 
 		req.session.data['attendance-confirmation'] = 'true'
@@ -216,15 +333,27 @@ router.post('/select-refusals-locations', function(req, res) {
 
 	// REFUSALS LIST
 router.get('/refusals-list', function(req, res) {
-	let period = req.session.data['times'].toUpperCase()
-	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
-	let locations = getWings(req.session.data['selected-locations'])
+	let period = req.session.data['times'].toUpperCase()	
+	let chosenDate = req.session.data['chosen-date']
+	let date = new Date(chosenDate); // Replace with the actual date
+	let dayOfWeek = date.getDay(); // Replace with the actual day of the week
+
+	let filteredActivities = req.session.data['timetable-3'].filter(activity => {
+        // Check if the activity occurs on the current day of the week
+		let activityDayMatches = activity.timesAndDays.some(timeAndDay => timeAndDay.day === dayOfWeek);
+         // Check if the activity occurs in the given period
+		let activityPeriodMatches = activity.period === period;
+		return activityDayMatches && activityPeriodMatches;
+	});
+
+
 	let filteredPrisoners = req.session.data['prisoners'].filter((prisoner) => {
 		return filteredActivities.some((activity) => {
 			return activity.id === prisoner.activity;
 		});
 	});
 
+	let locations = getWings(req.session.data['selected-locations'])
 	if( Object.keys(locations).length !== 0 ){
 		filteredPrisoners = filteredPrisoners.filter( prisoner => req.session.data['selected-locations']['houseblocks'].includes( prisoner.location.houseblock.toString() ) )
 	}
@@ -251,15 +380,27 @@ router.post('/select-unlock-locations', function(req, res) {
 
 // unlock list
 router.get('/unlock-list', function(req, res) {
-	let period = req.session.data['times'].toUpperCase()
-	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
-	let locations = getWings(req.session.data['selected-locations'])
+	let period = req.session.data['times'].toUpperCase()	
+	let chosenDate = req.session.data['chosen-date']
+	let date = new Date(chosenDate); // Replace with the actual date
+	let dayOfWeek = date.getDay(); // Replace with the actual day of the week
+
+	let filteredActivities = req.session.data['timetable-3'].filter(activity => {
+        // Check if the activity occurs on the current day of the week
+		let activityDayMatches = activity.timesAndDays.some(timeAndDay => timeAndDay.day === dayOfWeek);
+         // Check if the activity occurs in the given period
+		let activityPeriodMatches = activity.period === period;
+		return activityDayMatches && activityPeriodMatches;
+	});
+
+
 	let filteredPrisoners = req.session.data['prisoners'].filter((prisoner) => {
 		return filteredActivities.some((activity) => {
 			return activity.id === prisoner.activity;
 		});
 	});
 
+	let locations = getWings(req.session.data['selected-locations'])
 	if( Object.keys(locations).length !== 0 ){
 		filteredPrisoners = filteredPrisoners.filter( prisoner => req.session.data['selected-locations']['houseblocks'].includes( prisoner.location.houseblock.toString() ) )
 	}
@@ -300,11 +441,29 @@ router.post('/select-activity', function(req, res) {
 router.get('/activities', function(req, res) {
 	updateAttendanceList(req, res)
 
+	let chosenDate = req.session.data['chosen-date']
 	let period = req.session.data['times'].toUpperCase()
-	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period && activity.count > 0);
+	let date = new Date(chosenDate)
+	let dayOfWeek = date.getDay(); // Get the day of the week (0-6, with 0 being Sunday)
+
+	let filteredActivities = {
+		morning: [],
+		afternoon: []
+	};
+	req.session.data['timetable-3'].filter(activity => {
+        // Check if the activity occurs on the current day of the week
+		let activityDayMatches = activity.timesAndDays.some(timeAndDay => timeAndDay.day === dayOfWeek);
+		if (activityDayMatches) {
+            // Check if the activity occurs in the desired time period
+			if (activity.period === 'AM') {
+				filteredActivities.morning.push(activity);
+			} else if (activity.period === 'PM') {
+				filteredActivities.afternoon.push(activity);
+			}
+		}
+	});
 
 	let selectedDate, relativeDate;
-	let chosenDate = req.session.data['chosen-date']
 
 	if(chosenDate == 'other-date'){
 		chosenDate = req.session.data['other-date-year'] + '-' + req.session.data['other-date-month'] + '-' + req.session.data['other-date-day']
@@ -337,7 +496,9 @@ router.get('/activities', function(req, res) {
 		relativeDate = DateTime.fromFormat(chosenDate, "yyyy-M-d").toRelativeCalendar();
 	}
 
-	res.render('unlock/' + req.version + '/activities', {filteredActivities, relativeDate, selectedDate})
+	let activitiesCount = filteredActivities.morning.length + filteredActivities.afternoon.length
+
+	res.render('unlock/' + req.version + '/activities', {filteredActivities, relativeDate, selectedDate, activitiesCount})
 });
 
 module.exports = router
