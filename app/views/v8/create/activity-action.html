@@ -23,10 +23,19 @@ Activities Management prototype
           Are you sure you want to suspend following activites?
           {% endif %}
 
+          {% if (data.action=="archiveSchedule") %}
+          Are you sure you want to archive the following schedules?
+          {% endif %}
+
+          {% if (data.action=="suspendSchedule") %}
+          Are you sure you want to suspend following schedules?
+          {% endif %}
+
+
         </h1><br />
       </div>
 
-<h2 class="govuk-heading-m govuk-!-margin-bottom-4"">{{data.activityName}}</h2>
+<h2 class="govuk-heading-l govuk-!-margin-bottom-4"">{{data.activityName}}{% if (data.action=="suspendSchedule") or (data.action=="archiveSchedule") %} - Schedule A {% endif %}</h2>
       <form method="post">
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-form-group">
