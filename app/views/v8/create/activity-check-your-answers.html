@@ -165,7 +165,7 @@ Activities Management prototype
           </div>
 
         </dl>
-        {% if data.showSchedules!=='true' %}
+
 
             {% if data['fromActivityDashboard']=='true' %}
               {% if (data.changedCategory=='changed')%}
@@ -174,24 +174,24 @@ Activities Management prototype
                 <button class="govuk-button" data-module="govuk-button" value="return">
                 Confirm changes
                 {%endif%}
-              {% if (data.changedCategory!=='changed')%}
-              <form method="post">
-                <input type="hidden" name="returnToDashboard" value="true" />
-                <button class="govuk-button" data-module="govuk-button" value="return">
-                Return to dashboard
-                {%endif%}
-            {% else %}
+
+              {% if (data.changedCategory=='changed')%}
+            <form method="post">
+              <button class="govuk-button" data-module="govuk-button" value="return">
               {% if data['edit']=='true' %}
                 Confirm changes to activity
                 {% else %}
                   Create activity
               {% endif %}
             {% endif %}
+            {% endif %}
 
           </button>
         </form>
-        {% endif %}
+            <a href="activity-dashboard">Return to dashboard</a><br /><br /><br />
       </div>
+
+
 
 
 
