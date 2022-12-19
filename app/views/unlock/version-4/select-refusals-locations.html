@@ -27,27 +27,28 @@ Activities Management prototype
 		<h1 class="govuk-heading-l">
 			Choose refusals and sickness details
 		</h1>
-		<form method="post">
+		<form action="refusals-list">
+			{% set today = '_'|today() %}
 			{{ govukRadios({
 				name: "chosen-date",
 				fieldset: {
 					legend: {
-						text: "Date",
+						text: "Select unlock date",
 						isPageHeading: false,
 						classes: "govuk-fieldset__legend--m"
 					}
 				},
 				items: [
 				{
-					value: "today",
+					value: today,
 					text: "Today"
 				},
 				{
-					value: "yesterday",
+					value: today|dayBefore(today),
 					text: "Yesterday"
 				},
 				{
-					value: "DATE",
+					value: "other-date",
 					text: "A different date",
 					conditional: {
 						html: dateHtml
@@ -55,6 +56,7 @@ Activities Management prototype
 				}
 				]
 			}) }}
+			
 			{{ govukRadios({
 				name: "times",
 				fieldset: {

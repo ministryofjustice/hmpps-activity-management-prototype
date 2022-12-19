@@ -216,15 +216,27 @@ router.post('/select-refusals-locations', function(req, res) {
 
 	// REFUSALS LIST
 router.get('/refusals-list', function(req, res) {
-	let period = req.session.data['times'].toUpperCase()
-	let filteredActivities = req.session.data['timetable-3'].filter(activity => activity.period == period);
-	let locations = getWings(req.session.data['selected-locations'])
+	let period = req.session.data['times'].toUpperCase()	
+	let chosenDate = req.session.data['chosen-date']
+	let date = new Date(chosenDate); // Replace with the actual date
+	let dayOfWeek = date.getDay(); // Replace with the actual day of the week
+
+    let filteredActivities = req.session.data['timetable-3'].filter(activity => {
+        // Check if the activity occurs on the current day of the week
+        let activityDayMatches = activity.timesAndDays.some(timeAndDay => timeAndDay.day === dayOfWeek);
+         // Check if the activity occurs in the given period
+    	let activityPeriodMatches = activity.period === period;
+        return activityDayMatches && activityPeriodMatches;
+    });
+
+
 	let filteredPrisoners = req.session.data['prisoners'].filter((prisoner) => {
 		return filteredActivities.some((activity) => {
 			return activity.id === prisoner.activity;
 		});
 	});
 
+	let locations = getWings(req.session.data['selected-locations'])
 	if( Object.keys(locations).length !== 0 ){
 		filteredPrisoners = filteredPrisoners.filter( prisoner => req.session.data['selected-locations']['houseblocks'].includes( prisoner.location.houseblock.toString() ) )
 	}

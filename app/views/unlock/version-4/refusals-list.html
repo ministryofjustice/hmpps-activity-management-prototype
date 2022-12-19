@@ -26,12 +26,18 @@ Activities Management prototype
 		}) }}
 		{% endblock %}
 
+		{% if data['chosen-date'] == 'other-date' %}
+		{% set date = data['other-date-year'] + '-' + data['other-date-month'] + '-' + data['other-date-day'] %}
+		{% else %}
+		{% set date = data['chosen-date'] %}
+		{% endif %}
+
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-two-thirds">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 						Refusals and sickness
-						<span class="govuk-caption-l">Monday 31st October - {{data['time-period'] or "AM"}}</span>
+						<span class="govuk-caption-l">{{relativeDate or date|longDateFormat(date)}} ({{data['times']|upper or "morning"}})</span>
 					</h1>
 				</div>
 				<div class="govuk-grid-column-one-third">
@@ -95,6 +101,7 @@ Activities Management prototype
 					</div>
 				</div>
 			</div>
+
 			<div class="app-filter-area" id="filters" tabindex=0>
 				<div class="govuk-grid-row">
 					<div class="govuk-grid-column-full">
