@@ -33,8 +33,13 @@ Activities Management prototype
 		<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
 			{{activitiesCount}} activities scheduled for {{relativeDate or date|longDateFormat(date)}} ({{data['times']|upper or "morning"}})
 		</h1>
-
-		<p class="govuk-!-margin-bottom-6"><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></p>
+		
+		<ul class="govuk-list govuk-!-margin-bottom-6">
+			<li><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></li>
+			{% if date != '_'|today %}
+			<li><a href="?chosen-date={{'_'|today}}" class="govuk-link--no-visited-state">View today's schedule</a></li>
+			{% endif %}
+		</ul>
 
 		<div class="app-search govuk-!-margin-bottom-6">
 			<form action="/applications" method="get" novalidate="">
