@@ -163,10 +163,11 @@ Activities Management prototype
               </a>
             </dd>
           </div>
-
         </dl>
+        </div>
 
-
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
             {% if data['fromActivityDashboard']=='true' %}
               {% if (data.changedCategory=='changed')%}
               <form method="post">
@@ -185,27 +186,48 @@ Activities Management prototype
               {% endif %}
             {% endif %}
             {% endif %}
+              </div>
+              </div>
 
+
+
+<div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-thirds" style="margin-left:35px;">
+        <a href="activity-start-date?activityName={{data.activityNameDashboard}}">
+          <button class="govuk-button" data-module="govuk-button">
+            Build a new schedule
+          </button>
+
+        <a href="activity-action?action=suspendActivity&activityName={{data.activityNameDashboard}}">
+          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+            Suspend {{data.activityNameDashboard}}
+          </button>
+          <a href="activity-action?action=susarchivependActivity&activityName={{data.activityNameDashboard}}"">
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+              Archive {{data.activityNameDashboard}}
+            </button>
+        </a>  <br /><br />
           </button>
         </form>
-            <a href="activity-dashboard">Return to dashboard</a><br /><br /><br />
+            <a href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+            <div style="margin-bottom:100px;">&nbsp;</div>
       </div>
+    </div>
 
 
 
-
-
+  <div class="govuk-grid-column-three-thirds">
 
       {% if data.showSchedules=='true' %}
       <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-m">Schedule details</h2>
+        <h2 class="govuk-heading-m">Schedules for {{data.activityNameDashboard or 'Maths level 1'}} </h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Schedule name
             </dt>
             <dd class="govuk-summary-list__value">
-            Schedule A
+            {{data.activityNameDashboard or 'Maths level 1'}} - Schedule A
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-start-date">
@@ -340,7 +362,7 @@ Activities Management prototype
                   <button class="govuk-button" data-module="govuk-button" value="return">
                   Confirm changes
                   {%endif%}
-                {% if (data.changedCategory!=='changed')%}
+                {% if (data.changedCategory!=='changed') and (data.activityNameDashboard=="")%}
                 <form method="post">
                   <input type="hidden" name="returnToDashboard" value="true" />
                   <button class="govuk-button" data-module="govuk-button" value="return">
@@ -354,6 +376,25 @@ Activities Management prototype
                 {% endif %}
               {% endif %}
 
+              <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-three-thirds" style="margin-left:-10px;">
+
+                      <a href="activity-action?action=suspendActivity&activityName={{data.activityNameDashboard}}">
+                        <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                          Suspend Schedule A
+                        </button>
+                        <a href="activity-action?action=susarchivependActivity&activityName={{data.activityNameDashboard}}"">
+                          <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                            Archive Schedule A
+                          </button>
+                      </a>  <br /><br />
+                        </button>
+                      </form>
+                          <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+                          <div style="margin-bottom:100px;">&nbsp;</div>
+                    </div>
+                  </div>
+
             </button>
           </form>
           {% endif %}
@@ -365,7 +406,7 @@ Activities Management prototype
 
 
   {% else %}
-§<!--Create journey-->
+<!--Create journey-->
 
 
 
@@ -498,6 +539,7 @@ Activities Management prototype
           </button>
         </form>
       </div>
+    </div>
 </div>
 {% endif %}
 {% endblock %}
