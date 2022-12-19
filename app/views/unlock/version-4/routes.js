@@ -60,7 +60,7 @@ function getWings(data) {
 }
 
 function updateAttendanceList(req, res) {
-	req.session.data['activities'].forEach(( activity ) => {
+	req.session.data['timetable-3'].forEach(( activity ) => {
 		const id = activity.id;
 		const scheduledPrisoners = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id);
 
@@ -82,7 +82,7 @@ router.get('/activities/:activityId', function(req, res) {
 	updateAttendanceList(req, res)
 
 	let activityId = req.params.activityId;
-	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
+	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
 	// remove the confirmation notification on refreshing the page
 	if(req.session.data['attendance-confirmation'] == 'true'){
@@ -99,7 +99,7 @@ router.get('/activities/:activityId', function(req, res) {
 // cancellation  details
 router.get('/activities/:activityId/cancel', function (req, res) {
 	let activityId = req.params.activityId;
-	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
+	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
 	res.render('unlock/' + req.version + '/choose-cancellation-reason', {activity})
 })
@@ -112,7 +112,7 @@ router.get('/activities/:activityId/confirm-cancellation', function (req, res) {
 router.post('/activities/:activityId/confirm-cancellation', function (req, res) {
 	if(req.session.data['confirm-cancellation'] == 'yes'){
 		let activityId = req.params.activityId;
-		let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId);
+		let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId);
 		if (activity) {
 			activity.cancelled = true;
 		}
@@ -127,7 +127,7 @@ router.post('/activities/:activityId/confirm-cancellation', function (req, res) 
 // attendance  details
 router.get('/activities/:activityId/:prisonerId', function (req, res) {
 	let activityId = req.params.activityId;
-	let activity = req.session.data['activities'].find(activity => activity.id.toString() === activityId)
+	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
 	let prisonerId = req.params.prisonerId;
 	let prisoner = req.session.data['prisoners'].find(prisoner => prisoner._id === prisonerId)
@@ -217,7 +217,7 @@ router.post('/select-refusals-locations', function(req, res) {
 	// REFUSALS LIST
 router.get('/refusals-list', function(req, res) {
 	let period = req.session.data['times'].toUpperCase()
-	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
+	let filteredActivities = req.session.data['timetable-3'].filter(activity => activity.period == period);
 	let locations = getWings(req.session.data['selected-locations'])
 	let filteredPrisoners = req.session.data['prisoners'].filter((prisoner) => {
 		return filteredActivities.some((activity) => {
@@ -251,15 +251,27 @@ router.post('/select-unlock-locations', function(req, res) {
 
 // unlock list
 router.get('/unlock-list', function(req, res) {
-	let period = req.session.data['times'].toUpperCase()
-	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period);
-	let locations = getWings(req.session.data['selected-locations'])
+	let period = req.session.data['times'].toUpperCase()	
+	let chosenDate = req.session.data['chosen-date']
+	let date = new Date(chosenDate); // Replace with the actual date
+	let dayOfWeek = date.getDay(); // Replace with the actual day of the week
+
+    let filteredActivities = req.session.data['timetable-3'].filter(activity => {
+        // Check if the activity occurs on the current day of the week
+        let activityDayMatches = activity.timesAndDays.some(timeAndDay => timeAndDay.day === dayOfWeek);
+         // Check if the activity occurs in the given period
+    	let activityPeriodMatches = activity.period === period;
+        return activityDayMatches && activityPeriodMatches;
+    });
+
+
 	let filteredPrisoners = req.session.data['prisoners'].filter((prisoner) => {
 		return filteredActivities.some((activity) => {
 			return activity.id === prisoner.activity;
 		});
 	});
 
+	let locations = getWings(req.session.data['selected-locations'])
 	if( Object.keys(locations).length !== 0 ){
 		filteredPrisoners = filteredPrisoners.filter( prisoner => req.session.data['selected-locations']['houseblocks'].includes( prisoner.location.houseblock.toString() ) )
 	}
@@ -300,11 +312,29 @@ router.post('/select-activity', function(req, res) {
 router.get('/activities', function(req, res) {
 	updateAttendanceList(req, res)
 
+	let chosenDate = req.session.data['chosen-date']
 	let period = req.session.data['times'].toUpperCase()
-	let filteredActivities = req.session.data['activities'].filter(activity => activity.period == period && activity.count > 0);
+	let date = new Date(chosenDate)
+	let dayOfWeek = date.getDay(); // Get the day of the week (0-6, with 0 being Sunday)
+
+    let filteredActivities = {
+        morning: [],
+        afternoon: []
+    };
+    req.session.data['timetable-3'].filter(activity => {
+        // Check if the activity occurs on the current day of the week
+        let activityDayMatches = activity.timesAndDays.some(timeAndDay => timeAndDay.day === dayOfWeek);
+        if (activityDayMatches) {
+            // Check if the activity occurs in the desired time period
+            if (activity.period === 'AM') {
+                filteredActivities.morning.push(activity);
+            } else if (activity.period === 'PM') {
+                filteredActivities.afternoon.push(activity);
+            }
+        }
+    });
 
 	let selectedDate, relativeDate;
-	let chosenDate = req.session.data['chosen-date']
 
 	if(chosenDate == 'other-date'){
 		chosenDate = req.session.data['other-date-year'] + '-' + req.session.data['other-date-month'] + '-' + req.session.data['other-date-day']
@@ -337,7 +367,9 @@ router.get('/activities', function(req, res) {
 		relativeDate = DateTime.fromFormat(chosenDate, "yyyy-M-d").toRelativeCalendar();
 	}
 
-	res.render('unlock/' + req.version + '/activities', {filteredActivities, relativeDate, selectedDate})
+	let activitiesCount = filteredActivities.morning.length + filteredActivities.afternoon.length
+
+	res.render('unlock/' + req.version + '/activities', {filteredActivities, relativeDate, selectedDate, activitiesCount})
 });
 
 module.exports = router

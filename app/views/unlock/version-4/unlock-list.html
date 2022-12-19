@@ -21,12 +21,18 @@ Activities Management prototype
 	]
 }) }}
 {% endblock %}
+
 {% block content %}
+{% if data['chosen-date'] == 'other-date' %}
+{% set date = data['other-date-year'] + '-' + data['other-date-month'] + '-' + data['other-date-day'] %}
+{% else %}
+{% set date = data['chosen-date'] %}
+{% endif %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 			Unlock list
-			<span class="govuk-caption-l">Monday 31st October - {{data['times']|upper or "AM"}}</span>
+			<span class="govuk-caption-l">{{relativeDate or date|longDateFormat(date)}} ({{data['times']|upper or "morning"}})</span>
 		</h1>
 		<!-- <p class="govuk-!-margin-top-0">
 			<a href="#">Select another residential location</a>
@@ -360,7 +366,7 @@ Activities Management prototype
 			</td>
 			<td class="govuk-table__cell" data-sort-value="{{activityName}}" scope="col">
 				<div>
-				<a href="activities/{{activity.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ activity.name }}</a>
+				<a href="activities/{{activity.id}}?date={{date}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ activity.name }}</a>
 				<br>
 				<span class="govuk-hint govuk-!-font-size-16">{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}</span>
 				<br>

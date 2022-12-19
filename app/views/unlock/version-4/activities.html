@@ -31,7 +31,7 @@ Activities Management prototype
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
-			{{filteredActivities.length}} activities scheduled for {{relativeDate or date|longDateFormat(date)}} ({{data['times']|upper or "morning"}})
+			{{activitiesCount}} activities scheduled for {{relativeDate or date|longDateFormat(date)}} ({{data['times']|upper or "morning"}})
 		</h1>
 
 		<p class="govuk-!-margin-bottom-6"><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></p>
@@ -52,7 +52,9 @@ Activities Management prototype
 	</div>
 </div>
 
-{% set tableHtml %}
+<h2 class="govuk-heading-m">
+	{{"Morning sessions (" + filteredActivities.morning|length + ")"}}
+</h2>
 <table class="govuk-table" data-module="moj-sortable-table">
 	<thead class="govuk-table__head">
 		<tr class="govuk-table__row">
@@ -65,9 +67,12 @@ Activities Management prototype
 		</tr>
 	</thead>
 	<tbody class="govuk-table__body">
-		{% for activity in filteredActivities | sort(false, true, 'name') %}
+		{% for activity in filteredActivities.morning | sort(false, true, 'name') %}
 		<tr class="govuk-table__row">
-			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}"><a href="activities/{{activity.id}}?date={{date|shortDateFormat(date)}}" class="govuk-link--no-visited-state">{{activity.name}}</a></td>
+			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
+				<a href="activities/{{activity.id}}?date={{date|shortDateFormat(date)}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+				{% if activity.cancelled == true %}<span class="govuk-tag">Cancelled</span>{% endif %}
+			</td>
 			<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
 			<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
 				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
@@ -79,17 +84,39 @@ Activities Management prototype
 		{% endfor %}
 	</tbody>
 </table>
-{% endset %}
 
 <h2 class="govuk-heading-m">
-	{{"Morning sessions (" + filteredActivities|length + ")"}}
+	{{"Afternoon sessions (" + filteredActivities.afternoon|length + ")"}}
 </h2>
-{{tableHtml|safe}}
-
-<h2 class="govuk-heading-m">
-	{{"Afternoon sessions (" + filteredActivities|length + ")"}}
-</h2>
-{{tableHtml|safe}}
+<table class="govuk-table" data-module="moj-sortable-table">
+	<thead class="govuk-table__head">
+		<tr class="govuk-table__row">
+			<th scope="col" class="govuk-table__header" aria-sort="ascending">Activity</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none">Location</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none">Time</th>
+			<th scope="col" class="govuk-table__header">Scheduled</th>
+			<th scope="col" class="govuk-table__header govuk-hint">Attended</th>
+			<th scope="col" class="govuk-table__header govuk-hint">Not attended</th>
+		</tr>
+	</thead>
+	<tbody class="govuk-table__body">
+		{% for activity in filteredActivities.afternoon | sort(false, true, 'name') %}
+		<tr class="govuk-table__row">
+			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
+				<a href="activities/{{activity.id}}?date={{date|shortDateFormat(date)}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+				{% if activity.cancelled == true %}<br><span class="govuk-tag govuk-tag--red govuk-!-margin-top-1">Cancelled</span>{% endif %}
+			</td>
+			<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
+			<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
+				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
+			</td>
+			<td class="govuk-table__cell">{{activity.count}}</td>
+			<td class="govuk-table__cell govuk-hint">{{activity['attended-count']}}</td>
+			<td class="govuk-table__cell govuk-hint"><span class="{{'govuk-tag govuk-tag--red' if activity['not-attended-count'] > 0 }}">{{activity['not-attended-count']}}</span></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
 
 {% set dayBefore = date | dayBefore() %}
 {% set dayAfter = date | dayAfter() %}
