@@ -145,7 +145,7 @@ Activities Management prototype
 					<tr class="govuk-table__row">
 						{% if notRecorded > 0 %}
 						<td class="govuk-table__cell">
-							{% if prisoner.attendance == "attended" %}
+							{% if prisoner.attendance[0].attendance == "attended" %}
 							
 							{% elif prisoner.attendance == "not-attended" %}
 							
@@ -176,9 +176,9 @@ Activities Management prototype
 							{% endif %}
 						</td>
 						<td class="govuk-table__cell">
-							{% if prisoner.attendance == "attended" %}
+							{% if prisoner.attendance[0].attendance == "attended" %}
 							<a href="{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--green">Attended</span></a>
-							{% elif prisoner.attendance == "not-attended" %}
+							{% elif prisoner.attendance[0].attendance == "not-attended" %}
 							<a href="{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--red">Absent</span></a>
 							{% else %}
 							<span class="govuk-hint">Not recorded yet</span>
@@ -195,17 +195,16 @@ Activities Management prototype
 			{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 			{{ govukPagination({
 				previous: {
-					text: "Previous day",
-					labelText: dayBefore | convertShortDateToVeryLongDate(dayBefore),
-					href: "?date="+dayBefore
+					text: "Previous session",
+					labelText: previousSessionDate | convertShortDateToVeryLongDate(dayBefore),
+					href: "?date="+previousSessionDate
 				},
 				next: {
-					text: "Next day",
-					labelText: dayAfter | convertShortDateToVeryLongDate(),
-					href: "?date="+dayAfter
+					text: "Next session",
+					labelText: nextSessionDate | convertShortDateToVeryLongDate(),
+					href: "?date="+nextSessionDate
 				}
 			}) }}
-
 		</main>
 	</div>
 
