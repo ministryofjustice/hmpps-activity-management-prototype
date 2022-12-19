@@ -19,13 +19,8 @@ router.post(version +'/setup', function(req, res) {
 							}
 						}
 			else if  (req.session.data.setupTaskType == 'activityDashboard'){
-				res.redirect(version +'/create/activity-dashboard')
+				res.redirect(version +'/create/activity-dashboard?dashboardCategory=All&dashboardView=live')
 			}
-			else if  (req.session.data.setupTaskType == 'activityDashboardMulti'){
-				res.redirect(version +'/create/activity-dashboard-multi-select')
-			}
-
-
 		else {
 			//Schedule an activity
 			res.redirect(version +'/create/activity-start-date')
@@ -34,19 +29,6 @@ router.post(version +'/setup', function(req, res) {
 
 	//From activity dashboard, if schedule, delete (archive or suspend)
 	router.post(version +'/create/activity-dashboard', function(req, res) {
-
-		if (req.session.data.editDashboard == 'schedule'){
-				res.redirect(version +'/create/activity-start-date')
-			}
-			else if (req.session.data.editDashboard == 'archive'){
-					res.redirect(version +'/create/activity-action?action=archiveActivity')
-					}
-				else if  (req.session.data.editDashboard == 'suspend'){
-					res.redirect(version +'/create/activity-action?action=suspendActivity')
-				}
-	});
-	//From activity dashboard, if schedule, delete (archive or suspend)
-	router.post(version +'/create/activity-dashboard-multi-select', function(req, res) {
 
 		if (req.session.data.editDashboard == 'schedule'){
 				res.redirect(version +'/create/activity-start-date')
