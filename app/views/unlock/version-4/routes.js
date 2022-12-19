@@ -212,11 +212,18 @@ router.post('/activities/:activityId/confirm-cancellation', function (req, res) 
 			activity.cancelled = true;
 		}
 		let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
-		filteredPrisoners.forEach((prisoner) => {
-			prisoner.attendance = "not-attended"
+
+		// set prisoner attendance
+		filteredPrisoners.forEach((prisoner, index) => {
+			prisoner.attendance = [];
+			prisoner.attendance.push({
+				activityId: req.session.data['activity-id'],
+				date: req.session.data['date'],
+				attendance: "not-attended"
+			});
 		})
 	}
-	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId)
+	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId + '?date=' + req.session.data['date'])
 })
 
 // attendance  details
