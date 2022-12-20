@@ -378,10 +378,10 @@ Activities Management prototype
 
               <div class="govuk-grid-row">
                     <div class="govuk-grid-column-three-thirds" style="margin-left:-10px;">
-
+                      {% if data.status==live %}
                       <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
                         <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
-                          Suspend Schedule A
+                          Suspend Schedule
                         </button>
                         <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
                           <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
@@ -389,6 +389,7 @@ Activities Management prototype
                           </button>
                       </a>  <br /><br />
                         </button>
+                        {% endif %}
                       </form>
                           <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
                           <div style="margin-bottom:100px;">&nbsp;</div>
