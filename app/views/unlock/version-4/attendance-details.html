@@ -17,13 +17,14 @@ Activities Management prototype
 		<h1 class="govuk-heading-l">
 			Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		</h1>
+
 		<dl class="govuk-summary-list">
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 					Activity
 				</dt>
 				<dd class="govuk-summary-list__value">
-					<a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+					<a href="../{{activity.id}}?date={{data['date']}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
 				</dd>
 			</div>
 
@@ -32,7 +33,7 @@ Activities Management prototype
 					Activity date
 				</dt>
 				<dd class="govuk-summary-list__value">
-					2 November 2022
+					{{activity['attendance-history'][0]['date']|convertShortDateToLongDate}}
 				</dd>
 			</div>
 
@@ -54,7 +55,7 @@ Activities Management prototype
 					Recorded date
 				</dt>
 				<dd class="govuk-summary-list__value">
-					11:03am on 2 November 2022
+					{{attendanceData.formattedTimestamp}}
 				</dd>
 			</div>
 

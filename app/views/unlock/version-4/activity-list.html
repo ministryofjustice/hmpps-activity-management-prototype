@@ -28,8 +28,6 @@ Activities Management prototype
 
 		{% set date = data['date'] or date|today() %}
 
-		{{activity|dump}}
-
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 			{% if activity.cancelled == true %}
 			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
@@ -147,9 +145,9 @@ Activities Management prototype
 					<tr class="govuk-table__row">
 						{% if notRecorded > 0 %}
 						<td class="govuk-table__cell">
-							{% if prisoner.attendance[0].attendance == "attended" %}
+							{% if prisoner.attendance[0].attendance.status == "attended" %}
 							
-							{% elif prisoner.attendance[0].attendance == "not-attended" %}
+							{% elif prisoner.attendance[0].attendance.status == "not-attended" %}
 							
 							{% else %}
 							<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-left-2">
@@ -178,9 +176,9 @@ Activities Management prototype
 							{% endif %}
 						</td>
 						<td class="govuk-table__cell">
-							{% if prisoner.attendance[0].attendance == "attended" %}
+							{% if prisoner.attendance[0].attendance.status == "attended" %}
 							<a href="{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--green">Attended</span></a>
-							{% elif prisoner.attendance[0].attendance == "not-attended" %}
+							{% elif prisoner.attendance[0].attendance.status == "not-attended" %}
 							<a href="{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--red">Absent</span></a>
 							{% else %}
 							<span class="govuk-hint">Not recorded yet</span>

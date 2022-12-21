@@ -77,62 +77,54 @@ function updateAttendanceList(req, res) {
 	})
 }
 
-function updateAttendanceHistory(activities, date) {
-	activities.forEach(activity => {
-		if (activity['attendance-history'].length === 0) {
-			activity['attendance-history'].push({
-				date: date,
-				attendance: []
-			});
-		}
-	});
-}
+function updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate}) {
+	let timestamp = new Date().toISOString();
+	let formattedTimestamp = DateTime.fromISO(timestamp, "yyyy-M-d").setLocale('en-GB').toFormat("h:mma 'on' d MMMM yyyy")
 
-function updateAttendance({ attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate }) {
 	filteredPrisoners.forEach((prisoner) => {
 		let prisonerAttendance = attendanceDetails.find(attendance => attendance._id == prisoner._id);
 		let status = attendanceAction == 'not-attended' ? 'not-attended' : 'attended';
 		let payment = attendanceAction == 'not-attended' ? prisonerAttendance['absence-payment'] : prisonerAttendance.bonus;
+		prisonerAttendance.status = status
 
 		prisoner.attendance = [{
 			activityId: activityId,
 			date: activityDate,
-			attendance: status,
+			attendance: prisonerAttendance,
 			payment,
+			timestamp,
+			formattedTimestamp
 		}];
-	});
 
-	updateActivityAttendanceHistory(activityTimetable, activityId, activityDate, filteredPrisoners);
-}
+		let activity = activityTimetable.find(activity => activity.id == activityId);
 
-function updateActivityAttendanceHistory(activityTimetable, activityId, activityDate, prisoners) {
-	let activity = activityTimetable.find(activity => activity.id == activityId);
-
-	if (!activity['attendance-history']) {
-		activity['attendance-history'] = [];
-	}
-
-	let attendanceHistory = activity['attendance-history'].find(history => history.date == activityDate);
-
-	if (!attendanceHistory) {
-		attendanceHistory = {
-			date: activityDate,
-			'attendance-data': [],
-		};
-		activity['attendance-history'].push(attendanceHistory);
-	}
-
-	prisoners.forEach((prisoner) => {
-		let prisonerAttendance = attendanceHistory['attendance-data'].find(attendance => attendance.prisonerId == prisoner._id);
-
-		if (!prisonerAttendance) {
-			prisonerAttendance = {
-				prisonerId: prisoner._id,
-			};
-			attendanceHistory['attendance-data'].push(prisonerAttendance);
+		if (!activity['attendance-history']) {
+			activity['attendance-history'] = [];
 		}
 
-		prisonerAttendance.status = prisoner.attendance[0].attendance;
+		let attendanceHistory = activity['attendance-history'].find(history => history.date == activityDate);
+
+		if (!attendanceHistory) {
+			attendanceHistory = {
+				date: activityDate,
+				'attendance-data': [],
+			};
+			activity['attendance-history'].push(attendanceHistory);
+		}
+
+		let prisonerAttendanceHistory = attendanceHistory['attendance-data'].find(attendance => attendance.prisonerId == prisoner._id);
+
+		if (!prisonerAttendanceHistory) {
+			prisonerAttendanceHistory = {
+				prisonerId: prisoner._id,
+				timestamp,
+				formattedTimestamp,
+				activityDate
+			};
+			attendanceHistory['attendance-data'].push(prisonerAttendanceHistory);
+		}
+
+		prisonerAttendanceHistory.status = prisoner.attendance[0].attendance.status;
 	});
 }
 
@@ -171,7 +163,6 @@ router.get('/activities/:activityId', function(req, res) {
 
 	let activityId = req.params.activityId;
 	let date = req.session.data['date']
-	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
     // remove the confirmation notification on refreshing the page
 	if (req.session.data['attendance-confirmation'] == 'true') {
@@ -179,25 +170,40 @@ router.get('/activities/:activityId', function(req, res) {
 	}
 
 	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
+	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
-	function countPrisonerAttendance(date, attendanceHistory, status) {
-		let numNotAttended = 0;
-		let attendanceHistoryData;
-		if (attendanceHistory) {
-			attendanceHistoryData = attendanceHistory.filter(record => record.date === date)
-
-			for (const item of attendanceHistoryData) {
-				if (item.status === status) {
-					numNotAttended++;
-				}
-			}
+	function getAttendanceHistory(activity, date) {
+    	if (!activity['attendance-history']) {
+    		return null;
+    	}
+    	let attendanceHistory = null;
+    	activity['attendance-history'].forEach(history => {
+    		if (history.date === date) {
+    			attendanceHistory = history;
+    		}
+    	});
+    	return attendanceHistory;
+    }
+    let attendanceHistory = getAttendanceHistory(activity, date);
+	
+	function countAttendanceStatus(activity, status, date) {
+		if (!activity['attendance-history']) {
+			return 0;
 		}
-
-		return numNotAttended;
+		let attendanceCount = 0;
+		activity['attendance-history'].forEach(history => {
+			if (history.date === date) {
+				history['attendance-data'].forEach(data => {
+					if (data.status === status) {
+						attendanceCount++;
+					}
+				});
+			}
+		});
+		return attendanceCount;
 	}
-
-	let notAttendedCount = countPrisonerAttendance(date, activity['attendance-history'], 'not-attended');
-	let attendedCount = 0;
+	let notAttendedCount = countAttendanceStatus(activity, "not-attended", date);
+	let attendedCount = countAttendanceStatus(activity, "attended", date);
 
 	function getSessionDate(date, activity, direction) {
 		const currentDay = new Date(date).getDay();
@@ -262,6 +268,7 @@ router.get('/activities/:activityId', function(req, res) {
     	filteredPrisoners,
     	notAttendedCount,
     	attendedCount,
+    	attendanceHistory,
     	activityId,
     	nextSessionDate,
     	previousSessionDate
@@ -323,16 +330,7 @@ router.post('/activities/:activityId/add-attendance-details', function(req, res)
 	let activityTimetable = req.session.data['timetable-3'];
 	let attendanceDetails = req.session.data['attendance-details'];  
 
-	const args = {
-		attendanceAction: attendanceAction,
-		filteredPrisoners: filteredPrisoners,
-		attendanceDetails: attendanceDetails,
-		activityTimetable: activityTimetable,
-		activityId: activityId,
-		activityDate: date
-	};
-
-	updateAttendance(args);
+	updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate: date});
 
     // set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
@@ -358,16 +356,7 @@ router.post('/add-refusal-details', function(req, res) {
 	let activityTimetable = req.session.data['timetable-3'];
 	let attendanceDetails = req.session.data['attendance-details'];
 
-	const args = {
-		attendanceAction: attendanceAction,
-		filteredPrisoners: filteredPrisoners,
-		attendanceDetails: attendanceDetails,
-		activityTimetable: activityTimetable,
-		activityId: activityId,
-		activityDate: date
-	};
-
-	updateAttendance(args);
+	updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate: date});
 
     // set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
@@ -407,7 +396,8 @@ router.post('/activities/:activityId/check-variable-pay', function(req, res) {
 		let attendanceAction = req.session.data['attendance-action'];
 		let activityTimetable = req.session.data['timetable-3'];
 		let attendanceDetails = req.session.data['attendance-details'];
-		updateAttendance({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate: date});
+
+		updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate: date});
 
 		req.session.data['attendance-confirmation'] = 'true'
 		res.redirect('../' + activityId + '?date=' + req.session.data['date'])
