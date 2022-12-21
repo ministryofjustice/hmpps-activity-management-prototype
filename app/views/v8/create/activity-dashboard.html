@@ -77,7 +77,7 @@ Activities Management prototype
       <a href="../allocate/activity-dashboard-1">See vacancies and allocate people</a></p>
   </div>
   </div>
-  <form method="post">
+
   <table class="govuk-table" data-module="moj-sortable-table" style="margin:0 0 0 10px;">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
@@ -88,7 +88,7 @@ Activities Management prototype
         <th scope="col" class="govuk-table__header" aria-sort="none">Number of schedules</th>
       </tr>
     </thead>
-    </form>
+
 
 
 
@@ -98,7 +98,7 @@ Activities Management prototype
 
 
   {% if data.dashboardView=="live" %}
-  <form>
+
       <tbody class="govuk-table__body">
         {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
         <tr class="govuk-table__row">
@@ -113,8 +113,11 @@ Activities Management prototype
           <td class="govuk-table__cell" data-sort-value="Education">Education</td>
           <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
           <td class="govuk-table__cell" data-sort-value="0">
-            0  <button class="govuk-button govuk-button--secondary" name="editDashboard" value="schedule" data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
+            0
+            <a href="activity-start-date?activityName=Maths level 1">
+              <button class="govuk-button govuk-button--secondary" name="editDashboard" value="schedule" data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
             </button>
+            <a/>
           </td>
         </tr>
         {% endif %}
@@ -211,8 +214,11 @@ Activities Management prototype
           <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
           <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
           <td class="govuk-table__cell" data-sort-value="0">
-            0  <button class="govuk-button govuk-button--secondary"  name="editDashboard" value="schedule"  data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
+            0
+            <a href="activity-start-date?activityName=Servery work">
+              <button class="govuk-button govuk-button--secondary"  name="" value=""  data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
             </button>
+          </a>
           </td>
         </tr>
         {% endif %}
@@ -238,7 +244,7 @@ Activities Management prototype
     <button class="govuk-button" data-module="govuk-button" name="editDashboard" value="suspend">
     Suspend all activities
     </button>-->
-    </form>
+
 {% endif %}
 
 
@@ -250,7 +256,7 @@ Activities Management prototype
 
 
 {% if data.dashboardView=="suspended"%}
-    <form>
+
     <tbody class="govuk-table__body">
       {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
       <tr class="govuk-table__row">
@@ -334,7 +340,7 @@ Activities Management prototype
     <button class="govuk-button govuk-button--warning" data-module="govuk-button" name="editDashboard" value="archive" style="margin-left:30px;">
     Archive selected activities
     </button>
-    </form>
+
 {% endif %}
 
 
@@ -347,7 +353,7 @@ Activities Management prototype
 
 
 {% if data.dashboardView=="archived"%}
-    <form>
+
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
         {% if data.dashboardCategory=="Other" or data.dashboardCategory=="All" %}
@@ -421,13 +427,7 @@ Activities Management prototype
       {% endif %}
 
     </tbody>
-    </table>
     <br />
-<!--
-    <button class="govuk-button" data-module="govuk-button" name="editDashboard" value="unarchive">
-    Unarchive selected activities
-    </button>-->
-    </form>
 {% endif %}
 
 
@@ -441,7 +441,6 @@ Activities Management prototype
 
 
 {% if data.dashboardView=="all"%}
-<form>
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
         {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
@@ -456,8 +455,11 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="Education">Education</td>
         <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
         <td class="govuk-table__cell" data-sort-value="0">
-          0  <button class="govuk-button govuk-button--secondary" name="editDashboard" value="schedule" data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
+          0
+          <a href="activity-start-date?activityName=Maths level 1">
+            <button class="govuk-button govuk-button--secondary" name="" value="" data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
           </button>
+        </a>
         </td>
       </tr>
       {% endif %}
@@ -554,8 +556,11 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
         <td class="govuk-table__cell" data-sort-value="Live"> <strong class="govuk-tag">Live</strong></td>
         <td class="govuk-table__cell" data-sort-value="0">
-          0  <button class="govuk-button govuk-button--secondary"  name="editDashboard" value="schedule"  data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
+          0
+          <a href="activity-start-date?activityName=Servery work">
+            <button class="govuk-button govuk-button--secondary"  name="editDashboard" value="schedule"  data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
           </button>
+          </a>
         </td>
       </tr>
       {% endif %}
@@ -697,12 +702,6 @@ Activities Management prototype
     </tbody>
   </table>
   <br />
-<!--
-  <button class="govuk-button" data-module="govuk-button" name="editDashboard" value="suspend">
-  Suspend all activities
-  </button>-->
-  </form>
-
 {% endif %}
 
 
