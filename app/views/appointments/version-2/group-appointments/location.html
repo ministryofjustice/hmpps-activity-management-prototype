@@ -1,7 +1,12 @@
 
 {% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
 {% block pageTitle %}
 Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
 {% endblock %}
 
 {% block content %}
@@ -13,15 +18,13 @@ Appointments prototype
       </div>
    
       <h1 class="govuk-heading-l">
-        How to add people
+        Where is the appointment?
        </h1>
          
        {{ govukSelect({
         id: "appointment-location",
         name: "appointment-location",
-        hint: {
-          text: "Select a location"
-        },
+       
         items: [
       {
         value: "Select a location",

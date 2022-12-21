@@ -1,23 +1,31 @@
-
-{% extends "layout.html" %}
-
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
 
 {% block pageTitle %}
 Appointments prototype
 {% endblock %}
 
+{% block primaryNavigation %}
+{% endblock %}
+
 {% block content %}
-<form id="form" method="post" action="prisoner-info-and-alerts-uploaded-version">
+<form id="form" method="post" action="">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
-      <h1 class="govuk-heading-xl">
-        Upload a file
+      <h1 class="govuk-heading-l">
+        Upload a CSV file of prisoners' names
       </h1>
    
-    
+    {{ govukFileUpload({
+      id: "file-upload-1",
+      name: "file-upload-1",
+      label: {
+        text: "Upload a file"
+      }
+    }) }}
     
     {{ govukButton({
       text: "Continue"

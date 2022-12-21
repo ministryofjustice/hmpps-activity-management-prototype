@@ -20,7 +20,7 @@ Activities Management prototype
       </div>
 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      View or change details for {{data.activityNameDashboard or 'Maths level 1'}}
+      View {% if data.status=='live' %}or  change {% endif %} details for {{data.activityNameDashboard or 'Maths level 1'}}
     </h1>
   </div>
   <div class="govuk-grid-column-one-third">
@@ -202,7 +202,7 @@ Activities Management prototype
           <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
             Suspend {{data.activityNameDashboard}}
           </button>
-          <a href="activity-action?action=susarchivependActivity&activityName={{data.activityNameDashboard}}"">
+          <a href="activity-action?action=archiveActivity&activityName={{data.activityNameDashboard}}"">
             <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
               Archive {{data.activityNameDashboard}}
             </button>
@@ -378,10 +378,10 @@ Activities Management prototype
 
               <div class="govuk-grid-row">
                     <div class="govuk-grid-column-three-thirds" style="margin-left:-10px;">
-
+                      {% if data.status==live %}
                       <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
                         <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
-                          Suspend Schedule A
+                          Suspend Schedule
                         </button>
                         <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
                           <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
@@ -389,6 +389,7 @@ Activities Management prototype
                           </button>
                       </a>  <br /><br />
                         </button>
+                        {% endif %}
                       </form>
                           <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
                           <div style="margin-bottom:100px;">&nbsp;</div>
