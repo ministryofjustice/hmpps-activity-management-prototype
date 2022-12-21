@@ -18,7 +18,7 @@ module.exports = [
         "day": 6
     }
     ],
-    "name": "Customer Service",
+    "name": "English L2",
     "period": "ED",
     "startTime": "19:15",
     "endTime": "22:00",
@@ -32,7 +32,7 @@ module.exports = [
     [
     {
         "time": "AM",
-        "day": 3
+        "day": 1
     },
     {
         "time": "PM",
@@ -144,7 +144,7 @@ module.exports = [
         "day": 4
     }
     ],
-    "name": "Financial Capabilities",
+    "name": "Sign-making",
     "period": "PM",
     "startTime": "15:00",
     "endTime": "18:45",
@@ -165,7 +165,7 @@ module.exports = [
         "day": 4
     },
     {
-        "time": "PM",
+        "time": "AM",
         "day": 5
     },
     {
@@ -173,7 +173,7 @@ module.exports = [
         "day": 6
     }
     ],
-    "name": "Gardens",
+    "name": "Gardening",
     "period": "PM",
     "startTime": "13:15",
     "endTime": "16:30",
@@ -270,11 +270,11 @@ module.exports = [
         "day": 1
     }
     ],
-    "name": "Nursery Stay & Play",
+    "name": "Textiles",
     "period": "PM",
     "startTime": "15:15",
     "endTime": "18:00",
-    "location": "Visiting room 2"
+    "location": "Workshop 2"
 },
 {
     "id": 14,
@@ -476,11 +476,11 @@ module.exports = [
         "day": 3
     }
     ],
-    "name": "Laundrette",
+    "name": "Woodwork",
     "period": "PM",
     "startTime": "12:45",
     "endTime": "15:00",
-    "location": "Laundry room"
+    "location": "Workshop 6"
 },
 {
     "id": 24,
@@ -492,7 +492,7 @@ module.exports = [
     "period": "PM",
     "startTime": "14:00",
     "endTime": "17:15",
-    "location": "Workshop 3"
+    "location": "Laundry room"
 },
 {
     "id": 25,
@@ -509,11 +509,11 @@ module.exports = [
         "day": 4
     }
     ],
-    "name": "Music tech",
+    "name": "Wing A Cleaners",
     "period": "AM",
     "startTime": "9:00",
     "endTime": "12:00",
-    "location": "Education 5"
+    "location": "Wing A"
 },
 {
     "id": 26,

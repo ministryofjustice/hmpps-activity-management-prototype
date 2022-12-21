@@ -1,20 +1,24 @@
 const express = require('express')
 const router = express.Router()
-const { DateTime } = require('luxon')
+const {
+	DateTime
+} = require('luxon')
 
 // app data
 const prisoners = require('../../../data/prisoners-list-1')
 
-	//redirect the root url to the start page
+//redirect the root url to the start page
 router.get('/', function(req, res) {
 	res.redirect(req.version + '/config')
 });
 
-	// CONFIG
+// CONFIG
 router.get('/config', function(req, res) {
 	let version = req.version
-	req.session.data["config"]["navigation-tiles"][0]["linkURL"] = "/unlock/"+version+"/whereabouts"
-	res.render('unlock/' + req.version + '/config', {version})
+	req.session.data["config"]["navigation-tiles"][0]["linkURL"] = "/unlock/" + version + "/whereabouts"
+	res.render('unlock/' + req.version + '/config', {
+		version
+	})
 });
 router.post('/config', function(req, res) {
 	res.redirect('dps-home')
@@ -28,10 +32,10 @@ router.post('/reset-config', function(req, res) {
 function getFilteredPrisoners(selectedPrisoners, prisonerList) {
 	let filteredPrisoners = []
 
-	if( selectedPrisoners ) {
+	if (selectedPrisoners) {
 		filteredPrisoners = prisonerList.filter(prisoner => selectedPrisoners.includes(prisoner._id))
 	} else {
-		filteredPrisoners = prisonerList.slice(0,3)
+		filteredPrisoners = prisonerList.slice(0, 3)
 	}
 
 	return filteredPrisoners
@@ -40,15 +44,15 @@ function getFilteredPrisoners(selectedPrisoners, prisonerList) {
 function getWings(data) {
 	let locations = {};
 
-	if(data.hasOwnProperty('houseblocks')){
+	if (data.hasOwnProperty('houseblocks')) {
 		data.houseblocks.forEach(houseblock => {
 			locations[houseblock] = []
 		})
 
-		if(data.hasOwnProperty('wings')){
+		if (data.hasOwnProperty('wings')) {
 			data.wings.forEach(string => {
 				const [houseblock, wing] = string.split("-");
-				if(locations.hasOwnProperty(houseblock)){
+				if (locations.hasOwnProperty(houseblock)) {
 					locations[houseblock].push(wing);
 				}
 			});
@@ -60,7 +64,7 @@ function getWings(data) {
 }
 
 function updateAttendanceList(req, res) {
-	req.session.data['timetable-3'].forEach(( activity ) => {
+	req.session.data['timetable-3'].forEach((activity) => {
 		const id = activity.id;
 		const scheduledPrisoners = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id);
 
@@ -73,71 +77,83 @@ function updateAttendanceList(req, res) {
 	})
 }
 
-function updateAttendanceHistory(activities, date) {
-	activities.forEach(activity => {
-		if (activity['attendance-history'].length === 0) {
-			activity['attendance-history'].push({
-				date: date,
-				attendance: []
-			});
-		}
-	});
-}
-
-function updateAttendance(req, filteredPrisoners) {
-	const attendanceAction = req.session.data['attendance-action'];
-	const activityTimetable = req.session.data['timetable-3'];
-	const activityId = req.session.data['activity-id'];
-	const activityDate = req.session.data['date'];
+function updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate}) {
+	let timestamp = new Date().toISOString();
+	let formattedTimestamp = DateTime.fromISO(timestamp, "yyyy-M-d").setLocale('en-GB').toFormat("h:mma 'on' d MMMM yyyy")
 
 	filteredPrisoners.forEach((prisoner) => {
-		const prisonerAttendance = req.session.data['attendance-details'].find(attendance => attendance._id == prisoner._id);
-		const status = attendanceAction == 'not-attended' ? 'not-attended' : 'attended';
-		const payment = attendanceAction == 'not-attended' ? prisonerAttendance['absence-payment'] : prisonerAttendance.bonus;
+		let prisonerAttendance = attendanceDetails.find(attendance => attendance._id == prisoner._id);
+		let status = attendanceAction == 'not-attended' ? 'not-attended' : 'attended';
+		let payment = attendanceAction == 'not-attended' ? prisonerAttendance['absence-payment'] : prisonerAttendance.bonus;
+		prisonerAttendance.status = status
 
 		prisoner.attendance = [{
 			activityId: activityId,
 			date: activityDate,
-			attendance: status,
+			attendance: prisonerAttendance,
 			payment,
+			timestamp,
+			formattedTimestamp
 		}];
-	});
 
-	updateActivityAttendanceHistory(activityTimetable, activityId, activityDate, filteredPrisoners);
-}
+		let activity = activityTimetable.find(activity => activity.id == activityId);
 
-function updateActivityAttendanceHistory(activityTimetable, activityId, activityDate, prisoners) {
-	const activity = activityTimetable.find(activity => activity.id == activityId);
-
-	if (!activity['attendance-history']) {
-		activity['attendance-history'] = [];
-	}
-
-	let attendanceHistory = activity['attendance-history'].find(history => history.date == activityDate);
-
-	if (!attendanceHistory) {
-		attendanceHistory = {
-			date: activityDate,
-			'attendance-data': [],
-		};
-		activity['attendance-history'].push(attendanceHistory);
-	}
-
-	prisoners.forEach((prisoner) => {
-		let prisonerAttendance = attendanceHistory['attendance-data'].find(attendance => attendance.prisonerId == prisoner._id);
-
-		if (!prisonerAttendance) {
-			prisonerAttendance = {
-				prisonerId: prisoner._id,
-			};
-			attendanceHistory['attendance-data'].push(prisonerAttendance);
+		if (!activity['attendance-history']) {
+			activity['attendance-history'] = [];
 		}
 
-		prisonerAttendance.status = prisoner.attendance[0].attendance;
+		let attendanceHistory = activity['attendance-history'].find(history => history.date == activityDate);
+
+		if (!attendanceHistory) {
+			attendanceHistory = {
+				date: activityDate,
+				'attendance-data': [],
+			};
+			activity['attendance-history'].push(attendanceHistory);
+		}
+
+		let prisonerAttendanceHistory = attendanceHistory['attendance-data'].find(attendance => attendance.prisonerId == prisoner._id);
+
+		if (!prisonerAttendanceHistory) {
+			prisonerAttendanceHistory = {
+				prisonerId: prisoner._id,
+				timestamp,
+				formattedTimestamp,
+				activityDate
+			};
+			attendanceHistory['attendance-data'].push(prisonerAttendanceHistory);
+		}
+
+		prisonerAttendanceHistory.status = prisoner.attendance[0].attendance.status;
 	});
 }
 
-	// ATTENDANCE LIST
+function getActivitiesForPeriod(activities, period, dayOfWeek) {
+	return activities.filter(activity => {
+		let activityDayMatches = activity.timesAndDays.some(timeAndDay => timeAndDay.day === dayOfWeek);
+		let activityPeriodMatches = activity.period === period;
+		return activityDayMatches && activityPeriodMatches;
+	});
+}
+
+function getPrisonersForActivities(prisoners, activities) {
+	return prisoners.filter(prisoner => {
+		return activities.some(activity => {
+			return activity.id === prisoner.activity;
+		});
+	});
+}
+
+function filterPrisonersByLocation(prisoners, locations) {
+	if (Object.keys(locations).length === 0) {
+		return prisoners;
+	}
+	return prisoners.filter(prisoner => locations['houseblocks'].includes(prisoner.location.houseblock.toString()));
+}
+
+
+
+// ATTENDANCE LIST
 router.post('/activities/:activityId', function(req, res) {
 	res.redirect('add-attendance-details')
 });
@@ -147,33 +163,47 @@ router.get('/activities/:activityId', function(req, res) {
 
 	let activityId = req.params.activityId;
 	let date = req.session.data['date']
-	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
-	// remove the confirmation notification on refreshing the page
-	if(req.session.data['attendance-confirmation'] == 'true'){
+    // remove the confirmation notification on refreshing the page
+	if (req.session.data['attendance-confirmation'] == 'true') {
 		delete req.session.data['attendance-confirmation']
 	}
 
 	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
+	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
-	function countPrisonerAttendance(date, attendanceHistory, status) {
-		let numNotAttended = 0;
-		let attendanceHistoryData;
-		if(attendanceHistory){
-			attendanceHistoryData = attendanceHistory.filter(record => record.date === date)
-
-			for (const item of attendanceHistoryData) {
-				if (item.status === status) {
-					numNotAttended++;
-				}
-			}
+	function getAttendanceHistory(activity, date) {
+    	if (!activity['attendance-history']) {
+    		return null;
+    	}
+    	let attendanceHistory = null;
+    	activity['attendance-history'].forEach(history => {
+    		if (history.date === date) {
+    			attendanceHistory = history;
+    		}
+    	});
+    	return attendanceHistory;
+    }
+    let attendanceHistory = getAttendanceHistory(activity, date);
+	
+	function countAttendanceStatus(activity, status, date) {
+		if (!activity['attendance-history']) {
+			return 0;
 		}
-
-		return numNotAttended;
+		let attendanceCount = 0;
+		activity['attendance-history'].forEach(history => {
+			if (history.date === date) {
+				history['attendance-data'].forEach(data => {
+					if (data.status === status) {
+						attendanceCount++;
+					}
+				});
+			}
+		});
+		return attendanceCount;
 	}
-
-	let notAttendedCount = countPrisonerAttendance(date, activity['attendance-history'], 'not-attended');
-	let attendedCount = 0;
+	let notAttendedCount = countAttendanceStatus(activity, "not-attended", date);
+	let attendedCount = countAttendanceStatus(activity, "attended", date);
 
 	function getSessionDate(date, activity, direction) {
 		const currentDay = new Date(date).getDay();
@@ -238,6 +268,7 @@ router.get('/activities/:activityId', function(req, res) {
     	filteredPrisoners,
     	notAttendedCount,
     	attendedCount,
+    	attendanceHistory,
     	activityId,
     	nextSessionDate,
     	previousSessionDate
@@ -245,20 +276,22 @@ router.get('/activities/:activityId', function(req, res) {
 });
 
 // cancellation  details
-router.get('/activities/:activityId/cancel', function (req, res) {
+router.get('/activities/:activityId/cancel', function(req, res) {
 	let activityId = req.params.activityId;
 	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
-	res.render('unlock/' + req.version + '/choose-cancellation-reason', {activity})
+	res.render('unlock/' + req.version + '/choose-cancellation-reason', {
+		activity
+	})
 })
-router.post('/activities/:activityId/cancel', function (req, res) {
+router.post('/activities/:activityId/cancel', function(req, res) {
 	res.redirect('confirm-cancellation')
 })
-router.get('/activities/:activityId/confirm-cancellation', function (req, res) {
+router.get('/activities/:activityId/confirm-cancellation', function(req, res) {
 	res.render('unlock/' + req.version + '/confirm-cancellation')
 })
-router.post('/activities/:activityId/confirm-cancellation', function (req, res) {
-	if(req.session.data['confirm-cancellation'] == 'yes'){
+router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
+	if (req.session.data['confirm-cancellation'] == 'yes') {
 		let activityId = req.params.activityId;
 		let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId);
 		if (activity) {
@@ -266,7 +299,7 @@ router.post('/activities/:activityId/confirm-cancellation', function (req, res) 
 		}
 		let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
 
-		// set prisoner attendance
+        // set prisoner attendance
 		filteredPrisoners.forEach((prisoner, index) => {
 			prisoner.attendance = [];
 			prisoner.attendance.push({
@@ -279,36 +312,67 @@ router.post('/activities/:activityId/confirm-cancellation', function (req, res) 
 	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId + '?date=' + req.session.data['date'])
 })
 
-	// ATTENDANCE DETAILS
+// ATTENDANCE DETAILS
 router.get('/activities/:activityId/add-attendance-details', function(req, res) {
 	delete req.session.data['attendance-details']
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
-	res.render('unlock/' + req.version + '/add-attendance-details', { filteredPrisoners })
+	res.render('unlock/' + req.version + '/add-attendance-details', {
+		filteredPrisoners
+	})
 });
 
 router.post('/activities/:activityId/add-attendance-details', function(req, res) {
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 	let activityId = req.session.data['activity-id'];
 	let date = req.session.data['date']
+	let attendanceAction = req.session.data['attendance-action'];
+	let activityTimetable = req.session.data['timetable-3'];
+	let attendanceDetails = req.session.data['attendance-details'];  
 
-	updateAttendance(req, filteredPrisoners)
+	updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate: date});
 
-	// set the confirmation dialog to display
+    // set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
 
 	let referrer = req.session.data['attendance-url']
-	let url = (referrer == 'refusals') ? ('refusals-list') : ('../'+activityId+'?date='+date)
+	let url = (referrer == 'refusals') ? ('refusals-list') : ('../' + activityId + '?date=' + date)
 
 	res.redirect(url)
 });
+
+// refusals
+router.get('/add-refusal-details', function(req, res) {
+	delete req.session.data['attendance-details']
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
+
+	res.render('unlock/' + req.version + '/add-attendance-details', { filteredPrisoners })
+});
+router.post('/add-refusal-details', function(req, res) {
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
+	let activityId = req.session.data['activity-id'];
+	let date = req.session.data['date']
+	let attendanceAction = req.session.data['attendance-action'];
+	let activityTimetable = req.session.data['timetable-3'];
+	let attendanceDetails = req.session.data['attendance-details'];
+
+	updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate: date});
+
+    // set the confirmation dialog to display
+	req.session.data['attendance-confirmation'] = 'true'
+
+	res.redirect('refusals-list?date=' + date)
+});
+
 
 
 // check variable pay
 router.get('/activities/:activityId/check-variable-pay', function(req, res) {
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
-	res.render('unlock/' + req.version + '/check-variable-pay', { filteredPrisoners })
+	res.render('unlock/' + req.version + '/check-variable-pay', {
+		filteredPrisoners
+	})
 });
 router.post('/activities/:activityId/check-variable-pay', function(req, res) {
 	let selectedPrisoners = req.session.data['selected-prisoners']
@@ -327,130 +391,141 @@ router.post('/activities/:activityId/check-variable-pay', function(req, res) {
 			});
 		});
 
-		updateAttendance(req, filteredPrisoners)
+		let activityId = req.session.data['activity-id'];
+		let date = req.session.data['date'];
+		let attendanceAction = req.session.data['attendance-action'];
+		let activityTimetable = req.session.data['timetable-3'];
+		let attendanceDetails = req.session.data['attendance-details'];
+
+		updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate: date});
 
 		req.session.data['attendance-confirmation'] = 'true'
-		let activityId = req.session.data['activity-id']
-		res.redirect('../'+activityId+'?date='+req.session.data['date'])
+		res.redirect('../' + activityId + '?date=' + req.session.data['date'])
 	}
 });
 
 // attendance  details
-router.get('/activities/:activityId/:prisonerId', function (req, res) {
+router.get('/activities/:activityId/:prisonerId', function(req, res) {
 	let activityId = req.params.activityId;
 	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
 	let prisonerId = req.params.prisonerId;
 	let prisoner = req.session.data['prisoners'].find(prisoner => prisoner._id === prisonerId)
 
-	res.render('unlock/' + req.version + '/attendance-details', {prisoner, activity})
+	function getAttendanceData(activity, prisonerId) {
+		if (!activity || !activity['attendance-history'] || !activity['attendance-history'].length) {
+			return null;
+		}
+
+		for (let i = 0; i < activity['attendance-history'].length; i++) {
+			const attendanceData = activity['attendance-history'][i]['attendance-data'];
+			for (let j = 0; j < attendanceData.length; j++) {
+				if (attendanceData[j].prisonerId === prisonerId) {
+					return attendanceData[j];
+				}
+			}
+		}
+		return null;
+	}
+
+	const attendanceData = getAttendanceData(activity, prisonerId);
+
+	res.render('unlock/' + req.version + '/attendance-details', {
+		prisoner,
+		activity,
+		attendanceData
+	})
 })
 
-	// CHECK ATTENDANCE DETAILS
+// CHECK ATTENDANCE DETAILS
 router.get('/check-attendance-details', function(req, res) {
 	let attendanceDetails = req.session.data['attendance-details']
-	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])		
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 
-	res.render('unlock/' + req.version + '/check-attendance-details', { attendanceDetails })
+	res.render('unlock/' + req.version + '/check-attendance-details', {
+		attendanceDetails
+	})
 });
 router.post('/check-attendance-details', function(req, res) {
 	res.redirect('attendance-confirmation')
 });
 
-	// SELECT REFUSALS LOCATIONS
+// SELECT REFUSALS LOCATIONS
 router.post('/select-refusals-locations', function(req, res) {
 	res.redirect('refusals-list')
 });
 
-	// REFUSALS LIST
+// REFUSALS LIST
 router.get('/refusals-list', function(req, res) {
-	let period = req.session.data['times'].toUpperCase()	
-	let chosenDate = req.session.data['chosen-date']
-	let date = new Date(chosenDate); // Replace with the actual date
-	let dayOfWeek = date.getDay(); // Replace with the actual day of the week
+	let period = req.session.data['times'].toUpperCase();
+	let chosenDate = req.session.data['chosen-date'];
+	let date = new Date(chosenDate);
+	let dayOfWeek = date.getDay();
 
-	let filteredActivities = req.session.data['timetable-3'].filter(activity => {
-        // Check if the activity occurs on the current day of the week
-		let activityDayMatches = activity.timesAndDays.some(timeAndDay => timeAndDay.day === dayOfWeek);
-         // Check if the activity occurs in the given period
-		let activityPeriodMatches = activity.period === period;
-		return activityDayMatches && activityPeriodMatches;
-	});
+	let activities = req.session.data['timetable-3'];
+	let prisoners = req.session.data['prisoners'];
+	let locations = getWings(req.session.data['selected-locations']);
 
+	let filteredActivities = getActivitiesForPeriod(activities, period, dayOfWeek);
+	let filteredPrisoners = getPrisonersForActivities(prisoners, filteredActivities);
+	filteredPrisoners = filterPrisonersByLocation(filteredPrisoners, req.session.data['selected-locations']);
 
-	let filteredPrisoners = req.session.data['prisoners'].filter((prisoner) => {
-		return filteredActivities.some((activity) => {
-			return activity.id === prisoner.activity;
-		});
-	});
-
-	let locations = getWings(req.session.data['selected-locations'])
-	if( Object.keys(locations).length !== 0 ){
-		filteredPrisoners = filteredPrisoners.filter( prisoner => req.session.data['selected-locations']['houseblocks'].includes( prisoner.location.houseblock.toString() ) )
-	}
-
-	// remove the confirmation notification on loading the page
-	if(req.session.data['attendance-confirmation'] == 'true'){
+    // remove the confirmation notification on loading the page
+	if (req.session.data['attendance-confirmation'] == 'true') {
 		delete req.session.data['attendance-confirmation']
 	}
 
-	res.render('unlock/' + req.version + '/refusals-list', { filteredPrisoners, locations })
+	res.render('unlock/' + req.version + '/refusals-list', {
+		filteredPrisoners,
+		locations
+	})
 });
 router.post('/refusals-list', function(req, res) {
-	if(req.session.data['selected-prisoners'].length > 1) {
+	if (req.session.data['selected-prisoners'].length > 1) {
 		res.redirect('add-attendance-details--multiple')
 	} else {
 		res.redirect('add-attendance-details--single')
 	}
 });
 
-	// SELECT UNLOCK LOCATIONS	
+// SELECT UNLOCK LOCATIONS	
 router.post('/select-unlock-locations', function(req, res) {
 	res.redirect('unlock-list')
 });
 
 // unlock list
 router.get('/unlock-list', function(req, res) {
-	let period = req.session.data['times'].toUpperCase()	
-	let chosenDate = req.session.data['chosen-date']
-	let date = new Date(chosenDate); // Replace with the actual date
-	let dayOfWeek = date.getDay(); // Replace with the actual day of the week
+	let period = req.session.data['times'].toUpperCase();
+	let chosenDate = req.session.data['chosen-date'];
+	let date = new Date(chosenDate);
+	let dayOfWeek = date.getDay();
 
-	let filteredActivities = req.session.data['timetable-3'].filter(activity => {
-        // Check if the activity occurs on the current day of the week
-		let activityDayMatches = activity.timesAndDays.some(timeAndDay => timeAndDay.day === dayOfWeek);
-         // Check if the activity occurs in the given period
-		let activityPeriodMatches = activity.period === period;
-		return activityDayMatches && activityPeriodMatches;
-	});
+	let activities = req.session.data['timetable-3'];
+	let prisoners = req.session.data['prisoners'];
+	let locations = getWings(req.session.data['selected-locations']);
 
+	let filteredActivities = getActivitiesForPeriod(activities, period, dayOfWeek);
+	let filteredPrisoners = getPrisonersForActivities(prisoners, filteredActivities);
+	filteredPrisoners = filterPrisonersByLocation(filteredPrisoners, req.session.data['selected-locations']);
 
-	let filteredPrisoners = req.session.data['prisoners'].filter((prisoner) => {
-		return filteredActivities.some((activity) => {
-			return activity.id === prisoner.activity;
-		});
-	});
-
-	let locations = getWings(req.session.data['selected-locations'])
-	if( Object.keys(locations).length !== 0 ){
-		filteredPrisoners = filteredPrisoners.filter( prisoner => req.session.data['selected-locations']['houseblocks'].includes( prisoner.location.houseblock.toString() ) )
-	}
-
-	// remove the confirmation notification on loading the page
-	if(req.session.data['attendance-confirmation'] == 'true'){
+    // remove the confirmation notification on loading the page
+	if (req.session.data['attendance-confirmation'] == 'true') {
 		delete req.session.data['attendance-confirmation']
 	}
 
-	res.render('unlock/' + req.version + '/unlock-list', { filteredPrisoners, locations })
+	res.render('unlock/' + req.version + '/unlock-list', {
+		filteredPrisoners,
+		locations
+	})
 });
 
-router.get('/unlock-list/download', function(req, res){
+router.get('/unlock-list/download', function(req, res) {
 	const file = `public/downloads/Unlock list concept.pdf`;
-  res.download(file); // Set disposition and send it.
+    res.download(file); // Set disposition and send it.
 });
 
 
-	// SELECT-ACTIVITY
+// SELECT-ACTIVITY
 router.get('/select-activity', function(req, res) {
 	res.render('unlock/' + req.version + '/select-activity')
 });
@@ -458,8 +533,8 @@ router.post('/select-activity', function(req, res) {
 	let chosenDate = req.session.data['chosen-date']
 	let today = new Date()
 
-	if(chosenDate == 'other-date'){
-		if(req.session.data['other-date-year'] !== undefined && req.session.data['other-date-month'] !== undefined && req.session.data['other-date-day'] !== undefined){
+	if (chosenDate == 'other-date') {
+		if (req.session.data['other-date-year'] !== undefined && req.session.data['other-date-month'] !== undefined && req.session.data['other-date-day'] !== undefined) {
 			res.redirect('activities')
 		} else {
 			res.redirect('select-activity');
@@ -470,68 +545,43 @@ router.post('/select-activity', function(req, res) {
 });
 // SELECT ACTIVITY RESULTS
 router.get('/activities', function(req, res) {
-	updateAttendanceList(req, res)
-
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 	let chosenDate = req.session.data['chosen-date']
+
 	let period = req.session.data['times'].toUpperCase()
 	let date = new Date(chosenDate)
-	let dayOfWeek = date.getDay(); // Get the day of the week (0-6, with 0 being Sunday)
+    let dayOfWeek = date.getDay(); // Get the day of the week (0-6, with 0 being Sunday)
 
-	// updateAttendanceHistory(req.session.data['timetable-3'], chosenDate);
+    let filteredActivities = { morning: [], afternoon: [] };
+    req.session.data['timetable-3'].forEach(activity => {
+    	if (activity.timesAndDays.some(timeAndDay => timeAndDay.day === dayOfWeek)) {
+    		if (activity.period === 'AM') filteredActivities.morning.push(activity);
+    		else if (activity.period === 'PM') filteredActivities.afternoon.push(activity);
+    	}
+    });
 
-	let filteredActivities = {
-		morning: [],
-		afternoon: []
-	};
-	req.session.data['timetable-3'].filter(activity => {
-        // Check if the activity occurs on the current day of the week
-		let activityDayMatches = activity.timesAndDays.some(timeAndDay => timeAndDay.day === dayOfWeek);
-		if (activityDayMatches) {
-            // Check if the activity occurs in the desired time period
-			if (activity.period === 'AM') {
-				filteredActivities.morning.push(activity);
-			} else if (activity.period === 'PM') {
-				filteredActivities.afternoon.push(activity);
-			}
-		}
-	});
+    let selectedDate, relativeDate;
 
-	let selectedDate, relativeDate;
+    if (chosenDate == 'other-date') {
+    	chosenDate = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
+    }
 
-	if(chosenDate == 'other-date'){
-		chosenDate = req.session.data['other-date-year'] + '-' + req.session.data['other-date-month'] + '-' + req.session.data['other-date-day']
-	}
+    let today = new Date();
+    let dateObj2 = new Date(today);
+    let timeDiff = Math.abs(date.getTime() - dateObj2.getTime());
+    let hourDiff = timeDiff / (1000 * 60 * 60);
+    if (hourDiff <= 48) {
+    	relativeDate = DateTime.fromFormat(chosenDate, "yyyy-M-d").toRelativeCalendar();
+    }
 
-	let today = new Date()	
+    let activitiesCount = filteredActivities.morning.length + filteredActivities.afternoon.length
 
-	function compareDays(date1, date2) {
-        // Convert the date strings to Date objects
-		let dateObj1 = new Date(date1);
-		let dateObj2 = new Date(date2);
-
-        // Get the day of the week for each date (0-6, with 0 being Sunday)
-		let day1 = dateObj1.getDay();
-		let day2 = dateObj2.getDay();
-
-        // Calculate the difference in days
-		let dayDiff = Math.abs(day1 - day2);
-
-         // Calculate the difference in milliseconds between the two dates
-		let timeDiff = Math.abs(dateObj1.getTime() - dateObj2.getTime());
-
-  		// Convert the difference in milliseconds to hours
-		let hourDiff = timeDiff / (1000 * 60 * 60);
-
-        // Check if the difference is greater than 1
-		return hourDiff <= 48 && dayDiff <= 1;
-	}
-	if (compareDays(chosenDate, today)) {
-		relativeDate = DateTime.fromFormat(chosenDate, "yyyy-M-d").toRelativeCalendar();
-	}
-
-	let activitiesCount = filteredActivities.morning.length + filteredActivities.afternoon.length
-
-	res.render('unlock/' + req.version + '/activities', {filteredActivities, relativeDate, selectedDate, activitiesCount})
+    res.render('unlock/' + req.version + '/activities', {
+    	filteredActivities,
+    	relativeDate,
+    	selectedDate,
+    	activitiesCount
+    })
 });
 
 module.exports = router
