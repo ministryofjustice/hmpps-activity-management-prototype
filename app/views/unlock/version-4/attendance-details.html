@@ -17,7 +17,6 @@ Activities Management prototype
 		<h1 class="govuk-heading-l">
 			Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		</h1>
-
 		<dl class="govuk-summary-list">
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
@@ -42,37 +41,13 @@ Activities Management prototype
 					Attendance
 				</dt>
 				<dd class="govuk-summary-list__value">
-					{% if prisoner.attendance == "attended" %}
+					{% if attendanceData.status == "attended" %}
 					<span class="moj-badge moj-badge--large moj-badge--green">Attended</span>
-					{% elif prisoner.attendance == "not-attended" %}
+					{% elif attendanceData.status == "not-attended" %}
 					<span class="moj-badge moj-badge--large moj-badge--red">Absent</span>
 					{% endif %}
 				</dd>
 			</div>
-
-			<!-- {% if prisoner.attendance == "attended" and prisoner.bonus['bonus-awarded'].length == 2 %}
-			<div class="govuk-summary-list__row">
-				<dt class="govuk-summary-list__key">
-					Bonus
-				</dt>
-				<dd class="govuk-summary-list__value">
-					Yes
-					{% if prisoner.bonus['bonus-detail'] %}
-					<br><br>
-					{{prisoner.bonus['bonus-detail']}}
-					{% endif %}
-				</dd>
-			</div>
-			{% elif prisoner.attendance == "attended" and prisoner.bonus['bonus-awarded'].length != 2 %}
-			<div class="govuk-summary-list__row">
-				<dt class="govuk-summary-list__key">
-					Bonus
-				</dt>
-				<dd class="govuk-summary-list__value">
-					None
-				</dd>
-			</div>
-			{% endif %} -->
 			
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">

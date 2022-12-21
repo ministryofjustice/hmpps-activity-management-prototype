@@ -28,6 +28,8 @@ Activities Management prototype
 
 		{% set date = data['date'] or date|today() %}
 
+		{{activity|dump}}
+
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 			{% if activity.cancelled == true %}
 			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
@@ -147,7 +149,7 @@ Activities Management prototype
 						<td class="govuk-table__cell">
 							{% if prisoner.attendance[0].attendance == "attended" %}
 							
-							{% elif prisoner.attendance == "not-attended" %}
+							{% elif prisoner.attendance[0].attendance == "not-attended" %}
 							
 							{% else %}
 							<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-left-2">
