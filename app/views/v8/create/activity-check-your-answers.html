@@ -59,7 +59,7 @@ Activities Management prototype
             <dt class="govuk-summary-list__key">
               Name
             </dt>
-            <dd class="govuk-summary-list__value">
+            <dd class="govuk-summary-list__value" >
               {{data.activityNameDashboard or 'Maths level 1'}}
             </dd>
             <dd class="govuk-summary-list__value">
@@ -109,18 +109,18 @@ Activities Management prototype
               Education level
             </dt>
             <dd class="govuk-summary-list__value">
-                {%if (data.activityNameDashboard=='Maths level 2')%}
+                {% if data.activityNameDashboard=='Maths level 1'%}
+                  Maths entry level 3
+                    {% elseif data.activityNameDashboard=='Maths level 2'%}
+                    Maths level 1
+                    {% else %}
+                      None set
+                  {% endif %}
 
-                Maths level 1<br />English level 1
 
-                {% else %}
-                {{data.activityNameDashboard}}
-                Entry level English, level 3<br />Entry level maths, level 3
-
-              {% endif %}
             </dd>
             <dd class="govuk-summary-list__value">
-              {{data.temp2}}
+
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-add-education">
@@ -190,7 +190,7 @@ Activities Management prototype
               </div>
 
 
-
+  {% if data.status=='live' %}
 <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-thirds" style="margin-left:35px;">
         <a href="activity-start-date?activityName={{data.activityNameDashboard}}">
@@ -198,21 +198,63 @@ Activities Management prototype
             Build a new schedule
           </button>
 
-        <a href="activity-action?action=suspendActivity&activityName={{data.activityNameDashboard}}">
+        <a href="activity-action?action=suspendActivity&activityName={{data.activityNameDashboard}}&numberOfSchedules={{data.numberOfSchedules}}">
           <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
             Suspend {{data.activityNameDashboard}}
           </button>
-          <a href="activity-action?action=archiveActivity&activityName={{data.activityNameDashboard}}"">
+          <a href="activity-action?action=archiveActivity&activityName={{data.activityNameDashboard}}&numberOfSchedules={{data.numberOfSchedules}}">
             <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
               Archive {{data.activityNameDashboard}}
             </button>
         </a>  <br /><br />
           </button>
-        </form>
             <a href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
             <div style="margin-bottom:100px;">&nbsp;</div>
       </div>
     </div>
+  {% endif %}
+
+  {% if data.status=='suspended' %}
+  <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-thirds" style="margin-left:35px;">
+
+
+        <a href="activity-action?action=unSuspendActivity&activityName={{data.activityNameDashboard}}&numberOfSchedules={{data.numberOfSchedules}}">
+          <button class="govuk-button govuk-button" data-module="govuk-button" style="margin:0 20px 0 0px;">
+            Unsuspend {{data.activityNameDashboard}}
+          </button>
+          <a href="activity-action?action=archiveActivity&activityName={{data.activityNameDashboard}}&numberOfSchedules={{data.numberOfSchedules}}">
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+              Archive {{data.activityNameDashboard}}
+            </button>
+        </a>  <br /><br />
+          </button>
+            <a href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+            <div style="margin-bottom:100px;">&nbsp;</div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if data.status=='archived' %}
+  <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-thirds" style="margin-left:35px;">
+        <a href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+        <div style="margin-bottom:100px;">&nbsp;</div>
+      </div>
+    </div>
+  {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -383,13 +425,28 @@ Activities Management prototype
                         <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
                           Suspend Schedule
                         </button>
+                        </a>
                         <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
                           <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
                             Archive Schedule A
                           </button>
-                      </a>  <br /><br />
+                        </a>
+                        <br /><br />
                         </button>
                         {% endif %}
+
+                        {% if data.status==suspended %}
+                        <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                            Suspend Schedule
+                          </button>
+                          <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                              Archive Schedule A
+                            </button>
+                          </a>  <br /><br />
+                          </button>
+                          {% endif %}
                       </form>
                           <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
                           <div style="margin-bottom:100px;">&nbsp;</div>
