@@ -16,19 +16,17 @@ Appointments prototype
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
-      
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Multiple appointment list</span>
+        Will the appointment repeat?
+       </h1>
    
       {{ govukRadios({
         idPrefix: "appointment-repeat",
         name: "appointment-repeat",
-        fieldset: {
-          legend: {
-            text: "Will the appointment repeat?
-            ",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--l"
-          }
-        },
+       hint: {
+        text: "Select yes if the appointment will repeat"
+       },
         items: [
           {
             value: "Yes",
