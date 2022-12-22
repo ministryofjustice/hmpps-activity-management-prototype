@@ -43,6 +43,8 @@ Activities Management prototype
 			}) }}
 			{% endif %}
 
+			{{data['attendance-data']|dump}}
+
 			<div class="govuk-grid-row govuk-!-margin-bottom-5">
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
@@ -72,7 +74,6 @@ Activities Management prototype
 					</ul>
 				</div>
 
-				{{periodStart}}
 				<div class="govuk-grid-column-one-quarter">
 					<p class="govuk-body" style="text-align: right;">
 						{{govukButton({
@@ -145,11 +146,7 @@ Activities Management prototype
 					<tr class="govuk-table__row">
 						{% if notRecorded > 0 %}
 						<td class="govuk-table__cell">
-							{% if prisoner.attendance[0].attendance.status == "attended" %}
-							
-							{% elif prisoner.attendance[0].attendance.status == "not-attended" %}
-							
-							{% else %}
+							{% if not prisoner.attendance.status %}
 							<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-left-2">
 								<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}" name="selected-prisoners" value="{{prisoner._id}}">
 								<label class="govuk-label govuk-checkboxes__label" for="prisoner-{{loop.index}}">
@@ -176,10 +173,10 @@ Activities Management prototype
 							{% endif %}
 						</td>
 						<td class="govuk-table__cell">
-							{% if prisoner.attendance[0].attendance.status == "attended" %}
+							{% if prisoner.attendance.status == "attended" %}
 							<a href="{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--green">Attended</span></a>
-							{% elif prisoner.attendance[0].attendance.status == "not-attended" %}
-							<a href="{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--red">Absent</span></a>
+							{% elif prisoner.attendance.status == "not-attended" %}
+							<a href="{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--large moj-badge--red">Absent</span></a>				
 							{% else %}
 							<span class="govuk-hint">Not recorded yet</span>
 							{% endif %}

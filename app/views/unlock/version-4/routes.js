@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {
-	DateTime
+    DateTime
 } = require('luxon')
 
 // app data
@@ -9,25 +9,84 @@ const prisoners = require('../../../data/prisoners-list-1')
 
 //redirect the root url to the start page
 router.get('/', function(req, res) {
-	res.redirect(req.version + '/config')
+    res.redirect(req.version + '/config')
 });
 
 // CONFIG
 router.get('/config', function(req, res) {
-	let version = req.version
-	req.session.data["config"]["navigation-tiles"][0]["linkURL"] = "/unlock/" + version + "/whereabouts"
-	res.render('unlock/' + req.version + '/config', {
-		version
-	})
+    let version = req.version
+    req.session.data["config"]["navigation-tiles"][0]["linkURL"] = "/unlock/" + version + "/whereabouts"
+    res.render('unlock/' + req.version + '/config', {
+        version
+    })
 });
 router.post('/config', function(req, res) {
-	res.redirect('dps-home')
+    res.redirect('dps-home')
 });
 
 router.post('/reset-config', function(req, res) {
-	delete req.session.data['config']
-	res.redirect('config')
+    delete req.session.data['config']
+    res.redirect('config')
 })
+
+function getSessionDate(date, activity, direction) {
+    const currentDay = new Date(date).getDay();
+
+    let sessionDay;
+    if (direction === 'next') {
+        for (const timeAndDay of activity.timesAndDays) {
+            if (timeAndDay.day > currentDay) {
+                sessionDay = timeAndDay.day;
+                break;
+            }
+        }
+    } else if (direction === 'previous') {
+        for (let i = activity.timesAndDays.length - 1; i >= 0; i--) {
+            if (activity.timesAndDays[i].day < currentDay) {
+                sessionDay = activity.timesAndDays[i].day;
+                break;
+            }
+        }
+    }
+
+    // If no next/previous session day was found, it means the next/previous session is in the following/previous week
+    if (!sessionDay) {
+        if (direction === 'next') {
+            sessionDay = activity.timesAndDays[0].day;
+        } else if (direction === 'previous') {
+            sessionDay = activity.timesAndDays[activity.timesAndDays.length - 1].day;
+        }
+    }
+
+    // Check if the next/previous session day is in the same week as the current day
+    const sessionDate = new Date(date);
+    if (direction === 'next') {
+        if (sessionDay === currentDay) {
+            sessionDate.setDate(sessionDate.getDate() + 7)
+        } else if (sessionDay < currentDay) {
+            sessionDate.setDate(sessionDate.getDate() + (7 - currentDay + sessionDay));
+        } else {
+            sessionDate.setDate(sessionDate.getDate() + (sessionDay - currentDay));
+        }
+    } else if (direction === 'previous') {
+    	if (sessionDay === currentDay) {
+            sessionDate.setDate(sessionDate.getDate() - 7);
+        } else if (sessionDay > currentDay) {
+            sessionDate.setDate(sessionDate.getDate() - (currentDay + (7 - sessionDay)));
+        } else {
+            sessionDate.setDate(sessionDate.getDate() - (currentDay - sessionDay));
+        }
+    }
+
+    return formatDate(sessionDate);
+}
+
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // months are 0-based
+    const day = date.getDate();
+    return `${year}-${month}-${day}`;
+}
 
 function getFilteredPrisoners(selectedPrisoners, prisonerList) {
 	let filteredPrisoners = []
@@ -56,14 +115,13 @@ function getWings(data) {
 					locations[houseblock].push(wing);
 				}
 			});
-			console.log(data)
 		}
 	}
 
 	return locations
 }
 
-function updateAttendanceList(req, res) {
+function updateAttendanceListFigures(req, res) {
 	req.session.data['timetable-3'].forEach((activity) => {
 		const id = activity.id;
 		const scheduledPrisoners = req.session.data['prisoners'].filter((prisoner) => prisoner.activity === id);
@@ -75,57 +133,6 @@ function updateAttendanceList(req, res) {
 		activity['attended-count'] = attendedPrisoners.length
 		activity['not-attended-count'] = notAttendedPrisoners.length
 	})
-}
-
-function updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate}) {
-	let timestamp = new Date().toISOString();
-	let formattedTimestamp = DateTime.fromISO(timestamp, "yyyy-M-d").setLocale('en-GB').toFormat("h:mma 'on' d MMMM yyyy")
-
-	filteredPrisoners.forEach((prisoner) => {
-		let prisonerAttendance = attendanceDetails.find(attendance => attendance._id == prisoner._id);
-		let status = attendanceAction == 'not-attended' ? 'not-attended' : 'attended';
-		let payment = attendanceAction == 'not-attended' ? prisonerAttendance['absence-payment'] : prisonerAttendance.bonus;
-		prisonerAttendance.status = status
-
-		prisoner.attendance = [{
-			activityId: activityId,
-			date: activityDate,
-			attendance: prisonerAttendance,
-			payment,
-			timestamp,
-			formattedTimestamp
-		}];
-
-		let activity = activityTimetable.find(activity => activity.id == activityId);
-
-		if (!activity['attendance-history']) {
-			activity['attendance-history'] = [];
-		}
-
-		let attendanceHistory = activity['attendance-history'].find(history => history.date == activityDate);
-
-		if (!attendanceHistory) {
-			attendanceHistory = {
-				date: activityDate,
-				'attendance-data': [],
-			};
-			activity['attendance-history'].push(attendanceHistory);
-		}
-
-		let prisonerAttendanceHistory = attendanceHistory['attendance-data'].find(attendance => attendance.prisonerId == prisoner._id);
-
-		if (!prisonerAttendanceHistory) {
-			prisonerAttendanceHistory = {
-				prisonerId: prisoner._id,
-				timestamp,
-				formattedTimestamp,
-				activityDate
-			};
-			attendanceHistory['attendance-data'].push(prisonerAttendanceHistory);
-		}
-
-		prisonerAttendanceHistory.status = prisoner.attendance[0].attendance.status;
-	});
 }
 
 function getActivitiesForPeriod(activities, period, dayOfWeek) {
@@ -151,6 +158,96 @@ function filterPrisonersByLocation(prisoners, locations) {
 	return prisoners.filter(prisoner => locations['houseblocks'].includes(prisoner.location.houseblock.toString()));
 }
 
+function updateAttendanceData(req, activityID, activityDate, data) {
+    // create attendance-data object if it doesn't exist
+    if (!req.session.data['attendance-data']) {
+        req.session.data['attendance-data'] = {};
+    }
+
+    // create nested objects for activityID and activityDate if they don't exist
+    if (!req.session.data['attendance-data'][activityID]) {
+        req.session.data['attendance-data'][activityID] = {};
+    }
+    if (!req.session.data['attendance-data'][activityID][activityDate]) {
+        req.session.data['attendance-data'][activityID][activityDate] = {};
+    }
+
+    // add attendance data for each prisoner
+    for (let i = 0; i < data.length; i++) {
+        let prisonerID = data[i]['_id'];
+        req.session.data['attendance-data'][activityID][activityDate][prisonerID] = data[i];
+    }
+}
+
+function getAttendanceData(date, activityId, attendanceData, filteredPrisoners) {
+    let updatedFilteredPrisoners = [];
+    if (attendanceData && attendanceData[activityId] && attendanceData[activityId][date]) {
+        for (let i = 0; i < filteredPrisoners.length; i++) {
+            let prisoner = filteredPrisoners[i];
+            if (prisoner.activity.toString() === activityId.toString()) {
+                let prisonerAttendanceData = attendanceData[activityId][date][prisoner._id];
+                if (prisonerAttendanceData) {
+                    prisoner.attendance = {
+                        status: prisonerAttendanceData.status,
+                        pay: prisonerAttendanceData.pay,
+                        warningDetail: prisonerAttendanceData['incentive-level-warning-detail'],
+                        date
+                    }
+                    updatedFilteredPrisoners.push(prisoner);
+                } else {
+                    // Remove attendance data for this prisoner if the dates are not equal
+                    if (prisoner.attendance && prisoner.attendance.date !== date) {
+                        prisoner.attendance = null;
+                    }
+                    updatedFilteredPrisoners.push(prisoner);
+                }
+            } else {
+                // Remove attendance data for this prisoner if the activity IDs are not equal
+                if (prisoner.attendance && prisoner.attendance.activityId !== activityId) {
+                    prisoner.attendance = null;
+                }
+                updatedFilteredPrisoners.push(prisoner);
+            }
+        }
+        return updatedFilteredPrisoners;
+    } else {
+        // Remove attendance data for all prisoners if attendance data is not available for the specified activity ID and date
+        for (let i = 0; i < filteredPrisoners.length; i++) {
+            let prisoner = filteredPrisoners[i];
+            prisoner.attendance = null;
+            updatedFilteredPrisoners.push(prisoner);
+        }
+        return updatedFilteredPrisoners;
+    }
+}
+
+function countAttendance(data, activityId, date, status) {
+	// Return 0 if data is undefined or null
+  if (!data) {
+    return 0;
+  }
+
+  // Check if the activityId and date exist in the data
+  if (!data[activityId] || !data[activityId][date]) {
+    return 0;
+  }
+
+  // Initialise a counter for the number of prisoners with the status "attended"
+  let attendedCount = 0;
+
+  // Iterate through the prisoners in the class on the given date
+  for (const studentId in data[activityId][date]) {
+    // Check if the prisoner's status is "attended"
+    if (data[activityId][date][studentId]["status"] === status) {
+      // If the prisoner's status is "attended", increment the attendedCount
+      attendedCount++;
+    }
+  }
+
+  // Return the attendedCount
+  return attendedCount;
+}
+
 
 
 // ATTENDANCE LIST
@@ -159,7 +256,7 @@ router.post('/activities/:activityId', function(req, res) {
 });
 
 router.get('/activities/:activityId', function(req, res) {
-	updateAttendanceList(req, res)
+	updateAttendanceListFigures(req, res)
 
 	let activityId = req.params.activityId;
 	let date = req.session.data['date']
@@ -169,96 +266,13 @@ router.get('/activities/:activityId', function(req, res) {
 		delete req.session.data['attendance-confirmation']
 	}
 
-	let filteredPrisoners = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
+	let prisonerList = req.session.data['prisoners'].filter(prisoner => prisoner.activity == activityId)
 	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
-	function getAttendanceHistory(activity, date) {
-    	if (!activity['attendance-history']) {
-    		return null;
-    	}
-    	let attendanceHistory = null;
-    	activity['attendance-history'].forEach(history => {
-    		if (history.date === date) {
-    			attendanceHistory = history;
-    		}
-    	});
-    	return attendanceHistory;
-    }
-    let attendanceHistory = getAttendanceHistory(activity, date);
-	
-	function countAttendanceStatus(activity, status, date) {
-		if (!activity['attendance-history']) {
-			return 0;
-		}
-		let attendanceCount = 0;
-		activity['attendance-history'].forEach(history => {
-			if (history.date === date) {
-				history['attendance-data'].forEach(data => {
-					if (data.status === status) {
-						attendanceCount++;
-					}
-				});
-			}
-		});
-		return attendanceCount;
-	}
-	let notAttendedCount = countAttendanceStatus(activity, "not-attended", date);
-	let attendedCount = countAttendanceStatus(activity, "attended", date);
+	let filteredPrisoners = getAttendanceData(date, activityId, req.session.data['attendance-data'], prisonerList);
 
-	function getSessionDate(date, activity, direction) {
-		const currentDay = new Date(date).getDay();
-
-		let sessionDay;
-		if (direction === 'next') {
-			for (const timeAndDay of activity.timesAndDays) {
-				if (timeAndDay.day > currentDay) {
-					sessionDay = timeAndDay.day;
-					break;
-				}
-			}
-		} else if (direction === 'previous') {
-			for (let i = activity.timesAndDays.length - 1; i >= 0; i--) {
-				if (activity.timesAndDays[i].day < currentDay) {
-					sessionDay = activity.timesAndDays[i].day;
-					break;
-				}
-			}
-		}
-
-        // If no next/previous session day was found, it means the next/previous session is in the following/previous week
-		if (!sessionDay) {
-			if (direction === 'next') {
-				sessionDay = activity.timesAndDays[0].day;
-			} else if (direction === 'previous') {
-				sessionDay = activity.timesAndDays[activity.timesAndDays.length - 1].day;
-			}
-		}
-
-        // Check if the next/previous session day is in the same week as the current day
-		const sessionDate = new Date(date);
-		if (direction === 'next') {
-			if (sessionDay < currentDay) {
-				sessionDate.setDate(sessionDate.getDate() + (7 - currentDay + sessionDay));
-			} else {
-				sessionDate.setDate(sessionDate.getDate() + (sessionDay - currentDay));
-			}
-		} else if (direction === 'previous') {
-			if (sessionDay > currentDay) {
-				sessionDate.setDate(sessionDate.getDate() - (currentDay + (7 - sessionDay)));
-			} else {
-				sessionDate.setDate(sessionDate.getDate() - (currentDay - sessionDay));
-			}
-		}
-
-		return formatDate(sessionDate);
-	}
-
-	function formatDate(date) {
-		const year = date.getFullYear();
-        const month = date.getMonth() + 1; // months are 0-based
-        const day = date.getDate();
-        return `${year}-${month}-${day}`;
-    }
+	let notAttendedCount = countAttendance(req.session.data['attendance-data'], activityId, date, "not-attended");
+	let attendedCount = countAttendance(req.session.data['attendance-data'], activityId, date, "attended");
 
     let nextSessionDate = getSessionDate(date, activity, 'next');
     let previousSessionDate = getSessionDate(date, activity, 'previous');
@@ -268,7 +282,6 @@ router.get('/activities/:activityId', function(req, res) {
     	filteredPrisoners,
     	notAttendedCount,
     	attendedCount,
-    	attendanceHistory,
     	activityId,
     	nextSessionDate,
     	previousSessionDate
@@ -327,10 +340,13 @@ router.post('/activities/:activityId/add-attendance-details', function(req, res)
 	let activityId = req.session.data['activity-id'];
 	let date = req.session.data['date']
 	let attendanceAction = req.session.data['attendance-action'];
-	let activityTimetable = req.session.data['timetable-3'];
-	let attendanceDetails = req.session.data['attendance-details'];  
+	let attendanceDetails = req.session.data['attendance-details'];
 
-	updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate: date});
+	attendanceDetails.forEach(detail => {
+		detail.status = attendanceAction;
+	});
+
+	updateAttendanceData(req, activityId, date, attendanceDetails)
 
     // set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
@@ -355,8 +371,6 @@ router.post('/add-refusal-details', function(req, res) {
 	let attendanceAction = req.session.data['attendance-action'];
 	let activityTimetable = req.session.data['timetable-3'];
 	let attendanceDetails = req.session.data['attendance-details'];
-
-	updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate: date});
 
     // set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
@@ -387,7 +401,8 @@ router.post('/activities/:activityId/check-variable-pay', function(req, res) {
 				"_id": prisonerID,
 				"pay": ["standard", {
 					"pay-detail": []
-				}]
+				}],
+				"status": req.session.data['attendance-action']
 			});
 		});
 
@@ -397,7 +412,7 @@ router.post('/activities/:activityId/check-variable-pay', function(req, res) {
 		let activityTimetable = req.session.data['timetable-3'];
 		let attendanceDetails = req.session.data['attendance-details'];
 
-		updateAttendanceAndActivityHistory({attendanceAction, filteredPrisoners, attendanceDetails, activityTimetable, activityId, activityDate: date});
+		updateAttendanceData(req, activityId, date, attendanceDetails)
 
 		req.session.data['attendance-confirmation'] = 'true'
 		res.redirect('../' + activityId + '?date=' + req.session.data['date'])
