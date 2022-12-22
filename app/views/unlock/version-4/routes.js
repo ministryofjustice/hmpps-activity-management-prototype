@@ -248,22 +248,33 @@ function countAttendance(data, activityId, date, status) {
   return attendedCount;
 }
 
-function addAttendanceCounts(filteredActivities, attendanceData) {
+function addAttendanceCounts(prisoners, filteredActivities, attendanceData) {
     for (let timeOfDay in filteredActivities) {
         for (let i = 0; i < filteredActivities[timeOfDay].length; i++) {
             let activity = filteredActivities[timeOfDay][i];
             let attendanceCount = {
-                attended: 0,
-                notAttended: 0,
-                scheduled: 9
+                'attended': 0,
+                'not-attended': 0,
+                'scheduled': 0,
+                'not-recorded': 0
             };
+            let prisonerList = prisoners.filter(prisoner => prisoner.activity == activity.id);
+            for (let i = 0; i < prisonerList.length; i++) {
+                let prisoner = prisonerList[i];
+                if (prisoner.activity === activity.id) {
+                    attendanceCount['scheduled']++;
+                    attendanceCount['not-recorded']++;
+                }
+            }
             if (attendanceData && attendanceData[activity.id]) {
                 for (let date in attendanceData[activity.id]) {
                     for (let participant in attendanceData[activity.id][date]) {
-                        if (attendanceData[activity.id][date][participant].status === 'attended') {
-                            attendanceCount.attended++;
+                        if (attendanceData[activity.id][date][participant].status === "attended") {
+                            attendanceCount['attended']++;
+                            attendanceCount['not-recorded']--;
                         } else {
-                            attendanceCount.notAttended++;
+                            attendanceCount['not-attended']++;
+                            attendanceCount['not-recorded']--;
                         }
                     }
                 }
@@ -612,9 +623,7 @@ router.get('/activities', function(req, res) {
     	relativeDate = DateTime.fromFormat(chosenDate, "yyyy-M-d").toRelativeCalendar();
     }
 
-
-
-    addAttendanceCounts(filteredActivities, req.session.data['attendance-data'])
+    addAttendanceCounts(req.session.data['prisoners'], filteredActivities, req.session.data['attendance-data'])
 
     res.render('unlock/' + req.version + '/activities', {
     	filteredActivities,
