@@ -30,10 +30,15 @@ Activities Management prototype
 {% endif %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
+		{% set activitiesCount =  filteredActivities.morning|length + filteredActivities.afternoon|length %}
 		<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
 			{{activitiesCount}} activities scheduled for {{relativeDate or date|longDateFormat(date)}} ({{data['times']|upper or "morning"}})
 		</h1>
-		
+
+		<!-- filteredActivities: {{filteredActivities|dump}} -->
+		<!-- <br><br> -->
+		<!-- data['attendance-data']: {{data['attendance-data']|dump}} -->
+
 		<ul class="govuk-list govuk-!-margin-bottom-6">
 			<li><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></li>
 			{% if date != '_'|today %}

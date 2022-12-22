@@ -248,6 +248,30 @@ function countAttendance(data, activityId, date, status) {
   return attendedCount;
 }
 
+function addAttendanceCounts(filteredActivities, attendanceData) {
+    for (let timeOfDay in filteredActivities) {
+        for (let i = 0; i < filteredActivities[timeOfDay].length; i++) {
+            let activity = filteredActivities[timeOfDay][i];
+            let attendanceCount = {
+                attended: 0,
+                notAttended: 0,
+                scheduled: 9
+            };
+            if (attendanceData && attendanceData[activity.id]) {
+                for (let date in attendanceData[activity.id]) {
+                    for (let participant in attendanceData[activity.id][date]) {
+                        if (attendanceData[activity.id][date][participant].status === 'attended') {
+                            attendanceCount.attended++;
+                        } else {
+                            attendanceCount.notAttended++;
+                        }
+                    }
+                }
+            }
+            activity.attendanceCount = attendanceCount;
+        }
+    }
+}
 
 
 // ATTENDANCE LIST
@@ -256,7 +280,7 @@ router.post('/activities/:activityId', function(req, res) {
 });
 
 router.get('/activities/:activityId', function(req, res) {
-	updateAttendanceListFigures(req, res)
+	// updateAttendanceListFigures(req, res)
 
 	let activityId = req.params.activityId;
 	let date = req.session.data['date']
@@ -560,7 +584,6 @@ router.post('/select-activity', function(req, res) {
 });
 // SELECT ACTIVITY RESULTS
 router.get('/activities', function(req, res) {
-	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['prisoners'])
 	let chosenDate = req.session.data['chosen-date']
 
 	let period = req.session.data['times'].toUpperCase()
@@ -582,20 +605,21 @@ router.get('/activities', function(req, res) {
     }
 
     let today = new Date();
-    let dateObj2 = new Date(today);
-    let timeDiff = Math.abs(date.getTime() - dateObj2.getTime());
+    let dateObj = new Date(today);
+    let timeDiff = Math.abs(date.getTime() - dateObj.getTime());
     let hourDiff = timeDiff / (1000 * 60 * 60);
     if (hourDiff <= 48) {
     	relativeDate = DateTime.fromFormat(chosenDate, "yyyy-M-d").toRelativeCalendar();
     }
 
-    let activitiesCount = filteredActivities.morning.length + filteredActivities.afternoon.length
+
+
+    addAttendanceCounts(filteredActivities, req.session.data['attendance-data'])
 
     res.render('unlock/' + req.version + '/activities', {
     	filteredActivities,
     	relativeDate,
-    	selectedDate,
-    	activitiesCount
+    	selectedDate
     })
 });
 
