@@ -1,0 +1,151 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Check for non-associations
+    </h1>
+  
+<p class="govuk-body">
+  Select and remove prisoners who cannot associate together.
+</p>
+<form method="post" action="clashes">
+<table class="govuk-table" data-module="moj-sortable-table" style="margin:30px 0 0 10px;">
+  <caption class="govuk-table__caption govuk-table__caption--m">Friday 13 December 2022</caption>
+
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" style="width:30%;"   >Prisoner name and number</th>
+      <th scope="col" class="govuk-table__header" style="width:30%;"  aria-sort="ascending" >Date of appointment</th>
+      <th scope="col" class="govuk-table__header" style="width:23%;" aria-sort="none">Non-associations</th>
+     
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+      {{ govukCheckboxes({
+        idPrefix: "check-rudge",
+        name: "check-rudge",
+        
+        items: [
+          {
+            value: "Neil Rudge, A4309SK",
+            text: "Neil Rudge, A4309SK"
+          }
+        ]
+      }) }}
+        
+      </td>
+      <td class="govuk-table__cell" data-sort-value="13">
+        Friday 13 December 2022
+        </td>
+      <td class="govuk-table__cell" >
+       
+        <strong class="govuk-tag govuk-tag--red ">
+          Eric Sykes, A1291AZ 
+        </strong>
+      </td>
+     
+     
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+        {{ govukCheckboxes({
+          idPrefix: "check-rudge",
+          name: "check-rudge",
+          
+          items: [
+            {
+              value: "Eric Sykes, A1291AZ",
+              text: "Eric Sykes, A1291AZ"
+            }
+          ]
+        }) }}
+       </td>
+       <td class="govuk-table__cell" data-sort-value="13">
+        Friday 13 December 2022
+        </td>
+      <td class="govuk-table__cell" >
+       
+        <strong class="govuk-tag govuk-tag--red ">
+          Neil Rudge, A4309SK 
+        </strong>
+      </td>
+    
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+      {{ govukCheckboxes({
+        idPrefix: "check-rudge",
+        name: "check-rudge",
+        
+        items: [
+          {
+            value: "Neil Rudge, A4309SK",
+            text: "Neil Rudge, A4309SK"
+          }
+        ]
+      }) }}
+        
+      </td>
+      <td class="govuk-table__cell" data-sort-value="20">
+        Friday 20 December 2022
+        </td>
+      <td class="govuk-table__cell" >
+       
+        <strong class="govuk-tag govuk-tag--red ">
+          Eric Sykes, A1291AZ 
+        </strong>
+      </td>
+     
+     
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+        {{ govukCheckboxes({
+          idPrefix: "check-rudge",
+          name: "check-rudge",
+          
+          items: [
+            {
+              value: "Eric Sykes, A1291AZ",
+              text: "Eric Sykes, A1291AZ"
+            }
+          ]
+        }) }}
+       </td>
+       <td class="govuk-table__cell" data-sort-value="20">
+        Friday 20 December 2022
+        </td>
+      <td class="govuk-table__cell" >
+       
+        <strong class="govuk-tag govuk-tag--red ">
+          Neil Rudge, A4309SK 
+        </strong>
+      </td>
+    
+    </tr>
+  </tbody>
+</table>
+
+<br />
+<button class="govuk-button govuk-button--warning" data-module="govuk-button" name="editDashboard" value="archive">
+Remove selected prisoners
+</button>
+<button class="govuk-button" data-module="govuk-button" style="margin-left:30px;" name="editDashboard" value="suspend">
+Confirm and continue
+</button>
+  </form>
+
+</div>
+{% endblock %}

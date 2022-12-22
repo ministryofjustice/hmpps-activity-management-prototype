@@ -18,5 +18,18 @@ const router = express.Router()
 		}
 	  });
 
-	
+
+
+
+
+	  router.post(`/group-appointments/single-or-multiple`, function (req, res) {
+		const schedType = req.session.data['schedule-type'];
+		if (schedType === 'single-time') {
+			res.redirect(`appointment-time`);
+		} else {
+			res.redirect(`schedule-builder`);
+		}
+	  });
+
+	  
 module.exports = router
