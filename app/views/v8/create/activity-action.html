@@ -62,13 +62,13 @@ Activities Management prototype
   <div class="govuk-grid-column-two-thirds">
     <a href="activity-dashboard?dashboardView=all">
     <button style="margin-left:10px;" class="govuk-button" data-module="govuk-button">
-      {% if (data.action=="suspendActivity") %}
+      {% if (data.action=="suspendActivity" or data.action=="suspendSchedule" ) %}
         Confirm supension
       {% endif %}
-      {% if (data.action=="archiveActivity") %}
+      {% if (data.action=="archiveActivity" or data.action=="archiveSchedule") %}
         Confirm archive
       {% endif %}
-      {% if (data.action=="unSuspendActivity") %}
+      {% if (data.action=="unSuspendActivity" or data.action=="unSuspendSchedule") %}
         Confirm unsupension
       {% endif %}
     </button>
