@@ -123,10 +123,10 @@ Activities Management prototype
 			<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
 				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
 			</td>
-			<td class="govuk-table__cell">{{activity.attendanceCount.scheduled}}</td>
-			<td class="govuk-table__cell govuk-hint">{{activity['attended-count']}}</td>
-			<td class="govuk-table__cell govuk-hint">0</td>
-			<td class="govuk-table__cell govuk-hint"><span class="{{'govuk-tag govuk-tag--red' if activity['not-attended-count'] > 0 }}">{{activity['not-attended-count']}}</span></td>
+			<td class="govuk-table__cell">{{activity.attendanceCount['scheduled']}}</td>
+			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount['attended']}}</td>
+			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount['not-recorded']}}</td>
+			<td class="govuk-table__cell govuk-hint"><span class="{{'govuk-tag govuk-tag--red' if activity['not-attended-count'] > 0 }}">{{activity.attendanceCount['not-attended']}}</span></td>
 		</tr>
 		{% endfor %}
 	</tbody>
