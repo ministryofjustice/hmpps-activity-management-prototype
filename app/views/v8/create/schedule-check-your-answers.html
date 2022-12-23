@@ -23,13 +23,26 @@ Activities Management prototype
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
+              Schedule name
+            </dt>
+            <dd class="govuk-summary-list__value">
+            {{data.scheduleName or 'Schedule A'}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/schedule-name">
+                Change<span class="govuk-visually-hidden"> licence type</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
               Start date
             </dt>
             <dd class="govuk-summary-list__value">
             {{data.startDate or '3 January 2023'}}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/schedule-name">
+              <a class="govuk-link" href="check/activity-start-date">
                 Change<span class="govuk-visually-hidden"> licence type</span>
               </a>
             </dd>
@@ -42,7 +55,7 @@ Activities Management prototype
               {{data.endDate or 'Not set'}}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/schedule-name">
+              <a class="govuk-link" href="check/activity-start-date">
                 Change<span class="govuk-visually-hidden"> licence type</span>
               </a>
             </dd>
