@@ -16,61 +16,34 @@ Activities Management prototype
     <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'High'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
     <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-    Enter the pay rates
+    Enter pay for {{data.activityName or 'Maths level 1'}}
     </h1>
   </div>
-  <div class="govuk-grid-column-two-thirds">
-
   <div id="event-name-hint" class="govuk-hint">
-  You can add as many pay rates as you need.
   </div>
+  <p> When you allocate someone to this activity, you'll be asked to select their pay rate, based on their incentive level.<br />
+    Use this page to enter the relevant rates (up to 10 for each incentive level).</p>
+  <p>If the pay is the same for people on all incentive levels, select 'All incentive levels'.</p>
+  <div class="govuk-inset-text">
+    Do not enter a rate for an incentive level if people on that incentive level cannot be allocated to this activity.
+</div>
     <form method="post">
       <div class="govuk-form-group">
-        <div data-module="moj-add-another">
-          <form method="post">
-            <fieldset class="govuk-fieldset moj-add-another__item">
-              <div class="govuk-form-group">
-                <label class="govuk-label govuk-!-font-weight-bold" for="paymentName">
-                  Pay rate name
-                </label>
-                <input class="govuk-input govuk-input--width-10" id="paymentName" name="paymentName" type="text" value="{{ data.paymentName }}">
-              </div>
-              <div class="govuk-form-group">
-                <label class="govuk-label govuk-!-font-weight-bold" for="paymentAmount">
-                  Pay rate amount
-                </label>
-              <input class="govuk-input govuk-input--width-5" id="paymentAmount" name="paymentAmount" type="text" value="{{ data.paymentAmount }}">
-              </div>
-                <h2 class="govuk-heading-l govuk-!-margin-bottom-4">
-              If you want to pay someone for each item instead
-              </h2>
-              <div class="govuk-form-group">
-                <label class="govuk-label govuk-!-font-weight-bold" for="piecework">
-                  Piecework rate
-                </label>
-              <strong></strong>  <input class="govuk-input govuk-input--width-5" id="piecework" name="piecework" type="text" value="">
-              </div>
-              <br />
-              <hr />
-            </fieldset>
-            <br />
-            <div class="moj-button-action">
-              <button class="govuk-button govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4" data-module="govuk-button">
-                Add another pay rate
-              </button>
-            </div>
-            <div class="moj-button-action">
-              <button class="govuk-button" data-module="govuk-button">
-                Continue
-              </button>
-            </div>
-          </form>
-        </div>
-        <br /><br />
-        </fieldset>
+        <label class="govuk-label" for="sort">
+          Sort by
+        </label>
+        <select class="govuk-select" id="sort" name="PayIncentiveLevel">
+          <option value="All" selected>All incentive levels</option>
+          <option value="Basic">Basic</option>
+          <option value="Standard" >Standard</option>
+          <option value="Enhanced">Enhanced</option>
+        </select>
       </div>
-      <br />
-</div>
-</div>
+      <div class="moj-button-action">
+        <button class="govuk-button" data-module="govuk-button">
+          Continue
+        </button>
+      </div>
+    </div>
 
 {% endblock %}
