@@ -74,15 +74,10 @@ router.post(version +'/create/activity-name', function(req, res) {
 
 router.post(version +'/create/activity-risk-assessment', function(req, res) {
 	{
-		res.redirect(version +'/create/activity-incentive-level')
+		res.redirect(version +'/create/activity-payment-details')
 	}
 });
 
-	router.post(version +'/create/activity-incentive-level', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-payment-details')
-		}
-	});
 
 //OLD
 	//router.post(version +'/create/activity-payment-details', function(req, res) {
@@ -306,11 +301,6 @@ router.post(version +'/create/check/schedule-name', function(req, res) {
 		}
 	});
 
-	router.post(version +'/create/check/activity-incentive-level', function(req, res) {
-		{
-			res.redirect(version +'/create/activity-check-your-answers')
-		}
-	});
 
 	router.post(version +'/create/check/activity-risk-assessment', function(req, res) {
 		{
