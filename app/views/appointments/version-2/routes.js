@@ -31,5 +31,14 @@ const router = express.Router()
 		}
 	  });
 
+	  router.post(`/group-appointments/appointment-repeat`, function (req, res) {
+		const appRepeat = req.session.data['appointment-repeat'];
+		if (appRepeat === 'Yes') {
+			res.redirect(`appointment-frequency`);
+		} else {
+			res.redirect(`how-to-schedule-group`);
+		}
+	  });
+
 	  
 module.exports = router
