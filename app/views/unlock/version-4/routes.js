@@ -83,8 +83,8 @@ function getSessionDate(date, activity, direction) {
 
 function formatDate(date) {
     const year = date.getFullYear();
-    const month = date.getMonth() + 1; // months are 0-based
-    const day = date.getDate();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
 
@@ -248,39 +248,39 @@ function countAttendance(data, activityId, date, status) {
   return attendedCount;
 }
 
-function addAttendanceCounts(prisoners, filteredActivities, attendanceData) {
-    for (let timeOfDay in filteredActivities) {
-        for (let i = 0; i < filteredActivities[timeOfDay].length; i++) {
-            let activity = filteredActivities[timeOfDay][i];
-            let attendanceCount = {
-                'attended': 0,
-                'not-attended': 0,
-                'scheduled': 0,
-                'not-recorded': 0
-            };
-            let prisonerList = prisoners.filter(prisoner => prisoner.activity == activity.id);
-            for (let i = 0; i < prisonerList.length; i++) {
-                let prisoner = prisonerList[i];
-                if (prisoner.activity === activity.id) {
-                    attendanceCount['scheduled']++;
-                    attendanceCount['not-recorded']++;
-                }
+function addAttendanceCounts(prisoners, filteredActivities, attendanceData, date) {
+    const scheduledKey = 'scheduled';
+    const notRecordedKey = 'not-recorded';
+    const attendedKey = 'attended';
+    const notAttendedKey = 'not-attended';
+    for (let activity of filteredActivities.morning.concat(filteredActivities.afternoon)) {
+        let attendanceCount = {
+            [scheduledKey]: 0,
+            [notRecordedKey]: 0,
+            [attendedKey]: 0,
+            [notAttendedKey]: 0
+        };
+        let prisonerList = prisoners.filter(prisoner => prisoner.activity == activity.id);
+        for (let i = 0; i < prisonerList.length; i++) {
+            let prisoner = prisonerList[i];
+            if (prisoner.activity === activity.id) {
+                attendanceCount[scheduledKey]++;
+                attendanceCount[notRecordedKey]++;
             }
-            if (attendanceData && attendanceData[activity.id]) {
-                for (let date in attendanceData[activity.id]) {
-                    for (let participant in attendanceData[activity.id][date]) {
-                        if (attendanceData[activity.id][date][participant].status === "attended") {
-                            attendanceCount['attended']++;
-                            attendanceCount['not-recorded']--;
-                        } else {
-                            attendanceCount['not-attended']++;
-                            attendanceCount['not-recorded']--;
-                        }
-                    }
-                }
-            }
-            activity.attendanceCount = attendanceCount;
         }
+        if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
+        	console.log(attendanceData)
+            for (let participant in attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
+                if (attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)][participant].status === "attended") {
+                    attendanceCount[attendedKey]++;
+                    attendanceCount[notRecordedKey]--;
+                } else {
+                    attendanceCount[notAttendedKey]++;
+                    attendanceCount[notRecordedKey]--;
+                }
+            }
+        }
+        activity.attendanceCount = attendanceCount;
     }
 }
 
@@ -620,10 +620,10 @@ router.get('/activities', function(req, res) {
     let timeDiff = Math.abs(date.getTime() - dateObj.getTime());
     let hourDiff = timeDiff / (1000 * 60 * 60);
     if (hourDiff <= 48) {
-    	relativeDate = DateTime.fromFormat(chosenDate, "yyyy-M-d").toRelativeCalendar();
+    	relativeDate = DateTime.fromFormat(chosenDate, "yyyy-MM-dd").toRelativeCalendar();
     }
 
-    addAttendanceCounts(req.session.data['prisoners'], filteredActivities, req.session.data['attendance-data'])
+    addAttendanceCounts(req.session.data['prisoners'], filteredActivities, req.session.data['attendance-data'], date)
 
     res.render('unlock/' + req.version + '/activities', {
     	filteredActivities,

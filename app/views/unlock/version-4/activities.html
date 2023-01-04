@@ -28,11 +28,13 @@ Activities Management prototype
 {% else %}
 {% set date = data['chosen-date'] %}
 {% endif %}
+{{data['attendance-data']|dump}}
+{{filteredActivities|dump}}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		{% set activitiesCount =  filteredActivities.morning|length + filteredActivities.afternoon|length %}
 		<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
-			{{activitiesCount}} activities scheduled for {{relativeDate or date|longDateFormat(date)}} ({{data['times']|upper or "morning"}})
+			{{activitiesCount}} activities scheduled for {{relativeDate or date|longDateFormat(date)}}
 		</h1>
 
 		<!-- filteredActivities: {{filteredActivities|dump}} -->
