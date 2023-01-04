@@ -190,10 +190,12 @@ Activities Management prototype
               </div>
 
 
+  {% if (data.changedCategory!=='changed')%}
   {% if data.status=='live' %}
+
 <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-thirds" style="margin-left:35px;">
-        <a href="activity-start-date?activityName={{data.activityNameDashboard}}">
+        <a href="schedule-name?activityName={{data.activityNameDashboard}}">
           <button class="govuk-button" data-module="govuk-button">
             Build a new schedule
           </button>
@@ -243,6 +245,7 @@ Activities Management prototype
       </div>
     </div>
   {% endif %}
+    {% endif %}
 
 
 
@@ -272,7 +275,7 @@ Activities Management prototype
             {{data.activityNameDashboard or 'Maths level 1'}} - Schedule A
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-start-date">
+              <a class="govuk-link" href="check/schedule-name">
                 Change<span class="govuk-visually-hidden"> licence type</span>
               </a>
             </dd>
@@ -285,7 +288,7 @@ Activities Management prototype
             {{data.startDate or '1 December 2022'}}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-start-date">
+              <a class="govuk-link" href="check/schedule-name">
                 Change<span class="govuk-visually-hidden"> licence type</span>
               </a>
             </dd>
@@ -473,7 +476,7 @@ Activities Management prototype
           {{data.activityNameDashboard or 'Maths level 1'}} - Schedule B
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="check/activity-start-date">
+            <a class="govuk-link" href="check/schedule-name">
               Change<span class="govuk-visually-hidden"> licence type</span>
             </a>
           </dd>
@@ -486,7 +489,7 @@ Activities Management prototype
           {{data.startDate or '1 December 2022'}}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="check/activity-start-date">
+            <a class="govuk-link" href="check/schedule-name">
               Change<span class="govuk-visually-hidden"> licence type</span>
             </a>
           </dd>
@@ -681,7 +684,7 @@ Activities Management prototype
               {{data.activityNameDashboard or 'Maths level 1'}} - Schedule C
               </dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="check/activity-start-date">
+                <a class="govuk-link" href="check/schedule-name">
                   Change<span class="govuk-visually-hidden"> licence type</span>
                 </a>
               </dd>
@@ -694,7 +697,7 @@ Activities Management prototype
               {{data.startDate or '1 December 2022'}}
               </dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="check/activity-start-date">
+                <a class="govuk-link" href="check/schedule-name">
                   Change<span class="govuk-visually-hidden"> licence type</span>
                 </a>
               </dd>
@@ -889,7 +892,7 @@ Activities Management prototype
                   {{data.activityNameDashboard or 'Maths level 1'}} - Schedule D
                   </dd>
                   <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="check/activity-start-date">
+                    <a class="govuk-link" href="check/schedule-name">
                       Change<span class="govuk-visually-hidden"> licence type</span>
                     </a>
                   </dd>
@@ -902,7 +905,7 @@ Activities Management prototype
                   {{data.startDate or '1 December 2022'}}
                   </dd>
                   <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="check/activity-start-date">
+                    <a class="govuk-link" href="check/schedule-name">
                       Change<span class="govuk-visually-hidden"> licence type</span>
                     </a>
                   </dd>
@@ -1094,7 +1097,7 @@ Activities Management prototype
                       {{data.activityNameDashboard or 'Maths level 1'}} - Schedule E
                       </dd>
                       <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="check/activity-start-date">
+                        <a class="govuk-link" href="check/schedule-name">
                           Change<span class="govuk-visually-hidden"> licence type</span>
                         </a>
                       </dd>
@@ -1107,7 +1110,7 @@ Activities Management prototype
                       {{data.startDate or '1 December 2022'}}
                       </dd>
                       <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="check/activity-start-date">
+                        <a class="govuk-link" href="check/schedule-name">
                           Change<span class="govuk-visually-hidden"> licence type</span>
                         </a>
                       </dd>
@@ -1298,7 +1301,7 @@ Activities Management prototype
                           {{data.activityNameDashboard or 'Maths level 1'}} - Schedule F
                           </dd>
                           <dd class="govuk-summary-list__actions">
-                            <a class="govuk-link" href="check/activity-start-date">
+                            <a class="govuk-link" href="check/schedule-name">
                               Change<span class="govuk-visually-hidden"> licence type</span>
                             </a>
                           </dd>
@@ -1311,7 +1314,7 @@ Activities Management prototype
                           {{data.startDate or '1 December 2022'}}
                           </dd>
                           <dd class="govuk-summary-list__actions">
-                            <a class="govuk-link" href="check/activity-start-date">
+                            <a class="govuk-link" href="check/schedule-name">
                               Change<span class="govuk-visually-hidden"> licence type</span>
                             </a>
                           </dd>
@@ -1507,7 +1510,7 @@ Activities Management prototype
                               {{data.activityNameDashboard or 'Maths level 1'}} - Schedule G
                               </dd>
                               <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link" href="check/activity-start-date">
+                                <a class="govuk-link" href="check/schedule-name">
                                   Change<span class="govuk-visually-hidden"> licence type</span>
                                 </a>
                               </dd>
@@ -1520,7 +1523,7 @@ Activities Management prototype
                               {{data.startDate or '1 December 2022'}}
                               </dd>
                               <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link" href="check/activity-start-date">
+                                <a class="govuk-link" href="check/schedule-name">
                                   Change<span class="govuk-visually-hidden"> licence type</span>
                                 </a>
                               </dd>
@@ -1716,7 +1719,7 @@ Activities Management prototype
                                   {{data.activityNameDashboard or 'Maths level 1'}} - Schedule H
                                   </dd>
                                   <dd class="govuk-summary-list__actions">
-                                    <a class="govuk-link" href="check/activity-start-date">
+                                    <a class="govuk-link" href="check/schedule-name">
                                       Change<span class="govuk-visually-hidden"> licence type</span>
                                     </a>
                                   </dd>
@@ -1729,7 +1732,7 @@ Activities Management prototype
                                   {{data.startDate or '1 December 2022'}}
                                   </dd>
                                   <dd class="govuk-summary-list__actions">
-                                    <a class="govuk-link" href="check/activity-start-date">
+                                    <a class="govuk-link" href="check/schedule-name">
                                       Change<span class="govuk-visually-hidden"> licence type</span>
                                     </a>
                                   </dd>
@@ -1904,9 +1907,6 @@ Activities Management prototype
 
 
                             {% endif %}
-
-
-
 
   {% else %}
 <!--Create journey-->

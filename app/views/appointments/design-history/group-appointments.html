@@ -1,0 +1,84 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block header %}
+{% set homepageUrl %}
+{% if data['prototype'] == 'create' %}
+/?prototype=create
+{% elseif data['prototype'] == 'unlock' %}
+/unlock?prototype=unklock
+{% elseif data['prototype'] == 'appointments' %}
+/appointments?prototype=appointments
+{% endif %}
+{% endset %}
+
+{{ govukHeader({
+  homepageUrl: homepageUrl,
+  serviceName: serviceName,
+  serviceUrl: homepageUrl,
+  containerClasses: "govuk-width-container",
+  navigation: [
+  {
+    text: "Create and allocate",
+    href: "/?prototype=create"
+  },
+  {
+    text: "Unlock and attend",
+    href: "/unlock/?prototype=unlock"
+  },
+  {
+    text: "Appointments",
+    href: "/appointments/?prototype=appointments",
+    active: true
+  }]
+}) }}
+
+<div class="app-masthead">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="app-masthead__title govuk-heading-xl govuk-!-margin-bottom-3">
+          Multiple (group) appointments
+        </h1>
+        <h3 class="app-masthead__subtitle govuk-heading-l">Appointments - Design history</h3>
+      </div>
+      <div class="govuk-grid-column-one-third">
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+<!--article content-->
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-m">
+      Discovery opportunities and assumptions
+    </h2>
+
+    <p class="govuk-body">
+      Content here once written
+    </p>
+
+
+
+
+
+
+
+    <!--ARTICLE END-->
+    {% from "govuk/components/pagination/macro.njk" import govukPagination %}
+    {{ govukPagination({
+      previous: {
+        labelText: "Back to article list",
+        href: "../design-history?prototype=appointments"
+      }
+    }) }}
+  </div>
+</div>
+
+{% endblock %}
