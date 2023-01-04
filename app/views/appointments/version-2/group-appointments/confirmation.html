@@ -16,19 +16,24 @@ Appointments prototype
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {{ govukPanel({
-        titleText: "Appointment saved"
+        titleText: "Appointment created"
       }) }}
-      <p class="govuk-body">We have sent you a confirmation email.</p>
-      <h2 class="govuk-heading-m">What happens next</h2>
+     
+      <h2 class="govuk-heading-m">What you can do next</h2>
       <p class="govuk-body">
-        You have successfully created a medical appointment for James Johnson at 11am to 12pm on Tuesday 13 December.
+        Your appointment has been created.
       </p>
       <p class="govuk-body">
-        <a href="#" class="govuk-link">Change appointment details</a>
+        You can <a href="" class="govuk-link">print appointment and prisoners' details</a>.
       </p>
       <p class="govuk-body">
-        <a href="appointment-start" class="govuk-link">Create another appointment</a>
+        You can <a href="" class="govuk-link">create a new appointment</a> or <a href="" class="govuk-link">change details of an existing appointment</a>.
       </p>
+      
+      {{ govukButton({
+        text: "Print appointment and prisoners' details",
+        classes: "govuk-button--secondary"
+      }) }}
     </div>
   </div>
 {% endblock %}
