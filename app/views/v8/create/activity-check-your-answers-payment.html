@@ -25,7 +25,7 @@ Activities Management prototype
     {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
     {% set html %}
     <h3 class="govuk-notification-banner__heading">
-      Payrate removed
+      Pay rate {{rate.name or 'Payment rate A'}} removed
     </h3>
     {% endset %}
     {{ govukNotificationBanner({
@@ -41,7 +41,7 @@ Activities Management prototype
       {% for rate in details %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          {{rate.name or 'Payment Rate A'}}
+          {{rate.name or 'Payment rate A'}}
         </dt>
         <dd class="govuk-summary-list__value">
           &pound; {{rate.amount or '1.10'}}
