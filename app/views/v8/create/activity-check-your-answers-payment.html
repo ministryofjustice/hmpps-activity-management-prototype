@@ -16,35 +16,46 @@ Activities Management prototype
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-      </div>
+    </div>
 
-      <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'High'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
-      <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
-        <p></p>
-        <h2 class="govuk-heading-m">{{data.PayIncentiveLevel or 'Basic'}} incentive level payments</h2>
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              {{data.paymentIncentiveName or 'Payment Rate A'}}
-            </dt>
-            <dd class="govuk-summary-list__value">
-              &pound; {{data.paymentIncentiveAmount or '1.10'}}
-            </dd>
-            <dd class="govuk-summary-list__actions">
-            <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
-                  <a class="govuk-link" href="check/activity-risk-assessment">
-                Change<span class="govuk-visually-hidden"> licence type</span>
-              </a>
-            </dd>
-          </div>
-        </dl>
-          <form method="post">
-            <button class="govuk-button" data-module="govuk-button" value="confirmPay">
-            Confirm pay rates
-            <button style="margin-left:30px;" class="govuk-button govuk-button--secondary" data-module="govuk-button" value="addAnother">
-            Add another pay rate
-          </form>
-          </div>
+    <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'High'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
+    <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
+
+    {{data['payrates']|dump}}
+
+    {% for level, details in data.payrates %}
+    <h2 class="govuk-heading-m">{{level}} incentive level payments</h2>
+    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+      {% for rate in details %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          {{rate.name or 'Payment Rate A'}}
+        </dt>
+        <dd class="govuk-summary-list__value">
+          &pound; {{rate.amount or '1.10'}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
+            <a class="govuk-link govuk-!-margin-right-3" href="activity-payment-details?id={{rate.id}}">
+              Change<span class="govuk-visually-hidden"> incentive payment</span>
+            </a>
+            <a class="govuk-link" href="remove-activity-payment-details?id={{rate.id}}">
+              Remove<span class="govuk-visually-hidden"> incentive payment</span>
+            </a>
+          </dd>
         </div>
+        {% endfor %}
+      </dl>
+      {% endfor %}
+      <form>
+        <button class="govuk-button" data-module="govuk-button" value="confirmPay" formaction="activity-add-education">
+          Confirm pay rates
+        </button>
+        <button style="margin-left:30px;" class="govuk-button govuk-button--secondary" data-module="govuk-button" value="addAnother" formaction="activity-payment-details">
+          Add another pay rate
+        </button>
+      </form>
+    </div>
+  </div>
 
-{% endblock %}
+  {% endblock %}
