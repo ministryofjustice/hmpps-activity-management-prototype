@@ -1,0 +1,48 @@
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="single-or-multiple">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Multiple appointment list</span>
+        What sort of appointment do you want to create?
+       </h1>
+   
+      
+      {{ govukRadios({
+        idPrefix: "schedule-type",
+        name: "schedule-type",
+        
+        hint: {
+          text: "Select if you want to create an appointment for a group of people or a number of individual appointments"
+        },
+        items: [
+          {
+            value: "single-time",
+            text: "an appointment for a group of people"
+          },
+          {
+            value: "multiple-times",
+            text: "a number of individual appointments"
+          }
+        ]
+      }) }}
+    
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </div>
+</div>
+{% endblock %}

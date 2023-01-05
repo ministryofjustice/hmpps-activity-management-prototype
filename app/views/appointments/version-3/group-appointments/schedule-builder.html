@@ -1,0 +1,711 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="non-associations">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+   <h1 class="govuk-heading-l">
+    What time does the appointment for each individual start? 
+   </h1>
+   
+
+
+  <p class="govuk-body">
+    Select a start time for each individual appointment
+  </p>
+   
+        
+      
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header ">Name</th>
+          <th scope="col" class="govuk-table__header ">Start time</th>
+          <th scope="col" class="govuk-table__header ">End time (optional)</th>
+          <th scope="col" class="govuk-table__header "></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell ">Neil Rudge, A4309SK</td>
+          <td class="govuk-table__cell ">
+            
+         
+              <ul class="time-input noMarginBottom">
+                <li>
+                  {{ govukSelect({
+                    id: "start-hours",
+                    name: "start-hours",
+                    items: [
+                    {
+                      value: "--",
+                      text: "--",
+                    selected: true},
+                      {
+                        value: "08",
+                        text: "08"
+                      },
+                      {
+                        value: "09",
+                        text: "09"
+                      },
+                      {
+                        value: "10",
+                        text: "10"
+                      },
+                      {
+                        value: "11",
+                        text: "11"
+                      },
+                      {
+                        value: "12",
+                        text: "12"
+                      },
+                      {
+                        value: "13",
+                        text: "13"
+                      },
+                      {
+                        value: "14",
+                        text: "14"
+                      },
+                      {
+                        value: "15",
+                        text: "15"
+                      },
+                      {
+                        value: "16",
+                        text: "16"
+                      },
+                      {
+                        value: "17",
+                        text: "17"
+                      },
+                      {
+                        value: "18",
+                        text: "18"
+                      },
+                      {
+                        value: "19",
+                        text: "19"
+                      },
+                      {
+                        value: "20",
+                        text: "20"
+                      },
+                      {
+                        value: "21",
+                        text: "21"
+                      },
+                      {
+                        value: "22",
+                        text: "22"
+                      }
+                      
+                    ]
+                  }) }}
+                </li>
+                <li class="minutes">
+                  {{ govukSelect({
+                    id: "start-minutes",
+                    name: "start-minutes",
+                    items: [
+                    {
+                      value: "--",
+                      text: "--",
+                    selected: true},
+                      {
+                        value: "00",
+                        text: "00"
+                      },
+                      {
+                        value: "15",
+                        text: "15"
+                      },
+                      {
+                        value: "30",
+                        text: "30"
+                      },
+                      {
+                        value: "45",
+                        text: "45"
+                      }
+                    ]
+                  }) }}
+                </li>
+              </ul>
+         
+          </td>
+            <td class="govuk-table__cell ">
+             
+         
+                <ul class="time-input">
+                  <li>
+                    {{ govukSelect({
+                      id: "start-hours",
+                      name: "start-hours",
+                      items: [
+                      {
+                        value: "--",
+                        text: "--",
+                      selected: true},
+                        {
+                          value: "08",
+                          text: "08"
+                        },
+                        {
+                          value: "09",
+                          text: "09"
+                        },
+                        {
+                          value: "10",
+                          text: "10"
+                        },
+                        {
+                          value: "11",
+                          text: "11"
+                        },
+                        {
+                          value: "12",
+                          text: "12"
+                        },
+                        {
+                          value: "13",
+                          text: "13"
+                        },
+                        {
+                          value: "14",
+                          text: "14"
+                        },
+                        {
+                          value: "15",
+                          text: "15"
+                        },
+                        {
+                          value: "16",
+                          text: "16"
+                        },
+                        {
+                          value: "17",
+                          text: "17"
+                        },
+                        {
+                          value: "18",
+                          text: "18"
+                        },
+                        {
+                          value: "19",
+                          text: "19"
+                        },
+                        {
+                          value: "20",
+                          text: "20"
+                        },
+                        {
+                          value: "21",
+                          text: "21"
+                        },
+                        {
+                          value: "22",
+                          text: "22"
+                        }
+                        
+                      ]
+                    }) }}
+                  </li>
+                  <li class="minutes">
+                    {{ govukSelect({
+                      id: "start-minutes",
+                      name: "start-minutes",
+                      items: [
+                      {
+                        value: "--",
+                        text: "--",
+                      selected: true},
+                        {
+                          value: "00",
+                          text: "00"
+                        },
+                        {
+                          value: "15",
+                          text: "15"
+                        },
+                        {
+                          value: "30",
+                          text: "30"
+                        },
+                        {
+                          value: "45",
+                          text: "45"
+                        }
+                      ]
+                    }) }}
+                  </li>
+                </ul>
+          
+            </td>
+          
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell ">Bert Hungerford, A9121FA</td>
+          <td class="govuk-table__cell ">
+            
+         
+              <ul class="time-input noMarginBottom">
+                <li>
+                  {{ govukSelect({
+                    id: "start-hours",
+                    name: "start-hours",
+                    items: [
+                    {
+                      value: "--",
+                      text: "--",
+                    selected: true},
+                      {
+                        value: "08",
+                        text: "08"
+                      },
+                      {
+                        value: "09",
+                        text: "09"
+                      },
+                      {
+                        value: "10",
+                        text: "10"
+                      },
+                      {
+                        value: "11",
+                        text: "11"
+                      },
+                      {
+                        value: "12",
+                        text: "12"
+                      },
+                      {
+                        value: "13",
+                        text: "13"
+                      },
+                      {
+                        value: "14",
+                        text: "14"
+                      },
+                      {
+                        value: "15",
+                        text: "15"
+                      },
+                      {
+                        value: "16",
+                        text: "16"
+                      },
+                      {
+                        value: "17",
+                        text: "17"
+                      },
+                      {
+                        value: "18",
+                        text: "18"
+                      },
+                      {
+                        value: "19",
+                        text: "19"
+                      },
+                      {
+                        value: "20",
+                        text: "20"
+                      },
+                      {
+                        value: "21",
+                        text: "21"
+                      },
+                      {
+                        value: "22",
+                        text: "22"
+                      }
+                      
+                    ]
+                  }) }}
+                </li>
+                <li class="minutes">
+                  {{ govukSelect({
+                    id: "start-minutes",
+                    name: "start-minutes",
+                    items: [
+                    {
+                      value: "--",
+                      text: "--",
+                    selected: true},
+                      {
+                        value: "00",
+                        text: "00"
+                      },
+                      {
+                        value: "15",
+                        text: "15"
+                      },
+                      {
+                        value: "30",
+                        text: "30"
+                      },
+                      {
+                        value: "45",
+                        text: "45"
+                      }
+                    ]
+                  }) }}
+                </li>
+              </ul>
+         
+          </td>
+            <td class="govuk-table__cell ">
+             
+         
+                <ul class="time-input">
+                  <li>
+                    {{ govukSelect({
+                      id: "start-hours",
+                      name: "start-hours",
+                      items: [
+                      {
+                        value: "--",
+                        text: "--",
+                      selected: true},
+                        {
+                          value: "08",
+                          text: "08"
+                        },
+                        {
+                          value: "09",
+                          text: "09"
+                        },
+                        {
+                          value: "10",
+                          text: "10"
+                        },
+                        {
+                          value: "11",
+                          text: "11"
+                        },
+                        {
+                          value: "12",
+                          text: "12"
+                        },
+                        {
+                          value: "13",
+                          text: "13"
+                        },
+                        {
+                          value: "14",
+                          text: "14"
+                        },
+                        {
+                          value: "15",
+                          text: "15"
+                        },
+                        {
+                          value: "16",
+                          text: "16"
+                        },
+                        {
+                          value: "17",
+                          text: "17"
+                        },
+                        {
+                          value: "18",
+                          text: "18"
+                        },
+                        {
+                          value: "19",
+                          text: "19"
+                        },
+                        {
+                          value: "20",
+                          text: "20"
+                        },
+                        {
+                          value: "21",
+                          text: "21"
+                        },
+                        {
+                          value: "22",
+                          text: "22"
+                        }
+                        
+                      ]
+                    }) }}
+                  </li>
+                  <li class="minutes">
+                    {{ govukSelect({
+                      id: "start-minutes",
+                      name: "start-minutes",
+                      items: [
+                      {
+                        value: "--",
+                        text: "--",
+                      selected: true},
+                        {
+                          value: "00",
+                          text: "00"
+                        },
+                        {
+                          value: "15",
+                          text: "15"
+                        },
+                        {
+                          value: "30",
+                          text: "30"
+                        },
+                        {
+                          value: "45",
+                          text: "45"
+                        }
+                      ]
+                    }) }}
+                  </li>
+                </ul>
+          
+            </td>
+          
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell ">Eric Sykes, A1291AZ</td>
+          <td class="govuk-table__cell ">
+            
+         
+              <ul class="time-input noMarginBottom">
+                <li>
+                  {{ govukSelect({
+                    id: "start-hours",
+                    name: "start-hours",
+                    items: [
+                    {
+                      value: "--",
+                      text: "--",
+                    selected: true},
+                      {
+                        value: "08",
+                        text: "08"
+                      },
+                      {
+                        value: "09",
+                        text: "09"
+                      },
+                      {
+                        value: "10",
+                        text: "10"
+                      },
+                      {
+                        value: "11",
+                        text: "11"
+                      },
+                      {
+                        value: "12",
+                        text: "12"
+                      },
+                      {
+                        value: "13",
+                        text: "13"
+                      },
+                      {
+                        value: "14",
+                        text: "14"
+                      },
+                      {
+                        value: "15",
+                        text: "15"
+                      },
+                      {
+                        value: "16",
+                        text: "16"
+                      },
+                      {
+                        value: "17",
+                        text: "17"
+                      },
+                      {
+                        value: "18",
+                        text: "18"
+                      },
+                      {
+                        value: "19",
+                        text: "19"
+                      },
+                      {
+                        value: "20",
+                        text: "20"
+                      },
+                      {
+                        value: "21",
+                        text: "21"
+                      },
+                      {
+                        value: "22",
+                        text: "22"
+                      }
+                      
+                    ]
+                  }) }}
+                </li>
+                <li class="minutes">
+                  {{ govukSelect({
+                    id: "start-minutes",
+                    name: "start-minutes",
+                    items: [
+                    {
+                      value: "--",
+                      text: "--",
+                    selected: true},
+                      {
+                        value: "00",
+                        text: "00"
+                      },
+                      {
+                        value: "15",
+                        text: "15"
+                      },
+                      {
+                        value: "30",
+                        text: "30"
+                      },
+                      {
+                        value: "45",
+                        text: "45"
+                      }
+                    ]
+                  }) }}
+                </li>
+              </ul>
+         
+          </td>
+            <td class="govuk-table__cell ">
+             
+         
+                <ul class="time-input">
+                  <li>
+                    {{ govukSelect({
+                      id: "start-hours",
+                      name: "start-hours",
+                      items: [
+                      {
+                        value: "--",
+                        text: "--",
+                      selected: true},
+                        {
+                          value: "08",
+                          text: "08"
+                        },
+                        {
+                          value: "09",
+                          text: "09"
+                        },
+                        {
+                          value: "10",
+                          text: "10"
+                        },
+                        {
+                          value: "11",
+                          text: "11"
+                        },
+                        {
+                          value: "12",
+                          text: "12"
+                        },
+                        {
+                          value: "13",
+                          text: "13"
+                        },
+                        {
+                          value: "14",
+                          text: "14"
+                        },
+                        {
+                          value: "15",
+                          text: "15"
+                        },
+                        {
+                          value: "16",
+                          text: "16"
+                        },
+                        {
+                          value: "17",
+                          text: "17"
+                        },
+                        {
+                          value: "18",
+                          text: "18"
+                        },
+                        {
+                          value: "19",
+                          text: "19"
+                        },
+                        {
+                          value: "20",
+                          text: "20"
+                        },
+                        {
+                          value: "21",
+                          text: "21"
+                        },
+                        {
+                          value: "22",
+                          text: "22"
+                        }
+                        
+                      ]
+                    }) }}
+                  </li>
+                  <li class="minutes">
+                    {{ govukSelect({
+                      id: "start-minutes",
+                      name: "start-minutes",
+                      items: [
+                      {
+                        value: "--",
+                        text: "--",
+                      selected: true},
+                        {
+                          value: "00",
+                          text: "00"
+                        },
+                        {
+                          value: "15",
+                          text: "15"
+                        },
+                        {
+                          value: "30",
+                          text: "30"
+                        },
+                        {
+                          value: "45",
+                          text: "45"
+                        }
+                      ]
+                    }) }}
+                  </li>
+                </ul>
+          
+            </td>
+          
+        </tr>
+        
+      
+      </tbody>
+    </table>
+{{ govukButton({
+  text: "Continue"
+}) }}
+  </div>
+</div>
+
+    
+</form>
+{% endblock %}

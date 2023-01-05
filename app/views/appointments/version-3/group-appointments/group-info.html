@@ -1,0 +1,135 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="date-of-appointment">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Multiple appointment list</span>
+        Check prisoner names and numbers
+
+       </h1>
+   <p class="govuk-body">
+    You can remove non-associations for group appointments now. You can also make more changes later for both group and individual appointment lists.
+   </p>
+  </div>
+   </div>
+
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <table class="govuk-table">
+       
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header">Prison number</th>
+            <th scope="col" class="govuk-table__header">Location</th>
+            <th scope="col" class="govuk-table__header">Earliest release date</th>
+            <th scope="col" class="govuk-table__header"></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              Neil Rudge<br><br>
+            {{ govukDetails({
+              summaryText: "Non-associations",
+              classes: "govuk-!-margin-bottom-1",
+              html: 
+              "
+              <strong class='govuk-tag govuk-tag--red noTransform'>
+                Lance Arm, A4509GH
+              </strong><br>
+              <strong class='govuk-tag govuk-tag--red noTransform govuk-!-margin-top-3'>
+                Harry Christmas, A88992PP
+              </strong>
+              "
+            }) }}
+            </td>
+            <td class="govuk-table__cell">A4309SK</td>
+            <td class="govuk-table__cell">1-3-003</td>
+            <td class="govuk-table__cell">2 Feb 2023</td>
+            <td class="govuk-table__cell">
+              {% from "govuk/components/button/macro.njk" import govukButton %}
+              {{ govukButton({
+                text: "Remove",
+                classes: "govuk-button--warning"
+              }) }}
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              Bert Hungerford<br><br>
+            {{ govukDetails({
+              summaryText: "Non-associations",
+              classes: "govuk-!-margin-bottom-1",
+              html: 
+              "
+              <strong class='govuk-tag govuk-tag--red noTransform'>
+                Neil Rudge, A4309SK
+              </strong>
+              "
+            }) }}
+            </td>
+            <td class="govuk-table__cell">A9121FA</td>
+            <td class="govuk-table__cell">4-6-023</td>
+            <td class="govuk-table__cell">2 Feb 2023</td>
+            <td class="govuk-table__cell">
+              {% from "govuk/components/button/macro.njk" import govukButton %}
+              {{ govukButton({
+                text: "Remove",
+                classes: "govuk-button--warning"
+              }) }}
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              Eric Sykes<br><br>
+            {{ govukDetails({
+              summaryText: "Non-associations",
+              html: 
+              "
+             <b>No reported non-associations</b>
+              "
+            }) }}
+            </td>
+            <td class="govuk-table__cell">A1291AZ</td>
+            <td class="govuk-table__cell">1-1-055</td>
+            <td class="govuk-table__cell">2 Feb 2023</td>
+            <td class="govuk-table__cell">
+              {% from "govuk/components/button/macro.njk" import govukButton %}
+              {{ govukButton({
+                text: "Remove",
+                classes: "govuk-button--warning"
+              }) }}
+            </td>
+          </tr>
+         
+        </tbody>
+      </table>
+    
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
+<p class="govuk-body">
+  <a href="#" class="govuk-link">Add more people to this group</a>
+</p>
+
+
+  </div>
+</div>
+{% endblock %}

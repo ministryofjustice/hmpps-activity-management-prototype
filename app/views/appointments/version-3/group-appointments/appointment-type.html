@@ -1,0 +1,71 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="appointment-sub-type">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+   
+   <h1 class="govuk-heading-l">
+    <span class="govuk-caption-l">Multiple appointment list</span>
+    What type of appointment do you want to create?
+   </h1>
+     
+   {{ govukRadios({
+    id: "appointment-type",
+    name: "appointment-type",
+    hint: {
+      text: "Select what type of appointment it is you want to create"
+    },
+    items: [
+     
+      {
+        value: "Education",
+        text: "Education"
+      },
+      {
+        value: "Faith",
+        text: "Faith"
+      },
+      {
+        value: "Gym",
+        text: "Gym"
+      },
+      {
+        value: "Medical",
+        text: "Medical"
+      },
+      {
+        value: "Programmes and interventions",
+        text: "Programmes and interventions"
+      },
+      {
+        value: "Prisoner case meetings",
+        text: "Prisoner case meetings"
+      },
+      {
+        value: "Release",
+        text: "Release"
+      }
+    ]
+   }) }}
+     
+
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </div>
+</div>
+</form>
+{% endblock %}
