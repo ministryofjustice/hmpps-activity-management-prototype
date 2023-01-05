@@ -148,29 +148,29 @@ module.exports = function(router) {
 			'incentive-level': payIncentiveLevel
 		};
 
-        function updatePayrate(payrates, id, payrateData) {
+		function updatePayrate(payrates, id, payrateData) {
             // remove payrates with matching id from all levels
-            for (const level in payrates) {
-                const levelPayrates = payrates[level];
-                payrates[level] = levelPayrates.filter(payrate => payrate.id !== id);
-            }
+			for (const level in payrates) {
+				const levelPayrates = payrates[level];
+				payrates[level] = levelPayrates.filter(payrate => payrate.id !== id);
+			}
 
             // add payrate to the correct level
-            if (Array.isArray(payrateData['incentive-level'])) {
-                payrateData['incentive-level'].forEach(level => {
-                    if (!payrates[level]) {
-                        payrates[level] = [];
-                    }
-                    payrates[level].push(payrateData);
-                });
-            } else {
-                if (!payrates[payrateData['incentive-level']]) {
-                    payrates[payrateData['incentive-level']] = [];
-                }
-                payrates[payrateData['incentive-level']].push(payrateData);
-            }
-            return payrateData;
-        }
+			if (Array.isArray(payrateData['incentive-level'])) {
+				payrateData['incentive-level'].forEach(level => {
+					if (!payrates[level]) {
+						payrates[level] = [];
+					}
+					payrates[level].push(payrateData);
+				});
+			} else {
+				if (!payrates[payrateData['incentive-level']]) {
+					payrates[payrateData['incentive-level']] = [];
+				}
+				payrates[payrateData['incentive-level']].push(payrateData);
+			}
+			return payrateData;
+		}
 
         // Update the payrate in the payrates object
 		const updatedPayrate = updatePayrate(req.session.data.payrates, payIncentiveId, payrateData);
@@ -179,7 +179,83 @@ module.exports = function(router) {
 		res.redirect(version + '/create/activity-check-your-answers-payment');
 	});
 
-    // dan changes
+	router.get(version +'/create/activity-payment-remove', function(req, res) {
+		let payrateId = req.session.data['id']
+		let payrateData;
+
+		function getPayrateById(payrates, id) {
+			for (const level in payrates) {
+				const levelPayrates = payrates[level];
+				for (const payrate of levelPayrates) {
+					if (payrate.id === id) {
+						return payrate;
+					}
+				}
+			}
+			return null;
+		}
+
+		if (req.session.data.payrates && typeof req.session.data.payrates === 'object') {
+			payrateData = getPayrateById(req.session.data.payrates, payrateId)
+		}
+
+		res.render('../views/'+version+'/create/activity-payment-remove', {payrateData})
+	});
+
+	router.post(version + '/create/activity-payment-remove', function(req, res) {
+		if(req.session.data['confirm-remove-payrate'] == 'yes'){
+			let payrateId = req.session.data['id']
+			let payrateLevel = req.session.data['incentive-level']
+			let payrateData;
+
+			function removePayrateById(payrates, id) {
+            // Iterate over the payrates object
+				for (const level in payrates) {
+                // Get the array of payrates for the current pay rate level
+					const levelPayrates = payrates[level];
+                // Iterate over the array of payrates
+					for (let i = 0; i < levelPayrates.length; i++) {
+                    // If the payrate has the specified ID, remove it from the array
+						if (levelPayrates[i].id === id) {
+							levelPayrates.splice(i, 1);
+							return true;
+						}
+					}
+				}
+            // If no payrate with the specified ID was found, return false
+				return false;
+			}
+
+        // check the payrates object exists and is an object
+			if (req.session.data.payrates && typeof req.session.data.payrates === 'object') {
+            // update the payrateData variable
+				if (removePayrateById(req.session.data.payrates, payrateId)) {
+					payrateData = null;
+				} else {
+					payrateData = 'Payrate not found';
+				}
+			}
+
+			req.session.data['show-delete-dialog'] = true
+		}
+
+        // Redirect the user to the next page
+		res.redirect(version + '/create/activity-check-your-answers-payment');
+	});
+
+	router.get(version +'/create/activity-check-your-answers-payment', function(req, res) {
+		if( req.session.data['id'] ){
+			delete req.session.data['id']
+		}
+
+		// hide the dialog after first load
+		if (req.session.data['show-delete-dialog']) {
+			req.session.data['show-delete-dialog'] = false;
+		}
+		
+		res.render('../views/'+version+'/create/activity-check-your-answers-payment')
+	});
+
 	router.post(version + '/create/activity-check-your-answers-payment', function(req, res) {
 		res.redirect(version + '/create/activity-add-education')
 	});

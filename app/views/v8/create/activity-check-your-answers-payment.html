@@ -21,7 +21,18 @@ Activities Management prototype
     <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'High'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
     <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
 
-    <!-- {{data['payrates']|dump}} -->
+    {% if data['show-delete-dialog'] == true %}
+    {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+    {% set html %}
+    <h3 class="govuk-notification-banner__heading">
+      Payrate removed
+    </h3>
+    {% endset %}
+    {{ govukNotificationBanner({
+      html: html,
+      type: 'success'
+    }) }}
+    {% endif %}
 
     {% for level, details in data.payrates %}
     {% if details|length > 0 %}
@@ -40,7 +51,7 @@ Activities Management prototype
             <a class="govuk-link govuk-!-margin-right-3" href="activity-payment-details?id={{rate.id}}">
               Change<span class="govuk-visually-hidden"> incentive payment</span>
             </a>
-            <a class="govuk-link" href="remove-activity-payment-details?id={{rate.id}}">
+            <a class="govuk-link" href="activity-payment-remove?id={{rate.id}}&incentive-level={{level}}">
               Remove<span class="govuk-visually-hidden"> incentive payment</span>
             </a>
           </dd>
