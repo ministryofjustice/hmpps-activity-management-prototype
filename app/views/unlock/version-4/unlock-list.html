@@ -101,17 +101,6 @@ Activities Management prototype
 			</h2>
 			<div class="govuk-grid-row govuk-!-margin-bottom-2">
 				<div class="govuk-grid-column-full govuk-!-margin-bottom-1" style="vertical-align: top;">
-					{{govukInput({
-						formGroup: {
-							classes: "govuk-!-display-inline-block"
-						},
-						classes: "govuk-input--width-10",
-						value: "01/11/2022",
-						label: {
-							text: "Date",
-							classes: "govuk-label--s"
-						}
-					})}}
 					{{ govukSelect({
 						attributes: {
 							"data-enhance-multiple": ""
@@ -130,23 +119,23 @@ Activities Management prototype
 						},
 						items: [{
 							text: 'All',
-							id: 'bulgaria',
-							value: 'bulgaria'
+							id: 'All',
+							value: 'All'
 						},
 						{
 							text: 'Morning (AM)',
-							id: 'all',
-							value: 'all'
+							id: 'Morning',
+							value: 'Morning'
 						},
 						{
 							text: 'Afternoon (PM)',
-							id: 'austria',
-							value: 'austria'
+							id: 'Afternoon',
+							value: 'Afternoon'
 						},
 						{
 							text: 'Evening (ED)',
-							id: 'belgium',
-							value: 'belgium'
+							id: 'Evening',
+							value: 'Evening'
 						}]
 					}) }}
 
@@ -162,7 +151,7 @@ Activities Management prototype
 										classes: "govuk-!-margin-0"
 									},
 									classes: "govuk-checkboxes--small",
-									name: "waste",
+									name: "sublocations",
 									items: [
 									{
 										text: 'Landing 1',
@@ -194,74 +183,50 @@ Activities Management prototype
 						</div>
 					</fieldset>
 
-					{{ govukSelect({
-						formGroup: {
-							classes: "govuk-!-display-inline-block"
-						},
-						label: {
-							text: "Activities",
-							classes: "govuk-label--s"
-						},
-						idPrefix: 'activities',
-						name: 'activity[]',
-						heading: {
-							text: 'Activities'
-						},
-						items: [{
-							text: 'All activities',
-							id: 'all',
-							value: 'all'
-						},
-						{
-							text: '08:15 - D WING PID FT',
-							id: 'austria',
-							value: 'austria'
-						},
-						{
-							text: '08:15 - AM AWAITING ALLOCATION',
-							id: 'belgium',
-							value: 'belgium'
-						},
-						{
-							text: '08:15 - A WING AM CLEANER',
-							id: 'bulgaria',
-							value: 'bulgaria'
-						}]
-					}) }}
-					{{ govukSelect({
-						formGroup: {
-							classes: "govuk-!-display-inline-block"
-						},
-						label: {
-							text: "Attendance",
-							classes: "govuk-label--s"
-						},
-						idPrefix: 'attendance',
-						name: 'attendance[]',
-						heading: {
-							text: 'Attendance'
-						},
-						items: [{
-							text: 'All',
-							id: 'all',
-							value: 'all'
-						},
-						{
-							text: 'Attended',
-							id: 'attended',
-							value: 'austria'
-						},
-						{
-							text: 'Not attended',
-							id: 'not-attended',
-							value: 'belgium'
-						},
-						{
-							text: 'Not recorded',
-							id: 'not recorded',
-							value: 'bulgaria'
-						}]
-					}) }}
+					<fieldset class="govuk-fieldset govuk-!-display-inline-block" style="width: 280px; position: relative; top: 14px;">
+						<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+							Activities
+						</legend>
+						<div class="dropdown" data-control="checkbox-dropdown">
+							<label class="dropdown-label">All activities</label>
+							<div class="dropdown-list">
+								{{ govukCheckboxes({
+									formGroup: {
+										classes: "govuk-!-margin-0"
+									},
+									classes: "govuk-checkboxes--small",
+									name: "activities",
+									items: [
+									{
+										text: 'Activity 1',
+										id: 'activity-1',
+										value: '1'
+									},
+									{
+										text: 'Activity 2',
+										id: 'activity-2',
+										value: '2'
+									},
+									{
+										text: 'Activity 3',
+										id: 'activity-3',
+										value: '3'
+									},
+									{
+										text: 'Activity 4',
+										id: 'activity-4',
+										value: '4'
+									},
+									{
+										text: 'Activity 5',
+										id: 'activity-5',
+										value: '5'
+									}]
+								}) }}
+							</div>
+						</div>
+					</fieldset>
+
 					{{ govukSelect({
 						formGroup: {
 							classes: "govuk-!-display-inline-block"
@@ -366,16 +331,6 @@ Activities Management prototype
 				<br>
 				<span class="govuk-hint govuk-!-font-size-16">{{ activity.location }}</span>
 				</div>
-
-				<!-- <br>
-				
-				<div>
-				<a href="activities/{{activity.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ activity.name }}</a>
-				<br>
-				<span class="govuk-hint govuk-!-font-size-16">{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}</span>
-				<br>
-				<span class="govuk-hint govuk-!-font-size-16">{{ activity.location }}</span>
-				</div> -->
 			</td>
 			<td class="govuk-table__cell" data-sort-value="{{'9' if prisoner.attendance == 'attended'}}{{'1' if prisoner.attendance == 'not-attended'}}{{'5' if not prisoner.attendance}}" scope="col">
 				{% if prisoner.attendance == "attended" %}
