@@ -92,75 +92,103 @@ module.exports = function(router) {
     //     }
     // });
 
-    router.get(version +'/create/activity-payment-details', function(req, res) {
-    	let payrateId = req.session.data['id']
-    	let payrateData;
+	router.get(version +'/create/activity-payment-details', function(req, res) {
+		let payrateId = req.session.data['id']
+		let payrateData;
 
-        function getPayrateById(payrates, id) {
+		function getPayrateById(payrates, id) {
             // Iterate over the payrates object
-            for (const level in payrates) {
+			for (const level in payrates) {
                 // Get the array of payrates for the current pay rate level
-                const levelPayrates = payrates[level];
+				const levelPayrates = payrates[level];
                 // Iterate over the array of payrates
-                for (const payrate of levelPayrates) {
+				for (const payrate of levelPayrates) {
                     // If the payrate has the specified ID, return it
+					if (payrate.id === id) {
+						return payrate;
+					}
+				}
+			}
+            // If no payrate with the specified ID was found, return null
+			return null;
+		}
+
+        // check the payrates object exists and is an object
+		if (req.session.data.payrates && typeof req.session.data.payrates === 'object') {
+        	// update the payrateData variable
+			payrateData = getPayrateById(req.session.data.payrates, payrateId)
+		}
+
+        // render the page and include the payrateData variable so we can access it
+		res.render('../views/'+version+'/create/activity-payment-details', {payrateData})
+	});
+
+	router.post(version + '/create/activity-payment-details', function(req, res) {
+        // Assign an empty object to req.session.data.payrates if it is null or undefined
+		req.session.data.payrates = req.session.data.payrates ?? {};
+
+        // Get the values of the paymentIncentiveName, paymentIncentiveAmount, and PayIncentiveLevel fields from the session data
+		const paymentIncentiveName = req.session.data['paymentIncentiveName'];
+		const paymentIncentiveAmount = req.session.data['paymentIncentiveAmount'];
+		const payIncentiveLevel = req.session.data['PayIncentiveLevel'];
+
+        // Generate a random ID for the payrate
+		const payIncentiveId = crypto.randomBytes(4).toString("hex");
+
+        // Create the payrate data object
+		const payrateData = {
+			id: payIncentiveId,
+			name: paymentIncentiveName,
+			amount: paymentIncentiveAmount,
+			'incentive-level': payIncentiveLevel
+		};
+
+		console.log(payrateData)
+
+		function updatePayrate(payrates, id, payrateData) {
+            // Iterate over the payrates object
+			for (const level in payrates) {
+                // Get the array of payrates for the current pay rate level
+				const levelPayrates = payrates[level];
+                // Iterate over the array of payrates
+				for (const payrate of levelPayrates) {
+                    // If the payrate has the specified ID, update it and return it
                     if (payrate.id === id) {
+                        // If the pay rate level has changed, remove the payrate from the current array of payrates and add it to the array of payrates for the new pay rate level
+                        if (payrate['incentive-level'] !== payrateData['incentive-level']) {
+                            levelPayrates.splice(levelPayrates.indexOf(payrate), 1);
+                            if (Array.isArray(payrateData['incentive-level'])) {
+                                // Iterate over the array of levels and add the payrate data to each level
+                                payrateData['incentive-level'].forEach(level => {
+                                    payrates[level].push(payrate);
+                                });
+                            } else {
+                                payrates[payrateData['incentive-level']].push(payrate);
+                            }
+						}
+                        // Update the payrate's properties with the new data and return the updated payrate
+						payrate.name = payrateData.name;
+						payrate.amount = payrateData.amount;
+						payrate['incentive-level'] = payrateData['incentive-level'];
                         return payrate;
                     }
                 }
             }
-            // If no payrate with the specified ID was found, return null
-            return null;
-        }
-
-        // check the payrates object exists and is an object
-        if (req.session.data.payrates && typeof req.session.data.payrates === 'object') {
-        	// update the payrateData variable
-            payrateData = getPayrateById(req.session.data.payrates, payrateId)
-        }
-
-        // render the page and include the payrateData variable so we can access it
-    	res.render('../views/'+version+'/create/activity-payment-details', {payrateData})
-    });
-
-	router.post(version + '/create/activity-payment-details', function(req, res) {
-        // Assign an empty object to req.session.data.payrates if it is null or undefined
-		req.session.data.payrates = req.session.data.payrates || {};
-
-        // Set the values of pay rates
-		let payRates = ["Basic", "Enhanced", "Standard"];
-
-        // Get the values of the paymentIncentiveName, paymentIncentiveAmount, and PayIncentiveLevel fields from the session data
-		let paymentIncentiveName = req.session.data['paymentIncentiveName']
-		let paymentIncentiveAmount = req.session.data['paymentIncentiveAmount']
-		let payIncentiveLevel = req.session.data['PayIncentiveLevel']
-
-            // Generate a random ID for the payrate
-		let payIncentiveId = crypto.randomBytes(4).toString("hex");
-
-        // Define a function to create a payrate object
-		function createPayrate(id, name, amount, level) {
-			return {
-				id: id,
-				name: name,
-				amount: amount,
-				'incentive-level': level
-			};
+            // If no payrate with the specified ID was found, add the payrate data to the array of payrates for each level
+            payrateData['incentive-level'].forEach(level => {
+                if (!payrates[level]) {
+                    payrates[level] = [];
+                }
+                payrates[level].push(payrateData);
+            });
+            return payrateData;
 		}
 
-		payIncentiveLevel.forEach(payRate => {
-			let payrate = createPayrate(payIncentiveId, paymentIncentiveName, paymentIncentiveAmount, payRate);
+        // Update the payrate in the payrates object
+		const updatedPayrate = updatePayrate(req.session.data.payrates, payIncentiveId, payrateData);
 
-                // If there are no payrates for this pay rate, create an empty array for them
-			if (!req.session.data.payrates[payRate]) {
-				req.session.data.payrates[payRate] = [];
-			}
-
-                // Add the payrate to the array of payrates for this pay rate
-			req.session.data.payrates[payRate].push(payrate);
-		});
-
-		res.redirect(version + '/create/activity-check-your-answers-payment')
+        // Redirect the user to the next page
+		res.redirect(version + '/create/activity-check-your-answers-payment');
 	});
 
     // dan changes
