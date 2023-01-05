@@ -266,10 +266,10 @@ function addAttendanceCounts(prisoners, filteredActivities, attendanceData, date
 			[attendedKey]: 0,
 			[notAttendedKey]: 0
 		};
-		let prisonerList = prisoners.filter(prisoner => prisoner.activity == activity.id);
+		let prisonerList = prisoners.filter(prisoner => prisoner.activity.includes(activity.id));
 		for (let i = 0; i < prisonerList.length; i++) {
 			let prisoner = prisonerList[i];
-			if (prisoner.activity === activity.id) {
+			if (prisoner.activity.includes(activity.id)) {
 				attendanceCount[scheduledKey]++;
 				attendanceCount[notRecordedKey]++;
 			}
