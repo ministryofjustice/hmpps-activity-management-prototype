@@ -17,13 +17,14 @@ Activities Management prototype
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
     </div>
-    
+
     <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'High'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
     <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
 
     <!-- {{data['payrates']|dump}} -->
 
     {% for level, details in data.payrates %}
+    {% if details|length > 0 %}
     <h2 class="govuk-heading-m">{{level}} incentive level payments</h2>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       {% for rate in details %}
@@ -47,6 +48,7 @@ Activities Management prototype
         </div>
         {% endfor %}
       </dl>
+      {% endif %}
       {% endfor %}
       <form>
         <button class="govuk-button" data-module="govuk-button" value="confirmPay" formaction="activity-add-education">

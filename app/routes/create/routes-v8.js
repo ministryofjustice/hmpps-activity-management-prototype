@@ -132,8 +132,13 @@ module.exports = function(router) {
 		const paymentIncentiveAmount = req.session.data['paymentIncentiveAmount'];
 		const payIncentiveLevel = req.session.data['PayIncentiveLevel'];
 
-        // Generate a random ID for the payrate
-		const payIncentiveId = crypto.randomBytes(4).toString("hex");
+        // Get the ID for the payrate or generate a random one
+		let payIncentiveId;
+		if (req.session.data['id']) {
+			payIncentiveId = req.session.data['id'];
+		} else {
+			payIncentiveId = crypto.randomBytes(4).toString("hex");
+		}
 
         // Create the payrate data object
 		const payrateData = {
@@ -143,46 +148,29 @@ module.exports = function(router) {
 			'incentive-level': payIncentiveLevel
 		};
 
-		console.log(payrateData)
-
-		function updatePayrate(payrates, id, payrateData) {
-            // Iterate over the payrates object
-			for (const level in payrates) {
-                // Get the array of payrates for the current pay rate level
-				const levelPayrates = payrates[level];
-                // Iterate over the array of payrates
-				for (const payrate of levelPayrates) {
-                    // If the payrate has the specified ID, update it and return it
-                    if (payrate.id === id) {
-                        // If the pay rate level has changed, remove the payrate from the current array of payrates and add it to the array of payrates for the new pay rate level
-                        if (payrate['incentive-level'] !== payrateData['incentive-level']) {
-                            levelPayrates.splice(levelPayrates.indexOf(payrate), 1);
-                            if (Array.isArray(payrateData['incentive-level'])) {
-                                // Iterate over the array of levels and add the payrate data to each level
-                                payrateData['incentive-level'].forEach(level => {
-                                    payrates[level].push(payrate);
-                                });
-                            } else {
-                                payrates[payrateData['incentive-level']].push(payrate);
-                            }
-						}
-                        // Update the payrate's properties with the new data and return the updated payrate
-						payrate.name = payrateData.name;
-						payrate.amount = payrateData.amount;
-						payrate['incentive-level'] = payrateData['incentive-level'];
-                        return payrate;
-                    }
-                }
+        function updatePayrate(payrates, id, payrateData) {
+            // remove payrates with matching id from all levels
+            for (const level in payrates) {
+                const levelPayrates = payrates[level];
+                payrates[level] = levelPayrates.filter(payrate => payrate.id !== id);
             }
-            // If no payrate with the specified ID was found, add the payrate data to the array of payrates for each level
-            payrateData['incentive-level'].forEach(level => {
-                if (!payrates[level]) {
-                    payrates[level] = [];
+
+            // add payrate to the correct level
+            if (Array.isArray(payrateData['incentive-level'])) {
+                payrateData['incentive-level'].forEach(level => {
+                    if (!payrates[level]) {
+                        payrates[level] = [];
+                    }
+                    payrates[level].push(payrateData);
+                });
+            } else {
+                if (!payrates[payrateData['incentive-level']]) {
+                    payrates[payrateData['incentive-level']] = [];
                 }
-                payrates[level].push(payrateData);
-            });
+                payrates[payrateData['incentive-level']].push(payrateData);
+            }
             return payrateData;
-		}
+        }
 
         // Update the payrate in the payrates object
 		const updatedPayrate = updatePayrate(req.session.data.payrates, payIncentiveId, payrateData);
