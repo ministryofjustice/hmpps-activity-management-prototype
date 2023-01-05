@@ -26,8 +26,8 @@ module.exports = {
     "attend-pattern": "separate",
     "select-activity-pattern": "select-date-table",
     "navigation-tiles": [{
-      "linkText": "Manage prisoner whereabouts",
-      "descriptionText":"View unlock lists, all appointments and COVID units, manage attendance and add bulk appointments.",
+      "linkText": "Manage prisoner unlock and attendance",
+      "descriptionText":"Create movement, unlock and attendance lists. Check and record attendance and manage pay.",
       "linkURL":""
     },
     {
