@@ -583,6 +583,7 @@ router.get('/unlock-list', function(req, res) {
 
 	res.render('unlock/' + req.version + '/unlock-list', {
 		filteredPrisoners,
+		filteredActivities,
 		locations
 	})
 });
@@ -633,12 +634,12 @@ router.get('/activities', function(req, res) {
     	chosenDate = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
     }
 
-    let today = new Date();
-    let dateObj = new Date(today);
-    let timeDiff = Math.abs(date.getTime() - dateObj.getTime());
-    let hourDiff = timeDiff / (1000 * 60 * 60);
-    if (hourDiff <= 48) {
-    	relativeDate = DateTime.fromFormat(chosenDate, "yyyy-MM-dd").toRelativeCalendar();
+    let today = DateTime.local().startOf("day");
+    let dateLuxon = DateTime.fromFormat(chosenDate, "yyyy-MM-dd").startOf("day");
+    let diff = Math.abs(today.diff(dateLuxon, "days").days);
+    console.log(diff)
+    if (diff <= 1) {
+    	relativeDate = dateLuxon.toRelativeCalendar();
     }
 
     addAttendanceCounts(req.session.data['prisoners-3'], filteredActivities, req.session.data['attendance-data'], date)
