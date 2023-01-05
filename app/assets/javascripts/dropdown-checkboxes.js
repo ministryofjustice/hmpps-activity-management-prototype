@@ -70,23 +70,22 @@ $(document).ready(function() {
   };
   
   CheckboxDropdown.prototype.toggleOpen = function(forceOpen) {
-    var _this = this;
-    
-    if(!this.isOpen || forceOpen) {
-       this.isOpen = true;
-       this.$el.addClass('on');
-      // $(document).on('click', function(e) {
-      //   if(!$(e.target).closest('[data-control]').length) {
-      //    _this.toggleOpen();
-      //   }
-      // });
-    }
-    else {
-      this.isOpen = false;
-      this.$el.removeClass('on');
-      // $(document).off('click');
-    }
-  };
+  var _this = this;
+
+  if(!this.isOpen || forceOpen) {
+    this.isOpen = true;
+    this.$el.addClass('on');
+    $('body').on('click', function(e) {
+      if(!$(e.target).closest('[data-control]').length) {
+        _this.toggleOpen();
+      }
+    });
+  } else {
+    this.isOpen = false;
+    this.$el.removeClass('on');
+    $('body').off('click');
+  }
+};
   
   var checkboxesDropdowns = document.querySelectorAll('[data-control="checkbox-dropdown"]');
   for(var i = 0, length = checkboxesDropdowns.length; i < length; i++) {
