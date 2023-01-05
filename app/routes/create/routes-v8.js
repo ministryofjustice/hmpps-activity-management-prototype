@@ -206,11 +206,6 @@ module.exports = function(router) {
 			res.redirect(version + '/create/activity-add-education-two-added')
 		}
 	});
-	router.post(version + '/create/addEducation3', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-add-education-three-added')
-		}
-	});
 
 	router.post(version + '/create/activity-add-education', function(req, res) {
 		{
