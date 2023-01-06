@@ -13,7 +13,7 @@ module.exports = [
     },
     "dateOfBirth": "1992-01-05",
     "attendance": null,
-    "activity": 10,
+    "activity": [10],
     "alerts": []
   },
   {
@@ -30,7 +30,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-04-21",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": [
       "Risk to females"
     ]
@@ -49,7 +49,7 @@ module.exports = [
     },
     "dateOfBirth": "1971-07-29",
     "attendance": null,
-    "activity": 40,
+    "activity": [40],
     "alerts": []
   },
   {
@@ -66,7 +66,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-10-29",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": []
   },
   {
@@ -83,7 +83,7 @@ module.exports = [
     },
     "dateOfBirth": "1945-04-21",
     "attendance": null,
-    "activity": 19,
+    "activity": [19],
     "alerts": []
   },
   {
@@ -100,7 +100,7 @@ module.exports = [
     },
     "dateOfBirth": "1979-06-22",
     "attendance": null,
-    "activity": 9,
+    "activity": [9],
     "alerts": []
   },
   {
@@ -117,7 +117,7 @@ module.exports = [
     },
     "dateOfBirth": "1944-01-12",
     "attendance": null,
-    "activity": 22,
+    "activity": [22],
     "alerts": []
   },
   {
@@ -134,7 +134,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-01-08",
     "attendance": null,
-    "activity": 27,
+    "activity": [27],
     "alerts": []
   },
   {
@@ -151,7 +151,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-08-17",
     "attendance": null,
-    "activity": 9,
+    "activity": [9],
     "alerts": []
   },
   {
@@ -168,7 +168,7 @@ module.exports = [
     },
     "dateOfBirth": "1983-02-24",
     "attendance": null,
-    "activity": 10,
+    "activity": [10],
     "alerts": []
   },
   {
@@ -185,7 +185,7 @@ module.exports = [
     },
     "dateOfBirth": "1970-03-29",
     "attendance": null,
-    "activity": 1,
+    "activity": [1],
     "alerts": [
       "Shielding Unit",
       "Veteran"
@@ -205,7 +205,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-10-28",
     "attendance": null,
-    "activity": -1,
+    "activity": [-1],
     "alerts": []
   },
   {
@@ -222,7 +222,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-08-03",
     "attendance": null,
-    "activity": 32,
+    "activity": [32],
     "alerts": []
   },
   {
@@ -239,7 +239,7 @@ module.exports = [
     },
     "dateOfBirth": "1974-04-08",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": []
   },
   {
@@ -256,7 +256,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-01-01",
     "attendance": null,
-    "activity": 32,
+    "activity": [32],
     "alerts": []
   },
   {
@@ -273,7 +273,7 @@ module.exports = [
     },
     "dateOfBirth": "1960-09-19",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": [
       "Arsonist",
       "No one-to-one"
@@ -293,7 +293,7 @@ module.exports = [
     },
     "dateOfBirth": "1957-06-06",
     "attendance": null,
-    "activity": 20,
+    "activity": [20],
     "alerts": []
   },
   {
@@ -310,7 +310,7 @@ module.exports = [
     },
     "dateOfBirth": "1996-12-16",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": [
       "Refusing to shield",
       "Care experienced"
@@ -330,7 +330,7 @@ module.exports = [
     },
     "dateOfBirth": "1963-07-17",
     "attendance": null,
-    "activity": 6,
+    "activity": [6],
     "alerts": []
   },
   {
@@ -347,7 +347,7 @@ module.exports = [
     },
     "dateOfBirth": "1990-10-22",
     "attendance": null,
-    "activity": 9,
+    "activity": [9],
     "alerts": [
       "E-list"
     ]
@@ -366,7 +366,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-10-23",
     "attendance": null,
-    "activity": 21,
+    "activity": [21],
     "alerts": [
       "Care experienced"
     ]
@@ -385,7 +385,7 @@ module.exports = [
     },
     "dateOfBirth": "1969-08-29",
     "attendance": null,
-    "activity": 43,
+    "activity": [43],
     "alerts": []
   },
   {
@@ -402,7 +402,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-12-19",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": [
       "Chemical attacker"
     ]
@@ -421,7 +421,7 @@ module.exports = [
     },
     "dateOfBirth": "1983-01-28",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": []
   },
   {
@@ -438,7 +438,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-03-21",
     "attendance": null,
-    "activity": 30,
+    "activity": [30,21],
     "alerts": []
   },
   {
@@ -455,7 +455,7 @@ module.exports = [
     },
     "dateOfBirth": "1990-01-21",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": [
       "Controlled unlock"
     ]
@@ -474,7 +474,7 @@ module.exports = [
     },
     "dateOfBirth": "1949-07-13",
     "attendance": null,
-    "activity": 3,
+    "activity": [3],
     "alerts": []
   },
   {
@@ -491,7 +491,7 @@ module.exports = [
     },
     "dateOfBirth": "1992-08-21",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": [
       "Care experienced"
     ]
@@ -510,7 +510,7 @@ module.exports = [
     },
     "dateOfBirth": "1949-05-17",
     "attendance": null,
-    "activity": 35,
+    "activity": [35],
     "alerts": []
   },
   {
@@ -527,7 +527,7 @@ module.exports = [
     },
     "dateOfBirth": "1959-04-06",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": [
       "Gang member",
       "CSIP"
@@ -547,7 +547,7 @@ module.exports = [
     },
     "dateOfBirth": "1998-01-23",
     "attendance": null,
-    "activity": 41,
+    "activity": [41],
     "alerts": []
   },
   {
@@ -564,7 +564,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-05-05",
     "attendance": null,
-    "activity": 20,
+    "activity": [20],
     "alerts": []
   },
   {
@@ -581,7 +581,7 @@ module.exports = [
     },
     "dateOfBirth": "1973-09-06",
     "attendance": null,
-    "activity": 0,
+    "activity": [0],
     "alerts": []
   },
   {
@@ -598,7 +598,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-09-29",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": [
       "Protective Isolation Unit"
     ]
@@ -617,7 +617,7 @@ module.exports = [
     },
     "dateOfBirth": "1991-08-20",
     "attendance": null,
-    "activity": 30,
+    "activity": [30],
     "alerts": []
   },
   {
@@ -634,7 +634,7 @@ module.exports = [
     },
     "dateOfBirth": "1945-07-24",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -651,7 +651,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-05-20",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": [
       "No one-to-one"
     ]
@@ -670,7 +670,7 @@ module.exports = [
     },
     "dateOfBirth": "1973-12-20",
     "attendance": null,
-    "activity": 42,
+    "activity": [42],
     "alerts": [
       "Risk to LGBT"
     ]
@@ -689,7 +689,7 @@ module.exports = [
     },
     "dateOfBirth": "2002-02-11",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": []
   },
   {
@@ -706,7 +706,7 @@ module.exports = [
     },
     "dateOfBirth": "1951-02-27",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -723,7 +723,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-12-11",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": [
       "Chemical attacker"
     ]
@@ -742,7 +742,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-05-17",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": [
       "Gang member",
       "Reverse Cohorting Unit"
@@ -762,7 +762,7 @@ module.exports = [
     },
     "dateOfBirth": "1963-10-24",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": []
   },
   {
@@ -779,7 +779,7 @@ module.exports = [
     },
     "dateOfBirth": "1972-10-01",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": []
   },
   {
@@ -796,7 +796,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-08-18",
     "attendance": null,
-    "activity": 12,
+    "activity": [12],
     "alerts": [
       "Reverse Cohorting Unit",
       "PEEP"
@@ -816,7 +816,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-03-09",
     "attendance": null,
-    "activity": 39,
+    "activity": [39],
     "alerts": []
   },
   {
@@ -833,7 +833,7 @@ module.exports = [
     },
     "dateOfBirth": "2001-11-03",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": [
       "TACT",
       "Controlled unlock"
@@ -853,7 +853,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-02-09",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": []
   },
   {
@@ -870,7 +870,7 @@ module.exports = [
     },
     "dateOfBirth": "1973-09-25",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": [
       "Gang member"
     ]
@@ -906,7 +906,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-04-26",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": []
   },
   {
@@ -923,7 +923,7 @@ module.exports = [
     },
     "dateOfBirth": "1979-07-19",
     "attendance": null,
-    "activity": 29,
+    "activity": [29],
     "alerts": []
   },
   {
@@ -940,7 +940,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-10-29",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": [
       "Refusing to shield",
       "Corruptor"
@@ -960,7 +960,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-05-05",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": []
   },
   {
@@ -977,7 +977,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-08-14",
     "attendance": null,
-    "activity": 24,
+    "activity": [24],
     "alerts": []
   },
   {
@@ -994,7 +994,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-10-29",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": []
   },
   {
@@ -1011,7 +1011,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-01-05",
     "attendance": null,
-    "activity": 24,
+    "activity": [24],
     "alerts": []
   },
   {
@@ -1028,7 +1028,7 @@ module.exports = [
     },
     "dateOfBirth": "1995-05-28",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": []
   },
   {
@@ -1045,7 +1045,7 @@ module.exports = [
     },
     "dateOfBirth": "1955-02-19",
     "attendance": null,
-    "activity": -5,
+    "activity": [-5],
     "alerts": []
   },
   {
@@ -1062,7 +1062,7 @@ module.exports = [
     },
     "dateOfBirth": "1995-10-27",
     "attendance": null,
-    "activity": 41,
+    "activity": [41],
     "alerts": [
       "No one-to-one",
       "TACT"
@@ -1082,7 +1082,7 @@ module.exports = [
     },
     "dateOfBirth": "1959-09-23",
     "attendance": null,
-    "activity": 7,
+    "activity": [7],
     "alerts": [
       "Gang member"
     ]
@@ -1101,7 +1101,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-07-02",
     "attendance": null,
-    "activity": 0,
+    "activity": [0],
     "alerts": []
   },
   {
@@ -1118,7 +1118,7 @@ module.exports = [
     },
     "dateOfBirth": "1979-12-09",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -1135,7 +1135,7 @@ module.exports = [
     },
     "dateOfBirth": "1953-07-06",
     "attendance": null,
-    "activity": 38,
+    "activity": [38],
     "alerts": []
   },
   {
@@ -1152,7 +1152,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-11-28",
     "attendance": null,
-    "activity": 39,
+    "activity": [39],
     "alerts": []
   },
   {
@@ -1169,7 +1169,7 @@ module.exports = [
     },
     "dateOfBirth": "1970-12-28",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": []
   },
   {
@@ -1186,7 +1186,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-11-05",
     "attendance": null,
-    "activity": -1,
+    "activity": [-1],
     "alerts": []
   },
   {
@@ -1203,7 +1203,7 @@ module.exports = [
     },
     "dateOfBirth": "1991-12-31",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": []
   },
   {
@@ -1220,7 +1220,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-01-09",
     "attendance": null,
-    "activity": 27,
+    "activity": [27],
     "alerts": []
   },
   {
@@ -1237,7 +1237,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-11-25",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -1254,7 +1254,7 @@ module.exports = [
     },
     "dateOfBirth": "1977-11-14",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": []
   },
   {
@@ -1271,7 +1271,7 @@ module.exports = [
     },
     "dateOfBirth": "1951-06-08",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": [
       "TACT",
       "Care experienced"
@@ -1291,7 +1291,7 @@ module.exports = [
     },
     "dateOfBirth": "1980-04-18",
     "attendance": null,
-    "activity": 22,
+    "activity": [22],
     "alerts": []
   },
   {
@@ -1308,7 +1308,7 @@ module.exports = [
     },
     "dateOfBirth": "1997-06-13",
     "attendance": null,
-    "activity": 22,
+    "activity": [22],
     "alerts": []
   },
   {
@@ -1325,7 +1325,7 @@ module.exports = [
     },
     "dateOfBirth": "1997-03-30",
     "attendance": null,
-    "activity": 10,
+    "activity": [10],
     "alerts": []
   },
   {
@@ -1342,7 +1342,7 @@ module.exports = [
     },
     "dateOfBirth": "1996-11-23",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": [
       "Arsonist",
       "TACT"
@@ -1362,7 +1362,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-01-31",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": []
   },
   {
@@ -1379,7 +1379,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-09-09",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": []
   },
   {
@@ -1396,7 +1396,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-03-19",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": []
   },
   {
@@ -1413,7 +1413,7 @@ module.exports = [
     },
     "dateOfBirth": "1984-02-03",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -1430,7 +1430,7 @@ module.exports = [
     },
     "dateOfBirth": "1988-10-05",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": [
       "Risk to females",
       "Reverse Cohorting Unit"
@@ -1450,7 +1450,7 @@ module.exports = [
     },
     "dateOfBirth": "1968-08-30",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": [
       "Arsonist"
     ]
@@ -1469,7 +1469,7 @@ module.exports = [
     },
     "dateOfBirth": "1978-08-21",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": []
   },
   {
@@ -1486,7 +1486,7 @@ module.exports = [
     },
     "dateOfBirth": "1985-09-16",
     "attendance": null,
-    "activity": 7,
+    "activity": [7],
     "alerts": []
   },
   {
@@ -1503,7 +1503,7 @@ module.exports = [
     },
     "dateOfBirth": "1997-04-16",
     "attendance": null,
-    "activity": 20,
+    "activity": [20],
     "alerts": [
       "Hostage taker",
       "CSIP"
@@ -1523,7 +1523,7 @@ module.exports = [
     },
     "dateOfBirth": "1989-04-10",
     "attendance": null,
-    "activity": 19,
+    "activity": [19],
     "alerts": []
   },
   {
@@ -1540,7 +1540,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-04-21",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -1557,7 +1557,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-03-29",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -1574,7 +1574,7 @@ module.exports = [
     },
     "dateOfBirth": "1983-10-05",
     "attendance": null,
-    "activity": 45,
+    "activity": [45],
     "alerts": []
   },
   {
@@ -1591,7 +1591,7 @@ module.exports = [
     },
     "dateOfBirth": "1988-04-16",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": []
   },
   {
@@ -1608,7 +1608,7 @@ module.exports = [
     },
     "dateOfBirth": "1953-11-28",
     "attendance": null,
-    "activity": 35,
+    "activity": [35],
     "alerts": [
       "No one-to-one"
     ]
@@ -1627,7 +1627,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-06-09",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -1644,7 +1644,7 @@ module.exports = [
     },
     "dateOfBirth": "1944-12-30",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": []
   },
   {
@@ -1661,7 +1661,7 @@ module.exports = [
     },
     "dateOfBirth": "1954-12-01",
     "attendance": null,
-    "activity": 1,
+    "activity": [1],
     "alerts": [
       "Care experienced",
       "Racist"
@@ -1681,7 +1681,7 @@ module.exports = [
     },
     "dateOfBirth": "1998-11-18",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": []
   },
   {
@@ -1698,7 +1698,7 @@ module.exports = [
     },
     "dateOfBirth": "1976-05-20",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": []
   },
   {
@@ -1715,7 +1715,7 @@ module.exports = [
     },
     "dateOfBirth": "1970-12-12",
     "attendance": null,
-    "activity": 38,
+    "activity": [38],
     "alerts": []
   },
   {
@@ -1732,7 +1732,7 @@ module.exports = [
     },
     "dateOfBirth": "1998-10-16",
     "attendance": null,
-    "activity": 11,
+    "activity": [11],
     "alerts": []
   },
   {
@@ -1749,7 +1749,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-02-16",
     "attendance": null,
-    "activity": 35,
+    "activity": [35],
     "alerts": []
   },
   {
@@ -1766,7 +1766,7 @@ module.exports = [
     },
     "dateOfBirth": "1973-10-25",
     "attendance": null,
-    "activity": 19,
+    "activity": [19],
     "alerts": []
   },
   {
@@ -1783,7 +1783,7 @@ module.exports = [
     },
     "dateOfBirth": "2000-03-16",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": [
       "Care experienced",
       "Reverse Cohorting Unit"
@@ -1803,7 +1803,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-03-23",
     "attendance": null,
-    "activity": 10,
+    "activity": [10],
     "alerts": []
   },
   {
@@ -1820,7 +1820,7 @@ module.exports = [
     },
     "dateOfBirth": "1951-08-13",
     "attendance": null,
-    "activity": 7,
+    "activity": [7],
     "alerts": []
   },
   {
@@ -1837,7 +1837,7 @@ module.exports = [
     },
     "dateOfBirth": "1985-10-27",
     "attendance": null,
-    "activity": 43,
+    "activity": [43],
     "alerts": []
   },
   {
@@ -1854,7 +1854,7 @@ module.exports = [
     },
     "dateOfBirth": "1945-11-20",
     "attendance": null,
-    "activity": 30,
+    "activity": [30,21],
     "alerts": []
   },
   {
@@ -1871,7 +1871,7 @@ module.exports = [
     },
     "dateOfBirth": "1992-10-23",
     "attendance": null,
-    "activity": 38,
+    "activity": [38],
     "alerts": []
   },
   {
@@ -1888,7 +1888,7 @@ module.exports = [
     },
     "dateOfBirth": "1962-01-05",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": []
   },
   {
@@ -1905,7 +1905,7 @@ module.exports = [
     },
     "dateOfBirth": "1944-05-01",
     "attendance": null,
-    "activity": 13,
+    "activity": [13],
     "alerts": []
   },
   {
@@ -1922,7 +1922,7 @@ module.exports = [
     },
     "dateOfBirth": "1960-04-19",
     "attendance": null,
-    "activity": 29,
+    "activity": [29],
     "alerts": [
       "Veteran"
     ]
@@ -1941,7 +1941,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-12-27",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": []
   },
   {
@@ -1958,7 +1958,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-10-01",
     "attendance": null,
-    "activity": 0,
+    "activity": [0],
     "alerts": []
   },
   {
@@ -1975,7 +1975,7 @@ module.exports = [
     },
     "dateOfBirth": "1980-07-25",
     "attendance": null,
-    "activity": 1,
+    "activity": [1],
     "alerts": []
   },
   {
@@ -1992,7 +1992,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-09-09",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": []
   },
   {
@@ -2009,7 +2009,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-08-27",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": []
   },
   {
@@ -2026,7 +2026,7 @@ module.exports = [
     },
     "dateOfBirth": "1971-04-20",
     "attendance": null,
-    "activity": 12,
+    "activity": [12],
     "alerts": []
   },
   {
@@ -2043,7 +2043,7 @@ module.exports = [
     },
     "dateOfBirth": "1979-10-01",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": []
   },
   {
@@ -2060,7 +2060,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-01-31",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": [
       "Refusing to shield",
       "TACT"
@@ -2080,7 +2080,7 @@ module.exports = [
     },
     "dateOfBirth": "1953-04-13",
     "attendance": null,
-    "activity": 45,
+    "activity": [45],
     "alerts": [
       "E-list"
     ]
@@ -2099,7 +2099,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-03-27",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": [
       "Veteran",
       "E-list"
@@ -2119,7 +2119,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-07-11",
     "attendance": null,
-    "activity": 41,
+    "activity": [41],
     "alerts": []
   },
   {
@@ -2136,7 +2136,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-06-15",
     "attendance": null,
-    "activity": 23,
+    "activity": [23],
     "alerts": [
       "Gang member"
     ]
@@ -2155,7 +2155,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-07-26",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": [
       "Arsonist"
     ]
@@ -2174,7 +2174,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-08-24",
     "attendance": null,
-    "activity": 39,
+    "activity": [39],
     "alerts": []
   },
   {
@@ -2191,7 +2191,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-05-28",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": []
   },
   {
@@ -2208,7 +2208,7 @@ module.exports = [
     },
     "dateOfBirth": "1972-05-09",
     "attendance": null,
-    "activity": 6,
+    "activity": [6],
     "alerts": []
   },
   {
@@ -2225,7 +2225,7 @@ module.exports = [
     },
     "dateOfBirth": "1990-01-13",
     "attendance": null,
-    "activity": 11,
+    "activity": [11],
     "alerts": []
   },
   {
@@ -2242,7 +2242,7 @@ module.exports = [
     },
     "dateOfBirth": "1970-09-25",
     "attendance": null,
-    "activity": 10,
+    "activity": [10],
     "alerts": []
   },
   {
@@ -2259,7 +2259,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-08-07",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": [
       "Refusing to shield",
       "Veteran"
@@ -2279,7 +2279,7 @@ module.exports = [
     },
     "dateOfBirth": "1998-02-12",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": []
   },
   {
@@ -2296,7 +2296,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-10-10",
     "attendance": null,
-    "activity": -5,
+    "activity": [-5],
     "alerts": []
   },
   {
@@ -2313,7 +2313,7 @@ module.exports = [
     },
     "dateOfBirth": "1998-09-18",
     "attendance": null,
-    "activity": 33,
+    "activity": [33],
     "alerts": []
   },
   {
@@ -2330,7 +2330,7 @@ module.exports = [
     },
     "dateOfBirth": "1971-02-04",
     "attendance": null,
-    "activity": 23,
+    "activity": [23],
     "alerts": []
   },
   {
@@ -2347,7 +2347,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-11-06",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": []
   },
   {
@@ -2364,7 +2364,7 @@ module.exports = [
     },
     "dateOfBirth": "1985-04-19",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": [
       "Gang member"
     ]
@@ -2383,7 +2383,7 @@ module.exports = [
     },
     "dateOfBirth": "1963-07-29",
     "attendance": null,
-    "activity": 11,
+    "activity": [11],
     "alerts": []
   },
   {
@@ -2400,7 +2400,7 @@ module.exports = [
     },
     "dateOfBirth": "1974-10-21",
     "attendance": null,
-    "activity": 43,
+    "activity": [43],
     "alerts": [
       "Care experienced"
     ]
@@ -2419,7 +2419,7 @@ module.exports = [
     },
     "dateOfBirth": "1958-09-17",
     "attendance": null,
-    "activity": 7,
+    "activity": [7],
     "alerts": []
   },
   {
@@ -2436,7 +2436,7 @@ module.exports = [
     },
     "dateOfBirth": "1969-03-19",
     "attendance": null,
-    "activity": 23,
+    "activity": [23],
     "alerts": []
   },
   {
@@ -2453,7 +2453,7 @@ module.exports = [
     },
     "dateOfBirth": "1951-11-09",
     "attendance": null,
-    "activity": 44,
+    "activity": [44],
     "alerts": []
   },
   {
@@ -2470,7 +2470,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-01-04",
     "attendance": null,
-    "activity": 21,
+    "activity": [21],
     "alerts": []
   },
   {
@@ -2487,7 +2487,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-10-17",
     "attendance": null,
-    "activity": 29,
+    "activity": [29],
     "alerts": []
   },
   {
@@ -2504,7 +2504,7 @@ module.exports = [
     },
     "dateOfBirth": "1992-06-06",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -2521,7 +2521,7 @@ module.exports = [
     },
     "dateOfBirth": "2002-01-17",
     "attendance": null,
-    "activity": 3,
+    "activity": [3],
     "alerts": []
   },
   {
@@ -2538,7 +2538,7 @@ module.exports = [
     },
     "dateOfBirth": "1954-07-05",
     "attendance": null,
-    "activity": 12,
+    "activity": [12],
     "alerts": [
       "Corruptor"
     ]
@@ -2557,7 +2557,7 @@ module.exports = [
     },
     "dateOfBirth": "1959-09-09",
     "attendance": null,
-    "activity": 41,
+    "activity": [41],
     "alerts": []
   },
   {
@@ -2574,7 +2574,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-05-03",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": [
       "Risk to females",
       "Hostage taker"
@@ -2594,7 +2594,7 @@ module.exports = [
     },
     "dateOfBirth": "1972-08-06",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": [
       "Arsonist"
     ]
@@ -2613,7 +2613,7 @@ module.exports = [
     },
     "dateOfBirth": "1972-10-19",
     "attendance": null,
-    "activity": 22,
+    "activity": [22],
     "alerts": []
   },
   {
@@ -2630,7 +2630,7 @@ module.exports = [
     },
     "dateOfBirth": "1955-11-01",
     "attendance": null,
-    "activity": 35,
+    "activity": [35],
     "alerts": []
   },
   {
@@ -2647,7 +2647,7 @@ module.exports = [
     },
     "dateOfBirth": "1989-09-06",
     "attendance": null,
-    "activity": 3,
+    "activity": [3],
     "alerts": []
   },
   {
@@ -2664,7 +2664,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-02-12",
     "attendance": null,
-    "activity": 8,
+    "activity": [8],
     "alerts": [
       "CSIP"
     ]
@@ -2683,7 +2683,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-07-22",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": []
   },
   {
@@ -2700,7 +2700,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-08-30",
     "attendance": null,
-    "activity": 40,
+    "activity": [40],
     "alerts": []
   },
   {
@@ -2717,7 +2717,7 @@ module.exports = [
     },
     "dateOfBirth": "1957-10-04",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": []
   },
   {
@@ -2734,7 +2734,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-07-05",
     "attendance": null,
-    "activity": 13,
+    "activity": [13],
     "alerts": []
   },
   {
@@ -2751,7 +2751,7 @@ module.exports = [
     },
     "dateOfBirth": "1958-06-28",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": [
       "Hostage taker",
       "Conflict"
@@ -2771,7 +2771,7 @@ module.exports = [
     },
     "dateOfBirth": "1981-02-14",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": []
   },
   {
@@ -2788,7 +2788,7 @@ module.exports = [
     },
     "dateOfBirth": "1960-01-22",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": [
       "PEEP",
       "TACT"
@@ -2808,7 +2808,7 @@ module.exports = [
     },
     "dateOfBirth": "1957-12-03",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": []
   },
   {
@@ -2825,7 +2825,7 @@ module.exports = [
     },
     "dateOfBirth": "1954-05-15",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": []
   },
   {
@@ -2842,7 +2842,7 @@ module.exports = [
     },
     "dateOfBirth": "1959-07-11",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": [
       "Risk to females"
     ]
@@ -2861,7 +2861,7 @@ module.exports = [
     },
     "dateOfBirth": "1953-04-30",
     "attendance": null,
-    "activity": 40,
+    "activity": [40],
     "alerts": [
       "Conflict"
     ]
@@ -2880,7 +2880,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-09-22",
     "attendance": null,
-    "activity": 1,
+    "activity": [1],
     "alerts": []
   },
   {
@@ -2897,7 +2897,7 @@ module.exports = [
     },
     "dateOfBirth": "1968-03-03",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": []
   },
   {
@@ -2914,7 +2914,7 @@ module.exports = [
     },
     "dateOfBirth": "1976-12-13",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -2931,7 +2931,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-01-25",
     "attendance": null,
-    "activity": 41,
+    "activity": [41],
     "alerts": [
       "Risk to females",
       "Gang member"
@@ -2951,7 +2951,7 @@ module.exports = [
     },
     "dateOfBirth": "1981-09-05",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -2968,7 +2968,7 @@ module.exports = [
     },
     "dateOfBirth": "1988-05-08",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": []
   },
   {
@@ -2985,7 +2985,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-01-26",
     "attendance": null,
-    "activity": 19,
+    "activity": [19],
     "alerts": []
   },
   {
@@ -3002,7 +3002,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-06-12",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": []
   },
   {
@@ -3019,7 +3019,7 @@ module.exports = [
     },
     "dateOfBirth": "2002-05-26",
     "attendance": null,
-    "activity": -1,
+    "activity": [-1],
     "alerts": []
   },
   {
@@ -3036,7 +3036,7 @@ module.exports = [
     },
     "dateOfBirth": "1959-04-30",
     "attendance": null,
-    "activity": 0,
+    "activity": [0],
     "alerts": [
       "No one-to-one"
     ]
@@ -3055,7 +3055,7 @@ module.exports = [
     },
     "dateOfBirth": "1998-08-06",
     "attendance": null,
-    "activity": 22,
+    "activity": [22],
     "alerts": [
       "Racist"
     ]
@@ -3074,7 +3074,7 @@ module.exports = [
     },
     "dateOfBirth": "2000-11-05",
     "attendance": null,
-    "activity": 11,
+    "activity": [11],
     "alerts": []
   },
   {
@@ -3091,7 +3091,7 @@ module.exports = [
     },
     "dateOfBirth": "1954-10-10",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -3108,7 +3108,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-07-17",
     "attendance": null,
-    "activity": 9,
+    "activity": [9],
     "alerts": []
   },
   {
@@ -3125,7 +3125,7 @@ module.exports = [
     },
     "dateOfBirth": "1949-07-18",
     "attendance": null,
-    "activity": 3,
+    "activity": [3],
     "alerts": [
       "Risk to LGBT"
     ]
@@ -3144,7 +3144,7 @@ module.exports = [
     },
     "dateOfBirth": "1984-12-16",
     "attendance": null,
-    "activity": 41,
+    "activity": [41],
     "alerts": []
   },
   {
@@ -3161,7 +3161,7 @@ module.exports = [
     },
     "dateOfBirth": "1979-05-21",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": [
       "Arsonist"
     ]
@@ -3180,7 +3180,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-09-24",
     "attendance": null,
-    "activity": 45,
+    "activity": [45],
     "alerts": []
   },
   {
@@ -3197,7 +3197,7 @@ module.exports = [
     },
     "dateOfBirth": "1983-06-05",
     "attendance": null,
-    "activity": 21,
+    "activity": [21],
     "alerts": [
       "Risk to females"
     ]
@@ -3216,7 +3216,7 @@ module.exports = [
     },
     "dateOfBirth": "1991-09-14",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": []
   },
   {
@@ -3233,7 +3233,7 @@ module.exports = [
     },
     "dateOfBirth": "1970-09-25",
     "attendance": null,
-    "activity": 38,
+    "activity": [38],
     "alerts": []
   },
   {
@@ -3250,7 +3250,7 @@ module.exports = [
     },
     "dateOfBirth": "1944-12-24",
     "attendance": null,
-    "activity": 21,
+    "activity": [21],
     "alerts": [
       "Concerted indiscipline"
     ]
@@ -3269,7 +3269,7 @@ module.exports = [
     },
     "dateOfBirth": "1984-01-25",
     "attendance": null,
-    "activity": 4,
+    "activity": [4],
     "alerts": []
   },
   {
@@ -3286,7 +3286,7 @@ module.exports = [
     },
     "dateOfBirth": "1963-02-20",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": [
       "CSIP",
       "Quarantined"
@@ -3306,7 +3306,7 @@ module.exports = [
     },
     "dateOfBirth": "1957-09-12",
     "attendance": null,
-    "activity": 15,
+    "activity": [15],
     "alerts": []
   },
   {
@@ -3323,7 +3323,7 @@ module.exports = [
     },
     "dateOfBirth": "1983-12-14",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": []
   },
   {
@@ -3340,7 +3340,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-07-20",
     "attendance": null,
-    "activity": 15,
+    "activity": [15],
     "alerts": []
   },
   {
@@ -3357,7 +3357,7 @@ module.exports = [
     },
     "dateOfBirth": "1988-11-07",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": []
   },
   {
@@ -3374,7 +3374,7 @@ module.exports = [
     },
     "dateOfBirth": "1989-02-13",
     "attendance": null,
-    "activity": 15,
+    "activity": [15],
     "alerts": []
   },
   {
@@ -3391,7 +3391,7 @@ module.exports = [
     },
     "dateOfBirth": "1996-10-08",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": [
       "Racist",
       "Quarantined"
@@ -3411,7 +3411,7 @@ module.exports = [
     },
     "dateOfBirth": "1997-06-19",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": []
   },
   {
@@ -3428,7 +3428,7 @@ module.exports = [
     },
     "dateOfBirth": "1974-06-19",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": []
   },
   {
@@ -3445,7 +3445,7 @@ module.exports = [
     },
     "dateOfBirth": "1997-12-03",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": []
   },
   {
@@ -3462,7 +3462,7 @@ module.exports = [
     },
     "dateOfBirth": "1946-01-17",
     "attendance": null,
-    "activity": 23,
+    "activity": [23],
     "alerts": []
   },
   {
@@ -3479,7 +3479,7 @@ module.exports = [
     },
     "dateOfBirth": "1991-08-02",
     "attendance": null,
-    "activity": -5,
+    "activity": [-5],
     "alerts": []
   },
   {
@@ -3496,7 +3496,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-04-21",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -3513,7 +3513,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-10-11",
     "attendance": null,
-    "activity": 1,
+    "activity": [1],
     "alerts": []
   },
   {
@@ -3530,7 +3530,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-12-05",
     "attendance": null,
-    "activity": 8,
+    "activity": [8],
     "alerts": []
   },
   {
@@ -3547,7 +3547,7 @@ module.exports = [
     },
     "dateOfBirth": "1982-09-29",
     "attendance": null,
-    "activity": 37,
+    "activity": [37],
     "alerts": []
   },
   {
@@ -3564,7 +3564,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-08-14",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": []
   },
   {
@@ -3581,7 +3581,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-02-11",
     "attendance": null,
-    "activity": 46,
+    "activity": [46],
     "alerts": []
   },
   {
@@ -3598,7 +3598,7 @@ module.exports = [
     },
     "dateOfBirth": "1961-08-10",
     "attendance": null,
-    "activity": 11,
+    "activity": [11],
     "alerts": [
       "CSIP"
     ]
@@ -3617,7 +3617,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-12-23",
     "attendance": null,
-    "activity": 3,
+    "activity": [3],
     "alerts": []
   },
   {
@@ -3634,7 +3634,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-05-30",
     "attendance": null,
-    "activity": 0,
+    "activity": [0],
     "alerts": []
   },
   {
@@ -3651,7 +3651,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-06-20",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": [
       "Racist"
     ]
@@ -3670,7 +3670,7 @@ module.exports = [
     },
     "dateOfBirth": "1981-08-14",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": [
       "CSIP",
       "No one-to-one"
@@ -3690,7 +3690,7 @@ module.exports = [
     },
     "dateOfBirth": "1980-11-01",
     "attendance": null,
-    "activity": 46,
+    "activity": [46],
     "alerts": [
       "TACT",
       "CSIP"
@@ -3710,7 +3710,7 @@ module.exports = [
     },
     "dateOfBirth": "1983-02-08",
     "attendance": null,
-    "activity": 23,
+    "activity": [23],
     "alerts": []
   },
   {
@@ -3727,7 +3727,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-03-23",
     "attendance": null,
-    "activity": 9,
+    "activity": [9],
     "alerts": []
   },
   {
@@ -3744,7 +3744,7 @@ module.exports = [
     },
     "dateOfBirth": "1990-02-15",
     "attendance": null,
-    "activity": 24,
+    "activity": [24],
     "alerts": []
   },
   {
@@ -3761,7 +3761,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-07-17",
     "attendance": null,
-    "activity": -5,
+    "activity": [-5],
     "alerts": [
       "Refusing to shield"
     ]
@@ -3780,7 +3780,7 @@ module.exports = [
     },
     "dateOfBirth": "1998-06-17",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": []
   },
   {
@@ -3797,7 +3797,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-01-28",
     "attendance": null,
-    "activity": 38,
+    "activity": [38],
     "alerts": [
       "Corruptor",
       "Racist"
@@ -3817,7 +3817,7 @@ module.exports = [
     },
     "dateOfBirth": "1963-03-21",
     "attendance": null,
-    "activity": 43,
+    "activity": [43],
     "alerts": []
   },
   {
@@ -3834,7 +3834,7 @@ module.exports = [
     },
     "dateOfBirth": "1990-08-17",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": []
   },
   {
@@ -3851,7 +3851,7 @@ module.exports = [
     },
     "dateOfBirth": "1996-05-22",
     "attendance": null,
-    "activity": -5,
+    "activity": [-5],
     "alerts": []
   },
   {
@@ -3868,7 +3868,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-07-04",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": [
       "Risk to LGBT"
     ]
@@ -3887,7 +3887,7 @@ module.exports = [
     },
     "dateOfBirth": "1946-08-14",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": []
   },
   {
@@ -3904,7 +3904,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-10-28",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": [
       "Protective Isolation Unit"
     ]
@@ -3923,7 +3923,7 @@ module.exports = [
     },
     "dateOfBirth": "1981-03-11",
     "attendance": null,
-    "activity": 27,
+    "activity": [27],
     "alerts": []
   },
   {
@@ -3940,7 +3940,7 @@ module.exports = [
     },
     "dateOfBirth": "1944-06-27",
     "attendance": null,
-    "activity": 22,
+    "activity": [22],
     "alerts": []
   },
   {
@@ -3957,7 +3957,7 @@ module.exports = [
     },
     "dateOfBirth": "1981-10-21",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": []
   },
   {
@@ -3974,7 +3974,7 @@ module.exports = [
     },
     "dateOfBirth": "2000-08-06",
     "attendance": null,
-    "activity": 42,
+    "activity": [42],
     "alerts": []
   },
   {
@@ -3991,7 +3991,7 @@ module.exports = [
     },
     "dateOfBirth": "1969-12-27",
     "attendance": null,
-    "activity": 33,
+    "activity": [33],
     "alerts": []
   },
   {
@@ -4008,7 +4008,7 @@ module.exports = [
     },
     "dateOfBirth": "1961-08-13",
     "attendance": null,
-    "activity": 4,
+    "activity": [4],
     "alerts": []
   },
   {
@@ -4025,7 +4025,7 @@ module.exports = [
     },
     "dateOfBirth": "1951-11-29",
     "attendance": null,
-    "activity": 23,
+    "activity": [23],
     "alerts": [
       "Conflict"
     ]
@@ -4044,7 +4044,7 @@ module.exports = [
     },
     "dateOfBirth": "1959-05-06",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": []
   },
   {
@@ -4061,7 +4061,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-01-30",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": []
   },
   {
@@ -4078,7 +4078,7 @@ module.exports = [
     },
     "dateOfBirth": "1956-05-17",
     "attendance": null,
-    "activity": 20,
+    "activity": [20],
     "alerts": []
   },
   {
@@ -4095,7 +4095,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-03-25",
     "attendance": null,
-    "activity": 6,
+    "activity": [6],
     "alerts": []
   },
   {
@@ -4112,7 +4112,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-03-14",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": []
   },
   {
@@ -4129,7 +4129,7 @@ module.exports = [
     },
     "dateOfBirth": "1997-09-15",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": []
   },
   {
@@ -4146,7 +4146,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-12-01",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": [
       "CSIP",
       "Refusing to shield"
@@ -4166,7 +4166,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-02-02",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": []
   },
   {
@@ -4183,7 +4183,7 @@ module.exports = [
     },
     "dateOfBirth": "1961-08-22",
     "attendance": null,
-    "activity": 44,
+    "activity": [44],
     "alerts": []
   },
   {
@@ -4200,7 +4200,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-02-25",
     "attendance": null,
-    "activity": 1,
+    "activity": [1],
     "alerts": []
   },
   {
@@ -4217,7 +4217,7 @@ module.exports = [
     },
     "dateOfBirth": "1946-10-02",
     "attendance": null,
-    "activity": 13,
+    "activity": [13],
     "alerts": []
   },
   {
@@ -4234,7 +4234,7 @@ module.exports = [
     },
     "dateOfBirth": "2000-10-20",
     "attendance": null,
-    "activity": 27,
+    "activity": [27],
     "alerts": []
   },
   {
@@ -4251,7 +4251,7 @@ module.exports = [
     },
     "dateOfBirth": "1958-09-07",
     "attendance": null,
-    "activity": 11,
+    "activity": [11],
     "alerts": []
   },
   {
@@ -4268,7 +4268,7 @@ module.exports = [
     },
     "dateOfBirth": "1976-10-03",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": []
   },
   {
@@ -4285,7 +4285,7 @@ module.exports = [
     },
     "dateOfBirth": "1985-04-08",
     "attendance": null,
-    "activity": 24,
+    "activity": [24],
     "alerts": [
       "Quarantined",
       "Racist"
@@ -4305,7 +4305,7 @@ module.exports = [
     },
     "dateOfBirth": "1973-07-29",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -4322,7 +4322,7 @@ module.exports = [
     },
     "dateOfBirth": "2002-07-22",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": [
       "Hostage taker"
     ]
@@ -4341,7 +4341,7 @@ module.exports = [
     },
     "dateOfBirth": "1944-09-22",
     "attendance": null,
-    "activity": 0,
+    "activity": [0],
     "alerts": []
   },
   {
@@ -4358,7 +4358,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-08-12",
     "attendance": null,
-    "activity": 19,
+    "activity": [19],
     "alerts": []
   },
   {
@@ -4375,7 +4375,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-09-12",
     "attendance": null,
-    "activity": 12,
+    "activity": [12],
     "alerts": []
   },
   {
@@ -4392,7 +4392,7 @@ module.exports = [
     },
     "dateOfBirth": "1974-11-03",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": []
   },
   {
@@ -4409,7 +4409,7 @@ module.exports = [
     },
     "dateOfBirth": "1944-06-02",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": []
   },
   {
@@ -4426,7 +4426,7 @@ module.exports = [
     },
     "dateOfBirth": "1970-01-09",
     "attendance": null,
-    "activity": 15,
+    "activity": [15],
     "alerts": [
       "Racist",
       "Care experienced"
@@ -4446,7 +4446,7 @@ module.exports = [
     },
     "dateOfBirth": "1953-12-24",
     "attendance": null,
-    "activity": -5,
+    "activity": [-5],
     "alerts": []
   },
   {
@@ -4463,7 +4463,7 @@ module.exports = [
     },
     "dateOfBirth": "1962-01-09",
     "attendance": null,
-    "activity": 13,
+    "activity": [13],
     "alerts": [
       "E-list",
       "TACT"
@@ -4483,7 +4483,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-12-22",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": []
   },
   {
@@ -4500,7 +4500,7 @@ module.exports = [
     },
     "dateOfBirth": "1961-12-19",
     "attendance": null,
-    "activity": 44,
+    "activity": [44],
     "alerts": [
       "Risk to females"
     ]
@@ -4519,7 +4519,7 @@ module.exports = [
     },
     "dateOfBirth": "1962-01-20",
     "attendance": null,
-    "activity": 20,
+    "activity": [20],
     "alerts": [
       "Care experienced"
     ]
@@ -4538,7 +4538,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-04-22",
     "attendance": null,
-    "activity": 15,
+    "activity": [15],
     "alerts": []
   },
   {
@@ -4555,7 +4555,7 @@ module.exports = [
     },
     "dateOfBirth": "1984-11-29",
     "attendance": null,
-    "activity": 33,
+    "activity": [33],
     "alerts": []
   },
   {
@@ -4572,7 +4572,7 @@ module.exports = [
     },
     "dateOfBirth": "1998-04-10",
     "attendance": null,
-    "activity": 12,
+    "activity": [12],
     "alerts": []
   },
   {
@@ -4589,7 +4589,7 @@ module.exports = [
     },
     "dateOfBirth": "1959-03-29",
     "attendance": null,
-    "activity": 6,
+    "activity": [6],
     "alerts": []
   },
   {
@@ -4606,7 +4606,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-11-27",
     "attendance": null,
-    "activity": 19,
+    "activity": [19],
     "alerts": []
   },
   {
@@ -4623,7 +4623,7 @@ module.exports = [
     },
     "dateOfBirth": "1969-07-20",
     "attendance": null,
-    "activity": 7,
+    "activity": [7],
     "alerts": []
   },
   {
@@ -4640,7 +4640,7 @@ module.exports = [
     },
     "dateOfBirth": "1987-11-18",
     "attendance": null,
-    "activity": 41,
+    "activity": [41],
     "alerts": []
   },
   {
@@ -4657,7 +4657,7 @@ module.exports = [
     },
     "dateOfBirth": "1997-05-04",
     "attendance": null,
-    "activity": 39,
+    "activity": [39],
     "alerts": []
   },
   {
@@ -4674,7 +4674,7 @@ module.exports = [
     },
     "dateOfBirth": "2002-06-15",
     "attendance": null,
-    "activity": 1,
+    "activity": [1],
     "alerts": [
       "Conflict"
     ]
@@ -4693,7 +4693,7 @@ module.exports = [
     },
     "dateOfBirth": "1995-10-27",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": [
       "Care experienced"
     ]
@@ -4712,7 +4712,7 @@ module.exports = [
     },
     "dateOfBirth": "1951-01-19",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": []
   },
   {
@@ -4729,7 +4729,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-05-15",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": [
       "Arsonist"
     ]
@@ -4748,7 +4748,7 @@ module.exports = [
     },
     "dateOfBirth": "1976-09-21",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": []
   },
   {
@@ -4765,7 +4765,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-07-15",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": []
   },
   {
@@ -4782,7 +4782,7 @@ module.exports = [
     },
     "dateOfBirth": "1954-10-12",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": []
   },
   {
@@ -4799,7 +4799,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-12-20",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": []
   },
   {
@@ -4816,7 +4816,7 @@ module.exports = [
     },
     "dateOfBirth": "1996-10-10",
     "attendance": null,
-    "activity": 40,
+    "activity": [40],
     "alerts": [
       "Controlled unlock"
     ]
@@ -4835,7 +4835,7 @@ module.exports = [
     },
     "dateOfBirth": "1955-06-07",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": []
   },
   {
@@ -4852,7 +4852,7 @@ module.exports = [
     },
     "dateOfBirth": "1945-10-17",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -4869,7 +4869,7 @@ module.exports = [
     },
     "dateOfBirth": "2002-12-12",
     "attendance": null,
-    "activity": 11,
+    "activity": [11],
     "alerts": []
   },
   {
@@ -4886,7 +4886,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-08-07",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": [
       "Conflict"
     ]
@@ -4905,7 +4905,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-04-29",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": []
   },
   {
@@ -4922,7 +4922,7 @@ module.exports = [
     },
     "dateOfBirth": "1958-03-30",
     "attendance": null,
-    "activity": 44,
+    "activity": [44],
     "alerts": []
   },
   {
@@ -4939,7 +4939,7 @@ module.exports = [
     },
     "dateOfBirth": "1968-01-14",
     "attendance": null,
-    "activity": 43,
+    "activity": [43],
     "alerts": []
   },
   {
@@ -4956,7 +4956,7 @@ module.exports = [
     },
     "dateOfBirth": "1977-02-17",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": []
   },
   {
@@ -4973,7 +4973,7 @@ module.exports = [
     },
     "dateOfBirth": "1978-04-22",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": []
   },
   {
@@ -4990,7 +4990,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-08-20",
     "attendance": null,
-    "activity": 45,
+    "activity": [45],
     "alerts": []
   },
   {
@@ -5007,7 +5007,7 @@ module.exports = [
     },
     "dateOfBirth": "1979-08-29",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": []
   },
   {
@@ -5024,7 +5024,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-04-28",
     "attendance": null,
-    "activity": 13,
+    "activity": [13],
     "alerts": [
       "Protective Isolation Unit"
     ]
@@ -5043,7 +5043,7 @@ module.exports = [
     },
     "dateOfBirth": "1974-01-09",
     "attendance": null,
-    "activity": 30,
+    "activity": [30],
     "alerts": []
   },
   {
@@ -5060,7 +5060,7 @@ module.exports = [
     },
     "dateOfBirth": "1978-12-22",
     "attendance": null,
-    "activity": 4,
+    "activity": [4],
     "alerts": []
   },
   {
@@ -5077,7 +5077,7 @@ module.exports = [
     },
     "dateOfBirth": "1946-04-02",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": []
   },
   {
@@ -5094,7 +5094,7 @@ module.exports = [
     },
     "dateOfBirth": "1996-12-03",
     "attendance": null,
-    "activity": 32,
+    "activity": [32],
     "alerts": [
       "Chemical attacker"
     ]
@@ -5113,7 +5113,7 @@ module.exports = [
     },
     "dateOfBirth": "1962-01-05",
     "attendance": null,
-    "activity": 42,
+    "activity": [42],
     "alerts": []
   },
   {
@@ -5130,7 +5130,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-01-24",
     "attendance": null,
-    "activity": 3,
+    "activity": [3],
     "alerts": []
   },
   {
@@ -5147,7 +5147,7 @@ module.exports = [
     },
     "dateOfBirth": "1968-02-28",
     "attendance": null,
-    "activity": 37,
+    "activity": [37],
     "alerts": [
       "Corruptor"
     ]
@@ -5166,7 +5166,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-09-25",
     "attendance": null,
-    "activity": 13,
+    "activity": [13],
     "alerts": []
   },
   {
@@ -5183,7 +5183,7 @@ module.exports = [
     },
     "dateOfBirth": "1987-01-23",
     "attendance": null,
-    "activity": 15,
+    "activity": [15],
     "alerts": [
       "Arsonist"
     ]
@@ -5202,7 +5202,7 @@ module.exports = [
     },
     "dateOfBirth": "1987-03-15",
     "attendance": null,
-    "activity": 41,
+    "activity": [41],
     "alerts": []
   },
   {
@@ -5219,7 +5219,7 @@ module.exports = [
     },
     "dateOfBirth": "1990-12-04",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": []
   },
   {
@@ -5236,7 +5236,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-09-24",
     "attendance": null,
-    "activity": 3,
+    "activity": [3],
     "alerts": [
       "Risk to females"
     ]
@@ -5255,7 +5255,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-09-08",
     "attendance": null,
-    "activity": 7,
+    "activity": [7],
     "alerts": []
   },
   {
@@ -5272,7 +5272,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-12-01",
     "attendance": null,
-    "activity": 15,
+    "activity": [15],
     "alerts": []
   },
   {
@@ -5289,7 +5289,7 @@ module.exports = [
     },
     "dateOfBirth": "1961-05-13",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": []
   },
   {
@@ -5306,7 +5306,7 @@ module.exports = [
     },
     "dateOfBirth": "1987-09-26",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -5323,7 +5323,7 @@ module.exports = [
     },
     "dateOfBirth": "1983-09-18",
     "attendance": null,
-    "activity": 22,
+    "activity": [22],
     "alerts": []
   },
   {
@@ -5340,7 +5340,7 @@ module.exports = [
     },
     "dateOfBirth": "1958-01-24",
     "attendance": null,
-    "activity": 10,
+    "activity": [10],
     "alerts": []
   },
   {
@@ -5357,7 +5357,7 @@ module.exports = [
     },
     "dateOfBirth": "1977-11-06",
     "attendance": null,
-    "activity": 0,
+    "activity": [0],
     "alerts": []
   },
   {
@@ -5374,7 +5374,7 @@ module.exports = [
     },
     "dateOfBirth": "1970-08-19",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": []
   },
   {
@@ -5391,7 +5391,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-02-28",
     "attendance": null,
-    "activity": 45,
+    "activity": [45],
     "alerts": []
   },
   {
@@ -5408,7 +5408,7 @@ module.exports = [
     },
     "dateOfBirth": "1959-05-13",
     "attendance": null,
-    "activity": 20,
+    "activity": [20],
     "alerts": [
       "Conflict",
       "Refusing to shield"
@@ -5428,7 +5428,7 @@ module.exports = [
     },
     "dateOfBirth": "1956-06-25",
     "attendance": null,
-    "activity": 33,
+    "activity": [33],
     "alerts": [
       "Risk to LGBT",
       "Arsonist"
@@ -5448,7 +5448,7 @@ module.exports = [
     },
     "dateOfBirth": "1992-04-26",
     "attendance": null,
-    "activity": 6,
+    "activity": [6],
     "alerts": [
       "Controlled unlock",
       "E-list"
@@ -5468,7 +5468,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-03-28",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": []
   },
   {
@@ -5485,7 +5485,7 @@ module.exports = [
     },
     "dateOfBirth": "1998-01-06",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": []
   },
   {
@@ -5502,7 +5502,7 @@ module.exports = [
     },
     "dateOfBirth": "1984-12-29",
     "attendance": null,
-    "activity": 24,
+    "activity": [24],
     "alerts": []
   },
   {
@@ -5519,7 +5519,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-05-03",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": []
   },
   {
@@ -5536,7 +5536,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-11-16",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": []
   },
   {
@@ -5553,7 +5553,7 @@ module.exports = [
     },
     "dateOfBirth": "1996-07-20",
     "attendance": null,
-    "activity": 7,
+    "activity": [7],
     "alerts": []
   },
   {
@@ -5570,7 +5570,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-07-18",
     "attendance": null,
-    "activity": 11,
+    "activity": [11],
     "alerts": []
   },
   {
@@ -5587,7 +5587,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-10-04",
     "attendance": null,
-    "activity": 12,
+    "activity": [12],
     "alerts": []
   },
   {
@@ -5604,7 +5604,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-04-29",
     "attendance": null,
-    "activity": 29,
+    "activity": [29],
     "alerts": []
   },
   {
@@ -5621,7 +5621,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-01-20",
     "attendance": null,
-    "activity": 4,
+    "activity": [4],
     "alerts": [
       "No one-to-one",
       "Conflict"
@@ -5641,7 +5641,7 @@ module.exports = [
     },
     "dateOfBirth": "1968-08-08",
     "attendance": null,
-    "activity": 15,
+    "activity": [15],
     "alerts": []
   },
   {
@@ -5658,7 +5658,7 @@ module.exports = [
     },
     "dateOfBirth": "1971-07-08",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": []
   },
   {
@@ -5675,7 +5675,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-06-19",
     "attendance": null,
-    "activity": 19,
+    "activity": [19],
     "alerts": []
   },
   {
@@ -5692,7 +5692,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-04-01",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -5709,7 +5709,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-12-08",
     "attendance": null,
-    "activity": 44,
+    "activity": [44],
     "alerts": []
   },
   {
@@ -5726,7 +5726,7 @@ module.exports = [
     },
     "dateOfBirth": "1998-09-20",
     "attendance": null,
-    "activity": 3,
+    "activity": [3],
     "alerts": [
       "E-list"
     ]
@@ -5745,7 +5745,7 @@ module.exports = [
     },
     "dateOfBirth": "1998-08-07",
     "attendance": null,
-    "activity": 4,
+    "activity": [4],
     "alerts": [
       "E-list",
       "Conflict"
@@ -5765,7 +5765,7 @@ module.exports = [
     },
     "dateOfBirth": "1977-07-07",
     "attendance": null,
-    "activity": 15,
+    "activity": [15],
     "alerts": [
       "Hostage taker",
       "Controlled unlock"
@@ -5785,7 +5785,7 @@ module.exports = [
     },
     "dateOfBirth": "1992-06-20",
     "attendance": null,
-    "activity": 10,
+    "activity": [10],
     "alerts": []
   },
   {
@@ -5802,7 +5802,7 @@ module.exports = [
     },
     "dateOfBirth": "1976-10-28",
     "attendance": null,
-    "activity": 20,
+    "activity": [20],
     "alerts": [
       "E-list"
     ]
@@ -5821,7 +5821,7 @@ module.exports = [
     },
     "dateOfBirth": "1984-12-24",
     "attendance": null,
-    "activity": 45,
+    "activity": [45],
     "alerts": []
   },
   {
@@ -5838,7 +5838,7 @@ module.exports = [
     },
     "dateOfBirth": "1963-08-01",
     "attendance": null,
-    "activity": 20,
+    "activity": [20],
     "alerts": []
   },
   {
@@ -5855,7 +5855,7 @@ module.exports = [
     },
     "dateOfBirth": "1996-01-02",
     "attendance": null,
-    "activity": 7,
+    "activity": [7],
     "alerts": []
   },
   {
@@ -5872,7 +5872,7 @@ module.exports = [
     },
     "dateOfBirth": "1977-11-11",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": []
   },
   {
@@ -5889,7 +5889,7 @@ module.exports = [
     },
     "dateOfBirth": "1980-07-28",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": []
   },
   {
@@ -5906,7 +5906,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-12-03",
     "attendance": null,
-    "activity": 29,
+    "activity": [29],
     "alerts": [
       "Corruptor"
     ]
@@ -5925,7 +5925,7 @@ module.exports = [
     },
     "dateOfBirth": "1969-06-29",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -5942,7 +5942,7 @@ module.exports = [
     },
     "dateOfBirth": "1960-05-10",
     "attendance": null,
-    "activity": 20,
+    "activity": [20],
     "alerts": []
   },
   {
@@ -5959,7 +5959,7 @@ module.exports = [
     },
     "dateOfBirth": "1988-07-01",
     "attendance": null,
-    "activity": 3,
+    "activity": [3],
     "alerts": []
   },
   {
@@ -5976,7 +5976,7 @@ module.exports = [
     },
     "dateOfBirth": "1990-03-21",
     "attendance": null,
-    "activity": 42,
+    "activity": [42],
     "alerts": []
   },
   {
@@ -5993,7 +5993,7 @@ module.exports = [
     },
     "dateOfBirth": "1963-03-08",
     "attendance": null,
-    "activity": 39,
+    "activity": [39],
     "alerts": []
   },
   {
@@ -6010,7 +6010,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-11-23",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": []
   },
   {
@@ -6027,7 +6027,7 @@ module.exports = [
     },
     "dateOfBirth": "1949-05-22",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": [
       "Arsonist"
     ]
@@ -6046,7 +6046,7 @@ module.exports = [
     },
     "dateOfBirth": "1989-01-09",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": []
   },
   {
@@ -6063,7 +6063,7 @@ module.exports = [
     },
     "dateOfBirth": "1991-12-19",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -6080,7 +6080,7 @@ module.exports = [
     },
     "dateOfBirth": "1963-11-24",
     "attendance": null,
-    "activity": 37,
+    "activity": [37],
     "alerts": [
       "Reverse Cohorting Unit"
     ]
@@ -6099,7 +6099,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-10-29",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": [
       "Concerted indiscipline"
     ]
@@ -6118,7 +6118,7 @@ module.exports = [
     },
     "dateOfBirth": "1996-05-30",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": []
   },
   {
@@ -6135,7 +6135,7 @@ module.exports = [
     },
     "dateOfBirth": "1958-06-06",
     "attendance": null,
-    "activity": 30,
+    "activity": [30],
     "alerts": []
   },
   {
@@ -6152,7 +6152,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-03-08",
     "attendance": null,
-    "activity": 23,
+    "activity": [23],
     "alerts": [
       "Gang member",
       "No one-to-one"
@@ -6172,7 +6172,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-11-29",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": [
       "Corruptor"
     ]
@@ -6191,7 +6191,7 @@ module.exports = [
     },
     "dateOfBirth": "1946-10-26",
     "attendance": null,
-    "activity": 21,
+    "activity": [21],
     "alerts": []
   },
   {
@@ -6208,7 +6208,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-05-17",
     "attendance": null,
-    "activity": 24,
+    "activity": [24],
     "alerts": []
   },
   {
@@ -6225,7 +6225,7 @@ module.exports = [
     },
     "dateOfBirth": "2002-09-21",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": [
       "Refusing to shield"
     ]
@@ -6244,7 +6244,7 @@ module.exports = [
     },
     "dateOfBirth": "1973-09-01",
     "attendance": null,
-    "activity": 42,
+    "activity": [42],
     "alerts": []
   },
   {
@@ -6261,7 +6261,7 @@ module.exports = [
     },
     "dateOfBirth": "1977-12-16",
     "attendance": null,
-    "activity": 1,
+    "activity": [1],
     "alerts": []
   },
   {
@@ -6278,7 +6278,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-12-21",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": []
   },
   {
@@ -6295,7 +6295,7 @@ module.exports = [
     },
     "dateOfBirth": "2001-06-17",
     "attendance": null,
-    "activity": 41,
+    "activity": [41],
     "alerts": []
   },
   {
@@ -6312,7 +6312,7 @@ module.exports = [
     },
     "dateOfBirth": "1946-12-30",
     "attendance": null,
-    "activity": 4,
+    "activity": [4],
     "alerts": []
   },
   {
@@ -6329,7 +6329,7 @@ module.exports = [
     },
     "dateOfBirth": "1980-02-14",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": [
       "TACT"
     ]
@@ -6348,7 +6348,7 @@ module.exports = [
     },
     "dateOfBirth": "1982-01-29",
     "attendance": null,
-    "activity": 37,
+    "activity": [37],
     "alerts": []
   },
   {
@@ -6365,7 +6365,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-12-06",
     "attendance": null,
-    "activity": 1,
+    "activity": [1],
     "alerts": [
       "Shielding Unit"
     ]
@@ -6384,7 +6384,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-03-19",
     "attendance": null,
-    "activity": 3,
+    "activity": [3],
     "alerts": []
   },
   {
@@ -6401,7 +6401,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-01-19",
     "attendance": null,
-    "activity": 13,
+    "activity": [13],
     "alerts": [
       "Refusing to shield",
       "Arsonist"
@@ -6421,7 +6421,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-02-10",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": []
   },
   {
@@ -6438,7 +6438,7 @@ module.exports = [
     },
     "dateOfBirth": "1982-05-20",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": []
   },
   {
@@ -6455,7 +6455,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-06-19",
     "attendance": null,
-    "activity": 44,
+    "activity": [44],
     "alerts": []
   },
   {
@@ -6472,7 +6472,7 @@ module.exports = [
     },
     "dateOfBirth": "1954-12-31",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": [
       "Concerted indiscipline"
     ]
@@ -6491,7 +6491,7 @@ module.exports = [
     },
     "dateOfBirth": "1944-09-14",
     "attendance": null,
-    "activity": 46,
+    "activity": [46],
     "alerts": []
   },
   {
@@ -6508,7 +6508,7 @@ module.exports = [
     },
     "dateOfBirth": "1985-06-16",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": []
   },
   {
@@ -6525,7 +6525,7 @@ module.exports = [
     },
     "dateOfBirth": "1991-11-24",
     "attendance": null,
-    "activity": 33,
+    "activity": [33],
     "alerts": []
   },
   {
@@ -6542,7 +6542,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-04-13",
     "attendance": null,
-    "activity": 11,
+    "activity": [11],
     "alerts": [
       "Racist"
     ]
@@ -6561,7 +6561,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-01-03",
     "attendance": null,
-    "activity": 46,
+    "activity": [46],
     "alerts": [
       "Conflict"
     ]
@@ -6580,7 +6580,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-11-14",
     "attendance": null,
-    "activity": 40,
+    "activity": [40],
     "alerts": []
   },
   {
@@ -6597,7 +6597,7 @@ module.exports = [
     },
     "dateOfBirth": "1959-02-17",
     "attendance": null,
-    "activity": 21,
+    "activity": [21],
     "alerts": []
   },
   {
@@ -6614,7 +6614,7 @@ module.exports = [
     },
     "dateOfBirth": "1996-01-19",
     "attendance": null,
-    "activity": -1,
+    "activity": [-1],
     "alerts": []
   },
   {
@@ -6631,7 +6631,7 @@ module.exports = [
     },
     "dateOfBirth": "1989-07-15",
     "attendance": null,
-    "activity": 39,
+    "activity": [39],
     "alerts": []
   },
   {
@@ -6648,7 +6648,7 @@ module.exports = [
     },
     "dateOfBirth": "1944-08-07",
     "attendance": null,
-    "activity": 42,
+    "activity": [42],
     "alerts": [
       "Veteran"
     ]
@@ -6667,7 +6667,7 @@ module.exports = [
     },
     "dateOfBirth": "1974-04-18",
     "attendance": null,
-    "activity": 44,
+    "activity": [44],
     "alerts": []
   },
   {
@@ -6684,7 +6684,7 @@ module.exports = [
     },
     "dateOfBirth": "1956-07-31",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": []
   },
   {
@@ -6701,7 +6701,7 @@ module.exports = [
     },
     "dateOfBirth": "1985-08-09",
     "attendance": null,
-    "activity": 24,
+    "activity": [24],
     "alerts": []
   },
   {
@@ -6718,7 +6718,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-09-28",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": []
   },
   {
@@ -6735,7 +6735,7 @@ module.exports = [
     },
     "dateOfBirth": "1964-08-16",
     "attendance": null,
-    "activity": 19,
+    "activity": [19],
     "alerts": []
   },
   {
@@ -6752,7 +6752,7 @@ module.exports = [
     },
     "dateOfBirth": "1989-12-19",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -6769,7 +6769,7 @@ module.exports = [
     },
     "dateOfBirth": "1953-06-30",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": []
   },
   {
@@ -6786,7 +6786,7 @@ module.exports = [
     },
     "dateOfBirth": "2001-12-16",
     "attendance": null,
-    "activity": 13,
+    "activity": [13],
     "alerts": [
       "Concerted indiscipline"
     ]
@@ -6805,7 +6805,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-09-24",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": []
   },
   {
@@ -6822,7 +6822,7 @@ module.exports = [
     },
     "dateOfBirth": "1992-07-21",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": [
       "Quarantined"
     ]
@@ -6841,7 +6841,7 @@ module.exports = [
     },
     "dateOfBirth": "1944-06-25",
     "attendance": null,
-    "activity": 9,
+    "activity": [9],
     "alerts": [
       "TACT",
       "No one-to-one"
@@ -6861,7 +6861,7 @@ module.exports = [
     },
     "dateOfBirth": "1982-08-28",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": [
       "E-list",
       "Risk to LGBT"
@@ -6881,7 +6881,7 @@ module.exports = [
     },
     "dateOfBirth": "1970-02-05",
     "attendance": null,
-    "activity": -5,
+    "activity": [-5],
     "alerts": []
   },
   {
@@ -6898,7 +6898,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-08-09",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": []
   },
   {
@@ -6915,7 +6915,7 @@ module.exports = [
     },
     "dateOfBirth": "1958-01-14",
     "attendance": null,
-    "activity": 16,
+    "activity": [16],
     "alerts": []
   },
   {
@@ -6932,7 +6932,7 @@ module.exports = [
     },
     "dateOfBirth": "1976-01-11",
     "attendance": null,
-    "activity": 21,
+    "activity": [21],
     "alerts": []
   },
   {
@@ -6949,7 +6949,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-01-10",
     "attendance": null,
-    "activity": 6,
+    "activity": [6],
     "alerts": [
       "Conflict",
       "Refusing to shield"
@@ -6969,7 +6969,7 @@ module.exports = [
     },
     "dateOfBirth": "1946-04-30",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": [
       "Veteran"
     ]
@@ -6988,7 +6988,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-04-03",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": [
       "Shielding Unit"
     ]
@@ -7007,7 +7007,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-03-28",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": []
   },
   {
@@ -7024,7 +7024,7 @@ module.exports = [
     },
     "dateOfBirth": "1985-01-04",
     "attendance": null,
-    "activity": 35,
+    "activity": [35],
     "alerts": []
   },
   {
@@ -7041,7 +7041,7 @@ module.exports = [
     },
     "dateOfBirth": "1956-04-19",
     "attendance": null,
-    "activity": 32,
+    "activity": [32],
     "alerts": []
   },
   {
@@ -7058,7 +7058,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-03-14",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -7075,7 +7075,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-03-29",
     "attendance": null,
-    "activity": 29,
+    "activity": [29],
     "alerts": []
   },
   {
@@ -7092,7 +7092,7 @@ module.exports = [
     },
     "dateOfBirth": "1945-07-05",
     "attendance": null,
-    "activity": 0,
+    "activity": [0],
     "alerts": []
   },
   {
@@ -7109,7 +7109,7 @@ module.exports = [
     },
     "dateOfBirth": "1977-01-13",
     "attendance": null,
-    "activity": 43,
+    "activity": [43],
     "alerts": []
   },
   {
@@ -7126,7 +7126,7 @@ module.exports = [
     },
     "dateOfBirth": "1961-07-29",
     "attendance": null,
-    "activity": 46,
+    "activity": [46],
     "alerts": []
   },
   {
@@ -7143,7 +7143,7 @@ module.exports = [
     },
     "dateOfBirth": "1945-06-08",
     "attendance": null,
-    "activity": 29,
+    "activity": [29],
     "alerts": []
   },
   {
@@ -7160,7 +7160,7 @@ module.exports = [
     },
     "dateOfBirth": "1968-09-04",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": [
       "Racist"
     ]
@@ -7179,7 +7179,7 @@ module.exports = [
     },
     "dateOfBirth": "1958-12-26",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": [
       "Shielding Unit",
       "Risk to females"
@@ -7199,7 +7199,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-11-14",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": []
   },
   {
@@ -7216,7 +7216,7 @@ module.exports = [
     },
     "dateOfBirth": "1985-08-15",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -7233,7 +7233,7 @@ module.exports = [
     },
     "dateOfBirth": "1979-12-22",
     "attendance": null,
-    "activity": 22,
+    "activity": [22],
     "alerts": [
       "Risk to LGBT",
       "E-list"
@@ -7253,7 +7253,7 @@ module.exports = [
     },
     "dateOfBirth": "1979-05-21",
     "attendance": null,
-    "activity": 45,
+    "activity": [45],
     "alerts": []
   },
   {
@@ -7270,7 +7270,7 @@ module.exports = [
     },
     "dateOfBirth": "1991-05-07",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": [
       "CSIP"
     ]
@@ -7289,7 +7289,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-03-26",
     "attendance": null,
-    "activity": 3,
+    "activity": [3],
     "alerts": []
   },
   {
@@ -7306,7 +7306,7 @@ module.exports = [
     },
     "dateOfBirth": "1990-03-05",
     "attendance": null,
-    "activity": 7,
+    "activity": [7],
     "alerts": []
   },
   {
@@ -7323,7 +7323,7 @@ module.exports = [
     },
     "dateOfBirth": "1974-06-16",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": []
   },
   {
@@ -7340,7 +7340,7 @@ module.exports = [
     },
     "dateOfBirth": "2002-03-07",
     "attendance": null,
-    "activity": 19,
+    "activity": [19],
     "alerts": []
   },
   {
@@ -7357,7 +7357,7 @@ module.exports = [
     },
     "dateOfBirth": "1957-05-10",
     "attendance": null,
-    "activity": 27,
+    "activity": [27],
     "alerts": []
   },
   {
@@ -7374,7 +7374,7 @@ module.exports = [
     },
     "dateOfBirth": "1999-11-14",
     "attendance": null,
-    "activity": -1,
+    "activity": [-1],
     "alerts": []
   },
   {
@@ -7391,7 +7391,7 @@ module.exports = [
     },
     "dateOfBirth": "1979-06-24",
     "attendance": null,
-    "activity": 21,
+    "activity": [21],
     "alerts": []
   },
   {
@@ -7408,7 +7408,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-07-06",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": [
       "Reverse Cohorting Unit",
       "Shielding Unit"
@@ -7428,7 +7428,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-11-16",
     "attendance": null,
-    "activity": 41,
+    "activity": [41],
     "alerts": []
   },
   {
@@ -7445,7 +7445,7 @@ module.exports = [
     },
     "dateOfBirth": "1957-08-15",
     "attendance": null,
-    "activity": 43,
+    "activity": [43],
     "alerts": []
   },
   {
@@ -7462,7 +7462,7 @@ module.exports = [
     },
     "dateOfBirth": "1949-12-12",
     "attendance": null,
-    "activity": 4,
+    "activity": [4],
     "alerts": []
   },
   {
@@ -7479,7 +7479,7 @@ module.exports = [
     },
     "dateOfBirth": "1970-12-09",
     "attendance": null,
-    "activity": -5,
+    "activity": [-5],
     "alerts": []
   },
   {
@@ -7496,7 +7496,7 @@ module.exports = [
     },
     "dateOfBirth": "1983-07-04",
     "attendance": null,
-    "activity": 10,
+    "activity": [10],
     "alerts": []
   },
   {
@@ -7513,7 +7513,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-01-31",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": [
       "Racist"
     ]
@@ -7532,7 +7532,7 @@ module.exports = [
     },
     "dateOfBirth": "1977-03-30",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": [
       "PEEP",
       "Veteran"
@@ -7552,7 +7552,7 @@ module.exports = [
     },
     "dateOfBirth": "1966-08-03",
     "attendance": null,
-    "activity": 37,
+    "activity": [37],
     "alerts": [
       "Controlled unlock",
       "Protective Isolation Unit"
@@ -7572,7 +7572,7 @@ module.exports = [
     },
     "dateOfBirth": "1959-05-15",
     "attendance": null,
-    "activity": 43,
+    "activity": [43],
     "alerts": []
   },
   {
@@ -7589,7 +7589,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-07-28",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": [
       "Risk to females"
     ]
@@ -7608,7 +7608,7 @@ module.exports = [
     },
     "dateOfBirth": "1984-02-14",
     "attendance": null,
-    "activity": 6,
+    "activity": [6],
     "alerts": []
   },
   {
@@ -7625,7 +7625,7 @@ module.exports = [
     },
     "dateOfBirth": "1997-08-07",
     "attendance": null,
-    "activity": 7,
+    "activity": [7],
     "alerts": []
   },
   {
@@ -7642,7 +7642,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-04-29",
     "attendance": null,
-    "activity": 7,
+    "activity": [7],
     "alerts": [
       "Corruptor",
       "Gang member"
@@ -7662,7 +7662,7 @@ module.exports = [
     },
     "dateOfBirth": "1960-09-05",
     "attendance": null,
-    "activity": 39,
+    "activity": [39],
     "alerts": [
       "No one-to-one"
     ]
@@ -7681,7 +7681,7 @@ module.exports = [
     },
     "dateOfBirth": "1951-06-08",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": []
   },
   {
@@ -7698,7 +7698,7 @@ module.exports = [
     },
     "dateOfBirth": "1978-10-26",
     "attendance": null,
-    "activity": 12,
+    "activity": [12],
     "alerts": []
   },
   {
@@ -7715,7 +7715,7 @@ module.exports = [
     },
     "dateOfBirth": "1972-02-24",
     "attendance": null,
-    "activity": 40,
+    "activity": [40],
     "alerts": [
       "Chemical attacker"
     ]
@@ -7734,7 +7734,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-10-23",
     "attendance": null,
-    "activity": 29,
+    "activity": [29],
     "alerts": [
       "Shielding Unit"
     ]
@@ -7753,7 +7753,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-03-15",
     "attendance": null,
-    "activity": 44,
+    "activity": [44],
     "alerts": []
   },
   {
@@ -7770,7 +7770,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-02-10",
     "attendance": null,
-    "activity": 30,
+    "activity": [30],
     "alerts": []
   },
   {
@@ -7787,7 +7787,7 @@ module.exports = [
     },
     "dateOfBirth": "1961-02-06",
     "attendance": null,
-    "activity": 35,
+    "activity": [35],
     "alerts": []
   },
   {
@@ -7804,7 +7804,7 @@ module.exports = [
     },
     "dateOfBirth": "1985-08-13",
     "attendance": null,
-    "activity": 35,
+    "activity": [35],
     "alerts": []
   },
   {
@@ -7821,7 +7821,7 @@ module.exports = [
     },
     "dateOfBirth": "2001-11-30",
     "attendance": null,
-    "activity": -5,
+    "activity": [-5],
     "alerts": [
       "CSIP",
       "Protective Isolation Unit"
@@ -7841,7 +7841,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-11-17",
     "attendance": null,
-    "activity": 10,
+    "activity": [10],
     "alerts": []
   },
   {
@@ -7858,7 +7858,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-05-13",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": [
       "Refusing to shield"
     ]
@@ -7877,7 +7877,7 @@ module.exports = [
     },
     "dateOfBirth": "1987-03-21",
     "attendance": null,
-    "activity": 31,
+    "activity": [31],
     "alerts": []
   },
   {
@@ -7894,7 +7894,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-06-15",
     "attendance": null,
-    "activity": 45,
+    "activity": [45],
     "alerts": []
   },
   {
@@ -7911,7 +7911,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-07-30",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": []
   },
   {
@@ -7928,7 +7928,7 @@ module.exports = [
     },
     "dateOfBirth": "1995-07-29",
     "attendance": null,
-    "activity": 6,
+    "activity": [6],
     "alerts": []
   },
   {
@@ -7945,7 +7945,7 @@ module.exports = [
     },
     "dateOfBirth": "1970-03-21",
     "attendance": null,
-    "activity": 0,
+    "activity": [0],
     "alerts": []
   },
   {
@@ -7962,7 +7962,7 @@ module.exports = [
     },
     "dateOfBirth": "1947-09-03",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": []
   },
   {
@@ -7979,7 +7979,7 @@ module.exports = [
     },
     "dateOfBirth": "1971-09-20",
     "attendance": null,
-    "activity": 38,
+    "activity": [38],
     "alerts": [
       "Racist"
     ]
@@ -7998,7 +7998,7 @@ module.exports = [
     },
     "dateOfBirth": "1960-02-26",
     "attendance": null,
-    "activity": -4,
+    "activity": [-4],
     "alerts": []
   },
   {
@@ -8015,7 +8015,7 @@ module.exports = [
     },
     "dateOfBirth": "1950-02-06",
     "attendance": null,
-    "activity": -5,
+    "activity": [-5],
     "alerts": []
   },
   {
@@ -8032,7 +8032,7 @@ module.exports = [
     },
     "dateOfBirth": "1973-11-21",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -8049,7 +8049,7 @@ module.exports = [
     },
     "dateOfBirth": "1988-02-26",
     "attendance": null,
-    "activity": 46,
+    "activity": [46],
     "alerts": []
   },
   {
@@ -8066,7 +8066,7 @@ module.exports = [
     },
     "dateOfBirth": "2002-05-24",
     "attendance": null,
-    "activity": 6,
+    "activity": [6],
     "alerts": []
   },
   {
@@ -8083,7 +8083,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-03-02",
     "attendance": null,
-    "activity": 29,
+    "activity": [29],
     "alerts": []
   },
   {
@@ -8100,7 +8100,7 @@ module.exports = [
     },
     "dateOfBirth": "1968-02-21",
     "attendance": null,
-    "activity": 25,
+    "activity": [25],
     "alerts": [
       "Quarantined",
       "Reverse Cohorting Unit"
@@ -8120,7 +8120,7 @@ module.exports = [
     },
     "dateOfBirth": "1995-12-17",
     "attendance": null,
-    "activity": 44,
+    "activity": [44],
     "alerts": [
       "TACT"
     ]
@@ -8139,7 +8139,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-01-31",
     "attendance": null,
-    "activity": 5,
+    "activity": [5],
     "alerts": []
   },
   {
@@ -8156,7 +8156,7 @@ module.exports = [
     },
     "dateOfBirth": "1959-08-13",
     "attendance": null,
-    "activity": 39,
+    "activity": [39],
     "alerts": [
       "Risk to LGBT"
     ]
@@ -8175,7 +8175,7 @@ module.exports = [
     },
     "dateOfBirth": "1979-10-21",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": []
   },
   {
@@ -8192,7 +8192,7 @@ module.exports = [
     },
     "dateOfBirth": "1967-06-07",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": []
   },
   {
@@ -8209,7 +8209,7 @@ module.exports = [
     },
     "dateOfBirth": "1955-10-27",
     "attendance": null,
-    "activity": 33,
+    "activity": [33],
     "alerts": []
   },
   {
@@ -8226,7 +8226,7 @@ module.exports = [
     },
     "dateOfBirth": "1994-05-05",
     "attendance": null,
-    "activity": 45,
+    "activity": [45],
     "alerts": []
   },
   {
@@ -8243,7 +8243,7 @@ module.exports = [
     },
     "dateOfBirth": "1969-06-05",
     "attendance": null,
-    "activity": 0,
+    "activity": [0],
     "alerts": [
       "Controlled unlock"
     ]
@@ -8262,7 +8262,7 @@ module.exports = [
     },
     "dateOfBirth": "1961-10-16",
     "attendance": null,
-    "activity": -2,
+    "activity": [-2],
     "alerts": []
   },
   {
@@ -8279,7 +8279,7 @@ module.exports = [
     },
     "dateOfBirth": "1988-12-24",
     "attendance": null,
-    "activity": 10,
+    "activity": [10],
     "alerts": []
   },
   {
@@ -8296,7 +8296,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-04-09",
     "attendance": null,
-    "activity": 10,
+    "activity": [10],
     "alerts": [
       "No one-to-one",
       "Conflict"
@@ -8316,7 +8316,7 @@ module.exports = [
     },
     "dateOfBirth": "1953-07-04",
     "attendance": null,
-    "activity": 45,
+    "activity": [45],
     "alerts": [
       "Risk to females",
       "Racist"
@@ -8336,7 +8336,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-08-10",
     "attendance": null,
-    "activity": -1,
+    "activity": [-1],
     "alerts": []
   },
   {
@@ -8353,7 +8353,7 @@ module.exports = [
     },
     "dateOfBirth": "1960-09-02",
     "attendance": null,
-    "activity": 2,
+    "activity": [2],
     "alerts": []
   },
   {
@@ -8370,7 +8370,7 @@ module.exports = [
     },
     "dateOfBirth": "1956-08-04",
     "attendance": null,
-    "activity": 41,
+    "activity": [41],
     "alerts": []
   },
   {
@@ -8387,7 +8387,7 @@ module.exports = [
     },
     "dateOfBirth": "1991-03-25",
     "attendance": null,
-    "activity": 27,
+    "activity": [27],
     "alerts": []
   },
   {
@@ -8404,7 +8404,7 @@ module.exports = [
     },
     "dateOfBirth": "1972-05-13",
     "attendance": null,
-    "activity": 18,
+    "activity": [18],
     "alerts": [
       "Chemical attacker"
     ]
@@ -8423,7 +8423,7 @@ module.exports = [
     },
     "dateOfBirth": "1985-09-01",
     "attendance": null,
-    "activity": 30,
+    "activity": [30],
     "alerts": []
   },
   {
@@ -8440,7 +8440,7 @@ module.exports = [
     },
     "dateOfBirth": "2001-05-11",
     "attendance": null,
-    "activity": 19,
+    "activity": [19],
     "alerts": []
   },
   {
@@ -8457,7 +8457,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-07-06",
     "attendance": null,
-    "activity": 28,
+    "activity": [28],
     "alerts": []
   },
   {
@@ -8474,7 +8474,7 @@ module.exports = [
     },
     "dateOfBirth": "1958-03-20",
     "attendance": null,
-    "activity": 6,
+    "activity": [6],
     "alerts": []
   },
   {
@@ -8491,7 +8491,7 @@ module.exports = [
     },
     "dateOfBirth": "1992-07-30",
     "attendance": null,
-    "activity": 44,
+    "activity": [44],
     "alerts": [
       "Protective Isolation Unit",
       "Refusing to shield"
@@ -8511,7 +8511,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-07-23",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -8528,7 +8528,7 @@ module.exports = [
     },
     "dateOfBirth": "1979-02-25",
     "attendance": null,
-    "activity": 0,
+    "activity": [0],
     "alerts": [
       "Reverse Cohorting Unit"
     ]
@@ -8547,7 +8547,7 @@ module.exports = [
     },
     "dateOfBirth": "1973-12-24",
     "attendance": null,
-    "activity": 42,
+    "activity": [42],
     "alerts": []
   },
   {
@@ -8564,7 +8564,7 @@ module.exports = [
     },
     "dateOfBirth": "1997-04-18",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": []
   },
   {
@@ -8581,7 +8581,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-09-30",
     "attendance": null,
-    "activity": 22,
+    "activity": [22],
     "alerts": [
       "Shielding Unit"
     ]
@@ -8600,7 +8600,7 @@ module.exports = [
     },
     "dateOfBirth": "1957-01-30",
     "attendance": null,
-    "activity": 34,
+    "activity": [34],
     "alerts": []
   },
   {
@@ -8617,7 +8617,7 @@ module.exports = [
     },
     "dateOfBirth": "1969-09-12",
     "attendance": null,
-    "activity": 21,
+    "activity": [21],
     "alerts": []
   },
   {
@@ -8634,7 +8634,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-06-15",
     "attendance": null,
-    "activity": 37,
+    "activity": [37],
     "alerts": []
   },
   {
@@ -8651,7 +8651,7 @@ module.exports = [
     },
     "dateOfBirth": "1955-11-29",
     "attendance": null,
-    "activity": 36,
+    "activity": [36],
     "alerts": [
       "Corruptor",
       "Chemical attacker"
@@ -8671,7 +8671,7 @@ module.exports = [
     },
     "dateOfBirth": "1965-03-27",
     "attendance": null,
-    "activity": 26,
+    "activity": [26],
     "alerts": []
   },
   {
@@ -8688,7 +8688,7 @@ module.exports = [
     },
     "dateOfBirth": "1948-01-08",
     "attendance": null,
-    "activity": 17,
+    "activity": [17],
     "alerts": []
   },
   {
@@ -8705,7 +8705,7 @@ module.exports = [
     },
     "dateOfBirth": "1949-09-29",
     "attendance": null,
-    "activity": 24,
+    "activity": [24],
     "alerts": []
   },
   {
@@ -8722,7 +8722,7 @@ module.exports = [
     },
     "dateOfBirth": "1952-02-25",
     "attendance": null,
-    "activity": 15,
+    "activity": [15],
     "alerts": [
       "TACT",
       "Risk to females"
@@ -8742,7 +8742,7 @@ module.exports = [
     },
     "dateOfBirth": "1971-02-13",
     "attendance": null,
-    "activity": 12,
+    "activity": [12],
     "alerts": []
   },
   {
@@ -8759,7 +8759,7 @@ module.exports = [
     },
     "dateOfBirth": "1946-09-20",
     "attendance": null,
-    "activity": 6,
+    "activity": [6],
     "alerts": []
   },
   {
@@ -8776,7 +8776,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-04-05",
     "attendance": null,
-    "activity": 14,
+    "activity": [14],
     "alerts": [
       "Risk to LGBT"
     ]
@@ -8795,7 +8795,7 @@ module.exports = [
     },
     "dateOfBirth": "1987-11-22",
     "attendance": null,
-    "activity": 27,
+    "activity": [27],
     "alerts": []
   },
   {
@@ -8812,7 +8812,7 @@ module.exports = [
     },
     "dateOfBirth": "2001-01-07",
     "attendance": null,
-    "activity": -3,
+    "activity": [-3],
     "alerts": [
       "Racist",
       "Risk to females"
@@ -8832,7 +8832,7 @@ module.exports = [
     },
     "dateOfBirth": "1968-08-01",
     "attendance": null,
-    "activity": 15,
+    "activity": [15],
     "alerts": []
   }
 ]
