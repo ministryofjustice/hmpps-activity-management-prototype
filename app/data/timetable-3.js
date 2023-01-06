@@ -547,7 +547,7 @@ module.exports = [
     "period": "AM",
     "startTime": "10:30",
     "endTime": "13:15",
-    "location": "Workshop 4"
+    "location": "Workshop 3"
 },
 {
     "id": 28,

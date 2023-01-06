@@ -366,7 +366,7 @@ module.exports = [
     },
     "dateOfBirth": "1993-10-23",
     "attendance": null,
-    "activity": [21],
+    "activity": [21,27],
     "alerts": [
       "Care experienced"
     ]

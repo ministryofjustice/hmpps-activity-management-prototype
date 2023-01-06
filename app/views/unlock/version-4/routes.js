@@ -190,7 +190,8 @@ function getAttendanceData(date, activityId, attendanceData, filteredPrisoners) 
 	if (attendanceData && attendanceData[activityId] && attendanceData[activityId][date]) {
 		for (let i = 0; i < filteredPrisoners.length; i++) {
 			let prisoner = filteredPrisoners[i];
-			if (prisoner.activity.toString() === activityId.toString()) {
+			let activityIds = prisoner.activity.map(activityId => activityId.toString());
+			if (activityIds.includes(activityId.toString())) {
 				let prisonerAttendanceData = attendanceData[activityId][date][prisoner._id];
 				if (prisonerAttendanceData) {
 					prisoner.attendance = {
@@ -301,16 +302,38 @@ router.get('/activities/:activityId', function(req, res) {
 
 	let activityId = req.params.activityId;
 	let date = req.session.data['date']
+	let dateObject = new Date(date);
+	let dayOfWeek = dateObject.getDay();
 
     // remove the confirmation notification on refreshing the page
 	if (req.session.data['attendance-confirmation'] == 'true') {
 		delete req.session.data['attendance-confirmation']
 	}
 
-	let prisonerList = req.session.data['prisoners-3'].filter(prisoner => prisoner.activity == activityId)
+	let prisonerList = req.session.data['prisoners-3'].filter(prisoner => {
+		if (Array.isArray(prisoner.activity)) {
+			return prisoner.activity.map(a => a.toString()).includes(activityId.toString());
+		} else {
+			return prisoner.activity == activityId.toString();
+		}
+	})
 	let activity = req.session.data['timetable-3'].find(activity => activity.id.toString() === activityId)
 
+	let activities = req.session.data['timetable-3'];
+	let filteredActivities = getActivitiesForPeriod(activities, req.session.data['period'], dayOfWeek);
 	let filteredPrisoners = getAttendanceData(date, activityId, req.session.data['attendance-data'], prisonerList);
+
+	for (const prisoner of filteredPrisoners) {
+		prisoner.activityInfo = [];
+
+		for (const activityId of prisoner.activity) {
+			const activityInfo = filteredActivities.find(activity => activity.id === activityId);
+
+			if (activityInfo) {
+				prisoner.activityInfo.push(activityInfo);
+			}
+		}
+	}
 
 	let notAttendedCount = countAttendance(req.session.data['attendance-data'], activityId, date, "not-attended");
 	let attendedCount = countAttendance(req.session.data['attendance-data'], activityId, date, "attended");

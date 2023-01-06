@@ -30,6 +30,7 @@ Activities Management prototype
 			{% endif %}
 		</h1>
 
+		{% if filteredPrisoners|length > 3 %}
 		<div class="app-search">
 			<form action="/applications" method="get" novalidate="" class="govuk-!-margin-bottom-8">
 				<div class="govuk-form-group">
@@ -43,6 +44,7 @@ Activities Management prototype
 				</button>
 			</form>
 		</div>
+		{% endif %}
 
 		<form method="post">
 			{% for prisoner in filteredPrisoners %}
@@ -149,6 +151,27 @@ Activities Management prototype
 						text: "Can you provide more detail?"
 					}
 				}) }}
+				{{ govukRadios({
+					id: "not-listed-absence-type",
+					name: "not-listed-absence-type",
+					classes: "govuk-radios--small govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Was this an acceptable absence and should the prisoner be paid?"
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes"
+
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
 				{% endset %}
 
 				{{ govukRadios({
@@ -170,8 +193,8 @@ Activities Management prototype
 						text: "Refused"
 					},
 					{
-						value: "Not required/excused",
-						text: "Not required/excused"
+						value: "Not required/excused/rest day",
+						text: "Not required/excused/rest day"
 					},
 					{
 						value: "Not listed",
@@ -179,10 +202,6 @@ Activities Management prototype
 						conditional: {
 							html: notListedHtml
 						}
-					},
-					{
-						value: "Rest day",
-						text: "Rest day"
 					},
 					{
 						value: "Unacceptable absence",

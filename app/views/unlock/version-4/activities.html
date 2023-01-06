@@ -82,7 +82,7 @@ Activities Management prototype
 		{% for activity in filteredActivities.morning | sort(false, true, 'name') %}
 		<tr class="govuk-table__row">
 			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
-				<a href="activities/{{activity.id}}?date={{date|shortDateFormat(date)}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+				<a href="activities/{{activity.id}}?date={{date|shortDateFormat(date)}}&period=AM" class="govuk-link--no-visited-state">{{activity.name}}</a>
 				{% if activity.cancelled == true %}<br><span class="govuk-tag govuk-tag--red govuk-!-margin-top-1">Cancelled</span>{% endif %}
 			</td>
 			<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
@@ -90,7 +90,13 @@ Activities Management prototype
 				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
 			</td>
 			<td class="govuk-table__cell">{{activity.attendanceCount['scheduled']}}</td>
-			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount['attended']}}</td>
+			<td class="govuk-table__cell govuk-hint">
+				{% if activity.attendanceCount['attended'] > 0 %}
+				<span class="govuk-tag govuk-tag--green">{{activity.attendanceCount['attended']}}</span>
+				{% else %}
+				{{activity.attendanceCount['attended']}}
+				{% endif %}
+			</td>
 			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount['not-recorded']}}</td>
 			<td class="govuk-table__cell govuk-hint"><span class="{{'govuk-tag govuk-tag--red' if activity['not-attended-count'] > 0 }}">{{activity.attendanceCount['not-attended']}}</span></td>
 		</tr>
@@ -117,7 +123,7 @@ Activities Management prototype
 		{% for activity in filteredActivities.afternoon | sort(false, true, 'name') %}
 		<tr class="govuk-table__row">
 			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
-				<a href="activities/{{activity.id}}?date={{date|shortDateFormat(date)}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+				<a href="activities/{{activity.id}}?date={{date|shortDateFormat(date)}}&period=PM" class="govuk-link--no-visited-state">{{activity.name}}</a>
 				{% if activity.cancelled == true %}<br><span class="govuk-tag govuk-tag--red govuk-!-margin-top-1">Cancelled</span>{% endif %}
 			</td>
 			<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
@@ -125,7 +131,13 @@ Activities Management prototype
 				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
 			</td>
 			<td class="govuk-table__cell">{{activity.attendanceCount['scheduled']}}</td>
-			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount['attended']}}</td>
+			<td class="govuk-table__cell govuk-hint">
+				{% if activity.attendanceCount['attended'] > 0 %}
+				<span class="govuk-tag govuk-tag--green">{{activity.attendanceCount['attended']}}</span>
+				{% else %}
+				{{activity.attendanceCount['attended']}}
+				{% endif %}
+			</td>
 			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount['not-recorded']}}</td>
 			<td class="govuk-table__cell govuk-hint"><span class="{{'govuk-tag govuk-tag--red' if activity['not-attended-count'] > 0 }}">{{activity.attendanceCount['not-attended']}}</span></td>
 		</tr>

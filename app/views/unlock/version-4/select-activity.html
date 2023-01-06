@@ -71,27 +71,6 @@ Activities Management prototype
 		]
 	}) }}
 
-	<!-- {{ govukRadios({
-		name: "times",
-		fieldset: {
-			legend: {
-				text: "Time period (optional)",
-				isPageHeading: false,
-				classes: "govuk-fieldset__legend--m"
-			}
-		},
-		items: [
-		{
-			value: "am",
-			text: "Morning (AM)"
-		},
-		{
-			value: "pm",
-			text: "Afternoon (PM)"
-		}
-		]
-	}) }} -->
-
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			
@@ -104,20 +83,4 @@ Activities Management prototype
 		</div>
 	</div>
 </form>
-{% endblock %}
-
-
-{% block pageScripts %}
-<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
-<script>
-	accessibleAutocomplete.enhanceSelectElement({
-		selectElement: document.querySelector('#by-location'),
-		showAllValues: true
-	})
-
-	accessibleAutocomplete.enhanceSelectElement({
-		selectElement: document.querySelector('#by-activity'),
-		showAllValues: true
-	})
-</script>
 {% endblock %}
