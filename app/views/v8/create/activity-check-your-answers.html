@@ -19,16 +19,16 @@ Activities Management prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
 
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      View {% if data.status=='live' %}or  change {% endif %} details for {{data.activityNameDashboard or 'Maths level 1'}}
-    </h1>
-  </div>
-  <div class="govuk-grid-column-one-third">
-  <p class="govuk-body"><strong>Related tasks</strong><br />
-  <a href="activity-type-select-with-category">Create an activity</a><br />
-  <a href="../allocate/activity-dashboard-1">See vacancies and allocate people</a>
-    </p>
-  </div>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+        View {% if data.status=='live' %}or  change {% endif %} details for {{data.activityNameDashboard or 'Maths level 1'}}
+      </h1>
+    </div>
+    <div class="govuk-grid-column-one-third">
+    <p class="govuk-body"><strong>Related tasks</strong><br />
+    <a href="activity-type-select-with-category">Create an activity</a><br />
+    <a href="../allocate/activity-dashboard-1">See vacancies and allocate people</a>
+      </p>
+    </div>
 
 
       <div class="govuk-grid-column-two-thirds">
@@ -1905,17 +1905,21 @@ Activities Management prototype
                                 </form>
                                 {% endif %}
                                 </div>
-
-
                             {% endif %}
+
+
+
+
+
+
+
+
+
+
+
 
   {% else %}
 <!--Create journey-->
-
-
-
-
-
 
 <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-thirds">
@@ -1993,22 +1997,38 @@ Activities Management prototype
               Pay rates
             </dt>
             <dd class="govuk-summary-list__value">
-              Rate A: &pound;1.21<br />
-              Rate B: &pound;1.51<br />
-              Rate C: &pound;1.81
+              {% for level, details in data.payrates %}
+                {% if details|length > 0 %}
+                {{level}} incentive level payments<br />
+
+                {% for rate in details %}
+                  {{rate.name or 'Payment rate A'}} :
+                  &pound; {{rate.amount or '1.10'}}<br />
+
+
+
+                  {% endfor %}
+
+                {% endif %}<br />
+                {% endfor %}
+              </dd>
+                <dd class="govuk-summary-list__actions">
+                  <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
+                    <a class="govuk-link govuk-!-margin-right-3" href="activity-payment-details?id={{rate.id}}">
+                      Change<span class="govuk-visually-hidden"> incentive payment</span>
+                    </a>
+
+                  </dd>
+
             </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-payment-details">
-                Change<span class="govuk-visually-hidden"> licence period</span>
-              </a>
-            </dd>
+
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Minimum incentive level
             </dt>
             <dd class="govuk-summary-list__value">
-              {{data.incentiveLevel or 'Basic'}}
+              {{data.payrates['level'] or 'Basic'}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-incentive-level">
