@@ -36,11 +36,11 @@ Activities Management prototype
 		</h1>
 		<ul class="govuk-list">
 			<li>
-				<a href="select-unlock-locations" class="govuk-link--no-visited-state">Choose a different date</a>
+				<a href="select-unlock-locations" class="govuk-link--no-visited-state">Choose a different unlock list</a>
 			</li>
 			{% if activity.cancelled != true %}
 			<li>
-				<a href="refusals-list" class="govuk-link--no-visited-state">Record unlock refusals and absences</a>
+				<a href="refusals-list" class="govuk-link--no-visited-state">Record refusals and absences</a>
 			</li>
 			{% endif %}
 		</ul>
@@ -115,39 +115,22 @@ Activities Management prototype
 						<div class="dropdown" data-control="checkbox-dropdown">
 							<label class="dropdown-label">All sub-locations</label>
 							<div class="dropdown-list">
-								{{ govukCheckboxes({
-									formGroup: {
-										classes: "govuk-!-margin-0"
-									},
-									classes: "govuk-checkboxes--small",
-									name: "sublocations",
-									items: [
-									{
-										text: 'Landing 1',
-										id: 'landing-1',
-										value: '1'
-									},
-									{
-										text: 'Landing 2',
-										id: 'landing-2',
-										value: '2'
-									},
-									{
-										text: 'Landing 3',
-										id: 'landing-3',
-										value: '3'
-									},
-									{
-										text: 'Landing 4',
-										id: 'landing-4',
-										value: '4'
-									},
-									{
-										text: 'Landing 5',
-										id: 'landing-5',
-										value: '5'
-									}]
-								}) }}
+								<div class="govuk-form-group govuk-!-margin-0">
+									<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+										{% for houseblock, wings in locations %}
+										{% if wings.length > 0 %}
+										{% for wing in wings %}
+										<div class="govuk-checkboxes__item">
+											<input class="govuk-checkboxes__input" id="landing-1" name="sublocations" type="checkbox" value="1">
+											<label class="govuk-label govuk-checkboxes__label" for="landing-1">
+												Spur {{wing}}
+											</label>
+										</div>
+										{% endfor %}
+										{% endif %}
+										{% endfor %}
+									</div>
+								</div>
 							</div>
 						</div>
 					</fieldset>
@@ -159,39 +142,18 @@ Activities Management prototype
 						<div class="dropdown" data-control="checkbox-dropdown">
 							<label class="dropdown-label">All activities</label>
 							<div class="dropdown-list">
-								{{ govukCheckboxes({
-									formGroup: {
-										classes: "govuk-!-margin-0"
-									},
-									classes: "govuk-checkboxes--small",
-									name: "activities",
-									items: [
-									{
-										text: 'Activity 1',
-										id: 'activity-1',
-										value: '1'
-									},
-									{
-										text: 'Activity 2',
-										id: 'activity-2',
-										value: '2'
-									},
-									{
-										text: 'Activity 3',
-										id: 'activity-3',
-										value: '3'
-									},
-									{
-										text: 'Activity 4',
-										id: 'activity-4',
-										value: '4'
-									},
-									{
-										text: 'Activity 5',
-										id: 'activity-5',
-										value: '5'
-									}]
-								}) }}
+								<div class="govuk-form-group govuk-!-margin-0">
+									<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+										{% for activity in filteredActivities %}
+										<div class="govuk-checkboxes__item">
+											<input class="govuk-checkboxes__input" id="activity-{{activity.id}}" name="activities" type="checkbox" value="1">
+											<label class="govuk-label govuk-checkboxes__label" for="activity-{{activity.id}}">
+												{{activity.name}}
+											</label>
+										</div>
+										{% endfor %}
+									</div>
+								</div>
 							</div>
 						</div>
 					</fieldset>
@@ -294,9 +256,9 @@ Activities Management prototype
 			<td class="govuk-table__cell" data-sort-value="{{activityName}}" scope="col">
 				{% for activity in prisoner.activityInfo %}
 				<div {% if not loop.last %}class="govuk-!-margin-bottom-3"{% endif %}>
-				<a href="activities/{{activity.id}}?date={{date}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ activity.name }}</a>
-				<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}</div>
-				<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ activity.location }}</div>
+					<a href="activities/{{activity.id}}?date={{date}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ activity.name }}</a>
+					<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}</div>
+					<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ activity.location }}</div>
 				</div>
 				{% endfor %}
 			</td>
