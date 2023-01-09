@@ -4,6 +4,84 @@ const router = express.Router()
 
 module.exports = router
 
+
+router.get('/get-prisoners-1', function(req, res) {
+	const activities = req.session.data['timetable-complete-1']['activities']
+	const prisoners = req.session.data['timetable-complete-1']['prisoners']
+
+	const filterByLocation = (prisoners, locations) => {
+		const filteredPrisoners = prisoners.filter(prisoner => {
+			return locations.includes(prisoner.location.houseblock);
+		});
+		return filteredPrisoners;
+	};
+	const filterByActivityDate = (prisoners, activities, date, period) => {
+		const filteredPrisoners = prisoners.filter(prisoner => {
+			if(prisoner.activity && prisoner.activity.length){
+				const activityIds = prisoner.activity;
+				for (let i = 0; i < activities.length; i++) {
+					const activity = activities[i];
+					if (activity.startDate <= date && activity.endDate >= date && activity[period] !== null) {
+						if (activityIds.includes(activity.id)) {
+							return true;
+						}
+					}
+				}
+				return false;
+			}
+		});
+		return filteredPrisoners;
+	};
+
+	const addByAppointmentDate = (prisoners, date) => {
+		const filteredPrisoners = prisoners.filter(prisoner => {
+			if(prisoner.appointments && prisoner.appointments.length){
+				const prisonerAppointments = prisoner.appointments;
+				for (let i = 0; i < prisonerAppointments.length; i++) {
+					const appointment = prisonerAppointments[i];
+					if (appointment.date === date) {
+						return true;
+					}
+				}
+				return false;
+			}
+		});
+		return filteredPrisoners;
+	};
+
+	const addEventData = (prisoners, events) => {
+		const filteredPrisoners = prisoners.map(prisoner => {
+			if(prisoner.activity && prisoner.activity.length){
+				const activityIds = prisoner.activity;
+				for (let i = 0; i < events.length; i++) {
+					const event = events[i];
+					if (activityIds.includes(event.id)) {
+						prisoner.event = event;
+						break;
+					}
+				}
+				return prisoner;
+			}
+		});
+		return filteredPrisoners;
+	};
+
+	const filterPrisoners = (prisoners, locations, activities, date, period) => {
+		let filteredPrisoners = filterByLocation(prisoners, locations);
+		filteredPrisoners = filterByActivityDate(filteredPrisoners, activities, date, period);
+		filteredPrisoners = addByAppointmentDate(filteredPrisoners, date);
+		// filteredPrisoners = addEventData(filteredPrisoners, events);
+		return filteredPrisoners;
+	};
+
+	const filteredPrisoners = filterPrisoners(prisoners, ['1'], activities, "2023-04-06", "AM")
+	console.log(filteredPrisoners)
+	res.render('unlock/' + req.version + '/get-prisoners-1', {
+		filteredPrisoners
+	})
+})
+
+
 router.get('/get-sessions-by-date', function(req, res) {
 	const timetable = req.session.data['timetable']
 	const activitySeriesData = timetable.activitySeries

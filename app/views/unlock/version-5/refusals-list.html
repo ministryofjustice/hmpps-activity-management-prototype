@@ -26,12 +26,6 @@ Activities Management prototype
 		}) }}
 		{% endblock %}
 
-		{% if data['chosen-date'] == 'other-date' %}
-		{% set date = data['other-date-year'] + '-' + data['other-date-month'] + '-' + data['other-date-day'] %}
-		{% else %}
-		{% set date = data['chosen-date'] %}
-		{% endif %}
-
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-two-thirds">
@@ -306,7 +300,7 @@ Activities Management prototype
 			</div>
 
 			{% if data['selected-prisoners'].length == 1 %}
-			{% set prisoner = data['selected-prisoners'] | getPrisoner %}
+			{% set prisoner = selectedPrisoners[0] %}
 			{% endif %}
 			
 			{% if data['attendance-confirmation'] == 'true' %}
@@ -315,7 +309,7 @@ Activities Management prototype
 			<h3 class="govuk-notification-banner__heading">
 				Attendance recorded
 			</h3>
-			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisoner.name.firstname + " " + prisoner.name.surname}}.</p>
+			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisoner.firstname + " " + prisoner.surname}}.</p>
 			{% endset %}
 			{{ govukNotificationBanner({
 				html: html,
@@ -323,7 +317,7 @@ Activities Management prototype
 			}) }}
 			{% endif %}
 
-			{% set totalPrisoners = filteredPrisoners|length %}
+			{% set totalPrisoners = prisonersWithEvents|length %}
 			{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 			<h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
 
@@ -364,12 +358,11 @@ Activities Management prototype
 					</tr>
 				</thead>
 				<tbody class="govuk-table__body">
-					{% for prisoner in filteredPrisoners | sort(false, true, ('location.full')) %}
-					{% set activity =  prisoner.activity | getActivity %}
+					{% for prisoner in prisonersWithEvents | sort(false, true, ('location.full')) %}
 					<tr class="govuk-table__row">
 						<td class="govuk-table__cell">
 							<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-left-2">
-								<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}" name="selected-prisoners" value="{{prisoner._id}}">
+								<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}" name="selected-prisoners" value="{{prisoner.id}}">
 								<label class="govuk-label govuk-checkboxes__label" for="prisoner-{{loop.index}}">
 									<span class="govuk-visually-hidden">Select Surname, Forename</span>
 								</label>
@@ -377,10 +370,10 @@ Activities Management prototype
 						</td>
 						<td class="govuk-table__cell" width="180" scope="col">
 							<a href="#" class="govuk-link--no-visited-state"><b>{{prisoner.name.surname}}</b>, {{prisoner.name.firstname}}</a><br>
-							<span class="govuk-hint govuk-!-font-size-16">{{prisoner._id}}</span>
+							<span class="govuk-hint govuk-!-font-size-16">{{prisoner.id}}</span>
 						</td>
-						<td class="govuk-table__cell" data-sort-value="{{prisoner.location.houseblock}}{{prisoner.location.landing}}{{prisoner.location.cell}}" scope="col">
-							{{prisoner.location.houseblock}}-{{prisoner.location.landing}}-{{prisoner.location.cell}}
+						<td class="govuk-table__cell" data-sort-value="{{prisoner.location.houseblock}}{{prisoner.location.landing}}{{prisoner.location.cell_number}}" scope="col">
+							{{prisoner.location.cell}}
 						</td>
 						<td class="govuk-table__cell">
 							{% if prisoner.alerts.length > 0 %}
@@ -393,19 +386,25 @@ Activities Management prototype
 						</td>
 
 						<td class="govuk-table__cell" data-sort-value="{{activityName}}" scope="col">
-							{% for activity in prisoner.activityInfo %}
-							<div {% if not loop.last %}class="govuk-!-margin-bottom-3"{% endif %}>
-								<a href="activities/{{activity.id}}?date={{date}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ activity.name }}</a>
-								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}</div>
-								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ activity.location }}</div>
+							{% for event in prisoner.events %}
+							<div {% if not loop.last %}class="govuk-!-margin-bottom-4"{% endif %}>
+								<div>
+									<a href="activities/{{event.id}}?date={{data['date']}}&period={{event.period}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
+									{% if event.type == 'appointment' %}
+									<span class="govuk-tag govuk-tag--orange">Appointment</span>
+									{% endif %}
+								</div>
+								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.endTime}}</div>
+								{{event.time}}
+								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ event.location }}</div>
 							</div>
 							{% endfor %}
 						</td>
 						<td class="govuk-table__cell" data-sort-value="{{'9' if prisoner.attendance == 'attended'}}{{'1' if prisoner.attendance == 'not-attended'}}{{'5' if not prisoner.attendance}}" scope="col">
 							{% if prisoner.attendance == "attended" %}
-							<a href="activities/{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--green">Attended</span></a>
+							<a href="activities/{{activity.id}}/{{prisoner.id}}"><span class="moj-badge moj-badge--green">Attended</span></a>
 							{% elif prisoner.attendance == "not-attended" %}
-							<a href="activities/{{activity.id}}/{{prisoner._id}}"><span class="moj-badge moj-badge--red">Absent</span></a>
+							<a href="activities/{{activity.id}}/{{prisoner.id}}"><span class="moj-badge moj-badge--red">Absent</span></a>
 							{% endif %}
 						</td>
 					</tr>
