@@ -44,6 +44,7 @@ module.exports = {
   'timetable-2': require('./timetable-2'),
   'prisoners-2': require('./prisoners-list-2'),
   'prisoners-3': require('./prisoners-list-3'),
+  'timetable-complete-1': require('./timetable-complete-1'),
   'activity-locations-2': require('./activity-locations-list-2'),
   'timetable-3': require('./timetable-3'),
   'residential-locations': require('./residential-list-1'),
@@ -51,5 +52,6 @@ module.exports = {
   "times": "AM",
   "selected-locations": {},
   "prison-name": "HMP Leeds",
-  "chosen-date": "today"
+  "chosen-date": "today",
+  "date": "2023-01-02"
 }

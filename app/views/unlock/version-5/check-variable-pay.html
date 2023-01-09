@@ -1,0 +1,59 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			{% set titleText %}
+			{% if data['selected-prisoners'].length === 1 %}
+			Should {{filteredPrisoners[0].name.firstname}} {{filteredPrisoners[0].name.surname}} get standard pay?
+			{% else %}
+			Should all {{data['selected-prisoners'].length}} prisoners get standard pay?
+			{% endif %}
+			{% endset %}
+
+			{{ govukRadios({
+				name: "standard-pay-all",
+				fieldset: {
+					legend: {
+						text: titleText,
+						isPageHeading: true,
+						classes: "govuk-fieldset__legend--l"
+					}
+				},
+				hint: {
+					text: "Non-standard pay could include bonus pay, or reduced pay for poor performance."
+				},
+				items: [
+				{
+					value: "yes",
+					html: 'Yes'
+				},
+				{
+					value: "no",
+					html: "No, some prisoners need non-standard pay" if data['selected-prisoners'].length > 1 else "No"
+				}
+				]
+			}) }}
+
+			{{govukButton({
+				text: "Continue"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}
