@@ -36,7 +36,7 @@ const router = express.Router()
 		if (appRepeat === 'Yes') {
 			res.redirect(`appointment-frequency`);
 		} else {
-			res.redirect(`how-to-schedule-group`);
+			res.redirect(`upload-or-per-person`);
 		}
 	  });
 
