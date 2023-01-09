@@ -176,9 +176,10 @@ Activities Management prototype
 							{% for activity in prisoner.activityInfo %}
 							{% if activity.id != activityId %}
 							<div {% if not loop.last %}class="govuk-!-margin-bottom-3"{% endif %}>
-								<a href="activities/{{activity.id}}?date={{date}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ activity.name }}</a>
+								<a href="../activities/{{activity.id}}?date={{date}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ activity.name }}</a>
 								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}</div>
 								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ activity.location }}</div>
+								<span class="moj-badge moj-badge--green">Attended</span>
 							</div>
 							{% endif %}
 							{% endfor %}

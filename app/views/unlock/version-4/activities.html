@@ -23,11 +23,7 @@ Activities Management prototype
 {% endblock %}
 {% block content %}
 
-{% if data['chosen-date'] == 'other-date' %}
-{% set date = data['other-date-year'] + '-' + data['other-date-month'] + '-' + data['other-date-day'] %}
-{% else %}
-{% set date = data['chosen-date'] %}
-{% endif %}
+{% set date = data['chosen-date']|shortDateFormat(data['chosen-date']) %}
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">

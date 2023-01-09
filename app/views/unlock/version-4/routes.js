@@ -411,7 +411,7 @@ router.post('/activities/:activityId/add-attendance-details', function(req, res)
 	});
 
 	updateAttendanceData(req, activityId, date, attendanceDetails)
-
+	
     // set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
 
@@ -559,13 +559,6 @@ router.get('/refusals-list', function(req, res) {
 		locations
 	})
 });
-router.post('/refusals-list', function(req, res) {
-	if (req.session.data['selected-prisoners'].length > 1) {
-		res.redirect('add-attendance-details--multiple')
-	} else {
-		res.redirect('add-attendance-details--single')
-	}
-});
 
 // SELECT UNLOCK LOCATIONS	
 router.post('/select-unlock-locations', function(req, res) {
@@ -627,6 +620,7 @@ router.post('/select-activity', function(req, res) {
 
 	if (chosenDate == 'other-date') {
 		if (req.session.data['other-date-year'] !== undefined && req.session.data['other-date-month'] !== undefined && req.session.data['other-date-day'] !== undefined) {
+			req.session.data['chosen-date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
 			res.redirect('activities')
 		} else {
 			res.redirect('select-activity');

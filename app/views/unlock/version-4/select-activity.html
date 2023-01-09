@@ -26,7 +26,7 @@ Activities Management prototype
 {% endblock %}
 
 {% block content %}
-<form action="activities">
+<form method="post">
 	{% set dateHtml %}
 	{{ govukDateInput({
 		id: "other-date",
@@ -51,6 +51,9 @@ Activities Management prototype
 				isPageHeading: true,
 				classes: "govuk-fieldset__legend--l"
 			}
+		},
+		hint: {
+			text: "The date today is " + today|convertShortDateToLongDate(today)
 		},
 		items: [
 		{

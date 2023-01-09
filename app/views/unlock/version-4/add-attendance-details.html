@@ -116,6 +116,16 @@ Activities Management prototype
 				}) }}
 				{% endset %}
 
+				{% set caseNoteTextHtml %}
+				{{ govukTextarea({
+					name: "attendance-details[" + loop.index0 + "][incentive-level-warning-detail]",
+					id: "incentive-level-warning-detail-" + prisoner._id,
+					label: {
+						text: "Case note"
+					}
+				}) }}
+				{% endset %}
+
 				{% set unacceptableAbsenceHtml %}
 				{{ govukRadios({
 					id: "incentive-level-warning-" + prisoner._id,
@@ -137,7 +147,10 @@ Activities Management prototype
 					},
 					{
 						value: "no",
-						text: "No"
+						text: "No",
+						conditional: {
+							html: caseNoteTextHtml
+						}
 					}
 					]
 				}) }}
