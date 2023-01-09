@@ -1,0 +1,76 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+{% block beforeContent %}
+<div class="govuk-width-container">
+	<a href="dps-home" class="govuk-back-link">Digital Prison Services</a>
+	<h1 class="govuk-heading-l govuk-!-margin-top-7">Manage prisoner unlock and attendance</h1>
+</div>
+{% endblock %}
+<div class="homepage-content">
+	<div class="govuk-width-container">
+		<ul class="govuk-grid-row card-group">
+			<li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-activity-location">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="select-activity">Manage attendance and pay</a>
+					</h2>
+					<p class="govuk-body card__description">View and mark attendance at activities, add non attendance information and manage prisoner activity pay.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-activity-location">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="select-unlock-locations">Manage  unlock and movement</a>
+					</h2>
+					<p class="govuk-body card__description">Create and print lists of prisoners for unlock and movement.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-all-appointments">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="select-refusals-locations">Record unlock refusals and absences</a>
+					</h2>
+					<p class="govuk-body card__description">Mark prisoners who have not left the wing for their activity or appointment so payment details and attendance lists are correct.</p>
+				</div>
+			</li>
+			<!-- <li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-activity-location">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="view-daily-schedules">View daily schedules</a>
+					</h2>
+					<p class="govuk-body card__description">View prisoner schedules by residential, activity or appointment location and see who is due to leave prison.</p>
+				</div>
+			</li> -->
+			<!-- <li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-attendance-statistics">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="#">Attendance data</a>
+					</h2>
+					<p class="govuk-body card__description">View a breakdown of attendance statistics.</p>
+				</div>
+			</li> -->
+			<!-- <li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-bulk-appointments">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="#">Add bulk appointments</a>
+					</h2>
+					<p class="govuk-body card__description">Upload a spreadsheet to add appointments for multiple people.</p>
+				</div>
+			</li> -->
+		</ul>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script src="/public/javascripts/cards.js"></script>
+{% endblock %}

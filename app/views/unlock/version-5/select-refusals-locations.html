@@ -1,0 +1,244 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "dps-home"
+	},
+	{
+		text: "Manage prisoner whereabouts",
+		href: "whereabouts"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-l">
+			Choose refusals and sickness details
+		</h1>
+		<form action="refusals-list">
+			{% set today = '_'|today() %}
+			{{ govukRadios({
+				name: "chosen-date",
+				fieldset: {
+					legend: {
+						text: "Select unlock date",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: today,
+					text: "Today"
+				},
+				{
+					value: today|dayBefore(today),
+					text: "Yesterday"
+				},
+				{
+					value: "other-date",
+					text: "A different date",
+					conditional: {
+						html: dateHtml
+					}
+				}
+				]
+			}) }}
+			
+			{{ govukRadios({
+				name: "times",
+				fieldset: {
+					legend: {
+						text: "Time period",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "am",
+					text: "Morning (AM)"
+				},
+				{
+					value: "pm",
+					text: "Afternoon (PM)"
+				},
+				{
+					value: "ed",
+					text: "Evening (ED)"
+				}
+				]
+			}) }}
+			<div class="govuk-form-group govuk-!-margin-bottom-2">
+				<fieldset class="govuk-fieldset" aria-describedby="locations-hint">
+					<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+						Locations
+					</legend>
+					<div id="locations-hint" class="govuk-hint">
+						You can select more than one location if you need to
+					</div>
+					<div class="govuk-checkboxes" id="locations-checkboxes" data-module="govuk-checkboxes">
+						{% for houseblock in data['residential-locations'] %}
+						<div class="govuk-checkboxes__item">
+							<input class="govuk-checkboxes__input" id="locations-{{houseblock.id}}" name="selected-locations[houseblocks]" type="checkbox" value="{{houseblock.id}}" aria-controls="conditional-locations-{{houseblock.id}}" aria-expanded="false">
+							<label class="govuk-label govuk-checkboxes__label" for="locations-{{houseblock.id}}">
+								{{houseblock.name}}
+							</label>
+						</div>
+						<div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-locations-{{houseblock.id}}">
+							<div class="govuk-form-group">
+								<fieldset class="govuk-fieldset">
+									<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+										Sub-locations
+									</legend>
+									<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+										{% for wing in houseblock.wings %}
+										<div class="govuk-checkboxes__item">
+											<input class="govuk-checkboxes__input" id="houseblock-{{houseblock.id}}-sublocations-{{wing.id}}" name="selected-locations[wings]" type="checkbox" value="{{houseblock.id}}-{{wing.id}}">
+											<label class="govuk-label govuk-checkboxes__label" for="houseblock-{{houseblock.id}}-sublocations-{{wing.id}}">
+												{{wing.name}}
+											</label>
+										</div>
+										{% endfor %}
+									</div>
+								</fieldset>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</fieldset>
+			</div>
+			<p class="govuk-body govuk-!-margin-bottom-6">
+				<a href="#" class="govuk-link govuk-link--no-visited-state" id="check-all-locations">Select all<span class="govuk-visually-hidden"> locations</span></a>
+			</p>
+            <!-- {{ govukCheckboxes({
+				name: "staying-or-leaving",
+				fieldset: {
+					legend: {
+						text: "Staying or leaving wing",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "staying",
+					text: "Staying"
+				},
+				{
+					value: "leaving",
+					text: "Leaving"
+				}
+				]
+			}) }} -->
+			{{ govukRadios({
+				name: "staying-or-leaving",
+				fieldset: {
+					legend: {
+						text: "Group prisoners by",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "staying",
+					text: "Sub-location (for example, landing)"
+				},
+				{
+					value: "leaving",
+					text: "Activity"
+				},
+				{
+					value: "leaving",
+					text: "Don't group prisoners"
+				}
+				]
+			}) }}
+
+			<div class="govuk-button-group">
+				{{govukButton({
+					text: "View selection"
+				})}}
+				{{govukButton({
+					text: "Print selection",
+					href: "example-print-dialog",
+					classes: "govuk-button--secondary",
+					attributes: {
+						target: "_blank"
+					}
+				})}}
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
+{% block pageScripts %}
+<script>
+	let button = $('#check-all-locations')
+	let buttonHtml = button.html()
+	let checkboxes = $('#locations-checkboxes input[type=checkbox]');
+
+	function toggleButton() {
+		if (checkboxes.filter(":checked").length) {
+			buttonHtml = buttonHtml.replace("Select", "Deselect")
+			button.addClass("uncheck-all").removeClass("check-all")
+		} else {
+			buttonHtml = buttonHtml.replace("Deselect", "Select")
+			button.addClass("check-all").removeClass("uncheck-all")
+		}
+
+		button.html(buttonHtml)
+	}
+
+	$.each(checkboxes, function() {
+		$(this).on('change', function() {
+			if (checkboxes.filter(":checked").length) {
+				toggleButton()
+			} else {
+				toggleButton()
+			}
+		})
+	})
+
+	$(document).ready(function() {
+		if (checkboxes.filter(":checked").length) {
+			button.addClass("uncheck-all")
+		} else {
+			button.addClass("check-all")
+		}
+	})
+
+	$('body').on('click', '.check-all', function(event) {
+		event.preventDefault()
+
+		$.each(checkboxes, function() {
+			if ($(this).not(":checked")) {
+				$(this).click()
+			}
+		})
+	})
+
+	$('body').on('click', '.uncheck-all', function(event) {
+		event.preventDefault()
+
+		$.each(checkboxes, function() {
+			if ($(this).is(":checked")) {
+				$(this).click()
+			}
+		})
+	})
+</script>
+{% endblock %}

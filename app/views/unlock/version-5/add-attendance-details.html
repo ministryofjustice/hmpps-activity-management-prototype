@@ -53,18 +53,18 @@ Activities Management prototype
 				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 				<h2 class="govuk-heading-m">
 					{{prisoner.name.surname}}, {{prisoner.name.firstname}}
-					<span class="govuk-caption-m">{{prisoner._id}}</span>
+					<span class="govuk-caption-m">{{prisoner.id}}</span>
 				</h2>
 				{% endif %}
 
-				<input type="hidden" name="attendance-details[{{loop.index0}}][_id]" value="{{prisoner._id}}">
+				<input type="hidden" name="attendance-details[{{loop.index0}}][id]" value="{{prisoner.id}}">
 
 				{% if data['attendance-action'] == 'attended' %}
 
 				{% set caseNoteHtml %}
 				{{ govukTextarea({
 					name: "attendance-details[" + loop.index0 + "][pay][pay-detail]",
-					id: "bonus-detail-" + prisoner._id,
+					id: "bonus-detail-" + prisoner.id,
 					label: {
 						text: "Provide a short explanation for your decision, this will be added to their case notes."
 					}
@@ -72,7 +72,7 @@ Activities Management prototype
 				{% endset %}
 
 				{{ govukRadios({
-					id: "pay-details-" + prisoner._id,
+					id: "pay-details-" + prisoner.id,
 					name: "attendance-details[" + loop.index0 + "][pay]",
 					fieldset: {
 						legend: {
@@ -109,7 +109,7 @@ Activities Management prototype
 				{% set warningTextHtml %}
 				{{ govukTextarea({
 					name: "attendance-details[" + loop.index0 + "][incentive-level-warning-detail]",
-					id: "incentive-level-warning-detail-" + prisoner._id,
+					id: "incentive-level-warning-detail-" + prisoner.id,
 					label: {
 						text: "Incentive level warning detail"
 					}
@@ -119,7 +119,7 @@ Activities Management prototype
 				{% set caseNoteTextHtml %}
 				{{ govukTextarea({
 					name: "attendance-details[" + loop.index0 + "][incentive-level-warning-detail]",
-					id: "incentive-level-warning-detail-" + prisoner._id,
+					id: "incentive-level-warning-detail-" + prisoner.id,
 					label: {
 						text: "Case note"
 					}
@@ -128,7 +128,7 @@ Activities Management prototype
 
 				{% set unacceptableAbsenceHtml %}
 				{{ govukRadios({
-					id: "incentive-level-warning-" + prisoner._id,
+					id: "incentive-level-warning-" + prisoner.id,
 					name: "attendance-details[" + loop.index0 + "][incentive-level-warning]",
 					classes: "govuk-radios--small",
 					fieldset: {
@@ -188,7 +188,7 @@ Activities Management prototype
 				{% endset %}
 
 				{{ govukRadios({
-					id: "absence-reason-" + prisoner._id,
+					id: "absence-reason-" + prisoner.id,
 					name: "attendance-details[" + loop.index0 + "][absence-reason]",
 					classes: "govuk-radios",
 					fieldset: {
@@ -235,7 +235,7 @@ Activities Management prototype
 
 				{% set absencePaymentHtml %}
 				{{ govukSelect({
-					id: "pay-override-" + prisoner._id,
+					id: "pay-override-" + prisoner.id,
 					name: "attendance-details[" + loop.index0 + "][absence-payment][reason]",
 					label: {
 						text: "Why are you paying " + prisoner.name.firstname + " " + prisoner.name.surname + "?"
@@ -291,7 +291,7 @@ Activities Management prototype
 				{% endset %}
 
 				<!-- {{ govukRadios({
-					id: "pay-override-" + prisoner._id,
+					id: "pay-override-" + prisoner.id,
 					name: "attendance-details[" + loop.index0 + "][absence-payment][pay]",
 					fieldset: {
 						legend: {
