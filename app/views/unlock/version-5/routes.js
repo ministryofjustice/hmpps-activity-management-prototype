@@ -648,8 +648,6 @@ router.get('/activities/:activityId/confirm-cancellation', function(req, res) {
 router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
 	if (req.session.data['confirm-cancellation'] == 'yes') {
 		let activityId = req.params.activityId;
-		let date = req.session.data['date'];
-		let period = req.session.data['period']
 		let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId);
 		if (activity) {
 			activity.cancelled = true;
@@ -671,7 +669,7 @@ router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
 			const attendanceDetails = {};
 			prisoners.forEach(prisonerId => {
 				attendanceDetails[prisonerId] = {
-					attendance: 'not-attended',
+					attendance: 'attended',
 					pay: 'standard',
 					payReason: '',
 					unacceptableAbsence: '',
@@ -680,10 +678,11 @@ router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
 			});
 			return attendanceDetails;
 		}
-		let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(req.session.data['selected-prisoners'])
-		updateAttendanceData(req, activityId, date, period, attendanceDetails)
+
+		// let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners)
+		// updateAttendanceData(req, activityId, date, period, attendanceDetails)
 	}
-	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId + '?date=' + date + '?period=' + period)
+	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId + '?date=' + req.session.data['date'])
 })
 
 // ATTENDANCE DETAILS
