@@ -538,51 +538,51 @@ function countAttendance(data, activityId, date, period, status) {
 	return attendedCount;
 }
 const addAttendanceCountsToActivities = (activities, attendanceData, date, prisonersList) => {
-    const scheduledKey = 'scheduled';
-    const notRecordedKey = 'not-recorded';
-    const attendedKey = 'attended';
-    const notAttendedKey = 'not-attended';
+	const scheduledKey = 'scheduled';
+	const notRecordedKey = 'not-recorded';
+	const attendedKey = 'attended';
+	const notAttendedKey = 'not-attended';
     // // concat morning and afternoon activities
     // const allActivities = [...activitiesForDate.morning, ...activitiesForDate.afternoon];
 
     // loop through activities
-    for (let activity of activities) {
+	for (let activity of activities) {
         // initialize attendance count object
-        let attendanceCount = {
-            [scheduledKey]: 0,
-            [notRecordedKey]: 0,
-            [attendedKey]: 0,
-            [notAttendedKey]: 0
-        };
+		let attendanceCount = {
+			[scheduledKey]: 0,
+			[notRecordedKey]: 0,
+			[attendedKey]: 0,
+			[notAttendedKey]: 0
+		};
         // filter prisoners list for activity
-        let prisonerList = prisonersList.filter(prisoner => prisoner.activity && prisoner.activity.includes(activity.id));
+		let prisonerList = prisonersList.filter(prisoner => prisoner.activity && prisoner.activity.includes(activity.id));
         // loop through prisoners
-        for (let i = 0; i < prisonerList.length; i++) {
-            let prisoner = prisonerList[i];
-            if (prisoner.activity.includes(activity.id)) {
-                attendanceCount[scheduledKey]++;
-                attendanceCount[notRecordedKey]++;
-            }
-        }
+		for (let i = 0; i < prisonerList.length; i++) {
+			let prisoner = prisonerList[i];
+			if (prisoner.activity.includes(activity.id)) {
+				attendanceCount[scheduledKey]++;
+				attendanceCount[notRecordedKey]++;
+			}
+		}
 
         // check if attendance data exists for activity
-        if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
-            for (let timeSlot in attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
-                for (let participant in attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)][timeSlot]) {
-                    if (attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)][timeSlot][participant].attendance === "attended") {
-                        attendanceCount[attendedKey]++;
-                        attendanceCount[notRecordedKey]--;
-                    } else {
-                        attendanceCount[notAttendedKey]++;
-                        attendanceCount[notRecordedKey]--;
-                    }
-                }
-            }
-        }
+		if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
+			for (let timeSlot in attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
+				for (let participant in attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)][timeSlot]) {
+					if (attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)][timeSlot][participant].attendance === "attended") {
+						attendanceCount[attendedKey]++;
+						attendanceCount[notRecordedKey]--;
+					} else {
+						attendanceCount[notAttendedKey]++;
+						attendanceCount[notRecordedKey]--;
+					}
+				}
+			}
+		}
         // add attendanceCount to activity
-        activity.attendanceCount = attendanceCount;
-    }
-    return activities;
+		activity.attendanceCount = attendanceCount;
+	}
+	return activities;
 }
 
 
@@ -646,30 +646,24 @@ router.get('/activities/:activityId/confirm-cancellation', function(req, res) {
 	res.render('unlock/' + req.version + '/confirm-cancellation')
 })
 router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
+	let date = req.session.data.date
+	let period = req.session.data.period
+
 	if (req.session.data['confirm-cancellation'] == 'yes') {
 		let activityId = req.params.activityId;
 		let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId);
+		
+		// hacky way to add a cancelled flag
 		if (activity) {
 			activity.cancelled = true;
 		}
-		let filteredPrisoners = req.session.data['timetable-complete-1']['prisoners'].filter(prisoner => prisoner.activity == activityId)
 
-        // set prisoner attendance
-		filteredPrisoners.forEach((prisoner, index) => {
-			prisoner.attendance = [];
-			prisoner.attendance.push({
-				activityId: req.session.data['activity-id'],
-				date: req.session.data['date'],
-				attendance: "not-attended"
-			});
-		})
-
-		// function to create an attendanceDetails object to pass in to updateAttendanceData and mark all selected prisoners as 'attended' and 'standard' pay
+		// function to create an attendanceDetails object to pass in to updateAttendanceData and mark all selected prisoners as 'not-attended' and 'standard' pay
 		function createAttendanceDetailsForMultiplePrisoners(prisoners) {
 			const attendanceDetails = {};
 			prisoners.forEach(prisonerId => {
 				attendanceDetails[prisonerId] = {
-					attendance: 'attended',
+					attendance: 'not-attended',
 					pay: 'standard',
 					payReason: '',
 					unacceptableAbsence: '',
@@ -678,11 +672,23 @@ router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
 			});
 			return attendanceDetails;
 		}
+		let newActivities = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId.toString());
+		let prisonersData = req.session.data['timetable-complete-1']['prisoners']
+		let prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersData, newActivities, date, period, 'attendance')
 
-		// let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners)
-		// updateAttendanceData(req, activityId, date, period, attendanceDetails)
+		// make an array of prisoners from the attendance details
+		const getPrisonerIds = array => {
+			const idArray = [];
+			array.forEach(item => {
+				idArray.push(item.id);
+			});
+			return idArray;
+		};
+		let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(getPrisonerIds(prisonersByDateAndPeriod))
+		updateAttendanceData(req, activityId, date, period, attendanceDetails)
 	}
-	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId + '?date=' + req.session.data['date'])
+
+	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId + '?date=' + date + '&period=' + period)
 })
 
 // ATTENDANCE DETAILS
