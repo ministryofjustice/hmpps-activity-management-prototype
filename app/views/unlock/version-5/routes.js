@@ -36,30 +36,118 @@ const getPrisonersByHouseblock = (prisoners, houseblock) => {
 
 // Function to return prisoner details
 const findMatchingPrisoner = (prisoners, prisonerIds) => {
-  let selectedPrisoners = [];
-  if (Array.isArray(prisonerIds)) {
-    prisonerIds.forEach(id => {
-      let matchingPrisoner = prisoners.find(prisoner => {
-        return prisoner.id === id;
-      });
-      selectedPrisoners.push({
-        firstname: matchingPrisoner.name.firstname,
-        surname: matchingPrisoner.name.surname,
-        id: matchingPrisoner.id
-      });
-    });
-  } else {
-    let matchingPrisoner = prisoners.find(prisoner => {
-      return prisoner.id === prisonerIds;
-    });
-    selectedPrisoners.push({
-        firstname: matchingPrisoner.name.firstname,
-        surname: matchingPrisoner.name.surname,
-        id: matchingPrisoner.id
-      });
-  }
-  return selectedPrisoners;
+	let selectedPrisoners = [];
+	if (Array.isArray(prisonerIds)) {
+		prisonerIds.forEach(id => {
+			let matchingPrisoner = prisoners.find(prisoner => {
+				return prisoner.id === id;
+			});
+			selectedPrisoners.push({
+				firstname: matchingPrisoner.name.firstname,
+				surname: matchingPrisoner.name.surname,
+				id: matchingPrisoner.id
+			});
+		});
+	} else {
+		let matchingPrisoner = prisoners.find(prisoner => {
+			return prisoner.id === prisonerIds;
+		});
+		selectedPrisoners.push({
+			firstname: matchingPrisoner.name.firstname,
+			surname: matchingPrisoner.name.surname,
+			id: matchingPrisoner.id
+		});
+	}
+	return selectedPrisoners;
 };
+
+const attendAndPaySelectedPrisoners = (selectedPrisoners, activityId, date, period, attendanceData, activityPrisonerList) => {
+    // loop through selected prisoners
+	selectedPrisoners.forEach(prisoner => {
+		const attendanceInfo = attendanceData[prisoner];
+		const prisonerObject = activityPrisonerList.find(prisonerObject => prisonerObject.id === prisoner);
+		if (prisonerObject) {
+			if (!prisonerObject.attendance) {
+				prisonerObject.attendance = [];
+			}
+			const attendanceRecordExists = prisonerObject.attendance.find(attendanceRecord => attendanceRecord.activityId === activityId && attendanceRecord.date === date && attendanceRecord.period.toLowerCase() === period.toLowerCase());
+			if (!attendanceRecordExists) {
+				prisonerObject.attendance.push({
+					prisonerId: prisoner,
+					activityId: activityId,
+					date: date,
+					period: period,
+					attendance: attendanceInfo.attendance,
+					pay: attendanceInfo.pay,
+					payReason: attendanceInfo.payReason,
+					unacceptableAbsence: attendanceInfo.unacceptableAbsence,
+					incentiveLevelWarning: attendanceInfo.incentiveLevelWarning
+				});
+			}
+		}
+	});
+	return activityPrisonerList;
+}
+
+const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, date, period) => {
+	if (attendanceData && attendanceData[activityId] && attendanceData[activityId][date] && attendanceData[activityId][date][period]) {
+		attendanceData[activityId][date][period].forEach(attendanceRecord => {
+			const prisonerObject = prisoners.find(prisonerObject => prisonerObject.id === attendanceRecord.prisonerId);
+			if (prisonerObject) {
+				prisonerObject.attendance = {
+					activityId: activityId,
+					date: date,
+					period: period,
+					attendance: attendanceRecord.attendance,
+					pay: attendanceRecord.pay,
+					payReason: attendanceRecord.payReason,
+					unacceptableAbsence: attendanceRecord.unacceptableAbsence,
+					incentiveLevelWarning: attendanceRecord.incentiveLevelWarning
+				};
+			}
+		});
+	}
+	return prisoners;
+}
+
+function updateAttendanceData(req, activityId, date, period, attendanceDetails) {
+	if (!req.session.data.attendance) {
+		req.session.data.attendance = {};
+	}
+	if (!req.session.data.attendance[activityId]) {
+		req.session.data.attendance[activityId] = {};
+	}
+	if (!req.session.data.attendance[activityId][date]) {
+		req.session.data.attendance[activityId][date] = {};
+	}
+	if (!req.session.data.attendance[activityId][date][period]) {
+		req.session.data.attendance[activityId][date][period] = [];
+	}
+	Object.keys(attendanceDetails).forEach(prisonerId => {
+		const details = attendanceDetails[prisonerId];
+		const existingRecord = req.session.data.attendance[activityId][date][period].find(record => record.prisonerId === prisonerId);
+		if (!existingRecord) {
+			req.session.data.attendance[activityId][date][period].push({
+				prisonerId: prisonerId,
+				attendance: details.attendance,
+				pay: details.pay,
+				payReason: details.payReason,
+				unacceptableAbsence: details.unacceptableAbsence,
+				incentiveLevelWarning: details.incentiveLevelWarning,
+				timestamp: new Date()
+			});
+		} else {
+			Object.assign(existingRecord, {
+				attendance: details.attendance,
+				pay: details.pay,
+				payReason: details.payReason,
+				unacceptableAbsence: details.unacceptableAbsence,
+				incentiveLevelWarning: details.incentiveLevelWarning,
+				timestamp: new Date()
+			});
+		}
+	});
+}
 
 // Function to filter a list of prisoners who have an activity on a given date (e.g. '2023-02-21') and period (e.g. 'am' or 'pm')
 const getPrisonersByDateAndPeriod = (prisoners, activities, date, period, type) => {
@@ -75,29 +163,27 @@ const getPrisonersByDateAndPeriod = (prisoners, activities, date, period, type) 
 		}
 	});
 
-
     // filter prisoners by activity ids
-    const filteredPrisoners = prisonersWithActivityIds.filter(prisoner => {
-        const activityIds = Array.isArray(prisoner.activity) ? prisoner.activity : [prisoner.activity];
-        return activityIds.some(activityId => {
+	const filteredPrisoners = prisonersWithActivityIds.filter(prisoner => {
+		const activityIds = Array.isArray(prisoner.activity) ? prisoner.activity : [prisoner.activity];
+		return activityIds.some(activityId => {
             // get activity
-            const activity = activities.find(activity => activity.id.toString() === activityId.toString());
+			const activity = activities.find(activity => activity.id.toString() === activityId.toString());
 
             // check if activity has schedule for given day
-            if (activity) {
-                const scheduleForDay = activity.schedule.find(schedule => schedule.day === dayOfWeek);
-                if (scheduleForDay) {
-                	console.log(scheduleForDay)
-                    const timesForPeriod = scheduleForDay[period.toLowerCase()];
-                    if (timesForPeriod && timesForPeriod.length > 0) {
-                        return true;
-                    }
-                }
-            }
+			if (activity) {
+				const scheduleForDay = activity.schedule.find(schedule => schedule.day === dayOfWeek);
+				if (scheduleForDay) {
+					const timesForPeriod = scheduleForDay[period.toLowerCase()];
+					if (timesForPeriod && timesForPeriod.length > 0) {
+						return true;
+					}
+				}
+			}
 
-            return false;
-        });
-    });
+			return false;
+		});
+	});
 
     // filter prisoners by appointments
 	const prisonersWithAppointments = prisoners.filter(prisoner => {
@@ -116,8 +202,8 @@ const getPrisonersByDateAndPeriod = (prisoners, activities, date, period, type) 
 	}
 	// return filtered prisoners if type is attendance
 	if (type === 'attendance') {
-        return [...filteredPrisoners];
-    }
+		return [...filteredPrisoners];
+	}
 }
 
 // Function to add a new "events" array of objects to each filtered prisoner, containing each activity or appointment the prisoner has on the given date
@@ -183,6 +269,8 @@ const addEventsToPrisoners = (prisoners, activities, date, period) => {
 		};
 	});
 }
+
+
 
 // Function to get a list of activities on a given date
 const activitiesByDate = (activities, date) => {
@@ -357,26 +445,26 @@ function filterPrisonersByLocation(prisoners, locations) {
 	return prisoners.filter(prisoner => locations['houseblocks'].includes(prisoner.location.houseblock.toString()));
 }
 
-function updateAttendanceData(req, activityID, activityDate, data) {
-    // create attendance-data object if it doesn't exist
-	if (!req.session.data['attendance-data']) {
-		req.session.data['attendance-data'] = {};
-	}
+// function updateAttendanceData(req, activityID, activityDate, data) {
+//     // create attendance-data object if it doesn't exist
+// 	if (!req.session.data['attendance-data']) {
+// 		req.session.data['attendance-data'] = {};
+// 	}
 
-    // create nested objects for activityID and activityDate if they don't exist
-	if (!req.session.data['attendance-data'][activityID]) {
-		req.session.data['attendance-data'][activityID] = {};
-	}
-	if (!req.session.data['attendance-data'][activityID][activityDate]) {
-		req.session.data['attendance-data'][activityID][activityDate] = {};
-	}
+//     // create nested objects for activityID and activityDate if they don't exist
+// 	if (!req.session.data['attendance-data'][activityID]) {
+// 		req.session.data['attendance-data'][activityID] = {};
+// 	}
+// 	if (!req.session.data['attendance-data'][activityID][activityDate]) {
+// 		req.session.data['attendance-data'][activityID][activityDate] = {};
+// 	}
 
-    // add attendance data for each prisoner
-	for (let i = 0; i < data.length; i++) {
-		let prisonerID = data[i]['id'];
-		req.session.data['attendance-data'][activityID][activityDate][prisonerID] = data[i];
-	}
-}
+//     // add attendance data for each prisoner
+// 	for (let i = 0; i < data.length; i++) {
+// 		let prisonerID = data[i]['id'];
+// 		req.session.data['attendance-data'][activityID][activityDate][prisonerID] = data[i];
+// 	}
+// }
 
 function getAttendanceData(date, activityId, attendanceData, filteredPrisoners) {
 	let updatedFilteredPrisoners = [];
@@ -421,7 +509,7 @@ function getAttendanceData(date, activityId, attendanceData, filteredPrisoners) 
 	}
 }
 
-function countAttendance(data, activityId, date, status) {
+function countAttendance(data, activityId, date, period, status) {
     // Return 0 if data is undefined or null
 	if (!data) {
 		return 0;
@@ -436,9 +524,9 @@ function countAttendance(data, activityId, date, status) {
 	let attendedCount = 0;
 
     // Iterate through the prisoners in the class on the given date
-	for (const studentId in data[activityId][date]) {
+	for (const prisonerId in data[activityId][date][period]) {
         // Check if the prisoner's status is "attended"
-		if (data[activityId][date][studentId]["status"] === status) {
+		if (data[activityId][date][period][prisonerId]["attendance"] === status) {
             // If the prisoner's status is "attended", increment the attendedCount
 			attendedCount++;
 		}
@@ -447,40 +535,52 @@ function countAttendance(data, activityId, date, status) {
     // Return the attendedCount
 	return attendedCount;
 }
+const addAttendanceCountsToActivities = (activities, attendanceData, date, prisonersList) => {
+    const scheduledKey = 'scheduled';
+    const notRecordedKey = 'not-recorded';
+    const attendedKey = 'attended';
+    const notAttendedKey = 'not-attended';
+    // // concat morning and afternoon activities
+    // const allActivities = [...activitiesForDate.morning, ...activitiesForDate.afternoon];
 
-function addAttendanceCounts(prisoners, filteredActivities, attendanceData, date) {
-	const scheduledKey = 'scheduled';
-	const notRecordedKey = 'not-recorded';
-	const attendedKey = 'attended';
-	const notAttendedKey = 'not-attended';
-	for (let activity of filteredActivities.morning.concat(filteredActivities.afternoon)) {
-		let attendanceCount = {
-			[scheduledKey]: 0,
-			[notRecordedKey]: 0,
-			[attendedKey]: 0,
-			[notAttendedKey]: 0
-		};
-		let prisonerList = prisoners.filter(prisoner => prisoner.activity && prisoner.activity.includes(activity.id));
-		for (let i = 0; i < prisonerList.length; i++) {
-			let prisoner = prisonerList[i];
-			if (prisoner.activity.includes(activity.id)) {
-				attendanceCount[scheduledKey]++;
-				attendanceCount[notRecordedKey]++;
-			}
-		}
-		if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
-			for (let participant in attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
-				if (attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)][participant].status === "attended") {
-					attendanceCount[attendedKey]++;
-					attendanceCount[notRecordedKey]--;
-				} else {
-					attendanceCount[notAttendedKey]++;
-					attendanceCount[notRecordedKey]--;
-				}
-			}
-		}
-		activity.attendanceCount = attendanceCount;
-	}
+    // loop through activities
+    for (let activity of activities) {
+        // initialize attendance count object
+        let attendanceCount = {
+            [scheduledKey]: 0,
+            [notRecordedKey]: 0,
+            [attendedKey]: 0,
+            [notAttendedKey]: 0
+        };
+        // filter prisoners list for activity
+        let prisonerList = prisonersList.filter(prisoner => prisoner.activity && prisoner.activity.includes(activity.id));
+        // loop through prisoners
+        for (let i = 0; i < prisonerList.length; i++) {
+            let prisoner = prisonerList[i];
+            if (prisoner.activity.includes(activity.id)) {
+                attendanceCount[scheduledKey]++;
+                attendanceCount[notRecordedKey]++;
+            }
+        }
+
+        // check if attendance data exists for activity
+        if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
+            for (let timeSlot in attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
+                for (let participant in attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)][timeSlot]) {
+                    if (attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)][timeSlot][participant].attendance === "attended") {
+                        attendanceCount[attendedKey]++;
+                        attendanceCount[notRecordedKey]--;
+                    } else {
+                        attendanceCount[notAttendedKey]++;
+                        attendanceCount[notRecordedKey]--;
+                    }
+                }
+            }
+        }
+        // add attendanceCount to activity
+        activity.attendanceCount = attendanceCount;
+    }
+    return activities;
 }
 
 
@@ -498,11 +598,16 @@ router.get('/activities/:activityId', function(req, res) {
 	let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
 	let newActivities = activities.filter(activity => activity.id.toString() === activityId.toString());
 
-	let prisoners = req.session.data['timetable-complete-1']['prisoners']
-	let prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisoners, newActivities, date, period, 'attendance')
+	let attendanceData = req.session.data['attendance'];
+
+	let prisonersData = req.session.data['timetable-complete-1']['prisoners']
+	let prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersData, newActivities, date, period, 'attendance')
 	let prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period);
-	let notAttendedCount = countAttendance(req.session.data['attendance-data'], activityId, date, "not-attended");
-	let attendedCount = countAttendance(req.session.data['attendance-data'], activityId, date, "attended");
+
+	let prisonersList = addAttendanceDataToPrisoners(prisonersWithEvents, attendanceData, activityId, date, period);
+
+	let notAttendedCount = countAttendance(req.session.data['attendance'], activityId, date, period, "not-attended");
+	let attendedCount = countAttendance(req.session.data['attendance'], activityId, date, period, "attended");
 
 	let nextSessionDate = getSessionDate(date, activity, 'next');
 	let previousSessionDate = getSessionDate(date, activity, 'previous');
@@ -514,7 +619,7 @@ router.get('/activities/:activityId', function(req, res) {
 
 	res.render('unlock/' + req.version + '/activity-list', {
 		activity,
-		prisonersWithEvents,
+		prisonersList,
 		notAttendedCount,
 		attendedCount,
 		activityId,
@@ -571,23 +676,32 @@ router.get('/activities/:activityId/add-attendance-details', function(req, res) 
 });
 
 router.post('/activities/:activityId/add-attendance-details', function(req, res) {
-	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
-	let activityId = req.session.data['activity-id'];
-	let date = req.session.data['date']
-	let attendanceAction = req.session.data['attendance-action'];
+	let selectedPrisoners = req.session.data['selected-prisoners'];
+	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
+	let activityId = req.params.activityId;
+	let date = req.session.data['date'];
+	let period = req.session.data['times'];
+
+	// let attendanceAction = req.session.data['attendance-action'];
 	let attendanceDetails = req.session.data['attendance-details'];
 
-	attendanceDetails.forEach(detail => {
-		detail.status = attendanceAction;
-	});
+	let activity = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId)
+	let activityPrisonerList = getPrisonersByDateAndPeriod(prisoners, activity, date, period, 'attendance')
 
-	updateAttendanceData(req, activityId, date, attendanceDetails)
+	updateAttendanceData(req, activityId, date, period, attendanceDetails)
+
+	// let updatedPrisoners = attendAndPaySelectedPrisoners(selectedPrisoners, activityId, date, period, attendanceDetails, activityPrisonerList)
+
+	// attendanceDetails.forEach(detail => {
+	// 	detail.status = attendanceAction;
+	// });
 
     // set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
 
 	let referrer = req.session.data['attendance-url']
-	let url = (referrer == 'refusals') ? ('refusals-list') : ('../' + activityId + '?date=' + date)
+	let url = (referrer == 'refusals') ? ('refusals-list') : ('../' + activityId + '?date=' + date + '&period=' + period.toUpperCase())
 
 	res.redirect(url)
 });
@@ -627,33 +741,48 @@ router.get('/activities/:activityId/check-variable-pay', function(req, res) {
 });
 router.post('/activities/:activityId/check-variable-pay', function(req, res) {
 	let selectedPrisoners = req.session.data['selected-prisoners']
-	let filteredPrisoners = getFilteredPrisoners(selectedPrisoners, req.session.data['timetable-complete-1']['prisoners'])
+	let activityId = req.params.activityId
+	let period = req.session.data.period
+	let date = req.session.data.date
 
 	if (req.session.data['standard-pay-all'] == 'no') {
 		res.redirect('add-attendance-details')
 	} else {
-		attendAndPaySelectedPrisoners(prisoners, activityId, date, period)
-		req.session.data['attendance-details'] = [];
-		selectedPrisoners.forEach(prisonerID => {
-			req.session.data['attendance-details'].push({
-				"id": prisonerID,
-				"pay": ["standard", {
-					"pay-detail": []
-				}],
-				"status": req.session.data['attendance-action']
+    	// function to create an attendanceDetails object to pass in to updateAttendanceData and mark all selected prisoners as 'attended' and 'standard' pay
+		function createAttendanceDetailsForMultiplePrisoners(prisoners) {
+			const attendanceDetails = {};
+			prisoners.forEach(prisonerId => {
+				attendanceDetails[prisonerId] = {
+					attendance: 'attended',
+					pay: 'standard',
+					payReason: '',
+					unacceptableAbsence: '',
+					incentiveLevelWarning: ''
+				};
 			});
-		});
+			return attendanceDetails;
+		}
 
-		let activityId = req.session.data['activity-id'];
-		let date = req.session.data['date'];
-		let attendanceAction = req.session.data['attendance-action'];
-		let activityTimetable = req.session.data['timetable-complete-1']['activities'];
-		let attendanceDetails = req.session.data['attendance-details'];
+		let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners)
+		updateAttendanceData(req, activityId, date, period, attendanceDetails)
 
-		updateAttendanceData(req, activityId, date, attendanceDetails)
+        // function to create an attendanceDetails object to pass in to updateAttendanceData and mark selected prisoners as 'not attended'
+		function createAbsentAttendanceDetailsForMultiplePrisoners(prisoners) {
+			const attendanceDetails = {};
+			prisoners.forEach(prisonerId => {
+				attendanceDetails[prisonerId] = {
+					attendance: 'not-attended',
+					pay: '',
+					payReason: '',
+					unacceptableAbsence: '',
+					incentiveLevelWarning: ''
+				};
+			});
+			return attendanceDetails;
+		}
 
 		req.session.data['attendance-confirmation'] = 'true'
-		res.redirect('../' + activityId + '?date=' + req.session.data['date'])
+		res.redirect('../' + activityId + '?date=' + date + '&period=' + period.toUpperCase())
 	}
 });
 
@@ -661,27 +790,25 @@ router.post('/activities/:activityId/check-variable-pay', function(req, res) {
 router.get('/activities/:activityId/:prisonerId', function(req, res) {
 	let activityId = req.params.activityId;
 	let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
-
+	let date = req.session.data.date;
+	let period = req.session.data.period;
 	let prisonerId = req.params.prisonerId;
 	let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
 
-	function getAttendanceData(activity, prisonerId) {
-		if (!activity || !activity['attendance-history'] || !activity['attendance-history'].length) {
+	const getAttendanceData = (prisonerId, activityId, date, period, req) => {
+		if (!req.session.data.attendance[activityId] || !req.session.data.attendance[activityId][date] || !req.session.data.attendance[activityId][date][period]) {
 			return null;
 		}
 
-		for (let i = 0; i < activity['attendance-history'].length; i++) {
-			const attendanceData = activity['attendance-history'][i]['attendance-data'];
-			for (let j = 0; j < attendanceData.length; j++) {
-				if (attendanceData[j].prisonerId === prisonerId) {
-					return attendanceData[j];
-				}
+		for (let i = 0; i < req.session.data.attendance[activityId][date][period].length; i++) {
+			if (req.session.data.attendance[activityId][date][period][i].prisonerId === prisonerId) {
+				return req.session.data.attendance[activityId][date][period][i];
 			}
 		}
 		return null;
-	}
+	};
 
-	const attendanceData = getAttendanceData(activity, prisonerId);
+	const attendanceData = getAttendanceData(prisonerId, activityId, date, period, req);
 
 	res.render('unlock/' + req.version + '/attendance-details', {
 		prisoner,
@@ -836,7 +963,10 @@ router.get('/activities', function(req, res) {
 		relativeDate = dateLuxon.toRelativeCalendar();
 	}
 
-	addAttendanceCounts(req.session.data['timetable-complete-1']['prisoners'], activitiesForDate, req.session.data['attendance-data'], date)
+	let activitiesForDateWithCounts = {'morning':[], 'afternoon':[]}
+	activitiesForDateWithCounts.morning = addAttendanceCountsToActivities(activitiesForDate.morning, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
+	activitiesForDateWithCounts.afternoon = addAttendanceCountsToActivities(activitiesForDate.afternoon, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
+	// console.log(activitiesForDateWithCounts)
 
 	if (req.query.search) {
 		const searchTerm = req.query.search.toLowerCase();
@@ -846,7 +976,8 @@ router.get('/activities', function(req, res) {
 
 	res.render('unlock/' + req.version + '/activities', {
 		relativeDate,
-		activitiesForDate
+		activitiesForDate,
+		activitiesForDateWithCounts
 	})
 });
 
