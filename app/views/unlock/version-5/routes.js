@@ -665,8 +665,8 @@ router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
 				attendanceDetails[prisonerId] = {
 					attendance: 'not-attended',
 					pay: 'standard',
-					payReason: '',
-					unacceptableAbsence: '',
+					payReason: 'Session cancelled.',
+					unacceptableAbsence: 'no',
 					incentiveLevelWarning: ''
 				};
 			});
