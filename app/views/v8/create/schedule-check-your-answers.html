@@ -52,10 +52,10 @@ Activities Management prototype
               End date
             </dt>
             <dd class="govuk-summary-list__value">
-              {{data.endDate or 'Not set'}}
+              {% if data.ScheduleEndDate == 'yes'%}3 Jan 2024 {% else %}Not set {% endif %}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-start-date">
+              <a class="govuk-link" href="check/activity-end-date">
                 Change<span class="govuk-visually-hidden"> licence type</span>
               </a>
             </dd>
