@@ -212,10 +212,19 @@ Activities Management prototype
               Pay rates
             </dt>
             <dd class="govuk-summary-list__value">
-              Rate A: &pound;1.21<br />
-              Rate B: &pound;1.51<br />
-              Rate C: &pound;1.81
-            </dd>
+              {% for level, details in data.payrates %}
+                {% if details|length > 0 %}
+                {{level}} incentive level payments<br />
+
+                {% for rate in details %}
+                  {{rate.name or 'Payment rate A'}} :
+                  &pound; {{rate.amount or '1.10'}}<br />
+
+                  {% endfor %}
+
+                {% endif %}<br />
+                {% endfor %}
+              </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-payment-details">
                 <span class="govuk-visually-hidden"> licence period</span>
