@@ -252,7 +252,19 @@ module.exports = function(router) {
 	});
 
 	router.post(version + '/create/activity-check-your-answers-payment', function(req, res) {
-		res.redirect(version + '/create/activity-add-education')
+		res.redirect(version + '/create/activity-is-education-needed')
+	});
+
+
+
+	router.post(version + '/create/activity-is-education-needed', function(req, res) {
+
+		if (req.session.data.EducationNeeded == 'yes') {
+			res.redirect(version + '/create/activity-add-education')
+		}
+		 else {
+			res.redirect(version + '/create/activity-check-your-answers')
+		}
 	});
 
 	router.post(version + '/create/addEducation', function(req, res) {
