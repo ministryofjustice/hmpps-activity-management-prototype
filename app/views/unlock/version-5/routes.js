@@ -288,6 +288,7 @@ const activitiesByDate = (activities, date) => {
 						filteredActivities.morning.push({
 							...activity,
 							startTime: schedule.am[0].startTime,
+							endTime: schedule.am[0].endTime,
 							schedule: undefined
 						});
 					}
@@ -295,6 +296,7 @@ const activitiesByDate = (activities, date) => {
 						filteredActivities.afternoon.push({
 							...activity,
 							startTime: schedule.pm[0].startTime,
+							endTime: schedule.pm[0].endTime,
 							schedule: undefined
 						});
 					}
@@ -646,6 +648,8 @@ router.get('/activities/:activityId/confirm-cancellation', function(req, res) {
 router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
 	if (req.session.data['confirm-cancellation'] == 'yes') {
 		let activityId = req.params.activityId;
+		let date = req.session.data['date'];
+		let period = req.session.data['period']
 		let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId);
 		if (activity) {
 			activity.cancelled = true;
@@ -661,8 +665,25 @@ router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
 				attendance: "not-attended"
 			});
 		})
+
+		// function to create an attendanceDetails object to pass in to updateAttendanceData and mark all selected prisoners as 'attended' and 'standard' pay
+		function createAttendanceDetailsForMultiplePrisoners(prisoners) {
+			const attendanceDetails = {};
+			prisoners.forEach(prisonerId => {
+				attendanceDetails[prisonerId] = {
+					attendance: 'not-attended',
+					pay: 'standard',
+					payReason: '',
+					unacceptableAbsence: '',
+					incentiveLevelWarning: ''
+				};
+			});
+			return attendanceDetails;
+		}
+		let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(req.session.data['selected-prisoners'])
+		updateAttendanceData(req, activityId, date, period, attendanceDetails)
 	}
-	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId + '?date=' + req.session.data['date'])
+	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId + '?date=' + date + '?period=' + period)
 })
 
 // ATTENDANCE DETAILS

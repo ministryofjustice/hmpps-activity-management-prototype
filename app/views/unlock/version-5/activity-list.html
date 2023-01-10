@@ -68,7 +68,7 @@ Activities Management prototype
 						</li>
 						{% if activity.cancelled != true %}
 						<li>
-							<a href="{{activity.id}}/cancel" class="govuk-link--no-visited-state">Cancel this session</a>
+							<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-link--no-visited-state">Cancel this session</a>
 						</li>
 						{% endif %}
 					</ul>
@@ -179,12 +179,12 @@ Activities Management prototype
 							{% if event.id != activityId %}
 							<div {% if not loop.last %}class="govuk-!-margin-bottom-4"{% endif %}>
 								<div>
-									<a href="activities/{{event.id}}?date={{date}}&period={{event.period}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
+									<a href="{{event.id}}?date={{date}}&period={{event.period}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 									{% if event.type == 'appointment' %}
 									<span class="govuk-tag govuk-tag--orange">Appointment</span>
 									{% endif %}
 								</div>
-								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.endTime}}</div>
+								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.times.endTime}}</div>
 								{{event.time}}
 								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ event.location }}</div>
 							</div>
