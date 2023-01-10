@@ -62,9 +62,9 @@ const findMatchingPrisoner = (prisoners, prisonerIds) => {
 };
 
 // Function to filter a list of prisoners who have an activity on a given date (e.g. '2023-02-21') and period (e.g. 'am' or 'pm')
-const getPrisonersByDateAndPeriod = (prisoners, activities, date, period) => {
+const getPrisonersByDateAndPeriod = (prisoners, activities, date, period, type) => {
     // get day of week
-	const dayOfWeek = new Date(date).getDay();
+	const dayOfWeek = new Date(date).getDay() + 1;
 
     // get list of prisoners with activity ids
 	const prisonersWithActivityIds = prisoners.filter(prisoner => {
@@ -75,26 +75,29 @@ const getPrisonersByDateAndPeriod = (prisoners, activities, date, period) => {
 		}
 	});
 
-    // filter prisoners by activity ids
-	const filteredPrisoners = prisonersWithActivityIds.filter(prisoner => {
-		const activityIds = Array.isArray(prisoner.activity) ? prisoner.activity : [prisoner.activity];
 
-		return activityIds.some(activityId => {
+    // filter prisoners by activity ids
+    const filteredPrisoners = prisonersWithActivityIds.filter(prisoner => {
+        const activityIds = Array.isArray(prisoner.activity) ? prisoner.activity : [prisoner.activity];
+        return activityIds.some(activityId => {
             // get activity
-			const activity = activities.find(activity => activity.id.toString() === activityId.toString());
+            const activity = activities.find(activity => activity.id.toString() === activityId.toString());
 
             // check if activity has schedule for given day
-			const scheduleForDay = activity.schedule.find(schedule => schedule.day === dayOfWeek);
-			if (scheduleForDay) {
-				const timesForPeriod = scheduleForDay[period.toLowerCase()];
-				if (timesForPeriod && timesForPeriod.length > 0) {
-					return true;
-				}
-			}
+            if (activity) {
+                const scheduleForDay = activity.schedule.find(schedule => schedule.day === dayOfWeek);
+                if (scheduleForDay) {
+                	console.log(scheduleForDay)
+                    const timesForPeriod = scheduleForDay[period.toLowerCase()];
+                    if (timesForPeriod && timesForPeriod.length > 0) {
+                        return true;
+                    }
+                }
+            }
 
-			return false;
-		});
-	});
+            return false;
+        });
+    });
 
     // filter prisoners by appointments
 	const prisonersWithAppointments = prisoners.filter(prisoner => {
@@ -107,8 +110,14 @@ const getPrisonersByDateAndPeriod = (prisoners, activities, date, period) => {
 		}
 	});
 
-    // return merged array of prisoners
-	return [...filteredPrisoners, ...prisonersWithAppointments];
+    // return merged array of prisoners if type is unlock
+	if (type === 'unlock') {
+		return [...filteredPrisoners, ...prisonersWithAppointments];
+	}
+	// return filtered prisoners if type is attendance
+	if (type === 'attendance') {
+        return [...filteredPrisoners];
+    }
 }
 
 // Function to add a new "events" array of objects to each filtered prisoner, containing each activity or appointment the prisoner has on the given date
@@ -131,7 +140,7 @@ const addEventsToPrisoners = (prisoners, activities, date, period) => {
 			const activity = activities.find(activity => activity.id.toString() === activityId.toString());
 
             // check if activity has schedule for given day
-			const scheduleForDay = activity.schedule.find(schedule => schedule.day === new Date(date).getDay());
+			const scheduleForDay = activity.schedule.find(schedule => schedule.day === new Date(date).getDay() + 1);
 			if (scheduleForDay) {
 				const timesForPeriod = scheduleForDay[period.toLowerCase()];
 				if (timesForPeriod && timesForPeriod.length > 0) {
@@ -175,8 +184,41 @@ const addEventsToPrisoners = (prisoners, activities, date, period) => {
 	});
 }
 
+// Function to get a list of activities on a given date
+const activitiesByDate = (activities, date) => {
+	const dayOfWeek = date.getDay() + 1;
+	const filteredActivities = {
+		morning: [],
+		afternoon: []
+	};
+
+	activities.forEach(activity => {
+		if (activity.schedule.some(schedule => schedule.day === dayOfWeek)) {
+			activity.schedule.forEach(schedule => {
+				if (schedule.day === dayOfWeek) {
+					if (schedule.am) {
+						filteredActivities.morning.push({
+							...activity,
+							startTime: schedule.am[0].startTime,
+							schedule: undefined
+						});
+					}
+					if (schedule.pm) {
+						filteredActivities.afternoon.push({
+							...activity,
+							startTime: schedule.pm[0].startTime,
+							schedule: undefined
+						});
+					}
+				}
+			});
+		}
+	});
+	return filteredActivities;
+}
+
 function getSessionDate(date, activity, direction) {
-	const currentDay = new Date(date).getDay();
+	const currentDay = new Date(date).getDay() + 1;
 	let sessionDay;
 
 	if (direction === 'next') {
@@ -427,7 +469,6 @@ function addAttendanceCounts(prisoners, filteredActivities, attendanceData, date
 			}
 		}
 		if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
-			console.log(attendanceData)
 			for (let participant in attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
 				if (attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)][participant].status === "attended") {
 					attendanceCount[attendedKey]++;
@@ -451,73 +492,29 @@ router.post('/activities/:activityId', function(req, res) {
 router.get('/activities/:activityId', function(req, res) {
 	let activityId = req.params.activityId;
 	let date = req.session.data['date']
-	let dayOfWeek = new Date(date).getDay();
 	let period = req.session.data['period'];
 
-    // remove the confirmation notification on refreshing the page
-	if (req.session.data['attendance-confirmation'] == 'true') {
-		delete req.session.data['attendance-confirmation']
-	}
-
-	let prisonerList = req.session.data['timetable-complete-1']['prisoners'].filter(prisoner => {
-		if (Array.isArray(prisoner.activity)) {
-			return prisoner.activity.map(a => a.toString()).includes(activityId.toString());
-		} else {
-			return prisoner.activity == activityId.toString();
-		}
-	})
-	let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
-
-	let activitySchedule = activity.schedule.find(day => day.day === dayOfWeek);
-	activity.times = activitySchedule[period.toLowerCase()]
-
 	let activities = req.session.data['timetable-complete-1']['activities'];
-	let filteredActivities = getActivitiesForPeriod(activities, period, dayOfWeek);
-	let filteredPrisoners = getAttendanceData(date, activityId, req.session.data['attendance-data'], prisonerList);
+	let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
+	let newActivities = activities.filter(activity => activity.id.toString() === activityId.toString());
 
-	for (const prisoner of filteredPrisoners) {
-		prisoner.clashInfo = [];
-
-		for (const activityId of prisoner.activity) {
-			const activity = activities.find(activity => activity.id === activityId);
-
-			if (activity) {
-				const schedule = activity.schedule.find(day => day.day === dayOfWeek);
-				if (schedule) {
-					if (schedule.am && period === 'AM') {
-						for (const time of schedule.am) {
-							prisoner.clashInfo.push({
-								name: activity.name,
-								location: activity.location,
-								startTime: time.startTime,
-								id: activity.id
-							});
-						}
-					}
-					if (schedule.pm && period === 'PM') {
-						for (const time of schedule.pm) {
-							prisoner.clashInfo.push({
-								name: activity.name,
-								location: activity.location,
-								startTime: time.startTime,
-								id: activity.id
-							});
-						}
-					}
-				}
-			}
-		}
-	}
-
+	let prisoners = req.session.data['timetable-complete-1']['prisoners']
+	let prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisoners, newActivities, date, period, 'attendance')
+	let prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period);
 	let notAttendedCount = countAttendance(req.session.data['attendance-data'], activityId, date, "not-attended");
 	let attendedCount = countAttendance(req.session.data['attendance-data'], activityId, date, "attended");
 
 	let nextSessionDate = getSessionDate(date, activity, 'next');
 	let previousSessionDate = getSessionDate(date, activity, 'previous');
 
+	// remove the confirmation notification on refreshing the page
+	if (req.session.data['attendance-confirmation'] == 'true') {
+		delete req.session.data['attendance-confirmation']
+	}
+
 	res.render('unlock/' + req.version + '/activity-list', {
 		activity,
-		filteredPrisoners,
+		prisonersWithEvents,
 		notAttendedCount,
 		attendedCount,
 		activityId,
@@ -635,6 +632,7 @@ router.post('/activities/:activityId/check-variable-pay', function(req, res) {
 	if (req.session.data['standard-pay-all'] == 'no') {
 		res.redirect('add-attendance-details')
 	} else {
+		attendAndPaySelectedPrisoners(prisoners, activityId, date, period)
 		req.session.data['attendance-details'] = [];
 		selectedPrisoners.forEach(prisonerID => {
 			req.session.data['attendance-details'].push({
@@ -718,7 +716,7 @@ router.get('/refusals-list', function(req, res) {
 		date = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
 	}
 
-	let dayOfWeek = new Date(date).getDay();
+	let dayOfWeek = new Date(date).getDay() + 1;
 
 	let activities = req.session.data['timetable-complete-1']['activities'];
 	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
@@ -727,7 +725,8 @@ router.get('/refusals-list', function(req, res) {
 	let houseblock = Object.keys(locations)[0]
 
 	const prisonersByHouseblock = getPrisonersByHouseblock(prisoners, houseblock);
-	const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period);
+	const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
+	cons
 	const prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period);
 
     // remove the confirmation notification on loading the page
@@ -770,7 +769,7 @@ router.get('/unlock-list', function(req, res) {
 		date = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
 	}
 
-	let dayOfWeek = new Date(date).getDay();
+	let dayOfWeek = new Date(date).getDay() + 1;
 
 	let activities = req.session.data['timetable-complete-1']['activities'];
 	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
@@ -778,7 +777,7 @@ router.get('/unlock-list', function(req, res) {
 	let houseblock = Object.keys(locations)[0]
 
 	const prisonersByHouseblock = getPrisonersByHouseblock(prisoners, houseblock);
-	const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period);
+	const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
 	const prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period);
 
     // remove the confirmation notification on loading the page
@@ -823,61 +822,31 @@ router.get('/activities', function(req, res) {
 	let chosenDate = req.session.data['date']
 	let period = req.session.data['times'].toUpperCase()
 	let date = new Date(chosenDate)
-	let dayOfWeek = date.getDay() + 1;
-
-	const filteredActivities = {
-		morning: [],
-		afternoon: []
-	};
-	req.session.data['timetable-complete-1']['activities'].forEach(activity => {
-		if (activity.schedule.some(schedule => schedule.day === dayOfWeek)) {
-			activity.schedule.forEach(schedule => {
-				if (schedule.day === dayOfWeek) {
-					if (schedule.am) {
-						filteredActivities.morning.push({
-							...activity,
-							startTime: schedule.am[0].startTime,
-							schedule: undefined
-						});
-					}
-					if (schedule.pm) {
-						filteredActivities.afternoon.push({
-							...activity,
-							startTime: schedule.pm[0].startTime,
-							schedule: undefined
-						});
-					}
-				}
-			});
-		}
-	});
-
-	let selectedDate, relativeDate;
+	let activitiesForDate = activitiesByDate(req.session.data['timetable-complete-1']['activities'], date);
 
 	if (chosenDate == 'other-date') {
 		chosenDate = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
 	}
 
+	let relativeDate;
 	let today = DateTime.local().startOf("day");
 	let dateLuxon = DateTime.fromFormat(chosenDate, "yyyy-MM-dd").startOf("day");
 	let diff = Math.abs(today.diff(dateLuxon, "days").days);
-	console.log(diff)
 	if (diff <= 1) {
 		relativeDate = dateLuxon.toRelativeCalendar();
 	}
 
-	addAttendanceCounts(req.session.data['timetable-complete-1']['prisoners'], filteredActivities, req.session.data['attendance-data'], date)
+	addAttendanceCounts(req.session.data['timetable-complete-1']['prisoners'], activitiesForDate, req.session.data['attendance-data'], date)
 
 	if (req.query.search) {
 		const searchTerm = req.query.search.toLowerCase();
-		filteredActivities.morning = filteredActivities.morning.filter(activity => activity.name.toLowerCase().includes(searchTerm));
-		filteredActivities.afternoon = filteredActivities.afternoon.filter(activity => activity.name.toLowerCase().includes(searchTerm));
+		activitiesForDate.morning = activitiesForDate.morning.filter(activity => activity.name.toLowerCase().includes(searchTerm));
+		activitiesForDate.afternoon = activitiesForDate.afternoon.filter(activity => activity.name.toLowerCase().includes(searchTerm));
 	}
 
 	res.render('unlock/' + req.version + '/activities', {
-		filteredActivities,
 		relativeDate,
-		selectedDate
+		activitiesForDate
 	})
 });
 
