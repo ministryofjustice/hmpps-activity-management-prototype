@@ -72,7 +72,7 @@ module.exports = function(env) {
     }
 
     filters.longDateFormat = function(inputDate) {
-        return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("DDDD")
+        return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("DDDD")
     }
 
     filters.shortDateFormat = function(inputDate) {
