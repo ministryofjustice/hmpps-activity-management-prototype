@@ -18,7 +18,7 @@ Activities Management prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
     </div>
 
-    <span class="govuk-caption-m">{{data.category or 'Education'}} | Risk level: {{data.riskLevel or 'High'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
+    <span class="govuk-caption-m">{{data.category or 'Education'}} | Risk level: {{data.riskLevel or 'High'}}</span>
     <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
 
     {% if data['show-delete-dialog'] == true %}
@@ -62,7 +62,7 @@ Activities Management prototype
       {% endif %}
       {% endfor %}
       <form>
-        <button class="govuk-button" data-module="govuk-button" value="confirmPay" formaction="activity-add-education">
+        <button class="govuk-button" data-module="govuk-button" value="confirmPay" formaction="activity-is-education-needed">
           Confirm pay rates
         </button>
         <button style="margin-left:30px;" class="govuk-button govuk-button--secondary" data-module="govuk-button" value="addAnother" formaction="activity-payment-details">

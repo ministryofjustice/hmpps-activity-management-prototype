@@ -100,7 +100,7 @@ Activities Management prototype
 			}) }}
 			{% endif %}
 
-			{% set totalPrisoners = filteredPrisoners|length %}
+			{% set totalPrisoners = prisonersWithEvents|length %}
 			{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 			{% include './_includes/table-navbar.html' %}
 
@@ -142,7 +142,7 @@ Activities Management prototype
 				</thead>
 				<tbody class="govuk-table__body">
 					{% set sortOrder = data['sort-by'] %}
-					{% for prisoner in filteredPrisoners %}
+					{% for prisoner in prisonersWithEvents %}
 					<tr class="govuk-table__row">
 						{% if notRecorded > 0 %}
 						<td class="govuk-table__cell">
@@ -173,12 +173,18 @@ Activities Management prototype
 							{% endif %}
 						</td>
 						<td class="govuk-table__cell">
-							{% for activity in prisoner.clashInfo %}
-							{% if activity.id != activityId %}
-							<div {% if not loop.last %}class="govuk-!-margin-bottom-3"{% endif %}>
-								<a href="../activities/{{activity.id}}?date={{date}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ activity.name }}</a>
-								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{activity.startTime}}</div>
-								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ activity.location }}</div>
+							{% for event in prisoner.events %}
+							{% if event.id != activityId %}
+							<div {% if not loop.last %}class="govuk-!-margin-bottom-4"{% endif %}>
+								<div>
+									<a href="activities/{{event.id}}?date={{date}}&period={{event.period}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
+									{% if event.type == 'appointment' %}
+									<span class="govuk-tag govuk-tag--orange">Appointment</span>
+									{% endif %}
+								</div>
+								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.endTime}}</div>
+								{{event.time}}
+								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ event.location }}</div>
 							</div>
 							{% endif %}
 							{% endfor %}
