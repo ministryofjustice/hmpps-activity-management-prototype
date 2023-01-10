@@ -302,11 +302,27 @@ module.exports = function(router) {
 			res.redirect(version + '/create/activity-start-date')
 		}
 	});
+
 	router.post(version + '/create/activity-start-date', function(req, res) {
+		{
+			res.redirect(version + '/create/activity-is-there-an-end-date')
+		}
+	});
+	router.post(version + '/create/activity-is-there-an-end-date', function(req, res) {
+
+		if (req.session.data.ScheduleEndDate == 'yes') {
+			res.redirect(version + '/create/activity-end-date')
+		}
+		 else {
+			res.redirect(version + '/create/activity-start-time')
+		}
+	});
+	router.post(version + '/create/activity-end-date', function(req, res) {
 		{
 			res.redirect(version + '/create/activity-start-time')
 		}
 	});
+
 	router.post(version + '/create/activity-start-time', function(req, res) {
 		{
 			res.redirect(version + '/create/activity-location-dropdown')
@@ -380,15 +396,6 @@ module.exports = function(router) {
 		}
 	});
 
-	router.post(version + '/create/check/activity-will-it-recur', function(req, res) {
-		if (req.session.data.activityWillItRecur == 'yes') {
-			res.redirect(version + '/create/check/activity-add-recurrence')
-		} else {
-			res.redirect(version + '/create/activity-start-date')
-		}
-	});
-
-
 	router.post(version + '/create/check/activity-start-time', function(req, res) {
 		{
 			res.redirect(version + '/create/schedule-check-your-answers')
@@ -403,6 +410,11 @@ module.exports = function(router) {
 
     //Not recurring
 	router.post(version + '/create/check/activity-start-date', function(req, res) {
+		{
+			res.redirect(version + '/create/schedule-check-your-answers')
+		}
+	});
+	router.post(version + '/create/check/activity-end-date', function(req, res) {
 		{
 			res.redirect(version + '/create/schedule-check-your-answers')
 		}

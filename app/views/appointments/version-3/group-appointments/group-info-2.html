@@ -41,7 +41,7 @@ Appointments prototype
         </thead>
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell">A4309SK</td>
+            <td class="govuk-table__cell">{{ data['person-1']}}</td>
             <td class="govuk-table__cell">Neil Rudge</td>
            
             <td class="govuk-table__cell">1-3-003</td>
@@ -52,7 +52,7 @@ Appointments prototype
           </tr>
           <tr class="govuk-table__row">
             
-            <td class="govuk-table__cell">A9121FA</td>
+            <td class="govuk-table__cell">{{ data['person-2']}}</td>
             <td class="govuk-table__cell"> Bert Hungerford</td>
             <td class="govuk-table__cell">4-6-023</td>
             <td class="govuk-table__cell">2 Feb 2023</td>
@@ -81,8 +81,8 @@ Appointments prototype
             }) %}
         <br>
             {{ govukInput({
-              id: 'person[0][first_name]',
-              name: 'person[0][first_name]',
+              id: 'person-3',
+              name: 'person-3',
               label: {
                 html: 'Search by prison number',
                 classes: 'govuk-!-font-weight-bold'
@@ -110,7 +110,7 @@ Appointments prototype
           <br><br>
           
             {{ govukButton({
-              text: 'Submit'
+              text: 'Check for non-associations'
             }) }}
            
           </div>
