@@ -16,14 +16,12 @@ Activities Management prototype
       <span class="govuk-caption-m">{{data.category or 'Education'}}  | Risk level: {{data.riskLevel or 'Low'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}} | Start date: {{data.activityCreateScheduleStartDate or '3 Jan 2023'}} | End date: {% if data.ScheduleEndDate == 'yes'%}3 Jan 2024 {% else %}Not set {% endif %}</span>
       <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      How many people can be allocated to this activity?
+      How many people can be allocated to this schedule?
     </h1>
-
   </div>
+  <p>Enter the maximum number (known as capacity) of people who can be allocated.</p>
+  <p>You'll be able to allocate more people than the schedule's capacity to ensure the activity is not short-handed</p>
 
-  <div id="event-name-hint" class="govuk-hint">
-  Enter the maximum number (known as capacity) of people who can be allocated.
-  </div>
     <form method="post">
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
@@ -35,7 +33,7 @@ Activities Management prototype
         </fieldset>
       </div>
       <br />
-    <button class="govuk-button" data-module="govuk-button">Continue</button>
+    <button class="govuk-button" data-module="govuk-button">Confirm capacity</button>
     </form>
 </div>
 {% endblock %}
