@@ -28,6 +28,8 @@ Activities Management prototype
 
 		{% set date = data['date'] or date|today() %}
 
+		<!-- {{data['attendance']|dump}} -->
+
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 			{% if activity.cancelled == true %}
 			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
@@ -66,7 +68,7 @@ Activities Management prototype
 						</li>
 						{% if activity.cancelled != true %}
 						<li>
-							<a href="{{activity.id}}/cancel" class="govuk-link--no-visited-state">Cancel this session</a>
+							<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-link--no-visited-state">Cancel this session</a>
 						</li>
 						{% endif %}
 					</ul>
@@ -100,7 +102,7 @@ Activities Management prototype
 			}) }}
 			{% endif %}
 
-			{% set totalPrisoners = prisonersWithEvents|length %}
+			{% set totalPrisoners = prisonersList|length %}
 			{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 			{% include './_includes/table-navbar.html' %}
 
@@ -142,11 +144,11 @@ Activities Management prototype
 				</thead>
 				<tbody class="govuk-table__body">
 					{% set sortOrder = data['sort-by'] %}
-					{% for prisoner in prisonersWithEvents %}
+					{% for prisoner in prisonersList %}
 					<tr class="govuk-table__row">
 						{% if notRecorded > 0 %}
 						<td class="govuk-table__cell">
-							{% if not prisoner.attendance.status %}
+							{% if not prisoner.attendance.attendance %}
 							<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-left-2">
 								<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}" name="selected-prisoners" value="{{prisoner.id}}">
 								<label class="govuk-label govuk-checkboxes__label" for="prisoner-{{loop.index}}">
@@ -177,12 +179,14 @@ Activities Management prototype
 							{% if event.id != activityId %}
 							<div {% if not loop.last %}class="govuk-!-margin-bottom-4"{% endif %}>
 								<div>
-									<a href="activities/{{event.id}}?date={{date}}&period={{event.period}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 									{% if event.type == 'appointment' %}
+									<a href="#" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 									<span class="govuk-tag govuk-tag--orange">Appointment</span>
+									{% else %}
+									<a href="{{event.id}}?date={{date}}&period={{event.period}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 									{% endif %}
 								</div>
-								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.endTime}}</div>
+								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}</div>
 								{{event.time}}
 								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ event.location }}</div>
 							</div>
@@ -190,9 +194,9 @@ Activities Management prototype
 							{% endfor %}
 						</td>
 						<td class="govuk-table__cell">
-							{% if prisoner.attendance.status == "attended" %}
+							{% if prisoner.attendance.attendance == "attended" %}
 							<a href="{{activity.id}}/{{prisoner.id}}"><span class="moj-badge moj-badge--large moj-badge--green">Attended</span></a>
-							{% elif prisoner.attendance.status == "not-attended" %}
+							{% elif prisoner.attendance.attendance == "not-attended" %}
 							<a href="{{activity.id}}/{{prisoner.id}}"><span class="moj-badge moj-badge--large moj-badge--red">Absent</span></a>				
 							{% else %}
 							<span class="govuk-hint">Not recorded yet</span>
@@ -210,12 +214,12 @@ Activities Management prototype
 				previous: {
 					text: "Previous session",
 					labelText: previousSessionDate | convertShortDateToVeryLongDate(dayBefore),
-					href: "?date="+previousSessionDate
+					href: "?date="+previousSessionDate+"&period="+data['period']
 				},
 				next: {
 					text: "Next session",
 					labelText: nextSessionDate | convertShortDateToVeryLongDate(),
-					href: "?date="+nextSessionDate
+					href: "?date="+nextSessionDate+"&period="+data['period']
 				}
 			}) }}
 		</main>

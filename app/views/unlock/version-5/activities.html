@@ -32,10 +32,6 @@ Activities Management prototype
 			{{activitiesCount}} activities scheduled for {{relativeDate or date|longDateFormat(date)}}
 		</h1>
 
-		<!-- filteredActivities: {{filteredActivities|dump}} -->
-		<!-- <br><br> -->
-		<!-- data['attendance-data']: {{data['attendance-data']|dump}} -->
-		<!-- {{data['prisoners']|dump}} -->
 		<ul class="govuk-list govuk-!-margin-bottom-6">
 			<li><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></li>
 			{% if date != '_'|today %}
@@ -94,7 +90,13 @@ Activities Management prototype
 				{% endif %}
 			</td>
 			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount['not-recorded']}}</td>
-			<td class="govuk-table__cell govuk-hint"><span class="{{'govuk-tag govuk-tag--red' if activity['not-attended-count'] > 0 }}">{{activity.attendanceCount['not-attended']}}</span></td>
+			<td class="govuk-table__cell govuk-hint">
+					{% if activity.attendanceCount['not-attended'] > 0 %}
+					<span class="govuk-tag govuk-tag--red">{{activity.attendanceCount['not-attended']}}</span>
+					{% else %}
+					{{activity.attendanceCount['not-attended']}}
+					{% endif %}
+			</td>
 		</tr>
 		{% endfor %}
 	</tbody>
