@@ -2026,6 +2026,11 @@ Activities Management prototype
 
 
         </dl>
+        {% if data['edit']=='true' %}
+
+          {% else %}
+            <a href="activity-dashboard?dashboardCategory=All&dashboardView=live">Cancel and return to activities dashboard</a><br /><br /><br /><br />
+        {% endif %}
         <form method="post">
           <button class="govuk-button" data-module="govuk-button">
             {% if data['edit']=='true' %}
