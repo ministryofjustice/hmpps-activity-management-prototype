@@ -607,6 +607,7 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req
 		activity,
 		day,
 		date,
+		period,
 		activityTimes,
 		prisonersList,
 		notAttendedCount,
@@ -639,9 +640,9 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancel
 router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation', function(req, res) {
 	let date = req.params.selectedDate
 	let period = req.params.selectedPeriod
+	let activityId = req.params.activityId;
 
 	if (req.session.data['confirm-cancellation'] == 'yes') {
-		let activityId = req.params.activityId;
 		let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId);
 		
 		// hacky way to add a cancelled flag
@@ -679,7 +680,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
 		updateAttendanceData(req, activityId, date, period, attendanceDetails)
 	}
 
-	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId + '?date=' + date + '&period=' + period)
+	res.redirect('/unlock/' + req.version + '/activities/' + date + '/' + period + '/' + activityId)
 })
 
 // ATTENDANCE DETAILS
