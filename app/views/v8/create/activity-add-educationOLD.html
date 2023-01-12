@@ -24,24 +24,26 @@ Activities Management prototype
   </head>
   <body class="">
     <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
-<main id="content" role="main">
   <div class="grid-row">
     <div class="column-two-thirds">
       <div class="back">
         <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
         </div>
-        <span class="govuk-caption-m">{{data.category or 'Education'}}  | Risk level: {{data.riskLevel or 'Low'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}} | Start date: {{data.activityCreateScheduleStartDate or '3 Jan 2023'}} | End date: {% if data.ScheduleEndDate == 'yes'%}3 Jan 2024 {% else %}Not set {% endif %}</span>
-        <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
-      <form class="form" method="post" autocomplete="off">
+      <span class="govuk-caption-m">{{data.category or 'Education'}} | Risk level: {{data.riskLevel or 'High'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
+      <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
+      <form class="form" method="post" autocomplete="off" action="addEducation">
         <div class="form-group">
           <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-            Where does this activity take place?
+          Select any required education levels or qualifications
           </h1>
-          <p class="gov-hint">Start typing a location and select from the list of options.</p>
+          <div id="event-name-hint" class="govuk-hint">
+            For example, English level 1 or a health and safety certificate. You can add as many as you need.<p> This is an optional step.</p>
+          </div>
+
           <div class="form-control-1-2">
             <select class="form-control" id="location-select-dropdown">
               <option value="" disabled selected>
-                Find a location for the activity
+                Select the education level for the activity
               </option>
 
                 <option value="Canteen">Canteen</option>
@@ -54,10 +56,15 @@ Activities Management prototype
             </select>
           </div>
         </div>
+        <br />
+        <button class="govuk-button govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4" data-module="govuk-button">Add education or qualification</button>
+      </form>
+      <br />
+      <p>If the required education level does not exist in this list, you can <a href="#">request for it to be added</a>.</p>
+<br />
         <div class="form-group">
-          <br /><br />
-          <button class="govuk-button" data-module="govuk-button">Continue</button>
-
+          <form class="form" method="post" autocomplete="off">
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
         </div>
       </form>
     </div>
@@ -91,7 +98,7 @@ Activities Management prototype
   <script type="text/javascript" src="https://unpkg.com/registers-picker-engine@0.0.2"></script>
   <script type="text/javascript" src="https://unpkg.com/accessible-typeahead@0.4.1"></script>
   <script type="text/javascript">
-    var dataFilePath = '/public/javascripts/locations.json'
+    var dataFilePath = '/public/javascripts/education.json'
     AccessibleTypeahead.enhanceSelectElement({
       autoselect: true,
       selectElement: document.getElementById('location-select-dropdown'),

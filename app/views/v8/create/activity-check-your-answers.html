@@ -152,7 +152,7 @@ Activities Management prototype
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-incentive-level">
-                span class="govuk-visually-hidden"> previous application number</span>
+                <span class="govuk-visually-hidden"> previous application number</span>
               </a>
             </dd>
           </div>
@@ -2004,7 +2004,7 @@ Activities Management prototype
               </dd>
                 <dd class="govuk-summary-list__actions">
                   <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
-                    <a class="govuk-link govuk-!-margin-right-3" href="activity-payment-details?id={{rate.id}}">
+                    <a class="govuk-link" href="activity-payment-details?id={{rate.id}}">
                       Change<span class="govuk-visually-hidden"> incentive payment</span>
                     </a>
                   </dd>
@@ -2026,6 +2026,11 @@ Activities Management prototype
 
 
         </dl>
+        {% if data['edit']=='true' %}
+
+          {% else %}
+            <a href="activity-dashboard?dashboardCategory=All&dashboardView=live">Cancel and return to activities dashboard</a><br /><br /><br /><br />
+        {% endif %}
         <form method="post">
           <button class="govuk-button" data-module="govuk-button">
             {% if data['edit']=='true' %}

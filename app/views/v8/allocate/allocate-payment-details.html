@@ -18,7 +18,6 @@ Activities Management prototype
 
     </h1>
     <p class="govuk-body">{{ data.offenderAllocate }}'s current incentive level is <strong>Basic</strong>. </p>
-    <p class="govuk-body">If the rate you need is not listed you can <a href="allocate-check-your-answers-payment">add or change rates for this activity.</a></p>
   </div>
 
 
@@ -27,12 +26,12 @@ Activities Management prototype
 
   <div class="govuk-form-group">
     <form method="post">
-      <div id="contact-hint" class="govuk-hint">
-      Select the correct basic incentive level pay
-  </div>
+
   {% for level, details in data.payrates %}
     {% if details|length > 0 %}
           {% if (level=='Basic') %}
+           <h2 class="govuk-heading-m">Basic incentive level pay</h2>
+
             {% for rate in details %}
 
             <div class="govuk-form-group">
@@ -50,7 +49,7 @@ Activities Management prototype
         {% else %}
 
         <!--If nothing is set on first entry to page-->
-        <h2 class="govuk-heading-m">{{level}} incentive level payments</h2>
+
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="AllocatePaymentCurrent" name="AllocatePayment" type="radio" value="1.21">
           <label class="govuk-label govuk-radios__label" for="AllocatePaymentCurrent">
@@ -58,6 +57,11 @@ Activities Management prototype
           </label>
       </div>
         {% endfor %}
+        <hr />
+        <br />  <br />
+
+        <p class="govuk-body">If the rate you need is not listed you can <a href="allocate-check-your-answers-payment">add or change rates for this activity.</a></p>
+
       <br />  <br />
     <button class="govuk-button" data-module="govuk-button">Confirm pay and continue</button>
     </form>

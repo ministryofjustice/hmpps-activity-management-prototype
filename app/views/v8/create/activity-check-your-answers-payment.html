@@ -33,10 +33,10 @@ Activities Management prototype
       type: 'success'
     }) }}
     {% endif %}
-
+      <h2 class="govuk-heading-xl govuk-!-margin-bottom-4">Review pay rates for {{data.activityName or 'Maths level 1'}}</h1>
     {% for level, details in data.payrates %}
     {% if details|length > 0 %}
-    <h2 class="govuk-heading-m">{{level}} incentive level payments</h2>
+    <h2 class="govuk-heading-m">{{level}} incentive level pay</h2>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       {% for rate in details %}
       <div class="govuk-summary-list__row">
@@ -49,10 +49,10 @@ Activities Management prototype
         <dd class="govuk-summary-list__actions">
           <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
             <a class="govuk-link govuk-!-margin-right-3" href="activity-payment-details?id={{rate.id}}">
-              Change<span class="govuk-visually-hidden"> incentive payment</span>
+              Change<span class="govuk-visually-hidden"> incentive pay</span>
             </a>
             <a class="govuk-link" href="activity-payment-remove?id={{rate.id}}&incentive-level={{level}}">
-              Remove<span class="govuk-visually-hidden"> incentive payment</span>
+              Remove<span class="govuk-visually-hidden"> incentive pay</span>
             </a>
           </dd>
 
