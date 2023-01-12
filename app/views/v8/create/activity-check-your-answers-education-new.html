@@ -25,37 +25,33 @@ Activities Management prototype
         }) }}
         {% endif %}
         <h2 class="govuk-heading-xl govuk-!-margin-bottom-4">Review pay rates for {{data.activityName or 'Maths level 1'}}</h2>
-        {% for level, details in data.payrates %}
-        {% if details|length > 0 %}
-        <h2 class="govuk-heading-m">{{level}} incentive level pay</h2>
+
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-            {% for rate in details %}
+            {% for level in data.educationLevels %}
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    {{rate.name or 'Payment rate A'}}
+                    {{level.name}}
                 </dt>
                 <dd class="govuk-summary-list__value">
                     &pound; {{rate.amount or '1.10'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                    <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
-                    <a class="govuk-link govuk-!-margin-right-3" href="activity-payment-details?id={{rate.id}}">
+                    <a class="govuk-link govuk-!-margin-right-3" href="activity-add-education-new?id={{level.id}}">
                         Change<span class="govuk-visually-hidden"> incentive pay</span>
                     </a>
-                    <a class="govuk-link" href="activity-payment-remove?id={{rate.id}}&incentive-level={{level}}">
+                    <a class="govuk-link" href="activity-education-level-remove?id={{level.id}}">
                         Remove<span class="govuk-visually-hidden"> incentive pay</span>
                     </a>
                 </dd>
             </div>
             {% endfor %}
         </dl>
-        {% endif %}
-        {% endfor %}
+
         <form>
             <button class="govuk-button" data-module="govuk-button" value="confirmPay" formaction="activity-is-education-needed">
                 Confirm pay rates
             </button>
-            <button style="margin-left:30px;" class="govuk-button govuk-button--secondary" data-module="govuk-button" value="addAnother" formaction="activity-payment-details">
+            <button style="margin-left:30px;" class="govuk-button govuk-button--secondary" data-module="govuk-button" value="addAnother" formaction="activity-add-education-new">
                 Add another pay rate
             </button>
         </form>
