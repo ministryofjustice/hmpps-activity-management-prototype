@@ -678,14 +678,10 @@ const addAttendanceCountsToActivities = (activities, attendanceData, date, priso
 
 
 // ATTENDANCE LIST
-router.post('/activities/:activityId', function(req, res) {
-	res.redirect('add-attendance-details')
-});
-
-router.get('/activities/:activityId', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req, res) {
 	let activityId = req.params.activityId;
-	let date = req.session.data['date']
-	let period = req.session.data['period'];
+	let date = req.params.selectedDate
+	let period = req.params.selectedPeriod;
 
 	let activities = req.session.data['timetable-complete-1']['activities'];
 	let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
@@ -717,6 +713,7 @@ router.get('/activities/:activityId', function(req, res) {
 	res.render('unlock/' + req.version + '/activity-list', {
 		activity,
 		day,
+		date,
 		activityTimes,
 		prisonersList,
 		notAttendedCount,
@@ -727,8 +724,12 @@ router.get('/activities/:activityId', function(req, res) {
 	})
 });
 
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId', function(req, res) {
+	res.redirect('add-attendance-details')
+});
+
 // cancellation  details
-router.get('/activities/:activityId/cancel', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/cancel', function(req, res) {
 	let activityId = req.params.activityId;
 	let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
 
@@ -736,15 +737,15 @@ router.get('/activities/:activityId/cancel', function(req, res) {
 		activity
 	})
 })
-router.post('/activities/:activityId/cancel', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/cancel', function(req, res) {
 	res.redirect('confirm-cancellation')
 })
-router.get('/activities/:activityId/confirm-cancellation', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation', function(req, res) {
 	res.render('unlock/' + req.version + '/confirm-cancellation')
 })
-router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
-	let date = req.session.data.date
-	let period = req.session.data.period
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation', function(req, res) {
+	let date = req.params.selectedDate
+	let period = req.params.selectedPeriod
 
 	if (req.session.data['confirm-cancellation'] == 'yes') {
 		let activityId = req.params.activityId;
@@ -789,7 +790,7 @@ router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
 })
 
 // ATTENDANCE DETAILS
-router.get('/activities/:activityId/add-attendance-details', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function(req, res) {
 	delete req.session.data['attendance-details']
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
@@ -797,13 +798,13 @@ router.get('/activities/:activityId/add-attendance-details', function(req, res) 
 		filteredPrisoners
 	})
 });
-router.post('/activities/:activityId/add-attendance-details', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function(req, res) {
 	let selectedPrisoners = req.session.data['selected-prisoners'];
 	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
 	let activityId = req.params.activityId;
-	let date = req.session.data['date'];
-	let period = req.session.data['times'];
+	let date = req.params.selectedDate;
+	let period = req.params.selectedPeriod;
 
 	// let attendanceAction = req.session.data['attendance-action'];
 	let attendanceDetails = req.session.data['attendance-details'];
@@ -817,7 +818,7 @@ router.post('/activities/:activityId/add-attendance-details', function(req, res)
 	req.session.data['attendance-confirmation'] = 'true'
 
 	let referrer = req.session.data['attendance-url']
-	let url = (referrer == 'refusals') ? ('refusals-list') : ('../' + activityId + '?date=' + date + '&period=' + period.toUpperCase())
+	let url = (referrer == 'refusals') ? ('refusals-list') : ('../' + activityId)
 
 	res.redirect(url)
 });
@@ -857,18 +858,18 @@ router.post('/add-refusal-details', function(req, res) {
 
 
 // check variable pay
-router.get('/activities/:activityId/check-variable-pay', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/check-variable-pay', function(req, res) {
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
 	res.render('unlock/' + req.version + '/check-variable-pay', {
 		filteredPrisoners
 	})
 });
-router.post('/activities/:activityId/check-variable-pay', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-variable-pay', function(req, res) {
 	let selectedPrisoners = req.session.data['selected-prisoners']
 	let activityId = req.params.activityId
-	let period = req.session.data.period
-	let date = req.session.data.date
+	let period = req.params.selectedPeriod
+	let date = req.params.selectedDate
 
 	if (req.session.data['standard-pay-all'] == 'no') {
 		res.redirect('add-attendance-details')
@@ -907,16 +908,16 @@ router.post('/activities/:activityId/check-variable-pay', function(req, res) {
 		}
 
 		req.session.data['attendance-confirmation'] = 'true'
-		res.redirect('../' + activityId + '?date=' + date + '&period=' + period.toUpperCase())
+		res.redirect('../' + activityId)
 	}
 });
 
 // attendance  details
-router.get('/activities/:activityId/:prisonerId', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', function(req, res) {
 	let activityId = req.params.activityId;
 	let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
-	let date = req.session.data.date;
-	let period = req.session.data.period;
+	let date = req.params.selectedDate;
+	let period = req.params.selectedPeriod;
 	let prisonerId = req.params.prisonerId;
 	let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
 
@@ -1062,34 +1063,33 @@ router.get('/select-activity', function(req, res) {
 	res.render('unlock/' + req.version + '/select-activity')
 });
 router.post('/select-activity', function(req, res) {
-	let chosenDate = req.session.data['date']
-	let today = new Date()
+	let date = req.session.data['date']
 
-	if (chosenDate == 'other-date') {
+	if (date == 'other-date') {
 		if (req.session.data['other-date-year'] !== undefined && req.session.data['other-date-month'] !== undefined && req.session.data['other-date-day'] !== undefined) {
-			req.session.data['date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
-			res.redirect('activities')
+			date = req.session.data['date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
+			res.redirect('activities/'+date)
 		} else {
 			res.redirect('select-activity');
 		}
 	} else {
-		res.redirect('activities')
+		res.redirect('activities/'+date)
 	}
 });
 // SELECT ACTIVITY RESULTS
-router.get('/activities', function(req, res) {
-	let chosenDate = req.session.data['date']
+router.get('/activities/:selectedDate', function(req, res) {
+	let selectedDate = req.params.selectedDate
 	let period = req.session.data['times'].toUpperCase()
-	let date = new Date(chosenDate)
+	let date = new Date(selectedDate)
 	let activitiesForDate = activitiesByDate(req.session.data['timetable-complete-1']['activities'], date);
 
-	if (chosenDate == 'other-date') {
-		chosenDate = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
+	if (selectedDate == 'other-date') {
+		selectedDate = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
 	}
 
 	let relativeDate;
 	let today = DateTime.local().startOf("day");
-	let dateLuxon = DateTime.fromFormat(chosenDate, "yyyy-MM-dd").startOf("day");
+	let dateLuxon = DateTime.fromFormat(selectedDate, "yyyy-MM-dd").startOf("day");
 	let diff = Math.abs(today.diff(dateLuxon, "days").days);
 	if (diff <= 1) {
 		relativeDate = dateLuxon.toRelativeCalendar();
@@ -1106,6 +1106,7 @@ router.get('/activities', function(req, res) {
 	}
 
 	res.render('unlock/' + req.version + '/activities', {
+		selectedDate,
 		relativeDate,
 		activitiesForDate,
 		activitiesForDateWithCounts

@@ -16,17 +16,15 @@ Activities Management prototype
 			items: [
 			{
 				text: "Digital Prison Services",
-				href: "../dps-home"
+				href: "../../../dps-home"
 			},
 			{
 				text: "Manage prisoner whereabouts",
-				href: "../whereabouts"
+				href: "../../../whereabouts"
 			}
 			]
 		}) }}
 		{% endblock %}
-
-		{% set date = data['date'] or date|today() %}
 
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 			{% if activity.cancelled == true %}
@@ -59,10 +57,10 @@ Activities Management prototype
 
 					<ul class="govuk-list">
 						<li>
-							<a href="../activities?chosen-date={{date}}" class="govuk-link--no-visited-state">Choose a different activity</a>
+							<a href="../../{{date}}" class="govuk-link--no-visited-state">Choose a different activity</a>
 						</li>
 						<li>
-							<a href="../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
+							<a href="../../../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
 						</li>
 						{% if activity.cancelled != true %}
 						<li>
@@ -187,7 +185,7 @@ Activities Management prototype
 									<a href="#" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 									<span class="govuk-tag govuk-tag--orange">Appointment</span>
 									{% else %}
-									<a href="{{event.id}}?date={{date}}&period={{event.period}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
+									<a href="{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 									{% endif %}
 								</div>
 								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}</div>
@@ -218,12 +216,12 @@ Activities Management prototype
 				previous: {
 					text: "Previous session",
 					labelText: previousSessionDate.date | convertShortDateToVeryLongDate(dayBefore) + ' (' + previousSessionDate.period + ')',
-					href: "?date="+previousSessionDate.date+"&period="+previousSessionDate.period
+					href: "../../" + previousSessionDate.date+"/" + previousSessionDate.period + "/" + activityId
 				},
 				next: {
 					text: "Next session",
 					labelText: nextSessionDate.date | convertShortDateToVeryLongDate() + ' (' + nextSessionDate.period + ')',
-					href: "?date="+nextSessionDate.date+"&period="+nextSessionDate.period
+					href: "../../" + nextSessionDate.date+"/" + nextSessionDate.period + "/" + activityId
 				}
 			}) }}
 		</main>
