@@ -128,23 +128,23 @@ Activities Management prototype
 									},
 									items: [{
 										text: 'All',
-										id: 'bulgaria',
-										value: 'bulgaria'
+										id: 'All',
+										value: 'All'
 									},
 									{
 										text: 'Morning (AM)',
-										id: 'all',
-										value: 'all'
+										id: 'Morning',
+										value: 'Morning'
 									},
 									{
 										text: 'Afternoon (PM)',
-										id: 'austria',
-										value: 'austria'
+										id: 'Afternoon',
+										value: 'Afternoon'
 									},
 									{
 										text: 'Evening (ED)',
-										id: 'belgium',
-										value: 'belgium'
+										id: 'Evening',
+										value: 'Evening'
 									}]
 								}) }}
 
@@ -160,7 +160,7 @@ Activities Management prototype
 													classes: "govuk-!-margin-0"
 												},
 												classes: "govuk-checkboxes--small",
-												name: "waste",
+												name: "sublocation",
 												items: [
 												{
 													text: 'Landing 1',
@@ -247,17 +247,17 @@ Activities Management prototype
 									{
 										text: 'Attended',
 										id: 'attended',
-										value: 'austria'
+										value: 'attended'
 									},
 									{
 										text: 'Not attended',
 										id: 'not-attended',
-										value: 'belgium'
+										value: 'not-attended'
 									},
 									{
 										text: 'Unaccounted for',
 										id: 'unaccounted-for',
-										value: 'bulgaria'
+										value: 'unaccounted-for'
 									}]
 								}) }}
 								{{ govukSelect({
@@ -281,12 +281,12 @@ Activities Management prototype
 									{
 										text: 'Staying',
 										id: 'attended',
-										value: 'austria'
+										value: 'attended'
 									},
 									{
 										text: 'Leaving',
 										id: 'not-attended',
-										value: 'belgium'
+										value: 'not-attended'
 									}]
 								}) }}
 							</div>
@@ -300,7 +300,7 @@ Activities Management prototype
 			</div>
 
 			{% if data['selected-prisoners'].length == 1 %}
-			{% set prisoner = selectedPrisoners[0] %}
+			{% set prisoner = data['selected-prisoners'] | getPrisoner %}
 			{% endif %}
 			
 			{% if data['attendance-confirmation'] == 'true' %}
@@ -309,7 +309,7 @@ Activities Management prototype
 			<h3 class="govuk-notification-banner__heading">
 				Attendance recorded
 			</h3>
-			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisoner.firstname + " " + prisoner.surname}}.</p>
+			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisoner.name.firstname + " " + prisoner.name.surname}}.</p>
 			{% endset %}
 			{{ govukNotificationBanner({
 				html: html,

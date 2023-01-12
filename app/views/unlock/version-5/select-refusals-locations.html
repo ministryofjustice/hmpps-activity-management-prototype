@@ -28,9 +28,24 @@ Activities Management prototype
 			Choose refusals and sickness details
 		</h1>
 		<form action="refusals-list">
+			{% set dateHtml %}
+			{{ govukDateInput({
+				id: "other-date",
+				namePrefix: "other-date",
+				fieldset: {
+					legend: {
+						text: "Date"
+					}
+				},
+				hint: {
+					text: "For example, 27 3 2022"
+				}
+			}) }}
+			{% endset %}
+
 			{% set today = '_'|today() %}
 			{{ govukRadios({
-				name: "chosen-date",
+				name: "date",
 				fieldset: {
 					legend: {
 						text: "Select unlock date",
@@ -44,8 +59,8 @@ Activities Management prototype
 					text: "Today"
 				},
 				{
-					value: today|dayBefore(today),
-					text: "Yesterday"
+					value: today|dayAfter(today),
+					text: "Tomorrow"
 				},
 				{
 					value: "other-date",
@@ -56,7 +71,7 @@ Activities Management prototype
 				}
 				]
 			}) }}
-			
+
 			{{ govukRadios({
 				name: "times",
 				fieldset: {
@@ -81,34 +96,32 @@ Activities Management prototype
 				}
 				]
 			}) }}
+
 			<div class="govuk-form-group govuk-!-margin-bottom-2">
 				<fieldset class="govuk-fieldset" aria-describedby="locations-hint">
 					<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
 						Locations
 					</legend>
-					<div id="locations-hint" class="govuk-hint">
-						You can select more than one location if you need to
-					</div>
-					<div class="govuk-checkboxes" id="locations-checkboxes" data-module="govuk-checkboxes">
-						{% for houseblock in data['residential-locations'] %}
-						<div class="govuk-checkboxes__item">
-							<input class="govuk-checkboxes__input" id="locations-{{houseblock.id}}" name="selected-locations[houseblocks]" type="checkbox" value="{{houseblock.id}}" aria-controls="conditional-locations-{{houseblock.id}}" aria-expanded="false">
-							<label class="govuk-label govuk-checkboxes__label" for="locations-{{houseblock.id}}">
+					<div class="govuk-radios" id="locations-radios" data-module="govuk-radios">
+						{% for houseblock in data['residential-locations-2'] %}
+						<div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="locations-{{houseblock.id}}" name="selected-locations[houseblocks]" type="radio" value="{{houseblock.id}}" aria-controls="conditional-locations-{{houseblock.id}}" aria-expanded="false">
+							<label class="govuk-label govuk-radios__label" for="locations-{{houseblock.id}}">
 								{{houseblock.name}}
 							</label>
 						</div>
-						<div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-locations-{{houseblock.id}}">
+						<div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-locations-{{houseblock.id}}">
 							<div class="govuk-form-group">
 								<fieldset class="govuk-fieldset">
 									<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
 										Sub-locations
 									</legend>
 									<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-										{% for wing in houseblock.wings %}
+										{% for spur in houseblock.spurs %}
 										<div class="govuk-checkboxes__item">
-											<input class="govuk-checkboxes__input" id="houseblock-{{houseblock.id}}-sublocations-{{wing.id}}" name="selected-locations[wings]" type="checkbox" value="{{houseblock.id}}-{{wing.id}}">
-											<label class="govuk-label govuk-checkboxes__label" for="houseblock-{{houseblock.id}}-sublocations-{{wing.id}}">
-												{{wing.name}}
+											<input class="govuk-checkboxes__input" id="houseblock-{{houseblock.id}}-sublocations-{{spur.id}}" name="selected-locations[wings]" type="checkbox" value="{{houseblock.id}}-{{spur.id}}" checked>
+											<label class="govuk-label govuk-checkboxes__label" for="houseblock-{{houseblock.id}}-sublocations-{{spur.id}}">
+												{{spur.name}}
 											</label>
 										</div>
 										{% endfor %}
@@ -120,10 +133,8 @@ Activities Management prototype
 					</div>
 				</fieldset>
 			</div>
-			<p class="govuk-body govuk-!-margin-bottom-6">
-				<a href="#" class="govuk-link govuk-link--no-visited-state" id="check-all-locations">Select all<span class="govuk-visually-hidden"> locations</span></a>
-			</p>
-            <!-- {{ govukCheckboxes({
+		
+			{{ govukCheckboxes({
 				name: "staying-or-leaving",
 				fieldset: {
 					legend: {
@@ -140,30 +151,6 @@ Activities Management prototype
 				{
 					value: "leaving",
 					text: "Leaving"
-				}
-				]
-			}) }} -->
-			{{ govukRadios({
-				name: "staying-or-leaving",
-				fieldset: {
-					legend: {
-						text: "Group prisoners by",
-						isPageHeading: false,
-						classes: "govuk-fieldset__legend--m"
-					}
-				},
-				items: [
-				{
-					value: "staying",
-					text: "Sub-location (for example, landing)"
-				},
-				{
-					value: "leaving",
-					text: "Activity"
-				},
-				{
-					value: "leaving",
-					text: "Don't group prisoners"
 				}
 				]
 			}) }}
