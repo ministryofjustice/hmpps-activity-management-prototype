@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {
-	DateTime
-} = require('luxon')
+const { DateTime } = require('luxon')
 
 // app data
 const prisoners = require('../../../data/prisoners-list-3')
@@ -60,34 +58,6 @@ const findMatchingPrisoner = (prisoners, prisonerIds) => {
 	}
 	return selectedPrisoners;
 };
-
-const attendAndPaySelectedPrisoners = (selectedPrisoners, activityId, date, period, attendanceData, activityPrisonerList) => {
-    // loop through selected prisoners
-	selectedPrisoners.forEach(prisoner => {
-		const attendanceInfo = attendanceData[prisoner];
-		const prisonerObject = activityPrisonerList.find(prisonerObject => prisonerObject.id === prisoner);
-		if (prisonerObject) {
-			if (!prisonerObject.attendance) {
-				prisonerObject.attendance = [];
-			}
-			const attendanceRecordExists = prisonerObject.attendance.find(attendanceRecord => attendanceRecord.activityId === activityId && attendanceRecord.date === date && attendanceRecord.period.toLowerCase() === period.toLowerCase());
-			if (!attendanceRecordExists) {
-				prisonerObject.attendance.push({
-					prisonerId: prisoner,
-					activityId: activityId,
-					date: date,
-					period: period,
-					attendance: attendanceInfo.attendance,
-					pay: attendanceInfo.pay,
-					payReason: attendanceInfo.payReason,
-					unacceptableAbsence: attendanceInfo.unacceptableAbsence,
-					incentiveLevelWarning: attendanceInfo.incentiveLevelWarning
-				});
-			}
-		}
-	});
-	return activityPrisonerList;
-}
 
 const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, date, period) => {
 	if (attendanceData && attendanceData[activityId] && attendanceData[activityId][date] && attendanceData[activityId][date][period]) {
@@ -448,21 +418,6 @@ function getPreviousSession(activity, selectedDate, selectedPeriod) {
     return "No upcoming sessions found";
 }
 
-// Function to get the next date
-function getNextDate(date, numDays) {
-	const newDate = new Date(date);
-	newDate.setDate(newDate.getDate() + numDays);
-	return newDate.toISOString().slice(0, 10);
-}
-
-
-function formatDate(date) {
-	const year = date.getFullYear();
-	const month = String(date.getMonth() + 1).padStart(2, '0');
-	const day = String(date.getDate()).padStart(2, '0');
-	return `${year}-${month}-${day}`;
-}
-
 function getFilteredPrisoners(selectedPrisoners, prisonerList) {
 	let filteredPrisoners = []
 
@@ -493,71 +448,6 @@ function getWings(data) {
 
 	return locations
 }
-
-function updateAttendanceListFigures(req, res) {
-	req.session.data['timetable-complete-1']['activities'].forEach((activity) => {
-		const id = activity.id;
-		const scheduledPrisoners = req.session.data['timetable-complete-1']['prisoners'].filter((prisoner) => prisoner.activity === id);
-
-		const attendedPrisoners = scheduledPrisoners.filter((prisoner) => prisoner.attendance == 'attended');
-		const notAttendedPrisoners = scheduledPrisoners.filter((prisoner) => prisoner.attendance == 'not-attended');
-
-		activity['count'] = scheduledPrisoners.length
-		activity['attended-count'] = attendedPrisoners.length
-		activity['not-attended-count'] = notAttendedPrisoners.length
-	})
-}
-
-function getActivitiesForPeriod(activities, period, dayOfWeek) {
-	return activities.filter(activity => {
-		let schedule = activity.schedule.find(day => day.day === dayOfWeek);
-		return schedule && schedule[period.toLowerCase()];
-	});
-}
-
-function getPrisonersForActivities(prisoners, activities) {
-	return prisoners.filter(prisoner => {
-		if (Array.isArray(prisoner.activity)) {
-			return prisoner.activity.some(activityId => {
-				return activities.some(activity => {
-					return activity.id === activityId;
-				});
-			});
-		} else {
-			return activities.some(activity => {
-				return activity.id === prisoner.activity;
-			});
-		}
-	});
-}
-
-function filterPrisonersByLocation(prisoners, locations) {
-	if (Object.keys(locations).length === 0) {
-		return prisoners;
-	}
-	return prisoners.filter(prisoner => locations['houseblocks'].includes(prisoner.location.houseblock.toString()));
-}
-
-// function updateAttendanceData(req, activityID, activityDate, data) {
-//     // create attendance-data object if it doesn't exist
-// 	if (!req.session.data['attendance-data']) {
-// 		req.session.data['attendance-data'] = {};
-// 	}
-
-//     // create nested objects for activityID and activityDate if they don't exist
-// 	if (!req.session.data['attendance-data'][activityID]) {
-// 		req.session.data['attendance-data'][activityID] = {};
-// 	}
-// 	if (!req.session.data['attendance-data'][activityID][activityDate]) {
-// 		req.session.data['attendance-data'][activityID][activityDate] = {};
-// 	}
-
-//     // add attendance data for each prisoner
-// 	for (let i = 0; i < data.length; i++) {
-// 		let prisonerID = data[i]['id'];
-// 		req.session.data['attendance-data'][activityID][activityDate][prisonerID] = data[i];
-// 	}
-// }
 
 function getAttendanceData(date, activityId, attendanceData, filteredPrisoners) {
 	let updatedFilteredPrisoners = [];
@@ -628,6 +518,7 @@ function countAttendance(data, activityId, date, period, status) {
     // Return the attendedCount
 	return attendedCount;
 }
+
 const addAttendanceCountsToActivities = (activities, attendanceData, date, prisonersList) => {
 	const scheduledKey = 'scheduled';
 	const notRecordedKey = 'not-recorded';
