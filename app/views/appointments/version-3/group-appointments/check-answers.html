@@ -67,7 +67,7 @@ Appointments prototype
                   </a>
                 </dd>
               </div>
-              <div class="govuk-summary-list__row">
+              <!--<div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   End date
                 </dt>
@@ -77,7 +77,7 @@ Appointments prototype
                 <dd class="govuk-summary-list__actions">
                  
                 </dd>
-              </div>
+              </div>-->
              
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -181,7 +181,7 @@ Appointments prototype
                   Total number of prisoners 
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  3 
+                  10 
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
@@ -220,7 +220,20 @@ Appointments prototype
                   Prisoner name and number
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  Eric Sykes, {{ data['person-3']}} 
+                  Matthew Doyle, {{ data['person-3']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Alex Sale, {{ data['person-4']}} 
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
@@ -229,7 +242,104 @@ Appointments prototype
                 </dd>
               </div>
              
-            </dl>
+              {% if data['person-5'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Ryan Gee, {{ data['person-5']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+
+              {% if data['person-6'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Robin Bab, {{ data['person-6']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+
+
+              {% if data['person-7'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Tommy-Lee Knox, {{ data['person-7']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+
+              {% if data['person-8'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Luther Drove, {{ data['person-8']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+
+              {% if data['person-9'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Logan Looker, {{ data['person-9']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+
+              {% if data['person-10'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Eric Sykes, {{ data['person-10']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+
+              </dl>
             
             <form action="confirmation" method="post" novalidate>
               <input type="hidden" name="answers-checked" value="true">
