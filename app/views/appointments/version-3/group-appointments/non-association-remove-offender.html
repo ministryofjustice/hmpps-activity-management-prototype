@@ -18,29 +18,39 @@ Activities Management prototype
           Are you sure you wish to remove the following prisoners from this appointment?
           </h1>
      
-          <ul class='govuk-list govuk-list--bullet'>
-            {% if data['person-3-check-selected'] === 'true' %}
-            
-            
-            <li>
-              Matthew Doyle, {{ data['person-3']}} 
-            </li>
-            {% endif %}
-            <li>
-              Robin Bab, {{ data['person-6']}}
-            </li>
-          </ul>
-         
+
+
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header" style="width:30%;"   >Prisoner name and number</th>
+              
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              {% if data.personMatthew=='Matthew' %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell" data-sort-value="Maths level 1">
+                    Matthew Doyle, {{ data['person-3']}} 
+                </td>
+              </tr>
+              {% endif %}
+              {% if data.personRobin=='Robin' %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell" data-sort-value="Maths level 1">
+                    Robin Bab, {{ data['person-3']}}  
+                </td>
+              </tr>
+              {% endif %}
+              </tbody>
+              </table>
+
+
+              
+
           {{ govukRadios({
-            idPrefix: "",
-            name: "",
-            fieldset: {
-              legend: {
-                text: "",
-                isPageHeading: true,
-                classes: "govuk-fieldset__legend--l"
-              }
-            },
+            idPrefix: "rem-prisoner",
+            name: "rem-prisoner",
             items: [
               {
                 value: "Yes",
@@ -52,9 +62,10 @@ Activities Management prototype
               }
             ]
           }) }}
-          <button class="govuk-button" data-module="govuk-button" >
-            Confirm
-          </button>
+          {{ govukButton({
+            text: "Continue",
+            href: "non-associations-updated"
+          }) }}
           <input type="hidden" name="cancelAllocation" value="false">
         </form>
       </div>
