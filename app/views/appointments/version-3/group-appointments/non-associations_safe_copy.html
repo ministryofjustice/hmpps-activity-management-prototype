@@ -5,7 +5,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form method="post" action="non-association-remove-offender">
+<form method="post">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
@@ -16,21 +16,9 @@ Appointments prototype
       Check for non-associations
     </h1>
     <p class="govuk-body">
-       
+      Select and remove prisoners who cannot associate together.  
     </p>
 
-
-
-
-
-
-
-
-
-
-
-
-<div class="govuk-form-group">
 
 <table class="govuk-table" data-module="moj-sortable-table" style="margin:30px 0 0 10px;">
   <thead class="govuk-table__head">
@@ -43,7 +31,7 @@ Appointments prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes__item">
-          <input class="govuk-checkboxes__input" id="person" name="person" type="checkbox" value="Neil">
+          <input class="govuk-checkboxes__input" id="person-1-check" name="person-1-check" type="checkbox" value="selected">
           <label class="govuk-label govuk-checkboxes__label" for="waste">
             Neil Rudge, {{ data['person-1']}} 
           </label>
@@ -56,16 +44,11 @@ Appointments prototype
         </strong>
       </td>
     </tr>
-
-
-    {% if data.personMatthew=='Matthew' and data.rem-prisoner=="Yes" %}
-
-    {% else %}
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="person" name="personMatthew" type="checkbox" value="Matthew">
+            <input class="govuk-checkboxes__input" id="person-3-check" name="person-3-check" type="checkbox" value="selected">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
               Matthew Doyle, {{ data['person-3']}}
             </label>
@@ -93,17 +76,11 @@ Appointments prototype
         {% endif  %}
       </td>
     </tr>
-    {% endif %}
-
-
-
-
-   
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="person" name="personRobin" type="checkbox" value="Robin">
+            <input class="govuk-checkboxes__input" id="person-6-check" name="person-6-check" type="checkbox" value="selected">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
               Robin Bab, {{ data['person-6']}}
             </label>
@@ -126,7 +103,7 @@ Appointments prototype
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="person-2" name="person" type="checkbox" value="Luther">
+            <input class="govuk-checkboxes__input" id="person-8-check" name="person-8-check" type="checkbox" value="selected">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
               Luther Drove, {{ data['person-8']}} 
             </label>
@@ -145,7 +122,7 @@ Appointments prototype
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="person-3" name="person" type="checkbox" value="Logan">
+            <input class="govuk-checkboxes__input" id="person-9-check" name="person-9-check" type="checkbox" value="selected">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
              Logan Looker, {{ data['person-9']}} 
             </label>
@@ -165,7 +142,7 @@ Appointments prototype
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="person-4" name="person" type="checkbox" value="Eric">
+            <input class="govuk-checkboxes__input" id="person-10-check" name="person-10-check" type="checkbox" value="selected">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
              Eric Sykes, {{ data['person-10']}} 
             </label>
@@ -182,14 +159,14 @@ Appointments prototype
     {% endif %}
   </tbody>
 </table>
-</div>
+
 <br />
 
 {{ govukButton({
   text: "Remove selected prisoners",
-  classes: "govuk-button--warning"
+  classes: "govuk-button--warning",
+  href: "non-association-remove-offender"
 }) }}
-</form>
 {{ govukButton({
   text: "Continue",
   href: "how-to-schedule-group"
@@ -197,7 +174,7 @@ Appointments prototype
 
 
 
-  
+  </form>
 
 </div>
 {% endblock %}
