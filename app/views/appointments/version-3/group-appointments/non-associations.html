@@ -5,6 +5,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
+<form method="post">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
@@ -18,7 +19,7 @@ Appointments prototype
       Select and remove prisoners who cannot associate together.  
     </p>
 
-<form method="post" action="how-to-schedule-group">
+
 <table class="govuk-table" data-module="moj-sortable-table" style="margin:30px 0 0 10px;">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
@@ -30,7 +31,7 @@ Appointments prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes__item">
-          <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+          <input class="govuk-checkboxes__input" id="person-1-check" name="person-1-check" type="checkbox" value="selected">
           <label class="govuk-label govuk-checkboxes__label" for="waste">
             Neil Rudge, {{ data['person-1']}} 
           </label>
@@ -47,7 +48,7 @@ Appointments prototype
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+            <input class="govuk-checkboxes__input" id="person-3-check" name="person-3-check" type="checkbox" value="selected">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
               Matthew Doyle, {{ data['person-3']}}
             </label>
@@ -79,7 +80,7 @@ Appointments prototype
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+            <input class="govuk-checkboxes__input" id="person-6-check" name="person-6-check" type="checkbox" value="selected">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
               Robin Bab, {{ data['person-6']}}
             </label>
@@ -102,7 +103,7 @@ Appointments prototype
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+            <input class="govuk-checkboxes__input" id="person-8-check" name="person-8-check" type="checkbox" value="selected">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
               Luther Drove, {{ data['person-8']}} 
             </label>
@@ -121,7 +122,7 @@ Appointments prototype
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+            <input class="govuk-checkboxes__input" id="person-9-check" name="person-9-check" type="checkbox" value="selected">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
              Logan Looker, {{ data['person-9']}} 
             </label>
@@ -141,7 +142,7 @@ Appointments prototype
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+            <input class="govuk-checkboxes__input" id="person-10-check" name="person-10-check" type="checkbox" value="selected">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
              Eric Sykes, {{ data['person-10']}} 
             </label>
@@ -160,12 +161,19 @@ Appointments prototype
 </table>
 
 <br />
-<button class="govuk-button govuk-button--warning" data-module="govuk-button" name="editDashboard" value="archive">
-Remove selected prisoners
-</button>
-<button class="govuk-button" data-module="govuk-button" style="margin-left:30px;" name="editDashboard" value="suspend">
-Continue
-</button>
+
+{{ govukButton({
+  text: "Remove selected prisoners",
+  classes: "govuk-button--warning",
+  href: "non-association-remove-offender"
+}) }}
+{{ govukButton({
+  text: "Continue",
+  href: "how-to-schedule-group"
+}) }}
+
+
+
   </form>
 
 </div>
