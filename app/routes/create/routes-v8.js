@@ -260,7 +260,7 @@ module.exports = function(router) {
 	router.post(version + '/create/activity-is-education-needed', function(req, res) {
 
 		if (req.session.data.EducationNeeded == 'yes') {
-			res.redirect(version + '/create/activity-add-education')
+			res.redirect(version + '/create/activity-add-education-new')
 		}
 		else {
 			res.redirect(version + '/create/activity-check-your-answers')

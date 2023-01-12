@@ -24,16 +24,17 @@ Activities Management prototype
         type: 'success'
         }) }}
         {% endif %}
-        <h2 class="govuk-heading-xl govuk-!-margin-bottom-4">Review pay rates for {{data.activityName or 'Maths level 1'}}</h2>
+        <h2 class="govuk-heading-xl govuk-!-margin-bottom-4">Review education levels and qualifications for {{data.activityName or 'Maths level 1'}}</h2>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <h3>Course or Skill</h3>
             {% for level in data.educationLevels %}
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     {{level.name}}
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    &pound; {{rate.amount or '1.10'}}
+
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link govuk-!-margin-right-3" href="activity-add-education-new?id={{level.id}}">
@@ -48,11 +49,11 @@ Activities Management prototype
         </dl>
 
         <form>
-            <button class="govuk-button" data-module="govuk-button" value="confirmPay" formaction="activity-is-education-needed">
-                Confirm pay rates
+            <button class="govuk-button" data-module="govuk-button" value="confirmPay" formaction="activity-check-your-answers">
+                Confirm
             </button>
             <button style="margin-left:30px;" class="govuk-button govuk-button--secondary" data-module="govuk-button" value="addAnother" formaction="activity-add-education-new">
-                Add another pay rate
+                Add another qualification
             </button>
         </form>
     </div>

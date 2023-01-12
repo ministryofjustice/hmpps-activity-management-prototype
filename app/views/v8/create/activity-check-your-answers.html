@@ -1958,6 +1958,8 @@ Activities Management prototype
               </a>
             </dd>
           </div>
+
+
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Risk level
@@ -1977,10 +1979,12 @@ Activities Management prototype
               Education level
             </dt>
             <dd class="govuk-summary-list__value">
-              Entry level English, level 3<br />Entry level maths, level 3
+              {% for level in data.educationLevels %}
+                {{level.name or 'None set'}}<br />
+              {% endfor %}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-add-education">
+              <a class="govuk-link" href="check/activity-add-education-new">
                 Change<span class="govuk-visually-hidden"> licence period</span>
               </a>
             </dd>
@@ -2000,7 +2004,7 @@ Activities Management prototype
 
                   {% endfor %}
 
-                {% endif %}<br />
+                {% endif %}
                 {% endfor %}
               </dd>
                 <dd class="govuk-summary-list__actions">
@@ -2024,8 +2028,6 @@ Activities Management prototype
               </a>
             </dd>
           </div>
-
-
         </dl>
         {% if data['edit']=='true' %}
 
