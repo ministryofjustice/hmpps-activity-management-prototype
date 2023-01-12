@@ -1,14 +1,12 @@
 
 {% extends "layout.html" %}
 
-
 {% block pageTitle %}
 Activities Management prototype
 {% endblock %}
 {% block back %}
 {% endblock %}
 {% block content %}
-
 
 {% if data['fromActivityDashboard']=='true' %}
 <!--Show content linked form flat activity fromActivityDashboard-->
@@ -18,8 +16,7 @@ Activities Management prototype
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
-
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{data|dump}}
         View {% if data.status=='live' %}or  change {% endif %} details for {{data.activityNameDashboard or 'Maths level 1'}}
       </h1>
     </div>
@@ -114,7 +111,7 @@ Activities Management prototype
             </dd>
           </div>
           <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
+            <dt class="govuk-summary-list__key" style="width=10%">
               Pay rates
             </dt>
             <dd class="govuk-summary-list__value">
@@ -128,7 +125,11 @@ Activities Management prototype
 
                   {% endfor %}
 
-                {% endif %}<br />
+                  {% else %}
+                  Basic incentive level <br />
+                  Payment rate A: &pound;1.10
+
+                  {% endif %}<br />
                 {% endfor %}
               </dd>
             <dd class="govuk-summary-list__value">

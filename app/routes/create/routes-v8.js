@@ -267,6 +267,12 @@ module.exports = function(router) {
 		}
 	});
 
+	router.post(version + '/create/addEducation-new', function(req, res) {
+		{
+			res.redirect(version + '/create/activity-add-education')
+		}
+	});
+
 	router.post(version + '/create/addEducation', function(req, res) {
 		{
 			res.redirect(version + '/create/activity-add-education-one-added')
