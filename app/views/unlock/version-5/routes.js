@@ -89,7 +89,7 @@ function createAttendanceDetailsForMultiplePrisoners(prisoners, attendance, pay,
         attendanceDetails[prisonerId] = {
             attendance: attendance,
             pay: pay,
-            payReason: reason,
+            'pay-detail': reason,
             unacceptableAbsence: unacceptableAbsence,
             incentiveLevelWarning: ''
         };
