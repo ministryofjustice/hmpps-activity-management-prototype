@@ -16,19 +16,15 @@ Activities Management prototype
 			items: [
 			{
 				text: "Digital Prison Services",
-				href: "../dps-home"
+				href: "../../../dps-home"
 			},
 			{
 				text: "Manage prisoner whereabouts",
-				href: "../whereabouts"
+				href: "../../../whereabouts"
 			}
 			]
 		}) }}
 		{% endblock %}
-
-		{% set date = data['date'] or date|today() %}
-
-		<!-- {{data['attendance']|dump}} -->
 
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 			{% if activity.cancelled == true %}
@@ -49,7 +45,7 @@ Activities Management prototype
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 						<span class="govuk-caption-l">
-							{{activity.times[0].startTime}} on {{date|convertShortDateToLongDate(date) or "2 November 2022"}}
+							{{activityTimes.startTime}}&thinsp;&ndash;&thinsp;{{activityTimes.endTime}} on {{date|convertShortDateToLongDate(date) or "2 November 2022"}}
 						</span>
 
 						{{ activity.name or 'Workshop' }}: record attendance
@@ -61,10 +57,10 @@ Activities Management prototype
 
 					<ul class="govuk-list">
 						<li>
-							<a href="../activities?chosen-date={{date}}" class="govuk-link--no-visited-state">Choose a different activity</a>
+							<a href="../../{{date}}" class="govuk-link--no-visited-state">Choose a different activity</a>
 						</li>
 						<li>
-							<a href="../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
+							<a href="../../../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
 						</li>
 						{% if activity.cancelled != true %}
 						<li>
@@ -85,7 +81,13 @@ Activities Management prototype
 			</div>
 
 			{% if data['selected-prisoners'].length == 1 %}
-			{% set prisoner = data['selected-prisoners'] | getPrisoner %}
+			{% set prisonerName %}
+			{% for prisoner in prisonersList %}
+			{% if data['selected-prisoners'][0] == prisoner.id %}
+			{{prisoner.name.firstname}} {{prisoner.name.surname}}
+			{% endif %}
+			{% endfor %}
+			{%- endset -%}
 			{% endif %}
 
 			{% if data['attendance-confirmation'] == 'true' %}
@@ -94,7 +96,7 @@ Activities Management prototype
 			<h3 class="govuk-notification-banner__heading">
 				Attendance recorded
 			</h3>
-			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisoner.name.firstname + " " + prisoner.name.surname}}.</p>
+			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisonerName}}.</p>
 			{% endset %}
 			{{ govukNotificationBanner({
 				html: html,
@@ -183,7 +185,7 @@ Activities Management prototype
 									<a href="#" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 									<span class="govuk-tag govuk-tag--orange">Appointment</span>
 									{% else %}
-									<a href="{{event.id}}?date={{date}}&period={{event.period}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
+									<a href="{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 									{% endif %}
 								</div>
 								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}</div>
@@ -213,13 +215,13 @@ Activities Management prototype
 			{{ govukPagination({
 				previous: {
 					text: "Previous session",
-					labelText: previousSessionDate | convertShortDateToVeryLongDate(dayBefore),
-					href: "?date="+previousSessionDate+"&period="+data['period']
+					labelText: previousSessionDate.date | convertShortDateToVeryLongDate(dayBefore) + ' (' + previousSessionDate.period + ')',
+					href: "../../" + previousSessionDate.date+"/" + previousSessionDate.period + "/" + activityId
 				},
 				next: {
 					text: "Next session",
-					labelText: nextSessionDate | convertShortDateToVeryLongDate(),
-					href: "?date="+nextSessionDate+"&period="+data['period']
+					labelText: nextSessionDate.date | convertShortDateToVeryLongDate() + ' (' + nextSessionDate.period + ')',
+					href: "../../" + nextSessionDate.date+"/" + nextSessionDate.period + "/" + activityId
 				}
 			}) }}
 		</main>
