@@ -27,15 +27,15 @@ Activities Management prototype
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 			Unlock list
-			<span class="govuk-caption-l">{{relativeDate or date|longDateFormat(date)}} ({{data['times']|upper or "morning"}})</span>
+			<span class="govuk-caption-l">{{relativeDate or date|longDateFormat(date)}} ({{period|upper}})</span>
 		</h1>
 		<ul class="govuk-list">
 			<li>
-				<a href="select-unlock-locations" class="govuk-link--no-visited-state">Choose a different unlock list</a>
+				<a href="../../../select-unlock-locations" class="govuk-link--no-visited-state">Choose a different unlock list</a>
 			</li>
 			{% if activity.cancelled != true %}
 			<li>
-				<a href="refusals-list" class="govuk-link--no-visited-state">Record refusals and absences</a>
+				<a href="../../../refusals-list/{{date}}/{{period}}/{{houseblock}}" class="govuk-link--no-visited-state">Record refusals and absences</a>
 			</li>
 			{% endif %}
 		</ul>
@@ -252,7 +252,7 @@ Activities Management prototype
 				{% for event in prisoner.events %}
 				<div {% if not loop.last %}class="govuk-!-margin-bottom-4"{% endif %}>
 					<div>
-						<a href="activities/{{event.id}}?date={{date}}&period={{event.period}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
+						<a href="../../../activities/{{date}}/{{event.period}}/{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 						{% if event.type == 'appointment' %}
 						<span class="govuk-tag govuk-tag--orange">Appointment</span>
 						{% endif %}

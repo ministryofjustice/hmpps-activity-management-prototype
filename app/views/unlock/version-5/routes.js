@@ -717,7 +717,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendanc
 });
 
 // refusals
-router.get('/add-refusal-details', function(req, res) {
+router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-refusal-details', function(req, res) {
 	delete req.session.data['attendance-details']
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
@@ -725,7 +725,7 @@ router.get('/add-refusal-details', function(req, res) {
 		filteredPrisoners
 	})
 });
-router.post('/add-refusal-details', function(req, res) {
+router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-refusal-details', function(req, res) {
 	let selectedPrisoners = req.session.data['selected-prisoners'];
 	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
@@ -734,7 +734,8 @@ router.post('/add-refusal-details', function(req, res) {
 	let period = req.session.data['times'];
 	let attendanceDetails = req.session.data['attendance-details'];
 	let activity = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId)
-
+	let houseblock = req.params.selectedHouseblock
+	
 	// selectedPrisoners.forEach(function(prisonerId) {
     //     let prisonerActivityId = filteredPrisoners[prisonerId].activityId;
     //     updateAttendanceData(req, prisonerActivityId, date, period, attendanceDetails);
@@ -745,7 +746,7 @@ router.post('/add-refusal-details', function(req, res) {
     // set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
 
-	res.redirect('refusals-list?date=' + date)
+	res.redirect('../'+houseblock)
 });
 
 
@@ -851,35 +852,38 @@ router.post('/check-attendance-details', function(req, res) {
 
 // SELECT REFUSALS LOCATIONS
 router.post('/select-refusals-locations', function(req, res) {
-	let chosenDate = req.session.data['date']
-	let today = new Date()
+	let date = req.session.data['date']
+	let period = req.session.data['period'].toUpperCase()
+	let locations = getWings(req.session.data['selected-locations']);
+	let houseblock = Object.keys(locations)[0]
 
-	if (chosenDate == 'other-date') {
+	if (date == 'other-date') {
 		if (req.session.data['other-date-year'] !== undefined && req.session.data['other-date-month'] !== undefined && req.session.data['other-date-day'] !== undefined) {
-			req.session.data['date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
-			res.redirect('refusals-list')
+			date = req.session.data['date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
+			res.redirect('refusals-list/'+date+'/'+period+'/'+houseblock)
 		} else {
 			res.redirect('select-refusals-locations');
 		}
 	} else {
-		res.redirect('refusals-list')
+		res.redirect('refusals-list/'+date+'/'+period+'/'+houseblock)
 	}
 });
 
 // REFUSALS LIST
-router.get('/refusals-list', function(req, res) {
-	let period = req.session.data['times'].toUpperCase();
-	let date = req.session.data['date'];
-	if (date == 'other-date' && req.session.data['other-date-year'] && req.session.data['other-date-month'] && req.session.data['other-date-day']){
-		date = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
-	}
+router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', function(req, res) {
+	let period = req.params.selectedPeriod;
+	let date = req.params.selectedDate;
+
+	// if (date == 'other-date' && req.session.data['other-date-year'] && req.session.data['other-date-month'] && req.session.data['other-date-day']){
+	// 	date = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
+	// }
 
 	let dayOfWeek = new Date(date).getDay();
 
 	let activities = req.session.data['timetable-complete-1']['activities'];
 	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
 	let locations = getWings(req.session.data['selected-locations']);
-	let houseblock = Object.keys(locations)[0]
+	let houseblock = req.params.selectedHouseblock
 
 	const prisonersByHouseblock = getPrisonersByHouseblock(prisoners, houseblock);
 	const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
@@ -893,41 +897,41 @@ router.get('/refusals-list', function(req, res) {
 	res.render('unlock/' + req.version + '/refusals-list', {
 		locations,
 		prisonersWithEvents,
-		date
+		date,
+		period,
+		houseblock
 	})
 });
 
 // SELECT UNLOCK LOCATIONS	
 router.post('/select-unlock-locations', function(req, res) {
-	let chosenDate = req.session.data['date']
-	let today = new Date()
+	let date = req.session.data['date']
+	let period = req.session.data['period'].toUpperCase()
+	let locations = getWings(req.session.data['selected-locations']);
+	let houseblock = Object.keys(locations)[0]
 
-	if (chosenDate == 'other-date') {
+	if (date == 'other-date') {
 		if (req.session.data['other-date-year'] !== undefined && req.session.data['other-date-month'] !== undefined && req.session.data['other-date-day'] !== undefined) {
-			req.session.data['date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
-			res.redirect('unlock-list')
+			date = req.session.data['date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
+			res.redirect('unlock-list/'+date+'/'+period+'/'+houseblock)
 		} else {
 			res.redirect('select-unlock-locations');
 		}
 	} else {
-		res.redirect('unlock-list')
+		res.redirect('unlock-list/'+date+'/'+period+'/'+houseblock)
 	}
 });
 
 // unlock list
-router.get('/unlock-list', function(req, res) {
-	let period = req.session.data['times'].toUpperCase();
-	let date = req.session.data['date'];
-	if (date == 'other-date' && req.session.data['other-date-year'] && req.session.data['other-date-month'] && req.session.data['other-date-day']){
-		date = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
-	}
-
+router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', function(req, res) {
+	let period = req.params.selectedPeriod;
+	let date = req.params.selectedDate;
 	let dayOfWeek = new Date(date).getDay();
 
 	let activities = req.session.data['timetable-complete-1']['activities'];
 	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
+	let houseblock = req.params.selectedHouseblock
 	let locations = getWings(req.session.data['selected-locations']);
-	let houseblock = Object.keys(locations)[0]
 
 	const prisonersByHouseblock = getPrisonersByHouseblock(prisoners, houseblock);
 	const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
@@ -941,13 +945,15 @@ router.get('/unlock-list', function(req, res) {
 	res.render('unlock/' + req.version + '/unlock-list', {
 		locations,
 		prisonersWithEvents,
-		date
+		date,
+		period,
+		houseblock
 	})
 });
 
 router.get('/unlock-list/download', function(req, res) {
 	const file = `public/downloads/Unlock list concept.pdf`;
-    res.download(file); // Set disposition and send it.
+    res.download(file);
 });
 
 

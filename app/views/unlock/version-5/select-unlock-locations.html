@@ -27,7 +27,7 @@ Activities Management prototype
 		<h1 class="govuk-heading-l">
 			Choose unlock list details
 		</h1>
-		<form action="unlock-list">
+		<form method="post">
 			{% set dateHtml %}
 			{{ govukDateInput({
 				id: "other-date",
@@ -73,7 +73,7 @@ Activities Management prototype
 			}) }}
 
 			{{ govukRadios({
-				name: "times",
+				name: "period",
 				fieldset: {
 					legend: {
 						text: "Time period",
