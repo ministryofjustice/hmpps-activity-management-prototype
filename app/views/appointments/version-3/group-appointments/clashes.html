@@ -18,226 +18,173 @@ Appointments prototype
       Check for appointment clashes
     </h1>
     <p class="govuk-body">
-      Select and remove prisoners with conflicting appointments.
+      Select and remove prisoners with conflicting events.
     </p>
   </div>
 
 </div>
 
 
-<br>
+
 
   
 
 
 
-<div class="govuk-grid-row" style="background-color:#f1f1f1; margin:10px 0 0 5px ;">
-  <div class="govuk-grid-column-two-thirds">
-  <h2 class="govuk-label-wrapper">
-    <label class="govuk-label govuk-label--s" for="event-name" style="margin:10px 0 0 5px ;">
-      Select and apply filters to view appointment clashes
-    </label>
-  </h2>
-  </div>
-  </div>
 
-  <div class="govuk-grid-row" style="background-color:#f1f1f1; margin:0px 0 0 5px ;">
-  <div class="govuk-grid-column-one-third">
-    <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <h1 class="govuk-fieldset__heading">
-          </h1>
-        </legend>
-        <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes"style="margin:0px 0 0 15px ;">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
-            <label class="govuk-label govuk-checkboxes__label" for="organisation">
-              Healthcare
-            </label>
-          </div>
-         
-          <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes"style="margin:0px 0 0 0px ;">
-            <br><br> <br>
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
-              <label class="govuk-label govuk-checkboxes__label" for="organisation">
-                Programmes
-              </label>
-            </div>
-      </fieldset>
-      <br>
-      <button class="govuk-button" data-module="govuk-button" style="margin:0px 0 20px 4px;">
-        Apply filters
-        </button>
-    </div>
-  </div>
-
-  <div class="govuk-grid-column-one-third">
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          </legend>
-          <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
-              <label class="govuk-label govuk-checkboxes__label" for="organisation">
-                Court appearances
-              </label>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-    </div>
-
-
-    <div class="govuk-grid-column-one-third">
-      <h2 class="govuk-label-wrapper" style="margin-top:10px">
-        <label class="govuk-label govuk-label--s" for="event-name">
-        </label>
-      </h2>
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-          <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
-              <label class="govuk-label govuk-checkboxes__label" for="organisation">
-                External appointments
-              </label>
-            </div>
-           </div>
-        </fieldset>
-        
-      </div>
-    </div>
-   
-</div>
 
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <form method="post" action="check-answers">
+
+
+
+  <table class="govuk-table" data-module="moj-sortable-table" style="margin:30px 0 0 10px;">
     
   
-<form method="post" action="check-answers">
-<table class="govuk-table" data-module="moj-sortable-table" style="margin:30px 0 0 10px;">
-  <caption class="govuk-table__caption govuk-table__caption--m">Friday 13 December 2022</caption>
-
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header"   aria-sort="ascending" >Prisoner name and number</th>
-      <th scope="col" class="govuk-table__header"  ></th>
-    </tr>
-  </thead>
-
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell" >
-        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
-            <label class="govuk-label govuk-checkboxes__label" for="waste">
-              Eric Sykes, {{ data['person-3']}}
-            </label>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"   aria-sort="ascending" >Prisoner name and number</th>
+        <th scope="col" class="govuk-table__header"  ></th>
+      </tr>
+    </thead>
+  
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" >
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+              <label class="govuk-label govuk-checkboxes__label" for="waste">
+                Bert Hungerford, {{ data['person-2']}}
+              </label>
+            </div>
           </div>
-        </div>
-        <br>
+          <br>
 
-        <details class="govuk-details" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              Clash details
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <ul class="appointment-event">
-              <li>
-                <b>Drugs misuse programme</b><br>
-                1pm to 4:30pm<br>
-                Created by: John Smith<br>
-                
-    
-              </li>
-              <li>
-                <b>Kitchen</b><br>
-                1pm to 4:30pm<br>
-                Created by: Bill Jones<br>
-                
-              </li>
-            </ul>
+          <!--details component-->
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Clash details
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ul class="appointment-event">
+                <li>
+                  <b>Drugs misuse programme</b><br>
+                  1pm to 4:30pm<br>
+                  Created by: John Smith<br>
+                </li>
+                <li>
+                  <b>Kitchen</b><br>
+                  1pm to 4:30pm<br>
+                  Created by: Bill Jones<br>
+                </li>
+              </ul>
+            </div>
+          </details>
+         <!--details component-->
+            
+       </td>
+        <td class="govuk-table__cell" data-sort-value="0">
+          {{ govukTag({
+            text: "Clash",
+            classes: "govuk-!-margin-right-3"
+          }) }}
+          <a href="schedules/prisoner-schedule" class="govuk-link" target="_blank">View schedule (opens in a new tab)</a>
+        </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" >
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+              <label class="govuk-label govuk-checkboxes__label" for="waste">
+                Alex Sale, {{ data['person-4']}}
+              </label>
+            </div>
           </div>
-        </details>
-       
-          
-          
+          <br>
 
-        
-
-      </td>
-      <td class="govuk-table__cell" data-sort-value="0">
-        {{ govukTag({
-          text: "Clash",
-          classes: "govuk-!-margin-right-3"
-        }) }}
-        <a href="schedules/prisoner-schedule" class="govuk-link" target="_blank">View schedule (opens in a new tab)</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<table class="govuk-table" data-module="moj-sortable-table" style="margin:30px 0 0 10px;">
-  <caption class="govuk-table__caption govuk-table__caption--m">Friday 20 December 2022</caption>
-
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header"   aria-sort="ascending" >Prisoner name and number</th>
-      <th scope="col" class="govuk-table__header" ></th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell" >
-        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
-            <label class="govuk-label govuk-checkboxes__label" for="waste">
-              Eric Sykes, {{ data['person-3']}}
-            </label>
+          <!--details component-->
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Clash details
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ul class="appointment-event">
+               
+                <li>
+                  <b>Kitchen</b><br>
+                  1pm to 4:30pm<br>
+                  Created by: Bill Jones<br>
+                </li>
+              </ul>
+            </div>
+          </details>
+         <!--details component-->
+            
+       </td>
+        <td class="govuk-table__cell" data-sort-value="0">
+          {{ govukTag({
+            text: "Clash",
+            classes: "govuk-!-margin-right-3"
+          }) }}
+          <a href="schedules/prisoner-schedule" class="govuk-link" target="_blank">View schedule (opens in a new tab)</a>
+        </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" >
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+              <label class="govuk-label govuk-checkboxes__label" for="waste">
+                Ryan Gee, {{ data['person-5']}}
+              </label>
+            </div>
           </div>
-        </div>
-        <br>
-        <details class="govuk-details" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              Clash details
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <ul class="appointment-event">
-              <li>
-                <b>Drugs misuse programme</b><br>
-                1pm to 4:30pm<br>
-                Created by: John Smith<br>
-                
-    
-              </li>
-              <li>
-                <b>Kitchen</b><br>
-                1pm to 4:30pm<br>
-                Created by: Bill Jones<br>
-                
-              </li>
-            </ul>
-          </div>
-        </details>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="0">
-        {{ govukTag({
-          text: "Clash",
-          classes: "govuk-!-margin-right-3"
-        }) }}<a href="schedules/prisoner-schedule-20-dec" class="govuk-link" target="_blank">View schedule (opens in a new tab)</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+          <br>
+
+          <!--details component-->
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Clash details
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ul class="appointment-event">
+               
+                <li>
+                  <b>Kitchen</b><br>
+                  1pm to 4:30pm<br>
+                  Created by: Bill Jones<br>
+                </li>
+              </ul>
+            </div>
+          </details>
+         <!--details component-->
+            
+       </td>
+        <td class="govuk-table__cell" data-sort-value="0">
+          {{ govukTag({
+            text: "Clash",
+            classes: "govuk-!-margin-right-3"
+          }) }}
+          <a href="schedules/prisoner-schedule" class="govuk-link" target="_blank">View schedule (opens in a new tab)</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+
+
+
 <br />
 <button class="govuk-button govuk-button--warning" data-module="govuk-button" name="editDashboard" value="archive">
 Remove selected prisoners

@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {
-	DateTime
-} = require('luxon')
+const { DateTime } = require('luxon')
 
 // app data
 const prisoners = require('../../../data/prisoners-list-3')
@@ -60,34 +58,6 @@ const findMatchingPrisoner = (prisoners, prisonerIds) => {
 	}
 	return selectedPrisoners;
 };
-
-const attendAndPaySelectedPrisoners = (selectedPrisoners, activityId, date, period, attendanceData, activityPrisonerList) => {
-    // loop through selected prisoners
-	selectedPrisoners.forEach(prisoner => {
-		const attendanceInfo = attendanceData[prisoner];
-		const prisonerObject = activityPrisonerList.find(prisonerObject => prisonerObject.id === prisoner);
-		if (prisonerObject) {
-			if (!prisonerObject.attendance) {
-				prisonerObject.attendance = [];
-			}
-			const attendanceRecordExists = prisonerObject.attendance.find(attendanceRecord => attendanceRecord.activityId === activityId && attendanceRecord.date === date && attendanceRecord.period.toLowerCase() === period.toLowerCase());
-			if (!attendanceRecordExists) {
-				prisonerObject.attendance.push({
-					prisonerId: prisoner,
-					activityId: activityId,
-					date: date,
-					period: period,
-					attendance: attendanceInfo.attendance,
-					pay: attendanceInfo.pay,
-					payReason: attendanceInfo.payReason,
-					unacceptableAbsence: attendanceInfo.unacceptableAbsence,
-					incentiveLevelWarning: attendanceInfo.incentiveLevelWarning
-				});
-			}
-		}
-	});
-	return activityPrisonerList;
-}
 
 const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, date, period) => {
 	if (attendanceData && attendanceData[activityId] && attendanceData[activityId][date] && attendanceData[activityId][date][period]) {
@@ -152,7 +122,7 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
 // Function to filter a list of prisoners who have an activity on a given date (e.g. '2023-02-21') and period (e.g. 'am' or 'pm')
 const getPrisonersByDateAndPeriod = (prisoners, activities, date, period, type) => {
     // get day of week
-	const dayOfWeek = new Date(date).getDay() + 1;
+	const dayOfWeek = new Date(date).getDay();
 
     // get list of prisoners with activity ids
 	const prisonersWithActivityIds = prisoners.filter(prisoner => {
@@ -226,7 +196,7 @@ const addEventsToPrisoners = (prisoners, activities, date, period) => {
 			const activity = activities.find(activity => activity.id.toString() === activityId.toString());
 
             // check if activity has schedule for given day
-			const scheduleForDay = activity.schedule.find(schedule => schedule.day === new Date(date).getDay() + 1);
+			const scheduleForDay = activity.schedule.find(schedule => schedule.day === new Date(date).getDay());
 			if (scheduleForDay) {
 				const timesForPeriod = scheduleForDay[period.toLowerCase()];
 				if (timesForPeriod && timesForPeriod.length > 0) {
@@ -274,7 +244,7 @@ const addEventsToPrisoners = (prisoners, activities, date, period) => {
 
 // Function to get a list of activities on a given date
 const activitiesByDate = (activities, date) => {
-	const dayOfWeek = date.getDay() + 1;
+	const dayOfWeek = date.getDay();
 	const filteredActivities = {
 		morning: [],
 		afternoon: []
@@ -307,69 +277,147 @@ const activitiesByDate = (activities, date) => {
 	return filteredActivities;
 }
 
-function getSessionDate(date, activity, direction) {
-	const currentDay = new Date(date).getDay() + 1;
-	let sessionDay;
+function getNextSession(activity, selectedDate, selectedPeriod) {
+    selectedDate = new Date(selectedDate);
+    var currentDay = selectedDate.getDay();
 
-	if (direction === 'next') {
-		for (const day of activity.schedule) {
-			if (day.day > currentDay) {
-				sessionDay = day.day;
-				break;
-			}
-			if (day.am || day.pm) {
-				sessionDay = day.day;
-			}
-		}
-	} else if (direction === 'previous') {
-		for (let i = activity.schedule.length - 1; i >= 0; i--) {
-			if (activity.schedule[i].day < currentDay) {
-				sessionDay = activity.schedule[i].day;
-				break;
-			}
-			if (activity.schedule[i].am || activity.schedule[i].pm) {
-				sessionDay = activity.schedule[i].day;
-			}
-		}
-	}
+    var nextSession = {
+        date: null,
+        period: null
+    };
 
-    // If no next/previous session day was found, it means the next/previous session is in the following/previous week
-	if (!sessionDay) {
-		if (direction === 'next') {
-			sessionDay = activity.schedule[0].day;
-		} else if (direction === 'previous') {
-			sessionDay = activity.schedule[activity.schedule.length - 1].day;
-		}
-	}
+    var maxIterations = 8;
+    while (maxIterations > 0) {
+        if (selectedPeriod === "AM") {
+            if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
+                return nextSession = {
+                    date: selectedDate.toISOString().slice(0, 10),
+                    period: "PM"
+                };
+            } else {
+                currentDay++;
+                if (currentDay === 7) {
+                    currentDay = 0;
+                }
+                if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
+                	selectedDate.setDate(selectedDate.getDate() + 1)
+                    return nextSession = {
+                        date: selectedDate.toISOString().slice(0, 10),
+                        period: "AM"
+                    };
+                } else {
+                    if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
+                    	selectedDate.setDate(selectedDate.getDate() + 1)
+                        return nextSession = {
+                            date: selectedDate.toISOString().slice(0, 10),
+                            period: "PM"
+                        };
+                    } else {
+                        selectedDate.setDate(selectedDate.getDate() + 1)
+                        maxIterations--;
+                    }
+                }
+            }
+        } else if (selectedPeriod === "PM") {
+            currentDay++;
+            if (currentDay === 7) {
+                currentDay = 0;
+                selectedDate.setDate(selectedDate.getDate() + 1);
+            }
+            if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
+            	selectedDate.setDate(selectedDate.getDate() + 1)
+                return nextSession = {
+                    date: selectedDate.toISOString().slice(0, 10),
+                    period: "AM"
+                };
+            } else {
+                if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
+                    return nextSession = {
+                        date: selectedDate.toISOString().slice(0, 10),
+                        period: "PM"
+                    };
+                } else {
+                    selectedDate.setDate(selectedDate.getDate() + 1)
+                    maxIterations--;
+                }
+            }
+        }
+    }
 
-    // Check if the next/previous session day is in the same week as the current day
-	const sessionDate = new Date(date);
-	if (direction === 'next') {
-		if (sessionDay === currentDay) {
-			sessionDate.setDate(sessionDate.getDate() + 7);
-		} else if (sessionDay < currentDay) {
-			sessionDate.setDate(sessionDate.getDate() + (7 - currentDay + sessionDay));
-		} else {
-			sessionDate.setDate(sessionDate.getDate() + (sessionDay - currentDay));
-		}
-	} else if (direction === 'previous') {
-		if (sessionDay === currentDay) {
-			sessionDate.setDate(sessionDate.getDate() - 7);
-		} else if (sessionDay > currentDay) {
-			sessionDate.setDate(sessionDate.getDate() - (currentDay + (7 - sessionDay)));
-		} else {
-			sessionDate.setDate(sessionDate.getDate() - (currentDay - sessionDay));
-		}
-	}
-
-	return formatDate(sessionDate);
+    return "No upcoming sessions found";
 }
 
-function formatDate(date) {
-	const year = date.getFullYear();
-	const month = String(date.getMonth() + 1).padStart(2, '0');
-	const day = String(date.getDate()).padStart(2, '0');
-	return `${year}-${month}-${day}`;
+function getPreviousSession(activity, selectedDate, selectedPeriod) {
+    selectedDate = new Date(selectedDate);
+    var currentDay = selectedDate.getDay();
+
+    var previousSession = {
+        date: null,
+        period: null
+    };
+
+    var maxIterations = 8;
+    while (maxIterations > 0) {
+        if (selectedPeriod === "PM") {
+            if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
+                return previousSession = {
+                    date: selectedDate.toISOString().slice(0, 10),
+                    period: "AM"
+                };
+            } else {
+                currentDay--;
+                if (currentDay === -1) {
+                    currentDay = 6;
+                    selectedDate.setDate(selectedDate.getDate() - 1);
+                }
+                if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
+                	console.log("found on day:"+currentDay)
+                	selectedDate.setDate(selectedDate.getDate() - 1)
+                    return previousSession = {
+                        date: selectedDate.toISOString().slice(0, 10),
+                        period: "PM"
+                    };
+                } else {
+                	console.log("found on day:"+currentDay)
+                    if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
+                    	selectedDate.setDate(selectedDate.getDate() - 1)
+                        return previousSession = {
+                            date: selectedDate.toISOString().slice(0, 10),
+                            period: "AM"
+                        };
+                    } else {
+                        selectedDate.setDate(selectedDate.getDate() - 1)
+                        maxIterations--;
+                    }
+                }
+            }
+        } else if (selectedPeriod === "AM") {
+            currentDay--;
+            if (currentDay === -1) {
+                currentDay = 6;
+            }
+            if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
+            	selectedDate.setDate(selectedDate.getDate() - 1)
+                return previousSession = {
+                    date: selectedDate.toISOString().slice(0, 10),
+                    period: "PM"
+                };
+            } else {
+                if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
+                	selectedDate.setDate(selectedDate.getDate() - 1)
+                    return previousSession = {
+                        date: selectedDate.toISOString().slice(0, 10),
+                        period: "AM"
+                    };
+                } else {
+                    selectedDate.setDate(selectedDate.getDate() - 1)
+                    maxIterations--;
+                }
+            }
+        }
+    }
+
+    return "No upcoming sessions found";
 }
 
 function getFilteredPrisoners(selectedPrisoners, prisonerList) {
@@ -402,71 +450,6 @@ function getWings(data) {
 
 	return locations
 }
-
-function updateAttendanceListFigures(req, res) {
-	req.session.data['timetable-complete-1']['activities'].forEach((activity) => {
-		const id = activity.id;
-		const scheduledPrisoners = req.session.data['timetable-complete-1']['prisoners'].filter((prisoner) => prisoner.activity === id);
-
-		const attendedPrisoners = scheduledPrisoners.filter((prisoner) => prisoner.attendance == 'attended');
-		const notAttendedPrisoners = scheduledPrisoners.filter((prisoner) => prisoner.attendance == 'not-attended');
-
-		activity['count'] = scheduledPrisoners.length
-		activity['attended-count'] = attendedPrisoners.length
-		activity['not-attended-count'] = notAttendedPrisoners.length
-	})
-}
-
-function getActivitiesForPeriod(activities, period, dayOfWeek) {
-	return activities.filter(activity => {
-		let schedule = activity.schedule.find(day => day.day === dayOfWeek);
-		return schedule && schedule[period.toLowerCase()];
-	});
-}
-
-function getPrisonersForActivities(prisoners, activities) {
-	return prisoners.filter(prisoner => {
-		if (Array.isArray(prisoner.activity)) {
-			return prisoner.activity.some(activityId => {
-				return activities.some(activity => {
-					return activity.id === activityId;
-				});
-			});
-		} else {
-			return activities.some(activity => {
-				return activity.id === prisoner.activity;
-			});
-		}
-	});
-}
-
-function filterPrisonersByLocation(prisoners, locations) {
-	if (Object.keys(locations).length === 0) {
-		return prisoners;
-	}
-	return prisoners.filter(prisoner => locations['houseblocks'].includes(prisoner.location.houseblock.toString()));
-}
-
-// function updateAttendanceData(req, activityID, activityDate, data) {
-//     // create attendance-data object if it doesn't exist
-// 	if (!req.session.data['attendance-data']) {
-// 		req.session.data['attendance-data'] = {};
-// 	}
-
-//     // create nested objects for activityID and activityDate if they don't exist
-// 	if (!req.session.data['attendance-data'][activityID]) {
-// 		req.session.data['attendance-data'][activityID] = {};
-// 	}
-// 	if (!req.session.data['attendance-data'][activityID][activityDate]) {
-// 		req.session.data['attendance-data'][activityID][activityDate] = {};
-// 	}
-
-//     // add attendance data for each prisoner
-// 	for (let i = 0; i < data.length; i++) {
-// 		let prisonerID = data[i]['id'];
-// 		req.session.data['attendance-data'][activityID][activityDate][prisonerID] = data[i];
-// 	}
-// }
 
 function getAttendanceData(date, activityId, attendanceData, filteredPrisoners) {
 	let updatedFilteredPrisoners = [];
@@ -537,6 +520,7 @@ function countAttendance(data, activityId, date, period, status) {
     // Return the attendedCount
 	return attendedCount;
 }
+
 const addAttendanceCountsToActivities = (activities, attendanceData, date, prisonersList) => {
 	const scheduledKey = 'scheduled';
 	const notRecordedKey = 'not-recorded';
@@ -587,14 +571,10 @@ const addAttendanceCountsToActivities = (activities, attendanceData, date, priso
 
 
 // ATTENDANCE LIST
-router.post('/activities/:activityId', function(req, res) {
-	res.redirect('add-attendance-details')
-});
-
-router.get('/activities/:activityId', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req, res) {
 	let activityId = req.params.activityId;
-	let date = req.session.data['date']
-	let period = req.session.data['period'];
+	let date = req.params.selectedDate
+	let period = req.params.selectedPeriod;
 
 	let activities = req.session.data['timetable-complete-1']['activities'];
 	let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
@@ -611,8 +591,12 @@ router.get('/activities/:activityId', function(req, res) {
 	let notAttendedCount = countAttendance(req.session.data['attendance'], activityId, date, period, "not-attended");
 	let attendedCount = countAttendance(req.session.data['attendance'], activityId, date, period, "attended");
 
-	let nextSessionDate = getSessionDate(date, activity, 'next');
-	let previousSessionDate = getSessionDate(date, activity, 'previous');
+	let nextSessionDate = getNextSession(activity, date, period);
+	let previousSessionDate = getPreviousSession(activity, date, period);
+
+	let day = new Date(date).getDay()
+	let activitySchedule = activity.schedule.filter(schedule => schedule.day.toString() === day.toString());
+	let activityTimes = activitySchedule[0][period.toLowerCase()][0]
 
 	// remove the confirmation notification on refreshing the page
 	if (req.session.data['attendance-confirmation'] == 'true') {
@@ -621,6 +605,10 @@ router.get('/activities/:activityId', function(req, res) {
 
 	res.render('unlock/' + req.version + '/activity-list', {
 		activity,
+		day,
+		date,
+		period,
+		activityTimes,
 		prisonersList,
 		notAttendedCount,
 		attendedCount,
@@ -630,8 +618,12 @@ router.get('/activities/:activityId', function(req, res) {
 	})
 });
 
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId', function(req, res) {
+	res.redirect('add-attendance-details')
+});
+
 // cancellation  details
-router.get('/activities/:activityId/cancel', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/cancel', function(req, res) {
 	let activityId = req.params.activityId;
 	let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
 
@@ -639,18 +631,18 @@ router.get('/activities/:activityId/cancel', function(req, res) {
 		activity
 	})
 })
-router.post('/activities/:activityId/cancel', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/cancel', function(req, res) {
 	res.redirect('confirm-cancellation')
 })
-router.get('/activities/:activityId/confirm-cancellation', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation', function(req, res) {
 	res.render('unlock/' + req.version + '/confirm-cancellation')
 })
-router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
-	let date = req.session.data.date
-	let period = req.session.data.period
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation', function(req, res) {
+	let date = req.params.selectedDate
+	let period = req.params.selectedPeriod
+	let activityId = req.params.activityId;
 
 	if (req.session.data['confirm-cancellation'] == 'yes') {
-		let activityId = req.params.activityId;
 		let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId);
 		
 		// hacky way to add a cancelled flag
@@ -688,11 +680,11 @@ router.post('/activities/:activityId/confirm-cancellation', function(req, res) {
 		updateAttendanceData(req, activityId, date, period, attendanceDetails)
 	}
 
-	res.redirect('/unlock/' + req.version + '/activities/' + req.params.activityId + '?date=' + date + '&period=' + period)
+	res.redirect('/unlock/' + req.version + '/activities/' + date + '/' + period + '/' + activityId)
 })
 
 // ATTENDANCE DETAILS
-router.get('/activities/:activityId/add-attendance-details', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function(req, res) {
 	delete req.session.data['attendance-details']
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
@@ -700,14 +692,13 @@ router.get('/activities/:activityId/add-attendance-details', function(req, res) 
 		filteredPrisoners
 	})
 });
-
-router.post('/activities/:activityId/add-attendance-details', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function(req, res) {
 	let selectedPrisoners = req.session.data['selected-prisoners'];
 	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
 	let activityId = req.params.activityId;
-	let date = req.session.data['date'];
-	let period = req.session.data['times'];
+	let date = req.params.selectedDate;
+	let period = req.params.selectedPeriod;
 
 	// let attendanceAction = req.session.data['attendance-action'];
 	let attendanceDetails = req.session.data['attendance-details'];
@@ -717,23 +708,17 @@ router.post('/activities/:activityId/add-attendance-details', function(req, res)
 
 	updateAttendanceData(req, activityId, date, period, attendanceDetails)
 
-	// let updatedPrisoners = attendAndPaySelectedPrisoners(selectedPrisoners, activityId, date, period, attendanceDetails, activityPrisonerList)
-
-	// attendanceDetails.forEach(detail => {
-	// 	detail.status = attendanceAction;
-	// });
-
     // set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
 
 	let referrer = req.session.data['attendance-url']
-	let url = (referrer == 'refusals') ? ('refusals-list') : ('../' + activityId + '?date=' + date + '&period=' + period.toUpperCase())
+	let url = (referrer == 'refusals') ? ('refusals-list') : ('../' + activityId)
 
 	res.redirect(url)
 });
 
 // refusals
-router.get('/add-refusal-details', function(req, res) {
+router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-refusal-details', function(req, res) {
 	delete req.session.data['attendance-details']
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
@@ -741,35 +726,45 @@ router.get('/add-refusal-details', function(req, res) {
 		filteredPrisoners
 	})
 });
-router.post('/add-refusal-details', function(req, res) {
-	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
-	let activityId = req.session.data['activity-id'];
-	let date = req.session.data['date']
-	let attendanceAction = req.session.data['attendance-action'];
-	let activityTimetable = req.session.data['timetable-complete-1']['activities'];
+router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-refusal-details', function(req, res) {
+	let selectedPrisoners = req.session.data['selected-prisoners'];
+	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
+	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
+	let activityId = req.params.activityId;
+	let date = req.session.data['date'];
+	let period = req.session.data['times'];
 	let attendanceDetails = req.session.data['attendance-details'];
+	let activity = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId)
+	let houseblock = req.params.selectedHouseblock
+	
+	// selectedPrisoners.forEach(function(prisonerId) {
+    //     let prisonerActivityId = filteredPrisoners[prisonerId].activityId;
+    //     updateAttendanceData(req, prisonerActivityId, date, period, attendanceDetails);
+    // });
+
+	updateAttendanceData(req, activityId, date, period, attendanceDetails)
 
     // set the confirmation dialog to display
 	req.session.data['attendance-confirmation'] = 'true'
 
-	res.redirect('refusals-list?date=' + date)
+	res.redirect('../'+houseblock)
 });
 
 
 
 // check variable pay
-router.get('/activities/:activityId/check-variable-pay', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/check-variable-pay', function(req, res) {
 	let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
 	res.render('unlock/' + req.version + '/check-variable-pay', {
 		filteredPrisoners
 	})
 });
-router.post('/activities/:activityId/check-variable-pay', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-variable-pay', function(req, res) {
 	let selectedPrisoners = req.session.data['selected-prisoners']
 	let activityId = req.params.activityId
-	let period = req.session.data.period
-	let date = req.session.data.date
+	let period = req.params.selectedPeriod
+	let date = req.params.selectedDate
 
 	if (req.session.data['standard-pay-all'] == 'no') {
 		res.redirect('add-attendance-details')
@@ -808,16 +803,16 @@ router.post('/activities/:activityId/check-variable-pay', function(req, res) {
 		}
 
 		req.session.data['attendance-confirmation'] = 'true'
-		res.redirect('../' + activityId + '?date=' + date + '&period=' + period.toUpperCase())
+		res.redirect('../' + activityId)
 	}
 });
 
 // attendance  details
-router.get('/activities/:activityId/:prisonerId', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', function(req, res) {
 	let activityId = req.params.activityId;
 	let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
-	let date = req.session.data.date;
-	let period = req.session.data.period;
+	let date = req.params.selectedDate;
+	let period = req.params.selectedPeriod;
 	let prisonerId = req.params.prisonerId;
 	let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
 
@@ -858,76 +853,86 @@ router.post('/check-attendance-details', function(req, res) {
 
 // SELECT REFUSALS LOCATIONS
 router.post('/select-refusals-locations', function(req, res) {
-	res.redirect('refusals-list')
-});
-
-// REFUSALS LIST
-router.get('/refusals-list', function(req, res) {
-	let period = req.session.data['times'].toUpperCase();
-	let date = req.session.data['date'];
-	if (date == 'other-date' && req.session.data['other-date-year'] && req.session.data['other-date-month'] && req.session.data['other-date-day']){
-		date = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
-	}
-
-	let dayOfWeek = new Date(date).getDay() + 1;
-
-	let activities = req.session.data['timetable-complete-1']['activities'];
-	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
-	let selectedPrisoners;
+	let date = req.session.data['date']
+	let period = req.session.data['period'].toUpperCase()
 	let locations = getWings(req.session.data['selected-locations']);
 	let houseblock = Object.keys(locations)[0]
 
+	if (date == 'other-date') {
+		if (req.session.data['other-date-year'] !== undefined && req.session.data['other-date-month'] !== undefined && req.session.data['other-date-day'] !== undefined) {
+			date = req.session.data['date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
+			res.redirect('refusals-list/'+date+'/'+period+'/'+houseblock)
+		} else {
+			res.redirect('select-refusals-locations');
+		}
+	} else {
+		res.redirect('refusals-list/'+date+'/'+period+'/'+houseblock)
+	}
+});
+
+// REFUSALS LIST
+router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', function(req, res) {
+	let period = req.params.selectedPeriod;
+	let date = req.params.selectedDate;
+
+	// if (date == 'other-date' && req.session.data['other-date-year'] && req.session.data['other-date-month'] && req.session.data['other-date-day']){
+	// 	date = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
+	// }
+
+	let dayOfWeek = new Date(date).getDay();
+
+	let activities = req.session.data['timetable-complete-1']['activities'];
+	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
+	let locations = getWings(req.session.data['selected-locations']);
+	let houseblock = req.params.selectedHouseblock
+
 	const prisonersByHouseblock = getPrisonersByHouseblock(prisoners, houseblock);
 	const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
-	cons
 	const prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period);
 
     // remove the confirmation notification on loading the page
 	if (req.session.data['attendance-confirmation'] == 'true') {
-		selectedPrisoners = findMatchingPrisoner(prisoners, req.session.data['selected-prisoners'])
-
 		delete req.session.data['attendance-confirmation']
-	}
+	}    
 
 	res.render('unlock/' + req.version + '/refusals-list', {
 		locations,
 		prisonersWithEvents,
-		selectedPrisoners,
-		date
+		date,
+		period,
+		houseblock
 	})
 });
 
 // SELECT UNLOCK LOCATIONS	
 router.post('/select-unlock-locations', function(req, res) {
-	let chosenDate = req.session.data['date']
-	let today = new Date()
+	let date = req.session.data['date']
+	let period = req.session.data['period'].toUpperCase()
+	let locations = getWings(req.session.data['selected-locations']);
+	let houseblock = Object.keys(locations)[0]
 
-	if (chosenDate == 'other-date') {
+	if (date == 'other-date') {
 		if (req.session.data['other-date-year'] !== undefined && req.session.data['other-date-month'] !== undefined && req.session.data['other-date-day'] !== undefined) {
-			req.session.data['date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
-			res.redirect('unlock-list')
+			date = req.session.data['date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
+			res.redirect('unlock-list/'+date+'/'+period+'/'+houseblock)
 		} else {
 			res.redirect('select-unlock-locations');
 		}
 	} else {
-		res.redirect('unlock-list')
+		res.redirect('unlock-list/'+date+'/'+period+'/'+houseblock)
 	}
 });
 
 // unlock list
-router.get('/unlock-list', function(req, res) {
-	let period = req.session.data['times'].toUpperCase();
-	let date = req.session.data['date'];
-	if (date == 'other-date' && req.session.data['other-date-year'] && req.session.data['other-date-month'] && req.session.data['other-date-day']){
-		date = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
-	}
-
-	let dayOfWeek = new Date(date).getDay() + 1;
+router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', function(req, res) {
+	let period = req.params.selectedPeriod;
+	let date = req.params.selectedDate;
+	let dayOfWeek = new Date(date).getDay();
 
 	let activities = req.session.data['timetable-complete-1']['activities'];
 	let prisoners = req.session.data['timetable-complete-1']['prisoners'];
+	let houseblock = req.params.selectedHouseblock
 	let locations = getWings(req.session.data['selected-locations']);
-	let houseblock = Object.keys(locations)[0]
 
 	const prisonersByHouseblock = getPrisonersByHouseblock(prisoners, houseblock);
 	const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
@@ -941,13 +946,15 @@ router.get('/unlock-list', function(req, res) {
 	res.render('unlock/' + req.version + '/unlock-list', {
 		locations,
 		prisonersWithEvents,
-		date
+		date,
+		period,
+		houseblock
 	})
 });
 
 router.get('/unlock-list/download', function(req, res) {
 	const file = `public/downloads/Unlock list concept.pdf`;
-    res.download(file); // Set disposition and send it.
+    res.download(file);
 });
 
 
@@ -956,34 +963,33 @@ router.get('/select-activity', function(req, res) {
 	res.render('unlock/' + req.version + '/select-activity')
 });
 router.post('/select-activity', function(req, res) {
-	let chosenDate = req.session.data['date']
-	let today = new Date()
+	let date = req.session.data['date']
 
-	if (chosenDate == 'other-date') {
+	if (date == 'other-date') {
 		if (req.session.data['other-date-year'] !== undefined && req.session.data['other-date-month'] !== undefined && req.session.data['other-date-day'] !== undefined) {
-			req.session.data['date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
-			res.redirect('activities')
+			date = req.session.data['date'] = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
+			res.redirect('activities/'+date)
 		} else {
 			res.redirect('select-activity');
 		}
 	} else {
-		res.redirect('activities')
+		res.redirect('activities/'+date)
 	}
 });
 // SELECT ACTIVITY RESULTS
-router.get('/activities', function(req, res) {
-	let chosenDate = req.session.data['date']
+router.get('/activities/:selectedDate', function(req, res) {
+	let selectedDate = req.params.selectedDate
 	let period = req.session.data['times'].toUpperCase()
-	let date = new Date(chosenDate)
+	let date = new Date(selectedDate)
 	let activitiesForDate = activitiesByDate(req.session.data['timetable-complete-1']['activities'], date);
 
-	if (chosenDate == 'other-date') {
-		chosenDate = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
+	if (selectedDate == 'other-date') {
+		selectedDate = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
 	}
 
 	let relativeDate;
 	let today = DateTime.local().startOf("day");
-	let dateLuxon = DateTime.fromFormat(chosenDate, "yyyy-MM-dd").startOf("day");
+	let dateLuxon = DateTime.fromFormat(selectedDate, "yyyy-MM-dd").startOf("day");
 	let diff = Math.abs(today.diff(dateLuxon, "days").days);
 	if (diff <= 1) {
 		relativeDate = dateLuxon.toRelativeCalendar();
@@ -992,7 +998,6 @@ router.get('/activities', function(req, res) {
 	let activitiesForDateWithCounts = {'morning':[], 'afternoon':[]}
 	activitiesForDateWithCounts.morning = addAttendanceCountsToActivities(activitiesForDate.morning, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
 	activitiesForDateWithCounts.afternoon = addAttendanceCountsToActivities(activitiesForDate.afternoon, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
-	// console.log(activitiesForDateWithCounts)
 
 	if (req.query.search) {
 		const searchTerm = req.query.search.toLowerCase();
@@ -1001,6 +1006,7 @@ router.get('/activities', function(req, res) {
 	}
 
 	res.render('unlock/' + req.version + '/activities', {
+		selectedDate,
 		relativeDate,
 		activitiesForDate,
 		activitiesForDateWithCounts
