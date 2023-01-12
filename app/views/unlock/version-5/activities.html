@@ -8,18 +8,18 @@ Activities Management prototype
 {% block beforeContent %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {{ govukBreadcrumbs({
-	classes: "govuk-!-display-none-print",
-	items: [
-	{
-		text: "Digital Prison Services",
-		href: "dps-home"
-	},
-	{
-		text: "Manage prisoner whereabouts",
-		href: "whereabouts"
-	}
-	]
-}) }}
+			classes: "govuk-!-display-none-print",
+			items: [
+			{
+				text: "Digital Prison Services",
+				href: "../dps-home"
+			},
+			{
+				text: "Manage prisoner whereabouts",
+				href: "../whereabouts"
+			}
+			]
+		}) }}
 {% endblock %}
 {% block content %}
 
@@ -53,8 +53,9 @@ Activities Management prototype
 	</div>
 </div>
 
+{% for period, activities in activitiesForDate %}
 <h2 class="govuk-heading-m">
-	{{"Morning sessions (" + activitiesForDate.morning|length + ")"}}
+	{{period|capitalize}} sessions ({{activities|length}})
 </h2>
 <table class="govuk-table" data-module="moj-sortable-table">
 	<thead class="govuk-table__head">
@@ -69,10 +70,10 @@ Activities Management prototype
 		</tr>
 	</thead>
 	<tbody class="govuk-table__body">
-		{% for activity in activitiesForDate.morning | sort(false, true, 'name') %}
+		{% for activity in activities | sort(false, true, 'name') %}
 		<tr class="govuk-table__row">
 			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
-				<a href="{{selectedDate}}/AM/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+				<a href="{{selectedDate}}/{{'AM' if period == 'morning' else 'PM'}}/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
 				{% if activity.cancelled == true %}<br><span class="govuk-tag govuk-tag--red govuk-!-margin-top-1">Cancelled</span>{% endif %}
 			</td>
 			<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
@@ -99,47 +100,7 @@ Activities Management prototype
 		{% endfor %}
 	</tbody>
 </table>
-
-<h2 class="govuk-heading-m">
-	{{"Afternoon sessions (" + activitiesForDate.afternoon|length + ")"}}
-</h2>
-<table class="govuk-table" data-module="moj-sortable-table">
-	<thead class="govuk-table__head">
-		<tr class="govuk-table__row">
-			<th scope="col" class="govuk-table__header" aria-sort="ascending" width="250">Activity</th>
-			<th scope="col" class="govuk-table__header" aria-sort="none" width="150">Location</th>
-			<th scope="col" class="govuk-table__header" aria-sort="none" width="150">Time</th>
-			<th scope="col" class="govuk-table__header">Scheduled</th>
-			<th scope="col" class="govuk-table__header govuk-hint">Attended</th>
-			<th scope="col" class="govuk-table__header govuk-hint">Not recorded</th>
-			<th scope="col" class="govuk-table__header govuk-hint">Absent</th>
-		</tr>
-	</thead>
-	<tbody class="govuk-table__body">
-		{% for activity in activitiesForDate.afternoon | sort(false, true, 'name') %}
-		<tr class="govuk-table__row">
-			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
-				<a href="{{date}}/PM/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
-				{% if activity.cancelled == true %}<br><span class="govuk-tag govuk-tag--red govuk-!-margin-top-1">Cancelled</span>{% endif %}
-			</td>
-			<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
-			<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
-				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
-			</td>
-			<td class="govuk-table__cell">{{activity.attendanceCount['scheduled']}}</td>
-			<td class="govuk-table__cell govuk-hint">
-				{% if activity.attendanceCount['attended'] > 0 %}
-				<span class="govuk-tag govuk-tag--green">{{activity.attendanceCount['attended']}}</span>
-				{% else %}
-				{{activity.attendanceCount['attended']}}
-				{% endif %}
-			</td>
-			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount['not-recorded']}}</td>
-			<td class="govuk-table__cell govuk-hint"><span class="{{'govuk-tag govuk-tag--red' if activity['not-attended-count'] > 0 }}">{{activity.attendanceCount['not-attended']}}</span></td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+{% endfor %}
 
 {% set dayBefore = selectedDate | dayBefore() %}
 {% set dayAfter = selectedDate | dayAfter() %}

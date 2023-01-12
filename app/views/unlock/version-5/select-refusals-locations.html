@@ -27,7 +27,7 @@ Activities Management prototype
 		<h1 class="govuk-heading-l">
 			Choose refusals and sickness details
 		</h1>
-		<form action="refusals-list">
+		<form method="post">
 			{% set dateHtml %}
 			{{ govukDateInput({
 				id: "other-date",
@@ -73,7 +73,7 @@ Activities Management prototype
 			}) }}
 
 			{{ govukRadios({
-				name: "times",
+				name: "period",
 				fieldset: {
 					legend: {
 						text: "Time period",
