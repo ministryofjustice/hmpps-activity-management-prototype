@@ -58,15 +58,21 @@ Appointments prototype
         <strong class="govuk-tag govuk-tag--red ">
           Neil Rudge, {{ data['person-1']}} 
         </strong>
+        {% if data['person-6'] >= '' %}
         <strong class="govuk-tag govuk-tag--red ">
           Robin Bab, {{ data['person-6']}}
         </strong>
+        {% endif  %}
+        {% if data['person-8'] >= '' %}
         <strong class="govuk-tag govuk-tag--red ">
           Luther Drove, {{ data['person-8']}}
         </strong>
+        {% endif  %}
+        {% if data['person-9'] >= '' %}
         <strong class="govuk-tag govuk-tag--red ">
           Logan Looker, {{ data['person-9']}} 
         </strong>
+        {% endif  %}
       </td>
     </tr>
     <tr class="govuk-table__row">
@@ -84,11 +90,14 @@ Appointments prototype
         <strong class="govuk-tag govuk-tag--red ">
           Matthew Doyle, {{ data['person-3']}} 
         </strong>
+        {% if data['person-10'] >= '' %}
         <strong class="govuk-tag govuk-tag--red ">
           Eric Sykes, {{ data['person-10']}}  
         </strong>
+        {% endif  %}
       </td>
     </tr>
+    {% if data['person-8'] >= '' %}
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
@@ -106,6 +115,8 @@ Appointments prototype
         </strong>
       </td>
     </tr>
+    {% endif %}
+    {% if data['person-9'] >= '' %}
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
@@ -124,6 +135,8 @@ Appointments prototype
         
       </td>
     </tr>
+    {% endif %}
+    {% if data['person-10'] >= '' %}
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Maths level 1">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
@@ -142,6 +155,7 @@ Appointments prototype
         
       </td>
     </tr>
+    {% endif %}
   </tbody>
 </table>
 

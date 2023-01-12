@@ -54,6 +54,11 @@ Appointments prototype
                   </a>
                 </dd>
               </div>
+
+
+            
+
+              {% if data['  appointment-repeat'] === 'yes' %}
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Start date
@@ -67,18 +72,6 @@ Appointments prototype
                   </a>
                 </dd>
               </div>
-              <!--<div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  End date
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  12 2 2023 
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                 
-                </dd>
-              </div>-->
-             
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Frequency
@@ -97,7 +90,7 @@ Appointments prototype
                   Number of repeats
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  12 
+                  {{ data['number-of-appointments']}} 
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
@@ -105,6 +98,34 @@ Appointments prototype
                   </a>
                 </dd>
               </div>
+              {% else %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Appointment date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Date</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+              <!--<div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  End date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  12 2 2023 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                 
+                </dd>
+              </div>-->
+             
+              
               {% if data['schedule-type'] === 'single-time' %}
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -154,7 +175,7 @@ Appointments prototype
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Eric sykes, A1291AZ 
+                  Matthew Doyle, A1291AZ 
                 </dt>
                 <dd class="govuk-summary-list__value">
                   {{ data['start-hours-3']}}:{{ data['start-minutes-3']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-3']}}:{{ data['end-minutes-3']}} 
@@ -165,7 +186,97 @@ Appointments prototype
                   </a>
                 </dd>
               </div>
-             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Alex Sale, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-4']}}:{{ data['start-minutes-4']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-4']}}:{{ data['end-minutes-4']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Ryan Gee, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-5']}}:{{ data['start-minutes-5']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-5']}}:{{ data['end-minutes-5']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Robin Bab, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-6']}}:{{ data['start-minutes-6']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-6']}}:{{ data['end-minutes-6']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Tommy-Lee Knox, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-7']}}:{{ data['start-minutes-7']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-7']}}:{{ data['end-minutes-7']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Luther Drove, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-8']}}:{{ data['start-minutes-8']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-8']}}:{{ data['end-minutes-8']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Logan Looker, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-9']}}:{{ data['start-minutes-9']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-9']}}:{{ data['end-minutes-9']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Eric Sykes, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-10']}}:{{ data['start-minutes-10']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-10']}}:{{ data['end-minutes-10']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
             </dl>
 
 
