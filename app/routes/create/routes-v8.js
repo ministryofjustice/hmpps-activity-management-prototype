@@ -267,9 +267,9 @@ module.exports = function(router) {
 		}
 	});
 
-	router.post(version + '/create/addEducation-new', function(req, res) {
+	router.post(version + '/create/activity-add-Education-new', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-add-education')
+			res.redirect(version + '/create/activity-check-your-answers-payment')
 		}
 	});
 
