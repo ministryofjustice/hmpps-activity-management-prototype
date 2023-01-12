@@ -807,6 +807,7 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', 
     res.render('unlock/' + req.version + '/attendance-details', {
         prisoner,
         date,
+        period,
         activity,
         attendanceData
     })
