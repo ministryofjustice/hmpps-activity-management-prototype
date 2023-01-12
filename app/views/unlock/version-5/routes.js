@@ -298,7 +298,6 @@ function getNextSession(activity, selectedDate, selectedPeriod) {
                 currentDay++;
                 if (currentDay === 7) {
                     currentDay = 0;
-                    selectedDate.setDate(selectedDate.getDate() + 1);
                 }
                 if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
                 	selectedDate.setDate(selectedDate.getDate() + 1)
@@ -308,6 +307,7 @@ function getNextSession(activity, selectedDate, selectedPeriod) {
                     };
                 } else {
                     if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
+                    	selectedDate.setDate(selectedDate.getDate() + 1)
                         return nextSession = {
                             date: selectedDate.toISOString().slice(0, 10),
                             period: "PM"
@@ -371,13 +371,16 @@ function getPreviousSession(activity, selectedDate, selectedPeriod) {
                     selectedDate.setDate(selectedDate.getDate() - 1);
                 }
                 if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
+                	console.log("found on day:"+currentDay)
                 	selectedDate.setDate(selectedDate.getDate() - 1)
                     return previousSession = {
                         date: selectedDate.toISOString().slice(0, 10),
                         period: "PM"
                     };
                 } else {
+                	console.log("found on day:"+currentDay)
                     if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
+                    	selectedDate.setDate(selectedDate.getDate() - 1)
                         return previousSession = {
                             date: selectedDate.toISOString().slice(0, 10),
                             period: "AM"
@@ -392,7 +395,6 @@ function getPreviousSession(activity, selectedDate, selectedPeriod) {
             currentDay--;
             if (currentDay === -1) {
                 currentDay = 6;
-                selectedDate.setDate(selectedDate.getDate() - 1);
             }
             if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
             	selectedDate.setDate(selectedDate.getDate() - 1)
