@@ -76,11 +76,18 @@ Appointments prototype
                   <b>Drugs misuse programme</b><br>
                   13:00 to 16:30<br>
                   Created by: John Smith<br>
+                  {% if data['appointment-repeat'] === 'Yes' %}
+                  
+                  Clashes with 2 instances
+                  {% endif %}
                 </li>
                 <li>
                   <b>Kitchen</b><br>
                   13:00 to 16:30<br>
                   Created by: Bill Jones<br>
+                  {% if data['appointment-repeat'] === 'Yes' %}
+                  Clashes with {{ data['number-of-appointments']}} instances
+                  {% endif %}
                 </li>
               </ul>
             </div>
@@ -122,6 +129,9 @@ Appointments prototype
                   <b>Kitchen</b><br>
                   13:00 to 16:30<br>
                   Created by: Bill Jones<br>
+                  {% if data['appointment-repeat'] === 'Yes' %}
+                  Clashes with {{ data['number-of-appointments']}} instances
+                  {% endif %}
                 </li>
               </ul>
             </div>
@@ -134,7 +144,7 @@ Appointments prototype
             text: "Clash",
             classes: "govuk-!-margin-right-3"
           }) }}
-          <a href="schedules/prisoner-schedule" class="govuk-link" target="_blank">View schedule (opens in a new tab)</a>
+          <a href="#" class="govuk-link" target="_blank">View schedule (opens in a new tab)</a>
         </td>
       </tr>
       <tr class="govuk-table__row">
@@ -163,6 +173,10 @@ Appointments prototype
                   <b>Kitchen</b><br>
                   13:00 to 16:30m<br>
                   Created by: Bill Jones<br>
+
+                  {% if data['appointment-repeat'] === 'Yes' %}
+                  Clashes with {{ data['number-of-appointments']}} instances
+                  {% endif %}
                 </li>
               </ul>
             </div>
@@ -175,7 +189,7 @@ Appointments prototype
             text: "Clash",
             classes: "govuk-!-margin-right-3"
           }) }}
-          <a href="schedules/prisoner-schedule" class="govuk-link" target="_blank">View schedule (opens in a new tab)</a>
+          <a href="#" class="govuk-link" target="_blank">View schedule (opens in a new tab)</a>
         </td>
       </tr>
     </tbody>
