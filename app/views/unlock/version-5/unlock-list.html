@@ -1,8 +1,10 @@
 {% extends "layout_hmpps.html" %}
 {% set serviceName = "Activities Management" %}
+
 {% block pageTitle %}
-Activities Management prototype
+Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(date)}} ({{period|upper}})
 {% endblock %}
+
 {% block primaryNavigation %}
 {% endblock %}
 {% block beforeContent %}
@@ -26,8 +28,8 @@ Activities Management prototype
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-			Unlock list
-			<span class="govuk-caption-l">{{relativeDate or date|longDateFormat(date)}} ({{period|upper}})</span>
+			Unlock list - Houseblock {{houseblock}}
+			<span class="govuk-caption-l">{{relativeDate|capitalize or date|longDateFormat(date)}} ({{period|upper}})</span>
 		</h1>
 		<ul class="govuk-list">
 			<li>

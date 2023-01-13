@@ -142,6 +142,13 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
     });
 }
 
+function getActivitiesForPeriod(activities, period, dayOfWeek) {
+    return activities.filter(activity => {
+        let schedule = activity.schedule.find(day => day.day === dayOfWeek);
+        return schedule && schedule[period.toLowerCase()];
+    });
+}
+
 // Function to filter a list of prisoners who have an activity on a given date (e.g. '2023-02-21') and period (e.g. 'am' or 'pm')
 const getPrisonersByDateAndPeriod = (prisoners, activities, date, period, type) => {
     // get day of week
@@ -937,6 +944,16 @@ router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', fun
     const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
     const prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period, attendanceData);
 
+    let filteredActivities = getActivitiesForPeriod(activities, period, dayOfWeek);
+
+    let relativeDate;
+    let today = DateTime.local().startOf("day");
+    let dateLuxon = DateTime.fromFormat(date, "yyyy-MM-dd").startOf("day");
+    let diff = Math.abs(today.diff(dateLuxon, "days").days);
+    if (diff <= 1) {
+        relativeDate = dateLuxon.toRelativeCalendar();
+    }
+
     // remove the confirmation notification on loading the page
     if (req.session.data['attendance-confirmation'] == 'true') {
         delete req.session.data['attendance-confirmation']
@@ -946,8 +963,10 @@ router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', fun
         locations,
         prisonersWithEvents,
         date,
+        relativeDate,
         period,
-        houseblock
+        houseblock,
+        filteredActivities
     })
 });
 
