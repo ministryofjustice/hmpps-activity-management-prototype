@@ -558,35 +558,38 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
         for (let i = 0; i < prisonerList.length; i++) {
             let prisoner = prisonerList[i];
             let date = new Date(selectedDate).toISOString().slice(0, 10)
+
+            attendanceCount[scheduledKey] = prisonerList.length;
+            attendanceCount[notRecordedKey] = prisonerList.length;
+
             if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date]) {
                 let activityData = attendanceData[activity.id.toString()][date];
                 if (activityData.AM) {
                     for (let attendance of activityData.AM) {
                         if (attendance.prisonerId.toString() === prisoner.id.toString()) {
-                            attendanceCount[scheduledKey]++;
                             if (attendance.attendance === 'attended') {
                                 attendanceCount[attendedKey]++;
-                            } else {
+                            } else if (attendance.attendance === 'not-attended') {
                                 attendanceCount[notAttendedKey]++;
                             }
                         }
+                        attendanceCount[notRecordedKey]--;
                     }
                     activity.attendanceCount.morning = attendanceCount;
                 } else if (activityData.PM) {
                     for (let attendance of activityData.PM) {
                         if (attendance.prisonerId.toString() === prisoner.id.toString()) {
-                            attendanceCount[scheduledKey]++;
                             if (attendance.attendance === 'attended') {
                                 attendanceCount[attendedKey]++;
-                            } else {
+                            } else if (attendance.attendance === 'not-attended') {
                                 attendanceCount[notAttendedKey]++;
                             }
                         }
+                        attendanceCount[notRecordedKey]--;
                     }
                     activity.attendanceCount.afternoon = attendanceCount;
                 }
             } else {
-                attendanceCount[notRecordedKey] = prisonerList.length;
                 activity.attendanceCount.morning = attendanceCount;
                 activity.attendanceCount.afternoon = attendanceCount;
             }
