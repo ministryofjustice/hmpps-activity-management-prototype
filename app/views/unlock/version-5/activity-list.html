@@ -28,10 +28,16 @@
 		}) }}
 		{% endblock %}
 
-		<!-- {{data['attendance']|dump}} -->
+		{% set cancelled = false %}
+
+		{% for session in activitySchedule[0].cancelledSessions %}
+		{% if session.date == date and session.period|upper == period %}
+		{% set cancelled = true %}
+		{% endif %}
+		{% endfor %}
 
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-			{% if activity.cancelled == true %}
+			{% if cancelled == true %}
 			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 			{% set cancelledHtml %}
 			<h3 class="govuk-notification-banner__heading">
@@ -66,7 +72,7 @@
 						<li>
 							<a href="../../../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
 						</li>
-						{% if activity.cancelled != true %}
+						{% if cancelled == false %}
 						<li>
 							<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-link--no-visited-state">Cancel this session</a>
 						</li>

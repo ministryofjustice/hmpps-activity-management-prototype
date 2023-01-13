@@ -649,7 +649,8 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req
         attendedCount,
         activityId,
         nextSessionDate,
-        previousSessionDate
+        previousSessionDate,
+        activitySchedule
     })
 });
 
@@ -679,11 +680,12 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
 
     if (req.session.data['confirm-cancellation'] == 'yes') {
         let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId);
-
-        // hacky way to add a cancelled flag
-        if (activity) {
-            activity.cancelled = true;
+        let day = new Date(date).getDay()
+        let activitySchedule = activity.schedule.find(schedule => schedule.day.toString() === day.toString());
+        if ( ! activitySchedule.cancelledSessions){
+            activitySchedule.cancelledSessions = []
         }
+        activitySchedule.cancelledSessions.push({date,period});
 
         let newActivities = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId.toString());
         let prisonersData = req.session.data['timetable-complete-1']['prisoners']
