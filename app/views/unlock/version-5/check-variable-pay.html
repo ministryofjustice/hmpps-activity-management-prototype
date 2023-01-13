@@ -1,8 +1,18 @@
 {% extends "layout_hmpps.html" %}
 {% set serviceName = "Activities Management" %}
+
+{% set titleText %}
+{% if data['selected-prisoners'].length === 1 %}
+Should {{filteredPrisoners[0].name.firstname}} {{filteredPrisoners[0].name.surname}} get standard pay?
+{% else %}
+Should all {{data['selected-prisoners'].length}} prisoners get standard pay?
+{% endif %}
+{% endset %}
+
 {% block pageTitle %}
-Activities Management prototype
+{{titleText}}
 {% endblock %}
+
 {% block primaryNavigation %}
 {% endblock %}
 {% block beforeContent %}

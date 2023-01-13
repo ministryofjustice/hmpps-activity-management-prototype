@@ -1,10 +1,14 @@
 {% extends "layout_hmpps.html" %}
 {% set serviceName = "Activities Management" %}
+{% set activitiesCount =  activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
 {% block pageTitle %}
-Activities Management prototype
+{{activitiesCount}} activities scheduled for {{relativeDate or selectedDate|longDateFormat(selectedDate)}}
 {% endblock %}
+
 {% block primaryNavigation %}
 {% endblock %}
+
 {% block beforeContent %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {{ govukBreadcrumbs({
@@ -25,13 +29,12 @@ Activities Management prototype
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		{% set activitiesCount =  activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
 		<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
 			{{activitiesCount}} activities scheduled for {{relativeDate or selectedDate|longDateFormat(selectedDate)}}
 		</h1>
 
 		<ul class="govuk-list govuk-!-margin-bottom-6">
-			<li><a href="select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></li>
+			<li><a href="../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></li>
 			{% if selectedDate != '_'|today %}
 			<li><a href="{{'_'|today}}" class="govuk-link--no-visited-state">View today's schedule</a></li>
 			{% endif %}
