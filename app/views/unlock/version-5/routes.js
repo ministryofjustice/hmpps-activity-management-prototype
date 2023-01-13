@@ -535,53 +535,63 @@ function countAttendance(data, activityId, date, period, status) {
     // Return the attendedCount
     return attendedCount;
 }
-
-const addAttendanceCountsToActivities = (activities, attendanceData, date, prisonersList) => {
+const addAttendanceCountsToActivities = (activities, attendanceData, selectedDate, prisonersList) => {
     const scheduledKey = 'scheduled';
     const notRecordedKey = 'not-recorded';
     const attendedKey = 'attended';
     const notAttendedKey = 'not-attended';
-    // // concat morning and afternoon activities
-    // const allActivities = [...activitiesForDate.morning, ...activitiesForDate.afternoon];
-
-    // loop through activities
     for (let activity of activities) {
-        // initialize attendance count object
         let attendanceCount = {
             [scheduledKey]: 0,
             [notRecordedKey]: 0,
             [attendedKey]: 0,
             [notAttendedKey]: 0
         };
-        // filter prisoners list for activity
-        let prisonerList = prisonersList.filter(prisoner => prisoner.activity && prisoner.activity.includes(activity.id));
-        // loop through prisoners
-        for (let i = 0; i < prisonerList.length; i++) {
-            let prisoner = prisonerList[i];
-            if (prisoner.activity.includes(activity.id)) {
-                attendanceCount[scheduledKey]++;
-                attendanceCount[notRecordedKey]++;
-            }
+
+        activity.attendanceCount = {
+            "morning": "",
+            "afternoon": ""
         }
 
-        // check if attendance data exists for activity
-        if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
-            for (let timeSlot in attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)]) {
-                for (let participant in attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)][timeSlot]) {
-                    if (attendanceData[activity.id.toString()][date.toISOString().slice(0, 10)][timeSlot][participant].attendance === "attended") {
-                        attendanceCount[attendedKey]++;
-                        attendanceCount[notRecordedKey]--;
-                    } else {
-                        attendanceCount[notAttendedKey]++;
-                        attendanceCount[notRecordedKey]--;
+        let prisonerList = prisonersList.filter(prisoner => prisoner.activity && prisoner.activity.includes(activity.id));
+
+        for (let i = 0; i < prisonerList.length; i++) {
+            let prisoner = prisonerList[i];
+            let date = new Date(selectedDate).toISOString().slice(0, 10)
+            if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date]) {
+                let activityData = attendanceData[activity.id.toString()][date];
+                if (activityData.AM) {
+                    for (let attendance of activityData.AM) {
+                        if (attendance.prisonerId.toString() === prisoner.id.toString()) {
+                            attendanceCount[scheduledKey]++;
+                            if (attendance.attendance === 'attended') {
+                                attendanceCount[attendedKey]++;
+                            } else {
+                                attendanceCount[notAttendedKey]++;
+                            }
+                        }
                     }
+                    activity.attendanceCount.morning = attendanceCount;
+                } else if (activityData.PM) {
+                    for (let attendance of activityData.PM) {
+                        if (attendance.prisonerId.toString() === prisoner.id.toString()) {
+                            attendanceCount[scheduledKey]++;
+                            if (attendance.attendance === 'attended') {
+                                attendanceCount[attendedKey]++;
+                            } else {
+                                attendanceCount[notAttendedKey]++;
+                            }
+                        }
+                    }
+                    activity.attendanceCount.afternoon = attendanceCount;
                 }
+            } else {
+                attendanceCount[notRecordedKey] = prisonerList.length;
+                activity.attendanceCount.morning = attendanceCount;
+                activity.attendanceCount.afternoon = attendanceCount;
             }
         }
-        // add attendanceCount to activity
-        activity.attendanceCount = attendanceCount;
     }
-    return activities;
 }
 
 
@@ -738,10 +748,17 @@ router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/ad
     let activity = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId)
     let houseblock = req.params.selectedHouseblock
 
-    // selectedPrisoners.forEach(function(prisonerId) {
-    //     let prisonerActivityId = filteredPrisoners[prisonerId].activityId;
-    //     updateAttendanceData(req, prisonerActivityId, date, period, attendanceDetails);
-    // });
+
+    // // get all events for each prisoner in selectedPrisoners for the selected date and time period
+    // // and mark as 'not-attended' for each event
+    // for (prisonerId in selectedPrisoners){
+    //     let prisonerEventsForDateAndPeriod = getPrisonerEvents(prisonerId, date, period)
+
+    //     for(event in prisonerEventsForDateAndPeriod){
+    //         markPrisonerAsNotAttended()
+    //     }
+    // }
+
 
     updateAttendanceData(req, activityId, date, period, attendanceDetails)
 
@@ -861,9 +878,11 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', f
     let locations = getWings(req.session.data['selected-locations']);
     let houseblock = req.params.selectedHouseblock
 
+    let attendanceData = req.session.data['attendance'];
+
     const prisonersByHouseblock = getPrisonersByHouseblock(prisoners, houseblock);
     const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
-    const prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period);
+    const prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period, attendanceData);
 
     // remove the confirmation notification on loading the page
     if (req.session.data['attendance-confirmation'] == 'true') {
@@ -909,9 +928,11 @@ router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', fun
     let houseblock = req.params.selectedHouseblock
     let locations = getWings(req.session.data['selected-locations']);
 
+    let attendanceData = req.session.data['attendance'];
+
     const prisonersByHouseblock = getPrisonersByHouseblock(prisoners, houseblock);
     const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
-    const prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period);
+    const prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period, attendanceData);
 
     // remove the confirmation notification on loading the page
     if (req.session.data['attendance-confirmation'] == 'true') {

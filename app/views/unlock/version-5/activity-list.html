@@ -47,7 +47,7 @@ Activities Management prototype
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 						<span class="govuk-caption-l">
-							{{activityTimes.startTime}}&thinsp;&ndash;&thinsp;{{activityTimes.endTime}} ({{period}}) on {{date|convertShortDateToVeryLongDate(date)}}
+							{{activityTimes.startTime}}&thinsp;&ndash;&thinsp;{{activityTimes.endTime}} ({{period}}) on {{date|convertShortDateToVeryLongDate}}
 						</span>
 
 						{{ activity.name or 'Workshop' }}: record attendance
@@ -223,12 +223,12 @@ Activities Management prototype
 			{{ govukPagination({
 				previous: {
 					text: "Previous session",
-					labelText: previousSessionDate.date | convertShortDateToVeryLongDate(dayBefore) + ' (' + previousSessionDate.period + ')',
+					labelText: previousSessionDate.date | convertShortDateToVeryLongDate + ' (' + previousSessionDate.period + ')',
 					href: "../../" + previousSessionDate.date+"/" + previousSessionDate.period + "/" + activityId
 				},
 				next: {
 					text: "Next session",
-					labelText: nextSessionDate.date | convertShortDateToVeryLongDate() + ' (' + nextSessionDate.period + ')',
+					labelText: nextSessionDate.date | convertShortDateToVeryLongDate + ' (' + nextSessionDate.period + ')',
 					href: "../../" + nextSessionDate.date+"/" + nextSessionDate.period + "/" + activityId
 				}
 			}) }}

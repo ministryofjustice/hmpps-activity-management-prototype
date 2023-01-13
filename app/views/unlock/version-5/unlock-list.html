@@ -12,11 +12,11 @@ Activities Management prototype
 	items: [
 	{
 		text: "Digital Prison Services",
-		href: "#"
+		href: "../../../dps-home"
 	},
 	{
 		text: "Manage prisoner whereabouts",
-		href: "whereabouts"
+		href: "../../../whereabouts"
 	}
 	]
 }) }}
@@ -252,13 +252,21 @@ Activities Management prototype
 				{% for event in prisoner.events %}
 				<div {% if not loop.last %}class="govuk-!-margin-bottom-4"{% endif %}>
 					<div>
-						<a href="../../../activities/{{date}}/{{event.period}}/{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 						{% if event.type == 'appointment' %}
+						<a href="#" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 						<span class="govuk-tag govuk-tag--orange">Appointment</span>
+						{% else %}
+						<a href="../../../activities/{{date}}/{{period}}/{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 						{% endif %}
 					</div>
-					<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.endTime}}</div>
-					{{event.time}}
+
+					{% if event.attendance == 'attended' %}
+					<span class="moj-badge moj-badge--green govuk-!-margin-bottom-1 govuk-!-margin-top-1">Attended</span>
+					{% elif event.attendance == 'not-attended' %}
+					<span class="moj-badge moj-badge--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Not attended</span>
+					{% endif %}
+
+					<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.times.endTime}}</div>
 					<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ event.location }}</div>
 				</div>
 				{% endfor %}

@@ -52,7 +52,6 @@ Activities Management prototype
 		</div>
 	</div>
 </div>
-
 {% for period, activities in activitiesForDate %}
 <h2 class="govuk-heading-m">
 	{{period|capitalize}} sessions ({{activities|length}})
@@ -80,20 +79,20 @@ Activities Management prototype
 			<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
 				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
 			</td>
-			<td class="govuk-table__cell">{{activity.attendanceCount['scheduled']}}</td>
+			<td class="govuk-table__cell">{{activity.attendanceCount[period]['scheduled']}}</td>
 			<td class="govuk-table__cell govuk-hint">
-				{% if activity.attendanceCount['attended'] > 0 %}
-				<span class="govuk-tag govuk-tag--green">{{activity.attendanceCount['attended']}}</span>
+				{% if activity.attendanceCount[period]['attended'] > 0 %}
+				<span class="govuk-tag govuk-tag--green">{{activity.attendanceCount[period]['attended']}}</span>
 				{% else %}
-				{{activity.attendanceCount['attended']}}
+				{{activity.attendanceCount[period]['attended']}}
 				{% endif %}
 			</td>
-			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount['not-recorded']}}</td>
+			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount[period]['not-recorded']}}</td>
 			<td class="govuk-table__cell govuk-hint">
-					{% if activity.attendanceCount['not-attended'] > 0 %}
-					<span class="govuk-tag govuk-tag--red">{{activity.attendanceCount['not-attended']}}</span>
+					{% if activity.attendanceCount[period]['not-attended'] > 0 %}
+					<span class="govuk-tag govuk-tag--red">{{activity.attendanceCount[period]['not-attended']}}</span>
 					{% else %}
-					{{activity.attendanceCount['not-attended']}}
+					{{activity.attendanceCount[period]['not-attended']}}
 					{% endif %}
 			</td>
 		</tr>
@@ -102,18 +101,18 @@ Activities Management prototype
 </table>
 {% endfor %}
 
-{% set dayBefore = selectedDate | dayBefore() %}
-{% set dayAfter = selectedDate | dayAfter() %}
+{% set dayBefore = selectedDate | dayBefore %}
+{% set dayAfter = selectedDate | dayAfter %}
 {% from "govuk/components/pagination/macro.njk" import govukPagination %}
 {{ govukPagination({
 	previous: {
 		text: "Previous day",
-		labelText: dayBefore | convertShortDateToVeryLongDate(dayBefore),
+		labelText: dayBefore | convertShortDateToVeryLongDate,
 		href: dayBefore
 	},
 	next: {
 		text: "Next day",
-		labelText: dayAfter | convertShortDateToVeryLongDate(),
+		labelText: dayAfter | convertShortDateToVeryLongDate,
 		href: dayAfter
 	}
 }) }}
