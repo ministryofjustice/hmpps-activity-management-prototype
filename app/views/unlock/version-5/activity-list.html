@@ -1,8 +1,10 @@
 {% extends "layout_hmpps.html" %}
 {% set serviceName = "Activities Management" %}
+
 {% block pageTitle %}
-Activities Management prototype
+{{activity.name}} at {{activityTimes.startTime}} on {{date|convertShortDateToVeryLongDate}}
 {% endblock %}
+
 {% block primaryNavigation %}
 {% endblock %}
 
@@ -26,6 +28,8 @@ Activities Management prototype
 		}) }}
 		{% endblock %}
 
+		<!-- {{data['attendance']|dump}} -->
+
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 			{% if activity.cancelled == true %}
 			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
@@ -45,7 +49,7 @@ Activities Management prototype
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 						<span class="govuk-caption-l">
-							{{activityTimes.startTime}}&thinsp;&ndash;&thinsp;{{activityTimes.endTime}} ({{period}}) on {{date|convertShortDateToVeryLongDate(date)}}
+							{{activityTimes.startTime}}&thinsp;&ndash;&thinsp;{{activityTimes.endTime}} ({{period}}) on {{date|convertShortDateToVeryLongDate}}
 						</span>
 
 						{{ activity.name or 'Workshop' }}: record attendance
@@ -188,6 +192,13 @@ Activities Management prototype
 									<a href="{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 									{% endif %}
 								</div>
+								
+								{% if event.attendance == 'attended' %}
+								<span class="moj-badge moj-badge--green govuk-!-margin-bottom-1 govuk-!-margin-top-1">Attended</span>
+								{% elif event.attendance == 'not-attended' %}
+								<span class="moj-badge moj-badge--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Not attended</span>
+								{% endif %}
+
 								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.times.endTime}}</div>
 								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ event.location }}</div>
 							</div>
@@ -214,12 +225,12 @@ Activities Management prototype
 			{{ govukPagination({
 				previous: {
 					text: "Previous session",
-					labelText: previousSessionDate.date | convertShortDateToVeryLongDate(dayBefore) + ' (' + previousSessionDate.period + ')',
+					labelText: previousSessionDate.date | convertShortDateToVeryLongDate + ' (' + previousSessionDate.period + ')',
 					href: "../../" + previousSessionDate.date+"/" + previousSessionDate.period + "/" + activityId
 				},
 				next: {
 					text: "Next session",
-					labelText: nextSessionDate.date | convertShortDateToVeryLongDate() + ' (' + nextSessionDate.period + ')',
+					labelText: nextSessionDate.date | convertShortDateToVeryLongDate + ' (' + nextSessionDate.period + ')',
 					href: "../../" + nextSessionDate.date+"/" + nextSessionDate.period + "/" + activityId
 				}
 			}) }}

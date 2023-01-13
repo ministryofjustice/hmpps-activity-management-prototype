@@ -38,7 +38,8 @@ Activities Management prototype
 					}
 				},
 				hint: {
-					text: "For example, 27 3 2022"
+					html: "You can get unlock lists for dates up to 2 weeks from today.<br>
+					For example, 27 3 2022"
 				}
 			}) }}
 			{% endset %}
@@ -59,7 +60,7 @@ Activities Management prototype
 					text: "Today"
 				},
 				{
-					value: today|dayAfter(today),
+					value: today|dayAfter,
 					text: "Tomorrow"
 				},
 				{
@@ -97,7 +98,7 @@ Activities Management prototype
 				]
 			}) }}
 
-			<div class="govuk-form-group govuk-!-margin-bottom-2">
+			<div class="govuk-form-group govuk-!-margin-bottom-6">
 				<fieldset class="govuk-fieldset" aria-describedby="locations-hint">
 					<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
 						Locations
@@ -110,7 +111,7 @@ Activities Management prototype
 								{{houseblock.name}}
 							</label>
 						</div>
-						<div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-locations-{{houseblock.id}}">
+						<!-- <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-locations-{{houseblock.id}}">
 							<div class="govuk-form-group">
 								<fieldset class="govuk-fieldset">
 									<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
@@ -128,13 +129,13 @@ Activities Management prototype
 									</div>
 								</fieldset>
 							</div>
-						</div>
+						</div> -->
 						{% endfor %}
 					</div>
 				</fieldset>
 			</div>
 		
-			{{ govukCheckboxes({
+			<!-- {{ govukCheckboxes({
 				name: "staying-or-leaving",
 				fieldset: {
 					legend: {
@@ -153,7 +154,7 @@ Activities Management prototype
 					text: "Leaving"
 				}
 				]
-			}) }}
+			}) }} -->
 
 			<div class="govuk-button-group">
 				{{govukButton({

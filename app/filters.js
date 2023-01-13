@@ -125,38 +125,6 @@ module.exports = function(env) {
         }
     }
 
-    /**
-     * Add days to date
-     * @type {Integer} days
-     * @type {String} format
-     */
-    filters.nowPlusDays = (days, format = 'yyyy-LL-dd') => {
-        const date = DateTime.local().plus({
-            days: days
-        })
-
-        return DateTime.fromISO(date, {
-            locale: 'en-GB'
-        }).toFormat(format)
-    }
-
-    /**
-     * Convert object to array, or return empty array.
-     * @type {Object} obj
-     */
-    filters.toArray = (obj) => {
-        if (obj) {
-            const arr = []
-            for (const [key, value] of Object.entries(obj)) {
-                value.id = key
-                arr.push(value)
-            }
-            return arr
-        } else {
-            return []
-        }
-    }
-
     filters.push = (array, item) => {
         array.push(item)
         return array

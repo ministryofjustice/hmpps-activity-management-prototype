@@ -1,8 +1,10 @@
 {% extends "layout_hmpps.html" %}
 {% set serviceName = "Activities Management" %}
+
 {% block pageTitle %}
-Activities Management prototype
+Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(date)}} ({{period|upper}})
 {% endblock %}
+
 {% block primaryNavigation %}
 {% endblock %}
 {% block beforeContent %}
@@ -12,11 +14,11 @@ Activities Management prototype
 	items: [
 	{
 		text: "Digital Prison Services",
-		href: "#"
+		href: "../../../dps-home"
 	},
 	{
 		text: "Manage prisoner whereabouts",
-		href: "whereabouts"
+		href: "../../../whereabouts"
 	}
 	]
 }) }}
@@ -26,8 +28,8 @@ Activities Management prototype
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-			Unlock list
-			<span class="govuk-caption-l">{{relativeDate or date|longDateFormat(date)}} ({{period|upper}})</span>
+			Unlock list - Houseblock {{houseblock}}
+			<span class="govuk-caption-l">{{relativeDate|capitalize or date|longDateFormat(date)}} ({{period|upper}})</span>
 		</h1>
 		<ul class="govuk-list">
 			<li>
@@ -194,7 +196,8 @@ Activities Management prototype
 {% set totalPrisoners = prisonersWithEvents|length %}
 {% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 <h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
-<div class="app-filter-area" id="filters" tabindex=0>
+
+<!-- <div class="app-filter-area" id="filters" tabindex=0>
 	<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold govuk-!-display-none-print">Showing</span>
 	<ul class="app-filter-tag-list">
 		{% for houseblock, wings in locations %}
@@ -207,7 +210,7 @@ Activities Management prototype
 		{% endif %}
 		{% endfor %}
 	</ul>
-</div>
+</div> -->
 
 <table class="govuk-table app-whereabouts-table app-whereabouts-table--font-size-normal" data-module="moj-sortable-table">
 	<thead class="govuk-table__head">
@@ -215,10 +218,10 @@ Activities Management prototype
 			<th class="govuk-table__cell" aria-sort="none">
 				Name
 			</th>
-			<th class="govuk-table__cell" aria-sort="ascending">
+			<th class="govuk-table__cell" aria-sort="ascending" width="120">
 				Location
 			</th>
-			<th class="govuk-table__cell">
+			<th class="govuk-table__cell" width="250">
 				Relevant alerts
 			</th>
 			<th class="govuk-table__cell" aria-sort="none">
@@ -243,7 +246,7 @@ Activities Management prototype
 				{% if prisoner.alerts.length > 0 %}
 				<ul class="govuk-list">
 					{% for alert in prisoner.alerts %}
-					<li><span class="moj-badge moj-badge--grey">{{alert}}</span></li>        
+					<li class="govuk-!-display-inline-block govuk-!-margin-right-1"><span class="moj-badge moj-badge--grey">{{alert}}</span></li>
 					{% endfor %}
 				</ul>
 				{% endif %}
@@ -252,13 +255,21 @@ Activities Management prototype
 				{% for event in prisoner.events %}
 				<div {% if not loop.last %}class="govuk-!-margin-bottom-4"{% endif %}>
 					<div>
-						<a href="../../../activities/{{date}}/{{event.period}}/{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 						{% if event.type == 'appointment' %}
+						<a href="#" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 						<span class="govuk-tag govuk-tag--orange">Appointment</span>
+						{% else %}
+						<a href="../../../activities/{{date}}/{{period}}/{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 						{% endif %}
 					</div>
-					<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.endTime}}</div>
-					{{event.time}}
+
+					{% if event.attendance == 'attended' %}
+					<span class="moj-badge moj-badge--green govuk-!-margin-bottom-1 govuk-!-margin-top-1">Attended</span>
+					{% elif event.attendance == 'not-attended' %}
+					<span class="moj-badge moj-badge--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Not attended</span>
+					{% endif %}
+
+					<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.times.endTime}}</div>
 					<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ event.location }}</div>
 				</div>
 				{% endfor %}

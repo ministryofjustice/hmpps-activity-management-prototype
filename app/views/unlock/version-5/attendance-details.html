@@ -1,10 +1,13 @@
 {% extends "layout_hmpps.html" %}
 {% set serviceName = "Activities Management" %}
+
 {% block pageTitle %}
-Activities Management prototype
+Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 {% endblock %}
+
 {% block primaryNavigation %}
 {% endblock %}
+
 {% block beforeContent %}
 {{govukBackLink({
 	text: "Back",
@@ -17,14 +20,14 @@ Activities Management prototype
 		<h1 class="govuk-heading-l">
 			Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		</h1>
-
+		<!-- {{attendanceData|dump}} -->
 		<dl class="govuk-summary-list">
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 					Activity
 				</dt>
 				<dd class="govuk-summary-list__value">
-					<a href="../{{activity.id}}?date={{data['date']}}&period={{data['period']}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+					<a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
 				</dd>
 			</div>
 
@@ -33,7 +36,7 @@ Activities Management prototype
 					Activity date
 				</dt>
 				<dd class="govuk-summary-list__value">
-					{{ data['date'] | convertShortDateToLongDate(data['date']) }}
+					{{ date | convertShortDateToLongDate(date) }} ({{period}})
 				</dd>
 			</div>
 
@@ -52,19 +55,30 @@ Activities Management prototype
 			
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
-					Recorded date
+					Pay
 				</dt>
 				<dd class="govuk-summary-list__value">
-					{{attendanceData.timestamp}}
+					{{attendanceData.pay|capitalize}}
 				</dd>
 			</div>
 
+			{% if attendanceData.payReason %}
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
-					Recorded by
+					Pay details
 				</dt>
 				<dd class="govuk-summary-list__value">
-					Bal Patel
+					{{attendanceData.payReason}}
+				</dd>
+			</div>
+			{% endif %}
+
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Audit details
+				</dt>
+				<dd class="govuk-summary-list__value">
+					Recorded by Bal Patel on {{attendanceData.timestamp.date|convertShortDateToLongDate(attendanceData.timestamp.date)}} at {{attendanceData.timestamp.time}}
 				</dd>
 			</div>
 		</dl>
