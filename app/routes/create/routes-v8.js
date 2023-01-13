@@ -375,25 +375,45 @@ module.exports = function(router) {
 		}
 	});
 
+
 	router.post(version + '/create/activity-start-date', function(req, res) {
 		{
+			//Change numerical month to short month name
+			req.session.data.month = getMonthName(req.session.data.month)
+			req.session.data.activityCreateScheduleStartDate = req.session.data.day + " " + req.session.data.month + " " + req.session.data.year
 			res.redirect(version + '/create/activity-is-there-an-end-date')
 		}
 	});
+
+	function getMonthName(monthNumber) {
+  const date = new Date();
+  date.setMonth(monthNumber - 1);
+  return date.toLocaleString('en-US', { month: 'short' });
+}
+
+
 	router.post(version + '/create/activity-is-there-an-end-date', function(req, res) {
 
 		if (req.session.data.ScheduleEndDate == 'yes') {
+
 			res.redirect(version + '/create/activity-end-date')
 		}
 		else {
 			res.redirect(version + '/create/activity-start-time')
 		}
 	});
+
+
 	router.post(version + '/create/activity-end-date', function(req, res) {
 		{
+			//Change numerical month to short month name
+			req.session.data.endMonth = getMonthName(req.session.data.endMonth)
+			req.session.data.activityCreateScheduleEndDate = req.session.data.endDay + " " + req.session.data.endMonth + " " + req.session.data.endYear
+
 			res.redirect(version + '/create/activity-start-time')
 		}
 	});
+
 
 	router.post(version + '/create/activity-start-time', function(req, res) {
 		{
@@ -486,11 +506,18 @@ module.exports = function(router) {
 			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
+
 	router.post(version + '/create/check/activity-end-date', function(req, res) {
 		{
+			//Change numerical month to short month name
+			req.session.data.endMonth = getMonthName(req.session.data.endMonth)
+			req.session.data.activityCreateScheduleEndDate = req.session.data.endDay + " " + req.session.data.endMonth + " " + req.session.data.endYear
+
 			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
+
+
 
     //Recurring
 	router.post(version + '/create/check/activity-which-days', function(req, res) {
