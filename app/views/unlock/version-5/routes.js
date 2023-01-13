@@ -344,7 +344,7 @@ function getNextSession(activity, selectedDate, selectedPeriod) {
             currentDay++;
             if (currentDay === 7) {
                 currentDay = 0;
-                selectedDate.setDate(selectedDate.getDate() + 1);
+                // selectedDate.setDate(selectedDate.getDate() + 1);
             }
             if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
                 selectedDate.setDate(selectedDate.getDate() + 1)
