@@ -76,11 +76,18 @@ Appointments prototype
                   <b>Drugs misuse programme</b><br>
                   13:00 to 16:30<br>
                   Created by: John Smith<br>
+                  {% if data['appointment-repeat'] === 'Yes' %}
+                  
+                  2 instances
+                  {% endif %}
                 </li>
                 <li>
                   <b>Kitchen</b><br>
                   13:00 to 16:30<br>
                   Created by: Bill Jones<br>
+                  {% if data['appointment-repeat'] === 'Yes' %}
+                  {{ data['number-of-appointments']}} instances
+                  {% endif %}
                 </li>
               </ul>
             </div>
@@ -122,6 +129,9 @@ Appointments prototype
                   <b>Kitchen</b><br>
                   13:00 to 16:30<br>
                   Created by: Bill Jones<br>
+                  {% if data['appointment-repeat'] === 'Yes' %}
+                  {{ data['number-of-appointments']}} instances
+                  {% endif %}
                 </li>
               </ul>
             </div>
@@ -163,6 +173,10 @@ Appointments prototype
                   <b>Kitchen</b><br>
                   13:00 to 16:30m<br>
                   Created by: Bill Jones<br>
+
+                  {% if data['appointment-repeat'] === 'Yes' %}
+                  {{ data['number-of-appointments']}} instances
+                  {% endif %}
                 </li>
               </ul>
             </div>
