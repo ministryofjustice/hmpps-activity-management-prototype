@@ -501,11 +501,15 @@ module.exports = function(router) {
 
 
     //Not recurring
-	router.post(version + '/create/check/activity-start-date', function(req, res) {
-		{
-			res.redirect(version + '/create/schedule-check-your-answers')
-		}
-	});
+		router.post(version + '/create/check/activity-start-date', function(req, res) {
+			{
+				//Change numerical month to short month name
+				req.session.data.Month = getMonthName(req.session.data.Month)
+				req.session.data.activityCreateScheduleStartDate = req.session.data.Day + " " + req.session.data.Month + " " + req.session.data.Year
+
+				res.redirect(version + '/create/schedule-check-your-answers')
+			}
+		});
 
 	router.post(version + '/create/check/activity-end-date', function(req, res) {
 		{
