@@ -33,6 +33,9 @@ Activities Management prototype
 						Record refusals and absences
 						<span class="govuk-caption-l">{{relativeDate or date|longDateFormat(date)}} ({{data['times']|upper or "morning"}})</span>
 					</h1>
+					<p>
+						<a href="../../../select-refusals-locations" class="govuk-link--no-visited-state">Choose a different refusals list</a>
+					</p>
 				</div>
 				<div class="govuk-grid-column-one-third">
 					<div class="govuk-button-group" style="text-align: right;">
@@ -91,7 +94,7 @@ Activities Management prototype
 				</div>
 			</div>
 
-			<div class="app-filter-area" id="filters" tabindex=0>
+			<div class="app-filter-area govuk-!-display-none-print" id="filters" tabindex=0>
 				<div class="govuk-grid-row">
 					<div class="govuk-grid-column-full">
 						<h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
@@ -99,167 +102,56 @@ Activities Management prototype
 						</h2>
 						<div class="govuk-grid-row govuk-!-margin-bottom-2">
 							<div class="govuk-grid-column-full govuk-!-margin-bottom-1" style="vertical-align: top;">
-								{{govukInput({
-									formGroup: {
-										classes: "govuk-!-display-inline-block"
-									},
-									classes: "govuk-input--width-10",
-									value: "01/11/2022",
-									label: {
-										text: "Date",
-										classes: "govuk-label--s"
-									}
-								})}}
-								{{ govukSelect({
-									attributes: {
-										"data-enhance-multiple": ""
-									},
-									formGroup: {
-										classes: "govuk-!-display-inline-block"
-									},
-									label: {
-										text: "Period",
-										classes: "govuk-label--s"
-									},
-									idPrefix: 'period',
-									name: 'period[]',
-									heading: {
-										text: 'Period'
-									},
-									items: [{
-										text: 'All',
-										id: 'All',
-										value: 'All'
-									},
-									{
-										text: 'Morning (AM)',
-										id: 'Morning',
-										value: 'Morning'
-									},
-									{
-										text: 'Afternoon (PM)',
-										id: 'Afternoon',
-										value: 'Afternoon'
-									},
-									{
-										text: 'Evening (ED)',
-										id: 'Evening',
-										value: 'Evening'
-									}]
-								}) }}
-
-								<fieldset class="govuk-fieldset govuk-!-display-inline-block" style="width: 280px; position: relative; top: 14px;">
+								<fieldset class="govuk-fieldset govuk-!-display-inline-block govuk-!-margin-right-3" style="width: 360px; position: relative; top: 14px;">
 									<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
 										Sub-locations
 									</legend>
 									<div class="dropdown" data-control="checkbox-dropdown">
 										<label class="dropdown-label">All sub-locations</label>
 										<div class="dropdown-list">
-											{{ govukCheckboxes({
-												formGroup: {
-													classes: "govuk-!-margin-0"
-												},
-												classes: "govuk-checkboxes--small",
-												name: "sublocation",
-												items: [
-												{
-													text: 'Landing 1',
-													id: 'landing-1',
-													value: '1'
-												},
-												{
-													text: 'Landing 2',
-													id: 'landing-2',
-													value: '2'
-												},
-												{
-													text: 'Landing 3',
-													id: 'landing-3',
-													value: '3'
-												},
-												{
-													text: 'Landing 4',
-													id: 'landing-4',
-													value: '4'
-												},
-												{
-													text: 'Landing 5',
-													id: 'landing-5',
-													value: '5'
-												}]
-											}) }}
+											<div class="govuk-form-group govuk-!-margin-0">
+												<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+													{% for houseblock, wings in locations %}
+													{% if wings.length > 0 %}
+													{% for wing in wings %}
+													<div class="govuk-checkboxes__item">
+														<input class="govuk-checkboxes__input" id="landing-1" name="sublocations" type="checkbox" value="1">
+														<label class="govuk-label govuk-checkboxes__label" for="landing-1">
+															Spur {{wing}}
+														</label>
+													</div>
+													{% endfor %}
+													{% endif %}
+													{% endfor %}
+												</div>
+											</div>
 										</div>
 									</div>
 								</fieldset>
 
-								{{ govukSelect({
-									formGroup: {
-										classes: "govuk-!-display-inline-block"
-									},
-									label: {
-										text: "Activities",
-										classes: "govuk-label--s"
-									},
-									idPrefix: 'activities',
-									name: 'activity[]',
-									heading: {
-										text: 'Activities'
-									},
-									items: [{
-										text: 'All activities',
-										id: 'all',
-										value: 'all'
-									},
-									{
-										text: '08:15 - D WING PID FT',
-										id: 'austria',
-										value: 'austria'
-									},
-									{
-										text: '08:15 - AM AWAITING ALLOCATION',
-										id: 'belgium',
-										value: 'belgium'
-									},
-									{
-										text: '08:15 - A WING AM CLEANER',
-										id: 'bulgaria',
-										value: 'bulgaria'
-									}]
-								}) }}
-								{{ govukSelect({
-									formGroup: {
-										classes: "govuk-!-display-inline-block"
-									},
-									label: {
-										text: "Attendance",
-										classes: "govuk-label--s"
-									},
-									idPrefix: 'attendance',
-									name: 'attendance[]',
-									heading: {
-										text: 'Attendance'
-									},
-									items: [{
-										text: 'All',
-										id: 'all',
-										value: 'all'
-									},
-									{
-										text: 'Attended',
-										id: 'attended',
-										value: 'attended'
-									},
-									{
-										text: 'Not attended',
-										id: 'not-attended',
-										value: 'not-attended'
-									},
-									{
-										text: 'Unaccounted for',
-										id: 'unaccounted-for',
-										value: 'unaccounted-for'
-									}]
-								}) }}
+								<fieldset class="govuk-fieldset govuk-!-display-inline-block govuk-!-margin-right-3" style="width: 360px; position: relative; top: 14px;">
+									<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+										Activities
+									</legend>
+									<div class="dropdown" data-control="checkbox-dropdown">
+										<label class="dropdown-label">All activities</label>
+										<div class="dropdown-list">
+											<div class="govuk-form-group govuk-!-margin-0">
+												<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+													{% for activity in filteredActivities %}
+													<div class="govuk-checkboxes__item">
+														<input class="govuk-checkboxes__input" id="activity-{{activity.id}}" name="activities" type="checkbox" value="1">
+														<label class="govuk-label govuk-checkboxes__label" for="activity-{{activity.id}}">
+															{{activity.name}}
+														</label>
+													</div>
+													{% endfor %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+
 								{{ govukSelect({
 									formGroup: {
 										classes: "govuk-!-display-inline-block"
@@ -321,21 +213,6 @@ Activities Management prototype
 			{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 			<h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
 
-			<div class="app-filter-area" id="filters" tabindex=0>
-				<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold">Showing</span>
-				<ul class="app-filter-tag-list">
-					{% for houseblock, wings in locations %}
-					{% if wings.length > 0 %}
-					{% for wing in wings %}
-					<li class="govuk-tag govuk-tag--filter">Houseblock {{houseblock}} - Wing {{wing}}</li>
-					{% endfor %}
-					{% else %}
-					<li class="govuk-tag govuk-tag--filter">Houseblock {{houseblock}}</li>
-					{% endif %}
-					{% endfor %}
-				</ul>
-			</div>
-
 			<table class="govuk-table app-whereabouts-table app-whereabouts-table--font-size-normal" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
 				<thead class="govuk-table__head">
 					<tr>
@@ -343,10 +220,10 @@ Activities Management prototype
 						<th class="govuk-table__cell" aria-sort="none">
 							Name
 						</th>
-						<th class="govuk-table__cell" aria-sort="ascending">
+						<th class="govuk-table__cell" aria-sort="ascending" width="120">
 							Location
 						</th>
-						<th class="govuk-table__cell">
+						<th class="govuk-table__cell" width="250">
 							Relevant alerts
 						</th>
 						<th class="govuk-table__cell" aria-sort="none">
