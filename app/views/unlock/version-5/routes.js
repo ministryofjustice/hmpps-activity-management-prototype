@@ -1002,9 +1002,9 @@ router.get('/activities/:selectedDate', function(req, res) {
     activitiesForDateWithCounts.afternoon = addAttendanceCountsToActivities(activitiesForDate.afternoon, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
 
     if (req.query.search) {
-        const searchTerm = req.query.search.toLowerCase();
-        activitiesForDate.morning = activitiesForDate.morning.filter(activity => activity.name.toLowerCase().includes(searchTerm));
-        activitiesForDate.afternoon = activitiesForDate.afternoon.filter(activity => activity.name.toLowerCase().includes(searchTerm));
+        const searchTerm = req.query.search.toLowerCase().replace(/\s/g, "");
+        activitiesForDate.morning = activitiesForDate.morning.filter(activity => activity.name.toLowerCase().replace(/\s/g, "").includes(searchTerm));
+        activitiesForDate.afternoon = activitiesForDate.afternoon.filter(activity => activity.name.toLowerCase().replace(/\s/g, "").includes(searchTerm));
     }
 
     res.render('unlock/' + req.version + '/activities', {
