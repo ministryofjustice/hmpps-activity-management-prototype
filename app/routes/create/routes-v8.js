@@ -375,11 +375,22 @@ module.exports = function(router) {
 		}
 	});
 
+
 	router.post(version + '/create/activity-start-date', function(req, res) {
 		{
+			//Change numerical month to short month name
+			req.session.data.month = getMonthName(req.session.data.month)
 			res.redirect(version + '/create/activity-is-there-an-end-date')
 		}
 	});
+
+	function getMonthName(monthNumber) {
+  const date = new Date();
+  date.setMonth(monthNumber - 1);
+  return date.toLocaleString('en-US', { month: 'short' });
+}
+
+
 	router.post(version + '/create/activity-is-there-an-end-date', function(req, res) {
 
 		if (req.session.data.ScheduleEndDate == 'yes') {
@@ -389,11 +400,22 @@ module.exports = function(router) {
 			res.redirect(version + '/create/activity-start-time')
 		}
 	});
+
+
 	router.post(version + '/create/activity-end-date', function(req, res) {
 		{
 			res.redirect(version + '/create/activity-start-time')
 		}
 	});
+
+	router.post(version + '/create/activity-end-date', function(req, res) {
+		{
+			//Change numerical month to short month name
+			//req.session.data.month = getMonthName(req.session.data.month)
+			res.redirect(version + '/create/activity-start-time')
+		}
+	});
+
 
 	router.post(version + '/create/activity-start-time', function(req, res) {
 		{

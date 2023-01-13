@@ -26,8 +26,6 @@ Activities Management prototype
     <a href="../allocate/activity-dashboard-1">See vacancies and allocate people</a>
       </p>
     </div>
-
-
       <div class="govuk-grid-column-two-thirds">
         <p>You can change any details for this activity - remember this may affect current and future schedules and allocations.</p>
         <p>You can also suspend or archive an activity.</p>
@@ -266,7 +264,7 @@ Activities Management prototype
               Schedule name
             </dt>
             <dd class="govuk-summary-list__value">
-            {{data.activityNameDashboard or 'Maths level 1'}} - Schedule A
+            {{data.activityNameDashboard or 'Maths level 1'}} - Schedule B
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/schedule-name">
@@ -279,7 +277,7 @@ Activities Management prototype
               Start date
             </dt>
             <dd class="govuk-summary-list__value">
-            {{data.startDate or '1 December 2022'}}
+             {{data.day}} {{data.month}} {{data.year}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/schedule-name">
@@ -1959,7 +1957,6 @@ Activities Management prototype
             </dd>
           </div>
 
-
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Risk level
@@ -2007,13 +2004,12 @@ Activities Management prototype
                 {% endif %}
                 {% endfor %}
               </dd>
-                <dd class="govuk-summary-list__actions">
-                  <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
-                    <a class="govuk-link" href="activity-payment-details?id={{rate.id}}">
-                      Change<span class="govuk-visually-hidden"> incentive payment</span>
-                    </a>
-                  </dd>
-            </dd>
+              <dd class="govuk-summary-list__actions">
+              <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
+                <a class="govuk-link" href="activity-payment-details?id={{rate.id}}">
+                  Change<span class="govuk-visually-hidden"> incentive payment</span>
+                </a>
+              </dd>
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">

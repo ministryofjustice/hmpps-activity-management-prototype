@@ -15,7 +15,7 @@ Activities Management prototype
           <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
           </div>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
-          Check details for {{data.activityName or 'Maths level 1'}} - schedule A
+          Check details for {{data.activityName or 'Maths level 1'}} - {{data.scheduleName or 'Schedule A'}}
         </h1><br />
       </div>
       <div class="govuk-grid-column-two-thirds">
@@ -39,7 +39,7 @@ Activities Management prototype
               Start date
             </dt>
             <dd class="govuk-summary-list__value">
-            {{data.startDate or '3 January 2023'}}
+            {{data.day}} {{data.month}} {{data.year}} 
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-start-date">
@@ -131,7 +131,7 @@ Activities Management prototype
               Location
             </dt>
             <dd class="govuk-summary-list__value">
-              Room 2
+               {{data.location or 'Education wing'}}
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-location-dropdown">
