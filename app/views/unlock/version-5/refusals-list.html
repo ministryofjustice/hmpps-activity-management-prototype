@@ -19,7 +19,7 @@ Activities Management prototype
 				href: "../../../dps-home"
 			},
 			{
-				text: "Manage prisoner whereabouts",
+				text: "Manage prisoner unlock and attendance",
 				href: "../../../whereabouts"
 			}
 			]
@@ -111,13 +111,13 @@ Activities Management prototype
 										<div class="dropdown-list">
 											<div class="govuk-form-group govuk-!-margin-0">
 												<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-													{% for houseblock, wings in locations %}
-													{% if wings.length > 0 %}
-													{% for wing in wings %}
+													{% for location in data['residential-locations-2'] %}
+													{% if location.id == houseblock %}
+													{% for spur in location.spurs.slice(0, 3) %}
 													<div class="govuk-checkboxes__item">
-														<input class="govuk-checkboxes__input" id="landing-1" name="sublocations" type="checkbox" value="1">
-														<label class="govuk-label govuk-checkboxes__label" for="landing-1">
-															Spur {{wing}}
+														<input class="govuk-checkboxes__input" id="landings-{{spur.id}}" name="landings" type="checkbox" value="{{spur.id}}" {{ 'checked' if data['landings'] and loop.index|string in data['landings'] }}>
+														<label class="govuk-label govuk-checkboxes__label" for="landings-{{spur.id}}">
+															Landing {{spur.id}}
 														</label>
 													</div>
 													{% endfor %}
@@ -212,6 +212,17 @@ Activities Management prototype
 			{% set totalPrisoners = prisonersWithEvents|length %}
 			{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 			<h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
+
+			{% if data['landings'] %}
+			<div class="app-filter-area" id="filters" tabindex=0>
+				<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold govuk-!-display-none-print">Showing</span>
+				<ul class="app-filter-tag-list">
+					{% for landing in data['landings'] %}
+					<li class="govuk-tag govuk-tag--filter">Landing {{landing}}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
 
 			<table class="govuk-table app-whereabouts-table app-whereabouts-table--font-size-normal" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
 				<thead class="govuk-table__head">

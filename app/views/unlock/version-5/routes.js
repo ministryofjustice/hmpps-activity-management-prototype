@@ -894,11 +894,18 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', f
 
     const prisonersByHouseblock = getPrisonersByHouseblock(prisoners, houseblock);
     const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
-    const prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period, attendanceData);
+    let prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period, attendanceData);
 
     // remove the confirmation notification on loading the page
     if (req.session.data['attendance-confirmation'] == 'true') {
         delete req.session.data['attendance-confirmation']
+    }
+
+    // landing filtering
+    let landings = req.session.data['landings']
+    if(landings){
+        landings = landings.map(landing => landing.toString());
+        prisonersWithEvents = prisonersWithEvents.filter(prisoner => landings.includes(prisoner.location.landing.toString()));
     }
 
     res.render('unlock/' + req.version + '/refusals-list', {
@@ -944,7 +951,7 @@ router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', fun
 
     const prisonersByHouseblock = getPrisonersByHouseblock(prisoners, houseblock);
     const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
-    const prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period, attendanceData);
+    let prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period, attendanceData);
 
     let filteredActivities = getActivitiesForPeriod(activities, period, dayOfWeek);
 
@@ -959,6 +966,14 @@ router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', fun
     // remove the confirmation notification on loading the page
     if (req.session.data['attendance-confirmation'] == 'true') {
         delete req.session.data['attendance-confirmation']
+    }
+
+    // landing filtering
+    let landings = req.session.data['landings']
+    console.log(landings)
+    if(landings !== undefined && landings !== '_unchecked' && landings.length > 0){
+        landings = landings.map(landing => landing.toString());
+        prisonersWithEvents = prisonersWithEvents.filter(prisoner => landings.includes(prisoner.location.landing.toString()));
     }
 
     res.render('unlock/' + req.version + '/unlock-list', {
