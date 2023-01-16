@@ -1,0 +1,70 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+    Select a pay rate for {{ data.offenderAllocate }}, <strong>{{ data.offenderIDAllocate }}</strong></h2><br />
+
+    </h1>
+    <p class="govuk-body">{{ data.offenderAllocate }}'s current incentive level is <strong>Basic</strong>. </p>
+  </div>
+
+
+
+<!--START NEW -->
+
+  <div class="govuk-form-group">
+    <form method="post">
+
+  {% for level, details in data.payrates %}
+    {% if details|length > 0 %}
+          {% if (level=='Basic') %}
+           <h2 class="govuk-heading-m">Basic incentive level pay</h2>
+
+            {% for rate in details %}
+
+            <div class="govuk-form-group">
+              <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="AllocatePaymentCurrent" name="AllocatePayment" value="{{rate.amount}}" type="radio" >
+                  <label class="govuk-label govuk-radios__label" for="AllocatePaymentCurrent">
+                {{rate.name or 'Payment rate A'}} : &pound;{{rate.amount or '1.10'}}
+                  </label>
+              </div>
+              {% endfor %}
+            {% endif %}
+          {% endif %}
+
+        {% else %}
+
+        <!--If nothing is set on first entry to page-->
+
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="AllocatePaymentCurrent" name="AllocatePayment" type="radio" value="1.21">
+          <label class="govuk-label govuk-radios__label" for="AllocatePaymentCurrent">
+          {{rate.name or 'Payment rate A'}} : &pound;{{rate.amount or '1.10'}}
+          </label>
+      </div>
+        {% endfor %}
+        <hr />
+        <br />  <br />
+
+        <p class="govuk-body">If the rate you need is not listed you can <a href="allocate-check-your-answers-payment">add or change rates for this activity.</a></p>
+
+      <br />  <br />
+    <button class="govuk-button" data-module="govuk-button">Confirm pay and continue</button>
+    </form>
+</div>
+
+{% endblock %}
