@@ -4,23 +4,7 @@ module.exports = function(router) {
 	var version = '/v9';
 
 	router.post(version + '/setup', function(req, res) {
-		if (req.session.data.setupTaskType == 'allocation') {
-            //Allocate an activity
-			res.redirect(version + '/allocate/activity-dashboard-1')
-		} else if (req.session.data.setupTaskType == 'creation') {
-            //Create an activity
-
-			if (req.session.data.setupCategories == 'yes') {
-				res.redirect(version + '/create/activity-type-select-with-category')
-			} else {
-				res.redirect(version + '/create/activity-type-select-with-category')
-			}
-		} else if (req.session.data.setupTaskType == 'activityDashboard') {
-			res.redirect(version + '/create/activity-dashboard?dashboardCategory=All&dashboardView=live')
-		} else {
-            //Schedule an activity
-			res.redirect(version + '/create/schedule-name')
-		}
+			res.redirect(version + '/dps-home')
 	});
 
     //From activity dashboard, if schedule, delete (archive or suspend)
