@@ -119,7 +119,7 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 											{% if location.id == houseblock %}
 											{% for spur in location.spurs.slice(0, 3) %}
 											<div class="govuk-checkboxes__item">
-												<input class="govuk-checkboxes__input" id="landings-{{spur.id}}" name="landings" type="checkbox" value="{{spur.id}}" {{ 'checked' if loop.index|string in data['landings'] }}>
+												<input class="govuk-checkboxes__input" id="landings-{{spur.id}}" name="landings" type="checkbox" value="{{spur.id}}" {{ 'checked' if data['landings'] and loop.index|string in data['landings'] }}>
 												<label class="govuk-label govuk-checkboxes__label" for="landings-{{spur.id}}">
 													Landing {{spur.id}}
 												</label>
@@ -199,20 +199,16 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 {% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 <h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
 
-<!-- <div class="app-filter-area" id="filters" tabindex=0>
+{% if data['landings'] %}
+<div class="app-filter-area" id="filters" tabindex=0>
 	<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold govuk-!-display-none-print">Showing</span>
 	<ul class="app-filter-tag-list">
-		{% for houseblock, wings in locations %}
-		{% if wings.length > 0 %}
-		{% for wing in wings %}
-		<li class="govuk-tag govuk-tag--filter">Houseblock {{houseblock}} - Spur {{wing}}</li>
-		{% endfor %}
-		{% else %}
-		<li class="govuk-tag govuk-tag--filter">Houseblock {{houseblock}}</li>
-		{% endif %}
+		{% for landing in data['landings'] %}
+		<li class="govuk-tag govuk-tag--filter">Landing {{landing}}</li>
 		{% endfor %}
 	</ul>
-</div> -->
+</div>
+{% endif %}
 
 <table class="govuk-table app-whereabouts-table app-whereabouts-table--font-size-normal" data-module="moj-sortable-table">
 	<thead class="govuk-table__head">
