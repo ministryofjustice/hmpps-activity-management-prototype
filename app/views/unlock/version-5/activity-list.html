@@ -28,6 +28,9 @@
 		}) }}
 		{% endblock %}
 
+		{% set totalPrisoners = prisonersList|length %}
+		{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
+
 		{% set cancelled = false %}
 
 		{% for session in activitySchedule[0].cancelledSessions %}
@@ -114,8 +117,6 @@
 			}) }}
 			{% endif %}
 
-			{% set totalPrisoners = prisonersList|length %}
-			{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 			{% include './_includes/table-navbar.html' %}
 
 			<h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners allocated</h2>
