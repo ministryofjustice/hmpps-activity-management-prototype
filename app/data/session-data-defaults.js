@@ -33,7 +33,7 @@ module.exports = {
     {
       "linkText":"Manage activities and schedules",
       "descriptionText":"Create and manage activities and schedules. Allocate people in prison to activities.",
-      "linkURL":"/v6/create/activity-type-select-with-category"
+      "linkURL":"/v9/dps-home-2"
     }]
   },
   "activity": "Workshop",

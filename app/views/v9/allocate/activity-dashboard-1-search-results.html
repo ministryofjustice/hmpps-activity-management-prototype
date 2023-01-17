@@ -1,0 +1,153 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Allocation dashboard
+    </h1>
+  </div><br />
+
+<div class="moj-primary-navigation">
+  <div class="moj-primary-navigation__container">
+    <div class="moj-primary-navigation__nav">
+      <nav class="moj-primary-navigation" aria-label="Primary navigation">
+        <ul class="moj-primary-navigation__list">
+          <ul class="moj-sub-navigation__list" >
+            <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link" aria-current="page" href="#1">All activities (2)</a>
+            </li>
+            <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link" href="activity-list-dashboard-filtered">Activities with space (1)</a>
+            </li>
+
+          <li class="moj-primary-navigation__item">
+            <form method="post">
+            <button class="govuk-button" data-module="govuk-button" style="margin:-8px 0 0 203px;">Create new activity</button>
+          </form>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="moj-primary-navigation__search">
+      <div class="moj-search-toggle" data-module="moj-search-toggle" data-moj-search-toggle-text="Search for activity">
+        <div class="moj-search-toggle__toggle"></div>
+        <div class="moj-search-toggle__search">
+          <div class="moj-search moj-search--ondark moj-search--toggle moj-js-hidden">
+            <form action="searchAllocationDashboard" method="post">
+              <div class="govuk-form-group">
+                <label class="govuk-label moj-search__label govuk-visually-hidden" for="search2">
+                  Search
+                </label>
+                <div id="search2-hint" class="govuk-hint moj-search__hint ">
+                    Enter activity, location or facilitator<br />Or try  <a href="allocate-offender-dashboard-search-view">Advanced search</a>
+                </div>
+                <input class="govuk-input moj-search__input " id="search2" name="search2" type="search" aria-describedby="search2-hint">
+              </div>
+              <button class="govuk-button moj-search__button " data-module="govuk-button">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br /><br />
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+Showing search results for:
+      </h1>
+    </legend>
+    <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc" checked>
+        <label class="govuk-label govuk-checkboxes__label" for="organisation">
+        Maths (2)
+        </label>
+      </div>
+    </div>
+
+  </fieldset>
+</div>
+<form method="post" action="clearSearchAllocate">
+<button class="govuk-button govuk-button--secondary" data-module="govuk-button">Reset</button>
+<span style="margin-left:50px;" ><a href="allocate-offender-dashboard-search-view" >More search options</a></span>
+</form>
+<table class="govuk-table" data-module="moj-sortable-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity name</th>
+      <th scope="col" class="govuk-table__header app-custom-class" >Location</th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="ascending">Capacity</th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Allocated</th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Free space</th>
+            <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Waitlist</th>
+      <th scope="col" class="govuk-table__header app-custom-class"  aria-sort="none">Percentage filled</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="activity-allocation-list" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Maths level 3
+        </a></h3>
+          <span class="govuk-hint" style="font-size:.85em;">Days: M,T,W</span>
+      </th>
+      <td class="govuk-table__cell">B wing</td>
+      <td class="govuk-table__cell">15</td>
+      <td class="govuk-table__cell">15</td>
+      <td class="govuk-table__cell">0</td>
+        <td class="govuk-table__cell">3</td>
+      <td class="govuk-table__cell">
+        <div style="height:26px; border:1px solid black; width:140px;">
+        <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">
+          <span style="padding-right:80px;">100%</span>
+        </span>
+        </strong>
+      </div>
+        <br />
+      </td>
+          </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+        <a href="activity-allocation-list" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          Maths level 1
+        </a></h3>
+          <span class="govuk-hint" style="font-size:.85em; margin-top:-10px;">Days: M,T,W</span>
+      </th>
+      <td class="govuk-table__cell">A wing</td>
+      <td class="govuk-table__cell">20</td>
+      <td class="govuk-table__cell">10</td>
+        <td class="govuk-table__cell">10</td>
+      <td class="govuk-table__cell">2</td>
+      <td class="govuk-table__cell">
+        <div style="height:26px; border:1px solid black; width:140px;">
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+          <span style="padding-right:20px;">50%</span>
+        </span>
+        </strong>
+      </div>
+        <br />
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+{% endblock %}

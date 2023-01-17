@@ -1,0 +1,2047 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block back %}
+{% endblock %}
+{% block content %}
+
+{% if data['fromActivityDashboard']=='true' %}
+<!--Show content linked form flat activity fromActivityDashboard-->
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+        View {% if data.status=='live' %}or  change {% endif %} details for {{data.activityNameDashboard or 'Maths level 1'}}
+      </h1>
+    </div>
+    <div class="govuk-grid-column-one-third">
+    <p class="govuk-body"><strong>Related tasks</strong><br />
+    <a href="activity-type-select-with-category">Create an activity</a><br />
+    <a href="../allocate/activity-dashboard-1">See vacancies and allocate people</a>
+      </p>
+    </div>
+      <div class="govuk-grid-column-two-thirds">
+        <p>You can change any details for this activity - remember this may affect current and future schedules and allocations.</p>
+        <p>You can also suspend or archive an activity.</p>
+        <h2 class="govuk-heading-m">Activity details</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Category
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.category or 'Education'}}
+            </dd>
+            <dd class="govuk-summary-list__value"> {% if (data.changedCategory=='changed')%}
+              <strong class="govuk-tag govuk-tag--blue">
+                C<span style="text-transform:lowercase;">hanged</span>
+              </strong>
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-type-select-with-category?temp={{data.category}}">
+                Change<span class="govuk-visually-hidden"> name</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Name
+            </dt>
+            <dd class="govuk-summary-list__value" >
+              {{data.activityNameDashboard or 'Maths level 1'}}
+            </dd>
+            <dd class="govuk-summary-list__value">
+              {{data.temp2}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-name">
+                Change<span class="govuk-visually-hidden"> name</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Risk level
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.riskLevel or 'Low'}}
+            </dd>
+            <dd class="govuk-summary-list__value">
+              {{data.temp2}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+            <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
+                  <a class="govuk-link" href="check/activity-risk-assessment">
+                Change<span class="govuk-visually-hidden"> licence type</span>
+              </a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Education level
+            </dt>
+            <dd class="govuk-summary-list__value">
+                {% if data.activityNameDashboard=='Maths level 1'%}
+                  Maths entry level 3
+                    {% elseif data.activityNameDashboard=='Maths level 2'%}
+                    Maths level 1
+                    {% else %}
+                      None set
+                  {% endif %}
+
+
+            </dd>
+            <dd class="govuk-summary-list__value">
+
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-add-education">
+                Change<span class="govuk-visually-hidden"> licence period</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key" style="width=10%">
+              Pay rates
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {% for level, details in data.payrates %}
+                {% if details|length > 0 %}
+                {{level}} incentive level payments<br />
+
+                {% for rate in details %}
+                  {{rate.name or 'Payment rate A'}} :
+                  &pound; {{rate.amount or '1.10'}}<br />
+
+                  {% endfor %}
+
+                  {% else %}
+                  Basic incentive level <br />
+                  Payment rate A: &pound;1.10
+
+                  {% endif %}<br />
+                {% endfor %}
+              </dd>
+            <dd class="govuk-summary-list__value">
+              {{data.temp2}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-payment-details">
+                Change<span class="govuk-visually-hidden"> licence period</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Minimum incentive level
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.incentiveLevel or 'Basic'}}
+            </dd>
+            <dd class="govuk-summary-list__value">
+              {{data.temp2}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-incentive-level">
+                <span class="govuk-visually-hidden"> previous application number</span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+        </div>
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            {% if data['fromActivityDashboard']=='true' %}
+              {% if (data.changedCategory=='changed')%}
+              <form method="post">
+                <input type="hidden" name="returnToDashboard" value="false" />
+                <button class="govuk-button" data-module="govuk-button" value="return">
+                Confirm changes
+                {%endif%}
+
+              {% if (data.changedCategory=='changed')%}
+            <form method="post">
+              <button class="govuk-button" data-module="govuk-button" value="return">
+              {% if data['edit']=='true' %}
+                Confirm changes to activity
+                {% else %}
+                  Create activity
+              {% endif %}
+            {% endif %}
+            {% endif %}
+              </div>
+              </div>
+
+
+  {% if (data.changedCategory!=='changed')%}
+  {% if data.status=='live' %}
+
+<div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-thirds" style="margin-left:35px;">
+        <a href="schedule-name?activityName={{data.activityNameDashboard}}">
+          <button class="govuk-button" data-module="govuk-button">
+            Build a new schedule
+          </button>
+
+        <a href="activity-action?action=suspendActivity&activityName={{data.activityNameDashboard}}&numberOfSchedules={{data.numberOfSchedules}}">
+          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+            Suspend {{data.activityNameDashboard}}
+          </button>
+          <a href="activity-action?action=archiveActivity&activityName={{data.activityNameDashboard}}&numberOfSchedules={{data.numberOfSchedules}}">
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+              Archive {{data.activityNameDashboard}}
+            </button>
+        </a>  <br /><br />
+          </button>
+            <a href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+            <div style="margin-bottom:100px;">&nbsp;</div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if data.status=='suspended' %}
+  <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-thirds" style="margin-left:35px;">
+
+
+        <a href="activity-action?action=unSuspendActivity&activityName={{data.activityNameDashboard}}&numberOfSchedules={{data.numberOfSchedules}}">
+          <button class="govuk-button govuk-button" data-module="govuk-button" style="margin:0 20px 0 0px;">
+            Unsuspend {{data.activityNameDashboard}}
+          </button>
+          <a href="activity-action?action=archiveActivity&activityName={{data.activityNameDashboard}}&numberOfSchedules={{data.numberOfSchedules}}">
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+              Archive {{data.activityNameDashboard}}
+            </button>
+        </a>  <br /><br />
+          </button>
+            <a href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+            <div style="margin-bottom:100px;">&nbsp;</div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if data.status=='archived' %}
+  <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-thirds" style="margin-left:35px;">
+        <a href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+        <div style="margin-bottom:100px;">&nbsp;</div>
+      </div>
+    </div>
+  {% endif %}
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="govuk-grid-column-three-thirds">
+
+      {% if data.showSchedules=='true' %}
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">Schedules for {{data.activityNameDashboard or 'Maths level 1'}} </h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Schedule name
+            </dt>
+            <dd class="govuk-summary-list__value">
+            {{data.activityNameDashboard or 'Maths level 1'}} - Schedule B
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/schedule-name">
+                Change<span class="govuk-visually-hidden"> licence type</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Start date
+            </dt>
+            <dd class="govuk-summary-list__value">
+             {{data.day}} {{data.month}} {{data.year}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/schedule-name">
+                Change<span class="govuk-visually-hidden"> licence type</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              End date
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.endDate or '10 January 2023'}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time">
+                <span class="govuk-visually-hidden"> licence type</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Schedule
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <!--Check days entered on time enter page-->
+              {% if data.timeMonday =='timeMonday' %}
+                {% if data.timeAMMonday =='timeAMMonday'%} Monday am <br /> {% endif %}
+                {% if data.timePMMonday =='timePMMonday' %}Monday pm <br />{% endif %}
+                {% if data.timeEDMonday =='timeEDMonday' %}Monday ed <br />{% endif %}
+              {% endif %}
+
+            {% if data.timeTuesday =='timeTuesday' %}
+              {% if data.timeAMTuesday =='timeAMTuesday' %}Tuesday am <br />{% endif %}
+              {% if data.timePMTuesday =='timePMTuesday' %}Tuesday pm <br />{% endif %}
+              {% if data.timeEDTuesday =='timeEDTuesday' %}Tuesday ed <br />{% endif %}
+            {% endif %}
+
+            {% if data.timeWednesday =='timeWednesday' %}
+              {% if data.timeAMWednesday =='timeAMWednesday'  %}Wednesday am <br />{% endif %}
+              {% if data.timePMWednesday =='timePMWednesday' %}Wednesday pm <br />{% endif %}
+              {% if data.timeEDWednesday =='timeEDWednesday' %}Wednesday ed <br />{% endif %}
+            {% endif %}
+
+            {% if data.timeThursday =='timeThursday' %}
+              {% if data.timeAMThursday =='timeAMThursday' %}Thursday am <br />{% endif %}
+              {% if data.timePMThursday =='timePMThursday' %}Thursday pm <br />{% endif %}
+              {% if data.timeEDThursday =='timeEDThursday' %}Thursday ed <br />{% endif %}
+            {% endif %}
+
+            {% if data.timeFriday =='timeFriday' %}
+              {% if data.timeAMFriday =='timeAMFriday' %}Friday am <br />{% endif %}
+              {% if data.timePMFriday =='timePMFriday' %}Friday pm <br />{% endif %}
+              {% if data.timeEDFriday =='timeEDFriday' %}Friday ed <br />{% endif %}
+            {% endif %}
+
+            {% if data.timeSaturday =='timeSaturday' %}
+              {% if data.timeAMSaturday =='timeAMSaturday' %}Saturday am <br />{% endif %}
+              {% if data.timePMSaturday =='timePMSaturday' %}Saturday pm <br />{% endif %}
+              {% if data.timeEDSaturday =='timeEDSaturday' %}Saturday ed <br />{% endif %}
+            {% endif %}
+
+            {% if data.timeSunday =='timeSunday' %}
+              {% if data.timeAMSunday =='timeAMSunday' %}Sunday am <br />{% endif %}
+              {% if data.timePMSunday =='timePMSunday' %}Sunday pm <br />{% endif %}
+              {% if data.timeEDSunday =='timeEDSunday' %}Sunday ed <br />{% endif %}
+            {% endif %}
+
+            <!--IF nothing has been entered show a default value-->
+              {% if data.timeSunday !='timeSunday'
+              and data.timeMonday !='timeMonday'
+              and data.timeTuesday !='timeTuesday'
+              and data.timeWednesday !='timeWednesday'
+              and data.timeThursday !='timeThursday'
+              and data.timeFriday !='timeFriday'
+              and data.timeSaturday !='timeSaturday'
+              and data.timeSunday !='timeSunday' %}
+                Monday am<br /> Tuesday am
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time">
+                Change<span class="govuk-visually-hidden"> licence type</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Location
+            </dt>
+            <dd class="govuk-summary-list__value">
+              Room 2
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-location-dropdown">
+                Change<span class="govuk-visually-hidden"> licence type</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Capacity
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.ActivityCapacity or '15'}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-capacity">
+                Change<span class="govuk-visually-hidden"> licence type</span>
+              </a>
+            </dd>
+          </div>
+          </dl>
+
+              {% if data['fromActivityDashboard']=='true' %}
+                {% if (data.changedCategory=='changed')%}
+                <form method="post">
+                  <input type="hidden" name="returnToDashboard" value="false" />
+                  <button class="govuk-button" data-module="govuk-button" value="return">
+                  Confirm changes
+                  {%endif%}
+                {% if (data.changedCategory!=='changed') and (data.activityNameDashboard=="")%}
+                <form method="post">
+                  <input type="hidden" name="returnToDashboard" value="true" />
+                  <button class="govuk-button" data-module="govuk-button" value="return">
+                  Return to dashboard
+                  {%endif%}
+              {% else %}
+                {% if data['edit']=='true' %}
+                  Confirm changes to activity
+                  {% else %}
+                    Create activity
+                {% endif %}
+              {% endif %}
+
+              <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-three-thirds" style="margin-left:-10px;">
+                      {% if data.status=='live' %}
+                      <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                        <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                          Suspend Schedule A
+                        </button>
+                        </a>
+                        <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                          <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                            Archive Schedule A
+                          </button>
+                        </a>
+                        <br /><br />
+                        </button>
+                        {% endif %}
+
+                        {% if data.status=='suspended' %}
+                        <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                            Unsuspend Schedule A
+                          </button>
+                          <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                              Archive Schedule A
+                            </button>
+                          </a>  <br /><br />
+                          </button>
+                          {% endif %}
+                      </form>
+                          <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+                          <div style="margin-bottom:100px;">&nbsp;</div>
+                    </div>
+                  </div>
+
+            </button>
+          </form>
+          {% endif %}
+          </div>
+
+{% if data.numberOfSchedules>1 %}
+
+<div class="govuk-grid-column-three-thirds">
+
+    {% if data.showSchedules=='true' %}
+    <div class="govuk-grid-column-two-thirds">
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Schedule name
+          </dt>
+          <dd class="govuk-summary-list__value">
+          {{data.activityNameDashboard or 'Maths level 1'}} - Schedule B
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="check/schedule-name">
+              Change<span class="govuk-visually-hidden"> licence type</span>
+            </a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Start date
+          </dt>
+          <dd class="govuk-summary-list__value">
+          {{data.startDate or '1 December 2022'}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="check/schedule-name">
+              Change<span class="govuk-visually-hidden"> licence type</span>
+            </a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            End date
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data.endDate or '10 January 2023'}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="check/activity-start-time">
+              <span class="govuk-visually-hidden"> licence type</span>
+            </a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Schedule
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <!--Check days entered on time enter page-->
+            {% if data.timeMonday =='timeMonday' %}
+              {% if data.timeAMMonday =='timeAMMonday'%} Monday am <br /> {% endif %}
+              {% if data.timePMMonday =='timePMMonday' %}Monday pm <br />{% endif %}
+              {% if data.timeEDMonday =='timeEDMonday' %}Monday ed <br />{% endif %}
+            {% endif %}
+
+          {% if data.timeTuesday =='timeTuesday' %}
+            {% if data.timeAMTuesday =='timeAMTuesday' %}Tuesday am <br />{% endif %}
+            {% if data.timePMTuesday =='timePMTuesday' %}Tuesday pm <br />{% endif %}
+            {% if data.timeEDTuesday =='timeEDTuesday' %}Tuesday ed <br />{% endif %}
+          {% endif %}
+
+          {% if data.timeWednesday =='timeWednesday' %}
+            {% if data.timeAMWednesday =='timeAMWednesday'  %}Wednesday am <br />{% endif %}
+            {% if data.timePMWednesday =='timePMWednesday' %}Wednesday pm <br />{% endif %}
+            {% if data.timeEDWednesday =='timeEDWednesday' %}Wednesday ed <br />{% endif %}
+          {% endif %}
+
+          {% if data.timeThursday =='timeThursday' %}
+            {% if data.timeAMThursday =='timeAMThursday' %}Thursday am <br />{% endif %}
+            {% if data.timePMThursday =='timePMThursday' %}Thursday pm <br />{% endif %}
+            {% if data.timeEDThursday =='timeEDThursday' %}Thursday ed <br />{% endif %}
+          {% endif %}
+
+          {% if data.timeFriday =='timeFriday' %}
+            {% if data.timeAMFriday =='timeAMFriday' %}Friday am <br />{% endif %}
+            {% if data.timePMFriday =='timePMFriday' %}Friday pm <br />{% endif %}
+            {% if data.timeEDFriday =='timeEDFriday' %}Friday ed <br />{% endif %}
+          {% endif %}
+
+          {% if data.timeSaturday =='timeSaturday' %}
+            {% if data.timeAMSaturday =='timeAMSaturday' %}Saturday am <br />{% endif %}
+            {% if data.timePMSaturday =='timePMSaturday' %}Saturday pm <br />{% endif %}
+            {% if data.timeEDSaturday =='timeEDSaturday' %}Saturday ed <br />{% endif %}
+          {% endif %}
+
+          {% if data.timeSunday =='timeSunday' %}
+            {% if data.timeAMSunday =='timeAMSunday' %}Sunday am <br />{% endif %}
+            {% if data.timePMSunday =='timePMSunday' %}Sunday pm <br />{% endif %}
+            {% if data.timeEDSunday =='timeEDSunday' %}Sunday ed <br />{% endif %}
+          {% endif %}
+
+          <!--IF nothing has been entered show a default value-->
+            {% if data.timeSunday !='timeSunday'
+            and data.timeMonday !='timeMonday'
+            and data.timeTuesday !='timeTuesday'
+            and data.timeWednesday !='timeWednesday'
+            and data.timeThursday !='timeThursday'
+            and data.timeFriday !='timeFriday'
+            and data.timeSaturday !='timeSaturday'
+            and data.timeSunday !='timeSunday' %}
+              Monday am<br /> Tuesday am
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="check/activity-start-time">
+              Change<span class="govuk-visually-hidden"> licence type</span>
+            </a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Location
+          </dt>
+          <dd class="govuk-summary-list__value">
+            Room 2
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="check/activity-location-dropdown">
+              Change<span class="govuk-visually-hidden"> licence type</span>
+            </a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+          Capacity
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data.ActivityCapacity or '15'}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="check/activity-capacity">
+              Change<span class="govuk-visually-hidden"> licence type</span>
+            </a>
+          </dd>
+        </div>
+        </dl>
+
+            {% if data['fromActivityDashboard']=='true' %}
+              {% if (data.changedCategory=='changed')%}
+              <form method="post">
+                <input type="hidden" name="returnToDashboard" value="false" />
+                <button class="govuk-button" data-module="govuk-button" value="return">
+                Confirm changes
+                {%endif%}
+              {% if (data.changedCategory!=='changed') and (data.activityNameDashboard=="")%}
+              <form method="post">
+                <input type="hidden" name="returnToDashboard" value="true" />
+                <button class="govuk-button" data-module="govuk-button" value="return">
+                Return to dashboard
+                {%endif%}
+            {% else %}
+              {% if data['edit']=='true' %}
+                Confirm changes to activity
+                {% else %}
+                  Create activity
+              {% endif %}
+            {% endif %}
+
+            <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-three-thirds" style="margin-left:-10px;">
+                    {% if data.status=='live' %}
+                    <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                      <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                        Suspend Schedule B
+                      </button>
+                      </a>
+                      <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                        <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                          Archive Schedule B
+                        </button>
+                      </a>
+                      <br /><br />
+                      </button>
+                      {% endif %}
+
+                      {% if data.status=='suspended' %}
+                      <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                        <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                          Unsuspend Schedule B
+                        </button>
+                        <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                          <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                            Archive Schedule B
+                          </button>
+                        </a>  <br /><br />
+                        </button>
+                        {% endif %}
+                    </form>
+                        <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+                        <div style="margin-bottom:100px;">&nbsp;</div>
+                  </div>
+                </div>
+
+          </button>
+        </form>
+        {% endif %}
+        </div>
+
+
+    {% endif %}
+
+
+
+
+
+    {% if data.numberOfSchedules>2 %}
+
+    <div class="govuk-grid-column-three-thirds">
+
+        {% if data.showSchedules=='true' %}
+        <div class="govuk-grid-column-two-thirds">
+          <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Schedule name
+              </dt>
+              <dd class="govuk-summary-list__value">
+              {{data.activityNameDashboard or 'Maths level 1'}} - Schedule C
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="check/schedule-name">
+                  Change<span class="govuk-visually-hidden"> licence type</span>
+                </a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Start date
+              </dt>
+              <dd class="govuk-summary-list__value">
+              {{data.startDate or '1 December 2022'}}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="check/schedule-name">
+                  Change<span class="govuk-visually-hidden"> licence type</span>
+                </a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                End date
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{data.endDate or '10 January 2023'}}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="check/activity-start-time">
+                  <span class="govuk-visually-hidden"> licence type</span>
+                </a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Schedule
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <!--Check days entered on time enter page-->
+                {% if data.timeMonday =='timeMonday' %}
+                  {% if data.timeAMMonday =='timeAMMonday'%} Monday am <br /> {% endif %}
+                  {% if data.timePMMonday =='timePMMonday' %}Monday pm <br />{% endif %}
+                  {% if data.timeEDMonday =='timeEDMonday' %}Monday ed <br />{% endif %}
+                {% endif %}
+
+              {% if data.timeTuesday =='timeTuesday' %}
+                {% if data.timeAMTuesday =='timeAMTuesday' %}Tuesday am <br />{% endif %}
+                {% if data.timePMTuesday =='timePMTuesday' %}Tuesday pm <br />{% endif %}
+                {% if data.timeEDTuesday =='timeEDTuesday' %}Tuesday ed <br />{% endif %}
+              {% endif %}
+
+              {% if data.timeWednesday =='timeWednesday' %}
+                {% if data.timeAMWednesday =='timeAMWednesday'  %}Wednesday am <br />{% endif %}
+                {% if data.timePMWednesday =='timePMWednesday' %}Wednesday pm <br />{% endif %}
+                {% if data.timeEDWednesday =='timeEDWednesday' %}Wednesday ed <br />{% endif %}
+              {% endif %}
+
+              {% if data.timeThursday =='timeThursday' %}
+                {% if data.timeAMThursday =='timeAMThursday' %}Thursday am <br />{% endif %}
+                {% if data.timePMThursday =='timePMThursday' %}Thursday pm <br />{% endif %}
+                {% if data.timeEDThursday =='timeEDThursday' %}Thursday ed <br />{% endif %}
+              {% endif %}
+
+              {% if data.timeFriday =='timeFriday' %}
+                {% if data.timeAMFriday =='timeAMFriday' %}Friday am <br />{% endif %}
+                {% if data.timePMFriday =='timePMFriday' %}Friday pm <br />{% endif %}
+                {% if data.timeEDFriday =='timeEDFriday' %}Friday ed <br />{% endif %}
+              {% endif %}
+
+              {% if data.timeSaturday =='timeSaturday' %}
+                {% if data.timeAMSaturday =='timeAMSaturday' %}Saturday am <br />{% endif %}
+                {% if data.timePMSaturday =='timePMSaturday' %}Saturday pm <br />{% endif %}
+                {% if data.timeEDSaturday =='timeEDSaturday' %}Saturday ed <br />{% endif %}
+              {% endif %}
+
+              {% if data.timeSunday =='timeSunday' %}
+                {% if data.timeAMSunday =='timeAMSunday' %}Sunday am <br />{% endif %}
+                {% if data.timePMSunday =='timePMSunday' %}Sunday pm <br />{% endif %}
+                {% if data.timeEDSunday =='timeEDSunday' %}Sunday ed <br />{% endif %}
+              {% endif %}
+
+              <!--IF nothing has been entered show a default value-->
+                {% if data.timeSunday !='timeSunday'
+                and data.timeMonday !='timeMonday'
+                and data.timeTuesday !='timeTuesday'
+                and data.timeWednesday !='timeWednesday'
+                and data.timeThursday !='timeThursday'
+                and data.timeFriday !='timeFriday'
+                and data.timeSaturday !='timeSaturday'
+                and data.timeSunday !='timeSunday' %}
+                  Monday am<br /> Tuesday am
+                {% endif %}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="check/activity-start-time">
+                  Change<span class="govuk-visually-hidden"> licence type</span>
+                </a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Location
+              </dt>
+              <dd class="govuk-summary-list__value">
+                Room 2
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="check/activity-location-dropdown">
+                  Change<span class="govuk-visually-hidden"> licence type</span>
+                </a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+              Capacity
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{data.ActivityCapacity or '15'}}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="check/activity-capacity">
+                  Change<span class="govuk-visually-hidden"> licence type</span>
+                </a>
+              </dd>
+            </div>
+            </dl>
+
+                {% if data['fromActivityDashboard']=='true' %}
+                  {% if (data.changedCategory=='changed')%}
+                  <form method="post">
+                    <input type="hidden" name="returnToDashboard" value="false" />
+                    <button class="govuk-button" data-module="govuk-button" value="return">
+                    Confirm changes
+                    {%endif%}
+                  {% if (data.changedCategory!=='changed') and (data.activityNameDashboard=="")%}
+                  <form method="post">
+                    <input type="hidden" name="returnToDashboard" value="true" />
+                    <button class="govuk-button" data-module="govuk-button" value="return">
+                    Return to dashboard
+                    {%endif%}
+                {% else %}
+                  {% if data['edit']=='true' %}
+                    Confirm changes to activity
+                    {% else %}
+                      Create activity
+                  {% endif %}
+                {% endif %}
+
+                <div class="govuk-grid-row">
+                      <div class="govuk-grid-column-three-thirds" style="margin-left:-10px;">
+                        {% if data.status=='live' %}
+                        <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                            Suspend Schedule C
+                          </button>
+                          </a>
+                          <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                              Archive Schedule C
+                            </button>
+                          </a>
+                          <br /><br />
+                          </button>
+                          {% endif %}
+
+                          {% if data.status=='suspended' %}
+                          <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                              Unsuspend Schedule C
+                            </button>
+                            <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                              <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                                Archive Schedule C
+                              </button>
+                            </a>  <br /><br />
+                            </button>
+                            {% endif %}
+                        </form>
+                            <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+                            <div style="margin-bottom:100px;">&nbsp;</div>
+                      </div>
+                    </div>
+
+              </button>
+            </form>
+            {% endif %}
+            </div>
+
+
+        {% endif %}
+
+
+
+
+
+        {% if data.numberOfSchedules>3 %}
+
+        <div class="govuk-grid-column-three-thirds">
+
+            {% if data.showSchedules=='true' %}
+            <div class="govuk-grid-column-two-thirds">
+              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Schedule name
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                  {{data.activityNameDashboard or 'Maths level 1'}} - Schedule D
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="check/schedule-name">
+                      Change<span class="govuk-visually-hidden"> licence type</span>
+                    </a>
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Start date
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                  {{data.startDate or '1 December 2022'}}
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="check/schedule-name">
+                      Change<span class="govuk-visually-hidden"> licence type</span>
+                    </a>
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    End date
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{data.endDate or '10 January 2023'}}
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="check/activity-start-time">
+                      <span class="govuk-visually-hidden"> licence type</span>
+                    </a>
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Schedule
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    <!--Check days entered on time enter page-->
+                    {% if data.timeMonday =='timeMonday' %}
+                      {% if data.timeAMMonday =='timeAMMonday'%} Monday am <br /> {% endif %}
+                      {% if data.timePMMonday =='timePMMonday' %}Monday pm <br />{% endif %}
+                      {% if data.timeEDMonday =='timeEDMonday' %}Monday ed <br />{% endif %}
+                    {% endif %}
+
+                  {% if data.timeTuesday =='timeTuesday' %}
+                    {% if data.timeAMTuesday =='timeAMTuesday' %}Tuesday am <br />{% endif %}
+                    {% if data.timePMTuesday =='timePMTuesday' %}Tuesday pm <br />{% endif %}
+                    {% if data.timeEDTuesday =='timeEDTuesday' %}Tuesday ed <br />{% endif %}
+                  {% endif %}
+
+                  {% if data.timeWednesday =='timeWednesday' %}
+                    {% if data.timeAMWednesday =='timeAMWednesday'  %}Wednesday am <br />{% endif %}
+                    {% if data.timePMWednesday =='timePMWednesday' %}Wednesday pm <br />{% endif %}
+                    {% if data.timeEDWednesday =='timeEDWednesday' %}Wednesday ed <br />{% endif %}
+                  {% endif %}
+
+                  {% if data.timeThursday =='timeThursday' %}
+                    {% if data.timeAMThursday =='timeAMThursday' %}Thursday am <br />{% endif %}
+                    {% if data.timePMThursday =='timePMThursday' %}Thursday pm <br />{% endif %}
+                    {% if data.timeEDThursday =='timeEDThursday' %}Thursday ed <br />{% endif %}
+                  {% endif %}
+
+                  {% if data.timeFriday =='timeFriday' %}
+                    {% if data.timeAMFriday =='timeAMFriday' %}Friday am <br />{% endif %}
+                    {% if data.timePMFriday =='timePMFriday' %}Friday pm <br />{% endif %}
+                    {% if data.timeEDFriday =='timeEDFriday' %}Friday ed <br />{% endif %}
+                  {% endif %}
+
+                  {% if data.timeSaturday =='timeSaturday' %}
+                    {% if data.timeAMSaturday =='timeAMSaturday' %}Saturday am <br />{% endif %}
+                    {% if data.timePMSaturday =='timePMSaturday' %}Saturday pm <br />{% endif %}
+                    {% if data.timeEDSaturday =='timeEDSaturday' %}Saturday ed <br />{% endif %}
+                  {% endif %}
+
+                  {% if data.timeSunday =='timeSunday' %}
+                    {% if data.timeAMSunday =='timeAMSunday' %}Sunday am <br />{% endif %}
+                    {% if data.timePMSunday =='timePMSunday' %}Sunday pm <br />{% endif %}
+                    {% if data.timeEDSunday =='timeEDSunday' %}Sunday ed <br />{% endif %}
+                  {% endif %}
+
+                  <!--IF nothing has been entered show a default value-->
+                    {% if data.timeSunday !='timeSunday'
+                    and data.timeMonday !='timeMonday'
+                    and data.timeTuesday !='timeTuesday'
+                    and data.timeWednesday !='timeWednesday'
+                    and data.timeThursday !='timeThursday'
+                    and data.timeFriday !='timeFriday'
+                    and data.timeSaturday !='timeSaturday'
+                    and data.timeSunday !='timeSunday' %}
+                      Monday am<br /> Tuesday am
+                    {% endif %}
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="check/activity-start-time">
+                      Change<span class="govuk-visually-hidden"> licence type</span>
+                    </a>
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Location
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    Room 2
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="check/activity-location-dropdown">
+                      Change<span class="govuk-visually-hidden"> licence type</span>
+                    </a>
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                  Capacity
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{data.ActivityCapacity or '15'}}
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="check/activity-capacity">
+                      Change<span class="govuk-visually-hidden"> licence type</span>
+                    </a>
+                  </dd>
+                </div>
+                </dl>
+
+                    {% if data['fromActivityDashboard']=='true' %}
+                      {% if (data.changedCategory=='changed')%}
+                      <form method="post">
+                        <input type="hidden" name="returnToDashboard" value="false" />
+                        <button class="govuk-button" data-module="govuk-button" value="return">
+                        Confirm changes
+                        {%endif%}
+                      {% if (data.changedCategory!=='changed') and (data.activityNameDashboard=="")%}
+                      <form method="post">
+                        <input type="hidden" name="returnToDashboard" value="true" />
+                        <button class="govuk-button" data-module="govuk-button" value="return">
+                        Return to dashboard
+                        {%endif%}
+                    {% else %}
+                      {% if data['edit']=='true' %}
+                        Confirm changes to activity
+                        {% else %}
+                          Create activity
+                      {% endif %}
+                    {% endif %}
+
+                    <div class="govuk-grid-row">
+                          <div class="govuk-grid-column-three-thirds" style="margin-left:-10px;">
+                            {% if data.status=='live' %}
+                            <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                              <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                                Suspend Schedule D
+                              </button>
+                              </a>
+                              <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                                <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                                  Archive Schedule D
+                                </button>
+                              </a>
+                              <br /><br />
+                              </button>
+                              {% endif %}
+
+                              {% if data.status=='suspended' %}
+                              <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                                  Unsuspend Schedule D
+                                </button>
+                                <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                                  <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                                    Archive Schedule D
+                                  </button>
+                                </a>  <br /><br />
+                                </button>
+                                {% endif %}
+                            </form>
+                                <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+                                <div style="margin-bottom:100px;">&nbsp;</div>
+                          </div>
+                        </div>
+
+                  </button>
+                </form>
+                {% endif %}
+                </div>
+
+
+            {% endif %}
+
+
+            {% if data.numberOfSchedules>4 %}
+
+            <div class="govuk-grid-column-three-thirds">
+
+                {% if data.showSchedules=='true' %}
+                <div class="govuk-grid-column-two-thirds">
+                  <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Schedule name
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                      {{data.activityNameDashboard or 'Maths level 1'}} - Schedule E
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="check/schedule-name">
+                          Change<span class="govuk-visually-hidden"> licence type</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Start date
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                      {{data.startDate or '1 December 2022'}}
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="check/schedule-name">
+                          Change<span class="govuk-visually-hidden"> licence type</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        End date
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        {{data.endDate or '10 January 2023'}}
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="check/activity-start-time">
+                          <span class="govuk-visually-hidden"> licence type</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Schedule
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        <!--Check days entered on time enter page-->
+                        {% if data.timeMonday =='timeMonday' %}
+                          {% if data.timeAMMonday =='timeAMMonday'%} Monday am <br /> {% endif %}
+                          {% if data.timePMMonday =='timePMMonday' %}Monday pm <br />{% endif %}
+                          {% if data.timeEDMonday =='timeEDMonday' %}Monday ed <br />{% endif %}
+                        {% endif %}
+
+                      {% if data.timeTuesday =='timeTuesday' %}
+                        {% if data.timeAMTuesday =='timeAMTuesday' %}Tuesday am <br />{% endif %}
+                        {% if data.timePMTuesday =='timePMTuesday' %}Tuesday pm <br />{% endif %}
+                        {% if data.timeEDTuesday =='timeEDTuesday' %}Tuesday ed <br />{% endif %}
+                      {% endif %}
+
+                      {% if data.timeWednesday =='timeWednesday' %}
+                        {% if data.timeAMWednesday =='timeAMWednesday'  %}Wednesday am <br />{% endif %}
+                        {% if data.timePMWednesday =='timePMWednesday' %}Wednesday pm <br />{% endif %}
+                        {% if data.timeEDWednesday =='timeEDWednesday' %}Wednesday ed <br />{% endif %}
+                      {% endif %}
+
+                      {% if data.timeThursday =='timeThursday' %}
+                        {% if data.timeAMThursday =='timeAMThursday' %}Thursday am <br />{% endif %}
+                        {% if data.timePMThursday =='timePMThursday' %}Thursday pm <br />{% endif %}
+                        {% if data.timeEDThursday =='timeEDThursday' %}Thursday ed <br />{% endif %}
+                      {% endif %}
+
+                      {% if data.timeFriday =='timeFriday' %}
+                        {% if data.timeAMFriday =='timeAMFriday' %}Friday am <br />{% endif %}
+                        {% if data.timePMFriday =='timePMFriday' %}Friday pm <br />{% endif %}
+                        {% if data.timeEDFriday =='timeEDFriday' %}Friday ed <br />{% endif %}
+                      {% endif %}
+
+                      {% if data.timeSaturday =='timeSaturday' %}
+                        {% if data.timeAMSaturday =='timeAMSaturday' %}Saturday am <br />{% endif %}
+                        {% if data.timePMSaturday =='timePMSaturday' %}Saturday pm <br />{% endif %}
+                        {% if data.timeEDSaturday =='timeEDSaturday' %}Saturday ed <br />{% endif %}
+                      {% endif %}
+
+                      {% if data.timeSunday =='timeSunday' %}
+                        {% if data.timeAMSunday =='timeAMSunday' %}Sunday am <br />{% endif %}
+                        {% if data.timePMSunday =='timePMSunday' %}Sunday pm <br />{% endif %}
+                        {% if data.timeEDSunday =='timeEDSunday' %}Sunday ed <br />{% endif %}
+                      {% endif %}
+
+                      <!--IF nothing has been entered show a default value-->
+                        {% if data.timeSunday !='timeSunday'
+                        and data.timeMonday !='timeMonday'
+                        and data.timeTuesday !='timeTuesday'
+                        and data.timeWednesday !='timeWednesday'
+                        and data.timeThursday !='timeThursday'
+                        and data.timeFriday !='timeFriday'
+                        and data.timeSaturday !='timeSaturday'
+                        and data.timeSunday !='timeSunday' %}
+                          Monday am<br /> Tuesday am
+                        {% endif %}
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="check/activity-start-time">
+                          Change<span class="govuk-visually-hidden"> licence type</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Location
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        Room 2
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="check/activity-location-dropdown">
+                          Change<span class="govuk-visually-hidden"> licence type</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                      Capacity
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        {{data.ActivityCapacity or '15'}}
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="check/activity-capacity">
+                          Change<span class="govuk-visually-hidden"> licence type</span>
+                        </a>
+                      </dd>
+                    </div>
+                    </dl>
+
+                        {% if data['fromActivityDashboard']=='true' %}
+                          {% if (data.changedCategory=='changed')%}
+                          <form method="post">
+                            <input type="hidden" name="returnToDashboard" value="false" />
+                            <button class="govuk-button" data-module="govuk-button" value="return">
+                            Confirm changes
+                            {%endif%}
+                          {% if (data.changedCategory!=='changed') and (data.activityNameDashboard=="")%}
+                          <form method="post">
+                            <input type="hidden" name="returnToDashboard" value="true" />
+                            <button class="govuk-button" data-module="govuk-button" value="return">
+                            Return to dashboard
+                            {%endif%}
+                        {% else %}
+                          {% if data['edit']=='true' %}
+                            Confirm changes to activity
+                            {% else %}
+                              Create activity
+                          {% endif %}
+                        {% endif %}
+
+                        <div class="govuk-grid-row">
+                              <div class="govuk-grid-column-three-thirds" style="margin-left:-10px;">
+                                {% if data.status=='live' %}
+                                <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                                  <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                                    Suspend Schedule E
+                                  </button>
+                                  </a>
+                                  <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                                    <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                                      Archive Schedule E
+                                    </button>
+                                  </a>
+                                  <br /><br />
+                                  </button>
+                                  {% endif %}
+
+                                  {% if data.status=='suspended' %}
+                                  <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                                    <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                                      Unsuspend Schedule E
+                                    </button>
+                                    <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                                      <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                                        Archive Schedule E
+                                      </button>
+                                    </a>  <br /><br />
+                                    </button>
+                                    {% endif %}
+                                </form>
+                                    <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+                                    <div style="margin-bottom:100px;">&nbsp;</div>
+                              </div>
+                            </div>
+
+                      </button>
+                    </form>
+                    {% endif %}
+                    </div>
+
+
+                {% endif %}
+
+                {% if data.numberOfSchedules>5 %}
+
+                <div class="govuk-grid-column-three-thirds">
+
+                    {% if data.showSchedules=='true' %}
+                    <div class="govuk-grid-column-two-thirds">
+                      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Schedule name
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                          {{data.activityNameDashboard or 'Maths level 1'}} - Schedule F
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="check/schedule-name">
+                              Change<span class="govuk-visually-hidden"> licence type</span>
+                            </a>
+                          </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Start date
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                          {{data.startDate or '1 December 2022'}}
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="check/schedule-name">
+                              Change<span class="govuk-visually-hidden"> licence type</span>
+                            </a>
+                          </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            End date
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{data.endDate or '10 January 2023'}}
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="check/activity-start-time">
+                              <span class="govuk-visually-hidden"> licence type</span>
+                            </a>
+                          </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Schedule
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            <!--Check days entered on time enter page-->
+                            {% if data.timeMonday =='timeMonday' %}
+                              {% if data.timeAMMonday =='timeAMMonday'%} Monday am <br /> {% endif %}
+                              {% if data.timePMMonday =='timePMMonday' %}Monday pm <br />{% endif %}
+                              {% if data.timeEDMonday =='timeEDMonday' %}Monday ed <br />{% endif %}
+                            {% endif %}
+
+                          {% if data.timeTuesday =='timeTuesday' %}
+                            {% if data.timeAMTuesday =='timeAMTuesday' %}Tuesday am <br />{% endif %}
+                            {% if data.timePMTuesday =='timePMTuesday' %}Tuesday pm <br />{% endif %}
+                            {% if data.timeEDTuesday =='timeEDTuesday' %}Tuesday ed <br />{% endif %}
+                          {% endif %}
+
+                          {% if data.timeWednesday =='timeWednesday' %}
+                            {% if data.timeAMWednesday =='timeAMWednesday'  %}Wednesday am <br />{% endif %}
+                            {% if data.timePMWednesday =='timePMWednesday' %}Wednesday pm <br />{% endif %}
+                            {% if data.timeEDWednesday =='timeEDWednesday' %}Wednesday ed <br />{% endif %}
+                          {% endif %}
+
+                          {% if data.timeThursday =='timeThursday' %}
+                            {% if data.timeAMThursday =='timeAMThursday' %}Thursday am <br />{% endif %}
+                            {% if data.timePMThursday =='timePMThursday' %}Thursday pm <br />{% endif %}
+                            {% if data.timeEDThursday =='timeEDThursday' %}Thursday ed <br />{% endif %}
+                          {% endif %}
+
+                          {% if data.timeFriday =='timeFriday' %}
+                            {% if data.timeAMFriday =='timeAMFriday' %}Friday am <br />{% endif %}
+                            {% if data.timePMFriday =='timePMFriday' %}Friday pm <br />{% endif %}
+                            {% if data.timeEDFriday =='timeEDFriday' %}Friday ed <br />{% endif %}
+                          {% endif %}
+
+                          {% if data.timeSaturday =='timeSaturday' %}
+                            {% if data.timeAMSaturday =='timeAMSaturday' %}Saturday am <br />{% endif %}
+                            {% if data.timePMSaturday =='timePMSaturday' %}Saturday pm <br />{% endif %}
+                            {% if data.timeEDSaturday =='timeEDSaturday' %}Saturday ed <br />{% endif %}
+                          {% endif %}
+
+                          {% if data.timeSunday =='timeSunday' %}
+                            {% if data.timeAMSunday =='timeAMSunday' %}Sunday am <br />{% endif %}
+                            {% if data.timePMSunday =='timePMSunday' %}Sunday pm <br />{% endif %}
+                            {% if data.timeEDSunday =='timeEDSunday' %}Sunday ed <br />{% endif %}
+                          {% endif %}
+
+                          <!--IF nothing has been entered show a default value-->
+                            {% if data.timeSunday !='timeSunday'
+                            and data.timeMonday !='timeMonday'
+                            and data.timeTuesday !='timeTuesday'
+                            and data.timeWednesday !='timeWednesday'
+                            and data.timeThursday !='timeThursday'
+                            and data.timeFriday !='timeFriday'
+                            and data.timeSaturday !='timeSaturday'
+                            and data.timeSunday !='timeSunday' %}
+                              Monday am<br /> Tuesday am
+                            {% endif %}
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="check/activity-start-time">
+                              Change<span class="govuk-visually-hidden"> licence type</span>
+                            </a>
+                          </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Location
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            Room 2
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="check/activity-location-dropdown">
+                              Change<span class="govuk-visually-hidden"> licence type</span>
+                            </a>
+                          </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                          Capacity
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{data.ActivityCapacity or '15'}}
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="check/activity-capacity">
+                              Change<span class="govuk-visually-hidden"> licence type</span>
+                            </a>
+                          </dd>
+                        </div>
+                        </dl>
+
+                            {% if data['fromActivityDashboard']=='true' %}
+                              {% if (data.changedCategory=='changed')%}
+                              <form method="post">
+                                <input type="hidden" name="returnToDashboard" value="false" />
+                                <button class="govuk-button" data-module="govuk-button" value="return">
+                                Confirm changes
+                                {%endif%}
+                              {% if (data.changedCategory!=='changed') and (data.activityNameDashboard=="")%}
+                              <form method="post">
+                                <input type="hidden" name="returnToDashboard" value="true" />
+                                <button class="govuk-button" data-module="govuk-button" value="return">
+                                Return to dashboard
+                                {%endif%}
+                            {% else %}
+                              {% if data['edit']=='true' %}
+                                Confirm changes to activity
+                                {% else %}
+                                  Create activity
+                              {% endif %}
+                            {% endif %}
+
+                            <div class="govuk-grid-row">
+                                  <div class="govuk-grid-column-three-thirds" style="margin-left:-10px;">
+                                    {% if data.status=='live' %}
+                                    <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                                      <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                                        Suspend Schedule F
+                                      </button>
+                                      </a>
+                                      <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                                        <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                                          Archive Schedule F
+                                        </button>
+                                      </a>
+                                      <br /><br />
+                                      </button>
+                                      {% endif %}
+
+                                      {% if data.status=='suspended' %}
+                                      <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                                        <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                                          Unsuspend Schedule F
+                                        </button>
+                                        <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                                          <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                                            Archive Schedule F
+                                          </button>
+                                        </a>  <br /><br />
+                                        </button>
+                                        {% endif %}
+                                    </form>
+                                        <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+                                        <div style="margin-bottom:100px;">&nbsp;</div>
+                                  </div>
+                                </div>
+
+                          </button>
+                        </form>
+                        {% endif %}
+                        </div>
+
+
+                    {% endif %}
+
+
+
+
+
+
+                    {% if data.numberOfSchedules>6 %}
+
+                    <div class="govuk-grid-column-three-thirds">
+
+                        {% if data.showSchedules=='true' %}
+                        <div class="govuk-grid-column-two-thirds">
+                          <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                Schedule name
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                              {{data.activityNameDashboard or 'Maths level 1'}} - Schedule G
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="check/schedule-name">
+                                  Change<span class="govuk-visually-hidden"> licence type</span>
+                                </a>
+                              </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                Start date
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                              {{data.startDate or '1 December 2022'}}
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="check/schedule-name">
+                                  Change<span class="govuk-visually-hidden"> licence type</span>
+                                </a>
+                              </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                End date
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                                {{data.endDate or '10 January 2023'}}
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="check/activity-start-time">
+                                  <span class="govuk-visually-hidden"> licence type</span>
+                                </a>
+                              </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                Schedule
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                                <!--Check days entered on time enter page-->
+                                {% if data.timeMonday =='timeMonday' %}
+                                  {% if data.timeAMMonday =='timeAMMonday'%} Monday am <br /> {% endif %}
+                                  {% if data.timePMMonday =='timePMMonday' %}Monday pm <br />{% endif %}
+                                  {% if data.timeEDMonday =='timeEDMonday' %}Monday ed <br />{% endif %}
+                                {% endif %}
+
+                              {% if data.timeTuesday =='timeTuesday' %}
+                                {% if data.timeAMTuesday =='timeAMTuesday' %}Tuesday am <br />{% endif %}
+                                {% if data.timePMTuesday =='timePMTuesday' %}Tuesday pm <br />{% endif %}
+                                {% if data.timeEDTuesday =='timeEDTuesday' %}Tuesday ed <br />{% endif %}
+                              {% endif %}
+
+                              {% if data.timeWednesday =='timeWednesday' %}
+                                {% if data.timeAMWednesday =='timeAMWednesday'  %}Wednesday am <br />{% endif %}
+                                {% if data.timePMWednesday =='timePMWednesday' %}Wednesday pm <br />{% endif %}
+                                {% if data.timeEDWednesday =='timeEDWednesday' %}Wednesday ed <br />{% endif %}
+                              {% endif %}
+
+                              {% if data.timeThursday =='timeThursday' %}
+                                {% if data.timeAMThursday =='timeAMThursday' %}Thursday am <br />{% endif %}
+                                {% if data.timePMThursday =='timePMThursday' %}Thursday pm <br />{% endif %}
+                                {% if data.timeEDThursday =='timeEDThursday' %}Thursday ed <br />{% endif %}
+                              {% endif %}
+
+                              {% if data.timeFriday =='timeFriday' %}
+                                {% if data.timeAMFriday =='timeAMFriday' %}Friday am <br />{% endif %}
+                                {% if data.timePMFriday =='timePMFriday' %}Friday pm <br />{% endif %}
+                                {% if data.timeEDFriday =='timeEDFriday' %}Friday ed <br />{% endif %}
+                              {% endif %}
+
+                              {% if data.timeSaturday =='timeSaturday' %}
+                                {% if data.timeAMSaturday =='timeAMSaturday' %}Saturday am <br />{% endif %}
+                                {% if data.timePMSaturday =='timePMSaturday' %}Saturday pm <br />{% endif %}
+                                {% if data.timeEDSaturday =='timeEDSaturday' %}Saturday ed <br />{% endif %}
+                              {% endif %}
+
+                              {% if data.timeSunday =='timeSunday' %}
+                                {% if data.timeAMSunday =='timeAMSunday' %}Sunday am <br />{% endif %}
+                                {% if data.timePMSunday =='timePMSunday' %}Sunday pm <br />{% endif %}
+                                {% if data.timeEDSunday =='timeEDSunday' %}Sunday ed <br />{% endif %}
+                              {% endif %}
+
+                              <!--IF nothing has been entered show a default value-->
+                                {% if data.timeSunday !='timeSunday'
+                                and data.timeMonday !='timeMonday'
+                                and data.timeTuesday !='timeTuesday'
+                                and data.timeWednesday !='timeWednesday'
+                                and data.timeThursday !='timeThursday'
+                                and data.timeFriday !='timeFriday'
+                                and data.timeSaturday !='timeSaturday'
+                                and data.timeSunday !='timeSunday' %}
+                                  Monday am<br /> Tuesday am
+                                {% endif %}
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="check/activity-start-time">
+                                  Change<span class="govuk-visually-hidden"> licence type</span>
+                                </a>
+                              </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                Location
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                                Room 2
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="check/activity-location-dropdown">
+                                  Change<span class="govuk-visually-hidden"> licence type</span>
+                                </a>
+                              </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                              Capacity
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                                {{data.ActivityCapacity or '15'}}
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="check/activity-capacity">
+                                  Change<span class="govuk-visually-hidden"> licence type</span>
+                                </a>
+                              </dd>
+                            </div>
+                            </dl>
+
+                                {% if data['fromActivityDashboard']=='true' %}
+                                  {% if (data.changedCategory=='changed')%}
+                                  <form method="post">
+                                    <input type="hidden" name="returnToDashboard" value="false" />
+                                    <button class="govuk-button" data-module="govuk-button" value="return">
+                                    Confirm changes
+                                    {%endif%}
+                                  {% if (data.changedCategory!=='changed') and (data.activityNameDashboard=="")%}
+                                  <form method="post">
+                                    <input type="hidden" name="returnToDashboard" value="true" />
+                                    <button class="govuk-button" data-module="govuk-button" value="return">
+                                    Return to dashboard
+                                    {%endif%}
+                                {% else %}
+                                  {% if data['edit']=='true' %}
+                                    Confirm changes to activity
+                                    {% else %}
+                                      Create activity
+                                  {% endif %}
+                                {% endif %}
+
+                                <div class="govuk-grid-row">
+                                      <div class="govuk-grid-column-three-thirds" style="margin-left:-10px;">
+                                        {% if data.status=='live' %}
+                                        <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                                          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                                            Suspend Schedule G
+                                          </button>
+                                          </a>
+                                          <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                                            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                                              Archive Schedule G
+                                            </button>
+                                          </a>
+                                          <br /><br />
+                                          </button>
+                                          {% endif %}
+
+                                          {% if data.status=='suspended' %}
+                                          <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                                            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                                              Unsuspend Schedule G
+                                            </button>
+                                            <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                                              <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                                                Archive Schedule G
+                                              </button>
+                                            </a>  <br /><br />
+                                            </button>
+                                            {% endif %}
+                                        </form>
+                                            <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+                                            <div style="margin-bottom:100px;">&nbsp;</div>
+                                      </div>
+                                    </div>
+
+                              </button>
+                            </form>
+                            {% endif %}
+                            </div>
+
+
+                        {% endif %}
+
+
+
+
+
+
+                        {% if data.numberOfSchedules>7 %}
+
+                        <div class="govuk-grid-column-three-thirds">
+
+                            {% if data.showSchedules=='true' %}
+                            <div class="govuk-grid-column-two-thirds">
+                              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    Schedule name
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                  {{data.activityNameDashboard or 'Maths level 1'}} - Schedule H
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="check/schedule-name">
+                                      Change<span class="govuk-visually-hidden"> licence type</span>
+                                    </a>
+                                  </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    Start date
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                  {{data.startDate or '1 December 2022'}}
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="check/schedule-name">
+                                      Change<span class="govuk-visually-hidden"> licence type</span>
+                                    </a>
+                                  </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    End date
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                    {{data.endDate or '10 January 2023'}}
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="check/activity-start-time">
+                                      <span class="govuk-visually-hidden"> licence type</span>
+                                    </a>
+                                  </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    Schedule
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                    <!--Check days entered on time enter page-->
+                                    {% if data.timeMonday =='timeMonday' %}
+                                      {% if data.timeAMMonday =='timeAMMonday'%} Monday am <br /> {% endif %}
+                                      {% if data.timePMMonday =='timePMMonday' %}Monday pm <br />{% endif %}
+                                      {% if data.timeEDMonday =='timeEDMonday' %}Monday ed <br />{% endif %}
+                                    {% endif %}
+
+                                  {% if data.timeTuesday =='timeTuesday' %}
+                                    {% if data.timeAMTuesday =='timeAMTuesday' %}Tuesday am <br />{% endif %}
+                                    {% if data.timePMTuesday =='timePMTuesday' %}Tuesday pm <br />{% endif %}
+                                    {% if data.timeEDTuesday =='timeEDTuesday' %}Tuesday ed <br />{% endif %}
+                                  {% endif %}
+
+                                  {% if data.timeWednesday =='timeWednesday' %}
+                                    {% if data.timeAMWednesday =='timeAMWednesday'  %}Wednesday am <br />{% endif %}
+                                    {% if data.timePMWednesday =='timePMWednesday' %}Wednesday pm <br />{% endif %}
+                                    {% if data.timeEDWednesday =='timeEDWednesday' %}Wednesday ed <br />{% endif %}
+                                  {% endif %}
+
+                                  {% if data.timeThursday =='timeThursday' %}
+                                    {% if data.timeAMThursday =='timeAMThursday' %}Thursday am <br />{% endif %}
+                                    {% if data.timePMThursday =='timePMThursday' %}Thursday pm <br />{% endif %}
+                                    {% if data.timeEDThursday =='timeEDThursday' %}Thursday ed <br />{% endif %}
+                                  {% endif %}
+
+                                  {% if data.timeFriday =='timeFriday' %}
+                                    {% if data.timeAMFriday =='timeAMFriday' %}Friday am <br />{% endif %}
+                                    {% if data.timePMFriday =='timePMFriday' %}Friday pm <br />{% endif %}
+                                    {% if data.timeEDFriday =='timeEDFriday' %}Friday ed <br />{% endif %}
+                                  {% endif %}
+
+                                  {% if data.timeSaturday =='timeSaturday' %}
+                                    {% if data.timeAMSaturday =='timeAMSaturday' %}Saturday am <br />{% endif %}
+                                    {% if data.timePMSaturday =='timePMSaturday' %}Saturday pm <br />{% endif %}
+                                    {% if data.timeEDSaturday =='timeEDSaturday' %}Saturday ed <br />{% endif %}
+                                  {% endif %}
+
+                                  {% if data.timeSunday =='timeSunday' %}
+                                    {% if data.timeAMSunday =='timeAMSunday' %}Sunday am <br />{% endif %}
+                                    {% if data.timePMSunday =='timePMSunday' %}Sunday pm <br />{% endif %}
+                                    {% if data.timeEDSunday =='timeEDSunday' %}Sunday ed <br />{% endif %}
+                                  {% endif %}
+
+                                  <!--IF nothing has been entered show a default value-->
+                                    {% if data.timeSunday !='timeSunday'
+                                    and data.timeMonday !='timeMonday'
+                                    and data.timeTuesday !='timeTuesday'
+                                    and data.timeWednesday !='timeWednesday'
+                                    and data.timeThursday !='timeThursday'
+                                    and data.timeFriday !='timeFriday'
+                                    and data.timeSaturday !='timeSaturday'
+                                    and data.timeSunday !='timeSunday' %}
+                                      Monday am<br /> Tuesday am
+                                    {% endif %}
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="check/activity-start-time">
+                                      Change<span class="govuk-visually-hidden"> licence type</span>
+                                    </a>
+                                  </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    Location
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                    Room 2
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="check/activity-location-dropdown">
+                                      Change<span class="govuk-visually-hidden"> licence type</span>
+                                    </a>
+                                  </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                  Capacity
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                    {{data.ActivityCapacity or '15'}}
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="check/activity-capacity">
+                                      Change<span class="govuk-visually-hidden"> licence type</span>
+                                    </a>
+                                  </dd>
+                                </div>
+                                </dl>
+
+                                    {% if data['fromActivityDashboard']=='true' %}
+                                      {% if (data.changedCategory=='changed')%}
+                                      <form method="post">
+                                        <input type="hidden" name="returnToDashboard" value="false" />
+                                        <button class="govuk-button" data-module="govuk-button" value="return">
+                                        Confirm changes
+                                        {%endif%}
+                                      {% if (data.changedCategory!=='changed') and (data.activityNameDashboard=="")%}
+                                      <form method="post">
+                                        <input type="hidden" name="returnToDashboard" value="true" />
+                                        <button class="govuk-button" data-module="govuk-button" value="return">
+                                        Return to dashboard
+                                        {%endif%}
+                                    {% else %}
+                                      {% if data['edit']=='true' %}
+                                        Confirm changes to activity
+                                        {% else %}
+                                          Create activity
+                                      {% endif %}
+                                    {% endif %}
+
+                                    <div class="govuk-grid-row">
+                                          <div class="govuk-grid-column-three-thirds" style="margin-left:-10px;">
+                                            {% if data.status=='live' %}
+                                            <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                                              <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                                                Suspend Schedule H
+                                              </button>
+                                              </a>
+                                              <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                                                <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                                                  Archive Schedule H
+                                                </button>
+                                              </a>
+                                              <br /><br />
+                                              </button>
+                                              {% endif %}
+
+                                              {% if data.status=='suspended' %}
+                                              <a href="activity-action?action=suspendSchedule&activityName={{data.activityNameDashboard}}">
+                                                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin:0 20px 0 20px;">
+                                                  Unsuspend Schedule H
+                                                </button>
+                                                <a href="activity-action?action=archiveSchedule&activityName={{data.activityNameDashboard}}"">
+                                                  <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                                                    Archive Schedule H
+                                                  </button>
+                                                </a>  <br /><br />
+                                                </button>
+                                                {% endif %}
+                                            </form>
+                                                <a style="margin-left:25px;" href="activity-dashboard?dashboardCategory=All">Return to dashboard</a>
+                                                <div style="margin-bottom:100px;">&nbsp;</div>
+                                          </div>
+                                        </div>
+
+                                  </button>
+                                </form>
+                                {% endif %}
+                                </div>
+                            {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+  {% else %}
+<!--Create journey-->
+
+<div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-thirds">
+        <div class="back">
+          <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+          </div>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
+
+          {% if data['edit']=='true' %}
+            Change
+            {% else %}
+              Check
+          {% endif %}
+           details for {{data.activityName or 'Maths level 1'}}
+        </h1><br />
+      </div>
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">Activity details</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Category
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.category or 'Education'}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-type-select-with-category">
+                Change<span class="govuk-visually-hidden"> name</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Name
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.activityName or 'Maths level 1'}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-name">
+                Change<span class="govuk-visually-hidden"> name</span>
+              </a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Risk level
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.riskLevel or 'Low'}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-risk-assessment">
+                Change<span class="govuk-visually-hidden"> licence type</span>
+              </a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Education level
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {% for level in data.educationLevels %}
+                {{level.name or 'None set'}}<br />
+              {% endfor %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-add-education-new">
+                Change<span class="govuk-visually-hidden"> licence period</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Pay rates
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {% for level, details in data.payrates %}
+                {% if details|length > 0 %}
+                {{level}} incentive level payments<br />
+
+                {% for rate in details %}
+                  {{rate.name or 'Payment rate A'}} :
+                  &pound; {{rate.amount or '1.10'}}<br />
+
+                  {% endfor %}
+
+                {% endif %}
+                {% endfor %}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+              <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
+                <a class="govuk-link" href="activity-payment-details?id={{rate.id}}">
+                  Change<span class="govuk-visually-hidden"> incentive payment</span>
+                </a>
+              </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Minimum incentive level
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.payrates['level'] or 'Basic'}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-incentive-level">
+                <span class="govuk-visually-hidden"> previous application number</span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+        {% if data['edit']=='true' %}
+
+          {% else %}
+            <a href="activity-dashboard?dashboardCategory=All&dashboardView=live">Cancel and return to activities dashboard</a><br /><br /><br /><br />
+        {% endif %}
+        <form method="post">
+          <button class="govuk-button" data-module="govuk-button">
+            {% if data['edit']=='true' %}
+              Confirm changes to activity
+              {% else %}
+                Create activity
+            {% endif %}
+
+          </button>
+        </form>
+      </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
