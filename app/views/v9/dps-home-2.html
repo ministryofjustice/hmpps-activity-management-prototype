@@ -11,35 +11,6 @@ Activities Management prototype
 	<h1 class="govuk-heading-l govuk-!-margin-top-7">Digital Prison Services</h1>
 </div>
 {% endblock %}
-<div class="homepage-search">
-	<div class="govuk-width-container">
-		<h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search for a prisoner</h2>
-		<p class="govuk-body govuk-hint">Leave blank to view all results for selected residential location</p>
-		<form action="/prisoner-search" class="horizontal-form" data-test="homepage-search-form">
-			<div class="govuk-form-group">
-				<label class="govuk-label" for="keywords">
-					Name or prison number
-				</label>
-				<input class="govuk-input" id="keywords" name="keywords" type="text" data-test="homepage-search-keywords">
-			</div>
-			<div class="govuk-form-group">
-				<label class="govuk-label" for="location">
-					Residential location
-				</label>
-				<select class="govuk-select" id="location" name="location" data-test="homepage-search-location">
-					<option value="MDI">{{data['prison-name']}}</option>
-					{% for houseblock in data['residential-locations'] %}
-					<option value="MDI-1">{{houseblock.name}}</option>
-					{% endfor %}
-					<option value="MDI-RECEP">Reception</option>
-				</select>
-			</div>
-			<button type="submit" class="govuk-button" data-module="govuk-button">
-				Search
-			</button>
-		</form>
-	</div>
-</div>
 <div class="homepage-content">
 	<div class="govuk-width-container">
 		<ul class="govuk-grid-row card-group" id="sortable">
