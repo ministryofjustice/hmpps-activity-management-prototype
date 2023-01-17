@@ -901,11 +901,25 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', f
         delete req.session.data['attendance-confirmation']
     }
 
-    // landing filtering
-    let landings = req.session.data['landings']
-    if(landings){
-        landings = landings.map(landing => landing.toString());
-        prisonersWithEvents = prisonersWithEvents.filter(prisoner => landings.includes(prisoner.location.landing.toString()));
+    //landing filters
+    if (req.session.data['filters'] && req.session.data['filters']['landings']) {
+        let landings = req.session.data['filters']['landings'];
+
+        const removeLanding = req.query['remove-landing'];
+        if (removeLanding) {
+            landings = landings.filter(landing => landing !== removeLanding);
+            if(landings.length === 0) {
+                delete req.session.data['filters']['landings']
+            } else {
+                req.session.data['filters']['landings'] = landings;
+            }
+            delete req.query['remove-landing'];
+        }
+
+        if (landings !== '_unchecked' && landings.length > 0) {
+            landings = landings.map(landing => landing.toString());
+            prisonersWithEvents = prisonersWithEvents.filter(prisoner => landings.includes(prisoner.location.landing.toString()));
+        }
     }
 
     res.render('unlock/' + req.version + '/refusals-list', {
@@ -968,12 +982,25 @@ router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', fun
         delete req.session.data['attendance-confirmation']
     }
 
-    // landing filtering
-    let landings = req.session.data['landings']
-    console.log(landings)
-    if(landings !== undefined && landings !== '_unchecked' && landings.length > 0){
-        landings = landings.map(landing => landing.toString());
-        prisonersWithEvents = prisonersWithEvents.filter(prisoner => landings.includes(prisoner.location.landing.toString()));
+    //landing filters
+    if (req.session.data['filters'] && req.session.data['filters']['landings']) {
+        let landings = req.session.data['filters']['landings'];
+
+        const removeLanding = req.query['remove-landing'];
+        if (removeLanding) {
+            landings = landings.filter(landing => landing !== removeLanding);
+            if(landings.length === 0) {
+                delete req.session.data['filters']['landings']
+            } else {
+                req.session.data['filters']['landings'] = landings;
+            }
+            delete req.query['remove-landing'];
+        }
+
+        if (landings !== '_unchecked' && landings.length > 0) {
+            landings = landings.map(landing => landing.toString());
+            prisonersWithEvents = prisonersWithEvents.filter(prisoner => landings.includes(prisoner.location.landing.toString()));
+        }
     }
 
     res.render('unlock/' + req.version + '/unlock-list', {
