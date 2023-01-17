@@ -53,5 +53,19 @@ module.exports = {
   "selected-locations": {},
   "prison-name": "HMP Leeds",
   "chosen-date": "today",
-  "date": "2023-01-02"
+  "date": "2023-01-02",
+  "prototype-versions": {
+    'create-and-allocate': {
+      'latest-version': 'v9',
+      'url': '/v9/dps-home-2'
+    },
+    'unlock-and-attend': {
+      'latest-version': 'version-5',
+      'url': '/unlock/version-5/whereabouts'
+    },
+    'appointments': {
+      'latest-version': 'version-3',
+      'url': ''
+    }
+  }
 }
