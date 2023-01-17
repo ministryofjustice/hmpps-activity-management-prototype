@@ -123,9 +123,9 @@
 
 			{% set attendanceDetailsHtml %}
 			<ul class="govuk-list">
-				<li>Attended: <b>{{attendedCount}}</b></li>
-				<li>Absent: <b>{{notAttendedCount}}</b></li>
-				<li>Not recorded: <b>{{notRecorded}}</b></li>
+				<li>Attended: <b>{{attendedCount}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (attendedCount / totalPrisoners * 100) | round(1) }}%)</span></li>
+				<li>Absent: <b>{{notAttendedCount}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (notAttendedCount / totalPrisoners * 100) | round(1) }}%)</span></li>
+				<li>Not recorded: <b>{{notRecorded}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (notRecorded / totalPrisoners * 100) | round(1) }}%)</span></li>
 			</ul>
 			{% endset %}
 			<!-- {{ govukDetails({

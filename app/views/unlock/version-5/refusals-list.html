@@ -80,7 +80,7 @@ Activities Management prototype
 								<option value="activity_DESC">Activity name (Z-A)</option>
 							</select>
 						</div>
-						<div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-left-3 govuk-!-margin-bottom-0" style="text-align: left">
+						<!-- <div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-left-3 govuk-!-margin-bottom-0" style="text-align: left">
 							<label class="govuk-label">
 								Group by
 							</label>
@@ -89,7 +89,7 @@ Activities Management prototype
 								<option value="sublocation">Sublocation</option>
 								<option value="activity">Activity</option>
 							</select>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -115,7 +115,7 @@ Activities Management prototype
 													{% if location.id == houseblock %}
 													{% for spur in location.spurs.slice(0, 3) %}
 													<div class="govuk-checkboxes__item">
-														<input class="govuk-checkboxes__input" id="landings-{{spur.id}}" name="landings" type="checkbox" value="{{spur.id}}" {{ 'checked' if data['landings'] and loop.index|string in data['landings'] }}>
+														<input class="govuk-checkboxes__input" id="landings-{{spur.id}}" name="filters[landings]" type="checkbox" value="{{spur.id}}" {{ 'checked' if data['filters']['landings'] and loop.index|string in data['filters']['landings'] }}>
 														<label class="govuk-label govuk-checkboxes__label" for="landings-{{spur.id}}">
 															Landing {{spur.id}}
 														</label>
@@ -181,6 +181,38 @@ Activities Management prototype
 										value: 'not-attended'
 									}]
 								}) }}
+
+								{{ govukSelect({
+									formGroup: {
+										classes: "govuk-!-display-inline-block govuk-!-margin-right-5"
+									},
+									label: {
+										text: "Attendance status",
+										classes: "govuk-label--s"
+									},
+									idPrefix: 'attendance',
+									name: 'filters[attendance]',
+									items: [{
+										text: 'All',
+										id: 'all',
+										value: 'all'
+									},
+									{
+										text: 'Attended',
+										id: 'attended',
+										value: 'attended'
+									},
+									{
+										text: 'Not attended',
+										id: 'not-attended',
+										value: 'not-attended'
+									},
+									{
+										text: 'Not recorded',
+										id: 'not-recorded',
+										value: 'not-recorded'
+									}]
+								}) }}
 							</div>
 						</div>
 						{{govukButton({
@@ -213,15 +245,17 @@ Activities Management prototype
 			{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 			<h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
 
-			{% if data['landings'] %}
-			<div class="app-filter-area" id="filters" tabindex=0>
-				<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold govuk-!-display-none-print">Showing</span>
-				<ul class="app-filter-tag-list">
-					{% for landing in data['landings'] %}
-					<li class="govuk-tag govuk-tag--filter">Landing {{landing}}</li>
-					{% endfor %}
-				</ul>
-			</div>
+			{% if data['filters']['landings'] %}
+			<form>
+				<div class="app-filter-area" id="filters" tabindex=0>
+					<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold govuk-!-display-none-print">Showing</span>
+					<ul class="app-filter-tag-list">
+						{% for landing in data['filters']['landings'] %}
+						<li class="govuk-tag govuk-tag--filter"><button value="{{landing}}" name="remove-landing" title="Remove landing {{landing}} from filters"><span class="govuk-visually-hidden">Remove</span></button> Landing {{landing}}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</form>
 			{% endif %}
 
 			<table class="govuk-table app-whereabouts-table app-whereabouts-table--font-size-normal" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
