@@ -726,7 +726,8 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
             });
             return idArray;
         };
-        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(getPrisonerIds(prisonersByDateAndPeriod), 'not-attended', 'standard', 'Session cancelled', 'no')
+        let reason = req.session.data['cancellation-reason']
+        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(getPrisonerIds(prisonersByDateAndPeriod), 'not-attended', 'standard', reason, 'no')
         updateAttendanceData(req, activityId, date, period, attendanceDetails)
     }
 
