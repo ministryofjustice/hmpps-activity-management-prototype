@@ -4,7 +4,7 @@ module.exports = function(router) {
 	var version = '/v9';
 
 	router.post(version + '/setup', function(req, res) {
-			res.redirect(version + '/dps-home')
+			res.redirect('/dps-home')
 	});
 
     //From activity dashboard, if schedule, delete (archive or suspend)
