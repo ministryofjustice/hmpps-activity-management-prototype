@@ -1157,4 +1157,14 @@ router.get('/activities/:selectedDate', function(req, res) {
     })
 });
 
+// prisoner profile
+router.get('/prisoner/:prisonerId', function(req, res) {
+    let prisonerId = req.params.prisonerId;
+    let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
+
+    res.render('unlock/' + req.version + '/prisoner-profile', {
+        prisoner
+    })
+})
+
 module.exports = router
