@@ -609,7 +609,7 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
                 activity.attendanceCount.afternoon = attendanceCountPM;
                 console.log(activity.name+" AM: "+attendanceCountAM['not-attended']+"   "+activity.name+" PM: "+attendanceCountPM['not-attended'])
             } else if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date] && attendanceData[activity.id.toString()][date].PM) {
-                
+
                 console.log(attendanceData[activity.id.toString()][date].PM)
                 
                 for (let attendance of attendanceData[activity.id.toString()][date].PM) {
@@ -781,26 +781,39 @@ router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/ad
     let selectedPrisoners = req.session.data['selected-prisoners'];
     let prisoners = req.session.data['timetable-complete-1']['prisoners'];
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
-    let activityId = req.params.activityId;
-    let date = req.session.data['date'];
-    let period = req.session.data['times'];
+
+    let date = req.params.selectedDate;
+    let dateObject = new Date(date)
+
+    let period = req.params.selectedPeriod;
+    let periodWord = period === 'AM' ? "morning" : "afternoon";
+
+    let houseblock = req.params.selectedHouseblock;
     let attendanceDetails = req.session.data['attendance-details'];
-    let activity = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId)
-    let houseblock = req.params.selectedHouseblock
 
+    // get a list of all activities for the selected date
+    let activitiesForDate = activitiesByDate(req.session.data['timetable-complete-1']['activities'], dateObject);
 
-    // // get all events for each prisoner in selectedPrisoners for the selected date and time period
-    // // and mark as 'not-attended' for each event
-    // for (prisonerId in selectedPrisoners){
-    //     let prisonerEventsForDateAndPeriod = getPrisonerEvents(prisonerId, date, period)
+    // for each prisoner in filteredPrisoners
+    filteredPrisoners.forEach(prisoner => {
+        let currentActivity = []
 
-    //     for(event in prisonerEventsForDateAndPeriod){
-    //         markPrisonerAsNotAttended()
-    //     }
-    // }
+        // and for each activity in each prisoner
+        prisoner.activity.forEach(prisonerActivity => {
+            // get the activity detail
+            let activity = activitiesForDate[periodWord].filter(a => a.id === prisonerActivity)            
+            let activityId;
 
+            // if there's an activity and it has an ID, set it and update the prisoner's attendance for each activity
+            if(activity[0] && activity[0].id){
+                activityId = activity[0].id
+                updateAttendanceData(req, activityId, date, period, attendanceDetails)
+            }
+        })
+    })
 
-    updateAttendanceData(req, activityId, date, period, attendanceDetails)
+    // set the confirmation dialog to display
+    req.session.data['attendance-confirmation'] = 'true'
 
     // set the confirmation dialog to display
     req.session.data['attendance-confirmation'] = 'true'
@@ -1005,6 +1018,7 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', f
     res.render('unlock/' + req.version + '/refusals-list', {
         locations,
         prisonersWithEvents,
+        prisonersByHouseblock,
         date,
         period,
         houseblock

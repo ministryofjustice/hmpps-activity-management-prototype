@@ -223,17 +223,23 @@ Activities Management prototype
 				</div>
 			</div>
 
-			{% if data['selected-prisoners'].length == 1 %}
-			{% set prisoner = data['selected-prisoners'] | getPrisoner %}
-			{% endif %}
-			
+			{% if data['selected-prisoners'].length == 1 -%}
+			{% set prisonerName -%}
+			{% for prisoner in prisonersByHouseblock -%}
+			{% if data['selected-prisoners'][0] == prisoner.id -%}
+			{{prisoner.name.firstname}} {{prisoner.name.surname}}
+			{%- endif %}
+			{%- endfor %}
+			{%- endset %}
+			{%- endif %}
+
 			{% if data['attendance-confirmation'] == 'true' %}
 			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 			{% set html %}
 			<h3 class="govuk-notification-banner__heading">
 				Attendance recorded
 			</h3>
-			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisoner.name.firstname + " " + prisoner.name.surname}}.</p>
+			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisonerName}}.</p>
 			{% endset %}
 			{{ govukNotificationBanner({
 				html: html,
