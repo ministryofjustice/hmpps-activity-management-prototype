@@ -20,25 +20,34 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		<h1 class="govuk-heading-l">
 			Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		</h1>
-		<!-- {{attendanceData|dump}} -->
+
+		<h2 class="govuk-heading-m">
+			Recorded on {{attendanceData.timestamp.date|convertShortDateToLongDate(attendanceData.timestamp.date)}} at {{attendanceData.timestamp.time}}
+		</h2>
+
 		<dl class="govuk-summary-list">
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 					Activity
 				</dt>
 				<dd class="govuk-summary-list__value">
-					<a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+					<p>
+						<a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+					</p>
+					<p>
+						{{ date | convertShortDateToLongDate(date) }} ({{period}})
+					</p>
 				</dd>
 			</div>
 
-			<div class="govuk-summary-list__row">
+			<!-- <div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 					Activity date
 				</dt>
 				<dd class="govuk-summary-list__value">
 					{{ date | convertShortDateToLongDate(date) }} ({{period}})
 				</dd>
-			</div>
+			</div> -->
 
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
@@ -46,10 +55,15 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 				</dt>
 				<dd class="govuk-summary-list__value">
 					{% if attendanceData.attendance == "attended" %}
-					<span class="moj-badge moj-badge--large moj-badge--green">Attended</span>
+					Attended
 					{% elif attendanceData.attendance == "not-attended" %}
-					<span class="moj-badge moj-badge--large moj-badge--red">Absent</span>
+					Absent
 					{% endif %}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link govuk-link--no-visited-state" href="{{prisoner.id}}/change-attendance">
+						Change<span class="govuk-visually-hidden"> attendance</span>
+					</a>
 				</dd>
 			</div>
 			
@@ -58,35 +72,49 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 					Pay
 				</dt>
 				<dd class="govuk-summary-list__value">
-					{{attendanceData.pay|capitalize}}
+					<p>
+						{{attendanceData.pay|capitalize}}
+					</p>
+					{% if attendanceData.payReason %}
+					<p>
+						&ldquo;{{attendanceData.payReason}}&rdquo;
+					</p>
+					{% endif %}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link govuk-link--no-visited-state" href="{{prisoner.id}}/change-pay">
+						Change<span class="govuk-visually-hidden"> pay</span>
+					</a>
 				</dd>
 			</div>
 
-			{% if attendanceData.payReason %}
+			<!-- {% if attendanceData.payReason %}
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
-					Pay details
+					Additional information
 				</dt>
 				<dd class="govuk-summary-list__value">
-					{{attendanceData.payReason}}
+					{% if attendanceData.payReason %}{{attendanceData.payReason}}{% endif %}
 				</dd>
 			</div>
-			{% endif %}
+			{% endif %} -->
 
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
-					Audit details
+					Recorded by
 				</dt>
 				<dd class="govuk-summary-list__value">
-					Recorded by Bal Patel on {{attendanceData.timestamp.date|convertShortDateToLongDate(attendanceData.timestamp.date)}} at {{attendanceData.timestamp.time}}
+					Person Name
 				</dd>
 			</div>
 		</dl>
 
-		{{govukButton({
-			text: "Change attendance record",
-			classes: "govuk-button--secondary"
-		})}}
+		<form method="post">
+			<!-- {{govukButton({
+				text: "Change attendance record",
+				classes: "govuk-button--secondary"
+			})}} -->
+		</form>
 	</div>
 </div>
 {% endblock %}

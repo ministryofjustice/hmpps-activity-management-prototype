@@ -59,7 +59,7 @@
 <h2 class="govuk-heading-m">
 	{{period|capitalize}} sessions ({{activities|length}})
 </h2>
-<table class="govuk-table" data-module="moj-sortable-table">
+<table class="govuk-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
 	<thead class="govuk-table__head">
 		<tr class="govuk-table__row">
 			<th scope="col" class="govuk-table__header" aria-sort="ascending" width="250">Activity</th>
@@ -76,7 +76,9 @@
 		<tr class="govuk-table__row">
 			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
 				<a href="{{selectedDate}}/{{'AM' if period == 'morning' else 'PM'}}/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
-				{% if activity.cancelled == true %}<br><span class="govuk-tag govuk-tag--red govuk-!-margin-top-1">Cancelled</span>{% endif %}
+				{% for cancellation in activity.cancelledSessions %}
+				<br><span class="govuk-tag govuk-tag--red govuk-!-margin-top-1">Cancelled</span>
+				{% endfor %}
 			</td>
 			<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
 			<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">

@@ -277,19 +277,29 @@ const activitiesByDate = (activities, date) => {
             activity.schedule.forEach(schedule => {
                 if (schedule.day === dayOfWeek) {
                     if (schedule.am) {
+                        let cancelledSessionsAM;
+                        if(schedule.cancelledSessions){
+                            cancelledSessionsAM = schedule.cancelledSessions.filter(cancellation => cancellation.date === date.toISOString().slice(0,10) && cancellation.period.toLowerCase() === 'am')
+                        }
                         filteredActivities.morning.push({
                             ...activity,
                             startTime: schedule.am[0].startTime,
                             endTime: schedule.am[0].endTime,
-                            schedule: undefined
+                            schedule: schedule,
+                            cancelledSessions: cancelledSessionsAM
                         });
                     }
                     if (schedule.pm) {
+                        let cancelledSessionsPM;
+                        if(schedule.cancelledSessions){
+                            cancelledSessionsPM = schedule.cancelledSessions.filter(cancellation => cancellation.date === date.toISOString().slice(0,10) && cancellation.period.toLowerCase() === 'pm')
+                        }
                         filteredActivities.afternoon.push({
                             ...activity,
                             startTime: schedule.pm[0].startTime,
                             endTime: schedule.pm[0].endTime,
-                            schedule: undefined
+                            schedule: schedule,
+                            cancelledSessions: cancelledSessionsPM
                         });
                     }
                 }
@@ -548,7 +558,14 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
     const attendedKey = 'attended';
     const notAttendedKey = 'not-attended';
     for (let activity of activities) {
-        let attendanceCount = {
+        let attendanceCountAM = {
+            [scheduledKey]: 0,
+            [notRecordedKey]: 0,
+            [attendedKey]: 0,
+            [notAttendedKey]: 0
+        };
+
+        let attendanceCountPM = {
             [scheduledKey]: 0,
             [notRecordedKey]: 0,
             [attendedKey]: 0,
@@ -556,49 +573,58 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
         };
 
         activity.attendanceCount = {
-            "morning": "",
-            "afternoon": ""
+            morning: "",
+            afternoon: ""
         }
-
         let prisonerList = prisonersList.filter(prisoner => prisoner.activity && prisoner.activity.includes(activity.id));
-
         for (let i = 0; i < prisonerList.length; i++) {
             let prisoner = prisonerList[i];
             let date = new Date(selectedDate).toISOString().slice(0, 10)
 
-            attendanceCount[scheduledKey] = prisonerList.length;
-            attendanceCount[notRecordedKey] = prisonerList.length;
+            attendanceCountAM[scheduledKey] = prisonerList.length;
+            attendanceCountAM[notRecordedKey] = prisonerList.length;
 
-            if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date]) {
-                let activityData = attendanceData[activity.id.toString()][date];
-                if (activityData.AM) {
-                    for (let attendance of activityData.AM) {
-                        if (attendance.prisonerId.toString() === prisoner.id.toString()) {
-                            if (attendance.attendance === 'attended') {
-                                attendanceCount[attendedKey]++;
-                            } else if (attendance.attendance === 'not-attended') {
-                                attendanceCount[notAttendedKey]++;
-                            }
+            attendanceCountPM[scheduledKey] = prisonerList.length;
+            attendanceCountPM[notRecordedKey] = prisonerList.length;
+
+            if(!attendanceData || (!attendanceData[activity.id.toString()] || !attendanceData[activity.id.toString()][date] || !attendanceData[activity.id.toString()][date].AM)) {
+                activity.attendanceCount.morning = attendanceCountAM;
+            } else if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date] && attendanceData[activity.id.toString()][date].AM) {
+                for (let attendance of attendanceData[activity.id.toString()][date].AM) {
+                    if (attendance.prisonerId.toString() === prisoner.id.toString()) {
+                        if (attendance.attendance === 'attended') {
+                            attendanceCountAM[attendedKey]++;
+                        } else if (attendance.attendance === 'not-attended') {
+                            attendanceCountAM[notAttendedKey]++;
                         }
-                        attendanceCount[notRecordedKey]--;
                     }
-                    activity.attendanceCount.morning = attendanceCount;
-                } else if (activityData.PM) {
-                    for (let attendance of activityData.PM) {
-                        if (attendance.prisonerId.toString() === prisoner.id.toString()) {
-                            if (attendance.attendance === 'attended') {
-                                attendanceCount[attendedKey]++;
-                            } else if (attendance.attendance === 'not-attended') {
-                                attendanceCount[notAttendedKey]++;
-                            }
-                        }
-                        attendanceCount[notRecordedKey]--;
-                    }
-                    activity.attendanceCount.afternoon = attendanceCount;
+                    attendanceCountAM[notRecordedKey]--;
                 }
+                activity.attendanceCount.morning = attendanceCountAM;
             } else {
-                activity.attendanceCount.morning = attendanceCount;
-                activity.attendanceCount.afternoon = attendanceCount;
+                activity.attendanceCount.morning = attendanceCountAM;
+            }
+
+            if(attendanceData == undefined || ( !attendanceData[activity.id.toString()] || !attendanceData[activity.id.toString()][date] || !attendanceData[activity.id.toString()][date].PM )) {
+                activity.attendanceCount.afternoon = attendanceCountPM;
+                console.log(activity.name+" AM: "+attendanceCountAM['not-attended']+"   "+activity.name+" PM: "+attendanceCountPM['not-attended'])
+            } else if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date] && attendanceData[activity.id.toString()][date].PM) {
+
+                console.log(attendanceData[activity.id.toString()][date].PM)
+                
+                for (let attendance of attendanceData[activity.id.toString()][date].PM) {
+                    if (attendance.prisonerId.toString() === prisoner.id.toString()) {
+                        if (attendance.attendance === 'attended') {
+                            attendanceCountPM[attendedKey]++;
+                        } else if (attendance.attendance === 'not-attended') {
+                            attendanceCountPM[notAttendedKey]++;
+                        }
+                    }
+                    attendanceCountPM[notRecordedKey]--;
+                }
+                activity.attendanceCount.afternoon = attendanceCountPM;
+            } else {
+                activity.attendanceCount.afternoon = attendanceCountPM;
             }
         }
     }
@@ -685,6 +711,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
         if ( ! activitySchedule.cancelledSessions){
             activitySchedule.cancelledSessions = []
         }
+
         activitySchedule.cancelledSessions.push({date,period});
 
         let newActivities = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId.toString());
@@ -699,7 +726,8 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
             });
             return idArray;
         };
-        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(getPrisonerIds(prisonersByDateAndPeriod), 'not-attended', 'standard', 'Session cancelled', 'no')
+        let reason = req.session.data['cancellation-reason']
+        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(getPrisonerIds(prisonersByDateAndPeriod), 'not-attended', 'standard', reason, 'no')
         updateAttendanceData(req, activityId, date, period, attendanceDetails)
     }
 
@@ -753,26 +781,39 @@ router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/ad
     let selectedPrisoners = req.session.data['selected-prisoners'];
     let prisoners = req.session.data['timetable-complete-1']['prisoners'];
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
-    let activityId = req.params.activityId;
-    let date = req.session.data['date'];
-    let period = req.session.data['times'];
+
+    let date = req.params.selectedDate;
+    let dateObject = new Date(date)
+
+    let period = req.params.selectedPeriod;
+    let periodWord = period === 'AM' ? "morning" : "afternoon";
+
+    let houseblock = req.params.selectedHouseblock;
     let attendanceDetails = req.session.data['attendance-details'];
-    let activity = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId)
-    let houseblock = req.params.selectedHouseblock
 
+    // get a list of all activities for the selected date
+    let activitiesForDate = activitiesByDate(req.session.data['timetable-complete-1']['activities'], dateObject);
 
-    // // get all events for each prisoner in selectedPrisoners for the selected date and time period
-    // // and mark as 'not-attended' for each event
-    // for (prisonerId in selectedPrisoners){
-    //     let prisonerEventsForDateAndPeriod = getPrisonerEvents(prisonerId, date, period)
+    // for each prisoner in filteredPrisoners
+    filteredPrisoners.forEach(prisoner => {
+        let currentActivity = []
 
-    //     for(event in prisonerEventsForDateAndPeriod){
-    //         markPrisonerAsNotAttended()
-    //     }
-    // }
+        // and for each activity in each prisoner
+        prisoner.activity.forEach(prisonerActivity => {
+            // get the activity detail
+            let activity = activitiesForDate[periodWord].filter(a => a.id === prisonerActivity)            
+            let activityId;
 
+            // if there's an activity and it has an ID, set it and update the prisoner's attendance for each activity
+            if(activity[0] && activity[0].id){
+                activityId = activity[0].id
+                updateAttendanceData(req, activityId, date, period, attendanceDetails)
+            }
+        })
+    })
 
-    updateAttendanceData(req, activityId, date, period, attendanceDetails)
+    // set the confirmation dialog to display
+    req.session.data['attendance-confirmation'] = 'true'
 
     // set the confirmation dialog to display
     req.session.data['attendance-confirmation'] = 'true'
@@ -800,7 +841,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-variabl
         res.redirect('add-attendance-details')
     } else {
     	let attendanceAction = req.session.data['attendance-action']
-        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners, 'attended', 'standard', 'Attended.', 'no')
+        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners, 'attended', 'standard', '', 'no')
 
         updateAttendanceData(req, activityId, date, period, attendanceDetails)
 
@@ -841,6 +882,58 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', 
         attendanceData
     })
 })
+
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', function(req, res) {
+    res.redirect(req.params.prisonerId + '/change')
+});
+
+
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-attendance', function(req, res) {
+    let activityId = req.params.activityId;
+    let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
+    let date = req.params.selectedDate;
+    let period = req.params.selectedPeriod;
+    let prisonerId = req.params.prisonerId;
+    let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
+
+
+    let attendanceData = req.session.data['attendance']
+
+    let prisonerAttendanceRecord = attendanceData[activityId][date][period].filter(attendanceRecord => attendanceRecord.prisonerId == prisonerId)[0]
+
+    res.render('unlock/' + req.version + '/change-attendance', {
+        prisoner,
+        date,
+        period,
+        activityId,
+        activity,
+        prisonerAttendanceRecord
+    })
+})
+
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-attendance', function(req, res) {
+    let attendanceData = req.session.data['attendance']
+
+    res.redirect(req.params.prisonerId + '/change')
+})
+
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-pay', function(req, res) {
+    let activityId = req.params.activityId;
+    let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
+    let date = req.params.selectedDate;
+    let period = req.params.selectedPeriod;
+    let prisonerId = req.params.prisonerId;
+    let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
+
+    res.render('unlock/' + req.version + '/change-pay', {
+        prisoner,
+        date,
+        period,
+        activityId,
+        activity
+    })
+})
+
 
 // CHECK ATTENDANCE DETAILS
 router.get('/check-attendance-details', function(req, res) {
@@ -925,6 +1018,7 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', f
     res.render('unlock/' + req.version + '/refusals-list', {
         locations,
         prisonersWithEvents,
+        prisonersByHouseblock,
         date,
         period,
         houseblock
@@ -1077,5 +1171,15 @@ router.get('/activities/:selectedDate', function(req, res) {
         activitiesForDateWithCounts
     })
 });
+
+// prisoner profile
+router.get('/prisoner/:prisonerId', function(req, res) {
+    let prisonerId = req.params.prisonerId;
+    let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
+
+    res.render('unlock/' + req.version + '/prisoner-profile', {
+        prisoner
+    })
+})
 
 module.exports = router

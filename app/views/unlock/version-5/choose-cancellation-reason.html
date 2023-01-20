@@ -1,7 +1,7 @@
 {% extends "layout_hmpps.html" %}
 {% set serviceName = "Activities Management" %}
 {% block pageTitle %}
-Activities Management prototype
+Why are you cancelling the session?
 {% endblock %}
 {% block primaryNavigation %}
 {% endblock %}
@@ -16,7 +16,7 @@ Activities Management prototype
 	<div class="govuk-grid-column-two-thirds">
 		<form method="post">
 			{{ govukRadios({
-				name: "standard-pay-all",
+				name: "cancellation-reason",
 				fieldset: {
 					legend: {
 						text: "Why are you cancelling the session?",
@@ -26,20 +26,24 @@ Activities Management prototype
 				},
 				items: [
 				{
-					value: "1",
-					html: 'Reason 1'
+					value: "Staff unavailable",
+					html: 'Staff unavailable'
 				},
 				{
-					value: "2",
-					html: 'Reason 2'
+					value: "Staff training",
+					html: 'Staff training'
 				},
 				{
-					value: "3",
-					html: 'Reason 3'
+					value: "Session not required",
+					html: 'Session not required'
 				},
 				{
-					value: "4",
-					html: 'Reason 4'
+					value: "Location unavailable",
+					html: 'Location unavailable'
+				},
+				{
+					value: "Prison operational issue",
+					html: 'Prison operational issue'
 				}
 				]
 			}) }}
