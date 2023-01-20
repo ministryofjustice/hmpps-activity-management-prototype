@@ -32,10 +32,12 @@
 		{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 
 		{% set cancelled = false %}
+		{% set reason = '' %}
 
 		{% for session in activitySchedule[0].cancelledSessions %}
 		{% if session.date == date and session.period|upper == period %}
 		{% set cancelled = true %}
+		{% set reason = session.reason %}
 		{% endif %}
 		{% endfor %}
 
@@ -46,7 +48,7 @@
 			<h3 class="govuk-notification-banner__heading">
 				Session cancelled
 			</h3>
-			<p class="govuk-body">This activity session has been cancelled for the following reason: [REASON]</p>
+			<p class="govuk-body">This activity session has been cancelled for the following reason: {{reason}}</p>
 			{% endset %}
 			{{ govukNotificationBanner({
 				html: cancelledHtml,

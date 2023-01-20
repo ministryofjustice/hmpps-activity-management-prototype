@@ -403,14 +403,13 @@ function getPreviousSession(activity, selectedDate, selectedPeriod) {
                     selectedDate.setDate(selectedDate.getDate() - 1);
                 }
                 if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
-                    console.log("found on day:" + currentDay)
+
                     selectedDate.setDate(selectedDate.getDate() - 1)
                     return previousSession = {
                         date: selectedDate.toISOString().slice(0, 10),
                         period: "PM"
                     };
                 } else {
-                    console.log("found on day:" + currentDay)
                     if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
                         selectedDate.setDate(selectedDate.getDate() - 1)
                         return previousSession = {
@@ -607,11 +606,7 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
 
             if(attendanceData == undefined || ( !attendanceData[activity.id.toString()] || !attendanceData[activity.id.toString()][date] || !attendanceData[activity.id.toString()][date].PM )) {
                 activity.attendanceCount.afternoon = attendanceCountPM;
-                console.log(activity.name+" AM: "+attendanceCountAM['not-attended']+"   "+activity.name+" PM: "+attendanceCountPM['not-attended'])
-            } else if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date] && attendanceData[activity.id.toString()][date].PM) {
-
-                console.log(attendanceData[activity.id.toString()][date].PM)
-                
+            } else if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date] && attendanceData[activity.id.toString()][date].PM) {                
                 for (let attendance of attendanceData[activity.id.toString()][date].PM) {
                     if (attendance.prisonerId.toString() === prisoner.id.toString()) {
                         if (attendance.attendance === 'attended') {
@@ -706,13 +701,15 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
 
     if (req.session.data['confirm-cancellation'] == 'yes') {
         let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId);
-        let day = new Date(date).getDay()
+        let day = new Date(date).getDay();
+        let reason = req.session.data['cancellation-reason'];
         let activitySchedule = activity.schedule.find(schedule => schedule.day.toString() === day.toString());
+
         if ( ! activitySchedule.cancelledSessions){
             activitySchedule.cancelledSessions = []
         }
 
-        activitySchedule.cancelledSessions.push({date,period});
+        activitySchedule.cancelledSessions.push({date, period, reason});
 
         let newActivities = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId.toString());
         let prisonersData = req.session.data['timetable-complete-1']['prisoners']
@@ -726,7 +723,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
             });
             return idArray;
         };
-        let reason = req.session.data['cancellation-reason']
+        
         let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(getPrisonerIds(prisonersByDateAndPeriod), 'not-attended', 'standard', reason, 'no')
         updateAttendanceData(req, activityId, date, period, attendanceDetails)
     }
@@ -778,7 +775,6 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add
     })
 });
 router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-refusal-details', function(req, res) {
-    let selectedPrisoners = req.session.data['selected-prisoners'];
     let prisoners = req.session.data['timetable-complete-1']['prisoners'];
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
 
@@ -796,8 +792,6 @@ router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/ad
 
     // for each prisoner in filteredPrisoners
     filteredPrisoners.forEach(prisoner => {
-        let currentActivity = []
-
         // and for each activity in each prisoner
         prisoner.activity.forEach(prisonerActivity => {
             // get the activity detail
