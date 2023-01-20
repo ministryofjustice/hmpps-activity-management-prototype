@@ -13,7 +13,7 @@ Activities Management prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      Review eligibility and allocate to Wing cleaning 1
+      You're allocating to {{data.activityAllocateName or 'Wing cleaning 1'}}
     </h1>
   </div>
 <div class="govuk-grid-column-three-third">
@@ -24,103 +24,27 @@ Activities Management prototype
 <ul class="govuk-tabs__list">
   <li class="govuk-tabs__list-item">
     <a class="govuk-tabs__tab" href="#allocated">
-      People allocated now
+      Currently allocated
     </a>
   </li>
   <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
     <a class="govuk-tabs__tab" href="#allocate">
-      Candidate list
-      <strong class="govuk-tag govuk-tag--red" style="margin-left:15px;">
-        {% if (data.LanceArm != 'NotAllocated')%}
-          <span>1 </span><span style="text-transform:lowercase">vacancy</span>
-        {% else %}
-          <span>2 </span><span style="text-transform:lowercase">vacancies</span>
-        {% endif %}
-      </strong>
-    </a>
-  </li>
-  <li class="govuk-tabs__list-item">
-    <a class="govuk-tabs__tab" href="#criteria">
-      Activity risk and requirements
-    </a>
-  </li>
-  <li class="govuk-tabs__list-item">
-    <a class="govuk-tabs__tab" href="#schedule">
-      Wing cleaning 1 schedule
+      Candidates
     </a>
   </li>
 </ul>
 
-<div class="govuk-tabs__panel" id="schedule">
-  <h2 class="govuk-heading-m">Wing cleaning 1 schedule</h2><p>Check the schedule is compatible with the candidate's current allocations if they have any. </p>
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Days</th>
-        <th scope="col" class="govuk-table__header">AM</th>
-        <th scope="col" class="govuk-table__header">PM</th>
-        <th scope="col" class="govuk-table__header">ED</th>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">Monday</td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-      </tr>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">Tuesday</td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-      </tr>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">Wednesday</td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-      </tr>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">Thursday</td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-      </tr>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">Friday</td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-      </tr>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">Saturday</td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-      </tr>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">Sunday</td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
-        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
-      </tr>
-    </tbody>
-  </table>
-  <button class="govuk-button" data-module="govuk-button">
-  Edit schedule times
-  </button>
-</div>
 
 
 
 
-<!--allocate-->
-
+<!--allocated-->
 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocated">
   <h2 class="govuk-heading-m">People allocated now  <strong class="govuk-tag govuk-tag--yellow">
     <span style="text-transform:lowercase; ">4 people allocated out of a possible 5</span>
   </strong></h2><p>Review the list of people currently allocated to identify any non-associations or other risks. You can also remove someone from the activity by selecting their name.</p>
+
+
 
 <form method="post" action="AllocateRemove">
 <table class="govuk-table" data-module="moj-sortable-table">
@@ -672,456 +596,161 @@ Activities Management prototype
   <input type="hidden" name="activityAllocateName" value="Wing cleaning 1" />
 </form>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+<!--allocate new people-->
 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocate">
-  <h2 class="govuk-heading-m">Review and select who you want to allocate <strong class="govuk-tag govuk-tag--yellow">
-    <span style="text-transform:lowercase; ">4 people allocated out of a possible 5</span>
-  </strong>
-      </h2>
+    <p>Your candidate list has been filtered to show people who match all the requirments for this activity.
+      Use the filters to expand or reduce the list. You can also search for someone you want to allocate.</p>
 
-
-
-
-    <p>Check each candidate's suitability for Wing cleaning 1. Apply filters to narrow down the number of candidates.</p>
-  <div>
-  <details class="hods-expandable-banner" style="background-color:#f1f1f1; margin:0 0px 15px 10px;">
-<summary class="hods-expandable-banner__summary" style="color:#00008B; font-size:1.2em; font-family:GDS Transport, arial, sans-serif;" >
-  Advanced search and filter options
-</summary><br />
-<div class="hods-expandable-banner__text" style="background-color:#f1f1f1; padding:0px 0 0 15px;">
-</div>
-<div class="govuk-form-group" style="background-color:#f1f1f1; margin:5px 0px 15px 10px;">
-  <h2 class="govuk-label-wrapper"><label class="govuk-label govuk-label--s" for="event-name">
-      Search by name or prison ID:
-    </label>
-  </h2>
-  <input class="govuk-input govuk-input--width-20" id="event-name" name="event-name" type="text" >
-  <button class="govuk-button" data-module="govuk-button" style="margin-left:-4px;">
-  Search
-  </button>
-</div>
-  <div style="height:350px; width:100%; padding:10px 0 0 10px; ">
-  <div class="govuk-form-group" >
-    <fieldset class="govuk-fieldset">
-      <h2 class="govuk-heading-s">Filter the search results by selecting all that you wish to include.<div id="event-name-hint" class="govuk-hint">
+<div class="govuk-grid-row" style="background-color:#f1f1f1; padding-top:20px;">
+  <div class="govuk-grid-column-one-half">
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="sort">
+        Showing people who are:
+      </label>
+      <select class="govuk-select" id="show" name="show-grouping">
+        <option value="Unemployed" {% if data.allocateEmployed=="Unemployed" %}selected{% endif %}>Unemployed</option>
+        <option value="Employed" {% if data.allocateEmployed=="Employed" %}selected{% endif %}>Employed</option>
+        <option value="Employed and Unemployed" {% if data.allocateEmployed=="Employed and Unemployed" %}selected{% endif %}>Either Employed or Unemployed</option>
+      </select>
     </div>
-  </h2>
-      <p><strong>Employment status:</strong>
-        <span style="margin-left:8px;">
-      <button type="button" style="font-size:21px; background-color:grey; color:white; " id="all"
-
-      onmouseover="if(document.getElementById('all').style.backgroundColor != 'blue')
-                  {document.getElementById('all').style.backgroundColor='green'};"
-
-      onmouseout="if(document.getElementById('all').style.backgroundColor != 'blue')
-                  {document.getElementById('all').style.backgroundColor='grey'};"
-
-          onclick="if(document.getElementById('all').style.backgroundColor == 'blue')
-                      {document.getElementById('all').style.backgroundColor='grey' }
-                    else
-                      {document.getElementById('all').style.backgroundColor='blue' };">
-      Employed</button>
-
-      <button type="button" style="font-size:21px; background-color:grey; color:white;" id="unemployed"
-
-      onmouseover="if(document.getElementById('unemployed').style.backgroundColor != 'blue')
-                  {document.getElementById('unemployed').style.backgroundColor='green'};"
-
-      onmouseout="if(document.getElementById('unemployed').style.backgroundColor != 'blue')
-                  {document.getElementById('unemployed').style.backgroundColor='grey'};"
-          onclick="if(document.getElementById('unemployed').style.backgroundColor == 'blue')
-                      {document.getElementById('unemployed').style.backgroundColor='grey' }
-                    else
-                      {document.getElementById('unemployed').style.backgroundColor='blue' };">
-       Unemployed</button></p>
-       </span>
-
-       <p><strong>Prisoner location:</strong>
-         <span style="margin-left:30px;">
-
-         <button type="button" style="font-size:21px; background-color:grey; color:white; " id="wing1"
-
-         onmouseover="if(document.getElementById('wing1').style.backgroundColor != 'blue')
-                     {document.getElementById('wing1').style.backgroundColor='green'};"
-
-         onmouseout="if(document.getElementById('wing1').style.backgroundColor != 'blue')
-                     {document.getElementById('wing1').style.backgroundColor='grey'};"
-             onclick="if(document.getElementById('wing1').style.backgroundColor == 'blue')
-                         {document.getElementById('wing1').style.backgroundColor='grey' }
-                       else
-                         {document.getElementById('wing1').style.backgroundColor='blue' };">
-         Wing 1</button>
-
-         <button type="button" style="font-size:21px; background-color:grey; color:white; " id="wing2"
-
-         onmouseover="if(document.getElementById('wing2').style.backgroundColor != 'blue')
-                     {document.getElementById('wing2').style.backgroundColor='green'};"
-
-         onmouseout="if(document.getElementById('wing2').style.backgroundColor != 'blue')
-                     {document.getElementById('wing2').style.backgroundColor='grey'};"
-             onclick="if(document.getElementById('wing2').style.backgroundColor == 'blue')
-                         {document.getElementById('wing2').style.backgroundColor='grey' }
-                       else
-                         {document.getElementById('wing2').style.backgroundColor='blue' };">
-         Wing 2</button>
-
-         <button type="button" style="font-size:21px; background-color:grey; color:white; " id="wing3"
-
-         onmouseover="if(document.getElementById('wing3').style.backgroundColor != 'blue')
-                     {document.getElementById('wing3').style.backgroundColor='green'};"
-
-         onmouseout="if(document.getElementById('wing3').style.backgroundColor != 'blue')
-                     {document.getElementById('wing3').style.backgroundColor='grey'};"
-             onclick="if(document.getElementById('wing3').style.backgroundColor == 'blue')
-                         {document.getElementById('wing3').style.backgroundColor='grey' }
-                       else
-                         {document.getElementById('wing3').style.backgroundColor='blue' };">
-         Wing 3</button>
-
-         <button type="button" style="font-size:21px; background-color:grey; color:white; " id="wing4"
-
-         onmouseover="if(document.getElementById('wing4').style.backgroundColor != 'blue')
-                     {document.getElementById('wing4').style.backgroundColor='green'};"
-
-         onmouseout="if(document.getElementById('wing4').style.backgroundColor != 'blue')
-                     {document.getElementById('wing4').style.backgroundColor='grey'};"
-             onclick="if(document.getElementById('wing4').style.backgroundColor == 'blue')
-                         {document.getElementById('wing4').style.backgroundColor='grey' }
-                       else
-                         {document.getElementById('wing4').style.backgroundColor='blue' };">
-         Wing 4</button></p>
-         </span>
-
-
-      <p><strong>Earliest release date:</strong>
-
-     <button type="button" style="font-size:21px; background-color:grey; color:white; " id="1month"
-
-     onmouseover="if(document.getElementById('1month').style.backgroundColor != 'blue')
-                 {document.getElementById('1month').style.backgroundColor='green'};"
-
-     onmouseout="if(document.getElementById('1month').style.backgroundColor != 'blue')
-                 {document.getElementById('1month').style.backgroundColor='grey'};"
-         onclick="if(document.getElementById('1month').style.backgroundColor == 'blue')
-                     {document.getElementById('1month').style.backgroundColor='grey' }
-                   else
-                     {document.getElementById('1month').style.backgroundColor='blue' };">
-     Less than 1 month</button>
-
-     <button type="button" style="font-size:21px; background-color:grey; color:white; " id="6month"
-
-     onmouseover="if(document.getElementById('6month').style.backgroundColor != 'blue')
-                 {document.getElementById('6month').style.backgroundColor='green'};"
-
-     onmouseout="if(document.getElementById('6month').style.backgroundColor != 'blue')
-                 {document.getElementById('6month').style.backgroundColor='grey'};"
-         onclick="if(document.getElementById('6month').style.backgroundColor == 'blue')
-                     {document.getElementById('6month').style.backgroundColor='grey' }
-                   else
-                     {document.getElementById('6month').style.backgroundColor='blue' };">
-     1 month to 6 months</button>
-
-     <button type="button" style="font-size:21px; background-color:grey; color:white; " id="1year"
-
-     onmouseover="if(document.getElementById('1year').style.backgroundColor != 'blue')
-                 {document.getElementById('1year').style.backgroundColor='green'};"
-
-     onmouseout="if(document.getElementById('1year').style.backgroundColor != 'blue')
-                 {document.getElementById('1year').style.backgroundColor='grey'};"
-         onclick="if(document.getElementById('1year').style.backgroundColor == 'blue')
-                     {document.getElementById('1year').style.backgroundColor='grey' }
-                   else
-                     {document.getElementById('1year').style.backgroundColor='blue' };">
-     6 months  to 1 year</button>
-
-     <button type="button" style="font-size:21px; background-color:grey; color:white; " id="over1year"
-
-     onmouseover="if(document.getElementById('over1year').style.backgroundColor != 'blue')
-                 {document.getElementById('over1year').style.backgroundColor='green'};"
-
-     onmouseout="if(document.getElementById('over1year').style.backgroundColor != 'blue')
-                 {document.getElementById('over1year').style.backgroundColor='grey'};"
-         onclick="if(document.getElementById('over1year').style.backgroundColor == 'blue')
-                     {document.getElementById('over1year').style.backgroundColor='grey' }
-                   else
-                     {document.getElementById('over1year').style.backgroundColor='blue' };">
-     Over 1 year</button></p>
-
-
-     <p><strong>Incentive level:</strong>
-       <span style="margin-left:50px;">
-     <button type="button" style="font-size:21px; background-color:grey; color:white; " id="basic"
-
-     onmouseover="if(document.getElementById('basic').style.backgroundColor != 'blue')
-                 {document.getElementById('basic').style.backgroundColor='green'};"
-
-     onmouseout="if(document.getElementById('basic').style.backgroundColor != 'blue')
-                 {document.getElementById('basic').style.backgroundColor='grey'};"
-
-         onclick="if(document.getElementById('basic').style.backgroundColor == 'blue')
-                     {document.getElementById('basic').style.backgroundColor='grey' }
-                   else
-                     {document.getElementById('basic').style.backgroundColor='blue' };">
-     Basic</button>
-
-     <button type="button" style="font-size:21px; background-color:grey; color:white; " id="standard"
-
-     onmouseover="if(document.getElementById('standard').style.backgroundColor != 'blue')
-                 {document.getElementById('standard').style.backgroundColor='green'};"
-
-     onmouseout="if(document.getElementById('standard').style.backgroundColor != 'blue')
-                 {document.getElementById('standard').style.backgroundColor='grey'};"
-
-         onclick="if(document.getElementById('standard').style.backgroundColor == 'blue')
-                     {document.getElementById('standard').style.backgroundColor='grey' }
-                   else
-                     {document.getElementById('standard').style.backgroundColor='blue' };">
-     Standard</button>
-
-
-     <button type="button" style="font-size:21px; background-color:grey; color:white; " id="advanced"
-
-     onmouseover="if(document.getElementById('advanced').style.backgroundColor != 'blue')
-                 {document.getElementById('advanced').style.backgroundColor='green'};"
-
-     onmouseout="if(document.getElementById('advanced').style.backgroundColor != 'blue')
-                 {document.getElementById('advanced').style.backgroundColor='grey'};"
-         onclick="if(document.getElementById('advanced').style.backgroundColor == 'blue')
-                     {document.getElementById('advanced').style.backgroundColor='grey' }
-                   else
-                     {document.getElementById('advanced').style.backgroundColor='blue' };">
-      Advanced</button></p>
-      </span>
-        <button class="govuk-button" data-module="govuk-button">
-        Apply filters
-        </button>
-    </fieldset>
+    <div class="govuk-form-group">
+    <label class="govuk-label" for="sort">
+      Showing people whose workplace assessment risk is:
+    </label>
+    <select class="govuk-select" id="show2" name="show-grouping"">
+      <option value="Any" {% if data.allocateRisk=="Any" %}selected{% endif %}>Any risk level</option>
+      <option value="Low"  {% if data.allocateRisk=="Low" %}selected{% endif %}>Low</option>
+      <option value="Medium" {% if data.allocateRisk=="Medium" %}selected{% endif %}>Medium</option>
+      <option value="High" {% if data.allocateRisk=="High" %}selected{% endif %}>High</option>
+    </select>
+    </div>
+    <div class="govuk-form-group">
+    <label class="govuk-label" for="sort">
+      Showing people who have the following incentive level:
+    </label>
+    <select class="govuk-select" id="show3" name="show-grouping"">
+      <option value="Any" {% if data.allocateIncentive=="Any" %}selected{% endif %}>Any incentive level</option>
+      <option value="Education"  {% if data.allocateIncentive=="Education" %}selected{% endif %}>Basic </option>
+      <option value="Industries" {% if data.allocateIncentive=="Industries" %}selected{% endif %}>Standard</option>
+      <option value="Prison" {% if data.allocateIncentive=="Prison" %}selected{% endif %}>Enhanced</option>
+    </select>
+    </div>
   </div>
+
+  <div class="govuk-grid-column-one-half" >
+    <div style="padding-left:150px;">
+      <h2 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label" for="event-name">
+          Search by name or prison number:
+        </label>
+      </h2>
+      <input class="govuk-input govuk-!-width-two-thirds" id="event-name" name="event-name" type="text" >
+      <button class="govuk-button" data-module="govuk-button" style="margin-left:-4px;">
+      Search
+      </button>
+    </div>
   </div>
 </div>
-</details>
+
 
   <table class="govuk-table" data-module="moj-sortable-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header" style="width:15%;" aria-sort="ascending">Offender details</th>
-        <th scope="col" class="govuk-table__header" style="width:12%;" aria-sort="none">New column</th>
-        <th scope="col" class="govuk-table__header" style="width:14%;" aria-sort="none">New column</th>
-        <th scope="col" class="govuk-table__header" style="width:14%;" aria-sort="none">New column</th>
-        <th scope="col" class="govuk-table__header" style="width:18%;" aria-sort="none">Earliest release date</th>
-        <th scope="col" class="govuk-table__header" style="width:14%;">New column</th>
-        <th scope="col" class="govuk-table__header" style="width:14%;">New column</th>
+        <th scope="col" class="govuk-table__header" aria-sort="ascending">Prisoner details</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Security category</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Non-associations</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Qualifications</th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row"">
         <td data-sort-value="Neil">
-      <h3 style="margin-bottom:0;"><a href="activity-dashboard-5-1?activityAllocateName=Wing cleaning 1&offenderAllocate=Neil Rudge&returnDashboard=activity-dashboard-4-1&offenderIDAllocate=A9121FA">Neil Rudge</a></h3>
-        A4309SK<br />
-        1-3-003
-
+          <h3 style="margin-bottom:0;"><a href="activity-dashboard-5-1?activityAllocateName=Wing cleaning 1&offenderAllocate=Neil Rudge&returnDashboard=activity-dashboard-4-1&offenderIDAllocate=A9121FA">Neil Rudge</a></h3>
+          A4309SK<br />
+          1-3-003
         </td>
-        <td class="" data-sort-value="Unemployed"></td>
-        <td class="" data-sort-value="20230202"></td>
-        <td class="" data-sort-value="Unemployed">Unemployed</td>
-        <td class="" data-sort-value="20230202">2 Feb 2023</td>
-
-        <td class="">
-
-        </td>
-        </tr>
-        <tr>
-          <td colspan="7"  class="govuk-table__cell" data-sort-value="Neil">
-
-        </td>
-        <td class="" data-sort-value="A4309SK"></td>
-        <td class="" data-sort-value="13003"></td>
-        <td class="" data-sort-value="Unemployed"></td>
-        <td class="" data-sort-value="20230202"></td>
-        </tr>
+        <td class="" data-sort-value="20240709">9 July 2024</td>
+        <td class="" data-sort-value="A">A</td>
+        <td class="" data-sort-value="0">None</td>
+        <td class="" data-sort-value="Maths Entry level 1">Maths Entry level 1</td>
+      </tr>
       <tr class="govuk-table__row">
         <td data-sort-value="Ivor">
-          <h3 style="margin-bottom:0;"><a href="#">Ivor Norisk</a></h3>
-          A9121FA<br />
+          <h3 style="margin-bottom:0;"><a href="activity-dashboard-5-1?activityAllocateName=Wing cleaning 1&offenderAllocate=Ivor Norisk&returnDashboard=activity-dashboard-4-1&offenderIDAllocate=A32198B">Ivor Norisk</a></h3>
+          A32198B<br />
           2-3-022
-            </td>
-            <td class="" data-sort-value="A9121FA"></td>
-            <td class="" data-sort-value="23022"></td>
-            <td class="" data-sort-value="Maths">Maths level 2</td>
-            <td class="" data-sort-value="20230703">3 July 2023</td>
-
-            <td class="">
-            <form method="post" action="Dashboard4">
-              <input type="hidden" name="activityAllocateName" value="Wing cleaning 1" />
-              <input type="hidden" name="offenderAllocate" value="Ivor Norisk" />
-              <input type="hidden" name="offenderIDAllocate" value="A9121FA" />
-              <input type="hidden" name="returnDashboard" value="activity-dashboard-4-1" />
-
-              </form>
-
-            </td>
-            </tr>
-            <tr>
-              <td colspan="7"  class="govuk-table__cell" data-sort-value="Ivor">
-
-            </td>
-            <td class="" data-sort-value="A9121FA"></td>
-            <td class="" data-sort-value="23022"></td>
-            <td class="" data-sort-value="Maths"></td>
-            <td class="" data-sort-value="20230703"></td>
-            </tr>
-
+        </td>
+        <td class="" data-sort-value="20230122">22 Jan 2023</td>
+        <td class="" data-sort-value="B">B</td>
+        <td class="" data-sort-value="1">Armit Singh</td>
+        <td class="" data-sort-value="Maths Entry level 1">Maths Entry level 1</td>
+      </tr>
       <tr class="govuk-table__row">
         <td class="" data-sort-value="Eric">
-            <h3 style="margin-bottom:0;"><a href="#">Eric Sykes</a></h3>
-              A1291AZ<br />
-              1-1-021
-            </td>
-            <td class="" data-sort-value="A1291AZ"></td>
-            <td class="" data-sort-value="11021"></td>
-            <td class="" data-sort-value="Breakfast 2">Breakfast packs</td>
-            <td class="" data-sort-value="20230802">2 Aug 2023</td>
-            <form method="post" action="Dashboard4">
-            <td class="">
-              <input type="hidden" name="activityAllocateName" value="Wing cleaning 1" />
-                <input type="hidden" name="offenderAllocate" value="Eric Sykes" />
-                <input type="hidden" name="offenderIDAllocate" value="A1291AZ" />
-                <input type="hidden" name="returnDashboard" value="activity-dashboard-4-1" />
-              <a href="activity-dashboard-5-1">
-
-              </form>
-            </td>
-            </tr>
-            <tr>
-              <td colspan="7"  class="govuk-table__cell" data-sort-value="Eric">
-
-            </td>
-            <td class="" data-sort-value="A1291AZ"></td>
-            <td class="" data-sort-value="11021"></td>
-            <td class="" data-sort-value="Breakfast 2"></td>
-            <td class="" data-sort-value="20230802"></td>
-            </tr>
-
-
-    <tr class="govuk-table__row">
+          <h3 style="margin-bottom:0;"><a href="activity-dashboard-5-1?activityAllocateName=Wing cleaning 1&offenderAllocate=Eric Sykes&returnDashboard=activity-dashboard-4-1&offenderIDAllocate=A1291AZ">Eric Sykes</a></h3>
+            A1291AZ<br />
+            1-1-021
+        </td>
+        <td class="" data-sort-value="20230202">2 Mar 2023</td>
+        <td class="" data-sort-value="A">A</td>
+        <td class="" data-sort-value="3">Lance Arm<br />Lewis Holme<br />Harry Christmas</td>
+        <td class="" data-sort-value="Maths Entry level 1">English Entry level 1<br />Foundation Maths</td>
+      </tr>
+      <tr class="govuk-table__row">
         <td data-sort-value="Lionel">
-          <h3 style="margin-bottom:0;"><a href="#">Lionel Messer</a></h3>
+          <h3 style="margin-bottom:0;"><a href="activity-dashboard-5-1?activityAllocateName=Wing cleaning 1&offenderAllocate=Lionel Messer&returnDashboard=activity-dashboard-4-1&offenderIDAllocate=A7716WS">Lionel Messer</a></h3>
           A7716WS<br />
           2-4-032
-          </td>
-          <td class="" data-sort-value="A7716WS"></td>
-          <td class="" data-sort-value="24032"></td>
-          <td class="" data-sort-value="Unemployed">Unemployed</td>
-          <td class="" data-sort-value="20230309">9 March 2023</td>
-          <form method="post" action="Dashboard4">
-          <td class="">
-            <input type="hidden" name="activityAllocateName" value="Wing cleaning 1" />
-            <input type="hidden" name="offenderAllocate" value="Lionel Messer" />
-            <input type="hidden" name="offenderIDAllocate" value="A7716WS" />
-            <input type="hidden" name="returnDashboard" value="activity-dashboard-4-1" />
-
-            <a href="activity-dashboard-5-1">
-
-            </form>
-          </td>
-          </tr>
-          <tr>
-            <td colspan="7"  class="govuk-table__cell" data-sort-value="Lionel">
-            
-          </td>
-          <td class="" data-sort-value="A7716WS"></td>
-          <td class="" data-sort-value="24032"></td>
-          <td class="" data-sort-value="Unemployed"></td>
-          <td class="" data-sort-value="20230309"></td>
-          </tr>
+        </td>
+        <td class="" data-sort-value="20250216">16 Feb 2025</td>
+        <td class="" data-sort-value="B">B</td>
+        <td class="" data-sort-value="2">Armit Singh<br />Lewis Holme</td>
+        <td class="" data-sort-value="Maths Entry level 1">Maths Entry level 1</td>
+      </tr>
     </tbody>
   </table>
 </div>
-
-
-
-
-<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="criteria">
-  <h2 class="govuk-heading-m">Activity risk and requirements</h2><p>Check the risk level, any exclusions and entry criteria.</p>
-
-
-  <dl class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Capacity
-      </dt>
-      <dd class="govuk-summary-list__value">
-        10
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Activity category
-      </dt>
-      <dd class="govuk-summary-list__value">
-        Services
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Location
-      </dt>
-      <dd class="govuk-summary-list__value">
-        Wing 2
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Risk level
-      </dt>
-      <dd class="govuk-summary-list__value">
-        High
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Education level
-      </dt>
-      <dd class="govuk-summary-list__value">
-        None set
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Technical qualifications
-      </dt>
-      <dd class="govuk-summary-list__value">
-        None set
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Risk factors
-      </dt>
-      <dd class="govuk-summary-list__value">
-        Use of chemicals
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Health factors
-      </dt>
-      <dd class="govuk-summary-list__value">
-        Chemicals, Dust
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Incentive level
-      </dt>
-      <dd class="govuk-summary-list__value">
-        Standard
-      </dd>
-    </div>
-  </dl>
 </div>
 </div>
 </div>
-</div>
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
+<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a[data-modal]').on('click', function(event) {
+			event.preventDefault();
+			this.blur();
+			$.get(this.href, function(html) {
+				$(html).appendTo('body').modal({
+					showClose: false,
+					clickClose: false
+				});
+			});
+		});
 
-</div>
+		$('#show').on('change', function() {
+			window.location = 'activity-dashboard-new#allocate?allocateEmployed=' + $(this).val()
+		})
+    $('#show2').on('change', function() {
+			window.location = 'activity-dashboard-new#allocate?allocateRisk=' + $(this).val()
+		})
+    $('#show3').on('change', function() {
+			window.location = 'activity-dashboard-new#allocate?allocateIncentive=' + $(this).val()
+		})
+	})
+</script>
+{% endblock %}
 {% endblock %}
