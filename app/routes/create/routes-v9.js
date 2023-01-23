@@ -815,6 +815,16 @@ module.exports = function(router) {
 
 	router.post(version + '/allocate/activity-dashboard-4-1', function(req, res) {
 
+		if (req.session.data.currentActivityAllocateScheduleName !== req.session.data.activityAllocateScheduleName){
+
+		req.session.data.offenderAllocatedStatusNeilRudge = 'false';
+		req.session.data.offenderAllocatedStatusIvorNorisk = 'false';
+		req.session.data.offenderAllocatedStatusLeeMilson = 'false';
+		req.session.data.offenderAllocatedStatusLionelMesser = 'false';
+		req.session.data.offenderAllocatedStatusNoffRens = 'false';
+		req.session.data.offenderAllocatedStatusNeilRudge = 'false';
+	}
+
 		if (req.session.data.offenderAllocate=="Neil Rudge"){
 			req.session.data.offenderIDAllocate = 'AA4309K';
 			}
@@ -834,7 +844,6 @@ module.exports = function(router) {
 			req.session.data.offenderAllocate="Neil Rudge";
 			req.session.data.offenderIDAllocate = 'AA4309K';
 					}
-
 		{
 				res.redirect(version + '/allocate/allocate-payment-details')
 			}
@@ -1025,7 +1034,6 @@ module.exports = function(router) {
 
 		res.render('../views/'+version+'/allocate/allocate-check-your-answers-payment')
 	});
-
 
 //Now allocate completed set status of prisoner to alllocate to activity
 	router.post(version + '/allocate/allocate-check-answers', function(req, res) {

@@ -13,7 +13,8 @@ Activities Management prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      You're allocating to {{data.activityAllocateScheduleName or 'Wing cleaning 1'}}
+      You're allocating to {{data.activityAllocateScheduleName  or 'Wing cleaning 1'}}
+
     </h1>
   </div>
 
@@ -49,6 +50,7 @@ Activities Management prototype
             Current allocation
           </h2>
 
+          Current={{data.currentActivityAllocateScheduleName }}
 
 	         {% if (data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName ) %}
             <p class="govuk-body card__description">
@@ -756,7 +758,7 @@ Activities Management prototype
     </thead>
     <form method="post">
     <tbody class="govuk-table__body">
-      {% if (data.offenderAllocatedStatusNeilRudge !=="true")%}
+      {% if (data.offenderAllocatedStatusNeilRudge !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
       <tr class="govuk-table__row">
         <td data-sort-value="Neil" class="govuk-table__cell">
           <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -778,7 +780,7 @@ Activities Management prototype
       </tr>
       {% endif %}
 
-      {% if (data.offenderAllocatedStatusIvorNorisk !=="true")%}
+      {% if (data.offenderAllocatedStatusIvorNorisk !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Ivor" class="govuk-table__cell">
@@ -800,7 +802,7 @@ Activities Management prototype
       </tr>
       {% endif %}
 
-      {% if (data.offenderAllocatedStatusLeeMilson!=="true")%}
+      {% if (data.offenderAllocatedStatusLeeMilson!=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lee" class="govuk-table__cell">
@@ -823,7 +825,7 @@ Activities Management prototype
 
       {% endif %}
 
-      {% if (data.offenderAllocatedStatusLionelMesser !=="true")%}
+      {% if (data.offenderAllocatedStatusLionelMesser !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
@@ -845,7 +847,7 @@ Activities Management prototype
 
       {% endif %}
 
-      {% if (data.offenderAllocatedStatusNoffRens !=="true")%}
+      {% if (data.offenderAllocatedStatusNoffRens !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
