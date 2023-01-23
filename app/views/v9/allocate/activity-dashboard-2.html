@@ -32,43 +32,6 @@ Activities Management prototype
         </ul>
       </nav>
     </div>
-    <div class="moj-primary-navigation__search">
-      <div class="moj-search-toggle" data-module="moj-search-toggle" data-moj-search-toggle-text="Search for activity">
-        <div class="moj-search-toggle__toggle"></div>
-        <div class="moj-search-toggle__search">
-          <div class="moj-search moj-search--ondark moj-search--toggle moj-js-hidden">
-            <form action="searchAllocationDashboard" method="post">
-              <div class="govuk-form-group">
-                <label class="govuk-label moj-search__label govuk-visually-hidden" for="search2">
-                  Search
-                </label>
-                <div id="search2-hint" class="govuk-hint moj-search__hint ">
-                  <span style="font-size:.85em;">Enter activity, location, or try <a href="allocate-offender-dashboard-search-view">Advanced search</a></span>
-                  <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                      </legend>
-                      <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                          <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
-                          <label class="govuk-label govuk-checkboxes__label" for="organisation">
-                            <span style="font-size:.85em;" class="govuk-hint moj-search__hint ">Only search in activities with vacancies</span>
-                          </label>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </div>
-                </div>
-                <input class="govuk-input moj-search__input " id="search2" name="search2" type="search" aria-describedby="search2-hint">
-              </div>
-              <button class="govuk-button moj-search__button " data-module="govuk-button">
-                Search
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 <br /><br />
@@ -78,6 +41,7 @@ Activities Management prototype
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity name</th>
+      <th scope="col" class="govuk-table__header" aria-sort="ascending">Category</th>
       <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="ascending">Capacity</th>
       <th scope="col" class="govuk-table__header  govuk-table__header--numeric" aria-sort="none">Allocated</th>
       <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none">Percentage allocated</th>
@@ -88,10 +52,11 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Servery">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="#" class="govuk-link govuk-link--no-visited-state" >
-        Servery work
+          <a href="activity-dashboard-3?activityAllocateName=Servery" class="govuk-link govuk-link--no-visited-state">
+        Servery
         </a></h3>
       </td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="8">8</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="8">8</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="100">100%</td>
@@ -104,11 +69,12 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Wing">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-3" class="govuk-link govuk-link--no-visited-state">
+        <a href="activity-dashboard-3?activityAllocateName=Wing Cleaning" class="govuk-link govuk-link--no-visited-state">
           Wing cleaning
         </a></h3>
           <span class="govuk-hint" style="font-size:.85em;"></span>
       </td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
       <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="20">30</td>
       <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="27">27</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="90">90%</td>
@@ -122,12 +88,13 @@ Activities Management prototype
       </tr>
 
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell"data-sort-value="Kitchen">
+      <td class="govuk-table__cell"data-sort-value="Prayer">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3" >
-        <a href="#"  class="govuk-link govuk-link--no-visited-state">
-          Kitchen cleaning
+          <a href="activity-dashboard-3?activityAllocateName=Prayer meeting" class="govuk-link govuk-link--no-visited-state">
+          Prayer meeting
         </a></h3>
       </td>
+      <td class="govuk-table__cell" data-sort-value="Faith and spirituality">Faith and spirituality</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="15">15</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="14">14</td>
       <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="95">95%</td>
@@ -141,12 +108,13 @@ Activities Management prototype
     </tr>
 
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell" data-sort-value="Waste">
+      <td class="govuk-table__cell" data-sort-value="Maths">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="#"class="govuk-link govuk-link--no-visited-state">
-          Waste recycling
+          <a href="activity-dashboard-3?activityAllocateName=Maths level 1 - " class="govuk-link govuk-link--no-visited-state">
+          Maths level 1
         </a></h3>
       </td>
+      <td class="govuk-table__cell" data-sort-value="Education">Education</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="3">3</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="2">2</td>
       <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="67">67%</td>
@@ -159,12 +127,13 @@ Activities Management prototype
       </td>
     </tr>
     <tr class="govuk-table__row" >
-      <td class="govuk-table__cell" data-sort-value="Furn">
+      <td class="govuk-table__cell" data-sort-value="Textiles">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="#" class="govuk-link govuk-link--no-visited-state">
-        Furniture repair
+          <a href="activity-dashboard-3?activityAllocateName=Textiles" class="govuk-link govuk-link--no-visited-state">
+        Textiles
         </a></h3>
       </td>
+      <td class="govuk-table__cell" data-sort-value="Industries">Industries</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="8">8</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="8">8</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="100">100%</td>
@@ -175,12 +144,13 @@ Activities Management prototype
         </div></td>
     </tr>
     <tr class="govuk-table__row">
-      <td class="govuk-table__header" data-sort-value="Far">
+      <td class="govuk-table__header" data-sort-value="Farms">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="#"class="govuk-link govuk-link--no-visited-state">
+          <a href="activity-dashboard-3?activityAllocateName=Farms and gardens" class="govuk-link govuk-link--no-visited-state">
         Farms and gardens
         </a></h3>
       </td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="19">19</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="15">15</td>
       <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="75">75%</td>
@@ -195,10 +165,11 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__header" data-sort-value="Store">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3" >
-        <a href="#" class="govuk-link govuk-link--no-visited-state">
+          <a href="activity-dashboard-3?activityAllocateName=Stores replenishing" class="govuk-link govuk-link--no-visited-state">
         Stores replenshing
         </a></h3>
       </td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="3">3</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="3">3</td>
       <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="100">100%</td>
@@ -209,12 +180,14 @@ Activities Management prototype
         </div></td>
     </tr>
     <tr class="govuk-table__row">
-      <td class="govuk-table__header" data-sort-value="Shower">
+      <td class="govuk-table__header" data-sort-value="English">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="#" class="govuk-link govuk-link--no-visited-state">
-        Shower cleaning
+          <a href="activity-dashboard-3?activityAllocateName=English level 1 - " class="govuk-link govuk-link--no-visited-state">
+        English level 1
         </a></h3>
       </td>
+      <td class="govuk-table__cell" data-sort-value="Education">Education/td>
+
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="16">16</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="16">16</td>
       <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="100">100%</td>
@@ -227,10 +200,11 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__header" data-sort-value="Paint">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="#"class="govuk-link govuk-link--no-visited-state">
+          <a href="activity-dashboard-3?activityAllocateName=Painting and decorating" class="govuk-link govuk-link--no-visited-state">
         Painting and decorating
         </a></h3>
       </td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="30">30</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="21">21</td>
       <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="70">70%</td>
