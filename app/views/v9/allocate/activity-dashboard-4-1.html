@@ -48,9 +48,10 @@ Activities Management prototype
         <!--    <a class="govuk-link card__link govuk-link--no-visi ted-state" href="{{data['prototype-versions']['unlock-and-attend']['url']}}">-->
             Current allocation
           </h2>
+
           <p class="govuk-body card__description">
-            <span style="width:57%; float:left;"><strong>Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue"> 4</span> <br /><br />
-            <span style="width:59%; float:left;"><strong>Allocated:</strong></span> 8 <br /><br />
+            <span style="width:57%; float:left;"><strong>Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue"> {{data.vacanciesCount or '5'}}</span> <br /><br />
+            <span style="width:59%; float:left;"><strong>Allocated:</strong></span>{{12-data.vacanciesCount or '7'}} <br /><br />
             <span style="width:58%; float:left;"><strong>Capacity:</strong></span> 12 <br />
           </p>
         </div>
@@ -743,6 +744,7 @@ Activities Management prototype
     </thead>
     <form method="post">
     <tbody class="govuk-table__body">
+      {% if (data.offenderAllocatedStatusNeilRudge !=="true")%}
       <tr class="govuk-table__row">
         <td data-sort-value="Neil" class="govuk-table__cell">
           <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -762,6 +764,10 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="20240709">9 July 2024</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
       </tr>
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusIvorNorisk !=="true")%}
+
       <tr class="govuk-table__row">
         <td data-sort-value="Ivor" class="govuk-table__cell">
           <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -780,6 +786,10 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="20230122">22 Jan 2023</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
       </tr>
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusLeeMilson!=="true")%}
+
       <tr class="govuk-table__row">
         <td data-sort-value="Lee" class="govuk-table__cell">
           <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -798,6 +808,11 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="20230202">2 Mar 2023</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">English entry level 1<br />Maths level 2</td>
       </tr>
+
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusLionelMesser !=="true")%}
+
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
           <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -815,6 +830,11 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="20250216">16 Feb 2025</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
       </tr>
+
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusNoffRens !=="true")%}
+
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
           <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -831,9 +851,11 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">Unsentenced</td>
         <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
-      </tr>
+      </tr>{% endif %}
     </tbody>
 </table>
+
+
 
 
 <!--Pagination-->
