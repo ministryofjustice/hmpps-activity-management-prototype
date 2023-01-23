@@ -823,6 +823,7 @@ module.exports = function(router) {
 		req.session.data.offenderAllocatedStatusLionelMesser = 'false';
 		req.session.data.offenderAllocatedStatusNoffRens = 'false';
 		req.session.data.offenderAllocatedStatusNeilRudge = 'false';
+		req.session.data.vacanciesCount = 5;
 	}
 
 		if (req.session.data.offenderAllocate=="Neil Rudge"){
