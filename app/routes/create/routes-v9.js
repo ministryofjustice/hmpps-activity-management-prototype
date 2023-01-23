@@ -3,6 +3,9 @@ module.exports = function(router) {
 
 	var version = '/v9';
 
+	// app data
+	const prisoners = require('../../data/prisoners-list-3')
+
 	router.post(version + '/setup', function(req, res) {
 			res.redirect('/dps-home')
 	});
@@ -704,6 +707,17 @@ module.exports = function(router) {
 		}
 	});
 
+	//router.get(version + '/allocate/activity-dashboard-3', function(req, res) {
+	//	{
+	//		if (req.session.data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName )
+	//		{
+	//			req.session.data.vacanciesCount = 10;
+	//		}
+
+	//		res.redirect(version + '/allocate/activity-dashboard-4-1')
+	//	}
+	//});
+
 	router.post(version + '/allocate/searchAllocationDashboard', function(req, res) {
 		{
 			res.redirect(version + '/allocate/activity-dashboard-3-search')
@@ -797,15 +811,33 @@ module.exports = function(router) {
 
 
     //Offender dashbaord allocations
+		//Set the offender for allocate passed in on radio button on dashboard-4-1
 
-	router.post(version + '/allocate/Dashboard4', function(req, res) {
-		{
-			if (req.session.data.offenderAllocate == "Ivor Norisk") {
-				res.redirect(version + '/allocate/allocate-payment-details')
-			} else {
-				res.redirect(version + '/allocate/activity-dashboard-5-1')
+	router.post(version + '/allocate/activity-dashboard-4-1', function(req, res) {
+
+		if (req.session.data.offenderAllocate=="Neil Rudge"){
+			req.session.data.offenderIDAllocate = 'AA4309K';
 			}
-		}
+			else if (req.session.data.offenderAllocate=="Ivor Norisk"){
+				req.session.data.offenderIDAllocate = 'BA3219B';
+				}
+			else if (req.session.data.offenderAllocate=="Lee Milson"){
+				req.session.data.offenderIDAllocate = 'CV1291A';
+				}
+			else if (req.session.data.offenderAllocate=="Lionel Messer"){
+				req.session.data.offenderIDAllocate = 'NH7239A';
+				}
+			else if (req.session.data.offenderAllocate=="Noff Rens"){
+				req.session.data.offenderIDAllocate = 'BN7622L';
+				}
+		else {
+			req.session.data.offenderAllocate="Neil Rudge";
+			req.session.data.offenderIDAllocate = 'AA4309K';
+					}
+
+		{
+				res.redirect(version + '/allocate/allocate-payment-details')
+			}
 	});
 
 	router.post(version + '/allocate/activity-dashboard-5-1', function(req, res) {
@@ -994,26 +1026,41 @@ module.exports = function(router) {
 		res.render('../views/'+version+'/allocate/allocate-check-your-answers-payment')
 	});
 
-//router.post(version + '/create/activity-check-your-answers-payment', function(req, res) {
-//	res.redirect(version + '/create/activity-add-education')
-//});
 
-
-
-
-
-
-
-
-
-
+//Now allocate completed set status of prisoner to alllocate to activity
 	router.post(version + '/allocate/allocate-check-answers', function(req, res) {
+
+		if (req.session.data.offenderAllocate=="Neil Rudge"){
+			req.session.data.offenderAllocatedStatusNeilRudge = 'true';
+			}
+			else if (req.session.data.offenderAllocate=="Ivor Norisk"){
+				req.session.data.offenderAllocatedStatusIvorNorisk = 'true';
+				}
+			else if (req.session.data.offenderAllocate=="Lee Milson"){
+				req.session.data.offenderAllocatedStatusLeeMilson = 'true';
+				}
+			else if (req.session.data.offenderAllocate=="Lionel Messer"){
+				req.session.data.offenderAllocatedStatusLionelMesser = 'true';
+				}
+			else if (req.session.data.offenderAllocate=="Noff Rens"){
+				req.session.data.offenderAllocatedStatusNoffRens = 'true';
+				}
+		else {
+			req.session.data.offenderAllocate="Neil Rudge";
+				req.session.data.offenderAllocatedStatusNeilRudge = 'true';
+					}
+
+					req.session.data.currentActivityAllocateScheduleName = req.session.data.activityAllocateScheduleName;
+
+					if(req.session.data.vacanciesCount){
+						req.session.data.vacanciesCount= req.session.data.vacanciesCount - 1;
+					}
+					else {req.session.data.vacanciesCount=4}
+
 		{
+
 			res.redirect(version + '/allocate/allocate-confirmation')
 		}
 	});
-
-
-
 
 }
