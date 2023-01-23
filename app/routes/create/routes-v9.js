@@ -1050,12 +1050,12 @@ module.exports = function(router) {
 				req.session.data.offenderAllocatedStatusNeilRudge = 'true';
 					}
 
-					req.session.data.currentActivityAllocateScheduleName = req.session.data.activityAllocateScheduleName;
+			req.session.data.currentActivityAllocateScheduleName = req.session.data.activityAllocateScheduleName;
 
-					if(req.session.data.vacanciesCount){
-						req.session.data.vacanciesCount= req.session.data.vacanciesCount - 1;
-					}
-					else {req.session.data.vacanciesCount=4}
+			if(req.session.data.vacanciesCount){
+				req.session.data.vacanciesCount= req.session.data.vacanciesCount - 1;
+			}
+			else {req.session.data.vacanciesCount=4}
 
 		{
 
