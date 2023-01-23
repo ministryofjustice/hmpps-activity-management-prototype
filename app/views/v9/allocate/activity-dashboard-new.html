@@ -85,12 +85,12 @@ Activities Management prototype
 <ul class="govuk-tabs__list">
   <li class="govuk-tabs__list-item">
     <a class="govuk-tabs__tab" href="#allocated">
-      Currently allocated
+    <strong>  Currently allocated</strong>
     </a>
   </li>
   <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
     <a class="govuk-tabs__tab" href="#allocate">
-      Candidates
+      <strong>Candidates</strong>
     </a>
   </li>
 </ul>
@@ -673,7 +673,7 @@ Activities Management prototype
       Use the filters to expand or reduce the list. You can also search for someone you want to allocate.</p>
 
 <div class="govuk-grid-row" style="background-color:#f1f1f1; padding-top:20px;">
-  <div class="govuk-grid-column-one-half">
+  <div class="govuk-grid-column-one-half" style="background-color:#f1f1f1;">
     <div class="govuk-form-group">
       <label class="govuk-label" for="sort">
         Showing people who are:
@@ -681,7 +681,7 @@ Activities Management prototype
       <select class="govuk-select" id="show" name="show-grouping">
         <option value="Unemployed" {% if data.allocateEmployed=="Unemployed" %}selected{% endif %}>Unemployed</option>
         <option value="Employed" {% if data.allocateEmployed=="Employed" %}selected{% endif %}>Employed</option>
-        <option value="Employed and Unemployed" {% if data.allocateEmployed=="Employed and Unemployed" %}selected{% endif %}>Either Employed or Unemployed</option>
+        <option value="Employed and Unemployed" {% if data.allocateEmployed=="Employed and Unemployed" %}selected{% endif %}> Employed or Unemployed</option>
       </select>
     </div>
     <div class="govuk-form-group">
@@ -727,11 +727,18 @@ Activities Management prototype
   <table class="govuk-table" data-module="moj-sortable-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header" aria-sort="ascending">Candidate details</th>
+      <!--  <th scope="col" class="govuk-table__header" aria-sort="ascending">Candidate details</th>
         <th scope="col" class="govuk-table__header" aria-sort="none" style="width:28%">Non-associations on this activity</th>
         <th scope="col" class="govuk-table__header" aria-sort="none" >Security category</th>
         <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
-        <th scope="col" class="govuk-table__header" aria-sort="none">Qualifications</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Qualifications</th>-->
+
+        <th scope="col" class="govuk-table__header">Candidate details</th>
+        <th scope="col" class="govuk-table__header" style="width:28%">Non-associations on this activity</th>
+        <th scope="col" class="govuk-table__header">Security category</th>
+        <th scope="col" class="govuk-table__header">Earliest release date</th>
+        <th scope="col" class="govuk-table__header">Qualifications</th>
+
       </tr>
     </thead>
     <tbody class="govuk-table__body">
@@ -819,7 +826,7 @@ Activities Management prototype
             </label>
           </div>
         </td>
-        <td class="govuk-table__cell" data-sort-value="2">Armit Singh, <span style="font-size:.85em;">FG9121R</span><br />Lewis Holme, <span style="font-size:.85em;">LG1291A</span><br />and 5 more - <a href="#">see full list</a></td>
+        <td class="govuk-table__cell" data-sort-value="2">More than 5<br /> <a href="#">See full list</a></td>
         <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">Unsentenced</td>
         <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
