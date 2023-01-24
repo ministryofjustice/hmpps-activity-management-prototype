@@ -1,0 +1,347 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+</div>
+</div>
+<!--<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+    {% set html %}
+      <p class="govuk-notification-banner__heading">
+        The appointment you created takes place at the same time as another appointment
+        <a class="govuk-notification-banner__link" href="#">View appointments</a>.
+      </p>
+    {% endset %}
+    {{ govukNotificationBanner({
+      html: html
+    }) }}
+</div></div>-->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">
+       Paul Blake's schedule
+       <span class="govuk-caption-l">Monday 12 December to Sunday 18 December</span>
+      </h1>
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Print this page</a>
+      </p>
+      <!--<p class="govuk-body">
+        <a href="#" class="govuk-link">Change date and time of appointment</a>
+      </p>-->
+   
+      
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Monday  12  December</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Morning</th>
+            <th scope="col" class="govuk-table__header">Afternoon</th>
+            <th scope="col" class="govuk-table__header">Evening</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li>
+                  {{ govukTag({
+                    text: "3"
+                  }) }}<br><br>
+                  
+              <b>Kitchen</b><br>
+              8:30am to 12pm<br>
+              Created by: John Smith
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                  text: "3"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
+              1pm to 4:30pm<br>
+              Created by: John Smith
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              Nothing scheduled
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Tuesday  13  December</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Morning</th>
+            <th scope="col" class="govuk-table__header">Afternoon</th>
+            <th scope="col" class="govuk-table__header">Evening</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                   text: "2"
+                }) }}<br><br>
+                <b>Programme session</b><br>
+              9am to 11pm<br>
+              Created by: John Smith
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                  text: "1"
+                }) }}<br><br>
+                <b>Visit</b><br>
+              2pm to 3pm<br>
+              Created by: Bill Gough
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              Nothing scheduled
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Wednesday  14  December</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Morning</th>
+            <th scope="col" class="govuk-table__header">Afternoon</th>
+            <th scope="col" class="govuk-table__header">Evening</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                  text: "3"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
+              8:30am to 12pm<br>
+              Created by: John Smith
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                  text: "3"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
+              1pm to 4:30pm<br>
+              Created by: John Smith
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              Nothing scheduled
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Thursday  15  December</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Morning</th>
+            <th scope="col" class="govuk-table__header">Afternoon</th>
+            <th scope="col" class="govuk-table__header">Evening</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                  text: "3"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
+              8:30am to 12pm<br>
+              Created by: John Smith
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                  text: "3"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
+              1pm to 4:30pm<br>
+              Created by: John Smith
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              Nothing scheduled
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Friday  16  December</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Morning</th>
+            <th scope="col" class="govuk-table__header">Afternoon</th>
+            <th scope="col" class="govuk-table__header">Evening</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                  text: "3"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
+              8:30am to 12pm<br>
+              Created by: John Smith
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                  text: "3"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
+              1pm to 4:30pm<br>
+              Created by: John Smith
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              Nothing scheduled
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Saturday  17  December</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Morning</th>
+            <th scope="col" class="govuk-table__header">Afternoon</th>
+            <th scope="col" class="govuk-table__header">Evening</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                  text: "3"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
+              8:30am to 12pm<br>
+              Created by: John Smith
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                  text: "3"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
+              1pm to 4:30pm<br>
+              Created by: John Smith
+              </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              Nothing scheduled
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Sunday 18 December</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Morning</th>
+            <th scope="col" class="govuk-table__header">Afternoon</th>
+            <th scope="col" class="govuk-table__header">Evening</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li> {{ govukTag({
+                  text: "3"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
+              8:30am to 12pm<br>
+              Created by: John Smith
+            
+          </li>
+        </ul>
+      </td>
+            <td class="govuk-table__cell">
+              <ul class="appointment-event">
+                <li>
+                  {{ govukTag({
+                    text: "1"
+                  }) }}<br><br>
+                  <b>Drugs misuse programme</b><br>
+                  1pm to 4:30pm<br>
+                  Created by: John Smith<br>
+                  {{ govukTag({
+                    text: "clash"
+                  }) }}
+
+                </li>
+                <li> {{ govukTag({
+                  text: "3"
+                }) }}<br><br>
+                <b>Kitchen</b><br>
+                  1pm to 4:30pm<br>
+                  Created by: Bill Jones<br>
+                  {{ govukTag({
+                    text: "clash"	
+                  }) }}
+                </li>
+              </ul>
+            
+              
+            </td>
+            <td class="govuk-table__cell">
+              Nothing scheduled
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    {{ govukButton({
+      text: "Continue",
+      href: "date-and-time"
+    }) }}
+    <!--<p class="govuk-body">
+      <a href="#" class="govuk-link">Change date and time of appointment</a>
+    </p>-->
+  </div>
+</div>
+{% endblock %}
