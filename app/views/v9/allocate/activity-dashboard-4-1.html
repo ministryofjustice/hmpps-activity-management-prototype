@@ -272,56 +272,62 @@ Activities Management prototype
 
 <!--allocate new people-->
 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocate">
-    <p>Your candidate list has been filtered to show people who match all the requirements for this activity.
-      Use the filters to expand or reduce the list. You can also search for someone you want to allocate.</p>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p>Your candidate list has been filtered to show people who match all the requirements for this activity.
+        Use the filters to expand or reduce the list. You can also search for someone you want to allocate.</p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label" for="event-name">
+            Search by name or prison number:
+          </label>
+        </h2>
+        <input class="govuk-input govuk-!-width-two-thirds" id="event-name" name="event-name" type="text" >
+        <button class="govuk-button" data-module="govuk-button" style="margin-left:-4px;">
+        Search
+        </button>
+      </div>
+    </div>
 
 <div class="govuk-grid-row" style="background-color:#f1f1f1; padding-top:20px;">
-  <div class="govuk-grid-column-one-half" style="background-color:#f1f1f1;">
+  <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
+    <div class="govuk-form-group">
+        <label class="govuk-label" for="sort">
+          Showing people who are:<br /><br />
+        </label>
+        <select class="govuk-select" id="show" name="show-grouping">
+          <option value="Unemployed" {% if data.allocateEmployed=="Unemployed" %}selected{% endif %}>Unemployed</option>
+          <option value="Employed" {% if data.allocateEmployed=="Employed" %}selected{% endif %}>Employed</option>
+          <option value="Employed and Unemployed" {% if data.allocateEmployed=="Employed and Unemployed" %}selected{% endif %}> Employed or Unemployed</option>
+        </select>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
     <div class="govuk-form-group">
       <label class="govuk-label" for="sort">
-        Showing people who are:
+        Showing people whose workplace assessment risk is:
       </label>
-      <select class="govuk-select" id="show" name="show-grouping">
-        <option value="Unemployed" {% if data.allocateEmployed=="Unemployed" %}selected{% endif %}>Unemployed</option>
-        <option value="Employed" {% if data.allocateEmployed=="Employed" %}selected{% endif %}>Employed</option>
-        <option value="Employed and Unemployed" {% if data.allocateEmployed=="Employed and Unemployed" %}selected{% endif %}> Employed or Unemployed</option>
+      <select class="govuk-select" id="show2" name="show-grouping"">
+        <option value="Any" {% if data.allocateRisk=="Any" %}selected{% endif %}>Any risk level</option>
+        <option value="Low"  {% if data.allocateRisk=="Low" %}selected{% endif %}>Low</option>
+        <option value="Medium" {% if data.allocateRisk=="Medium" %}selected{% endif %}>Medium</option>
+        <option value="High" {% if data.allocateRisk=="High" %}selected{% endif %}>High</option>
       </select>
+      </div>
     </div>
-    <div class="govuk-form-group">
-    <label class="govuk-label" for="sort">
-      Showing people whose workplace assessment risk is:
-    </label>
-    <select class="govuk-select" id="show2" name="show-grouping"">
-      <option value="Any" {% if data.allocateRisk=="Any" %}selected{% endif %}>Any risk level</option>
-      <option value="Low"  {% if data.allocateRisk=="Low" %}selected{% endif %}>Low</option>
-      <option value="Medium" {% if data.allocateRisk=="Medium" %}selected{% endif %}>Medium</option>
-      <option value="High" {% if data.allocateRisk=="High" %}selected{% endif %}>High</option>
-    </select>
-    </div>
-    <div class="govuk-form-group">
-    <label class="govuk-label" for="sort">
-      Showing people who have the following incentive level:
-    </label>
-    <select class="govuk-select" id="show3" name="show-grouping"">
-      <option value="Any" {% if data.allocateIncentive=="Any" %}selected{% endif %}>Any incentive level</option>
-      <option value="Basic"  {% if data.allocateIncentive=="Education" %}selected{% endif %}>Basic </option>
-      <option value="Standard" {% if data.allocateIncentive=="Industries" %}selected{% endif %}>Standard</option>
-      <option value="Enhanced" {% if data.allocateIncentive=="Prison" %}selected{% endif %}>Enhanced</option>
-    </select>
-    </div>
-  </div>
-
-  <div class="govuk-grid-column-one-half" >
-    <div style="padding-left:150px;">
-      <h2 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label" for="event-name">
-          Search by name or prison number:
-        </label>
-      </h2>
-      <input class="govuk-input govuk-!-width-two-thirds" id="event-name" name="event-name" type="text" >
-      <button class="govuk-button" data-module="govuk-button" style="margin-left:-4px;">
-      Search
-      </button>
+    <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
+      <div class="govuk-form-group">
+      <label class="govuk-label" for="sort">
+        Showing people who have the following incentive level:
+      </label>
+      <select class="govuk-select" id="show3" name="show-grouping"">
+        <option value="Any" {% if data.allocateIncentive=="Any" %}selected{% endif %}>Any incentive level</option>
+        <option value="Basic"  {% if data.allocateIncentive=="Education" %}selected{% endif %}>Basic </option>
+        <option value="Standard" {% if data.allocateIncentive=="Industries" %}selected{% endif %}>Standard</option>
+        <option value="Enhanced" {% if data.allocateIncentive=="Prison" %}selected{% endif %}>Enhanced</option>
+      </select>
+      </div>
     </div>
   </div>
 </div>
