@@ -123,549 +123,140 @@ Activities Management prototype
 
 
 <form method="post" action="AllocateRemove">
-<table class="govuk-table" data-module="moj-sortable-table">
+  <table class="govuk-table" data-module="moj-sortable-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
+      <!--  <th scope="col" class="govuk-table__header" aria-sort="ascending">Candidate details</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none" style="width:28%">Non-associations on this activity</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none" >Security category</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Qualifications</th>-->
 
-        <th scope="col" class="govuk-table__header" style="width:30%;" aria-sort="ascending">Name</th>
-        <th scope="col" class="govuk-table__header" style="width:15%;" aria-sort="none">Prison number</th>
-        <th scope="col" class="govuk-table__header" style="width:15%;" aria-sort="none">Location</th>
-        <th scope="col" class="govuk-table__header" style="width:20%;" aria-sort="none">Allocation</th>
-        <th scope="col" class="govuk-table__header" style="width:35%;" aria-sort="none">Earliest release date</th>
+        <th scope="col" class="govuk-table__header">Candidate details</th>
+        <th scope="col" class="govuk-table__header" style="width:28%">Non-associations on this activity</th>
+        <th scope="col" class="govuk-table__header">Security category</th>
+        <th scope="col" class="govuk-table__header">Earliest release date</th>
+        <th scope="col" class="govuk-table__header">Qualifications</th>
 
       </tr>
     </thead>
+    <form method="post">
     <tbody class="govuk-table__body">
-{% if (data.LanceArm != 'NotAllocated')%}
+      {% if (data.offenderAllocatedStatusNeilRudge =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
       <tr class="govuk-table__row">
-        <td data-sort-value="Lance">
-          <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="Lance Arm">
-            <label class="govuk-label govuk-checkboxes__label" for="organisation">
-              Lance Arm
-            </label>
+        <td data-sort-value="Neil" class="govuk-table__cell">
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input type="hidden" name="returnDashboard" value="activity-dashboard-4-1" />
+              <input class="govuk-radios__input" id="offenderAllocate1" name="offenderAllocate" type="radio" value="Neil Rudge">
+              <label class="govuk-label govuk-radios__label" for="offenderAllocate1">
+              <strong><a href="#">Neil Rudge</a></strong><br />
+              AA4309K<br />
+              1-3-003
+              </label>
+            </div>
           </div>
       </td>
-      <td  data-sort-value="AB4309H">AB4309H</td>
-      <td  data-sort-value="13003">1-3-003</td>
-      <td  data-sort-value="Wing">Wing cleaning</td>
-      <td data-sort-value="20230923">23 Sept 2023</td>
-    </tr>
-    <tr>
-    <td  colspan="7" class="govuk-table__cell" data-sort-value="Lance">
-      <details class="hods-expandable-banner">
-    <summary class="hods-expandable-banner__summary" style="color:#00008B">
-      show more profile information
-    </summary>
-    <div class="hods-expandable-banner__text" style="background-color:#F2F1F0; padding:5px 0 0 15px;">
+      <td class="govuk-table__cell" data-sort-value="0">None</td>
+      <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">A (Provisional)</td>
+        <td class="govuk-table__cell" data-sort-value="20240709">9 July 2024</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
+      </tr>
+      {% endif %}
 
-
-      <dl class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-
-          </dt>
-          <dd class="govuk-summary-list__value">
-          <strong>Prisoner details</strong>
-          </dd>
-          <dd class="govuk-summary-list__value">
-            <strong>Activity requirements</strong>
-          </dd>
-          <dd class="govuk-summary-list__value">
-            <strong>Mismatch</strong>
-          </dd>
-        </div>
-
-
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Security category
-          </dt>
-          <dd class="govuk-summary-list__value">
-            A
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Incentive level
-          </dt>
-          <dd class="govuk-summary-list__value">
-            Basic
-          </dd>
-          <dd class="govuk-summary-list__value">
-            Standard
-          </dd>
-          <dd class="govuk-summary-list__value">
-            <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</span> </strong>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Educational qualifications
-          </dt>
-          <dd class="govuk-summary-list__value">
-            Maths level 1
-          </dd>
-          <dd class="govuk-summary-list__value">
-            None set
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Technical qualifications
-          </dt>
-          <dd class="govuk-summary-list__value">
-            Maintenance foundation skills
-          </dd>
-          <dd class="govuk-summary-list__value">
-            None set
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-          Learning pathways
-          </dt>
-          <dd class="govuk-summary-list__value">
-            Maintenance
-          </dd>
-          <dd class="govuk-summary-list__value">
-            Cleaning
-          </dd>
-          <dd class="govuk-summary-list__value">
-            <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</span> </strong>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Alerts
-          </dt>
-          <dd class="govuk-summary-list__value">
-            Racist,<br />
-            Arsonist<br />
-          </dd>
-          <dd class="govuk-summary-list__value">
-            None set
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Learning difficulties, <br />disabilities and health
-          </dt>
-          <dd class="govuk-summary-list__value">
-            Asthma,<br />
-            Dyslexia
-          </dd>
-          <dd class="govuk-summary-list__value">
-            None set
-          </dd>
-        </div>
-      </dl>
-    </div>
-  </details>
-  </td>
-  <td class="govuk-table__cell" data-sort-value="A4309JH"></td>
-  <td class="govuk-table__cell" data-sort-value="13003"></td>
-  <td class="govuk-table__cell" data-sort-value="Wing"></td>
-  <td class="govuk-table__cell" data-sort-value="20230923"></td>
-  </tr>
-{% endif %}
-      <tr class="govuk-table__row">
-        <td data-sort-value="Armit">
-          <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value=" Armit Singh">
-              <label class="govuk-label govuk-checkboxes__label" for="organisation">
-              Armit Singh
-              </label>
-            </div>
-          </td>
-          <td class="" data-sort-value="FG9121R">FG9121R</td>
-          <td class="" data-sort-value="23022">2-3-022</td>
-          <td class="" data-sort-value="Maths level 2">Maths level 2<br />Wing cleaning</td>
-          <td class="" data-sort-value="20230102">2 Jan 2023</td>
-          </tr>
-          <tr>
-            <td colspan="7" class="govuk-table__cell" data-sort-value="Armit">
-        <details class="hods-expandable-banner">
-      <summary class="hods-expandable-banner__summary" style="color:#00008B">
-        show more profile information
-      </summary>
-      <div class="hods-expandable-banner__text" style="background-color:#F2F1F0; padding:5px 0 0 15px;">
-    <dl class="govuk-summary-list govuk-summary-list--no-border">
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-            </dt>
-            <dd class="govuk-summary-list__value">
-            <strong>Prisoner details</strong>
-            </dd>
-            <dd class="govuk-summary-list__value">
-              <strong>Activity requirements</strong>
-            </dd>
-            <dd class="govuk-summary-list__value">
-              <strong>Mismatch</strong>
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Security category
-            </dt>
-            <dd class="govuk-summary-list__value">
-              A
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Incentive level
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Basic
-            </dd>
-            <dd class="govuk-summary-list__value">
-              Standard
-            </dd>
-            <dd class="govuk-summary-list__value">
-              <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</span> </strong>
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Educational qualifications
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Maths level 1
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None set
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Technical qualifications
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Maintenance foundation skills
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None set
-            </dd>
-
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-            Learning pathways
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Maintenance
-            </dd>
-            <dd class="govuk-summary-list__value">
-              Maintenance
-            </dd>
-            <dd class="govuk-summary-list__value">
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Alerts
-            </dt>
-            <dd class="govuk-summary-list__value">
-              None set
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None set
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Learning difficulties, <br />disabilities and health
-            </dt>
-            <dd class="govuk-summary-list__value">
-            None set
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None set
-            </dd>
-          </div>
-        </dl>
-
-      </div>
-    </details>
-    </td>
-    <td class="" data-sort-value="A9121TR"></td>
-    <td class="" data-sort-value="23022"></td>
-    <td class="" data-sort-value="Maths level 2"></td>
-    <td class="" data-sort-value="20230102"></td>
-    </tr>
-
-    <tr class="govuk-table__row">
-      <td class="">
-              <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-          </td>
-            <tr class="govuk-table__row">
-          <td class="" data-sort-value="Lewis">
-              <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value=" Lewis Holme">
-              <label class="govuk-label govuk-checkboxes__label" for="organisation">
-                Lewis Holme
-              </label>
-            </div>
-          </td>
-          <td class="" data-sort-value="A1291QA">LG1291A</td>
-          <td class="" data-sort-value="11021">1-1-021</td>
-          <td class="" data-sort-value="Breakfast">Breakfast packs<br />Wing cleaning</td>
-          <td class="" data-sort-value="20230923">23 Sept 2023</td>
-          </tr>
-              <tr>
-                <td colspan="7"  class="govuk-table__cell" data-sort-value="Lewis">
-                  <details class="hods-expandable-banner">
-                <summary class="hods-expandable-banner__summary" style="color:#00008B">
-                  show more profile information
-                </summary>
-                <div class="hods-expandable-banner__text" style="background-color:#F2F1F0; padding:5px 0 0 15px;">
-              <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                      <strong>Prisoner details</strong>
-                      </dd>
-                      <dd class="govuk-summary-list__value">
-                        <strong>Activity requirements</strong>
-                      </dd>
-                      <dd class="govuk-summary-list__value">
-                        <strong>Mismatch</strong>
-                      </dd>
-                    </div>
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                        Security category
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        A
-                      </dd>
-                    </div>
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                        Incentive level
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        Standard
-                      </dd>
-                      <dd class="govuk-summary-list__value">
-                        Standard
-                      </dd>
-                      <dd class="govuk-summary-list__value">
-                      </dd>
-                    </div>
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                        Educational qualifications
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        Maths level 1
-                      </dd>
-                      <dd class="govuk-summary-list__value">
-                        None set
-                      </dd>
-                    </div>
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                        Technical qualifications
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        Maintenance foundation skills
-                      </dd>
-                      <dd class="govuk-summary-list__value">
-                        None set
-                      </dd>
-
-                    </div>
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                      Learning pathways
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        Maintenance
-                      </dd>
-                      <dd class="govuk-summary-list__value">
-                        Maintenance
-                      </dd>
-                      <dd class="govuk-summary-list__value">
-                      </dd>
-                    </div>
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                        Alerts
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        Violent
-                      </dd>
-                      <dd class="govuk-summary-list__value">
-                        None set
-                      </dd>
-                      <dd class="govuk-summary-list__value">
-                        <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</span> </strong>
-                      </dd>
-
-                    </div>
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                        Learning difficulties, <br />disabilities and health
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                      None set
-                      </dd>
-                      <dd class="govuk-summary-list__value">
-                        None set
-                      </dd>
-                    </div>
-                  </dl>
-
-                </div>
-              </details>
-              </td>
-              <td class="" data-sort-value="A1291QA"></td>
-              <td class="" data-sort-value="11021"></td>
-              <td class="" data-sort-value="Breakfast"></td>
-              <td class="" data-sort-value="20230923"></td>
-              </tr>
+      {% if (data.offenderAllocatedStatusIvorNorisk =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
-        <td class="" data-sort-value="Harry">
-                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-              <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value=" Lewis Holme">
-                <label class="govuk-label govuk-checkboxes__label" for="organisation">
-                  Harry Christmas
-                </label>
-              </div>
-            </td>
-            <td class="" data-sort-value="A88992P">MK8892P</td>
-            <td class="" data-sort-value="12021">1-2-021</td>
-            <td class="" data-sort-value="Brekafast P">Breakfast packs</td>
-            <td class="" data-sort-value="20230703">3 July 2023</td>
-            </tr>
+        <td data-sort-value="Ivor" class="govuk-table__cell">
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="offenderAllocate2" name="offenderAllocate" type="radio" value="Ivor Norisk">
+              <label class="govuk-label govuk-radios__label" for="offenderAllocate2">
+              <strong><a href="#">Ivor Norisk</a></strong><br />
+              BA3219B<br />
+              2-3-022
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="1">Armit Singh, <span style="font-size:.85em;">FG9121R</span></td>
+      <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">B</td>
+        <td class="govuk-table__cell" data-sort-value="20230122">22 Jan 2023</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
+      </tr>
+      {% endif %}
 
-    <tr>
-      <td colspan="7"  class="govuk-table__cell" data-sort-value="Harry">
-        <details class="hods-expandable-banner">
-      <summary class="hods-expandable-banner__summary" style="color:#00008B">
-        show more profile information
-      </summary>
-      <div class="hods-expandable-banner__text" style="background-color:#F2F1F0; padding:5px 0 0 15px;">
-    <dl class="govuk-summary-list govuk-summary-list--no-border">
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-            </dt>
-            <dd class="govuk-summary-list__value">
-            <strong>Prisoner details</strong>
-            </dd>
-            <dd class="govuk-summary-list__value">
-              <strong>Activity requirements</strong>
-            </dd>
-            <dd class="govuk-summary-list__value">
-              <strong>Mismatch</strong>
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Security category
-            </dt>
-            <dd class="govuk-summary-list__value">
-              B
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Incentive level
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Enhanced
-            </dd>
-            <dd class="govuk-summary-list__value">
-              Standard
-            </dd>
-            <dd class="govuk-summary-list__value">
-              <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</span> </strong>
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Educational qualifications
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Maths level 1
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None set
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Technical qualifications
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Maintenance foundation skills
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None set
-            </dd>
+      {% if (data.offenderAllocatedStatusLeeMilson=="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
 
+      <tr class="govuk-table__row">
+        <td data-sort-value="Lee" class="govuk-table__cell">
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="offenderAllocate3" name="offenderAllocate" type="radio" value="Lee Milson">
+              <label class="govuk-label govuk-radios__label" for="offenderAllocate3">
+              <strong><a href="#">Lee Milson</a></strong><br />
+              CV1291A<br />
+              1-1-021
+              </label>
+            </div>
           </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-            Learning pathways
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Maintenance
-            </dd>
-            <dd class="govuk-summary-list__value">
-              Maintenance
-            </dd>
-            <dd class="govuk-summary-list__value">
-            </dd>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="3">Lance Arm, <span style="font-size:.85em;">AB4309H</span> <br />Lewis Holme, <span style="font-size:.85em;">LG1291A</span><br />Harry Christmas, <span style="font-size:.85em;">MK8892P</span></td>
+      <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">A</td>
+        <td class="govuk-table__cell" data-sort-value="20230202">2 Mar 2023</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">English entry level 1<br />Maths level 2</td>
+      </tr>
+
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusLionelMesser =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
+
+      <tr class="govuk-table__row">
+        <td data-sort-value="Lionel" class="govuk-table__cell">
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="offenderAllocate4" name="offenderAllocate" type="radio" value="Lionel Messer">
+              <label class="govuk-label govuk-radios__label" for="offenderAllocate4">
+              <strong><a href="#">Lionel Messer</a></strong><br />
+              NH7239A<br />
+              1-1-021
+            </label>
           </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Alerts
-            </dt>
-            <dd class="govuk-summary-list__value">
-              Violent
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None set
-            </dd>
-            <dd class="govuk-summary-list__value">
-              <strong class="govuk-tag govuk-tag--orange">M<span style="text-transform:lowercase;">ismatch</span> </strong>
-            </dd>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="2">Armit Singh, <span style="font-size:.85em;">FG9121R</span><br />Lewis Holme, <span style="font-size:.85em;">LG1291A</span></td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">Unsentenced</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">16 Feb 2025</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
+      </tr>
+
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusNoffRens =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
+
+      <tr class="govuk-table__row">
+        <td data-sort-value="Lionel" class="govuk-table__cell">
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Noff Rens">
+              <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
+              <strong><a href="#">Noff Rens</a></strong><br />
+              BN7622L<br />
+              2-1-021
+            </label>
           </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Learning difficulties, <br />disabilities and health
-            </dt>
-            <dd class="govuk-summary-list__value">
-            Breathing difficulties
-            </dd>
-            <dd class="govuk-summary-list__value">
-              None set
-            </dd>
-          </div>
-        </dl>
-      </div>
-    </details>
-    </td>
-    <td class="" data-sort-value="A88992PP"></td>
-    <td class="" data-sort-value="12021"></td>
-    <td class="" data-sort-value="Brekafast P"></td>
-    <td class="" data-sort-value="20230703"></td>
-    </tr>
-    </<tbody>
-    </table>
-  <button class="govuk-button" data-module="govuk-button">
+        </td>
+        <td class="govuk-table__cell" data-sort-value="2">More than 3<br /> <a href="#">See full list</a></td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">Unsentenced</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
+      </tr>{% endif %}
+    </tbody>
+  </table>
+
+<!--  <button class="govuk-button" data-module="govuk-button">
   Remove from this activity
   </button>
-  <input type="hidden" name="activityAllocateName" value="Wing cleaning 1" />
+  <input type="hidden" name="activityAllocateName" value="Wing cleaning 1" />-->
 </form>
 </div>
 
