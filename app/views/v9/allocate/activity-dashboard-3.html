@@ -9,14 +9,22 @@ Activities Management prototype
 {% block content %}
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-thirds">
+  <div class="govuk-grid-column-two-thirds">
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      Allocation dashboard: series view
+      Find schedules with vacancies
     </h1>
-  </div><br />
+  </div>
+  <div class="govuk-grid-column-one-third" style="border:2px solid black; padding:10px; margin:20px 0 0 0;">
+      <p class="govuk-body"><strong>Related tasks</strong><br />
+      <a href="activity-type-select-with-category">Create an activity</a><br />
+      <a href="../create/activity-dashboard?dashboardCategory=All&dashboardView=live">Change activities and schedules</a></p>
+  </div>
+  </div>
+  <br />
+  <div class="govuk-grid-row">
 <div class="moj-primary-navigation">
   <div class="moj-primary-navigation__container">
     <div class="moj-primary-navigation__nav">
@@ -24,10 +32,10 @@ Activities Management prototype
         <ul class="moj-primary-navigation__list">
           <ul class="moj-sub-navigation__list" >
             <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" aria-current="page" href="#">All activities (8)</a>
+              <a class="moj-sub-navigation__link" aria-current="page" href="#">Show all schedules (8)</a>
             </li>
             <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" href="activity-dashboard-3-filtered">Activities with space (2)</a>
+              <a class="moj-sub-navigation__link" href="activity-dashboard-3-filtered">Show schedules with vacancies (2)</a>
             </li>
           <li class="moj-primary-navigation__item">
           </li>
@@ -36,6 +44,7 @@ Activities Management prototype
     </div>
   </div>
 </div>
+
 
 <br /><br />
 <table class="govuk-table" data-module="moj-sortable-table">
