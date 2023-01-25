@@ -216,170 +216,132 @@ Appointments prototype
 	   {% from "govuk/components/table/macro.njk" import govukTable %}
 	   {% set individualHtml %}
 	   <h2 class="govuk-heading-l">Individual appointments</h2>
-	   {{ govukTable({
-		 head: [
-		 {
-			text: "Date"
-		  },
-		  {
-			text: "Time"
-		  }, 
-		  {
-			text: "Type"
-		  }, 
-		  
-		 {
-			 text: "Prison name and number"
-		   },
-		   {
-			text: "People in group"
-		  },
-		  {
-			text: "Occurences left"
-		  },
-		  
-		   {
-			 text: ""
-		   }
-		 ],
-		 rows: [
-		   [
-		   {
-			text: "18 Jan 2023"
-		  },
-		  {
-			text: "13:00"
-		  },
-		  {
-			text: "Medical"
-		  },
+
+
+
+	   <table class="govuk-table" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+		<thead class="govuk-table__head">
+		  <tr class="govuk-table__row">
+			<th class="govuk-table__header" scope="col" id="select-all"></th>
+			<th class="govuk-table__header" scope="col">Date</th>
+			<th class="govuk-table__header" scope="col">Time</th>
+			<th class="govuk-table__header" scope="col">Type</th>
+			<th class="govuk-table__header" scope="col">Prison name and number</th>
+			<th class="govuk-table__header govuk-table__header--numeric" scope="col">People in group</th>
+			<th class="govuk-table__header govuk-table__header--numeric" scope="col">Occurences left</th>
+			<th class="govuk-table__header govuk-table__header--numeric" scope="col"></th>
+		  </tr>
+		</thead>
+		<tbody class="govuk-table__body">
+		  <tr class="govuk-table__row govuk-table__row--selected">
+			<td class="govuk-table__cell">
+			  <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+				<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-david_francis-1">
+				<label class="govuk-label govuk-checkboxes__label" for="prisoner-david_francis-1">
+				  <span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+				</label>
+			  </div>
+			</td>
+				<td class="govuk-table__cell">18 Jan 2023</td>
+				<td class="govuk-table__cell">13:00</td>
+				<td class="govuk-table__cell">Medical</td>
+				<td class="govuk-table__cell">David Francis, A3123DF</td>
+				<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+				<td class="govuk-table__cell govuk-table__cell--numeric">7</td>
+				<td class="govuk-table__cell">
+					<a href="#" class="govuk-link">View and edit</a>
+				</td>
+		  </tr>
+		  <tr class="govuk-table__row govuk-table__row--selected">
+			<td class="govuk-table__cell">
+			  <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+				<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-david_francis-2">
+				<label class="govuk-label govuk-checkboxes__label" for="prisoner-david_francis-2">
+				  <span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+				</label>
+			  </div>
+			</td>
+				<td class="govuk-table__cell">18 Jan 2023</td>
+				<td class="govuk-table__cell">15:00</td>
+				<td class="govuk-table__cell">Medical</td>
+				<td class="govuk-table__cell">David Francis, A3123DF</td>
+				<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+				<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+				<td class="govuk-table__cell">
+					<a href="#" class="govuk-link">View and edit</a>
+				</td>
+		  </tr>
+		  <tr class="govuk-table__row govuk-table__row--selected">
+			<td class="govuk-table__cell">
+			  <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+				<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-david_francis-3">
+				<label class="govuk-label govuk-checkboxes__label" for="prisoner-david_francis-3">
+				  <span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+				</label>
+			  </div>
+			</td>
+				<td class="govuk-table__cell">18 Jan 2023</td>
+				<td class="govuk-table__cell">17:00</td>
+				<td class="govuk-table__cell">Programmes and interventions</td>
+				<td class="govuk-table__cell">David Francis, A3123DF</td>
+				<td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+				<td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+				<td class="govuk-table__cell">
+					<a href="#" class="govuk-link">View and edit</a>
+				</td>
+		  </tr>
 		 
-			{
-			   text: "David Francis, A3123DF"
-			},
-			{
-				text: "1"
-			  },
-			  {
-				text: "7"
-			  },
-			 {
-			   html: 
-			   "
-				<a href='#' class='govuk-link'>View</a>
-			   "
-			 }
-		   ],
-		   [
-		   {
-			text: "18 Jan 2023"
-		  },
-		  {
-			text: "15:00"
-		  },
-		  {
-			text: "Medical"
-		  },
-		 
-			{
-			   text: "David Francis, A3123DF"
-			},
-			{
-				text: "1"
-			  },
-			  {
-				text: "1"
-			  },
-			 {
-			   html: 
-			   "
-				<a href='#' class='govuk-link'>View</a>
-			   "
-			 }
-		   ],
-		   [
-		   {
-			text: "18 Jan 2023"
-		  },
-		  {
-			text: "13:00"
-		  },
-		  {
-			text: "Programmes and interventions"
-		  },
-		 
-			{
-			   text: "David Francis, A3123DF"
-			},
-			{
-				text: "20"
-			  },
-			  {
-				text: "7"
-			  },
-			 {
-			   html: 
-			   "
-				<a href='#' class='govuk-link'>View</a>
-			   "
-			 }
-		   ]
-		 ]
-	   }) }}
+		</tbody>
+	  </table>
+	  
+	  {{ govukButton({
+		text: "Delete selected appointments",
+		classes: "govuk-button--warning"
+	  }) }}
+
 	   {% endset -%}
 	   {% set bulkHtml %}
 	   <h2 class="govuk-heading-l">Group appointments</h2>
-	   {{ govukTable({
-		head: [
-		{
-		   text: "Date"
-		 },
-		 {
-		   text: "Time"
-		 }, 
-		 {
-		   text: "Type"
-		 }, 
-		 {
-			text: "People in group"
-		  },
-		
-		  {
-		   text: "Occurences left"
-		 },
+	   <table class="govuk-table" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+		<thead class="govuk-table__head">
+		  <tr class="govuk-table__row">
+			<th class="govuk-table__header" scope="col" id="select-all"></th>
+			<th class="govuk-table__header" scope="col">Date</th>
+			<th class="govuk-table__header" scope="col">Time</th>
+			<th class="govuk-table__header" scope="col">Type</th>
+			<th class="govuk-table__header" scope="col">Prison name and number</th>
+			<th class="govuk-table__header govuk-table__header--numeric" scope="col">People in group</th>
+			<th class="govuk-table__header govuk-table__header--numeric" scope="col">Occurences left</th>
+			<th class="govuk-table__header govuk-table__header--numeric" scope="col"></th>
+		  </tr>
+		</thead>
+		<tbody class="govuk-table__body">
 		 
-		  {
-			text: ""
-		  }
-		],
-		rows: [
+		  <tr class="govuk-table__row govuk-table__row--selected">
+			<td class="govuk-table__cell">
+			  <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+				<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-david_francis-3">
+				<label class="govuk-label govuk-checkboxes__label" for="prisoner-david_francis-3">
+				  <span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+				</label>
+			  </div>
+			</td>
+				<td class="govuk-table__cell">18 Jan 2023</td>
+				<td class="govuk-table__cell">17:00</td>
+				<td class="govuk-table__cell">Programmes and interventions</td>
+				<td class="govuk-table__cell">David Francis, A3123DF</td>
+				<td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+				<td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+				<td class="govuk-table__cell">
+					<a href="#" class="govuk-link">View and edit</a>
+				</td>
+		  </tr>
 		 
-		  [
-		  {
-		   text: "18 Jan 2023"
-		 },
-		 {
-		   text: "13:00"
-		 },
-		 {
-		   text: "Programmes and interventions"
-		 },
-		 {
-			text: "20"
-		 },
-		   
-		   {
-			   text: "7"
-			 },
-			
-			{
-			  html: 
-			  "
-			   <a href='#' class='govuk-link'>View</a>
-			  "
-			}
-		  ]
-		]
+		</tbody>
+	  </table>
+	  {{ govukButton({
+		text: "Delete selected appointments",
+		classes: "govuk-button--warning"
 	  }) }}
 	   {% endset -%}
 	   
