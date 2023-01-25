@@ -64,8 +64,8 @@ Activities Management prototype
 <p>Select the correct pay rate. There may only be one available.
   {% for level, details in data.payrates %}
     {% if details|length > 0 %}
-          {% if (level=='Basic') %}
-           <h2 class="govuk-heading-m">Basic incentive level</h2>
+          {% if (level=='Standard') %}
+           <h2 class="govuk-heading-m">Standard incentive level</h2>
 
             {% for rate in details %}
 
@@ -74,7 +74,7 @@ Activities Management prototype
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="AllocatePaymentCurrent" name="AllocatePayment" value="{{rate.amount}}" type="radio" >
                   <label class="govuk-label govuk-radios__label" for="AllocatePaymentCurrent">
-                <span style="margin-right:50px">&pound;{{rate.amount or '1.10'}}</span> {{ data.offenderAllocateIncentiveLevel or 'Basic' }} incentive level, {{rate.name or 'pay band 1'}}
+                <span style="margin-right:50px">&pound;{{rate.amount or '1.10'}}</span> {{ data.offenderAllocateIncentiveLevel or 'Standard' }} incentive level, {{rate.name or 'pay band 1'}}
                   </label>
               </div>
               {% endfor %}
@@ -88,7 +88,7 @@ Activities Management prototype
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="AllocatePaymentCurrent" name="AllocatePayment" type="radio" value="1.21">
           <label class="govuk-label govuk-radios__label" for="AllocatePaymentCurrent">
-         <span style="margin-right:50px">&pound;{{rate.amount or '1.10'}}</span> {{ data.offenderAllocateIncentiveLevel or 'Basic' }} incentive level,  {{rate.name or 'pay band 1'}}
+         <span style="margin-right:50px">&pound;{{rate.amount or '1.10'}}</span> {{ data.offenderAllocateIncentiveLevel or 'Standard' }} incentive level,  {{rate.name or 'pay band 1'}}
           </label>
       </div>
         {% endfor %}
