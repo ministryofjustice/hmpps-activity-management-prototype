@@ -17,11 +17,11 @@ Activities Management prototype
       Find schedules with vacancies
     </h1>
   </div>
-  <div class="govuk-grid-column-one-third" style="border:2px solid black; padding:10px; margin:20px 0 0 0;">
+    <div class="govuk-grid-column-one-third" style="border:2px solid black; padding:10px; margin:20px 0 0 0;">
       <p class="govuk-body"><strong>Related tasks</strong><br />
       <a href="activity-type-select-with-category">Create an activity</a><br />
       <a href="../create/activity-dashboard?dashboardCategory=All&dashboardView=live">Change activities and schedules</a></p>
-  </div>
+    </div>
   </div>
   <br />
   <div class="govuk-grid-row">
@@ -32,10 +32,19 @@ Activities Management prototype
         <ul class="moj-primary-navigation__list">
           <ul class="moj-sub-navigation__list" >
             <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" aria-current="page" href="#">Show all schedules (8)</a>
-            </li>
-            <li class="moj-sub-navigation__item">
-              <a class="moj-sub-navigation__link" href="activity-dashboard-3-filtered">Show schedules with vacancies (2)</a>
+
+            {% if (data.activityAllocateName=='Textiles' or data.activityAllocateName=='Kitchens') %}
+              <a class="moj-sub-navigation__link" aria-current="page" href="#">Show all schedules (1)</a>
+              </li>
+              <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link" href="activity-dashboard-3-filtered">Show schedules with vacancies (1)</a>
+            {% else %}
+                <a class="moj-sub-navigation__link" aria-current="page" href="#">Show all schedules (8)</a>
+              </li>
+              <li class="moj-sub-navigation__item">
+                <a class="moj-sub-navigation__link" href="activity-dashboard-3-filtered">Show schedules with vacancies (2)</a>
+            {% endif%}
+
             </li>
           <li class="moj-primary-navigation__item">
           </li>
@@ -44,8 +53,8 @@ Activities Management prototype
     </div>
   </div>
 </div>
-
-
+</div>
+<div class="govuk-grid-row">
 <br /><br />
 <table class="govuk-table" data-module="moj-sortable-table">
   <thead class="govuk-table__head">
@@ -59,7 +68,27 @@ Activities Management prototype
     </tr>
   </thead>
   <tbody class="govuk-table__body">
+{% if (data.activityAllocateName=='Textiles' or data.activityAllocateName=='Kitchens') %}
 
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell" data-sort-value="1">
+    <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+    <a href="activity-dashboard-4-1?activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+    {{data.activityAllocateName or 'Wing cleaning'}} 1
+    </a></h3>
+  </td>
+  <td class="govuk-table__cell" data-sort-value="1">House block 1</td>
+  <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="8">8</td>
+  <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="7">3</td>
+    <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="39">39%</td>
+    <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="1">
+      <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+        <span>5</span>
+      </strong>
+    </td>
+</tr>
+
+{% else %}
 
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="1">
@@ -227,6 +256,8 @@ Activities Management prototype
       <td class="govuk-table__cell" style="width:14%; font-weight:bold;">90%</td>
       <td class="govuk-table__cell" style="width:2%; font-weight:bold;">3</td>
     </tr>
+
+  {% endif %}
   </tbody>
 </table>
 </div>
