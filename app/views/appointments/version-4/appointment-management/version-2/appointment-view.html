@@ -204,10 +204,13 @@ Appointments prototype
 							}) }} -->
 						</div>
 					</div>
+
+					
 					{{govukButton({
 						text: "Apply filters",
 						classes: "govuk-!-margin-bottom-2"
 					})}}
+
 				</div>
 			</div>
 		</form>
@@ -293,11 +296,19 @@ Appointments prototype
 		 
 		</tbody>
 	  </table>
-	  
+	  <div class="govuk-button-group">
+
+		{{ govukButton({
+		text: "Cancel selected appointments",
+		classes: "govuk-button--secondary"
+	  }) }}
+
 	  {{ govukButton({
 		text: "Delete selected appointments",
 		classes: "govuk-button--warning"
 	  }) }}
+	   
+	  </div>
 
 	   {% endset -%}
 	   {% set bulkHtml %}
@@ -339,10 +350,19 @@ Appointments prototype
 		 
 		</tbody>
 	  </table>
+	 <div class="govuk-button-group">
+		
+		{{ govukButton({
+		text: "Cancel selected appointments",
+		classes: "govuk-button--secondary"
+	  }) }}
+
 	  {{ govukButton({
 		text: "Delete selected appointments",
 		classes: "govuk-button--warning"
 	  }) }}
+	   
+	  </div>
 	   {% endset -%}
 	   
 	   {{ govukTabs({
