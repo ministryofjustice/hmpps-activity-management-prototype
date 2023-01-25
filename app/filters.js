@@ -79,6 +79,10 @@ module.exports = function(env) {
         return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("yyyy-MM-dd")
     }
 
+    filters.convertShortDateToMediumDate = function(inputDate) {
+        return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("d MMM yyyy")
+    }
+
     filters.convertShortDateToLongDate = function(inputDate) {
         return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("d MMMM yyyy")
     }
