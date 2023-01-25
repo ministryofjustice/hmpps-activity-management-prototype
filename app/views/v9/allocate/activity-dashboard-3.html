@@ -77,7 +77,12 @@ Activities Management prototype
     {{data.activityAllocateName or 'Wing cleaning'}} 1
     </a></h3>
   </td>
-  <td class="govuk-table__cell" data-sort-value="1">House block 1</td>
+  {% if (data.activityAllocateName=='Textiles') %}
+    <td class="govuk-table__cell" data-sort-value="1">Workshop 1</td>
+  {% else %}
+    <td class="govuk-table__cell" data-sort-value="1">Kitchen</td>
+  {% endif %}
+
   <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="8">8</td>
   <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="7">3</td>
     <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="39">39%</td>
