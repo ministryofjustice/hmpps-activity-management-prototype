@@ -59,7 +59,7 @@ Activities Management prototype
 <table class="govuk-table" data-module="moj-sortable-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity series</th>
+      <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:30%;">Activity series</th>
       <th scope="col" class="govuk-table__header" aria-sort="none">Location</th>
       <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="ascending">Capacity</th>
       <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Allocated</th>
@@ -104,13 +104,17 @@ Activities Management prototype
       </td>
       {% if (data.activityAllocateName=='Wing cleaning') %}
         <td class="govuk-table__cell" data-sort-value="1">Wing A</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="2">2</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="1">1</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="50">50%</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="2">
       {% else %}
         <td class="govuk-table__cell" data-sort-value="1">House block 1</td>
-      {% endif %}
-      <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="5">5</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="4">4</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="5">5</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="4">4</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="80">80%</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="1">
+      {% endif %}
           <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
             <span>1</span>
           </strong>
@@ -287,11 +291,19 @@ Activities Management prototype
         Total
       </h3>
       </td>
-      <td class="govuk-table__cell" style="width:7%;"></td>
-      <td class="govuk-table__cell" style="width:14%; font-weight:bold;">30</td>
-      <td class="govuk-table__cell" style="width:25%; font-weight:bold;">27</td>
-      <td class="govuk-table__cell" style="width:14%; font-weight:bold;">90%</td>
-      <td class="govuk-table__cell" style="width:2%; font-weight:bold;">3</td>
+      {% if (data.activityAllocateName=='Wing cleaning') %}
+        <td class="govuk-table__cell" style="width:0%;"></td>
+        <td class="govuk-table__cell" style="width:12%; font-weight:bold;">27</td>
+        <td class="govuk-table__cell" style="width:22%; font-weight:bold;">24</td>
+        <td class="govuk-table__cell" style="width:14%; font-weight:bold;">90%</td>
+        <td class="govuk-table__cell" style="width:2%; font-weight:bold;">3</td>
+      {% else %}
+        <td class="govuk-table__cell" style="width:0%;"></td>
+        <td class="govuk-table__cell" style="width:12%; font-weight:bold;">30</td>
+        <td class="govuk-table__cell" style="width:20%; font-weight:bold;">27</td>
+        <td class="govuk-table__cell" style="width:14%; font-weight:bold;">90%</td>
+        <td class="govuk-table__cell" style="width:2%; font-weight:bold;">3</td>
+      {% endif %}
     </tr>
 
   {% endif %}
