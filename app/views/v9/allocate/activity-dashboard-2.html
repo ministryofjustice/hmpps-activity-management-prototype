@@ -26,14 +26,14 @@ Activities Management prototype
           <label class="govuk-label" for="sort">
             Filter by category:
           </label>
-          <select class="govuk-select" id="show2" name="show-grouping"">
+          <select class="govuk-select" id="show" name="show-grouping"">
             <option value="All" {% if data.dashboardCategory=="All" %}selected{% endif %}>All</option>
             <option value="Education"  {% if data.dashboardCategory=="Education" %}selected{% endif %}>Education </option>
             <option value="Industries" {% if data.dashboardCategory=="Industries" %}selected{% endif %}>Industries</option>
-            <option value="Prison" {% if data.dashboardCategory=="Prison" %}selected{% endif %}>Prison jobs</option>
+            <option value="Prison jobs" {% if data.dashboardCategory=="Prison jobs" %}selected{% endif %}>Prison jobs</option>
             <option value="Gym" {% if data.dashboardCategory=="Gym" %}selected{% endif %}>Gym, sports and fitness</option>
             <option value="Induction" {% if data.dashboardCategory=="Induction" %}selected{% endif %}>Induction</option>
-            <option value="Faith" {% if data.dashboardCategory=="Faith and spirituality'" %}selected{% endif %}>Faith and spirituality'</option>
+            <option value="Faith and spirituality" {% if data.dashboardCategory=="Faith and spirituality'" %}selected{% endif %}>Faith and spirituality</option>
             <option value="Other" {% if data.dashboardCategory=="Other" %}selected{% endif %}>Other</option>
           </select><br /><br />
           <button class="govuk-button" data-module="govuk-button">
@@ -83,6 +83,8 @@ Activities Management prototype
     </tr>
   </thead>
   <tbody class="govuk-table__body">
+
+    {% if data.dashboardCategory == "All" or data.dashboardCategory == "Education" %}
     <tr class="govuk-table__row">
       <td class="govuk-table__header" data-sort-value="English">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
@@ -101,6 +103,10 @@ Activities Management prototype
           </strong>
         </div></td>
     </tr>
+    {% endif %}
+
+
+    {% if data.dashboardCategory == "All" or data.dashboardCategory == "Prison jobs" %}
     <tr class="govuk-table__row">
       <td class="govuk-table__header" data-sort-value="Farms">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
@@ -120,6 +126,10 @@ Activities Management prototype
       </div>
       </td>
     </tr>
+    {% endif %}
+
+
+    {% if data.dashboardCategory == "All" or data.dashboardCategory == "Prison jobs" %}
     <tr class="govuk-table__row">
       <td class="govuk-table__header" data-sort-value="Kitchens">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
@@ -139,6 +149,9 @@ Activities Management prototype
       </div>
       </td>
     </tr>
+    {% endif %}
+
+    {% if data.dashboardCategory == "All" or data.dashboardCategory == "Education" %}
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Maths">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
@@ -158,6 +171,10 @@ Activities Management prototype
       </div>
       </td>
     </tr>
+    {% endif %}
+
+
+    {% if data.dashboardCategory == "All" or data.dashboardCategory == "Prison jobs" %}
     <tr class="govuk-table__row">
       <td class="govuk-table__cell"data-sort-value="Painting">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3" >
@@ -177,9 +194,10 @@ Activities Management prototype
     </div>
     </td>
     </tr>
+    {% endif %}
 
 
-
+    {% if data.dashboardCategory == "All" or data.dashboardCategory == "Faith and spirituality" %}
     <tr class="govuk-table__row">
       <td class="govuk-table__cell"data-sort-value="Prayer">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3" >
@@ -199,6 +217,10 @@ Activities Management prototype
     </div>
     </td>
     </tr>
+    {% endif %}
+
+
+    {% if data.dashboardCategory == "All" or data.dashboardCategory == "Prison jobs" %}
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Servery">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
@@ -216,7 +238,10 @@ Activities Management prototype
           </strong>
         </div></td>
     </tr>
+    {% endif %}
 
+
+    {% if data.dashboardCategory == "All" or data.dashboardCategory == "Industries" %}
     <tr class="govuk-table__row" >
       <td class="govuk-table__cell" data-sort-value="Textiles">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
@@ -234,7 +259,10 @@ Activities Management prototype
           </strong>
         </div></td>
     </tr>
+    {% endif %}
 
+
+    {% if data.dashboardCategory == "All" or data.dashboardCategory == "Prison jobs" %}
     <tr class="govuk-table__row">
       <td class="govuk-table__header" data-sort-value="Store">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3" >
@@ -252,7 +280,10 @@ Activities Management prototype
           </strong>
         </div></td>
     </tr>
+    {% endif %}
 
+
+    {% if data.dashboardCategory == "All" or data.dashboardCategory == "Prison jobs" %}
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="Wing">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
@@ -273,6 +304,8 @@ Activities Management prototype
       </div>
       </td>
       </tr>
+      {% endif %}
+
   </tbody>
 </table>
 
@@ -303,4 +336,26 @@ Activities Management prototype
   </tbody>
 </table>
 </div>
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
+<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a[data-modal]').on('click', function(event) {
+			event.preventDefault();
+			this.blur();
+			$.get(this.href, function(html) {
+				$(html).appendTo('body').modal({
+					showClose: false,
+					clickClose: false
+				});
+			});
+		});
+
+		$('#show').on('change', function() {
+			window.location = 'activity-dashboard-2?dashboardCategory=' + $(this).val()
+		})
+	})
+</script>
+{% endblock %}
 {% endblock %}
