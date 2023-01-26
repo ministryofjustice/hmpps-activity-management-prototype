@@ -94,12 +94,13 @@ function createAttendanceDetailsForMultiplePrisoners(prisoners, attendance, pay,
         attendanceDetails[prisonerId] = {
             attendance: attendance,
             pay: pay,
+            payReason: reason,
             'pay-detail': reason,
+            attendanceDetail: "Session cancelled",
             unacceptableAbsence: unacceptableAbsence,
             incentiveLevelWarning: ''
         };
     });
-    console.log(reason)
     return attendanceDetails;
 }
 
@@ -131,14 +132,14 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
         let attendanceDetail;
         if(details['absence-reason'] == 'sick'){
             attendanceDetail = 'Sick'
+            details.pay = 'standard'
         } else if(details['absence-reason'] == 'refused'){
             attendanceDetail = 'Refused to attend'
         } else if(details['absence-reason'] == 'not-required'){
             attendanceDetail = 'Not required, excused or rest day'
+            details.pay = 'standard'
         } else if(details['absence-reason'] == 'other'){
             attendanceDetail = 'Other'
-        } else {
-            attendanceDetail = null
         }
 
         if (!req.session.data.attendance[activityId][date][period][prisonerId]) {

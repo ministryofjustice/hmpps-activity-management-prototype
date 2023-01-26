@@ -201,7 +201,7 @@
 							</div>
 							{% endfor %}
 						</td>
-						<td class="govuk-table__cell">
+						<td class="govuk-table__cell" {%- if not prisoner.attendance.attendance %}colspan="2"{% endif -%}>
 							{%- if prisoner.attendance.attendance == "attended" %}
 							<span class="moj-badge moj-badge--large moj-tag--green">Attended</span>
 							
@@ -216,12 +216,18 @@
 							{%- else %}
 							<span class="govuk-hint">Not recorded yet</span>
 							{% endif -%}							
+							
+							{% if prisoner.attendance.pay == 'standard' %}
+							<span class="moj-badge moj-badge-- moj-badge--blue">Standard pay</span>
+							{%- elif prisoner.attendance.attendance == "not-attended" and prisoner.attendance.pay == null %}
+							<span class="moj-badge moj-badge-- moj-badge--black">No pay</span>
+							{% endif %}
 						</td>
+						{%- if prisoner.attendance.attendance %}
 						<td class="govuk-table__cell">
-							{%- if prisoner.attendance.attendance %}
 							<a href="{{activity.id}}/{{prisoner.id}}" class="govuk-link--no-visited-state">View or edit</a>
-							{% endif -%}
 						</td>
+						{% endif -%}
 					</tr>
 					{% endfor %}
 				</tbody>

@@ -63,22 +63,31 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 					Pay
 				</dt>
 				<dd class="govuk-summary-list__value">
-					{% if attendanceData.payReason != null %}
+					{% if attendanceData.pay != null %}
+
 					<p>
 						{{attendanceData.pay|capitalize}}
 					</p>
+
+					{% if attendanceData.payReason != null %}
 					<p>
 						&ldquo;{{attendanceData.payReason}}&rdquo;
 					</p>
+					{% endif %}
+
 					{% else %}
+
 					{% if attendanceData.attendanceDetail == 'Sick' %}
 					<p>
 						Standard
 					</p>
+
 					{% else %}
+
 					<p>
 						None
 					</p>
+
 					{% endif %}
 					{% endif %}
 				</dd>
