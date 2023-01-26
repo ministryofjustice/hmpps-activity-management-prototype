@@ -1,0 +1,60 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Why are you cancelling the session?
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			{{ govukRadios({
+				name: "cancellation-reason",
+				fieldset: {
+					legend: {
+						text: "Why are you cancelling the session?",
+						isPageHeading: true,
+						classes: "govuk-fieldset__legend--l"
+					}
+				},
+				items: [
+				{
+					value: "Staff unavailable",
+					html: 'Staff unavailable'
+				},
+				{
+					value: "Staff training",
+					html: 'Staff training'
+				},
+				{
+					value: "Session not required",
+					html: 'Session not required'
+				},
+				{
+					value: "Location unavailable",
+					html: 'Location unavailable'
+				},
+				{
+					value: "Prison operational issue",
+					html: 'Prison operational issue'
+				}
+				]
+			}) }}
+
+			{{govukButton({
+				text: "Continue"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}

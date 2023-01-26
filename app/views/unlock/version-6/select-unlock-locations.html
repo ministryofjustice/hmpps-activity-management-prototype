@@ -1,0 +1,175 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "dps-home"
+	},
+	{
+		text: "Manage prisoner unlock and attendance",
+		href: "whereabouts"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-l">
+			Choose unlock list details
+		</h1>
+		<form method="post">
+			{% set dateHtml %}
+			{{ govukDateInput({
+				id: "other-date",
+				namePrefix: "other-date",
+				fieldset: {
+					legend: {
+						text: "Date"
+					}
+				},
+				hint: {
+					html: "You can get unlock lists for dates up to 2 weeks from today.<br>
+					For example, 27 3 2022"
+				}
+			}) }}
+			{% endset %}
+
+			{% set today = '_'|today() %}
+			{{ govukRadios({
+				name: "date",
+				fieldset: {
+					legend: {
+						text: "Select unlock date",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: today,
+					text: "Today"
+				},
+				{
+					value: today|dayAfter,
+					text: "Tomorrow"
+				},
+				{
+					value: "other-date",
+					text: "A different date",
+					conditional: {
+						html: dateHtml
+					}
+				}
+				]
+			}) }}
+
+			{{ govukRadios({
+				name: "period",
+				fieldset: {
+					legend: {
+						text: "Time period",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "am",
+					text: "Morning (AM)"
+				},
+				{
+					value: "pm",
+					text: "Afternoon (PM)"
+				},
+				{
+					value: "ed",
+					text: "Evening (ED)"
+				}
+				]
+			}) }}
+
+			<div class="govuk-form-group govuk-!-margin-bottom-6">
+				<fieldset class="govuk-fieldset" aria-describedby="locations-hint">
+					<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+						Locations
+					</legend>
+					<div class="govuk-radios" id="locations-radios" data-module="govuk-radios">
+						{% for houseblock in data['residential-locations-2'] %}
+						<div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="locations-{{houseblock.id}}" name="selected-locations[houseblocks]" type="radio" value="{{houseblock.id}}" aria-controls="conditional-locations-{{houseblock.id}}" aria-expanded="false">
+							<label class="govuk-label govuk-radios__label" for="locations-{{houseblock.id}}">
+								{{houseblock.name}}
+							</label>
+						</div>
+						<!-- <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-locations-{{houseblock.id}}">
+							<div class="govuk-form-group">
+								<fieldset class="govuk-fieldset">
+									<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+										Sub-locations
+									</legend>
+									<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+										{% for spur in houseblock.spurs %}
+										<div class="govuk-checkboxes__item">
+											<input class="govuk-checkboxes__input" id="houseblock-{{houseblock.id}}-sublocations-{{spur.id}}" name="selected-locations[wings]" type="checkbox" value="{{houseblock.id}}-{{spur.id}}" checked>
+											<label class="govuk-label govuk-checkboxes__label" for="houseblock-{{houseblock.id}}-sublocations-{{spur.id}}">
+												{{spur.name}}
+											</label>
+										</div>
+										{% endfor %}
+									</div>
+								</fieldset>
+							</div>
+						</div> -->
+						{% endfor %}
+					</div>
+				</fieldset>
+			</div>
+		
+			<!-- {{ govukCheckboxes({
+				name: "staying-or-leaving",
+				fieldset: {
+					legend: {
+						text: "Staying or leaving wing",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "staying",
+					text: "Staying"
+				},
+				{
+					value: "leaving",
+					text: "Leaving"
+				}
+				]
+			}) }} -->
+
+			<div class="govuk-button-group">
+				{{govukButton({
+					text: "View selection"
+				})}}
+				{{govukButton({
+					text: "Print selection",
+					href: "example-print-dialog",
+					classes: "govuk-button--secondary",
+					attributes: {
+						target: "_blank"
+					}
+				})}}
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

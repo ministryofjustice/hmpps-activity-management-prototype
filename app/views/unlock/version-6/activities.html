@@ -1,0 +1,124 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount =  activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+{{activitiesCount}} activities scheduled for {{relativeDate or selectedDate|longDateFormat(selectedDate)}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+			classes: "govuk-!-display-none-print",
+			items: [
+			{
+				text: "Digital Prison Services",
+				href: "../dps-home"
+			},
+			{
+				text: "Manage prisoner unlock and attendance",
+				href: "../whereabouts"
+			}
+			]
+		}) }}
+{% endblock %}
+{% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+			{{activitiesCount}} activities scheduled for {{relativeDate or selectedDate|longDateFormat(selectedDate)}}
+		</h1>
+
+		<ul class="govuk-list govuk-!-margin-bottom-6">
+			<li><a href="../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a></li>
+			{% if selectedDate != '_'|today %}
+			<li><a href="{{'_'|today}}" class="govuk-link--no-visited-state">View today's schedule</a></li>
+			{% endif %}
+		</ul>
+
+		<div class="app-search govuk-!-margin-bottom-6">
+			<form action="{{date}}" method="get" novalidate="">
+				<div class="govuk-form-group">
+					<label class="govuk-label app-search__label govuk-label--m" for="keywords">
+						Search by activity name
+					</label>
+					<input class="govuk-input app-search__input " id="keywords" name="search" type="search" value="{{data['search']}}">
+				</div>
+				<button class="govuk-button app-search__button" data-module="govuk-button">
+					Search
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% for period, activities in activitiesForDate %}
+<h2 class="govuk-heading-m">
+	{{period|capitalize}} sessions ({{activities|length}})
+</h2>
+<table class="govuk-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+	<thead class="govuk-table__head">
+		<tr class="govuk-table__row">
+			<th scope="col" class="govuk-table__header" aria-sort="ascending" width="250">Activity</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none" width="150">Location</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none" width="150">Time</th>
+			<th scope="col" class="govuk-table__header">Scheduled</th>
+			<th scope="col" class="govuk-table__header govuk-hint">Attended</th>
+			<th scope="col" class="govuk-table__header govuk-hint">Not recorded</th>
+			<th scope="col" class="govuk-table__header govuk-hint">Absent</th>
+		</tr>
+	</thead>
+	<tbody class="govuk-table__body">
+		{% for activity in activities | sort(false, true, 'name') %}
+		<tr class="govuk-table__row">
+			<td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
+				<a href="{{selectedDate}}/{{'AM' if period == 'morning' else 'PM'}}/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+				{% for cancellation in activity.cancelledSessions %}
+				<br><span class="govuk-tag govuk-tag--red govuk-!-margin-top-1">Cancelled</span>
+				{% endfor %}
+			</td>
+			<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
+			<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
+				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
+			</td>
+			<td class="govuk-table__cell">{{activity.attendanceCount[period]['scheduled']}}</td>
+			<td class="govuk-table__cell govuk-hint">
+				{% if activity.attendanceCount[period]['attended'] > 0 %}
+				<span class="govuk-tag govuk-tag--green">{{activity.attendanceCount[period]['attended']}}</span>
+				{% else %}
+				{{activity.attendanceCount[period]['attended']}}
+				{% endif %}
+			</td>
+			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount[period]['not-recorded']}}</td>
+			<td class="govuk-table__cell govuk-hint">
+					{% if activity.attendanceCount[period]['not-attended'] > 0 %}
+					<span class="govuk-tag govuk-tag--red">{{activity.attendanceCount[period]['not-attended']}}</span>
+					{% else %}
+					{{activity.attendanceCount[period]['not-attended']}}
+					{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endfor %}
+
+{% set dayBefore = selectedDate | dayBefore %}
+{% set dayAfter = selectedDate | dayAfter %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+{{ govukPagination({
+	previous: {
+		text: "Previous day",
+		labelText: dayBefore | convertShortDateToVeryLongDate,
+		href: dayBefore
+	},
+	next: {
+		text: "Next day",
+		labelText: dayAfter | convertShortDateToVeryLongDate,
+		href: dayAfter
+	}
+}) }}
+{% endblock %}
