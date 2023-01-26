@@ -34,14 +34,14 @@ Activities Management prototype
 
 	         {% if (data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName ) %}
             <p class="govuk-body card__description">
-              <span style="width:57%; float:left;"><strong>Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue">{{data.vacanciesCount or '1'}}</span> <br /><br />
+              <span style="width:57%; float:left;"><strong>Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue">{{data.vacanciesCount or '0'}}</span> <br /><br />
               <span style="width:59%; float:left;"><strong>Allocated:</strong></span>{{data.allocatedCount or '1'}} <br /><br />
               <span style="width:58%; float:left;"><strong>Capacity:</strong></span> {{data.capacityCount or '2'}}  <br />
             </p>
 
           {% else %}
             <p class="govuk-body card__description">
-              <span style="width:57%; float:left;"><strong>Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue"> {{data.vacanciesCount or '1'}}</span> <br /><br />
+              <span style="width:57%; float:left;"><strong>Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue"> {{data.vacanciesCount or '0'}}</span> <br /><br />
               <span style="width:59%; float:left;"><strong>Allocated:</strong></span>{{data.allocatedCount or '1'}}<br /><br />
               <span style="width:58%; float:left;"><strong>Capacity:</strong></span> {{data.capacityCount or '2'}} <br />
             </p>
@@ -121,7 +121,6 @@ Activities Management prototype
           <strong><a href="#">Neil Rudge</a></strong><br />
           AA4309K<br />
           1-3-003
-          </label>
       </td>
       <td class="govuk-table__cell" data-sort-value="0">None</td>
       <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
@@ -154,7 +153,7 @@ Activities Management prototype
           1-1-021
         </td>
         <td class="govuk-table__cell" data-sort-value="3">Lance Arm, <span style="font-size:.85em;">AB4309H</span> <br />Lewis Holme, <span style="font-size:.85em;">LG1291A</span><br />Harry Christmas, <span style="font-size:.85em;">MK8892P</span></td>
-        <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">31 Jan 2023 </td>
+        <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
         <td class="govuk-table__cell" data-sort-value="20230202">English 1</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">2 Mar 2023</td>
       </tr>
@@ -188,37 +187,27 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="2">More than 3<br /> <a href="#">See full list</a></td>
         <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }} </td>
         <td class="govuk-table__cell" data-sort-value="20250216">None</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">3 Jan 2023</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">3 Aug 2023</td>
       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusHenryTatton =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate6" name="offenderAllocate" type="radio" value="Henry Tatton">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate6">
               <strong><a href="#">Henry Tatton</a></strong><br />
               BN5297F<br />
               1-A-069
-            </label>
-          </div>
         </td>
         <td class="govuk-table__cell" data-sort-value="0">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
-        <td class="govuk-table__cell" data-sort-value="20290701">1 July 2029</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
+        <td class="govuk-table__cell" data-sort-value="20290701">Laundry</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">1 March 2024</td>
       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusAlaricMesser =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Alaric" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate7" name="offenderAllocate" type="radio" value="Alaric Messer">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate7">
               <strong><a href="#">Alaric Messer</a></strong><br />
                 DE6192M<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
@@ -226,48 +215,36 @@ Activities Management prototype
               {% else %}
                 1-B-170
               {% endif %}
-            </label>
-          </div>
         </td>
         <td class="govuk-table__cell" data-sort-value="0">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
-        <td class="govuk-table__cell" data-sort-value="20250216">2 June 2040</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">Lawn care</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">1 March 2024</td>
       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusEniolaAldebrandi =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate8" name="offenderAllocate" type="radio" value="Eniola Aldebrandi">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate8">
-              <strong><a href="#">Eniola Aldebrandi</a></strong><br />
+            <strong><a href="#">Eniola Aldebrandi</a></strong><br />
               GK9675V<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 3-A-045
               {% else %}
                 3-C-045
               {% endif %}
-
-            </label>
-          </div>
         </td>
         <td class="govuk-table__cell" data-sort-value="0">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
-        <td class="govuk-table__cell" data-sort-value="20250216">9 Nov 2024</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">English Level 1</td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">Prayer</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">18 April 2025</td>
       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusBurcoCharves =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate9" name="offenderAllocate" type="radio" value="Burco Charves">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate9">
+
               <strong><a href="#">Burco Charves</a></strong><br />
               AL7634M<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
@@ -275,44 +252,30 @@ Activities Management prototype
               {% else %}
                 1-H-111
               {% endif %}
-
-            </label>
-          </div>
         </td>
         <td class="govuk-table__cell" data-sort-value="2">None</td>
-        <td class="govuk-table__cell" data-sort-value="C" style="padding-left:20px;">C</td>
-        <td class="govuk-table__cell" data-sort-value="20250216">18 April 2025</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+        <td class="govuk-table__cell" data-sort-value="C" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">Food hygiene 1</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">18 April 2025</td>
       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusJairusCatalano =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
-
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate10" name="offenderAllocate" type="radio" value="Jairus Catalano">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate10">
               <strong><a href="#">Jairus Catalano</a></strong><br />
               DY8443K<br />
               1-A-055
-            </label>
-          </div>
         </td>
         <td class="govuk-table__cell" data-sort-value="2">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
-        <td class="govuk-table__cell" data-sort-value="20250216">2 Mar 2023</td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">2 Mar 2023</td>
       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusAbdelGarcon =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate11" name="offenderAllocate" type="radio" value="Abdel Garcon">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate11">
               <strong><a href="#">Abdel Garcon</a></strong><br />
               ST9127U<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
@@ -320,24 +283,17 @@ Activities Management prototype
               {% else %}
                 2-B-022
               {% endif %}
-
-            </label>
-          </div>
         </td>
         <td class="govuk-table__cell" data-sort-value="2">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
-        <td class="govuk-table__cell" data-sort-value="20250216">28 Aug 2023</td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">28 Aug 2023</td>
       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusAlmogTanzer =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate12" name="offenderAllocate" type="radio" value="Almog Tanzer">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate12">
               <strong><a href="#">Almog Tanzer</a></strong><br />
               KR7121C<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
@@ -345,24 +301,17 @@ Activities Management prototype
               {% else %}
                 1-D-038
               {% endif %}
-
-            </label>
-          </div>
         </td>
         <td class="govuk-table__cell" data-sort-value="2">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">Unsentenced</td>
-        <td class="govuk-table__cell" data-sort-value="20250216">15 May 2027</td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">15 May 2027</td>
       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusErmisPiotrowski =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate13" name="offenderAllocate" type="radio" value="Ermis Piotrowski">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate13">
               <strong><a href="#">Ermis Piotrowski</a></strong><br />
               BB1076W<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
@@ -370,44 +319,32 @@ Activities Management prototype
               {% else %}
                 1-E-132
               {% endif %}
-
-            </label>
-          </div>
         </td>
         <td class="govuk-table__cell" data-sort-value="2">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
-        <td class="govuk-table__cell" data-sort-value="20250216">8 May 2024</td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">8 May 2024</td>
       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusCerenWieck =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Ceren Wieck">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
               <strong><a href="#">Ceren Wieck</a></strong><br />
               AB8540Z<br />
               1-A-099
-            </label>
-          </div>
         </td>
         <td class="govuk-table__cell" data-sort-value="2">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
-        <td class="govuk-table__cell" data-sort-value="20250216">16 Dec 2024</td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">16 Dec 2024</td>
+
       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusClaudWaller =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Claud Waller">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
               <strong><a href="#">Claud Waller</a></strong><br />
               WT1317H<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
@@ -415,17 +352,12 @@ Activities Management prototype
               {% else %}
                 1-C-078
               {% endif %}
-            </label>
-          </div>
         </td>
         <td class="govuk-table__cell" data-sort-value="2">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
-        <td class="govuk-table__cell" data-sort-value="20250216">3 June 2024</td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">3 June 2024</td>
       </tr>{% endif %}
-
-
-
     </tbody>
   </table>
 

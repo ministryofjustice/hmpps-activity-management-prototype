@@ -1134,6 +1134,7 @@ module.exports = function(router) {
 
 			if(req.session.data.vacanciesCount <=10){
 				req.session.data.vacanciesCount= req.session.data.vacanciesCount - 1;
+				req.session.data.allocatedCount ++;
 			}
 			else {req.session.data.vacanciesCount=10}
 
