@@ -14,11 +14,9 @@ Activities Management prototype
       </div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
       You're allocating to {{data.activityAllocateScheduleName  or 'Wing cleaning 1'}}
-
     </h1>
   </div>
-  </div>
-
+</div>
 
   <div class="govuk-width-container">
     <ul class="govuk-grid-row card-group" id="sortable">
@@ -34,16 +32,16 @@ Activities Management prototype
 
 	         {% if (data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName ) %}
             <p class="govuk-body card__description">
-              <span style="width:57%; float:left;"><strong>Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue">{{data.vacanciesCount or '5'}}</span> <br /><br />
-              <span style="width:59%; float:left;"><strong>Allocated:</strong></span>7 <br /><br />
-              <span style="width:58%; float:left;"><strong>Capacity:</strong></span> 12 <br />
+              <span style="width:57%; float:left;"><strong>1Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue">{{data.vacanciesCount or '1'}}</span> <br /><br />
+              <span style="width:59%; float:left;"><strong>1Allocated:</strong></span>{{data.allocatedCount or '1'}} <br /><br />
+              <span style="width:58%; float:left;"><strong>1Capacity:</strong></span> {{data.capacityCount or '2'}}  <br />
             </p>
 
           {% else %}
             <p class="govuk-body card__description">
-              <span style="width:57%; float:left;"><strong>Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue"> {{data.vacanciesCount or '5'}}</span> <br /><br />
-              <span style="width:59%; float:left;"><strong>Allocated:</strong></span>{{12-data.vacanciesCount or '7'}} <br /><br />
-              <span style="width:58%; float:left;"><strong>Capacity:</strong></span> 12 <br />
+              <span style="width:57%; float:left;"><strong>2Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue"> {{data.vacanciesCount or '1'}}</span> <br /><br />
+              <span style="width:59%; float:left;"><strong>2Allocated:</strong></span>{{data.allocatedCount or '1'}}<br /><br />
+              <span style="width:58%; float:left;"><strong>2Capacity:</strong></span> {{data.capacityCount or '2'}} <br />
             </p>
 
             {% endif %}
@@ -238,9 +236,9 @@ Activities Management prototype
           Showing people who are:<br /><br />
         </label>
         <select class="govuk-select" id="show" name="show-grouping">
-          <option value="Unemployed" {% if data.allocateEmployed=="Unemployed" %}selected{% endif %}>Unemployed</option>
-          <option value="Employed" {% if data.allocateEmployed=="Employed" %}selected{% endif %}>Employed</option>
-          <option value="Employed and Unemployed" {% if data.allocateEmployed=="Employed and Unemployed" %}selected{% endif %}> Employed or Unemployed</option>
+          <option value="Available" {% if data.allocateEmployed=="Available" %}selected{% endif %}>Available</option>
+          <option value="Unavailable" {% if data.allocateEmployed=="Unavailable" %}selected{% endif %}>Unavailable</option>
+          <option value="Both available and unavailable" {% if data.allocateEmployed=="Both available and unavailable" %}selected{% endif %}>Both available and unavailable</option>
         </select>
       </div>
     </div>
@@ -252,7 +250,9 @@ Activities Management prototype
       <select class="govuk-select" id="show2" name="show-grouping"">
         <option value="Any" {% if data.allocateRisk=="Any" %}selected{% endif %}>Any risk level</option>
         <option value="Low"  {% if data.allocateRisk=="Low" %}selected{% endif %}>Low</option>
-        <option value="Medium" {% if data.allocateRisk=="Medium" %}selected{% endif %}>Medium</option>
+        <option value="Low or Medium"  {% if data.allocateRisk=="Low or Medium" %}selected{% endif %}>Low or Medium</option>
+        <option value="Low, Medium or High" {% if data.allocateRisk=="Low, Medium or High" %}selected{% endif %}>Low, Medium or High</option>
+        <option value="Medium or High" {% if data.allocateRisk=="Medium or High" %}selected{% endif %}>Medium or High</option>
         <option value="High" {% if data.allocateRisk=="High" %}selected{% endif %}>High</option>
       </select>
       </div>
@@ -263,10 +263,13 @@ Activities Management prototype
         Showing people who have the following incentive level:
       </label>
       <select class="govuk-select" id="show3" name="show-grouping"">
-        <option value="Any" {% if data.allocateIncentive=="Any" %}selected{% endif %}>Any incentive level</option>
-        <option value="Basic"  {% if data.allocateIncentive=="Education" %}selected{% endif %}>Basic </option>
-        <option value="Standard" {% if data.allocateIncentive=="Industries" %}selected{% endif %}>Standard</option>
-        <option value="Enhanced" {% if data.allocateIncentive=="Prison" %}selected{% endif %}>Enhanced</option>
+        <option value="Basic"  {% if data.allocateIncentive=="Basic" %}selected{% endif %}>Basic</option>
+        <option value="Standard" {% if data.allocateIncentive=="Standard" %}selected{% endif %}>Standard</option>
+        <option value="Basic or Standard" {% if data.allocateIncentive=="Basic or Standard" %}selected{% endif %}>Basic or Standard</option>
+        <option value="Standard or Enhanced" {% if data.allocateIncentive=="Standard or Enhanced" %}selected{% endif %}>Standard or Enhanced</option>
+        <option value="All" {% if data.allocateIncentive=="All" %}selected{% endif %}>All incentive level</option>
+
+
       </select>
       </div>
     </div>
@@ -444,7 +447,7 @@ Activities Management prototype
 
 
 <div class="govuk-tabs__panel" id="schedule">
-  <h2 class="govuk-heading-m">Wing cleaning 2 schedule</h2><p>Check the schedule is compatible with the candidate's current allocations if they have any. </p>
+<p>Check the schedule is compatible with the candidate's current allocations if they have any. </p>
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">

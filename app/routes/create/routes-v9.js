@@ -823,7 +823,7 @@ module.exports = function(router) {
 		req.session.data.offenderAllocatedStatusLionelMesser = 'false';
 		req.session.data.offenderAllocatedStatusNoffRens = 'false';
 		req.session.data.offenderAllocatedStatusNeilRudge = 'false';
-		req.session.data.vacanciesCount = 5;
+		//req.session.data.vacanciesCount = 5;
 	}
 
 		if (req.session.data.offenderAllocate=="Neil Rudge"){
@@ -1061,10 +1061,10 @@ module.exports = function(router) {
 
 			req.session.data.currentActivityAllocateScheduleName = req.session.data.activityAllocateScheduleName;
 
-			if(req.session.data.vacanciesCount){
+			if(req.session.data.vacanciesCount <=10){
 				req.session.data.vacanciesCount= req.session.data.vacanciesCount - 1;
 			}
-			else {req.session.data.vacanciesCount=4}
+			else {req.session.data.vacanciesCount=10}
 
 		{
 

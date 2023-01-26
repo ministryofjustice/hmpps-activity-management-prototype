@@ -78,22 +78,32 @@ Activities Management prototype
 <tr class="govuk-table__row">
   <td class="govuk-table__cell" data-sort-value="1">
     <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-    <a href="activity-dashboard-4-1?activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+    {% if (data.activityAllocateName=='Textiles') %}
+      <a href="activity-dashboard-4-1?capacityCount=30&vacanciesCount=1&allocatedCount=29&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+    {% else %}
+      <a href="activity-dashboard-4-1?capacityCount=35&vacanciesCount=7&allocatedCount=28&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+    {% endif %}
+
     {{data.activityAllocateName or 'Wing cleaning'}} 1
     </a></h3>
   </td>
   {% if (data.activityAllocateName=='Textiles') %}
     <td class="govuk-table__cell" data-sort-value="1">Workshop 1</td>
+    <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="30">30</td>
+    <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="29">29</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="97">97%</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="1">
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+          <span>1</span>
   {% else %}
     <td class="govuk-table__cell" data-sort-value="1">Kitchen</td>
+    <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="35">35</td>
+    <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="28">28</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="39">80%</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="7">
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
+          <span>7</span>
   {% endif %}
-
-  <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="8">8</td>
-  <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="7">3</td>
-    <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="39">39%</td>
-    <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="1">
-      <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">
-        <span>5</span>
       </strong>
     </td>
 </tr>
@@ -103,17 +113,21 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="1">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-        {{data.activityAllocateName or 'Wing cleaning'}} 1
+      {% if (data.activityAllocateName=='Wing cleaning') %}
+        <a href="activity-dashboard-4-1?capacityCount=3&vacanciesCount=2&allocatedCount=1&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          {{data.activityAllocateName or 'Wing cleaning'}} 1
         </a></h3>
       </td>
-      {% if (data.activityAllocateName=='Wing cleaning') %}
         <td class="govuk-table__cell" data-sort-value="1">Wing A</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="2">2</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="1">1</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="50">50%</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="1">
       {% else %}
+        <a href="activity-dashboard-4-1?capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          {{data.activityAllocateName or 'Wing cleaning'}} 1
+        </a></h3>
+      </td>
         <td class="govuk-table__cell" data-sort-value="1">House block 1</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="5">5</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="4">4</td>
@@ -128,7 +142,7 @@ Activities Management prototype
     <tr class="govuk-table__row" >
       <td class="govuk-table__cell" data-sort-value="2">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}} 2" class="govuk-link govuk-link--no-visited-state">
+        <a href="activity-dashboard-4-1?capacityCount=4&vacanciesCount=0&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}} 2" class="govuk-link govuk-link--no-visited-state">
           {{data.activityAllocateName or 'Wing cleaning'}} 2
         </a></h3>
           <span class="govuk-hint" style="font-size:.85em;"></span>
@@ -151,7 +165,7 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="3">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}} 3"  class="govuk-link govuk-link--no-visited-state">
+        <a href="activity-dashboard-4-1?capacityCount=4&vacanciesCount=0&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}} 3"  class="govuk-link govuk-link--no-visited-state">
           {{data.activityAllocateName or 'Wing cleaning'}} 3
         </a></h3>
       </td>
@@ -172,7 +186,7 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="4">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  4" class="govuk-link govuk-link--no-visited-state">
+        <a href="activity-dashboard-4-1?capacityCount=2&vacanciesCount=1&allocatedCount=1activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  4" class="govuk-link govuk-link--no-visited-state">
           {{data.activityAllocateName or 'Wing cleaning'}} 4
         </a></h3>
       </td>
@@ -193,7 +207,7 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="5">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  5" class="govuk-link govuk-link--no-visited-state">
+        <a href="activity-dashboard-4-1?capacityCount=3&vacanciesCount=0&allocatedCount=3&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  5" class="govuk-link govuk-link--no-visited-state">
         {{data.activityAllocateName or 'Wing cleaning'}} 5
         </a></h3>
       </td>
@@ -215,7 +229,7 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="6">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  6" class="govuk-link govuk-link--no-visited-state">
+        <a href="activity-dashboard-4-1?capacityCount=4&vacanciesCount=0&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  6" class="govuk-link govuk-link--no-visited-state">
         {{data.activityAllocateName or 'Wing cleaning'}} 6
         </a></h3>
       </td>
@@ -236,7 +250,7 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="7">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  7" class="govuk-link govuk-link--no-visited-state">
+        <a href="activity-dashboard-4-1?capacityCount=3&vacanciesCount=0&allocatedCount=3&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  7" class="govuk-link govuk-link--no-visited-state">
         {{data.activityAllocateName or 'Wing cleaning'}} 7
         </a></h3>
       </td>
@@ -258,7 +272,7 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="8">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  8" class="govuk-link govuk-link--no-visited-state">
+        <a href="activity-dashboard-4-1?capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  8" class="govuk-link govuk-link--no-visited-state">
         {{data.activityAllocateName or 'Wing cleaning'}} 8
         </a></h3>
       </td>
