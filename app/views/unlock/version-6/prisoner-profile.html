@@ -1,0 +1,400 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Quick look - Digital Prison Services
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="header-with-link">
+    <h1 class="govuk-heading-l">{{prisoner.name.surname}}, {{prisoner.name.firstname}}</h1>
+</div>
+<div class="prisoner-header">
+    <div class="prisoner-header__image-container">
+        <a href="#">
+            <img src="/public/images/image-missing.jpg" alt="Picture of {{prisoner.name.surname}}, {{prisoner.name.firstname}}" class="prisoner-image" />
+        </a>
+    </div>
+    <div class="prisoner-header__details">
+        <div class="prisoner-header__details__alerts">
+        </div>
+        <ul class="prisoner-header__details__information">
+            <li class="">
+                <strong>Prison number</strong>
+                <br>
+                <span data-test="">
+                    {{prisoner.id}}
+                </span>
+            </li>
+            <li class="">
+                <strong>Category</strong>
+                <br>
+                <span data-test="">
+                    <span class="">
+                        Not entered
+                    </span>
+                    <br>
+                    <a data-qa="categorisation-external-link" class="govuk-link" href="#">
+                        View category
+                    </a>
+                </span>
+            </li>
+            <li class="">
+                <strong>Incentive level</strong>
+                <br>
+                <span data-test="">
+                    <span>Standard</span>
+                    <br>
+                    <a data-test="iep-details-link" class="govuk-link" href="#">
+                        View details <span class="govuk-visually-hidden">for Incentive Level</span>
+                    </a>
+                </span>
+            </li>
+            <li class="">
+                <strong>Location</strong>
+                <br>
+                <span data-test="">
+                    No cell allocated
+                    <br>
+                    Moorland (HMP &amp; YOI)
+                    <br>
+                    <a data-qa="cell-history-link" class="govuk-link" href="#">
+                        View details
+                    </a>
+                </span>
+            </li>
+            <li class="govuk-!-margin-bottom-4">
+                <strong>CSRA</strong>
+                <br>
+                <span data-test="">
+                    <span data-test="csra-details"> - No previous review</span>
+                    <br>
+                    <a data-test="csra-link" class="govuk-link" href="#">
+                        View details <span class="govuk-visually-hidden">of CSRA</span>
+                    </a>
+                </span>
+            </li>
+            <li class="">
+                <strong>Alerts</strong>
+                <br>
+                <span data-test="">
+                    <span>0 active, 0 inactive</span>
+                    <br>
+                    <a data-test="view-alerts-link" class="govuk-link" href="#">
+                        View alerts
+                    </a>
+                </span>
+            </li>
+            <li class="govuk-!-margin-bottom-0">
+                <strong>Key worker</strong>
+                <br>
+                <span data-test="keyworker-name">
+                    Steve Rendell
+                </span>
+            </li>
+            <li class="">
+                <strong>Last session</strong>
+                <br>
+                <span data-test="last-session">
+                    No previous session
+                </span>
+            </li>
+            <li class="govuk-!-margin-bottom-0">
+                <strong>Prison offender manager</strong>
+                <br>
+                <span data-test="">
+                    None assigned
+                </span>
+            </li>
+        </ul>
+        <div class="prisoner-header__details__actions">
+            <a href="#" role="button" draggable="false" class="govuk-button govuk-button--blue govuk-!-margin-bottom-3" data-module="govuk-button">
+                Add a case note
+            </a>
+            <a href="#" role="button" draggable="false" class="govuk-button govuk-button--blue govuk-!-margin-bottom-3" data-module="govuk-button">
+                Add an appointment
+            </a>
+            <a href="#" role="button" draggable="false" class="govuk-button govuk-button--blue govuk-!-margin-bottom-3" data-module="govuk-button">
+                Report use of force
+            </a>
+        </div>
+    </div>
+</div>
+<script src="/static/js/education-actions.js"></script>
+<div class="govuk-tabs">
+    <h2 class="govuk-tabs__title">
+        Prisoner profile sections
+    </h2>
+    <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+            <a class="govuk-tabs__tab" href="prisoner/{{prisoner.id}}" data-test="tabs-quick-look">
+                Quick look
+            </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#" data-test="tabs-personal">
+                Personal
+            </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#" data-test="tabs-alerts">
+                Alerts
+            </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#" data-test="tabs-case-notes">
+                Case notes
+            </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#" data-test="tabs-sentence-release">
+                Sentence and release
+            </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#" data-test="tabs-work-skills">
+                Work and skills
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-!-margin-bottom-6">
+            <h3 class="govuk-heading-m">Offences</h3>
+            <div data-test="offender-offences">
+                <dl class="govuk-summary-list govuk-!-margin-bottom-2" data-test="offence-summary">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Main offence
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            Not entered
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Imprisonment status
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            ORA Recalled from Curfew Conditions
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Release date
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            Not entered
+                        </dd>
+                    </div>
+                </dl>
+                <a href="#" class="govuk-link govuk-!-font-size-19">View sentence and release details</a>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-!-margin-bottom-6">
+            <h3 class="govuk-heading-m">Finances</h3>
+            <div data-test="offender-balances">
+                <dl class="govuk-summary-list govuk-!-margin-bottom-2" data-test="money-summary">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Spends
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            <a href="#" class="govuk-link">£99.00</a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Private cash
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            <a href="#" class="govuk-link">£0.00</a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Savings
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            <a href="#" class="govuk-link">£0.00</a>
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-!-margin-bottom-6">
+            <h3 class="govuk-heading-m">Incentives and adjudications in last 3 months</h3>
+            <div data-test="incentives-and-adjudications">
+                <dl class="govuk-summary-list govuk-!-margin-bottom-2" data-test="incentives-summary">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Incentive level warnings
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            0
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Incentive encouragements
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            0
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Date of next review
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            12 May 2023
+                        </dd>
+                    </div>
+                </dl>
+                <a href="#" class="govuk-link govuk-body govuk-!-margin-bottom-2 govuk-!-display-inline-block" data-test="incentive-details-link">View incentive level details</a>
+                <dl class="govuk-summary-list govuk-!-margin-bottom-2" data-test="adjudications-summary">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Proven adjudications
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            0
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Active adjudications
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            <p class="govuk-body">No active awards</p>
+                        </dd>
+                    </div>
+                </dl>
+                <a href="#" class="govuk-link govuk-body" data-test="adjudication-history-link">View adjudication history</a>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-!-margin-bottom-6">
+            <h3 class="govuk-heading-m">Visits</h3>
+            <div data-test="visits-details">
+                <dl class="govuk-summary-list govuk-!-margin-bottom-2" data-test="visits-summary">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Next visit date
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            None scheduled
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-!-margin-bottom-6">
+            <h3 class="govuk-heading-m">Personal information</h3>
+            <div data-test="personal-details">
+                <dl class="govuk-summary-list govuk-!-margin-bottom-2" data-test="personal-info-summary">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Age
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            36
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Nationality
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            Not entered
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            PNC number
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            Not entered
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            CRO number
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            Not entered
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-column-one-half">
+        <h3 class="govuk-heading-m">Schedule</h3>
+        <div data-test="schedules">
+            <dl class="govuk-summary-list govuk-!-margin-bottom-2" data-test="schedule-summary">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Morning
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Nothing scheduled</p>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Afternoon
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Nothing scheduled</p>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Evening
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Nothing scheduled</p>
+                    </dd>
+                </div>
+            </dl>
+            <a href="#" class="govuk-link govuk-!-font-size-19">
+                View 7 day schedule
+            </a>
+        </div>
+    </div>
+</div>
+<div class="prisoner-footer">
+    <p class="govuk-body" data-test="data-retention-record-details">
+        <strong>Prevent removal of this offender record:</strong>
+        Not set -
+        <a href="#" class="govuk-link">
+            Update
+        </a>
+    </p>
+</div>
+{% endblock %}
+{% block pageScripts %}
+{% endblock %}

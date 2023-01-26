@@ -1,0 +1,89 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Select activity date - {{serviceName}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "dps-home"
+	},
+	{
+		text: "Manage prisoner unlock and attendance",
+		href: "whereabouts"
+	}
+	]
+}) }}
+{% endblock %}
+
+{% block content %}
+<form method="post">
+	{% set dateHtml %}
+	{{ govukDateInput({
+		id: "other-date",
+		namePrefix: "other-date",
+		fieldset: {
+			legend: {
+				text: "Date"
+			}
+		},
+		hint: {
+			text: "For example, 27 3 2022"
+		}
+	}) }}
+	{% endset %}
+
+	{% set today = '_'|today() %}
+	{{ govukRadios({
+		name: "date",
+		fieldset: {
+			legend: {
+				text: "Select activity date",
+				isPageHeading: true,
+				classes: "govuk-fieldset__legend--l"
+			}
+		},
+		hint: {
+			text: "The date today is " + today|convertShortDateToLongDate
+		},
+		items: [
+		{
+			value: today,
+			text: "Today"
+		},
+		{
+			value: today|dayBefore(today),
+			text: "Yesterday"
+		},
+		{
+			value: "other-date",
+			text: "A different date",
+			conditional: {
+				html: dateHtml
+			}
+		}
+		]
+	}) }}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			
+
+			<div class="govuk-button-group">
+				{{govukButton({
+					text: "Search activities"
+				})}}
+			</div>
+		</div>
+	</div>
+</form>
+{% endblock %}

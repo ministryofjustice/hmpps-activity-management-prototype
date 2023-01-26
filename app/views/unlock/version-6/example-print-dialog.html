@@ -1,0 +1,124 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "#"
+	},
+	{
+		text: "Manage prisoner unlock and attendance",
+		href: "#"
+	}
+	]
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="inner-content">
+	<div class="pure-g">
+		<div class="sc-fEXmlR ewRqUl">
+			<div class="sc-bjfHbI dLPhOB">
+				<h1 class="govuk-heading-l">Library</h1>
+			</div>
+			<div class="page-content">
+				<table class="row-gutters">
+					<thead>
+						<tr>
+							<th class="straight width15"><span class="sortableLink" id="Name-sortable-column" tabindex="0" role="link">Name</span></th>
+							<th class="straight width10"><span class="sortableLink" id="Location-sortable-column" tabindex="0" role="link">Location</span></th>
+							<th class="straight width10">Prison number</th>
+							<th class="straight width10 straightPrint">Relevant alerts</th>
+							<th class="straight width20">
+								<div>Activity <span class="sortableLink" id="Activity-sort-asc" tabindex="0" role="link"><img src="/images/Triangle_asc.png" height="8" width="15" alt="Up arrow"></span></div>
+							</th>
+							<th class="straight">Other activities</th>
+							<th class="checkbox-header straightPrint no-display">
+								<div><span>Received</span></div>
+							</th>
+							<th class="straight width4 no-print">Attended</th>
+							<th class="straight width6 no-print">Not attended</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="row-gutters">
+							<td class="row-gutters straightPrint"><a target="_blank" rel="noopener noreferrer" class="link" href="/prisoner/G2137UI">Sid, Domenic</a></td>
+							<td class="no-display no-print"><a target="_blank" rel="noopener noreferrer" class="link" href="/prisoner/G2137UI">Sid, D</a></td>
+							<td class="row-gutters">5-1-A-004</td>
+							<td class="row-gutters straightPrint">G2137UI</td>
+							<td class="no-display no-print">***37UI</td>
+							<td class="straightPrint">
+								<div class="alerts"></div>
+							</td>
+							<td class="row-gutters">08:30 - Library Orderly AM</td>
+							<td class="row-gutters">
+								<ul></ul>
+							</td>
+							<td class="checkbox-header no-display straightPrint">
+								<div class="multiple-choice whereaboutsCheckbox"><label class="whereabouts-label" for="col1_0">Received</label><input id="col1_0" type="checkbox" name="ch1" disabled=""></div>
+							</td>
+							<td data-qa="pay-option" class="sc-ftTHYK gHNKYh row-gutters"><label class="src__Label-sc-7h7h1q-0 jIuPjI"><input type="radio" name="G2137UI485469479" class="src__Input-sc-7h7h1q-1 cFPNOL" value="pay"><span class="src__LabelText-sc-7h7h1q-2 jpbdpM"><span class="src__VisuallyHidden-sc-1d47voq-0 eIkBWJ">Pay</span></span></label></td>
+							<td data-qa="other-option" class="sc-ftTHYK gHNKYh row-gutters"><label class="src__Label-sc-7h7h1q-0 jIuPjI"><input type="radio" name="G2137UI485469479" class="src__Input-sc-7h7h1q-1 cFPNOL" value="other"><span class="src__LabelText-sc-7h7h1q-2 jpbdpM"><span class="src__VisuallyHidden-sc-1d47voq-0 eIkBWJ">Other</span></span></label></td>
+						</tr>
+						<tr class="row-gutters">
+							<td class="row-gutters straightPrint"><a target="_blank" rel="noopener noreferrer" class="link" href="/prisoner/G8721VF">Magestro, Dmitri</a></td>
+							<td class="no-display no-print"><a target="_blank" rel="noopener noreferrer" class="link" href="/prisoner/G8721VF">Magestro, D</a></td>
+							<td class="row-gutters">5-1-A-002</td>
+							<td class="row-gutters straightPrint">G8721VF</td>
+							<td class="no-display no-print">***21VF</td>
+							<td class="straightPrint">
+								<div class="alerts"></div>
+							</td>
+							<td class="row-gutters">08:30 - Library Redband AM</td>
+							<td class="row-gutters">
+								<ul></ul>
+							</td>
+							<td class="checkbox-header no-display straightPrint">
+								<div class="multiple-choice whereaboutsCheckbox"><label class="whereabouts-label" for="col1_1">Received</label><input id="col1_1" type="checkbox" name="ch1" disabled=""></div>
+							</td>
+							<td data-qa="pay-option" class="sc-ftTHYK gHNKYh row-gutters"><label class="src__Label-sc-7h7h1q-0 jIuPjI"><input type="radio" name="G8721VF485403949" class="src__Input-sc-7h7h1q-1 cFPNOL" value="pay"><span class="src__LabelText-sc-7h7h1q-2 jpbdpM"><span class="src__VisuallyHidden-sc-1d47voq-0 eIkBWJ">Pay</span></span></label></td>
+							<td data-qa="other-option" class="sc-ftTHYK gHNKYh row-gutters"><label class="src__Label-sc-7h7h1q-0 jIuPjI"><input type="radio" name="G8721VF485403949" class="src__Input-sc-7h7h1q-1 cFPNOL" value="other"><span class="src__LabelText-sc-7h7h1q-2 jpbdpM"><span class="src__VisuallyHidden-sc-1d47voq-0 eIkBWJ">Other</span></span></label></td>
+						</tr>
+						<tr class="row-gutters">
+							<td class="row-gutters straightPrint"><a target="_blank" rel="noopener noreferrer" class="link" href="/prisoner/G2437VN">Greenwald, Galen</a></td>
+							<td class="no-display no-print"><a target="_blank" rel="noopener noreferrer" class="link" href="/prisoner/G2437VN">Greenwald, G</a></td>
+							<td class="row-gutters">6-3-028</td>
+							<td class="row-gutters straightPrint">G2437VN</td>
+							<td class="no-display no-print">***37VN</td>
+							<td class="straightPrint">
+								<div class="alerts"></div>
+							</td>
+							<td class="row-gutters">08:30 - Library Toe by Toe AM</td>
+							<td class="row-gutters">
+								<ul></ul>
+							</td>
+							<td class="checkbox-header no-display straightPrint">
+								<div class="multiple-choice whereaboutsCheckbox"><label class="whereabouts-label" for="col1_2">Received</label><input id="col1_2" type="checkbox" name="ch1" disabled=""></div>
+							</td>
+							<td data-qa="pay-option" class="sc-ftTHYK gHNKYh row-gutters"><label class="src__Label-sc-7h7h1q-0 jIuPjI"><input type="radio" name="G2437VN485399987" class="src__Input-sc-7h7h1q-1 cFPNOL" value="pay"><span class="src__LabelText-sc-7h7h1q-2 jpbdpM"><span class="src__VisuallyHidden-sc-1d47voq-0 eIkBWJ">Pay</span></span></label></td>
+							<td data-qa="other-option" class="sc-ftTHYK gHNKYh row-gutters"><label class="src__Label-sc-7h7h1q-0 jIuPjI"><input type="radio" name="G2437VN485399987" class="src__Input-sc-7h7h1q-1 cFPNOL" value="other"><span class="src__LabelText-sc-7h7h1q-2 jpbdpM"><span class="src__VisuallyHidden-sc-1d47voq-0 eIkBWJ">Other</span></span></label></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script>
+	window.print();
+</script>
+{% endblock %}

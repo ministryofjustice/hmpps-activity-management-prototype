@@ -1,0 +1,99 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-three-quarters">
+		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+			Check attendance details
+		</h1>
+
+		{% for item in data['attendance-details'] %}
+		<h2 class="govuk-heading-m">
+			Prisoner Name
+			<span class="govuk-caption-m">{{ id }}</span>
+		</h2>
+		<dl class="govuk-summary-list">
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Attended
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{item.attended|capitalize}}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link" href="#">
+						Change<span class="govuk-visually-hidden"> name</span>
+					</a>
+				</dd>
+			</div>
+			{% if item.attended == "no" %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Payment
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{ "No" if item.payment['pay-override'] == "no" or not item.payment['pay-override'] else "Yes" }}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link" href="#">
+						Change<span class="govuk-visually-hidden"> name</span>
+					</a>
+				</dd>
+			</div>
+			{% endif %}
+			{% if item.payment['pay-override'] and item.payment['pay-override'] != "no" %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Payment reason
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{ item.payment['pay-override-reason'] }}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link" href="#">
+						Change<span class="govuk-visually-hidden"> name</span>
+					</a>
+				</dd>
+			</div>
+			{% endif %}
+			{% if item.bonus['bonus-awarded'] and item.bonus['bonus-awarded'] != "" %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Bonus pay
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{item.bonus['bonus-detail'] | striptags(true) | escape | nl2br or "Details"}}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link" href="#">
+						Change<span class="govuk-visually-hidden"> name</span>
+					</a>
+				</dd>
+			</div>
+			{% endif %}
+		</dl>
+		<hr class="govuk-section-break govuk-section-break--l">
+		{% endfor %}
+
+		<form method="post">
+			{{govukButton({
+				text: "Confirm and record attendance"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}
