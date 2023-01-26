@@ -12,20 +12,10 @@
 <form>
 	<div class="govuk-width-container">
 		{% block beforeContent %}
-		{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-		{{ govukBreadcrumbs({
-			classes: "govuk-!-display-none-print",
-			items: [
-			{
-				text: "Digital Prison Services",
-				href: "../../../dps-home"
-			},
-			{
-				text: "Manage prisoner unlock and attendance",
-				href: "../../../whereabouts"
-			}
-			]
-		}) }}
+		{{govukBackLink({
+			text: "Back",
+			"href": "javascript: window.history.go(-1)"
+		})}}
 		{% endblock %}
 
 		{% set totalPrisoners = prisonersList|length %}
@@ -60,13 +50,13 @@
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 						<span class="govuk-caption-l">
-							{{activityTimes.startTime}}&thinsp;&ndash;&thinsp;{{activityTimes.endTime}} ({{period}}) on {{date|convertShortDateToVeryLongDate}}
+							Record attendance
 						</span>
 
-						{{ activity.name or 'Workshop' }}: record attendance
+						{{ activity.name }}: {{activity.location}}
 
 						<span class="govuk-caption-l">
-							{{activity.location}}
+							{{activityTimes.startTime}}&thinsp;&ndash;&thinsp;{{activityTimes.endTime}} ({{period}}) on {{date|convertShortDateToVeryLongDate}}
 						</span>
 					</h1>
 
@@ -200,7 +190,6 @@
 									<a href="{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 									{% endif %}
 								</div>
-								
 								{% if event.attendance == 'attended' %}
 								<span class="moj-badge moj-badge--green govuk-!-margin-bottom-1 govuk-!-margin-top-1">Attended</span>
 								{% elif event.attendance == 'not-attended' %}
