@@ -823,6 +823,17 @@ module.exports = function(router) {
 		req.session.data.offenderAllocatedStatusLionelMesser = 'false';
 		req.session.data.offenderAllocatedStatusNoffRens = 'false';
 		req.session.data.offenderAllocatedStatusNeilRudge = 'false';
+
+		req.session.data.offenderAllocatedStatusHenryTatton = 'false';
+		req.session.data.offenderAllocatedStatusAlaricMesser = 'false';
+		req.session.data.offenderAllocatedStatusEniolaAldebrandi = 'false';
+		req.session.data.offenderAllocatedStatusBurcoCharves = 'false';
+		req.session.data.offenderAllocatedStatusJairusCatalano = 'false';
+		req.session.data.offenderAllocatedStatusAbdelGarcon = 'false';
+		req.session.data.offenderAllocatedStatusAlmogTanzer = 'false';
+		req.session.data.offenderAllocatedStatusErmisPiotrowski = 'false';
+		req.session.data.offenderAllocatedStatusCerenWieck = 'false';
+		req.session.data.offenderAllocatedStatusClaudWaller = 'false';
 		//req.session.data.vacanciesCount = 5;
 	}
 
@@ -838,8 +849,38 @@ module.exports = function(router) {
 			else if (req.session.data.offenderAllocate=="Lionel Messer"){
 				req.session.data.offenderIDAllocate = 'NH7239A';
 				}
+			else if (req.session.data.offenderAllocate=="Lionel Draganov"){
+				req.session.data.offenderIDAllocate = 'NH7239A';
+				}
 			else if (req.session.data.offenderAllocate=="Noff Rens"){
 				req.session.data.offenderIDAllocate = 'BN7622L';
+				}
+			else if (req.session.data.offenderAllocate=="Henry Tatton"){
+					req.session.data.offenderIDAllocate = 'BN5297F';
+					}
+			else if (req.session.data.offenderAllocate=="Alaric Messer"){
+				req.session.data.offenderIDAllocate = 'DE6192M';
+				}
+			else if (req.session.data.offenderAllocate=="Eniola Aldebrandi"){
+				req.session.data.offenderIDAllocate = 'GK9675V';
+				}
+			else if (req.session.data.offenderAllocate=="Burco Charves"){
+				req.session.data.offenderIDAllocate = 'AL7634M';
+			}
+			else if (req.session.data.offenderAllocate=="Jairus Catalano"){
+				req.session.data.offenderIDAllocate = 'DY8443K';
+				}
+			else if (req.session.data.offenderAllocate=="Abdel Garcon"){
+				req.session.data.offenderIDAllocate = 'ST9127U';
+				}
+			else if (req.session.data.offenderAllocate=="Almog Tanzer"){
+				req.session.data.offenderIDAllocate = 'KR7121C';
+				}
+			else if (req.session.data.offenderAllocate=="Ermis Piotrowski"){
+				req.session.data.offenderIDAllocate = 'BB1076W';
+				}
+			else if (req.session.data.offenderAllocate=="Ceren Wieck"){
+				req.session.data.offenderIDAllocate = 'AB8540Z';
 				}
 		else {
 			req.session.data.offenderAllocate="Neil Rudge";
@@ -1053,6 +1094,36 @@ module.exports = function(router) {
 				}
 			else if (req.session.data.offenderAllocate=="Noff Rens"){
 				req.session.data.offenderAllocatedStatusNoffRens = 'true';
+				}
+			else if (req.session.data.offenderAllocate=="Lionel Draganov"){
+				req.session.data.offenderAllocatedStatusLionelDraganov = 'true';
+				}
+			else if (req.session.data.offenderAllocate=="Henry Tatton"){
+					req.session.data.offenderAllocatedStatusHenryTatton = 'true';
+					}
+			else if (req.session.data.offenderAllocate=="Alaric Messer"){
+				req.session.data.offenderAllocatedStatusAlaricMesser = 'true';
+				}
+			else if (req.session.data.offenderAllocate=="Eniola Aldebrandi"){
+				req.session.data.offenderAllocatedStatusEniolaAldebrandi = 'true';
+				}
+			else if (req.session.data.offenderAllocate=="Burco Charves"){
+				req.session.data.offenderAllocatedStatusBurcoCharves = 'true';
+			}
+			else if (req.session.data.offenderAllocate=="Jairus Catalano"){
+				req.session.data.offenderAllocatedStatusJairusCatalano = 'true';
+				}
+			else if (req.session.data.offenderAllocate=="Abdel Garcon"){
+				req.session.data.offenderAllocatedStatusAbdelGarcon = 'true';
+				}
+			else if (req.session.data.offenderAllocate=="Almog Tanzer"){
+				req.session.data.offenderAllocatedStatusAlmogTanzer = 'true';
+				}
+			else if (req.session.data.offenderAllocate=="Ermis Piotrowski"){
+				req.session.data.offenderAllocatedStatusErmisPiotrowski = 'true';
+				}
+			else if (req.session.data.offenderAllocate=="Ceren Wieck"){
+				req.session.data.offenderAllocatedStatusCerenWieck = 'true';
 				}
 		else {
 			req.session.data.offenderAllocate="Neil Rudge";
