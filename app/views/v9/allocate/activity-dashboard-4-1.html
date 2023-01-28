@@ -514,12 +514,13 @@ Activities Management prototype
     </div>
 
 <div class="govuk-grid-row" style="background-color:#f1f1f1; padding-top:20px;">
+  <form method="post" action="poster">
   <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
     <div class="govuk-form-group">
         <label class="govuk-label" for="sort">
           Showing people who are:<br /><br />
         </label>
-        <select class="govuk-select" id="show" name="show-grouping">
+        <select class="govuk-select" id="show" name="allocateEmployed">
           <option value="Available" {% if data.allocateEmployed=="Available" %}selected{% endif %}>Available</option>
           <option value="Unavailable" {% if data.allocateEmployed=="Unavailable" %}selected{% endif %}>Unavailable</option>
           <option value="Both available and unavailable" {% if data.allocateEmployed=="Both available and unavailable" %}selected{% endif %}>Both available and unavailable</option>
@@ -531,9 +532,8 @@ Activities Management prototype
       <label class="govuk-label" for="sort">
         Showing people whose workplace assessment risk is:
       </label>
-      <select class="govuk-select" id="show2" name="show-grouping"">
-        <option value="Any" {% if data.allocateRisk=="Any" %}selected{% endif %}>Any risk level</option>
-        <option value="Low"  {% if data.allocateRisk=="Low" %}selected{% endif %}>Low</option>
+      <select class="govuk-select" id="show2">
+        <option value="Low" {% if data.allocateRisk=="Low" %}selected{% endif %}>Low</option>
         <option value="Low or Medium"  {% if data.allocateRisk=="Low or Medium" %}selected{% endif %}>Low or Medium</option>
         <option value="Low, Medium or High" {% if data.allocateRisk=="Low, Medium or High" %}selected{% endif %}>Low, Medium or High</option>
         <option value="Medium or High" {% if data.allocateRisk=="Medium or High" %}selected{% endif %}>Medium or High</option>
@@ -557,6 +557,10 @@ Activities Management prototype
       </select>
       </div>
     </div>
+    <button class="govuk-button" data-module="govuk-button" style="margin-left:16px;">
+    Apply filters
+    </button>
+    </form>
   </div>
 
 
@@ -581,27 +585,29 @@ Activities Management prototype
     <form method="post">
     <tbody class="govuk-table__body">
 
-
-
       {% if (data.offenderAllocatedStatusHenryTatton !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+        {% if data.allocateEmployed == "Available" %}
 
-      <tr class="govuk-table__row">
-        <td data-sort-value="Lionel" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate6" name="offenderAllocate" type="radio" value="Henry Tatton">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate6">
-              <strong><a href="#">Henry Tatton</a></strong><br />
-              BN5297F<br />
-              1-A-069
-            </label>
-          </div>
-        </td>
-        <td class="govuk-table__cell" data-sort-value="0">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
-        <td class="govuk-table__cell" data-sort-value="20290701">1 July 2029</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
-      </tr>{% endif %}
+
+        <tr class="govuk-table__row">
+          <td data-sort-value="Lionel" class="govuk-table__cell">
+            <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="offenderAllocate6" name="offenderAllocate" type="radio" value="Henry Tatton">
+                <label class="govuk-label govuk-radios__label" for="offenderAllocate6">
+                <strong><a href="#">Henry Tatton</a></strong><br />
+                BN5297F<br />
+                1-A-069
+              </label>
+            </div>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="0">None</td>
+          <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
+          <td class="govuk-table__cell" data-sort-value="20290701">1 July 2029</td>
+          <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+        </tr>
+        {% endif %}
+      {% endif %}
 
       {% if (data.offenderAllocatedStatusAlaricMesser !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
@@ -1053,32 +1059,6 @@ Activities Management prototype
 </div>
 
 {% block pageScripts %}
-<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
-<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('a[data-modal]').on('click', function(event) {
-			event.preventDefault();
-			this.blur();
-			$.get(this.href, function(html) {
-				$(html).appendTo('body').modal({
-					showClose: false,
-					clickClose: false
-				});
-			});
-		});
 
-		$('#show').on('change', function() {
-			window.location = 'activity-dashboard-4-1?allocateEmployed=' + $(this).val()
-
-		})
-    $('#show2').on('change', function() {
-			window.location = 'activity-dashboard-4-1?allocateRisk=' + $(this).val()
-		})
-    $('#show3').on('change', function() {
-			window.location = 'activity-dashboard-4-1?allocateIncentive=' + $(this).val()
-		})
-	})
-</script>
 {% endblock %}
 {% endblock %}

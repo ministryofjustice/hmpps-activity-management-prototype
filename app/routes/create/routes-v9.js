@@ -1144,4 +1144,11 @@ module.exports = function(router) {
 		}
 	});
 
+
+	router.get(version +'/allocate/poster', function(req, res) {
+			res.redirect(version + '/allocate/activity-dashboard-4-1#allocate')
+});
+
+
+
 }
