@@ -518,6 +518,8 @@ Activities Management prototype
   <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
     <div class="govuk-form-group">
         <label class="govuk-label" for="sort">
+
+
           Showing people who are:<br /><br />
         </label>
         <select class="govuk-select" id="show" name="allocateEmployed">
@@ -532,7 +534,7 @@ Activities Management prototype
       <label class="govuk-label" for="sort">
         Showing people whose workplace assessment risk is:
       </label>
-      <select class="govuk-select" id="show2">
+      <select class="govuk-select" id="show2" name="allocateRisk">
         <option value="Low" {% if data.allocateRisk=="Low" %}selected{% endif %}>Low</option>
         <option value="Low or Medium"  {% if data.allocateRisk=="Low or Medium" %}selected{% endif %}>Low or Medium</option>
         <option value="Low, Medium or High" {% if data.allocateRisk=="Low, Medium or High" %}selected{% endif %}>Low, Medium or High</option>
@@ -549,9 +551,13 @@ Activities Management prototype
       <select class="govuk-select" id="show3" name="show-grouping"">
         <option value="Basic"  {% if data.allocateIncentive=="Basic" %}selected{% endif %}>Basic</option>
         <option value="Standard" {% if data.allocateIncentive=="Standard" %}selected{% endif %}>Standard</option>
+        <option value="Enhanced" {% if data.allocateIncentive=="Enhanced" %}selected{% endif %}>Enhanced</option>
         <option value="Basic or Standard" {% if data.allocateIncentive=="Basic or Standard" %}selected{% endif %}>Basic or Standard</option>
         <option value="Standard or Enhanced" {% if data.allocateIncentive=="Standard or Enhanced" %}selected{% endif %}>Standard or Enhanced</option>
         <option value="All" {% if data.allocateIncentive=="All" %}selected{% endif %}>All incentive level</option>
+
+
+
 
 
       </select>
@@ -563,7 +569,26 @@ Activities Management prototype
     </form>
   </div>
 
+  <p>Here is filter result:</p>
 
+  {% if data.allocateEmployed == 'Available'%}
+  available<br />
+
+    {% if data.allocateRisk == 'Low'%}
+    available &amp;Low <br />
+
+    {% elseif data.allocateRisk == 'Low or Medium'%}
+    available &amp;Low or Medium <br />
+    {% endif %}
+
+
+  {% elseif data.allocateEmployed == 'Unavailable'%}
+  Unavailable
+
+  {% elseif data.allocateEmployed == 'Both available and unavailable'%}
+  Both available &amp; Unavailable
+
+  {% endif %}
 
   <table class="govuk-table" data-module="moj-sortable-table">
     <thead class="govuk-table__head">
