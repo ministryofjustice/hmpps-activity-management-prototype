@@ -1991,49 +1991,51 @@ AB5568F<br />
 <nav class="moj-pagination" aria-label="Pagination navigation">
 
   {% if data.pageToShow == 1 %}
-
   <ul class="moj-pagination__list">
-    <li class="moj-pagination__item  moj-pagination__item--prev">
-      Previous<span class="govuk-visually-hidden"> page</span>
-    </li>
-    <li class="moj-pagination__item moj-pagination__item--active" aria-label="Page 1 of 15" aria-label="page">1</li>
-
-    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=2" aria--current"Page 1 of 30">2</a></li>
-
-    <li class="moj-pagination__item  moj-pagination__item--next">
-      <a class="moj-pagination__link" href="?pageToShow=2">Next<span class="govuk-visually-hidden"> page</span></a>
-    </li>
-  </ul>
-  <p class="moj-pagination__results">Showing <b>1</b> to <b>15</b> of <b>15</b> results</p>
-</nav>
-<br /><br />
-
-  {% elseif data.pageToShow == 2 %}
-
-  <ul class="moj-pagination__list">
-    <li class="moj-pagination__item  moj-pagination__item--prev">
-      <a class="moj-pagination__link" href="?pageToShow=1#allocate">Previous<span class="govuk-visually-hidden"> page</span></a>
-    </li>
-    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=1#allocate" aria--current"Page 1 of 30">1</a></li>
-
-
-    <li class="moj-pagination__item moj-pagination__item--active" aria-label="Page 2 of 15" aria-label="page">2</li>
-
-    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=2#allocate" aria--current"Page 2 of 30">3</a></li>
-
+    <li class="moj-pagination__item moj-pagination__item--active">1</li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=2#allocate">2</a></li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=3#allocate">3</a></li>
     <li class="moj-pagination__item  moj-pagination__item--next">
       <a class="moj-pagination__link" href="?pageToShow=2#allocate">Next<span class="govuk-visually-hidden"> page</span></a>
     </li>
   </ul>
   <p class="moj-pagination__results">Showing <b>1</b> to <b>15</b> of <b>15</b> results</p>
+
+
+  {% elseif data.pageToShow == 2 %}
+  <ul class="moj-pagination__list">
+    <li class="moj-pagination__item  moj-pagination__item--prev">
+      <a class="moj-pagination__link" href="?pageToShow=1#allocate">Previous<span class="govuk-visually-hidden"> page</span></a>
+    </li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=1#allocate" aria--current">1</a></li>
+    <li class="moj-pagination__item moj-pagination__item--active" href="#" aria-label="page">2</li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=3#allocate">3</a></li>
+    <li class="moj-pagination__item  moj-pagination__item--next">
+      <a class="moj-pagination__link" href="?pageToShow=3#allocate">Next<span class="govuk-visually-hidden"> page</span></a>
+    </li>
+  </ul>
+  <p class="moj-pagination__results">Showing <b>10</b> to <b>15</b> of <b>15</b> results</p>
+
+
+  {% elseif data.pageToShow == 3 %}
+  <ul class="moj-pagination__list">
+    <li class="moj-pagination__item  moj-pagination__item--prev">
+      <a class="moj-pagination__link" href="?pageToShow=2#allocate">Previous<span class="govuk-visually-hidden"> page</span></a>
+    </li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=1#allocate">1</a></li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=2#allocate">2</a></li>
+    <li class="moj-pagination__item moj-pagination__item--active">3</li>
+  </ul>
+  <p class="moj-pagination__results">Showing <b>10</b> to <b>15</b> of <b>15</b> results</p>
+  {% endif %}
 </nav>
-<br /><br />
-{% endif %}
+  <br /><br />
+
 
   <button class="govuk-button" data-module="govuk-button">
   Select Candidate
   </button>
-    </form>
+  </form>
 </div>
 
 
@@ -2098,17 +2100,8 @@ AB5568F<br />
   <button class="govuk-button" data-module="govuk-button">
   Edit schedule times
   </button>
+  </div>
 </div>
-
-
-
-
-
-
-
-
-</div>
-
 </div>
 
 {% block pageScripts %}
