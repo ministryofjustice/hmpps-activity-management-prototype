@@ -7,6 +7,9 @@ module.exports = function(router) {
 	const prisoners = require('../../data/prisoners-list-3')
 
 	router.post(version + '/setup', function(req, res) {
+
+			req.session.data.allocateEmployed = "Available"
+			req.session.data.pageToShow =1
 			res.redirect('/dps-home')
 	});
 

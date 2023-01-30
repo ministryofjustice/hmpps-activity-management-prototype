@@ -1104,7 +1104,7 @@ AB5568F<br />
         {% if data.allocateEmployed == "Available" %}
           {% if data.pageToShow == 1 %}
 
-              {{ data.pageToShow }}
+
               {% if (data.offenderAllocatedStatusHenryTatton !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
               <tr class="govuk-table__row">
                 <td data-sort-value="Lionel" class="govuk-table__cell">
@@ -1613,6 +1613,7 @@ AB5568F<br />
 
 
 <!--Start of Unavailable view-->
+{% if data.pageToShow == 1 %}
 
     {% if (data.offenderAllocatedStatusNeilRudge !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
     <tr class="govuk-table__row">
@@ -1622,7 +1623,7 @@ AB5568F<br />
             <input type="hidden" name="returnDashboard" value="activity-dashboard-4-1" />
             <input class="govuk-radios__input" id="offenderAllocate1" name="offenderAllocate" type="radio" value="Neil Rudge">
             <label class="govuk-label govuk-radios__label" for="offenderAllocate1">
-            <strong><a href="#">Neil Rudge</a></strong><br />
+            <strong><a href="#">Neil Rudge2</a></strong><br />
             AA4309K<br />
             {% if data.activityAllocateName == 'Wing cleaning'%}
               1-A-003
@@ -1744,6 +1745,10 @@ AB5568F<br />
         <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
       </tr>{% endif %}
 
+
+      {% elseif data.pageToShow == 2 %}
+
+
       {% if (data.offenderAllocatedStatusEniolaAldebrandi !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
@@ -1864,6 +1869,8 @@ AB5568F<br />
         <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
       </tr>{% endif %}
 
+        {% elseif data.pageToShow == 3 %}
+
       {% if (data.offenderAllocatedStatusErmisPiotrowski !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
@@ -1934,11 +1941,6 @@ AB5568F<br />
       </tr>{% endif %}
 
 
-
-
-
-
-
       {% if (data.offenderAllocatedStatusNoffRens !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
       <tr class="govuk-table__row">
@@ -1975,6 +1977,7 @@ AB5568F<br />
               <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
             </tr>
 
+            {% endif %}
   {% endif %}
 
 
