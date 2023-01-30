@@ -9,14 +9,22 @@ Activities Management prototype
 {% block content %}
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-thirds">
+  <div class="govuk-grid-column-two-thirds">
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
       Find activities with vacancies
     </h1>
-  </div><br />
+  </div>
+
+  <div class="govuk-grid-column-one-third" style="border:2px solid black; padding:10px; margin-top:20px; padding-left:20px;">
+      <p class="govuk-body"><strong>Related tasks</strong><br />
+      <a href="activity-type-select-with-category">Create an activity</a><br />
+      <a href="../create/activity-dashboard?dashboardCategory=All&dashboardView=live">Change activities and schedules</a></p>
+  </div>
+</div>
+
   <p>Select the relevant activity to see schedules and start allocating peole to them.</p>
 
   <div class="govuk-grid-row">
@@ -36,20 +44,16 @@ Activities Management prototype
             <option value="Faith and spirituality" {% if data.dashboardCategory=="Faith and spirituality'" %}selected{% endif %}>Faith and spirituality</option>
             <option value="Other" {% if data.dashboardCategory=="Other" %}selected{% endif %}>Other</option>
           </select><br /><br />
-          <button class="govuk-button" data-module="govuk-button">
+        <!--  <button class="govuk-button" data-module="govuk-button">
           Apply filter
-          </button>
+          </button>-->
         </div>
       </div>
     </div>
     <div class="govuk-grid-column-one-quarter">
         &nbsp;
     </div>
-    <div class="govuk-grid-column-one-third" style="border:2px solid black; padding:10px; margin:20px 0 0 200px; padding-left:20px;">
-        <p class="govuk-body"><strong>Related tasks</strong><br />
-        <a href="activity-type-select-with-category">Create an activity</a><br />
-        <a href="../create/activity-dashboard?dashboardCategory=All&dashboardView=live">Change activities and schedules</a></p>
-    </div>
+
     </div>
 <div class="moj-primary-navigation">
   <div class="moj-primary-navigation__container">

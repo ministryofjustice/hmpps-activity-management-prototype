@@ -14,9 +14,6 @@ Activities Management prototype
       </div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
       You're allocating to {{data.activityAllocateScheduleName  or 'Wing cleaning 1'}}
-
-
-
   </div>
 </div>
 
@@ -364,51 +361,16 @@ Activities Management prototype
 
 
 
+
+
+
       <!--Static already allocated-->
 {% if data.activityAllocateName == 'Wing cleaning'%}
-      <tr class="govuk-table__row">
-        <td data-sort-value="Lionel" class="govuk-table__cell">
-              <strong><a href="#">Dennis Rogers</a></strong><br />
-              ZX2862P<br />
-              {% if data.activityAllocateName == 'Wing cleaning'%}
-                1-A-812
-              {% else %}
-                1-C-812
-              {% endif %}
-        </td>
-        <td class="govuk-table__cell" data-sort-value="2">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">1 July 2018</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">None set</td>
-        <td class="govuk-table__cell" data-sort-value="20250216">11 Sept 2023</td>
-      </tr>
-
-
-{% elseif data.activityAllocateName == 'Textiles'%}
-
 <tr class="govuk-table__row">
   <td data-sort-value="Lionel" class="govuk-table__cell">
-        <strong><a href="#">Sergio Pepperad</a></strong><br />
-        ZX2862P<br />
-        {% if data.activityAllocateName == 'Wing cleaning'%}
-          1-A-625
-        {% else %}
-          1-C-625
-        {% endif %}
-  </td>
-  <td class="govuk-table__cell" data-sort-value="2">None</td>
-  <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">2 Sept 2022</td>
-  <td class="govuk-table__cell" data-sort-value="Maths level 2">None set</td>
-  <td class="govuk-table__cell" data-sort-value="20250216">25 May 2024</td>
-</tr>
-
-
-
-{% elseif data.activityAllocateName == 'Kitchens'%}
-<tr class="govuk-table__row">
-  <td data-sort-value="Lionel" class="govuk-table__cell">
-      <strong><a href="#">Dennis Rogers</a></strong><br />
-      ZX2862P<br />
-        1-C-812
+    <strong><a href="#">Dennis Rogers</a></strong><br />
+    ZX2862P<br />
+      1-A-812
   </td>
   <td class="govuk-table__cell" data-sort-value="2">None</td>
   <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">1 July 2018</td>
@@ -416,62 +378,602 @@ Activities Management prototype
   <td class="govuk-table__cell" data-sort-value="20250216">11 Sept 2023</td>
 </tr>
 
+{% elseif data.activityAllocateName == 'Textiles' %}
 <tr class="govuk-table__row">
-  <td data-sort-value="Lionel" class="govuk-table__cell">
-      <strong><a href="#">Damien Burns</a></strong><br />
-      YU7726L<br />
-        1-C-812
-  </td>
-  <td class="govuk-table__cell" data-sort-value="2">Hymie Grainger, <span style="font-size:.85em;">LG1291A</span></td>
-  <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">11s
-     May 2022</td>
-  <td class="govuk-table__cell" data-sort-value="Maths level 2">None set</td>
-  <td class="govuk-table__cell" data-sort-value="20250216">29 May 2025</td>
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Dennis Rogers</a></strong><br />
+AB5536F<br />
+1-A-002</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">11 Sept 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Sergio Pepperad</a></strong><br />
+AB5537F<br />
+1-A-003</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">25 May 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Ricky Holder</a></strong><br />
+AB5538F<br />
+1-A-004</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">21 Nov 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Damien Burns</a></strong><br />
+AB5539F<br />
+1-A-005</td>
+<td class="govuk-table__cell" data-sort-value="0">Hymie Grainger, HG7543L</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216">Maths 1</td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">29 May 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Osvaldo Craypond</a></strong><br />
+AB5540F<br />
+1-A-006</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">25 May 2024</td>
 </tr>
 
 <tr class="govuk-table__row">
-  <td data-sort-value="Lionel" class="govuk-table__cell">
-      <strong><a href="#">Osvaldo Craypond</a></strong><br />
-      BN9819A<br />
-        1-C-812
-  </td>
-  <td class="govuk-table__cell" data-sort-value="2">None</td>
-  <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">10 Apr 2018</td>
-  <td class="govuk-table__cell" data-sort-value="Maths level 2">None set</td>
-  <td class="govuk-table__cell" data-sort-value="20250216">25 May 2024</td>
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Shaun Heathcliff</a></strong><br />
+AB5545F<br />
+1-A-011</td>
+<td class="govuk-table__cell" data-sort-value="0">Don Cattleprod, BV6933A</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2016</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 May 2025</td>
 </tr>
 <tr class="govuk-table__row">
-  <td data-sort-value="Lionel" class="govuk-table__cell">
-      <strong><a href="#">Sergio Pepperad</a></strong><br />
-      VR6355P<br />
-        1-C-625
-  </td>
-  <td class="govuk-table__cell" data-sort-value="2">None</td>
-  <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">2 Sept 2022</td>
-  <td class="govuk-table__cell" data-sort-value="Maths level 2">None set</td>
-  <td class="govuk-table__cell" data-sort-value="20250216">25 May 2024</td>
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Ben Woodmanstern</a></strong><br />
+AB5546F<br />
+1-A-012</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216">Farms and gardens 1</td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Niall Doolittle</a></strong><br />
+AB5547F<br />
+1-A-013</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">15 July 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Hassan Banal</a></strong><br />
+AB5548F<br />
+1-A-014</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">29 May 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Josiah Van Hassal</a></strong><br />
+AB5549F<br />
+1-A-015</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2016</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 May 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Socrates Greenwood</a></strong><br />
+AB5550F<br />
+1-A-016</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Bryan  Hummel</a></strong><br />
+AB5551F<br />
+1-A-017</td>
+<td class="govuk-table__cell" data-sort-value="0">Wayne Evans, CL8793V</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2019</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">David Hasselbank</a></strong><br />
+AB5552F<br />
+1-A-018</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 Sept 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 May 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Eoin McGregor</a></strong><br />
+AB5553F<br />
+1-A-019</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 Feb 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Humbert Brewster</a></strong><br />
+AB5554F<br />
+1-A-020</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">4 May 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216">Servery</td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Mikhail Bulgarri</a></strong><br />
+AB5555F<br />
+1-A-021</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">29 March 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">16 March 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Nivens Blacklock</a></strong><br />
+AB5556F<br />
+1-A-022</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">14 Feb 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Stewart Raglan</a></strong><br />
+AB5557F<br />
+1-A-023</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">17 April 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Nov 2029</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Peter  Wimsey</a></strong><br />
+AB5558F<br />
+1-A-024</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">27 March 2030</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Noddy Ventnor</a></strong><br />
+AB5559F<br />
+1-A-025</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">11 July 2029</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Patrick Platit</a></strong><br />
+AB5560F<br />
+1-A-026</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">25 July 2031</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Emory Wild</a></strong><br />
+AB5561F<br />
+1-A-027</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 April 2031</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Hamish Dunmore</a></strong><br />
+AB5562F<br />
+1-A-028</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2033</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">John Jameson</a></strong><br />
+AB5563F<br />
+1-A-029</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2035</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Clive Indiannapolis</a></strong><br />
+AB5564F<br />
+1-A-030</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 May 2040</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Tommy Sweetcorn</a></strong><br />
+AB5565F<br />
+1-A-031</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 Feb 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Lance Legstrong</a></strong><br />
+AB5566F<br />
+1-A-032</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 April 2032</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Xerxes Bridgeman</a></strong><br />
+AB5567F<br />
+1-A-033</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2019</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Ronaldo Whippet</a></strong><br />
+AB5568F<br />
+1-A-034</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2050</td>
+</tr>
+
+
+
+
+{% elseif  data.activityAllocateName == 'Kitchens' %}
+
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Vernon Littlegod</a></strong><br />
+AB5541F<br />
+1-A-007</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">21 Nov 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Moses Sunacre</a></strong><br />
+AB5542F<br />
+1-A-008</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">20 Dec 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">13 Feb 2026</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Sunil Kentucky</a></strong><br />
+AB5543F<br />
+1-A-009</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">14 Oct 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 May 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Bruce Oliphant</a></strong><br />
+AB5544F<br />
+1-A-010</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">4 Jan 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">14 Aug 2026</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Shaun Heathcliff</a></strong><br />
+AB5545F<br />
+1-A-011</td>
+<td class="govuk-table__cell" data-sort-value="0">Don Cattleprod, BV6933A</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2016</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 May 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Ben Woodmanstern</a></strong><br />
+AB5546F<br />
+1-A-012</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216">Farms and gardens 1</td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Niall Doolittle</a></strong><br />
+AB5547F<br />
+1-A-013</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">15 July 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Hassan Banal</a></strong><br />
+AB5548F<br />
+1-A-014</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">29 May 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Josiah Van Hassal</a></strong><br />
+AB5549F<br />
+1-A-015</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2016</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 May 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Socrates Greenwood</a></strong><br />
+AB5550F<br />
+1-A-016</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Bryan  Hummel</a></strong><br />
+AB5551F<br />
+1-A-017</td>
+<td class="govuk-table__cell" data-sort-value="0">Wayne Evans, CL8793V</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2019</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">David Hasselbank</a></strong><br />
+AB5552F<br />
+1-A-018</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 Sept 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 May 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Eoin McGregor</a></strong><br />
+AB5553F<br />
+1-A-019</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 Feb 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Humbert Brewster</a></strong><br />
+AB5554F<br />
+1-A-020</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">4 May 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216">Servery</td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Mikhail Bulgarri</a></strong><br />
+AB5555F<br />
+1-A-021</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">29 March 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">16 March 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Nivens Blacklock</a></strong><br />
+AB5556F<br />
+1-A-022</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">14 Feb 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Stewart Raglan</a></strong><br />
+AB5557F<br />
+1-A-023</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">17 April 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Nov 2029</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Peter  Wimsey</a></strong><br />
+AB5558F<br />
+1-A-024</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">27 March 2030</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Noddy Ventnor</a></strong><br />
+AB5559F<br />
+1-A-025</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">11 July 2029</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Patrick Platit</a></strong><br />
+AB5560F<br />
+1-A-026</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">25 July 2031</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Emory Wild</a></strong><br />
+AB5561F<br />
+1-A-027</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 April 2031</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Hamish Dunmore</a></strong><br />
+AB5562F<br />
+1-A-028</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2033</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">John Jameson</a></strong><br />
+AB5563F<br />
+1-A-029</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2035</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Clive Indiannapolis</a></strong><br />
+AB5564F<br />
+1-A-030</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 May 2040</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Tommy Sweetcorn</a></strong><br />
+AB5565F<br />
+1-A-031</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 Feb 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Lance Legstrong</a></strong><br />
+AB5566F<br />
+1-A-032</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 April 2032</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Xerxes Bridgeman</a></strong><br />
+AB5567F<br />
+1-A-033</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2019</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="#">Ronaldo Whippet</a></strong><br />
+AB5568F<br />
+1-A-034</td>
+<td class="govuk-table__cell" data-sort-value="0"></td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2050</td>
 </tr>
 
 {% else %}
 <tr class="govuk-table__row">
   <td data-sort-value="Lionel" class="govuk-table__cell">
-        <strong><a href="#">Ricky Holder</a></strong><br />
-        ZX2862P<br />
-        {% if data.activityAllocateName == 'Wing cleaning'%}
-          1-A-123
-        {% else %}
-          1-C-123
-        {% endif %}
+    <strong><a href="#">Ricky Holder</a></strong><br />
+    ZX2862P<br />
+    {% if data.activityAllocateName == 'Wing cleaning'%}
+      1-A-123
+    {% else %}
+      1-C-123
+    {% endif %}
   </td>
   <td class="govuk-table__cell" data-sort-value="2">None</td>
   <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">22 Aug 2022</td>
   <td class="govuk-table__cell" data-sort-value="Maths level 2">None set</td>
   <td class="govuk-table__cell" data-sort-value="20250216">21 Nov 2024</td>
 </tr>
-
 {% endif %}
-
-
     </tbody>
   </table>
 
@@ -548,7 +1050,7 @@ Activities Management prototype
       <label class="govuk-label" for="sort">
         Showing people who have the following incentive level:
       </label>
-      <select class="govuk-select" id="show3" name="show-grouping"">
+      <select class="govuk-select" id="show3" name="show-grouping">
         <option value="Basic"  {% if data.allocateIncentive=="Basic" %}selected{% endif %}>Basic</option>
         <option value="Standard" {% if data.allocateIncentive=="Standard" %}selected{% endif %}>Standard</option>
         <option value="Enhanced" {% if data.allocateIncentive=="Enhanced" %}selected{% endif %}>Enhanced</option>
@@ -569,16 +1071,116 @@ Activities Management prototype
     </form>
   </div>
 
-  <p>Here is filter result:</p>
+  <p>Filter currently showing:<br />
 
   {% if data.allocateEmployed == 'Available'%}
-  available<br />
+  Available<br />
 
     {% if data.allocateRisk == 'Low'%}
-    available &amp;Low <br />
+    Low <br />
+
+      {% if data.allocateIncentive=="Basic" %}
+      Basic<br />
+
+      {% elseif data.allocateIncentive=="Standard" %}
+      Standard<br />
+
+      {% elseif data.allocateIncentive=="Enhanced" %}
+      Enhanced<br />
+
+      {% elseif data.allocateIncentive=="Basic or Enhanced" %}
+      Basic or Enhanced<br />
+
+      {% elseif data.allocateIncentive=="Standard or Enhanced" %}
+      Standard or Enhanced<br />
+
+      {% elseif data.allocateIncentive=="All" %}
+      All incentive<br />
+
+    {% endif %}
 
     {% elseif data.allocateRisk == 'Low or Medium'%}
-    available &amp;Low or Medium <br />
+    Low or Medium <br />
+
+    {% if data.allocateRisk == 'Low'%}
+    Low <br />
+
+      {% if data.allocateIncentive=="Basic" %}
+      Basic<br />
+
+      {% elseif data.allocateIncentive=="Standard" %}
+      Standard<br />
+
+      {% elseif data.allocateIncentive=="Enhanced" %}
+      Enhanced<br />
+
+      {% elseif data.allocateIncentive=="Basic or Enhanced" %}
+      Basic or Enhanced<br />
+
+      {% elseif data.allocateIncentive=="Standard or Enhanced" %}
+      Standard or Enhanced<br />
+
+      {% elseif data.allocateIncentive=="All" %}
+      All incentive<br />
+
+    {% endif %}
+
+    {% elseif data.allocateRisk == 'Low, or Medium or High'%}
+    Low, or Medium or High<br />
+
+    {% if data.allocateRisk == 'Low'%}
+    Low <br />
+
+      {% if data.allocateIncentive=="Basic" %}
+      Basic<br />
+
+      {% elseif data.allocateIncentive=="Standard" %}
+      Standard<br />
+
+      {% elseif data.allocateIncentive=="Enhanced" %}
+      Enhanced<br />
+
+      {% elseif data.allocateIncentive=="Basic or Enhanced" %}
+      Basic or Enhanced<br />
+
+      {% elseif data.allocateIncentive=="Standard or Enhanced" %}
+      Standard or Enhanced<br />
+
+      {% elseif data.allocateIncentive=="All" %}
+      All incentive<br />
+
+    {% endif %}
+
+
+    {% elseif data.allocateRisk == 'Medium or High'%}
+    Medium or High<br />
+
+    {% if data.allocateRisk == 'Low'%}
+    Low <br />
+
+      {% if data.allocateIncentive=="Basic" %}
+      Basic<br />
+
+      {% elseif data.allocateIncentive=="Standard" %}
+      Standard<br />
+
+      {% elseif data.allocateIncentive=="Enhanced" %}
+      Enhanced<br />
+
+      {% elseif data.allocateIncentive=="Basic or Enhanced" %}
+      Basic or Enhanced<br />
+
+      {% elseif data.allocateIncentive=="Standard or Enhanced" %}
+      Standard or Enhanced<br />
+
+      {% elseif data.allocateIncentive=="All" %}
+      All incentive<br />
+
+    {% endif %}
+
+    {% elseif data.allocateRisk == 'High'%}
+    High<br />
+    
     {% endif %}
 
 
@@ -587,7 +1189,7 @@ Activities Management prototype
 
   {% elseif data.allocateEmployed == 'Both available and unavailable'%}
   Both available &amp; Unavailable
-
+</p>
   {% endif %}
 
   <table class="govuk-table" data-module="moj-sortable-table">
@@ -976,6 +1578,25 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
         <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
       </tr>{% endif %}
+
+
+      <tr class="govuk-table__row">
+      <td data-sort-value="Lionel" class="govuk-table__cell">
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+      <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Noff Rens">
+      <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
+      <strong><a href="#">Abdel Garcon</a></strong><br />AB1234A<br />1-A-178</label>
+                </div>
+              </td>
+              <td class="govuk-table__cell" data-sort-value="0"None</td>
+              <td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">D</td>
+              <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
+              <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+            </tr>
+
+
+
     </tbody>
 </table>
 
