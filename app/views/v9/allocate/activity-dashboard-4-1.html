@@ -1081,58 +1081,6 @@ AB5568F<br />
     </form>
   </div>
 
-  <p>Filter currently showing:<br />
-
-  {% if data.allocateEmployed == 'Available'%}
-  Available<br />
-
-    {% if data.allocateRisk == 'Low'%}
-    Low <br />
-
-      {% if data.allocateIncentive=="Basic" %}
-      Basic<br />
-
-      {% elseif data.allocateIncentive=="Standard" %}
-      Standard<br />
-
-      {% elseif data.allocateIncentive=="Enhanced" %}
-      Enhanced<br />
-
-      {% elseif data.allocateIncentive=="Basic or Enhanced" %}
-      Basic or Enhanced<br />
-
-      {% elseif data.allocateIncentive=="Standard or Enhanced" %}
-      Standard or Enhanced<br />
-
-      {% elseif data.allocateIncentive=="All" %}
-      All incentive<br />
-
-      {% endif %}
-
-    {% elseif data.allocateRisk == 'Low or Medium'%}
-    Low or Medium <br />
-
-
-    {% elseif data.allocateRisk == 'Low, or Medium or High'%}
-    Low, or Medium or High<br />
-
-
-    {% elseif data.allocateRisk == 'Medium or High'%}
-    Medium or High<br />
-
-    {% elseif data.allocateRisk == 'High'%}
-    High<br />
-    {% endif %}
-
-
-  {% elseif data.allocateEmployed == 'Unavailable'%}
-  Unavailable
-
-  {% elseif data.allocateEmployed == 'Both available and unavailable'%}
-  Both available &amp; Unavailable
-</p>
-  {% endif %}
-
   <table class="govuk-table" data-module="moj-sortable-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
