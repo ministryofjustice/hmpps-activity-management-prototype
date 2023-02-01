@@ -11,15 +11,15 @@ Appointments prototype
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds-from-desktop">
-            <h1 class="govuk-heading-l">Check your appointment details before you accept and save</h1>
+            <h1 class="govuk-heading-l">View and edit appointment details</h1>
             <h2 class="govuk-heading-m">Appointment details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Name of prisoner 
+                  Prison name and number
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['prisoner-name']}} 
+                  David Francis, A3123DF
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
@@ -27,13 +27,38 @@ Appointments prototype
                   </a>
                 </dd>
               </div>
-             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Appointment type
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Medical 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Appointment type</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Appointment sub type
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Doctor
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Appointment sub type</span>
+                  </a>
+                </dd>
+              </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Appointment location
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['appointment-location']}} 
+                 Example appointment location
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
@@ -46,7 +71,7 @@ Appointments prototype
                   Date
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['appointment-date-day']}} {{ data['appointment-date-month']}}  {{ data['appointment-date-year']}} 
+                 18 Jan 2023 
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
@@ -56,10 +81,23 @@ Appointments prototype
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Time
+                  Start time
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['start-hours']}}:{{ data['start-minutes']}} 
+                 15:00 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  End time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                 16:00 
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
@@ -71,10 +109,20 @@ Appointments prototype
             
             
             <form action="confirmation" method="post" novalidate>
-              <input type="hidden" name="answers-checked" value="true">
-              <button class="govuk-button" data-module="govuk-button">
-                Accept and save
+              <div class="govuk-button-group">
+              <button class="govuk-button " data-module="govuk-button">
+                Print movement list
               </button>
+              <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                Cancel appointment
+              </button>
+              <button class="govuk-button govuk-button--warning" data-module="govuk-button">
+                Delete appointment
+              </button>
+            </div>
+             <p class="govuk-body">
+              <a href="appointment-view" class="govuk-link">Back to list of appointments</a>
+             </p>
             </form>
           </div>
         </div>

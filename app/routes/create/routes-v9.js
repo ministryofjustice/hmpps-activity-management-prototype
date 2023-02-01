@@ -7,6 +7,9 @@ module.exports = function(router) {
 	const prisoners = require('../../data/prisoners-list-3')
 
 	router.post(version + '/setup', function(req, res) {
+
+			req.session.data.allocateEmployed = "Available"
+			req.session.data.pageToShow =1
 			res.redirect('/dps-home')
 	});
 
@@ -1143,5 +1146,12 @@ module.exports = function(router) {
 			res.redirect(version + '/allocate/allocate-confirmation')
 		}
 	});
+
+
+	router.get(version +'/allocate/poster', function(req, res) {
+			res.redirect(version + '/allocate/activity-dashboard-4-1#allocate')
+});
+
+
 
 }

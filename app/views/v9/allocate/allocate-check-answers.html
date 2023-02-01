@@ -20,7 +20,7 @@ Activities Management prototype
       </div>
 
       <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-m">Who you're allocating </h2>
+        <h2 class="govuk-heading-m">Details of who you're allocating </h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
@@ -52,12 +52,11 @@ Activities Management prototype
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
-              Location
+              Cell location
             </dt>
             <dd class="govuk-summary-list__value">
               <p class="govuk-body">
-              House block 1<br />
-                Wing 1<br />
+              1-A-3078
               </p>
             </dd>
             <dd class="govuk-summary-list__actions">
@@ -68,14 +67,44 @@ Activities Management prototype
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
-              Risk assessment
+              Workplace risk assessment
             </dt>
             <dd class="govuk-summary-list__value">
-              <p class="govuk-body"> Low
+              <p class="govuk-body"> {{ data.allocationRisk }}
               </p>
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="check/activity-start-time-2">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Education level
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">
+                  {{data.allocationEducation}}
+              </p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="allocate-payment-details">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Incentive level
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">
+                  {{data.allocateIncentive}}
+              </p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="allocate-payment-details">
                 <span class="govuk-visually-hidden"> contact details</span>
               </a>
             </dd>
@@ -86,22 +115,22 @@ Activities Management prototype
             </dt>
             <dd class="govuk-summary-list__value">
               <p class="govuk-body">
-                  &pound;{{data.AllocatePayment or '1.10'}}
+                  &pound;{{data.AllocatePayment or '1.1110'}}
               </p>
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="allocate-payment-details">
-                Change<span class="govuk-visually-hidden"> contact details</span>
+              <a class="govuk-link" href="allocate-payment-details">Change
+                <span class="govuk-visually-hidden"> contact details</span>
               </a>
             </dd>
           </div>
         </dl>
 
-        <h2 class="govuk-heading-m">Activity you're allocating to </h2>
+        <h2 class="govuk-heading-m">Activity schedule details </h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
-            Title
+            Activity name
             </dt>
             <dd class="govuk-summary-list__value">
               <p class="govuk-body">{{ data.activityAllocateName }}</p>
@@ -114,11 +143,20 @@ Activities Management prototype
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
-              Location
+              Activity location
             </dt>
             <dd class="govuk-summary-list__value">
               <p class="govuk-body">
-              Wing 1
+
+                {% if data.activityAllocateName=="Kitchens" %}
+                Kitchen
+
+                {% elseif data.activityAllocateName=="Textiles" %}
+                Workshop 1
+
+                {% elseif data.activityAllocateName=="Wing cleaning" %}
+                Wing A
+                {% endif %}
               </p>
             </dd>
             <dd class="govuk-summary-list__actions">
@@ -129,11 +167,65 @@ Activities Management prototype
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
-              Risk assessment
+            Activity risk level
             </dt>
             <dd class="govuk-summary-list__value">
               <p class="govuk-body">
-              High
+              {{ data.allocationRisk }}
+              </p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time-2">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Required education level
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">
+              {{data.allocationEducation}}
+              </p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time-2">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Required incentive level
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">
+              {{ data.allocationIncentive }}
+              </p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-start-time-2">
+                <span class="govuk-visually-hidden"> contact details</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Days and times
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">
+              Monday am<br />
+              Monday pm<br />
+              Tuesday am<br />
+              Tuesday pm<br />
+              Wednesday am <br />
+              Wednesday pm<br />
+              Thursday am<br />
+              Thursday pm <br />
+              Friday am
               </p>
             </dd>
             <dd class="govuk-summary-list__actions">

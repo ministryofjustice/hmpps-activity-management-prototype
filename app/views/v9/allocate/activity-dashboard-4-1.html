@@ -13,21 +13,28 @@ Activities Management prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      You're allocating to {{data.activityAllocateScheduleName  or 'Wing cleaning 1'}}
-
-
-
+      You're allocating to {{data.activityAllocateScheduleName or 'Wing cleaning 2'}}
   </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+<p>Check the requirements for this activity so you can allocate suitable candidates.</p>
+</div>
+  <div class="govuk-grid-column-one-third">
+    <div style="border:2px solid #f1f1f1; padding:10px; padding-left:20px; width=90%;">
+    <p class="govuk-body"><strong>Related tasks</strong><br />
+    <a href="#">Deallocate from an activity</a><br />
+    <a href="../create/activity-dashboard?dashboardCategory=All&dashboardView=live">Edit activities and schedules</a><br />
+    <a href="activity-dashboard-2?dashboardCategory=All#">Find other activities with vacancies</a></p>
+  </div>
+</div>
 </div>
 
   <div class="govuk-width-container">
     <ul class="govuk-grid-row card-group" id="sortable">
-      <li class="govuk-grid-column-one-third card-group__item" id="tile_unlock">
-        <div class="card card--clickable" data-test="manage-prisoner-whereabouts">
-          <div style="height:20px; width:100%; padding:0; margin:0; background-color:#f1f1f1;">
-          &nbsp;
-          <div>
-          <h2 class="govuk-heading-m card__heading">
+      <li class="govuk-grid-column-one-third card-group__item" id="tile">
+        <div class="card card--clickable">
+          <h2 class="govuk-heading-m card__heading" style="background-color:#f1f1f1;">
         <!--    <a class="govuk-link card__link govuk-link--no-visi ted-state" href="{{data['prototype-versions']['unlock-and-attend']['url']}}">-->
             Current allocation
           </h2>
@@ -50,19 +57,16 @@ Activities Management prototype
 
         </div>
       </li>
-      <li class="govuk-grid-column-two-thirds card-group__item" id="tile_unlock">
-        <div class="card card--clickable" data-test="manage-prisoner-whereabouts">
-          <div style="height:20px; width:100%; padding:0; margin:0; background-color:#f1f1f1;">
-          &nbsp;
-          <div>
-          <h2 class="govuk-heading-m card__heading">
+      <li class="govuk-grid-column-two-thirds card-group__item">
+        <div class="card card--clickable">
+          <h2 class="govuk-heading-m card__heading" style="background-color:#f1f1f1;">
         <!--    <a class="govuk-link card__link govuk-link--no-visited-state" href="{{data['prototype-versions']['unlock-and-attend']['url']}}">-->
             Requirements
           </h2>
           <p class="govuk-body card__description">
-            <span style="width:370px; float:left;"><strong>Education level:</strong></span> {{ data.allocationEducation }}<br /><br />
+            <span style="width:370px; float:left;"><strong>Suitable for workplace risk assessment:</strong></span> {{ data.allocationRisk }}<br /><br />
             <span style="width:370px; float:left;"><strong>Suitable for incentive level:</strong></span> {{ data.allocationIncentive }}<br /><br />
-            <span style="width:370px; float:left;"><strong>Suitable for workplace risk assessment:</strong></span> {{ data.allocationRisk }}
+            <span style="width:370px; float:left;"><strong>Education level:</strong></span> {{ data.allocationEducation }}
           </p>
         </div>
       </li>
@@ -107,7 +111,7 @@ Activities Management prototype
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header">Prisoner details</th>
-        <th scope="col" class="govuk-table__header" style="width:28%">Non-associations</th>
+        <th scope="col" class="govuk-table__header" style="width:28%">Non-associations in this prison</th>
         <th scope="col" class="govuk-table__header">Date allocated</th>
         <th scope="col" class="govuk-table__header">Other allocations</th>
         <th scope="col" class="govuk-table__header">Earliest release date</th>
@@ -118,7 +122,7 @@ Activities Management prototype
       {% if (data.offenderAllocatedStatusNeilRudge =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
       <tr class="govuk-table__row">
         <td data-sort-value="Neil" class="govuk-table__cell">
-          <strong><a href="#">Neil Rudge</a></strong><br />
+          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Neil Rudge</a></strong><br />
           AA4309K<br />
           1-3-003
       </td>
@@ -133,7 +137,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Ivor" class="govuk-table__cell">
-          <strong><a href="#">Ivor Norisk</a></strong><br />
+          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ivor Norisk</a></strong><br />
           BA3219B<br />
           2-3-022
         </td>
@@ -148,7 +152,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lee" class="govuk-table__cell">
-          <strong><a href="#">Lee Milson</a></strong><br />
+          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Lee Milson</a></strong><br />
           CV1291A<br />
           1-1-021
         </td>
@@ -164,7 +168,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-          <strong><a href="#">Lionel Messer</a></strong><br />
+          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Lionel Messer</a></strong><br />
           NH7239A<br />
           1-1-021
         </td>
@@ -180,7 +184,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Noff" class="govuk-table__cell">
-          <strong><a href="#">Noff Rens</a></strong><br />
+          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Noff Rens</a></strong><br />
           BN7622L<br />
           2-1-021
         </td>
@@ -194,7 +198,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-              <strong><a href="#">Henry Tatton</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Henry Tatton</a></strong><br />
               BN5297F<br />
               1-A-069
         </td>
@@ -208,7 +212,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Alaric" class="govuk-table__cell">
-              <strong><a href="#">Alaric Messer</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Alaric Messer</a></strong><br />
                 DE6192M<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 1-A-170
@@ -226,7 +230,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-            <strong><a href="#">Eniola Aldebrandi</a></strong><br />
+            <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Eniola Aldebrandi</a></strong><br />
               GK9675V<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 3-A-045
@@ -244,7 +248,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-              <strong><a href="#">Burco Charves</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Burco Charves</a></strong><br />
               AL7634M<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 1-A-111
@@ -261,7 +265,7 @@ Activities Management prototype
       {% if (data.offenderAllocatedStatusJairusCatalano =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-              <strong><a href="#">Jairus Catalano</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Jairus Catalano</a></strong><br />
               DY8443K<br />
               1-A-055
         </td>
@@ -275,7 +279,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-              <strong><a href="#">Abdel Garcon</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Abdel Garcon</a></strong><br />
               ST9127U<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 2-A-022
@@ -293,7 +297,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-              <strong><a href="#">Almog Tanzer</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Almog Tanzer</a></strong><br />
               KR7121C<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 2-A-022
@@ -311,7 +315,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-              <strong><a href="#">Ermis Piotrowski</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ermis Piotrowski</a></strong><br />
               BB1076W<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 1-A-132
@@ -329,7 +333,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-              <strong><a href="#">Ceren Wieck</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ceren Wieck</a></strong><br />
               AB8540Z<br />
               1-A-099
         </td>
@@ -344,7 +348,7 @@ Activities Management prototype
 
       <tr class="govuk-table__row">
         <td data-sort-value="Lionel" class="govuk-table__cell">
-              <strong><a href="#">Claud Waller</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Claud Waller</a></strong><br />
               WT1317H<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 1-A-078
@@ -364,63 +368,619 @@ Activities Management prototype
 
 
 
+
+
+
       <!--Static already allocated-->
 {% if data.activityAllocateName == 'Wing cleaning'%}
-      <tr class="govuk-table__row">
-        <td data-sort-value="Lionel" class="govuk-table__cell">
-              <strong><a href="#">Dennis Rogers</a></strong><br />
-              ZX2862P<br />
-              {% if data.activityAllocateName == 'Wing cleaning'%}
-                1-A-812
-              {% else %}
-                1-C-812
-              {% endif %}
-        </td>
-        <td class="govuk-table__cell" data-sort-value="2">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">1 July 2018</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">None set</td>
-        <td class="govuk-table__cell" data-sort-value="20250216">11 Sept 2023</td>
-      </tr>
-
-
-{% elseif data.activityAllocateName == 'Textiles'%}
-
 <tr class="govuk-table__row">
   <td data-sort-value="Lionel" class="govuk-table__cell">
-        <strong><a href="#">Sergio Pepperad</a></strong><br />
-        ZX2862P<br />
-        {% if data.activityAllocateName == 'Wing cleaning'%}
-          1-A-625
-        {% else %}
-          1-C-625
-        {% endif %}
+    <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Dennis Rogers</a></strong><br />
+    ZX2862P<br />
+      1-A-812
   </td>
   <td class="govuk-table__cell" data-sort-value="2">None</td>
-  <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">2 Sept 2022</td>
+  <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">1 July 2018</td>
   <td class="govuk-table__cell" data-sort-value="Maths level 2">None set</td>
-  <td class="govuk-table__cell" data-sort-value="20250216">25 May 2024</td>
+  <td class="govuk-table__cell" data-sort-value="20250216">11 Sept 2023</td>
+</tr>
+
+{% elseif data.activityAllocateName == 'Textiles' %}
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Dennis Rogers</a></strong><br />
+AB5536F<br />
+1-A-002</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">11 Sept 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Sergio Pepperad</a></strong><br />
+AB5537F<br />
+1-A-003</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">25 May 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ricky Holder</a></strong><br />
+AB5538F<br />
+1-A-004</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">21 Nov 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Damien Burns</a></strong><br />
+AB5539F<br />
+1-A-005</td>
+<td class="govuk-table__cell" data-sort-value="0">Hymie Grainger, HG7543L</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216">Maths 1</td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">29 May 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Osvaldo Craypond</a></strong><br />
+AB5540F<br />
+1-A-006</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">25 May 2024</td>
+</tr>
+
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Shaun Heathcliff</a></strong><br />
+AB5545F<br />
+1-A-011</td>
+<td class="govuk-table__cell" data-sort-value="0">Don Cattleprod, BV6933A</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2016</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 May 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ben Woodmanstern</a></strong><br />
+AB5546F<br />
+1-A-012</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216">Farms and gardens 1</td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Niall Doolittle</a></strong><br />
+AB5547F<br />
+1-A-013</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">15 July 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Hassan Banal</a></strong><br />
+AB5548F<br />
+1-A-014</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">29 May 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Josiah Van Hassal</a></strong><br />
+AB5549F<br />
+1-A-015</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2016</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 May 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Socrates Greenwood</a></strong><br />
+AB5550F<br />
+1-A-016</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Bryan  Hummel</a></strong><br />
+AB5551F<br />
+1-A-017</td>
+<td class="govuk-table__cell" data-sort-value="0">Wayne Evans, CL8793V</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2019</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">David Hasselbank</a></strong><br />
+AB5552F<br />
+1-A-018</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 Sept 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 May 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Eoin McGregor</a></strong><br />
+AB5553F<br />
+1-A-019</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 Feb 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Humbert Brewster</a></strong><br />
+AB5554F<br />
+1-A-020</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">4 May 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216">Servery</td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Mikhail Bulgarri</a></strong><br />
+AB5555F<br />
+1-A-021</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">29 March 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">16 March 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Nivens Blacklock</a></strong><br />
+AB5556F<br />
+1-A-022</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">14 Feb 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Stewart Raglan</a></strong><br />
+AB5557F<br />
+1-A-023</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">17 April 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Nov 2029</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Peter  Wimsey</a></strong><br />
+AB5558F<br />
+1-A-024</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">27 March 2030</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Noddy Ventnor</a></strong><br />
+AB5559F<br />
+1-A-025</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">11 July 2029</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Patrick Platit</a></strong><br />
+AB5560F<br />
+1-A-026</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">25 July 2031</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Emory Wild</a></strong><br />
+AB5561F<br />
+1-A-027</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 April 2031</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Hamish Dunmore</a></strong><br />
+AB5562F<br />
+1-A-028</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2033</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">John Jameson</a></strong><br />
+AB5563F<br />
+1-A-029</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2035</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Clive Indiannapolis</a></strong><br />
+AB5564F<br />
+1-A-030</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 May 2040</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Tommy Sweetcorn</a></strong><br />
+AB5565F<br />
+1-A-031</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 Feb 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Lance Legstrong</a></strong><br />
+AB5566F<br />
+1-A-032</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 April 2032</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Xerxes Bridgeman</a></strong><br />
+AB5567F<br />
+1-A-033</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2019</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ronaldo Whippet</a></strong><br />
+AB5568F<br />
+1-A-034</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2050</td>
+</tr>
+
+
+
+
+{% elseif  data.activityAllocateName == 'Kitchens' %}
+
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Vernon Littlegod</a></strong><br />
+AB5541F<br />
+1-A-007</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">21 Nov 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Moses Sunacre</a></strong><br />
+AB5542F<br />
+1-A-008</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">20 Dec 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">13 Feb 2026</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Sunil Kentucky</a></strong><br />
+AB5543F<br />
+1-A-009</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">14 Oct 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 May 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Bruce Oliphant</a></strong><br />
+AB5544F<br />
+1-A-010</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">4 Jan 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">14 Aug 2026</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Shaun Heathcliff</a></strong><br />
+AB5545F<br />
+1-A-011</td>
+<td class="govuk-table__cell" data-sort-value="0">Don Cattleprod, BV6933A</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2016</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 May 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ben Woodmanstern</a></strong><br />
+AB5546F<br />
+1-A-012</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216">Farms and gardens 1</td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Niall Doolittle</a></strong><br />
+AB5547F<br />
+1-A-013</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">15 July 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Hassan Banal</a></strong><br />
+AB5548F<br />
+1-A-014</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">29 May 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Josiah Van Hassal</a></strong><br />
+AB5549F<br />
+1-A-015</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2016</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 May 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Socrates Greenwood</a></strong><br />
+AB5550F<br />
+1-A-016</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Bryan  Hummel</a></strong><br />
+AB5551F<br />
+1-A-017</td>
+<td class="govuk-table__cell" data-sort-value="0">Wayne Evans, CL8793V</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2019</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">David Hasselbank</a></strong><br />
+AB5552F<br />
+1-A-018</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 Sept 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 May 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Eoin McGregor</a></strong><br />
+AB5553F<br />
+1-A-019</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 Feb 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Humbert Brewster</a></strong><br />
+AB5554F<br />
+1-A-020</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">4 May 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216">Servery</td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Mikhail Bulgarri</a></strong><br />
+AB5555F<br />
+1-A-021</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">29 March 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">16 March 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Nivens Blacklock</a></strong><br />
+AB5556F<br />
+1-A-022</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">14 Feb 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2028</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Stewart Raglan</a></strong><br />
+AB5557F<br />
+1-A-023</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">17 April 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">22 Nov 2029</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Peter  Wimsey</a></strong><br />
+AB5558F<br />
+1-A-024</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2023</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">27 March 2030</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Noddy Ventnor</a></strong><br />
+AB5559F<br />
+1-A-025</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">11 July 2029</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Patrick Platit</a></strong><br />
+AB5560F<br />
+1-A-026</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">25 July 2031</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Emory Wild</a></strong><br />
+AB5561F<br />
+1-A-027</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 April 2031</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Hamish Dunmore</a></strong><br />
+AB5562F<br />
+1-A-028</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2033</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">John Jameson</a></strong><br />
+AB5563F<br />
+1-A-029</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">1 July 2018</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2035</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Clive Indiannapolis</a></strong><br />
+AB5564F<br />
+1-A-030</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">2 Sept 2022</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 May 2040</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Tommy Sweetcorn</a></strong><br />
+AB5565F<br />
+1-A-031</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">22 Aug 2020</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">2 Feb 2025</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Lance Legstrong</a></strong><br />
+AB5566F<br />
+1-A-032</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">11 May 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">18 April 2032</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Xerxes Bridgeman</a></strong><br />
+AB5567F<br />
+1-A-033</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">10 April 2019</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">10 Jan 2027</td>
+</tr>
+<tr class="govuk-table__row">
+<td data-sort-value="Lionel" class="govuk-table__cell">
+<strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ronaldo Whippet</a></strong><br />
+AB5568F<br />
+1-A-034</td>
+<td class="govuk-table__cell" data-sort-value="0">None</td>
+<td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">9 Feb 2021</td>
+<td class="govuk-table__cell" data-sort-value="20250216"></td>
+<td class="govuk-table__cell" data-sort-value="Maths level 2">28 June 2050</td>
 </tr>
 
 {% else %}
 <tr class="govuk-table__row">
   <td data-sort-value="Lionel" class="govuk-table__cell">
-        <strong><a href="#">Ricky Holder</a></strong><br />
-        ZX2862P<br />
-        {% if data.activityAllocateName == 'Wing cleaning'%}
-          1-A-123
-        {% else %}
-          1-C-123
-        {% endif %}
+    <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ricky Holder</a></strong><br />
+    ZX2862P<br />
+    {% if data.activityAllocateName == 'Wing cleaning'%}
+      1-A-123
+    {% else %}
+      1-C-123
+    {% endif %}
   </td>
   <td class="govuk-table__cell" data-sort-value="2">None</td>
   <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">22 Aug 2022</td>
   <td class="govuk-table__cell" data-sort-value="Maths level 2">None set</td>
   <td class="govuk-table__cell" data-sort-value="20250216">21 Nov 2024</td>
 </tr>
-
 {% endif %}
-
-
     </tbody>
   </table>
 
@@ -463,12 +1023,15 @@ Activities Management prototype
     </div>
 
 <div class="govuk-grid-row" style="background-color:#f1f1f1; padding-top:20px;">
+  <form method="post" action="poster">
   <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
     <div class="govuk-form-group">
         <label class="govuk-label" for="sort">
+
+
           Showing people who are:<br /><br />
         </label>
-        <select class="govuk-select" id="show" name="show-grouping">
+        <select class="govuk-select" id="show" name="allocateEmployed">
           <option value="Available" {% if data.allocateEmployed=="Available" %}selected{% endif %}>Available</option>
           <option value="Unavailable" {% if data.allocateEmployed=="Unavailable" %}selected{% endif %}>Unavailable</option>
           <option value="Both available and unavailable" {% if data.allocateEmployed=="Both available and unavailable" %}selected{% endif %}>Both available and unavailable</option>
@@ -480,9 +1043,8 @@ Activities Management prototype
       <label class="govuk-label" for="sort">
         Showing people whose workplace assessment risk is:
       </label>
-      <select class="govuk-select" id="show2" name="show-grouping"">
-        <option value="Any" {% if data.allocateRisk=="Any" %}selected{% endif %}>Any risk level</option>
-        <option value="Low"  {% if data.allocateRisk=="Low" %}selected{% endif %}>Low</option>
+      <select class="govuk-select" id="show2" name="allocateRisk">
+        <option value="Low" {% if data.allocateRisk=="Low" %}selected{% endif %}>Low</option>
         <option value="Low or Medium"  {% if data.allocateRisk=="Low or Medium" %}selected{% endif %}>Low or Medium</option>
         <option value="Low, Medium or High" {% if data.allocateRisk=="Low, Medium or High" %}selected{% endif %}>Low, Medium or High</option>
         <option value="Medium or High" {% if data.allocateRisk=="Medium or High" %}selected{% endif %}>Medium or High</option>
@@ -495,20 +1057,26 @@ Activities Management prototype
       <label class="govuk-label" for="sort">
         Showing people who have the following incentive level:
       </label>
-      <select class="govuk-select" id="show3" name="show-grouping"">
+      <select class="govuk-select" id="show3" name="allocateIncentive">
         <option value="Basic"  {% if data.allocateIncentive=="Basic" %}selected{% endif %}>Basic</option>
         <option value="Standard" {% if data.allocateIncentive=="Standard" %}selected{% endif %}>Standard</option>
+        <option value="Enhanced" {% if data.allocateIncentive=="Enhanced" %}selected{% endif %}>Enhanced</option>
         <option value="Basic or Standard" {% if data.allocateIncentive=="Basic or Standard" %}selected{% endif %}>Basic or Standard</option>
         <option value="Standard or Enhanced" {% if data.allocateIncentive=="Standard or Enhanced" %}selected{% endif %}>Standard or Enhanced</option>
-        <option value="All" {% if data.allocateIncentive=="All" %}selected{% endif %}>All incentive level</option>
+        <option value="All" {% if data.allocateIncentive=="All" %}selected{% endif %}>All incentive levels</option>
+
+
+
 
 
       </select>
       </div>
     </div>
+    <button class="govuk-button" data-module="govuk-button" style="margin-left:16px;">
+    Apply filters
+    </button>
+    </form>
   </div>
-
-
 
   <table class="govuk-table" data-module="moj-sortable-table">
     <thead class="govuk-table__head">
@@ -530,27 +1098,744 @@ Activities Management prototype
     <form method="post">
     <tbody class="govuk-table__body">
 
+        {% if data.allocateEmployed == "Available" %}
+          {% if data.pageToShow == 1 %}
 
 
-      {% if (data.offenderAllocatedStatusHenryTatton !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+              {% if (data.offenderAllocatedStatusHenryTatton !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+              <tr class="govuk-table__row">
+                <td data-sort-value="Lionel" class="govuk-table__cell">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate6" name="offenderAllocate" type="radio" value="Henry Tatton">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate6">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Henry Tatton</a></strong><br />
+                      BN5297F<br />
+                      1-A-069
+                    </label>
+                  </div>
+                </td>
+                <td class="govuk-table__cell" data-sort-value="0">None</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
+                <td class="govuk-table__cell" data-sort-value="20290701">1 July 2029</td>
+                {% if  data.activityAllocateName == 'Textiles' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+                {% else %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+                {% endif %}
+              </tr>
+              {% endif %}
 
-      <tr class="govuk-table__row">
-        <td data-sort-value="Lionel" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate6" name="offenderAllocate" type="radio" value="Henry Tatton">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate6">
-              <strong><a href="#">Henry Tatton</a></strong><br />
-              BN5297F<br />
-              1-A-069
+              {% if (data.offenderAllocatedStatusAlaricMesser !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+              <tr class="govuk-table__row">
+                <td data-sort-value="Alaric" class="govuk-table__cell">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate7" name="offenderAllocate" type="radio" value="Alaric Messer">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate7">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Alaric Messer</a></strong><br />
+                        DE6192M<br />
+                      {% if data.activityAllocateName == 'Wing cleaning'%}
+                        1-A-170
+                      {% else %}
+                        1-B-170
+                      {% endif %}
+                    </label>
+                  </div>
+                </td>
+                <td class="govuk-table__cell" data-sort-value="0">None</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
+                <td class="govuk-table__cell" data-sort-value="20250216">2 June 2040</td>
+                {% if  data.activityAllocateName == 'Textiles' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+                {% else %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+                {% endif %}
+              </tr>{% endif %}
+
+              {% if (data.offenderAllocatedStatusEniolaAldebrandi !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+              <tr class="govuk-table__row">
+                <td data-sort-value="Lionel" class="govuk-table__cell">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate8" name="offenderAllocate" type="radio" value="Eniola Aldebrandi">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate8">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Eniola Aldebrandi</a></strong><br />
+                      GK9675V<br />
+                      {% if data.activityAllocateName == 'Wing cleaning'%}
+                        3-A-045
+                      {% else %}
+                        3-C-045
+                      {% endif %}
+
+                    </label>
+                  </div>
+                </td>
+                <td class="govuk-table__cell" data-sort-value="0">None</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+                <td class="govuk-table__cell" data-sort-value="20250216">9 Nov 2024</td>
+                {% if  data.activityAllocateName == 'Textiles' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+                {% elseif  data.activityAllocateName == 'Kitchens' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+                {% else %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+                {% endif %}
+                </tr>{% endif %}
+
+              {% if (data.offenderAllocatedStatusBurcoCharves !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+              <tr class="govuk-table__row">
+                <td data-sort-value="Lionel" class="govuk-table__cell">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate9" name="offenderAllocate" type="radio" value="Burco Charves">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate9">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Burco Charves</a></strong><br />
+                      AL7634M<br />
+                      {% if data.activityAllocateName == 'Wing cleaning'%}
+                        1-A-111
+                      {% else %}
+                        1-H-111
+                      {% endif %}
+
+                    </label>
+                  </div>
+                </td>
+                <td class="govuk-table__cell" data-sort-value="2">None</td>
+                <td class="govuk-table__cell" data-sort-value="C" style="padding-left:20px;">C</td>
+                <td class="govuk-table__cell" data-sort-value="20250216">18 April 2025</td>
+                {% if  data.activityAllocateName == 'Textiles' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+                {% elseif  data.activityAllocateName == 'Kitchens' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+                {% else %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+                {% endif %}
+                              </tr>{% endif %}
+
+              {% if (data.offenderAllocatedStatusJairusCatalano !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+              <tr class="govuk-table__row">
+                <td data-sort-value="Lionel" class="govuk-table__cell">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate10" name="offenderAllocate" type="radio" value="Jairus Catalano">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate10">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Jairus Catalano</a></strong><br />
+                      DY8443K<br />
+                      1-A-055
+                    </label>
+                  </div>
+                </td>
+                <td class="govuk-table__cell" data-sort-value="2">None</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+                <td class="govuk-table__cell" data-sort-value="20250216">2 Mar 2023</td>
+                {% if  data.activityAllocateName == 'Textiles' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+                {% elseif  data.activityAllocateName == 'Kitchens' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+                {% else %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+                {% endif %}
+                            </tr>{% endif %}
+
+
+
+
+              <!--END PAGE !1-->
+
+
+          {% elseif data.pageToShow == 2 %}
+          {% if (data.offenderAllocatedStatusAbdelGarcon !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+              <tr class="govuk-table__row">
+                <td data-sort-value="Lionel" class="govuk-table__cell">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate11" name="offenderAllocate" type="radio" value="Abdel Garcon">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate11">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Abdel Garcon</a></strong><br />
+                      ST9127U<br />
+                      {% if data.activityAllocateName == 'Wing cleaning'%}
+                        2-A-022
+                      {% else %}
+                        2-B-022
+                      {% endif %}
+
+                    </label>
+                  </div>
+                </td>
+                <td class="govuk-table__cell" data-sort-value="2">None</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+                <td class="govuk-table__cell" data-sort-value="20250216">28 Aug 2023</td>
+                {% if  data.activityAllocateName == 'Textiles' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+                {% elseif  data.activityAllocateName == 'Kitchens' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+                {% else %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+                {% endif %}
+                </tr>{% endif %}
+
+              {% if (data.offenderAllocatedStatusAlmogTanzer !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+              <tr class="govuk-table__row">
+                <td data-sort-value="Lionel" class="govuk-table__cell">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate12" name="offenderAllocate" type="radio" value="Almog Tanzer">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate12">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Almog Tanzer</a></strong><br />
+                      KR7121C<br />
+                      {% if data.activityAllocateName == 'Wing cleaning'%}
+                        2-A-022
+                      {% else %}
+                        1-D-038
+                      {% endif %}
+
+                    </label>
+                  </div>
+                </td>
+                <td class="govuk-table__cell" data-sort-value="2">None</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">Unsentenced</td>
+                <td class="govuk-table__cell" data-sort-value="20250216">15 May 2027</td>
+                {% if  data.activityAllocateName == 'Textiles' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+                {% elseif  data.activityAllocateName == 'Kitchens' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+                {% else %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+                {% endif %}               </tr>{% endif %}
+
+              {% if (data.offenderAllocatedStatusErmisPiotrowski !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+              <tr class="govuk-table__row">
+                <td data-sort-value="Lionel" class="govuk-table__cell">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate13" name="offenderAllocate" type="radio" value="Ermis Piotrowski">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate13">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ermis Piotrowski</a></strong><br />
+                      BB1076W<br />
+                      {% if data.activityAllocateName == 'Wing cleaning'%}
+                        1-A-132
+                      {% else %}
+                        1-E-132
+                      {% endif %}
+
+                    </label>
+                  </div>
+                </td>
+                <td class="govuk-table__cell" data-sort-value="2">None</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
+                <td class="govuk-table__cell" data-sort-value="20250216">8 May 2024</td>
+                {% if  data.activityAllocateName == 'Textiles' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+                {% elseif  data.activityAllocateName == 'Kitchens' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+                {% else %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+                {% endif %}               </tr>{% endif %}
+
+              {% if (data.offenderAllocatedStatusCerenWieck !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+              <tr class="govuk-table__row">
+                <td data-sort-value="Lionel" class="govuk-table__cell">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Ceren Wieck">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ceren Wieck</a></strong><br />
+                      AB8540Z<br />
+                      1-A-099
+                    </label>
+                  </div>
+                </td>
+                <td class="govuk-table__cell" data-sort-value="2">None</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+                <td class="govuk-table__cell" data-sort-value="20250216">16 Dec 2024</td>
+                {% if  data.activityAllocateName == 'Textiles' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+                {% elseif  data.activityAllocateName == 'Kitchens' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+                {% else %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+                {% endif %}               </tr>{% endif %}
+
+              {% if (data.offenderAllocatedStatusClaudWaller !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+              <tr class="govuk-table__row">
+                <td data-sort-value="Lionel" class="govuk-table__cell">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Claud Waller">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Claud Waller</a></strong><br />
+                      WT1317H<br />
+                      {% if data.activityAllocateName == 'Wing cleaning'%}
+                        1-A-078
+                      {% else %}
+                        1-C-078
+                      {% endif %}
+                    </label>
+                  </div>
+                </td>
+                <td class="govuk-table__cell" data-sort-value="2">None</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+                <td class="govuk-table__cell" data-sort-value="20250216">3 June 2024</td>
+                {% if  data.activityAllocateName == 'Textiles' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+                {% elseif  data.activityAllocateName == 'Kitchens' %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+                {% else %}
+                <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+                {% endif %}               </tr>{% endif %}
+
+
+
+
+          <!--END PAGE !2-->
+
+          {% elseif data.pageToShow == 3 %}
+
+          {% if (data.offenderAllocatedStatusNeilRudge !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+          <tr class="govuk-table__row">
+            <td data-sort-value="Neil" class="govuk-table__cell">
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input type="hidden" name="returnDashboard" value="activity-dashboard-4-1" />
+                  <input class="govuk-radios__input" id="offenderAllocate1" name="offenderAllocate" type="radio" value="Neil Rudge">
+                  <label class="govuk-label govuk-radios__label" for="offenderAllocate1">
+                  <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Neil Rudge</a></strong><br />
+                  AA4309K<br />
+                  {% if data.activityAllocateName == 'Wing cleaning'%}
+                    1-A-003
+                  {% else %}
+                    1-D-003
+                  {% endif %}
+
+                  </label>
+                </div>
+              </div>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="0">None</td>
+          <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">C</td>
+            <td class="govuk-table__cell" data-sort-value="20240709">9 July 2024</td>
+            {% if  data.activityAllocateName == 'Textiles' %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% elseif  data.activityAllocateName == 'Kitchens' %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+            {% else %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% endif %}           </tr>
+          {% endif %}
+
+          {% if (data.offenderAllocatedStatusIvorNorisk !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+          <tr class="govuk-table__row">
+            <td data-sort-value="Ivor" class="govuk-table__cell">
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="offenderAllocate2" name="offenderAllocate" type="radio" value="Ivor Norisk">
+                  <label class="govuk-label govuk-radios__label" for="offenderAllocate2">
+                  <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ivor Norisk</a></strong><br />
+                  BA3219B<br />
+                  {% if data.activityAllocateName == 'Wing cleaning'%}
+                    1-A-002
+                  {% else %}
+                    1-C-002
+                  {% endif %}
+                </label>
+              </div>
+            </div>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="1">Marcus Opaque, <span style="font-size:.85em;">LG1291A</span></td>
+          <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">D</td>
+            <td class="govuk-table__cell" data-sort-value="20230122">22 March 2023</td>
+            {% if  data.activityAllocateName == 'Textiles' %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% elseif  data.activityAllocateName == 'Kitchens' %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% else %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% endif %}           </tr>
+          {% endif %}
+
+          {% if (data.offenderAllocatedStatusLionelDraganov !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+          <tr class="govuk-table__row">
+            <td data-sort-value="Ivor" class="govuk-table__cell">
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="offenderAllocate16" name="offenderAllocate" type="radio" value="Lionel Draganov">
+                  <label class="govuk-label govuk-radios__label" for="offenderAllocate16">
+                  <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Lionel Draganov</a></strong><br />
+                  NH7239A<br />
+                  {% if data.activityAllocateName == 'Wing cleaning'%}
+                    1-A-069
+                  {% else %}
+                    1-B-069
+                  {% endif %}
+                </label>
+              </div>
+            </div>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="1">
+            Bal Mercure, <span style="font-size:.85em;">FG9121R</span><br />
+            Lewis Holme, <span style="font-size:.85em;">LG1291B</span>
+
+          </td>
+          <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">C</td>
+            <td class="govuk-table__cell" data-sort-value="20230122">16 Feb 2025</td>
+            {% if  data.activityAllocateName == 'Textiles' %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% elseif  data.activityAllocateName == 'Kitchens' %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% else %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% endif %}           </tr>
+          {% endif %}
+
+          {% if (data.offenderAllocatedStatusLeeMilson!=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+          <tr class="govuk-table__row">
+            <td data-sort-value="Lee" class="govuk-table__cell">
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="offenderAllocate3" name="offenderAllocate" type="radio" value="Lee Milson">
+                  <label class="govuk-label govuk-radios__label" for="offenderAllocate3">
+                  <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Lee Milson</a></strong><br />
+                  CV1291A<br />
+                  1-A-021
+                  </label>
+                </div>
+              </div>
+          </td>
+          <td class="govuk-table__cell" data-sort-value="2">More than 3<br /> <a href="#">See full list</a></td>
+          <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">D</td>
+            <td class="govuk-table__cell" data-sort-value="20230202">2 Mar 2023</td>
+            {% if  data.activityAllocateName == 'Textiles' %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% elseif  data.activityAllocateName == 'Kitchens' %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1<br />Food hygiene 1</td>
+            {% else %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% endif %}
+          </tr>
+
+          {% endif %}
+
+
+          {% if (data.offenderAllocatedStatusNoffRens !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+          <tr class="govuk-table__row">
+            <td data-sort-value="Lionel" class="govuk-table__cell">
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Noff Rens">
+                  <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
+                  <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Noff Rens</a></strong><br />
+                  BN7622L<br />
+                  1-A-178
+                </label>
+              </div>
+            </td>
+            <td class="govuk-table__cell" data-sort-value="2">More than 3<br /> <a href="#">See full list</a></td>
+            <td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">D</td>
+            <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
+            {% if  data.activityAllocateName == 'Textiles' %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% elseif  data.activityAllocateName == 'Kitchens' %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+            {% else %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+            {% endif %}           </tr>{% endif %}
+
+
+      <!--END IF AVAILABLE FILTER VIEW-->
+  <!--END PAGE !3-->
+  {% else %}
+  {% if (data.offenderAllocatedStatusHenryTatton !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+  <tr class="govuk-table__row">
+    <td data-sort-value="Lionel" class="govuk-table__cell">
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="offenderAllocate6" name="offenderAllocate" type="radio" value="Henry Tatton">
+          <label class="govuk-label govuk-radios__label" for="offenderAllocate6">
+          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Henry Tatton</a></strong><br />
+          BN5297F<br />
+          1-A-069
+        </label>
+      </div>
+    </td>
+    <td class="govuk-table__cell" data-sort-value="0">None</td>
+    <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
+    <td class="govuk-table__cell" data-sort-value="20290701">1 July 2029</td>
+    {% if  data.activityAllocateName == 'Textiles' %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+    {% elseif  data.activityAllocateName == 'Kitchens' %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1<br />Food hygiene 1</td>
+    {% else %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+  {% endif %}
+  </tr>
+  {% endif %}
+
+  {% if (data.offenderAllocatedStatusAlaricMesser !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+  <tr class="govuk-table__row">
+    <td data-sort-value="Alaric" class="govuk-table__cell">
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="offenderAllocate7" name="offenderAllocate" type="radio" value="Alaric Messer">
+          <label class="govuk-label govuk-radios__label" for="offenderAllocate7">
+          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Alaric Messer</a></strong><br />
+            DE6192M<br />
+          {% if data.activityAllocateName == 'Wing cleaning'%}
+            1-A-170
+          {% else %}
+            1-B-170
+          {% endif %}
+        </label>
+      </div>
+    </td>
+    <td class="govuk-table__cell" data-sort-value="0">None</td>
+    <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
+    <td class="govuk-table__cell" data-sort-value="20250216">2 June 2040</td>
+    {% if  data.activityAllocateName == 'Textiles' %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+    {% elseif  data.activityAllocateName == 'Kitchens' %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1<br />Food hygiene 1</td>
+    {% else %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+  {% endif %}   </tr>{% endif %}
+
+  {% if (data.offenderAllocatedStatusEniolaAldebrandi !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+  <tr class="govuk-table__row">
+    <td data-sort-value="Lionel" class="govuk-table__cell">
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="offenderAllocate8" name="offenderAllocate" type="radio" value="Eniola Aldebrandi">
+          <label class="govuk-label govuk-radios__label" for="offenderAllocate8">
+          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Eniola Aldebrandi</a></strong><br />
+          GK9675V<br />
+          {% if data.activityAllocateName == 'Wing cleaning'%}
+            3-A-045
+          {% else %}
+            3-C-045
+          {% endif %}
+
+        </label>
+      </div>
+    </td>
+    <td class="govuk-table__cell" data-sort-value="0">None</td>
+    <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+    <td class="govuk-table__cell" data-sort-value="20250216">9 Nov 2024</td>
+    {% if  data.activityAllocateName == 'Textiles' %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+    {% elseif  data.activityAllocateName == 'Kitchens' %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+    {% else %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+  {% endif %}   </tr>{% endif %}
+
+  {% if (data.offenderAllocatedStatusBurcoCharves !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+  <tr class="govuk-table__row">
+    <td data-sort-value="Lionel" class="govuk-table__cell">
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="offenderAllocate9" name="offenderAllocate" type="radio" value="Burco Charves">
+          <label class="govuk-label govuk-radios__label" for="offenderAllocate9">
+          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Burco Charves</a></strong><br />
+          AL7634M<br />
+          {% if data.activityAllocateName == 'Wing cleaning'%}
+            1-A-111
+          {% else %}
+            1-H-111
+          {% endif %}
+
+        </label>
+      </div>
+    </td>
+    <td class="govuk-table__cell" data-sort-value="2">None</td>
+    <td class="govuk-table__cell" data-sort-value="C" style="padding-left:20px;">C</td>
+    <td class="govuk-table__cell" data-sort-value="20250216">18 April 2025</td>
+    {% if  data.activityAllocateName == 'Textiles' %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+    {% elseif  data.activityAllocateName == 'Kitchens' %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+    {% else %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+  {% endif %}   </tr>{% endif %}
+
+  {% if (data.offenderAllocatedStatusJairusCatalano !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+  <tr class="govuk-table__row">
+    <td data-sort-value="Lionel" class="govuk-table__cell">
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="offenderAllocate10" name="offenderAllocate" type="radio" value="Jairus Catalano">
+          <label class="govuk-label govuk-radios__label" for="offenderAllocate10">
+          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Jairus Catalano</a></strong><br />
+          DY8443K<br />
+          1-A-055
+        </label>
+      </div>
+    </td>
+    <td class="govuk-table__cell" data-sort-value="2">None</td>
+    <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+    <td class="govuk-table__cell" data-sort-value="20250216">2 Mar 2023</td>
+    {% if  data.activityAllocateName == 'Textiles' %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+    {% elseif  data.activityAllocateName == 'Kitchens' %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+    {% else %}
+    <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
+  {% endif %}   </tr>{% endif %}
+
+
+
+
+  <!--END PAGE alt-->
+    {% endif %}
+  {% else %}
+
+
+
+
+
+
+
+
+
+<!--Start of Unavailable view-->
+{% if data.pageToShow == 1 %}
+
+    {% if (data.offenderAllocatedStatusNeilRudge !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+    <tr class="govuk-table__row">
+      <td data-sort-value="Neil" class="govuk-table__cell">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input type="hidden" name="returnDashboard" value="activity-dashboard-4-1" />
+            <input class="govuk-radios__input" id="offenderAllocate1" name="offenderAllocate" type="radio" value="Neil Rudge">
+            <label class="govuk-label govuk-radios__label" for="offenderAllocate1">
+            <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Neil Rudge</a></strong><br />
+            AA4309K<br />
+            {% if data.activityAllocateName == 'Wing cleaning'%}
+              1-A-003
+            {% else %}
+              1-D-003
+            {% endif %}
+
             </label>
           </div>
-        </td>
-        <td class="govuk-table__cell" data-sort-value="0">None</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
-        <td class="govuk-table__cell" data-sort-value="20290701">1 July 2029</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
-      </tr>{% endif %}
+        </div>
+    </td>
+    <td class="govuk-table__cell" data-sort-value="0">None</td>
+    <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">C</td>
+      <td class="govuk-table__cell" data-sort-value="20240709">9 July 2024</td>
+      <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+    </tr>
+    {% endif %}
+
+    {% if (data.offenderAllocatedStatusIvorNorisk !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+    <tr class="govuk-table__row">
+      <td data-sort-value="Ivor" class="govuk-table__cell">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="offenderAllocate2" name="offenderAllocate" type="radio" value="Ivor Norisk">
+            <label class="govuk-label govuk-radios__label" for="offenderAllocate2">
+            <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ivor Norisk</a></strong><br />
+            BA3219B<br />
+            {% if data.activityAllocateName == 'Wing cleaning'%}
+              1-A-002
+            {% else %}
+              1-C-002
+            {% endif %}
+          </label>
+        </div>
+      </div>
+    </td>
+    <td class="govuk-table__cell" data-sort-value="1">Marcus Opaque, <span style="font-size:.85em;">LG1291A</span></td>
+    <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">D</td>
+      <td class="govuk-table__cell" data-sort-value="20230122">22 March 2023</td>
+      {% if  data.activityAllocateName == 'Textiles' %}
+      <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+      {% elseif  data.activityAllocateName == 'Kitchens' %}
+      <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1<br />Food hygiene 1</td>
+      {% else %}
+      <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+    {% endif %}     </tr>
+    {% endif %}
+
+    {% if (data.offenderAllocatedStatusLionelDraganov !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+    <tr class="govuk-table__row">
+      <td data-sort-value="Ivor" class="govuk-table__cell">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="offenderAllocate16" name="offenderAllocate" type="radio" value="Lionel Draganov">
+            <label class="govuk-label govuk-radios__label" for="offenderAllocate16">
+            <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Lionel Draganov</a></strong><br />
+            NH7239A<br />
+            {% if data.activityAllocateName == 'Wing cleaning'%}
+              1-A-069
+            {% else %}
+              1-B-069
+            {% endif %}
+          </label>
+        </div>
+      </div>
+    </td>
+    <td class="govuk-table__cell" data-sort-value="1">
+      Bal Mercure, <span style="font-size:.85em;">FG9121R</span><br />
+      Lewis Holme, <span style="font-size:.85em;">LG1291B</span>
+
+    </td>
+    <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">C</td>
+      <td class="govuk-table__cell" data-sort-value="20230122">16 Feb 2025</td>
+      {% if  data.activityAllocateName == 'Textiles' %}
+      <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+      {% elseif  data.activityAllocateName == 'Kitchens' %}
+      <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+      {% else %}
+      <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+    {% endif %}     </tr>
+    {% endif %}
+
+    {% if (data.offenderAllocatedStatusLeeMilson!=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+    <tr class="govuk-table__row">
+      <td data-sort-value="Lee" class="govuk-table__cell">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="offenderAllocate3" name="offenderAllocate" type="radio" value="Lee Milson">
+            <label class="govuk-label govuk-radios__label" for="offenderAllocate3">
+            <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Lee Milson</a></strong><br />
+            CV1291A<br />
+            1-A-021
+            </label>
+          </div>
+        </div>
+    </td>
+    <td class="govuk-table__cell" data-sort-value="2">More than 3<br /> <a href="#">See full list</a></td>
+    <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">D</td>
+      <td class="govuk-table__cell" data-sort-value="20230202">2 Mar 2023</td>
+      {% if  data.activityAllocateName == 'Textiles' %}
+      <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+      {% elseif  data.activityAllocateName == 'Kitchens' %}
+      <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+      {% else %}
+      <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+      {% endif %}     </tr>
+
+    {% endif %}
 
       {% if (data.offenderAllocatedStatusAlaricMesser !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
@@ -560,7 +1845,7 @@ Activities Management prototype
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="offenderAllocate7" name="offenderAllocate" type="radio" value="Alaric Messer">
               <label class="govuk-label govuk-radios__label" for="offenderAllocate7">
-              <strong><a href="#">Alaric Messer</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Alaric Messer</a></strong><br />
                 DE6192M<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 1-A-170
@@ -573,8 +1858,17 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="0">None</td>
         <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
         <td class="govuk-table__cell" data-sort-value="20250216">2 June 2040</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
-      </tr>{% endif %}
+        {% if  data.activityAllocateName == 'Textiles' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% elseif  data.activityAllocateName == 'Kitchens' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+        {% else %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% endif %}       </tr>{% endif %}
+
+
+      {% elseif data.pageToShow == 2 %}
+
 
       {% if (data.offenderAllocatedStatusEniolaAldebrandi !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
@@ -584,7 +1878,7 @@ Activities Management prototype
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="offenderAllocate8" name="offenderAllocate" type="radio" value="Eniola Aldebrandi">
               <label class="govuk-label govuk-radios__label" for="offenderAllocate8">
-              <strong><a href="#">Eniola Aldebrandi</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Eniola Aldebrandi</a></strong><br />
               GK9675V<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 3-A-045
@@ -598,8 +1892,14 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="0">None</td>
         <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
         <td class="govuk-table__cell" data-sort-value="20250216">9 Nov 2024</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">English Level 1</td>
-      </tr>{% endif %}
+        {% if  data.activityAllocateName == 'Textiles' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% elseif  data.activityAllocateName == 'Kitchens' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
+        {% else %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% endif %}
+            </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusBurcoCharves !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
@@ -609,7 +1909,7 @@ Activities Management prototype
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="offenderAllocate9" name="offenderAllocate" type="radio" value="Burco Charves">
               <label class="govuk-label govuk-radios__label" for="offenderAllocate9">
-              <strong><a href="#">Burco Charves</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Burco Charves</a></strong><br />
               AL7634M<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 1-A-111
@@ -623,8 +1923,13 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="2">None</td>
         <td class="govuk-table__cell" data-sort-value="C" style="padding-left:20px;">C</td>
         <td class="govuk-table__cell" data-sort-value="20250216">18 April 2025</td>
+        {% if  data.activityAllocateName == 'Textiles' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% elseif  data.activityAllocateName == 'Kitchens' %}
         <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
-      </tr>{% endif %}
+        {% else %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% endif %}       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusJairusCatalano !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
@@ -634,7 +1939,7 @@ Activities Management prototype
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="offenderAllocate10" name="offenderAllocate" type="radio" value="Jairus Catalano">
               <label class="govuk-label govuk-radios__label" for="offenderAllocate10">
-              <strong><a href="#">Jairus Catalano</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Jairus Catalano</a></strong><br />
               DY8443K<br />
               1-A-055
             </label>
@@ -643,8 +1948,14 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="2">None</td>
         <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
         <td class="govuk-table__cell" data-sort-value="20250216">2 Mar 2023</td>
+        {% if  data.activityAllocateName == 'Textiles' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% elseif  data.activityAllocateName == 'Kitchens' %}
         <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
-      </tr>{% endif %}
+        {% else %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% endif %}
+       </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusAbdelGarcon !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
@@ -654,7 +1965,7 @@ Activities Management prototype
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="offenderAllocate11" name="offenderAllocate" type="radio" value="Abdel Garcon">
               <label class="govuk-label govuk-radios__label" for="offenderAllocate11">
-              <strong><a href="#">Abdel Garcon</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Abdel Garcon</a></strong><br />
               ST9127U<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 2-A-022
@@ -668,8 +1979,13 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="2">None</td>
         <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
         <td class="govuk-table__cell" data-sort-value="20250216">28 Aug 2023</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
-      </tr>{% endif %}
+        {% if  data.activityAllocateName == 'Textiles' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% elseif  data.activityAllocateName == 'Kitchens' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+        {% else %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% endif %}        </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusAlmogTanzer !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
@@ -679,7 +1995,7 @@ Activities Management prototype
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="offenderAllocate12" name="offenderAllocate" type="radio" value="Almog Tanzer">
               <label class="govuk-label govuk-radios__label" for="offenderAllocate12">
-              <strong><a href="#">Almog Tanzer</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Almog Tanzer</a></strong><br />
               KR7121C<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 2-A-022
@@ -693,8 +2009,15 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="2">None</td>
         <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">Unsentenced</td>
         <td class="govuk-table__cell" data-sort-value="20250216">15 May 2027</td>
+        {% if  data.activityAllocateName == 'Textiles' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% elseif  data.activityAllocateName == 'Kitchens' %}
         <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
-      </tr>{% endif %}
+        {% else %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% endif %}        </tr>{% endif %}
+
+        {% elseif data.pageToShow == 3 %}
 
       {% if (data.offenderAllocatedStatusErmisPiotrowski !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
@@ -704,7 +2027,7 @@ Activities Management prototype
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="offenderAllocate13" name="offenderAllocate" type="radio" value="Ermis Piotrowski">
               <label class="govuk-label govuk-radios__label" for="offenderAllocate13">
-              <strong><a href="#">Ermis Piotrowski</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ermis Piotrowski</a></strong><br />
               BB1076W<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 1-A-132
@@ -718,8 +2041,13 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="2">None</td>
         <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
         <td class="govuk-table__cell" data-sort-value="20250216">8 May 2024</td>
+        {% if  data.activityAllocateName == 'Textiles' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% elseif  data.activityAllocateName == 'Kitchens' %}
         <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
-      </tr>{% endif %}
+        {% else %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% endif %}        </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusCerenWieck !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
@@ -729,7 +2057,7 @@ Activities Management prototype
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Ceren Wieck">
               <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
-              <strong><a href="#">Ceren Wieck</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ceren Wieck</a></strong><br />
               AB8540Z<br />
               1-A-099
             </label>
@@ -738,8 +2066,13 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="2">None</td>
         <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
         <td class="govuk-table__cell" data-sort-value="20250216">16 Dec 2024</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
-      </tr>{% endif %}
+        {% if  data.activityAllocateName == 'Textiles' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% elseif  data.activityAllocateName == 'Kitchens' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">English 1</td>
+        {% else %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% endif %}        </tr>{% endif %}
 
       {% if (data.offenderAllocatedStatusClaudWaller !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
@@ -749,7 +2082,7 @@ Activities Management prototype
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Claud Waller">
               <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
-              <strong><a href="#">Claud Waller</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Claud Waller</a></strong><br />
               WT1317H<br />
               {% if data.activityAllocateName == 'Wing cleaning'%}
                 1-A-078
@@ -762,117 +2095,13 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="2">None</td>
         <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
         <td class="govuk-table__cell" data-sort-value="20250216">3 June 2024</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
-      </tr>{% endif %}
-
-
-
-      {% if (data.offenderAllocatedStatusNeilRudge !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
-      <tr class="govuk-table__row">
-        <td data-sort-value="Neil" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input type="hidden" name="returnDashboard" value="activity-dashboard-4-1" />
-              <input class="govuk-radios__input" id="offenderAllocate1" name="offenderAllocate" type="radio" value="Neil Rudge">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate1">
-              <strong><a href="#">Neil Rudge</a></strong><br />
-              AA4309K<br />
-              {% if data.activityAllocateName == 'Wing cleaning'%}
-                1-A-003
-              {% else %}
-                1-D-003
-              {% endif %}
-
-              </label>
-            </div>
-          </div>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="0">None</td>
-      <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">C</td>
-        <td class="govuk-table__cell" data-sort-value="20240709">9 July 2024</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
-      </tr>
-      {% endif %}
-
-      {% if (data.offenderAllocatedStatusIvorNorisk !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
-
-      <tr class="govuk-table__row">
-        <td data-sort-value="Ivor" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate2" name="offenderAllocate" type="radio" value="Ivor Norisk">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate2">
-              <strong><a href="#">Ivor Norisk</a></strong><br />
-              BA3219B<br />
-              {% if data.activityAllocateName == 'Wing cleaning'%}
-                1-A-002
-              {% else %}
-                1-C-002
-              {% endif %}
-            </label>
-          </div>
-        </div>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="1">Marcus Opaque, <span style="font-size:.85em;">LG1291A</span></td>
-      <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">D</td>
-        <td class="govuk-table__cell" data-sort-value="20230122">22 March 2023</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">None</td>
-      </tr>
-      {% endif %}
-
-      {% if (data.offenderAllocatedStatusLionelDraganov !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
-
-      <tr class="govuk-table__row">
-        <td data-sort-value="Ivor" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate16" name="offenderAllocate" type="radio" value="Lionel Draganov">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate16">
-              <strong><a href="#">Lionel Draganov</a></strong><br />
-              NH7239A<br />
-              {% if data.activityAllocateName == 'Wing cleaning'%}
-                1-A-069
-              {% else %}
-                1-B-069
-              {% endif %}
-            </label>
-          </div>
-        </div>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="1">
-        Bal Mercure, <span style="font-size:.85em;">FG9121R</span><br />
-        Lewis Holme, <span style="font-size:.85em;">LG1291B</span>
-
-      </td>
-      <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">C</td>
-        <td class="govuk-table__cell" data-sort-value="20230122">16 Feb 2025</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">None</td>
-      </tr>
-      {% endif %}
-
-      {% if (data.offenderAllocatedStatusLeeMilson!=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
-
-      <tr class="govuk-table__row">
-        <td data-sort-value="Lee" class="govuk-table__cell">
-          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="offenderAllocate3" name="offenderAllocate" type="radio" value="Lee Milson">
-              <label class="govuk-label govuk-radios__label" for="offenderAllocate3">
-              <strong><a href="#">Lee Milson</a></strong><br />
-              CV1291A<br />
-              1-A-021
-              </label>
-            </div>
-          </div>
-      </td>
-      <td class="govuk-table__cell" data-sort-value="2">More than 3<br /> <a href="#">See full list</a></td>
-      <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">D</td>
-        <td class="govuk-table__cell" data-sort-value="20230202">2 Mar 2023</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1<br />Food hygiene 1</td>
-      </tr>
-
-      {% endif %}
-
+        {% if  data.activityAllocateName == 'Textiles' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% elseif  data.activityAllocateName == 'Kitchens' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">English 1</td>
+        {% else %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% endif %}        </tr>{% endif %}
 
 
       {% if (data.offenderAllocatedStatusNoffRens !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
@@ -883,7 +2112,7 @@ Activities Management prototype
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Noff Rens">
               <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
-              <strong><a href="#">Noff Rens</a></strong><br />
+              <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Noff Rens</a></strong><br />
               BN7622L<br />
               1-A-178
             </label>
@@ -892,8 +2121,39 @@ Activities Management prototype
         <td class="govuk-table__cell" data-sort-value="2">More than 3<br /> <a href="#">See full list</a></td>
         <td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">D</td>
         <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
-        <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
-      </tr>{% endif %}
+        {% if  data.activityAllocateName == 'Textiles' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% elseif  data.activityAllocateName == 'Kitchens' %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">Food hygiene 1</td>
+        {% else %}
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+        {% endif %}        </tr>{% endif %}
+
+
+      <tr class="govuk-table__row">
+      <td data-sort-value="Lionel" class="govuk-table__cell">
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+      <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Noff Rens">
+      <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
+      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Abdel Garcon</a></strong><br />AB1234A<br />1-A-178</label>
+                </div>
+              </td>
+              <td class="govuk-table__cell" data-sort-value="0"None</td>
+              <td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">D</td>
+              <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
+              {% if  data.activityAllocateName == 'Textiles' %}
+              <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+              {% elseif  data.activityAllocateName == 'Kitchens' %}
+              <td class="govuk-table__cell" data-sort-value="Maths level 2">English 1</td>
+              {% else %}
+              <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+              {% endif %}              </tr>
+
+            {% endif %}
+  {% endif %}
+
+
     </tbody>
 </table>
 
@@ -903,27 +2163,52 @@ Activities Management prototype
 <!--Pagination-->
 <nav class="moj-pagination" aria-label="Pagination navigation">
 
+  {% if data.pageToShow == 1 %}
   <ul class="moj-pagination__list">
-    <li class="moj-pagination__item  moj-pagination__item--prev">
-      <a class="moj-pagination__link" href="#">Previous<span class="govuk-visually-hidden"> page</span></a>
-    </li>
-    <li class="moj-pagination__item moj-pagination__item--active" aria-label="Page 2 of 30" aria-label="page">1</li>
-
-    <li class="moj-pagination__item"><a class="moj-pagination__link" href="#" aria--current"Page 1 of 30">2</a></li>
-
+    <li class="moj-pagination__item moj-pagination__item--active">1</li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=2#allocate">2</a></li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=3#allocate">3</a></li>
     <li class="moj-pagination__item  moj-pagination__item--next">
-      <a class="moj-pagination__link" href="#">Next<span class="govuk-visually-hidden"> page</span></a>
+      <a class="moj-pagination__link" href="?pageToShow=2#allocate">Next<span class="govuk-visually-hidden"> page</span></a>
     </li>
   </ul>
   <p class="moj-pagination__results">Showing <b>1</b> to <b>15</b> of <b>15</b> results</p>
+
+
+  {% elseif data.pageToShow == 2 %}
+  <ul class="moj-pagination__list">
+    <li class="moj-pagination__item  moj-pagination__item--prev">
+      <a class="moj-pagination__link" href="?pageToShow=1#allocate">Previous<span class="govuk-visually-hidden"> page</span></a>
+    </li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=1#allocate" aria--current">1</a></li>
+    <li class="moj-pagination__item moj-pagination__item--active" href="#" aria-label="page">2</li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=3#allocate">3</a></li>
+    <li class="moj-pagination__item  moj-pagination__item--next">
+      <a class="moj-pagination__link" href="?pageToShow=3#allocate">Next<span class="govuk-visually-hidden"> page</span></a>
+    </li>
+  </ul>
+  <p class="moj-pagination__results">Showing <b>10</b> to <b>15</b> of <b>15</b> results</p>
+
+
+  {% elseif data.pageToShow == 3 %}
+  <ul class="moj-pagination__list">
+    <li class="moj-pagination__item  moj-pagination__item--prev">
+      <a class="moj-pagination__link" href="?pageToShow=2#allocate">Previous<span class="govuk-visually-hidden"> page</span></a>
+    </li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=1#allocate">1</a></li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="?pageToShow=2#allocate">2</a></li>
+    <li class="moj-pagination__item moj-pagination__item--active">3</li>
+  </ul>
+  <p class="moj-pagination__results">Showing <b>10</b> to <b>15</b> of <b>15</b> results</p>
+  {% endif %}
 </nav>
-<br /><br />
+  <br /><br />
 
 
   <button class="govuk-button" data-module="govuk-button">
   Select Candidate
   </button>
-    </form>
+  </form>
 </div>
 
 
@@ -988,46 +2273,11 @@ Activities Management prototype
   <button class="govuk-button" data-module="govuk-button">
   Edit schedule times
   </button>
+  </div>
 </div>
-
-
-
-
-
-
-
-
-</div>
-
 </div>
 
 {% block pageScripts %}
-<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
-<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('a[data-modal]').on('click', function(event) {
-			event.preventDefault();
-			this.blur();
-			$.get(this.href, function(html) {
-				$(html).appendTo('body').modal({
-					showClose: false,
-					clickClose: false
-				});
-			});
-		});
 
-		$('#show').on('change', function() {
-			window.location = 'activity-dashboard-4-1?allocateEmployed=' + $(this).val()
-
-		})
-    $('#show2').on('change', function() {
-			window.location = 'activity-dashboard-4-1?allocateRisk=' + $(this).val()
-		})
-    $('#show3').on('change', function() {
-			window.location = 'activity-dashboard-4-1?allocateIncentive=' + $(this).val()
-		})
-	})
-</script>
 {% endblock %}
 {% endblock %}

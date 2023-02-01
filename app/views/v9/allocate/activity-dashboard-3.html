@@ -8,6 +8,7 @@ Activities Management prototype
 
 {% block content %}
 
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
@@ -17,11 +18,13 @@ Activities Management prototype
       Find schedules with vacancies
     </h1>
   </div>
-    <div class="govuk-grid-column-one-third" style="border:2px solid black; padding:10px; margin:20px 0 0 0;">
-      <p class="govuk-body"><strong>Related tasks</strong><br />
+  <div class="govuk-grid-column-one-third">
+    <div style="border:2px solid #f1f1f1; padding:10px; padding-left:20px; width=90%;">
+  <p class="govuk-body"><strong>Related tasks</strong><br />
       <a href="activity-type-select-with-category">Create an activity</a><br />
-      <a href="../create/activity-dashboard?dashboardCategory=All&dashboardView=live">Change activities and schedules</a></p>
+      <a href="../create/activity-dashboard?dashboardCategory=All&dashboardView=live">Edit activities and schedules</a></p>
     </div>
+  </div>
   </div>
   <br />
   <div class="govuk-grid-row">
@@ -65,7 +68,7 @@ Activities Management prototype
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:30%;">Activity series</th>
-      <th scope="col" class="govuk-table__header" aria-sort="none">Location</th>
+      <th scope="col" class="govuk-table__header" aria-sort="none">Activity location</th>
       <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="ascending">Capacity</th>
       <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Allocated</th>
       <th scope="col" class="govuk-table__header  govuk-table__header--numeric"  aria-sort="none">Percentage allocated</th>
@@ -79,10 +82,10 @@ Activities Management prototype
   <td class="govuk-table__cell" data-sort-value="1">
     <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
     {% if (data.activityAllocateName=='Textiles') %}
-      <a href="activity-dashboard-4-1?allocationEducation=None set&allocationIncentive=Standard or Enhanced&allocationRisk=Low or Medium&capacityCount=30&vacanciesCount=1&allocatedCount=29&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+      <a href="activity-dashboard-4-1?pageToShow=1&allocateEmployed=Available&allocationEducation=None set&allocationIncentive=Standard or Enhanced&allocationRisk=Low or Medium&capacityCount=30&vacanciesCount=1&allocatedCount=29&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}} 1&allocateRisk=Low or Medium&&allocateIncentive=Standard or Enhanced" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
     {% else %}
     <!-- else it's Kitchen-->
-      <a href="activity-dashboard-4-1?allocationEducation=Food hygiene level 1, English level 1&allocationIncentive=Enhanced&allocationRisk=Low&capacityCount=35&vacanciesCount=7&allocatedCount=28&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+      <a href="activity-dashboard-4-1?pageToShow=1&allocateEmployed=Available&allocationEducation=Food hygiene level 1, English level 1&allocationIncentive=Enhanced&allocationRisk=Low&capacityCount=35&vacanciesCount=7&allocatedCount=28&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}} 1&allocateRisk=Low&allocateIncentive=Enhanced" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
     {% endif %}
 
     {{data.activityAllocateName or 'Wing cleaning'}} 1
@@ -115,8 +118,8 @@ Activities Management prototype
       <td class="govuk-table__cell" data-sort-value="1">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
       {% if (data.activityAllocateName=='Wing cleaning') %}
-        <a href="activity-dashboard-4-1?allocationEducation=BICS level 1, English level 1&allocationIncentive=Standard or Enhanced&allocationRisk=Low or Medium or High&capacityCount=2&vacanciesCount=1&allocatedCount=1&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-          {{data.activityAllocateName or 'Wing cleaning'}} 1
+        <a href="activity-dashboard-4-1?pageToShow=1&allocateEmployed=Available&allocationEducation=BICS level 1, English level 1&allocationIncentive=Standard or Enhanced&allocationRisk=Low, Medium or High&capacityCount=2&vacanciesCount=1&allocatedCount=1&activityAllocateScheduleName=Wing cleaning A&allocateRisk=Low, Medium or High&allocateIncentive=Standard or Enhanced" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          {{data.activityAllocateName or 'Wing cleaning'}} A
         </a></h3>
       </td>
         <td class="govuk-table__cell" data-sort-value="1">Wing A</td>
@@ -125,8 +128,8 @@ Activities Management prototype
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="50">50%</td>
         <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="1">
       {% else %}
-        <a href="activity-dashboard-4-1?allocationEducation=BICS level 1, English level 1&allocationIncentive=Standard or Enhanced&allocationRisk=Low or Medium or High&capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
-          {{data.activityAllocateName or 'Wing cleaning'}} 1
+        <a href="activity-dashboard-4-1?pageToShow=1&allocateEmployed=Available&allocationEducation=BICS level 1, English level 1&allocationIncentive=Standard or Enhanced&allocationRisk=Low, Medium or High&capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1&allocateRisk=Low, Medium or High&allocateIncentive=Standard or Enhanced" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          {{data.activityAllocateName or 'Wing cleaning'}} A
         </a></h3>
       </td>
         <td class="govuk-table__cell" data-sort-value="1">House block 1</td>
@@ -143,8 +146,8 @@ Activities Management prototype
     <tr class="govuk-table__row" >
       <td class="govuk-table__cell" data-sort-value="2">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?capacityCount=4&vacanciesCount=0&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}} 2" class="govuk-link govuk-link--no-visited-state">
-          {{data.activityAllocateName or 'Wing cleaning'}} 2
+          <a href="activity-dashboard-4-1?pageToShow=1&allocateEmployed=Available&allocationEducation=BICS level 1, English level 1&allocationIncentive=Standard or Enhanced&allocationRisk=Low, Medium or High&capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1&allocateRisk=Low, Medium or High&allocateIncentive=Standard or Enhanced" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          {{data.activityAllocateName or 'Wing cleaning'}} B
         </a></h3>
           <span class="govuk-hint" style="font-size:.85em;"></span>
       </td>
@@ -166,8 +169,8 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="3">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?capacityCount=4&vacanciesCount=0&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}} 3"  class="govuk-link govuk-link--no-visited-state">
-          {{data.activityAllocateName or 'Wing cleaning'}} 3
+          <a href="activity-dashboard-4-1?pageToShow=1&allocateEmployed=Available&allocationEducation=BICS level 1, English level 1&allocationIncentive=Standard or Enhanced&allocationRisk=Low, Medium or High&capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1&allocateRisk=Low, Medium or High&allocateIncentive=Standard or Enhanced" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          {{data.activityAllocateName or 'Wing cleaning'}} C
         </a></h3>
       </td>
       {% if (data.activityAllocateName=='Wing cleaning') %}
@@ -187,8 +190,8 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="4">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?capacityCount=2&vacanciesCount=1&allocatedCount=1activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  4" class="govuk-link govuk-link--no-visited-state">
-          {{data.activityAllocateName or 'Wing cleaning'}} 4
+          <a href="activity-dashboard-4-1?pageToShow=1&allocateEmployed=Available&allocationEducation=BICS level 1, English level 1&allocationIncentive=Standard or Enhanced&allocationRisk=Low, Medium or High&capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1&allocateRisk=Low, Medium or High&allocateIncentive=Standard or Enhanced" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+          {{data.activityAllocateName or 'Wing cleaning'}} D
         </a></h3>
       </td>
       {% if (data.activityAllocateName=='Wing cleaning') %}
@@ -208,8 +211,8 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="5">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?capacityCount=3&vacanciesCount=0&allocatedCount=3&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  5" class="govuk-link govuk-link--no-visited-state">
-        {{data.activityAllocateName or 'Wing cleaning'}} 5
+          <a href="activity-dashboard-4-1?pageToShow=1&allocateEmployed=Available&allocationEducation=BICS level 1, English level 1&allocationIncentive=Standard or Enhanced&allocationRisk=Low, Medium or High&capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1&allocateRisk=Low, Medium or High&allocateIncentive=Standard or Enhanced" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        {{data.activityAllocateName or 'Wing cleaning'}} E
         </a></h3>
       </td>
       {% if (data.activityAllocateName=='Wing cleaning') %}
@@ -230,8 +233,8 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="6">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?capacityCount=4&vacanciesCount=0&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  6" class="govuk-link govuk-link--no-visited-state">
-        {{data.activityAllocateName or 'Wing cleaning'}} 6
+          <a href="activity-dashboard-4-1?pageToShow=1&allocateEmployed=Available&allocationEducation=BICS level 1, English level 1&allocationIncentive=Standard or Enhanced&allocationRisk=Low, Medium or High&capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1&allocateRisk=Low, Medium or High&allocateIncentive=Standard or Enhanced" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        {{data.activityAllocateName or 'Wing cleaning'}} E
         </a></h3>
       </td>
       {% if (data.activityAllocateName=='Wing cleaning') %}
@@ -251,8 +254,8 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="7">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?capacityCount=3&vacanciesCount=0&allocatedCount=3&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  7" class="govuk-link govuk-link--no-visited-state">
-        {{data.activityAllocateName or 'Wing cleaning'}} 7
+          <a href="activity-dashboard-4-1?pageToShow=1&allocateEmployed=Available&allocationEducation=BICS level 1, English level 1&allocationIncentive=Standard or Enhanced&allocationRisk=Low, Medium or High&capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1&allocateRisk=Low, Medium or High&allocateIncentive=Standard or Enhanced" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        {{data.activityAllocateName or 'Wing cleaning'}} G
         </a></h3>
       </td>
 
@@ -273,8 +276,8 @@ Activities Management prototype
     <tr class="govuk-table__row">
       <td class="govuk-table__cell" data-sort-value="8">
         <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
-        <a href="activity-dashboard-4-1?capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  8" class="govuk-link govuk-link--no-visited-state">
-        {{data.activityAllocateName or 'Wing cleaning'}} 8
+          <a href="activity-dashboard-4-1?pageToShow=1&allocateEmployed=Available&allocationEducation=BICS level 1, English level 1&allocationIncentive=Standard or Enhanced&allocationRisk=Low, Medium or High&capacityCount=5&vacanciesCount=1&allocatedCount=4&activityAllocateScheduleName={{data.activityAllocateName or 'Wing cleaning'}}  1&allocateRisk=Low, Medium or High&allocateIncentive=Standard or Enhanced" class="govuk-link govuk-link--no-visited-state" data-sort-value="3">
+        {{data.activityAllocateName or 'Wing cleaning'}} H
         </a></h3>
       </td>
       {% if (data.activityAllocateName=='Wing cleaning') %}
