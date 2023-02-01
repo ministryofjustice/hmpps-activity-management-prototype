@@ -77,7 +77,8 @@ const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, dat
                             pay: attendanceRecord.pay,
                             payReason: attendanceRecord['pay-detail'],
                             unacceptableAbsence: attendanceRecord.unacceptableAbsence,
-                            incentiveLevelWarning: attendanceRecord.incentiveLevelWarning
+                            incentiveLevelWarning: attendanceRecord.incentiveLevelWarning,
+                            sessionCancelled: attendanceRecord.sessionCancelled
                         }
                     })
                 };
@@ -146,11 +147,19 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
             req.session.data.attendance[activityId][date][period][prisonerId] = [];
         }
 
+        let sessionCancelled;
+        if(details.sessionCancelled == true){
+            sessionCancelled = true;
+        } else {
+            sessionCancelled = false;
+        }
+
         req.session.data.attendance[activityId][date][period][prisonerId].push({
             attendance: details.attendance,
             attendanceDetail: attendanceDetail,
             pay: details.pay,
             payReason: payReason,
+            sessionCancelled: sessionCancelled,
             unacceptableAbsence: details.unacceptableAbsence,
             incentiveLevelWarning: details.incentiveLevelWarning,
             timestamp: {
@@ -259,6 +268,7 @@ const addEventsToPrisoners = (prisoners, activities, date, period, attendanceDat
         const appointmentsForDate = appointments.filter(appointment => {
             const appointmentDate = new Date(appointment.date).toDateString();
             const givenDate = new Date(date).toDateString();
+            appointment.type = 'appointment';
             return appointmentDate === givenDate;
         });
 
@@ -769,6 +779,11 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
         };
         
         let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(getPrisonerIds(prisonersByDateAndPeriod), 'not-attended', 'standard', reason, 'no')
+        Object.keys(attendanceDetails).forEach(prisonerId => {
+            const details = attendanceDetails[prisonerId];
+            details.sessionCancelled = true
+        })
+        // console.log(attendanceDetails)
         updateAttendanceData(req, activityId, date, period, attendanceDetails)
     }
 
@@ -1251,13 +1266,33 @@ router.get('/activities/:selectedDate', function(req, res) {
         activitiesForDate.afternoon = activitiesForDate.afternoon.filter(activity => activity.name.toLowerCase().replace(/\s/g, "").includes(searchTerm));
     }
 
-    res.render('unlock/' + req.version + '/activities', {
-        selectedDate,
-        relativeDate,
-        activitiesForDate,
-        activitiesForDateWithCounts
-    })
-});
+    let locations = [];
+    let attendanceTotals = {
+        'scheduled': 0,
+        'not-attended': 0,
+        'attended': 0,
+        'not-recorded': 0
+    };
+    for(let period in activitiesForDate){
+        for(let activity of activitiesForDate[period]){
+            for(let type in activity.attendanceCount[period]){
+                let attendance = activity.attendanceCount[period][type]
+                if(attendance > 0){
+                    attendanceTotals[type] = attendanceTotals[type] + activity.attendanceCount[period][type]
+                }
+            }
+        }
+    }
+
+        res.render('unlock/' + req.version + '/activities', {
+            locations,
+            attendanceTotals,
+            selectedDate,
+            relativeDate,
+            activitiesForDate,
+            activitiesForDateWithCounts
+        })
+    });
 
 // prisoner profile
 router.get('/prisoner/:prisonerId', function(req, res) {

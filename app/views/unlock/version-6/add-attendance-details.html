@@ -199,6 +199,68 @@ Add attendance details for {{prisonersNoun}}
 				}) }}
 				{% endset %}
 
+				{% set refusedHtml %}
+				{{ govukTextarea({
+					name: "more-detail",
+					id: "more-detail",
+					label: {
+						text: "Case note (optional)"
+					}
+				}) }}
+				{{ govukRadios({
+					id: "not-listed-absence-type",
+					name: "not-listed-absence-type",
+					classes: "govuk-radios--small govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Should this be recorded as an Incentive level warning?"
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes"
+
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
+				{% endset %}
+
+				{% set sickHtml %}
+				{{ govukTextarea({
+					name: "more-detail",
+					id: "more-detail",
+					label: {
+						text: "Can you provide more detail?"
+					}
+				}) }}
+				{{ govukRadios({
+					id: "not-listed-absence-type",
+					name: "not-listed-absence-type",
+					classes: "govuk-radios--small govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Was this an acceptable absence and should the prisoner be paid?"
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes"
+
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
+				{% endset %}
+
 				{{ govukRadios({
 					id: "absence-reason-" + prisoner.id,
 					name: "attendance-details[" + prisoner.id + "][absence-reason]",
@@ -211,11 +273,17 @@ Add attendance details for {{prisonersNoun}}
 					items: [
 					{
 						value: "sick",
-						text: "Sick"
+						text: "Sick",
+						conditional: {
+							html: sickHtml
+						}
 					},
 					{
 						value: "refused",
-						text: "Refused to attend"
+						text: "Refused to attend",
+						conditional: {
+							html: refusedHtml
+						}
 					},
 					{
 						value: "not-required",

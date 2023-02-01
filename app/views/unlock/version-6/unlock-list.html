@@ -302,11 +302,11 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 			</td>
 			<td class="govuk-table__cell" data-sort-value="{{activityName}}" scope="col">
 				{% for event in prisoner.events %}
-				<div {% if not loop.last %}class="govuk-!-margin-bottom-4"{% endif %}>
+				<div class="app-unlock-list-event {% if not loop.last %}govuk-!-margin-bottom-4 {% endif %}{% if event.type == 'appointment' %}app-unlock-list-event--appointment{% endif %}">
 					<div>
 						{% if event.type != 'activity' %}
 						<a href="#" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
-						<span class="govuk-tag govuk-tag--orange">Appointment</span>
+						<!-- <span class="govuk-tag govuk-tag--purple">Appointment</span> -->
 						{% else %}
 						<a href="../../../activities/{{date}}/{{period}}/{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 						{% endif %}

@@ -110,122 +110,15 @@ Activities Management prototype
 								{{houseblock.name}}
 							</label>
 						</div>
-						<!-- <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-locations-{{houseblock.id}}">
-							<div class="govuk-form-group">
-								<fieldset class="govuk-fieldset">
-									<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-										Sub-locations
-									</legend>
-									<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-										{% for spur in houseblock.spurs %}
-										<div class="govuk-checkboxes__item">
-											<input class="govuk-checkboxes__input" id="houseblock-{{houseblock.id}}-sublocations-{{spur.id}}" name="selected-locations[wings]" type="checkbox" value="{{houseblock.id}}-{{spur.id}}" checked>
-											<label class="govuk-label govuk-checkboxes__label" for="houseblock-{{houseblock.id}}-sublocations-{{spur.id}}">
-												{{spur.name}}
-											</label>
-										</div>
-										{% endfor %}
-									</div>
-								</fieldset>
-							</div>
-						</div> -->
 						{% endfor %}
 					</div>
 				</fieldset>
 			</div>
-		
-			<!-- {{ govukCheckboxes({
-				name: "staying-or-leaving",
-				fieldset: {
-					legend: {
-						text: "Staying or leaving wing",
-						isPageHeading: false,
-						classes: "govuk-fieldset__legend--m"
-					}
-				},
-				items: [
-				{
-					value: "staying",
-					text: "Staying"
-				},
-				{
-					value: "leaving",
-					text: "Leaving"
-				}
-				]
-			}) }} -->
-
-			<div class="govuk-button-group">
-				{{govukButton({
-					text: "View selection"
+	
+			{{govukButton({
+					text: "Continue"
 				})}}
-				{{govukButton({
-					text: "Print selection",
-					href: "example-print-dialog",
-					classes: "govuk-button--secondary",
-					attributes: {
-						target: "_blank"
-					}
-				})}}
-			</div>
 		</form>
 	</div>
 </div>
-{% endblock %}
-{% block pageScripts %}
-<script>
-	let button = $('#check-all-locations')
-	let buttonHtml = button.html()
-	let checkboxes = $('#locations-checkboxes input[type=checkbox]');
-
-	function toggleButton() {
-		if (checkboxes.filter(":checked").length) {
-			buttonHtml = buttonHtml.replace("Select", "Deselect")
-			button.addClass("uncheck-all").removeClass("check-all")
-		} else {
-			buttonHtml = buttonHtml.replace("Deselect", "Select")
-			button.addClass("check-all").removeClass("uncheck-all")
-		}
-
-		button.html(buttonHtml)
-	}
-
-	$.each(checkboxes, function() {
-		$(this).on('change', function() {
-			if (checkboxes.filter(":checked").length) {
-				toggleButton()
-			} else {
-				toggleButton()
-			}
-		})
-	})
-
-	$(document).ready(function() {
-		if (checkboxes.filter(":checked").length) {
-			button.addClass("uncheck-all")
-		} else {
-			button.addClass("check-all")
-		}
-	})
-
-	$('body').on('click', '.check-all', function(event) {
-		event.preventDefault()
-
-		$.each(checkboxes, function() {
-			if ($(this).not(":checked")) {
-				$(this).click()
-			}
-		})
-	})
-
-	$('body').on('click', '.uncheck-all', function(event) {
-		event.preventDefault()
-
-		$.each(checkboxes, function() {
-			if ($(this).is(":checked")) {
-				$(this).click()
-			}
-		})
-	})
-</script>
 {% endblock %}
