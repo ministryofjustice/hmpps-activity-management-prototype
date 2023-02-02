@@ -200,11 +200,15 @@ Add attendance details for {{prisonersNoun}}
 				{% endset %}
 
 				{% set refusedHtml %}
+				{{ govukWarningText({
+					text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid because this is an unacceptable absence.",
+					iconFallbackText: "Warning"
+				}) }}
 				{{ govukTextarea({
 					name: "more-detail",
 					id: "more-detail",
 					label: {
-						text: "Case note (optional)"
+						text: "Case note"
 					}
 				}) }}
 				{{ govukRadios({
@@ -325,7 +329,7 @@ Add attendance details for {{prisonersNoun}}
 					classes: "govuk-radios--small govuk-radios--small",
 					fieldset: {
 						legend: {
-							text: "Which event stopped the prisoner from attending this activity?"
+							text: "What's stopping the prisoner from attending the activity?"
 						}
 					},
 					items: [
@@ -338,7 +342,7 @@ Add attendance details for {{prisonersNoun}}
 					},
 					{
 						value: "other",
-						text: "Something else",
+						text: "They're somewhere else",
 						conditional: {
 							html: freeTextHtml
 						}
