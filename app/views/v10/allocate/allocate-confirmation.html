@@ -1,0 +1,46 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+
+  </div>
+  <div id="event-name-hint" class="govuk-hint">
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+        <div class="govuk-width-container">
+  <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            Allocation complete<br /><br />
+          <span style="font-weight:normal; font-size:.9em;">  {{ data.offenderAllocate }} {{ data.offenderIDAllocate }} is now allocated to {{ data.activityAllocateName }}</span><br /><br />
+
+              </h1>
+        <!--  <div class="govuk-panel__body">
+            Your reference number<br><strong>HDJ2123F</strong>
+          </div>-->
+        </div>
+        <h3 class="govuk-heading-m govuk-!-margin-bottom-4">
+      What you can do next
+        </h3>
+        <p class="govuk-body"><a href="{{data.returnDashboard or 'activity-dashboard-4-1'}}">Review the allocation for {{ data.activityAllocateName or 'Wing cleaning 1'}}</a> and continue allocating.</p>
+        <p class="govuk-body">You can also <a href="activity-dashboard-2?dashboardCategory=All">find other activities with vacancies</a>.</p><p class="govuk-body">
+        </p>
+      </div>
+    </div>
+  </main>
+</div>
+      </div>
+
+</div>
+{% endblock %}

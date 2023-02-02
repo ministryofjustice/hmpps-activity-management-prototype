@@ -1,0 +1,552 @@
+ga{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      You're allocating to {{data.activityAllocateScheduleName  or 'Wing cleaning 1'}}
+
+
+
+  </div>
+</div>
+
+  <div class="govuk-width-container">
+    <ul class="govuk-grid-row card-group" id="sortable">
+      <li class="govuk-grid-column-one-third card-group__item" id="tile_unlock">
+        <div class="card card--clickable" data-test="manage-prisoner-whereabouts">
+          <div style="height:20px; width:100%; padding:0; margin:0; background-color:#f1f1f1;">
+          &nbsp;
+          <div>
+          <h2 class="govuk-heading-m card__heading">
+        <!--    <a class="govuk-link card__link govuk-link--no-visi ted-state" href="{{data['prototype-versions']['unlock-and-attend']['url']}}">-->
+            Current allocation
+          </h2>
+
+	         {% if (data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName ) %}
+            <p class="govuk-body card__description">
+              <span style="width:57%; float:left;"><strong>1Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue">{{data.vacanciesCount or '1'}}</span> <br /><br />
+              <span style="width:59%; float:left;"><strong>1Allocated:</strong></span>{{data.allocatedCount or '1'}} <br /><br />
+              <span style="width:58%; float:left;"><strong>1Capacity:</strong></span> {{data.capacityCount or '2'}}  <br />
+            </p>
+
+          {% else %}
+            <p class="govuk-body card__description">
+              <span style="width:57%; float:left;"><strong>2Vacancies:</strong></span><span class="govuk-tag govuk-tag--blue"> {{data.vacanciesCount or '1'}}</span> <br /><br />
+              <span style="width:59%; float:left;"><strong>2Allocated:</strong></span>{{data.allocatedCount or '1'}}<br /><br />
+              <span style="width:58%; float:left;"><strong>2Capacity:</strong></span> {{data.capacityCount or '2'}} <br />
+            </p>
+
+            {% endif %}
+
+        </div>
+      </li>
+      <li class="govuk-grid-column-two-thirds card-group__item" id="tile_unlock">
+        <div class="card card--clickable" data-test="manage-prisoner-whereabouts">
+          <div style="height:20px; width:100%; padding:0; margin:0; background-color:#f1f1f1;">
+          &nbsp;
+          <div>
+          <h2 class="govuk-heading-m card__heading">
+        <!--    <a class="govuk-link card__link govuk-link--no-visited-state" href="{{data['prototype-versions']['unlock-and-attend']['url']}}">-->
+            Requirements
+          </h2>
+          <p class="govuk-body card__description">
+            <span style="width:370px; float:left;"><strong>Education level:</strong></span> {{ data.allocationEducation }}<br /><br />
+            <span style="width:370px; float:left;"><strong>Suitable for incentive level:</strong></span> {{ data.allocationIncentive }}<br /><br />
+            <span style="width:370px; float:left;"><strong>Suitable for workplace risk assessment:</strong></span> {{ data.allocationRisk }}
+          </p>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+
+
+
+<div class="govuk-grid-column-three-third">
+<div class="govuk-tabs" data-module="govuk-tabs">
+<h2 class="govuk-tabs__title">
+  Contents
+</h2>
+<ul class="govuk-tabs__list">
+  <li class="govuk-tabs__list-item">
+    <a class="govuk-tabs__tab" href="#allocated">
+    <strong>  Currently allocated</strong>
+    </a>
+  </li>
+  <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+    <a class="govuk-tabs__tab" href="#allocate">
+      <strong>Candidates</strong>
+    </a>
+  </li>
+  <li class="govuk-tabs__list-item">
+    <a class="govuk-tabs__tab" href="#schedule">
+      <strong>{{data.activityAllocateScheduleName  or 'Wing cleaning 1'}} schedule</strong>
+    </a>
+  </li>
+</ul>
+
+<!--allocated-->
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocated">
+<!--   <h2 class="govuk-heading-m">People allocated now  <strong class="govuk-tag govuk-tag--yellow">
+   <span style="text-transform:lowercase; ">4 people allocated out of a possible 5</span>
+  </strong></h2>--><p>Review the list of people currently allocated to identify any non-associations.</p>
+
+
+<form method="post" action="AllocateRemove">
+  <table class="govuk-table" data-module="moj-sortable-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Prisoner details</th>
+        <th scope="col" class="govuk-table__header" style="width:28%">Non-associations</th>
+        <th scope="col" class="govuk-table__header">Date allocated</th>
+        <th scope="col" class="govuk-table__header">Other allocations</th>
+        <th scope="col" class="govuk-table__header">Earliest release date</th>
+      </tr>
+    </thead>
+    <form method="post">
+    <tbody class="govuk-table__body">
+      {% if (data.offenderAllocatedStatusNeilRudge =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
+      <tr class="govuk-table__row">
+        <td data-sort-value="Neil" class="govuk-table__cell">
+          <strong><a href="#">Neil Rudge</a></strong><br />
+          AA4309K<br />
+          1-3-003
+          </label>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="0">None</td>
+      <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
+        <td class="govuk-table__cell" data-sort-value="20240709">Maths 1</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">9 July 2024</td>
+      </tr>
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusIvorNorisk =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
+
+      <tr class="govuk-table__row">
+        <td data-sort-value="Ivor" class="govuk-table__cell">
+          <strong><a href="#">Ivor Norisk</a></strong><br />
+          BA3219B<br />
+          2-3-022
+        </td>
+        <td class="govuk-table__cell" data-sort-value="1">Armit Singh, <span style="font-size:.85em;">FG9121R</span></td>
+        <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
+        <td class="govuk-table__cell" data-sort-value="20230122">None </td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">22 March 2023</td>
+      </tr>
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusLeeMilson=="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
+
+      <tr class="govuk-table__row">
+        <td data-sort-value="Lee" class="govuk-table__cell">
+          <strong><a href="#">Lee Milson</a></strong><br />
+          CV1291A<br />
+          1-1-021
+        </td>
+        <td class="govuk-table__cell" data-sort-value="3">Lance Arm, <span style="font-size:.85em;">AB4309H</span> <br />Lewis Holme, <span style="font-size:.85em;">LG1291A</span><br />Harry Christmas, <span style="font-size:.85em;">MK8892P</span></td>
+        <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">31 Jan 2023 </td>
+        <td class="govuk-table__cell" data-sort-value="20230202">English 1</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">2 Mar 2023</td>
+      </tr>
+
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusLionelMesser =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
+
+      <tr class="govuk-table__row">
+        <td data-sort-value="Lionel" class="govuk-table__cell">
+          <strong><a href="#">Lionel Messer</a></strong><br />
+          NH7239A<br />
+          1-1-021
+        </td>
+        <td class="govuk-table__cell" data-sort-value="2">Armit Singh, <span style="font-size:.85em;">FG9121R</span><br />Lewis Holme, <span style="font-size:.85em;">LG1291A</span></td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }}</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">Farms and gardens 1</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">31 Dec 2023 </td>
+      </tr>
+
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusNoffRens =="true" and data.currentActivityAllocateScheduleName == data.activityAllocateScheduleName)%}
+
+      <tr class="govuk-table__row">
+        <td data-sort-value="Noff" class="govuk-table__cell">
+          <strong><a href="#">Noff Rens</a></strong><br />
+          BN7622L<br />
+          2-1-021
+        </td>
+        <td class="govuk-table__cell" data-sort-value="2">More than 3<br /> <a href="#">See full list</a></td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">{{ ‘_’ | today | convertShortDateToMediumDate }} </td>
+        <td class="govuk-table__cell" data-sort-value="20250216">None</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">3 Jan 2023</td>
+      </tr>{% endif %}
+    </tbody>
+  </table>
+
+<!--  <button class="govuk-button" data-module="govuk-button">
+  Remove from this activity
+  </button>
+  <input type="hidden" name="activityAllocateName" value="Wing cleaning 1" />-->
+</form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--allocate new people-->
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocate">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p>Your candidate list has been filtered to show people who match all the requirements for this activity.
+        Use the filters to expand or reduce the list. You can also search for someone you want to allocate.</p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label" for="event-name">
+            Search by name or prison number:
+          </label>
+        </h2>
+        <input class="govuk-input govuk-!-width-two-thirds" id="event-name" name="event-name" type="text" >
+        <button class="govuk-button" data-module="govuk-button" style="margin-left:-4px;">
+        Search
+        </button>
+      </div>
+    </div>
+
+<div class="govuk-grid-row" style="background-color:#f1f1f1; padding-top:20px;">
+  <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
+    <div class="govuk-form-group">
+        <label class="govuk-label" for="sort">
+          Showing people who are:<br /><br />
+        </label>
+        <select class="govuk-select" id="show" name="show-grouping">
+          <option value="Available" {% if data.allocateEmployed=="Available" %}selected{% endif %}>Available</option>
+          <option value="Unavailable" {% if data.allocateEmployed=="Unavailable" %}selected{% endif %}>Unavailable</option>
+          <option value="Both available and unavailable" {% if data.allocateEmployed=="Both available and unavailable" %}selected{% endif %}>Both available and unavailable</option>
+        </select>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="sort">
+        Showing people whose workplace assessment risk is:
+      </label>
+      <select class="govuk-select" id="show2" name="show-grouping"">
+        <option value="Any" {% if data.allocateRisk=="Any" %}selected{% endif %}>Any risk level</option>
+        <option value="Low"  {% if data.allocateRisk=="Low" %}selected{% endif %}>Low</option>
+        <option value="Low or Medium"  {% if data.allocateRisk=="Low or Medium" %}selected{% endif %}>Low or Medium</option>
+        <option value="Low, Medium or High" {% if data.allocateRisk=="Low, Medium or High" %}selected{% endif %}>Low, Medium or High</option>
+        <option value="Medium or High" {% if data.allocateRisk=="Medium or High" %}selected{% endif %}>Medium or High</option>
+        <option value="High" {% if data.allocateRisk=="High" %}selected{% endif %}>High</option>
+      </select>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
+      <div class="govuk-form-group">
+      <label class="govuk-label" for="sort">
+        Showing people who have the following incentive level:
+      </label>
+      <select class="govuk-select" id="show3" name="show-grouping"">
+        <option value="Basic"  {% if data.allocateIncentive=="Basic" %}selected{% endif %}>Basic</option>
+        <option value="Standard" {% if data.allocateIncentive=="Standard" %}selected{% endif %}>Standard</option>
+        <option value="Basic or Standard" {% if data.allocateIncentive=="Basic or Standard" %}selected{% endif %}>Basic or Standard</option>
+        <option value="Standard or Enhanced" {% if data.allocateIncentive=="Standard or Enhanced" %}selected{% endif %}>Standard or Enhanced</option>
+        <option value="All" {% if data.allocateIncentive=="All" %}selected{% endif %}>All incentive level</option>
+
+
+      </select>
+      </div>
+    </div>
+  </div>
+
+
+
+  <table class="govuk-table" data-module="moj-sortable-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+      <!--  <th scope="col" class="govuk-table__header" aria-sort="ascending">Candidate details</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none" style="width:28%">Non-associations on this activity</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none" >Security category</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Qualifications</th>-->
+
+        <th scope="col" class="govuk-table__header">Candidate details</th>
+        <th scope="col" class="govuk-table__header" style="width:28%">Non-associations on this activity</th>
+        <th scope="col" class="govuk-table__header">Security category</th>
+        <th scope="col" class="govuk-table__header">Earliest release date</th>
+        <th scope="col" class="govuk-table__header">Qualifications</th>
+
+      </tr>
+    </thead>
+    <form method="post">
+    <tbody class="govuk-table__body">
+      {% if (data.offenderAllocatedStatusNeilRudge !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+      <tr class="govuk-table__row">
+        <td data-sort-value="Neil" class="govuk-table__cell">
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input type="hidden" name="returnDashboard" value="activity-dashboard-4-1" />
+              <input class="govuk-radios__input" id="offenderAllocate1" name="offenderAllocate" type="radio" value="Neil Rudge">
+              <label class="govuk-label govuk-radios__label" for="offenderAllocate1">
+              <strong><a href="#">Neil Rudge</a></strong><br />
+              AA4309K<br />
+              1-3-003
+              </label>
+            </div>
+          </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="0">None</td>
+      <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">A (Provisional)</td>
+        <td class="govuk-table__cell" data-sort-value="20240709">9 July 2024</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
+      </tr>
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusIvorNorisk !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+      <tr class="govuk-table__row">
+        <td data-sort-value="Ivor" class="govuk-table__cell">
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="offenderAllocate2" name="offenderAllocate" type="radio" value="Ivor Norisk">
+              <label class="govuk-label govuk-radios__label" for="offenderAllocate2">
+              <strong><a href="#">Ivor Norisk</a></strong><br />
+              BA3219B<br />
+              2-3-022
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="1">Armit Singh, <span style="font-size:.85em;">FG9121R</span></td>
+      <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">B</td>
+        <td class="govuk-table__cell" data-sort-value="20230122">22 March 2023</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
+      </tr>
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusLeeMilson!=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+      <tr class="govuk-table__row">
+        <td data-sort-value="Lee" class="govuk-table__cell">
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="offenderAllocate3" name="offenderAllocate" type="radio" value="Lee Milson">
+              <label class="govuk-label govuk-radios__label" for="offenderAllocate3">
+              <strong><a href="#">Lee Milson</a></strong><br />
+              CV1291A<br />
+              1-1-021
+              </label>
+            </div>
+          </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="3">Lance Arm, <span style="font-size:.85em;">AB4309H</span> <br />Lewis Holme, <span style="font-size:.85em;">LG1291A</span><br />Harry Christmas, <span style="font-size:.85em;">MK8892P</span></td>
+      <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">A</td>
+        <td class="govuk-table__cell" data-sort-value="20230202">2 Mar 2023</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">English entry level 1<br />Maths level 2</td>
+      </tr>
+
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusLionelMesser !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+      <tr class="govuk-table__row">
+        <td data-sort-value="Lionel" class="govuk-table__cell">
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="offenderAllocate4" name="offenderAllocate" type="radio" value="Lionel Messer">
+              <label class="govuk-label govuk-radios__label" for="offenderAllocate4">
+              <strong><a href="#">Lionel Messer</a></strong><br />
+              NH7239A<br />
+              1-1-021
+            </label>
+          </div>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="2">Armit Singh, <span style="font-size:.85em;">FG9121R</span><br />Lewis Holme, <span style="font-size:.85em;">LG1291A</span></td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">Unsentenced</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">16 Feb 2025</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
+      </tr>
+
+      {% endif %}
+
+      {% if (data.offenderAllocatedStatusNoffRens !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
+
+      <tr class="govuk-table__row">
+        <td data-sort-value="Lionel" class="govuk-table__cell">
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Noff Rens">
+              <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
+              <strong><a href="#">Noff Rens</a></strong><br />
+              BN7622L<br />
+              2-1-021
+            </label>
+          </div>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="2">More than 3<br /> <a href="#">See full list</a></td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">Unsentenced</td>
+        <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
+        <td class="govuk-table__cell" data-sort-value="Maths level 2">Maths level 2</td>
+      </tr>{% endif %}
+    </tbody>
+</table>
+
+
+
+
+<!--Pagination-->
+<nav class="moj-pagination" aria-label="Pagination navigation">
+
+  <ul class="moj-pagination__list">
+    <li class="moj-pagination__item  moj-pagination__item--prev">
+      <a class="moj-pagination__link" href="">Previous<span class="govuk-visually-hidden"> page</span></a>
+    </li>
+
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="/page=1" aria--current"Page 1 of 30">1</a></li>
+
+    <li class="moj-pagination__item moj-pagination__item--active" aria-label="Page 2 of 30" aria-label="page">2</li>
+
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="/page=3" aria-label="Page 3 of 30">3</a></li>
+
+    <li class="moj-pagination__item moj-pagination__item--dots">…</li>
+
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="/page=5" aria-label="Page 5 of 30">5</a></li>
+
+    <li class="moj-pagination__item  moj-pagination__item--next">
+      <a class="moj-pagination__link" href="">Next<span class="govuk-visually-hidden"> page</span></a>
+    </li>
+  </ul>
+  <p class="moj-pagination__results">Showing <b>0</b> to <b>5</b> of <b>20</b> results</p>
+</nav>
+<br /><br />
+
+
+  <button class="govuk-button" data-module="govuk-button">
+  Select Candidate
+  </button>
+    </form>
+</div>
+
+
+
+
+<div class="govuk-tabs__panel" id="schedule">
+<p>Check the schedule is compatible with the candidate's current allocations if they have any. </p>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Days</th>
+        <th scope="col" class="govuk-table__header">AM</th>
+        <th scope="col" class="govuk-table__header">PM</th>
+        <th scope="col" class="govuk-table__header">ED</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Monday</td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Tuesday</td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Wednesday</td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Thursday</td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Friday</td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Saturday</td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Sunday</td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">No</strong></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag">Yes</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="govuk-button" data-module="govuk-button">
+  Edit schedule times
+  </button>
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
+<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a[data-modal]').on('click', function(event) {
+			event.preventDefault();
+			this.blur();
+			$.get(this.href, function(html) {
+				$(html).appendTo('body').modal({
+					showClose: false,
+					clickClose: false
+				});
+			});
+		});
+
+		$('#show').on('change', function() {
+			window.location = 'activity-dashboard-4-1?allocateEmployed=' + $(this).val()
+
+		})
+    $('#show2').on('change', function() {
+			window.location = 'activity-dashboard-4-1?allocateRisk=' + $(this).val()
+		})
+    $('#show3').on('change', function() {
+			window.location = 'activity-dashboard-4-1?allocateIncentive=' + $(this).val()
+		})
+	})
+</script>
+{% endblock %}
+{% endblock %}

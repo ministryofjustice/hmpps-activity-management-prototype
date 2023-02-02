@@ -1,0 +1,67 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block main %}
+{% block beforeContent %}
+<div class="govuk-width-container">
+	<h1 class="govuk-heading-l govuk-!-margin-top-7">Manage activities and schedules</h1>
+</div>
+{% endblock %}
+<div class="homepage-content">
+	<div class="govuk-width-container">
+		<ul class="govuk-grid-row card-group" id="sortable">
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_003">
+				<div class="card card--clickable" data-test="incentives">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="allocate/activity-dashboard-2?dashboardCategory=All">Allocate and deallocate to activities</a>
+					</h2>
+					<p class="govuk-body card__description">See vacancies, check current allocation, and allocate or deallocate people to activities.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_002">
+				<div class="card card--clickable" data-test="check-my-diary">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="create/activity-dashboard?dashboardCategory=All&dashboardView=live">Change activity details and schedules</a>
+					</h2>
+					<p class="govuk-body card__description">Change, suspend or archive existing activities, and build, change or suspend schedules.</p>
+				</div>
+			</li>
+
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="create/activity-type-select-with-category">Create an activity</a>
+					</h2>
+					<p class="govuk-body card__description">Set up a new activity including selecting pay rates.</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+{% endblock %}
+{% block pageScripts %}
+<script src="/public/javascripts/cards.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+	$(document).ready( function() {
+		var $list = "ul#sortable"
+		$($list).sortable({
+			update: function(event, ui) {
+				var order = [];
+				var data = $(this).sortable('serialize');
+
+				$($list + ' li').each( function(e) {
+					order.push( $(this).find('a').html() );
+				});
+
+				console.log( order , data );
+			}
+		});
+		$($list).disableSelection();
+	} );
+</script>
+{% endblock %}
