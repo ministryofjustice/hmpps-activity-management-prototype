@@ -39,18 +39,6 @@
 			<li><a href="{{'_'|today}}" class="govuk-link--no-visited-state">View today's schedule</a></li>
 			{% endif %}
 		</ul>
-
-		{% set attendanceDetailsHtml %}
-		<ul class="govuk-list">
-			<li>Attended: <b>{{attendanceTotals['attended']}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (attendanceTotals['attended'] / attendanceTotals['scheduled'] * 100) | round(1) }}%)</span></li>
-			<li>Absent: <b>{{attendanceTotals['not-attended']}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (attendanceTotals['not-attended'] / attendanceTotals['scheduled'] * 100) | round(1) }}%)</span></li>
-			<li>Not recorded: <b>{{attendanceTotals['not-recorded']}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (attendanceTotals['not-recorded'] / attendanceTotals['scheduled'] * 100) | round(1) }}%)</span></li>
-		</ul>
-		{% endset %}
-		{{govukDetails({
-			html: attendanceDetailsHtml,
-			summaryText: "Daily attendance totals"
-		})}}
 	</div>
 </div>
 
@@ -207,7 +195,19 @@
 	{{period|capitalize}} sessions ({{activities|length}})
 </h2>
 
-<table class="govuk-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head govuk-!-margin-bottom-3" data-module="moj-sortable-table">
+{% set attendanceDetailsHtml %}
+<ul class="govuk-list">
+	<li>Attended: <b>{{attendanceTotals[period]['attended']}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (attendanceTotals[period]['attended'] / attendanceTotals[period]['scheduled'] * 100) | round(1) }}%)</span></li>
+	<li>Absent: <b>{{attendanceTotals[period]['not-attended']}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (attendanceTotals[period]['not-attended'] / attendanceTotals[period]['scheduled'] * 100) | round(1) }}%)</span></li>
+	<li>Not recorded: <b>{{attendanceTotals[period]['not-recorded']}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (attendanceTotals[period]['not-recorded'] / attendanceTotals[period]['scheduled'] * 100) | round(1) }}%)</span></li>
+</ul>
+{% endset %}
+{{govukDetails({
+	html: attendanceDetailsHtml,
+	summaryText: period|capitalize + " attendance totals"
+})}}
+
+<table class="govuk-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head govuk-!-margin-bottom-8" data-module="moj-sortable-table">
 	<thead class="govuk-table__head">
 		<tr class="govuk-table__row">
 			<th scope="col" class="govuk-table__header" aria-sort="ascending" width="250">Activity</th>
@@ -232,16 +232,16 @@
 			<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
 				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
 			</td>
-			<td class="govuk-table__cell">{{activity.attendanceCount[period]['scheduled']}}</td>
-			<td class="govuk-table__cell govuk-hint">
+			<td class="govuk-table__cell--numeric govuk-table__cell">{{activity.attendanceCount[period]['scheduled']}}</td>
+			<td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">
 				{% if activity.attendanceCount[period]['attended'] > 0 %}
 				<span class="govuk-tag govuk-tag--green">{{activity.attendanceCount[period]['attended']}}</span>
 				{% else %}
 				{{activity.attendanceCount[period]['attended']}}
 				{% endif %}
 			</td>
-			<td class="govuk-table__cell govuk-hint">{{activity.attendanceCount[period]['not-recorded']}}</td>
-			<td class="govuk-table__cell govuk-hint">
+			<td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">{{activity.attendanceCount[period]['not-recorded']}}</td>
+			<td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">
 				{% if activity.attendanceCount[period]['not-attended'] > 0 %}
 				<span class="govuk-tag govuk-tag--red">{{activity.attendanceCount[period]['not-attended']}}</span>
 				{% else %}

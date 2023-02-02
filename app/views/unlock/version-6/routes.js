@@ -248,8 +248,15 @@ const addEventsToPrisoners = (prisoners, activities, date, period, attendanceDat
         const activitiesForDate = activityIds.map(activityId => {
             const activity = activities.find(activity => activity.id.toString() === activityId.toString());
             const scheduleForDay = activity.schedule.find(schedule => schedule.day === new Date(date).getDay());
+            let isSessionCancelled = false;
+
             if (scheduleForDay) {
+                if(scheduleForDay.cancelledSessions){
+                    isSessionCancelled = true
+                }
+
                 const timesForPeriod = scheduleForDay[period.toLowerCase()];
+                
                 if (timesForPeriod && timesForPeriod.length > 0) {
                     return {
                         id: activity.id,
@@ -257,6 +264,7 @@ const addEventsToPrisoners = (prisoners, activities, date, period, attendanceDat
                         location: activity.location,
                         times: timesForPeriod[0],
                         period: period,
+                        cancelled: isSessionCancelled,
                         type: 'activity'
                     };
                 }
@@ -1267,32 +1275,32 @@ router.get('/activities/:selectedDate', function(req, res) {
     }
 
     let locations = [];
-    let attendanceTotals = {
-        'scheduled': 0,
-        'not-attended': 0,
-        'attended': 0,
-        'not-recorded': 0
-    };
-    for(let period in activitiesForDate){
-        for(let activity of activitiesForDate[period]){
-            for(let type in activity.attendanceCount[period]){
-                let attendance = activity.attendanceCount[period][type]
-                if(attendance > 0){
-                    attendanceTotals[type] = attendanceTotals[type] + activity.attendanceCount[period][type]
-                }
+    let attendanceTotals = {};
+
+        // 'scheduled': 0,
+        // 'not-attended': 0,
+        // 'attended': 0,
+        // 'not-recorded': 0
+    
+    for (const period in activitiesForDate) {
+        attendanceTotals[period] = attendanceTotals[period] || {};
+        for (const activity of activitiesForDate[period]) {
+            for (const type in activity.attendanceCount[period]) {
+                attendanceTotals[period][type] = (attendanceTotals[period][type] || 0) +
+                (activity.attendanceCount[period][type] > 0 ? activity.attendanceCount[period][type] : 0);
             }
         }
     }
 
-        res.render('unlock/' + req.version + '/activities', {
-            locations,
-            attendanceTotals,
-            selectedDate,
-            relativeDate,
-            activitiesForDate,
-            activitiesForDateWithCounts
-        })
-    });
+    res.render('unlock/' + req.version + '/activities', {
+        locations,
+        attendanceTotals,
+        selectedDate,
+        relativeDate,
+        activitiesForDate,
+        activitiesForDateWithCounts
+    })
+});
 
 // prisoner profile
 router.get('/prisoner/:prisonerId', function(req, res) {

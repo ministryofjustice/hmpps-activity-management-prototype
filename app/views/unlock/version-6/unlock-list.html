@@ -60,7 +60,7 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 		<div class="govuk-button-group govuk-!-margin-top-5">
 			<div class="govuk-button-group">
 				{{ govukButton({
-					text: "Show filters",
+					text: "Hide filters",
 					classes: "govuk-button--secondary govuk-!-margin-bottom-0",
 					attributes: {
 						id: "filter-toggle"
@@ -306,16 +306,21 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 					<div>
 						{% if event.type != 'activity' %}
 						<a href="#" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
-						<!-- <span class="govuk-tag govuk-tag--purple">Appointment</span> -->
+						<br>
+						<span class="govuk-tag govuk-!-margin-bottom-1 govuk-!-margin-top-1">Appointment</span>
 						{% else %}
 						<a href="../../../activities/{{date}}/{{period}}/{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 						{% endif %}
 					</div>
 
+					{% if event.cancelled != true %}
 					{% if event.attendance == 'attended' %}
 					<span class="moj-badge moj-badge--green govuk-!-margin-bottom-1 govuk-!-margin-top-1">Attended</span>
 					{% elif event.attendance == 'not-attended' %}
 					<span class="moj-badge moj-badge--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Not attended</span>
+					{% endif %}
+					{% else %}
+					<span class="moj-badge moj-badge--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Session cancelled</span>
 					{% endif %}
 
 					<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
@@ -327,9 +332,9 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 					</div>
 					<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ event.location }}</div>
 				</div>
-				<!-- {% if not loop.last %}
-				<hr class="govuk-section-break govuk-!-margin-top-2 govuk-!-margin-bottom-2 govuk-section-break--visible">
-				{% endif %} -->
+				{% if not loop.last %}
+				<hr class="govuk-section-break govuk-!-margin-top-3 govuk-!-margin-bottom-3 govuk-section-break--visible">
+				{% endif %}
 				{% endfor %}
 			</td>
 		</tr>
@@ -405,7 +410,7 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 			}
 			filterToggleBntText()
 		}
-		toggleFilters()
+		// toggleFilters()
 		filterToggleBntText()
 		filterToggle.on('click', toggleFilters)
 	})

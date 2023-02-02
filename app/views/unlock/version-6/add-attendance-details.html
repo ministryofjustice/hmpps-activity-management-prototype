@@ -231,16 +231,9 @@ Add attendance details for {{prisonersNoun}}
 				{% endset %}
 
 				{% set sickHtml %}
-				{{ govukTextarea({
-					name: "more-detail",
-					id: "more-detail",
-					label: {
-						text: "Can you provide more detail?"
-					}
-				}) }}
 				{{ govukRadios({
-					id: "not-listed-absence-type",
-					name: "not-listed-absence-type",
+					id: "acceptable-absence",
+					name: "acceptable-absence",
 					classes: "govuk-radios--small govuk-radios--inline",
 					fieldset: {
 						legend: {
@@ -258,6 +251,109 @@ Add attendance details for {{prisonersNoun}}
 						text: "No"
 					}
 					]
+				}) }}
+				<!-- {{ govukTextarea({
+					name: "more-detail",
+					id: "more-detail",
+					label: {
+						text: "Can you provide more detail?"
+					}
+				}) }} -->
+				{% endset %}
+
+				{% set notRequiredHtml %}
+				{{ govukRadios({
+					id: "acceptable-absence",
+					name: "acceptable-absence",
+					classes: "govuk-radios--small govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Was this an acceptable absence and should the prisoner be paid?"
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes"
+
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
+				{% endset %}
+
+				{% set restDayHtml %}
+				{{ govukRadios({
+					id: "acceptable-absence",
+					name: "acceptable-absence",
+					classes: "govuk-radios--small govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Was this an acceptable absence and should the prisoner be paid?"
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes"
+
+					},
+					{
+						value: "no",
+						text: "No"
+					}
+					]
+				}) }}
+				{% endset %}
+
+				{% set elsewhereHtml %}
+				{% set freeTextHtml %}
+				{{ govukTextarea({
+					name: "more-detail",
+					id: "more-detail",
+					label: {
+						text: "Provide more detail"
+					}
+				}) }}
+				{% endset %}
+				{{ govukRadios({
+					id: "prisoner-elsewhere",
+					name: "prisoner-elsewhere",
+					classes: "govuk-radios--small govuk-radios--small",
+					fieldset: {
+						legend: {
+							text: "Which event stopped the prisoner from attending this activity?"
+						}
+					},
+					items: [
+					{
+						value: "event",
+						html: "9:00&thinsp;&ndash;&thinsp;10:30 : Court video call"
+					},
+					{
+						divider: "or"
+					},
+					{
+						value: "other",
+						text: "Something else",
+						conditional: {
+							html: freeTextHtml
+						}
+					}
+					]
+				}) }}
+				{% endset %}
+
+				{% set unknownHtml %}
+				{{ govukTextarea({
+					name: "more-detail",
+					id: "more-detail",
+					label: {
+						text: "Provide more detail"
+					}
 				}) }}
 				{% endset %}
 
@@ -287,7 +383,24 @@ Add attendance details for {{prisonersNoun}}
 					},
 					{
 						value: "not-required",
-						text: "Not required, excused or rest day"
+						text: "Not required or excused",
+						conditional: {
+							html: notRequiredHtml
+						}
+					},
+					{
+						value: "not-required",
+						text: "Rest day",
+						conditional: {
+							html: restDayHtml
+						}
+					},
+					{
+						value: "not-required",
+						text: "Prisoner is elsewhere",
+						conditional: {
+							html: elsewhereHtml
+						}
 					},
 					{
 						value: "other",
@@ -301,7 +414,10 @@ Add attendance details for {{prisonersNoun}}
 					},
 					{
 						value: "unknown",
-						text: "Absence reason unknown"
+						text: "Absence reason unknown",
+						conditional: {
+							html: unknownHtml
+						}
 					}
 					]
 				}) }}
