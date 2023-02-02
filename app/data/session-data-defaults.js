@@ -61,7 +61,7 @@ module.exports = {
     },
     'unlock-and-attend': {
       'latest-version': 'version-5',
-      'url': '/unlock/version-5/whereabouts'
+      'url': '/unlock/version-6/whereabouts'
     },
     'appointments': {
       'latest-version': 'version-3',
