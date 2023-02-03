@@ -1153,5 +1153,19 @@ module.exports = function(router) {
 });
 
 
+//Admin journey
+router.post(version + '/admin/log-an-activity/activity-name-search', function(req, res) {
+	{
+		res.redirect(version + '/admin/log-an-activity/activity-name-results')
+	}
+});
+
+//Admin journey
+router.post(version + '/admin/log-an-activity/activity-name-results', function(req, res) {
+	{
+		res.redirect(version + '/admin/log-an-activity/check-existing-applications')
+	}
+});
+
 
 }

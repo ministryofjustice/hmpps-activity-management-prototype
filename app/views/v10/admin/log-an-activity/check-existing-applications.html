@@ -1,0 +1,52 @@
+ga{% extends "layout.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+    Check existing applications for {{data.logOffenderName or 'Henry Tatton'}}, {{data.logOffenderID or 'BN7666F'}}
+  </div>
+</div>
+<div class="govuk-grid-column-three-third">
+<form method="post">
+<table class="govuk-table" data-module="moj-sortable-table">
+<thead class="govuk-table__head">
+<tr class="govuk-table__row">
+<th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%">Activity being applied for</th>
+<th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%" >Application date</th>
+<th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%" >Application status</th>
+<th scope="col" class="govuk-table__header"style="width:28%"></th>
+</tr>
+</thead>
+
+<tbody class="govuk-table__body">
+  <tr class="govuk-table__row">
+    <td data-sort-value="Kitchens" class="">
+        <strong><a href="# target="_blank">Kitchens</a></strong><br />
+    </td>
+    <td class="" data-sort-value="20230101">1 Jan 2023</td>
+    <td class="" data-sort-value="Pending">Pending</td>
+  </tr>
+  <tr class="govuk-table__row">
+    <td data-sort-value="Electronics" class="">
+      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Electronics</a></strong><br />
+    </td>
+    <td class="" data-sort-value="20220801">1 Aug 2022</td>
+    <td class="" data-sort-value="Pending">Pending</td>
+  </tr>
+</tbody>
+</table>
+<button class="govuk-button" data-module="govuk-button">
+  Continue
+  </button>
+  </<form>
+
+{% endblock %}
