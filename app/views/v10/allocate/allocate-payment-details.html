@@ -1,0 +1,118 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-10">
+    Select how much you want to pay  {{ data.offenderAllocate }}, <strong>{{ data.offenderIDAllocate }}</strong><br />
+    </h1>
+  <!--  <p class="govuk-body">{{ data.offenderAllocate }}'s current incentive level is <strong>Basic</strong>. </p>-->
+  </div>
+</div><!--
+<div class="govuk-width-container">
+  <ul class="govuk-grid-row card-group" id="sortable">
+    <li class="govuk-grid-column-one-half card-group__item" id="tile_unlock">
+      <div class="card card--clickable" data-test="manage-prisoner-whereabouts">
+        <div style="height:20px; width:100%; padding:0; margin:0; background-color:#f1f1f1;">
+        &nbsp;
+        <div>
+        <h2 class="govuk-heading-m card__heading">
+      <!--    <a class="govuk-link card__link govuk-link--no-visi ted-state" href="{{data['prototype-versions']['unlock-and-attend']['url']}}">-->
+          <!--{{ data.offenderAllocate }}, {{ data.offenderIDAllocate }}
+        </h2>
+
+          <p class="govuk-body card__description">
+            <span style="width:60%; float:left;"><strong>Incentive level:</strong></span><span>{{ data.offenderAllocateIncentiveLevel or 'Standard' }}</span> <br /><br />
+            <span style="width:60%; float:left;"><strong>Workplace risk assessment level:</strong></span><span>{{ data.offenderAllocateRisk or 'Low' }}</span><br /><br />
+          </p>
+
+      </div>
+    </li>
+    <li class="govuk-grid-column-one-half card-group__item" id="tile_unlock">
+      <div class="card card--clickable" data-test="manage-prisoner-whereabouts">
+        <div style="height:20px; width:100%; padding:0; margin:0; background-color:#f1f1f1;">
+        &nbsp;
+        <div>
+        <h2 class="govuk-heading-m card__heading">
+          {{data.activityAllocateScheduleName  or 'Wing cleaning 1'}}
+        </h2>
+        <p class="govuk-body card__description">
+          <span style="width:60%; float:left;"><strong>Required incentive level:</strong></span><span>{{ data.offenderAllocateIncentiveLevel or 'Standard' }}</span> <br /><br />
+          <span style="width:60%; float:left;"><strong>Activity risk level:</strong></span><span>{{ data.offenderAllocateRisk or 'Low' }}</span><br /><br />
+        </p>
+      </div>
+    </li>
+
+  </ul>
+</div>-->
+
+
+<!--START NEW -->
+
+  <div class="govuk-form-group">
+    <form method="post">
+      <p>{{ data.offenderAllocate }}'s' current incentive level is {% if data.activityAllocateName=="Kitchens" %}Enhanced {% else %}Standard.{% endif %}
+<p>Select the correct pay rate. There may only be one available.</p><br />
+  {% for level, details in data.payrates %}
+    {% if details|length > 0 %}
+          {% if (level=='Standard') %}
+
+           <h2 class="govuk-heading-m">Standard incentive level </h2>
+
+            {% for rate in details %}
+
+            <div class="govuk-form-group">
+              <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="AllocatePaymentCurrent" name="AllocatePayment" value="{{rate.amount}}" type="radio" >
+                  <label class="govuk-label govuk-radios__label" for="AllocatePaymentCurrent">
+                <span style="margin-right:50px">&pound;{{rate.amount or '1.21'}}</span>
+
+                {% if data.activityAllocateName=="Kitchens" %}
+                      Enhanced
+                        {% else %}
+                          {{ data.offenderAllocateIncentiveLevel or 'Standard' }}
+                            {% endif %}
+                                incentive level, {{rate.name or 'pay band 1'}}
+                                  </label>
+                              </div>
+                              {% endfor %}
+                            {% endif %}
+                          {% endif %}
+
+        {% else %}
+
+        <!--If nothing is set on first entry to page-->
+
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="AllocatePaymentCurrent" name="AllocatePayment" type="radio" value="1.21">
+          <label class="govuk-label govuk-radios__label" for="AllocatePaymentCurrent">
+         <span style="margin-right:50px">&pound;{{rate.amount or '1.21'}}</span> {% if data.activityAllocateName=="Kitchens" %}
+               Enhanced
+                 {% else %}
+                   {{ data.offenderAllocateIncentiveLevel or 'Standard' }}
+                     {% endif %}
+                      incentive level,  {{rate.name or 'pay band 1'}}
+          </label>
+      </div>
+        {% endfor %}
+        <br />  <br />
+
+        <p class="govuk-body">If the rate you need is not listed you can <a href="allocate-check-your-answers-payment">add or change rates for this activity.</a></p>
+
+      <br />  <br />
+    <button class="govuk-button" data-module="govuk-button">Assign pay rate</button>
+    </form>
+</div>
+
+{% endblock %}
