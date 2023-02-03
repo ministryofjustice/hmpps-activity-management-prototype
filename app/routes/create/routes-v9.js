@@ -10,7 +10,7 @@ module.exports = function(router) {
 
 			req.session.data.allocateEmployed = "Available"
 			req.session.data.pageToShow =1
-			res.redirect('/dps-home')
+			res.redirect('dps-home?prototype-versions[create-and-allocate][url]=/'+version+'/dps-home-2')
 	});
 
     //From activity dashboard, if schedule, delete (archive or suspend)
