@@ -1,0 +1,260 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column--thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+    </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Select the activity {{data.logOffenderName or 'Henry Tatton'}} is applying for    </h1>
+  </div>
+</div>
+<form method="post">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <div class="govuk-form-group">
+    <label class="govuk-label" for="sort">
+      Filter by category:
+    </label>
+    <select class="govuk-select" id="categoryDropdown" name="show-grouping"">
+      <option value="All" {% if data.dashboardCategory=="All" %}selected{% endif %}>All</option>
+      <option value="Education"  {% if data.dashboardCategory=="Education" %}selected{% endif %}>Education </option>
+      <option value="Industries" {% if data.dashboardCategory=="Industries" %}selected{% endif %}>Industries</option>
+      <option value="Prison" {% if data.dashboardCategory=="Prison" %}selected{% endif %}>Prison jobs</option>
+      <option value="Gym" {% if data.dashboardCategory=="Gym" %}selected{% endif %}>Gym, sports and fitness</option>
+      <option value="Induction" {% if data.dashboardCategory=="Induction" %}selected{% endif %}>Induction</option>
+      <option value="Intervention" {% if data.dashboardCategory=="Intervention" %}selected{% endif %}>Intervention programmes</option>
+      <option value="Faith" {% if data.dashboardCategory=="Faith" %}selected{% endif %}>Faith</option>
+      <option value="Other" {% if data.dashboardCategory=="Other" %}selected{% endif %}>Other</option>
+    </select>
+    </div>
+  </div>
+</div>
+
+<table class="govuk-table" data-module="moj-sortable-table" style="margin:0 0 0 10px;">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" style="width:34%;"  aria-sort="ascending" >Activity name</th>
+      <th scope="col" class="govuk-table__header" style="width:15%;"aria-sort="none">Activity</th>
+      <th scope="col" class="govuk-table__header" style="width:15%;"aria-sort="none">Current waitlist</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="English">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logOffenderActivity" name="logOffenderActivity" type="radio" value="English">
+            <label class="govuk-label govuk-radios__label" for="logOffenderActivity">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="#">
+                  English
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+      <td class="govuk-table__cell" data-sort-value="15">15</td>
+    </tr>
+    {% endif %}
+    {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Farms and gardens">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logOffenderActivity2" name="logOffenderActivity" type="radio" value="Henry Tatton">
+            <label class="govuk-label govuk-radios__label" for="logOffenderActivity2">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="#">
+                  Farms and gardens
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+      <td class="govuk-table__cell" data-sort-value="12">12</td>
+    </tr>
+    {% endif %}
+    {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Kitchens">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logOffenderActivity3" name="logOffenderActivity" type="radio" value="Kitchens">
+            <label class="govuk-label govuk-radios__label" for="logOffenderActivity3">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="#">
+                  Kitchens
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+      <td class="govuk-table__cell" data-sort-value="4">4</td>
+    </tr>
+    {% endif %}
+    {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Maths">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logOffenderActivity4" name="logOffenderActivity" type="radio" value="Maths">
+            <label class="govuk-label govuk-radios__label" for="logOffenderActivity4">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="#">
+                  Maths
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+      <td class="govuk-table__cell" data-sort-value="15">15</td>
+    </tr>
+    {% endif %}
+    {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Painting">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logOffenderActivity5" name="logOffenderActivity" type="radio" value="Painting">
+            <label class="govuk-label govuk-radios__label" for="logOffenderActivity5">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="#">
+                  Painting
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+      <td class="govuk-table__cell" data-sort-value="15">15</td>
+    </tr>
+    {% endif %}
+    {% if data.dashboardCategory=="Faith" or data.dashboardCategory=="All" %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Prayer meeting">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logOffenderActivity5" name="logOffenderActivity" type="radio" value="Prayer meeting">
+            <label class="govuk-label govuk-radios__label" for="logOffenderActivity5">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="#">
+                  Prayer meeting
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Faith and spirituality</td>
+      <td class="govuk-table__cell" data-sort-value="12">12</td>
+    </tr>
+    {% endif %}
+    {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Servery">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logOffenderActivity6" name="logOffenderActivity" type="radio" value="Servery">
+            <label class="govuk-label govuk-radios__label" for="logOffenderActivity6">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="#">
+                  Servery
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+      <td class="govuk-table__cell" data-sort-value="4">4</td>
+    </tr>
+    {% endif %}
+    {% if data.dashboardCategory=="Industries" or data.dashboardCategory=="All" %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Textiles">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logOffenderActivity7" name="logOffenderActivity" type="radio" value="Textiles">
+            <label class="govuk-label govuk-radios__label" for="logOffenderActivity7">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="#">
+                  Textiles
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="Industries">Industries</td>
+      <td class="govuk-table__cell" data-sort-value="4">4</td>
+    </tr>
+    {% endif %}
+    {% if data.dashboardCategory=="Prison" or data.dashboardCategory=="All" %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Wing cleaning">
+        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logOffenderActivity8" name="logOffenderActivity" type="radio" value="Wing cleaning">
+            <label class="govuk-label govuk-radios__label" for="logOffenderActivity8">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="#">
+                  Wing cleaning
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+      <td class="govuk-table__cell" data-sort-value="0">0</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+<br /><br/>
+<button class="govuk-button" data-module="govuk-button">
+  Select activity
+  </button>
+  </form>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
+<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a[data-modal]').on('click', function(event) {
+			event.preventDefault();
+			this.blur();
+			$.get(this.href, function(html) {
+				$(html).appendTo('body').modal({
+					showClose: false,
+					clickClose: false
+				});
+			});
+		});
+
+		$('#categoryDropdown').on('change', function() {
+			window.location = 'search-for-activity?dashboardCategory=' + $(this).val()
+		})
+
+	})
+</script>
+{% endblock %}

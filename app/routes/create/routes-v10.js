@@ -1167,5 +1167,16 @@ router.post(version + '/admin/log-an-activity/activity-name-results', function(r
 	}
 });
 
+router.post(version + '/admin/log-an-activity/check-existing-applications', function(req, res) {
+	{
+		res.redirect(version + '/admin/log-an-activity/search-for-activity')
+	}
+});
+router.post(version + '/admin/log-an-activity/search-for-activity', function(req, res) {
+	{
+		res.redirect(version + '/admin/log-an-activity/add-date')
+	}
+});
+
 
 }

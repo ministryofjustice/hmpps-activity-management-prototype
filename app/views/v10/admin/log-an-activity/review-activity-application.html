@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column--thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+    </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Review new applications   </h1>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <div class="govuk-form-group">
+    <label class="govuk-label" for="sort">
+      Filter by category:
+    </label>
+    <select class="govuk-select" id="show2" name="show-grouping"">
+      <option value="All" {% if data.dashboardCategory=="All" %}selected{% endif %}>All</option>
+      <option value="Education"  {% if data.dashboardCategory=="Education" %}selected{% endif %}>Education </option>
+      <option value="Industries" {% if data.dashboardCategory=="Industries" %}selected{% endif %}>Industries</option>
+      <option value="Prison" {% if data.dashboardCategory=="Prison" %}selected{% endif %}>Prison jobs</option>
+      <option value="Gym" {% if data.dashboardCategory=="Gym" %}selected{% endif %}>Gym, sports and fitness</option>
+      <option value="Induction" {% if data.dashboardCategory=="Induction" %}selected{% endif %}>Induction</option>
+      <option value="Intervention" {% if data.dashboardCategory=="Intervention" %}selected{% endif %}>Intervention programmes</option>
+      <option value="Faith" {% if data.dashboardCategory=="Faith" %}selected{% endif %}>Faith</option>
+      <option value="Other" {% if data.dashboardCategory=="Other" %}selected{% endif %}>Other</option>
+    </select>
+    </div>
+  </div>
+</div>
+
+<table class="govuk-table" data-module="moj-sortable-table" style="margin:0 0 0 10px;">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" style="width:34%;"  aria-sort="ascending" >Name</th>
+      <th scope="col" class="govuk-table__header" style="width:15%;"aria-sort="none">Prison number or date of birth</th>
+      <th scope="col" class="govuk-table__header" style="width:15%;"aria-sort="none">Activity being applied for</th>
+      <th scope="col" class="govuk-table__header" style="width:15%;"aria-sort="none">Application date</th>
+      <th scope="col" class="govuk-table__header" style="width:34%;"  aria-sort="ascending" >Log another application for this person</th>
+      <th scope="col" class="govuk-table__header" style="width:34%;"  aria-sort="ascending" >Remove</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    {% if data.dashboardCategory=="Education" or data.dashboardCategory=="All" %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+        <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+
+        </h3>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+      <td class="govuk-table__cell" data-sort-value="20220902">2 Sept 2022</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+<br />
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
+<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a[data-modal]').on('click', function(event) {
+			event.preventDefault();
+			this.blur();
+			$.get(this.href, function(html) {
+				$(html).appendTo('body').modal({
+					showClose: false,
+					clickClose: false
+				});
+			});
+		});
+
+		$('#show').on('change', function() {
+			window.location = 'activity-dashboard?dashboardView=' + $(this).val()
+		})
+    $('#show2').on('change', function() {
+			window.location = 'activity-dashboard?dashboardCategory=' + $(this).val()
+		})
+	})
+</script>
+{% endblock %}
