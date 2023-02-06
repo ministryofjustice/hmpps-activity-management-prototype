@@ -1156,7 +1156,11 @@ module.exports = function(router) {
 //Admin journey
 router.post(version + '/admin/log-an-activity/activity-name-search', function(req, res) {
 	{
-		res.redirect(version + '/admin/log-an-activity/activity-name-results')
+			function onlyLetters(str) {
+			return /^[A-Za-z]*$/.test(str);
+		}
+			req.session.data.offenderIsaName = onlyLetters(req.session.data.logActivityName);
+			res.redirect(version + '/admin/log-an-activity/activity-name-results')
 	}
 });
 
@@ -1169,14 +1173,30 @@ router.post(version + '/admin/log-an-activity/activity-name-results', function(r
 
 router.post(version + '/admin/log-an-activity/check-existing-applications', function(req, res) {
 	{
-		res.redirect(version + '/admin/log-an-activity/search-for-activity')
+		res.redirect(version + '/admin/log-an-activity/search-for-activity?dashboardCategory=All')
 	}
 });
 router.post(version + '/admin/log-an-activity/search-for-activity', function(req, res) {
 	{
-		res.redirect(version + '/admin/log-an-activity/add-date')
+		res.redirect(version + '/admin/log-an-activity/enter-date')
 	}
 });
+
+router.post(version + '/admin/log-an-activity/enter-date', function(req, res) {
+	{
+		//Change numerical month to short month name
+		req.session.data.month = getMonthName(req.session.data.logMonth)
+		req.session.data.logDate = req.session.data.logDay + " " + req.session.data.month + " " + req.session.data.logYear
+		res.redirect(version + '/admin/log-an-activity/review-activity-application')
+	}
+});
+
+router.post(version + '/admin/log-an-activity/review-activity-application', function(req, res) {
+	{
+		res.redirect(version + '/admin/log-an-activity/log-confirmation')
+	}
+});
+
 
 
 }
