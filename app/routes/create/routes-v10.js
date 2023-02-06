@@ -1178,6 +1178,12 @@ router.post(version + '/admin/log-an-activity/check-existing-applications', func
 });
 router.post(version + '/admin/log-an-activity/search-for-activity', function(req, res) {
 	{
+		res.redirect(version + '/admin/log-an-activity/is-this-a-referral')
+	}
+});
+
+router.post(version + '/admin/log-an-activity/is-this-a-referral', function(req, res) {
+	{
 		res.redirect(version + '/admin/log-an-activity/enter-date')
 	}
 });
@@ -1196,7 +1202,6 @@ router.post(version + '/admin/log-an-activity/review-activity-application', func
 		res.redirect(version + '/admin/log-an-activity/log-confirmation')
 	}
 });
-
 
 
 }
