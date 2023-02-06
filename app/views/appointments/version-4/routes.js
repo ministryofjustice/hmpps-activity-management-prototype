@@ -40,5 +40,14 @@ const router = express.Router()
 		}
 	  });
 
+	  router.post(`/appointment-management/version-2/appointment-view-options`, function (req, res) {
+		const appGroup = req.session.data['group'];
+		if (appGroup === 'Yes') {
+			res.redirect(`appointment-view`);
+		} else {
+			res.redirect(`appointment-view#Bulk`);
+		}
+	  });
+
 	  
 module.exports = router
