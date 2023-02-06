@@ -5,7 +5,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="clashes">
+<form id="form" method="post" action="appointment-view-options">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 	
@@ -151,22 +151,21 @@ Appointments prototype
 		
 		items: [
 			{
-				value: "Value",
+				value: "Yes",
 				text: "Yes",
 				conditional: {
 				  html: individualHtml
 				}
 			},
 			{
-				value: "Value",
+				value: "No",
 				text: "No, it's for a group of people either at the same time or different times"
 			}
 		]
 	}) }}
 
 	{{ govukButton({
-		text: "View results",
-		href: "appointment-view"
+		text: "View results"
 	}) }}
 
 	</div>
