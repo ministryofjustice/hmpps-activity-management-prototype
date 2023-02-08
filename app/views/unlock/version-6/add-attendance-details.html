@@ -133,7 +133,7 @@ Add attendance details for {{prisonersNoun}}
 					name: "attendance-details[" + prisoner.id + "][incentive-level-warning-detail]",
 					id: "incentive-level-warning-detail-" + prisoner.id,
 					label: {
-						text: "Case note"
+						text: "Add a case note"
 					}
 				}) }}
 				{% endset %}
@@ -171,13 +171,10 @@ Add attendance details for {{prisonersNoun}}
 				{% set notListedHtml %}
 				{{ govukInput({
 					name: "more-detail",
-					classes: "govuk-input--width-20",
+					classes: "govuk-input--width-30",
 					id: "more-detail",
 					label: {
-						text: "Can you provide more detail?"
-					},
-					hint: {
-						text: "For example, "
+						text: "Add an absence reason"
 					}
 				}) }}
 				{{ govukRadios({
@@ -212,7 +209,7 @@ Add attendance details for {{prisonersNoun}}
 					name: "more-detail",
 					id: "more-detail",
 					label: {
-						text: "Case note"
+						text: "Add a case note"
 					}
 				}) }}
 				{{ govukRadios({
@@ -271,7 +268,7 @@ Add attendance details for {{prisonersNoun}}
 
 				{% set notRequiredHtml %}
 				<p>
-					Some helpful text here that this will be recorded as an acceptable absence and the prisoner will be paid.
+					The prisoner will be paid and their attendance will be recorded as an acceptable absence.
 				</p>
 				<!-- {{ govukRadios({
 					id: "acceptable-absence",
@@ -333,9 +330,9 @@ Add attendance details for {{prisonersNoun}}
 				<p>
 					9:00&thinsp;&ndash;&thinsp;10:30 : Court video call
 				</p>
-				<p>
+				<!-- <p>
 					Some text about the prisoner being paid for the activity they are absent from.
-				</p>
+				</p> -->
 				{% endset %}
 
 				{% set unknownHtml %}
@@ -392,7 +389,7 @@ Add attendance details for {{prisonersNoun}}
 					},
 					{
 						value: "not-required",
-						text: "Prisoner is elsewhere",
+						text: "Prisoner has a clash",
 						conditional: {
 							html: elsewhereHtml
 						}
