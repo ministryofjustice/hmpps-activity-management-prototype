@@ -242,14 +242,14 @@ Activities Management prototype
 			<h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
 
 			{% if data['filters']['landings'] %}
-				<div class="app-filter-area" id="filters" tabindex=0>
-					<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold govuk-!-display-none-print">Showing</span>
-					<ul class="app-filter-tag-list">
-						{% for landing in data['filters']['landings'] %}
-						<li class="govuk-tag govuk-tag--filter"><button value="{{landing}}" name="remove-landing" title="Remove landing {{landing}} from filters"><span class="govuk-visually-hidden">Remove</span></button> Landing {{landing}}</li>
-						{% endfor %}
-					</ul>
-				</div>
+			<div class="app-filter-area" id="filters" tabindex=0>
+				<span class="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold govuk-!-display-none-print">Showing</span>
+				<ul class="app-filter-tag-list">
+					{% for landing in data['filters']['landings'] %}
+					<li class="govuk-tag govuk-tag--filter"><button value="{{landing}}" name="remove-landing" title="Remove landing {{landing}} from filters"><span class="govuk-visually-hidden">Remove</span></button> Landing {{landing}}</li>
+					{% endfor %}
+				</ul>
+			</div>
 			{% endif %}
 
 			<table class="govuk-table app-whereabouts-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
@@ -299,10 +299,10 @@ Activities Management prototype
 						</td>
 						<td class="govuk-table__cell">
 							{% if prisoner.alerts.length > 0 %}
-							<ul class="govuk-list">
+							<ul class="alerts-list">
 								{% for alert in prisoner.alerts %}
-								<li class="govuk-!-display-inline-block govuk-!-margin-right-1"><span class="moj-badge moj-badge--grey">{{alert}}</span></li>
-								{%- endfor -%}
+								<li class="alert-status alert-status--{{alert|lower|replace(' ','-')}}">{{alert}}</li>
+								{% endfor %}
 							</ul>
 							{%- endif -%}
 						</td>

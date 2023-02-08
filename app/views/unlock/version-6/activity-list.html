@@ -61,12 +61,12 @@
 					</h1>
 
 					<ul class="govuk-list">
-						<li>
+						<!-- <li>
 							<a href="../../{{date}}" class="govuk-link--no-visited-state">Choose a different activity</a>
 						</li>
 						<li>
 							<a href="../../../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
-						</li>
+						</li> -->
 						{% if cancelled == false %}
 						<li>
 							<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-link--no-visited-state">Cancel this session</a>
@@ -169,7 +169,7 @@
 					<th class="govuk-table__header">
 						Location
 					</th>
-					<th class="govuk-table__header">
+					<th class="govuk-table__header" width="250">
 						Relevant alerts
 					</th>
 					<th class="govuk-table__header">
@@ -205,9 +205,9 @@
 					</td>
 					<td class="govuk-table__cell">
 						{% if prisoner.alerts.length > 0 %}
-						<ul class="govuk-list">
+						<ul class="alerts-list">
 							{% for alert in prisoner.alerts %}
-							<li><span class="moj-badge moj-badge--grey">{{alert}}</span></li>        
+							<li class="alert-status alert-status--{{alert|lower|replace(' ','-')}}">{{alert}}</li>
 							{% endfor %}
 						</ul>
 						{% endif %}
@@ -226,12 +226,12 @@
 
 							{% if event.cancelled != true %}
 							{% if event.attendance == 'attended' %}
-							<span class="moj-badge moj-badge--green govuk-!-margin-bottom-1 govuk-!-margin-top-1">Attended</span>
+							<span class="moj-badge moj-tag--green govuk-!-margin-bottom-1 govuk-!-margin-top-1">Attended</span>
 							{% elif event.attendance == 'not-attended' %}
-							<span class="moj-badge moj-badge--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Not attended</span>
+							<span class="moj-badge moj-tag--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Not attended</span>
 							{% endif %}
 							{% else %}
-							<span class="moj-badge moj-badge--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Session cancelled</span>
+							<span class="moj-badge moj-tag--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Session cancelled</span>
 							{% endif %}
 
 							<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.times.endTime}}</div>
@@ -240,14 +240,17 @@
 						{% endfor %}
 					</td>
 					<td class="govuk-table__cell" {%- if not prisoner.attendance.attendance %}colspan="2"{% endif -%}>
+						{% set attendance = prisoner.attendance.records[prisoner.attendance.records|length-1].attendance %}
+						<!-- {{prisoner.attendance.records[prisoner.attendance.records|length-1]|dump}} -->
+						{{prisoner.latestAttendance.attendance}}
 						<ul class="govuk-list">
 							{%- if prisoner.attendance.attendance == "attended" %}
 							<li><span class="moj-badge moj-badge--large moj-tag--green">Attended</span></li>
 
 							{%- if prisoner.attendance.pay == 'none' %}
-							<li><span class="moj-badge moj-badge moj-badge--black">No pay</span></li>
+							<li><span class="govuk-tag govuk-tag--red">No pay</span></li>
 							{%- elif prisoner.attendance.pay == 'bonus' %}
-							<li><span class="moj-badge moj-badge moj-badge--blue">Bonus</span></li>
+							<li><span class="govuk-tag govuk-tag--blue">Bonus</span></li>
 							{% endif -%}
 
 							{%- elif prisoner.attendance.attendance == "not-attended" %}
@@ -261,9 +264,9 @@
 							{% endif -%}
 
 							{% if prisoner.attendance.pay == 'standard' %}
-							<li><span class="moj-badge moj-badge-- moj-badge--blue">Standard pay</span></li>
+							<li><span class="govuk-tag govuk-tag--green">Pay</span></li>
 							{%- elif prisoner.attendance.attendance == "not-attended" and prisoner.attendance.pay == null %}
-							<li><span class="moj-badge moj-badge-- moj-badge--black">No pay</span></li>
+							<li><span class="govuk-tag govuk-tag--red">No pay</span></li>
 							{% endif %}
 						</ul>
 					</td>

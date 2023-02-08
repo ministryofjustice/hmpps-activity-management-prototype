@@ -78,10 +78,12 @@ const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, dat
                             payReason: attendanceRecord['pay-detail'],
                             unacceptableAbsence: attendanceRecord.unacceptableAbsence,
                             incentiveLevelWarning: attendanceRecord.incentiveLevelWarning,
-                            sessionCancelled: attendanceRecord.sessionCancelled
+                            sessionCancelled: attendanceRecord.sessionCancelled,
+                            timestamp: attendanceRecord.timestamp
                         }
                     })
                 };
+                // console.log(prisonerObject.attendance)
             }
         });
     }
@@ -164,7 +166,7 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
             incentiveLevelWarning: details.incentiveLevelWarning,
             timestamp: {
                 date: new Date().toISOString().slice(0, 10),
-                time: new Date().toTimeString().slice(0, 5)
+                time: new Date().toTimeString().slice(0, 8)
             }
         });
     });
@@ -695,14 +697,15 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req
         // remove other attendance data
         if (prisoner.attendance) {
             let records = prisoner.attendance.records;
+            let record;
             if (prisoner.attendance.activityId === activityId && prisoner.attendance.date === date && prisoner.attendance.period === period) {
-                records = records.reduce((mostRecentRecord, currentRecord) => {
-                    return currentRecord.date > mostRecentRecord.date ? currentRecord : mostRecentRecord;
+                record = records.reduce((mostRecentRecord, currentRecord) => {
+                    return new Date(currentRecord.timestamp.date + ' ' + currentRecord.timestamp.time) > new Date(mostRecentRecord.timestamp.date + ' ' + mostRecentRecord.timestamp.time) ? currentRecord : mostRecentRecord;
                 });
             } else {
-                records = [];
+                record = [];
             }
-            prisoner.attendance = records;
+            prisoner.attendance = record;
         }
     })
 
@@ -837,7 +840,15 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add
     delete req.session.data['attendance-details']
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
-    res.render('unlock/' + req.version + '/add-attendance-details', {
+    let pageToRender;
+    if(req.session.data['refusal-type'] == 'sickness'){
+        refusalPage = 'add-sickness-details'
+    } else if(req.session.data['refusal-type'] == 'refused'){
+        refusalPage = 'add-refusal-details'
+    } else {
+        refusalPage = 'add-absent-details'
+    }
+    res.render('unlock/' + req.version + '/' + refusalPage, {
         filteredPrisoners
     })
 });
@@ -882,9 +893,7 @@ router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/ad
     res.redirect('../' + houseblock)
 });
 
-
-
-
+// attend and pay
 router.post('/activities/:selectedDate/:selectedPeriod/:activityId/attend-and-pay', function(req, res) {
     let selectedPrisoners = req.session.data['selected-prisoners']
     let activityId = req.params.activityId
@@ -938,7 +947,7 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', 
     let prisonerId = req.params.prisonerId;
     let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
 
-    const attendanceData = req.session.data.attendance[activityId][date][period][prisonerId][0]
+    const attendanceData = req.session.data.attendance[activityId][date][period][prisonerId]
 
     res.render('unlock/' + req.version + '/attendance-details', {
         prisoner,
@@ -987,7 +996,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/c
     if(attendance == 'attended'){
         res.redirect(req.params.prisonerId + '/change-pay')
     } else if(attendance == 'not-attended'){
-        res.redirect('change-attendance-details')
+        res.redirect('../add-attendance-details')
     } else if(attendance == 'unknown'){
         res.redirect('confirm-remove-attendance')
     }
@@ -1081,11 +1090,6 @@ router.post('/select-refusals-locations', function(req, res) {
 router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', function(req, res) {
     let period = req.params.selectedPeriod;
     let date = req.params.selectedDate;
-
-    // if (date == 'other-date' && req.session.data['other-date-year'] && req.session.data['other-date-month'] && req.session.data['other-date-day']){
-    // 	date = `${req.session.data['other-date-year']}-${req.session.data['other-date-month']}-${req.session.data['other-date-day']}`;
-    // }
-
     let dayOfWeek = new Date(date).getDay();
 
     let activities = req.session.data['timetable-complete-1']['activities'];
@@ -1098,6 +1102,22 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', f
     const prisonersByHouseblock = getPrisonersByHouseblock(prisoners, houseblock);
     const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(prisonersByHouseblock, activities, date, period, 'unlock');
     let prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period, attendanceData);
+
+    prisonersWithEvents.forEach(prisoner => {
+        // remove other attendance data
+        if (prisoner.attendance) {
+            let records = prisoner.attendance.records;
+            let record;
+            if (prisoner.attendance.activityId === activityId && prisoner.attendance.date === date && prisoner.attendance.period === period) {
+                record = records.reduce((mostRecentRecord, currentRecord) => {
+                    return new Date(currentRecord.timestamp.date + ' ' + currentRecord.timestamp.time) > new Date(mostRecentRecord.timestamp.date + ' ' + mostRecentRecord.timestamp.time) ? currentRecord : mostRecentRecord;
+                });
+            } else {
+                record = [];
+            }
+            prisoner.attendance = record;
+        }
+    })
 
     // remove the confirmation notification on loading the page
     if (req.session.data['attendance-confirmation'] == 'true') {
