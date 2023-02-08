@@ -171,13 +171,10 @@ Add attendance details for {{prisonersNoun}}
 				{% set notListedHtml %}
 				{{ govukInput({
 					name: "more-detail",
-					classes: "govuk-input--width-20",
+					classes: "govuk-input--width-30",
 					id: "more-detail",
 					label: {
-						text: "Can you provide more detail?"
-					},
-					hint: {
-						text: "For example, "
+						text: "Add an absence reason"
 					}
 				}) }}
 				{{ govukRadios({
@@ -205,7 +202,7 @@ Add attendance details for {{prisonersNoun}}
 
 				{% set notRequiredHtml %}
 				<p>
-					Some helpful text here that this will be recorded as an acceptable absence and the prisoner will be paid.
+					This will be recorded as an acceptable absence and {{prisoner.name.firstname}} {{prisoner.name.surname}} will be paid.
 				</p>
 				<!-- {{ govukRadios({
 					id: "acceptable-absence",
@@ -267,9 +264,9 @@ Add attendance details for {{prisonersNoun}}
 				<p>
 					9:00&thinsp;&ndash;&thinsp;10:30 : Court video call
 				</p>
-				<p>
+				<!-- <p>
 					Some text about the prisoner being paid for the activity they are absent from.
-				</p>
+				</p> -->
 				{% endset %}
 
 				{% set unknownHtml %}
@@ -312,7 +309,7 @@ Add attendance details for {{prisonersNoun}}
 					},
 					{
 						value: "not-required",
-						text: "Prisoner is elsewhere",
+						text: "Prisoner has a clash",
 						conditional: {
 							html: elsewhereHtml
 						}
@@ -323,16 +320,6 @@ Add attendance details for {{prisonersNoun}}
 						conditional: {
 							html: notListedHtml
 						}
-					},
-					{
-						divider: "or"
-					},
-					{
-						value: "unknown",
-						text: "Absence reason unknown",
-						conditional: {
-							html: unknownHtml
-						}
 					}
 					]
 				}) }}
@@ -340,7 +327,7 @@ Add attendance details for {{prisonersNoun}}
 			</div>
 			{% endfor %}
 
-			<div class="govuk-button-group govuk-!-margin-top-9">
+			<div class="govuk-button-group govuk-!-margin-top-6">
 				{{govukButton({
 					text: "Record attendance and finish"
 				})}}
