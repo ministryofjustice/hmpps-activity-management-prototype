@@ -344,9 +344,10 @@ Add attendance details for {{prisonersNoun}}
 					},
 					rows: 3
 				}) }}
-				<p>
-					Some helpful text here that the prisoner will not be paid.
-				</p>
+				{{ govukWarningText({
+					text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid until their attendance has been properly recorded.",
+					iconFallbackText: "Warning"
+				}) }}
 				{% endset %}
 
 				{{ govukRadios({
