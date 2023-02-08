@@ -1,0 +1,46 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+
+  </div>
+  <div id="event-name-hint" class="govuk-hint">
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+        <div class="govuk-width-container">
+  <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            You've logged 1 new application<br /><br />
+          <span style="font-weight:normal; font-size:.9em;">  {{ data.logOffenderName or 'Mark Tatton' }}, {{data.logOffenderID or 'BN76661F'}} is now allocated to {{data.logOffenderActivity or 'Kitchens'}}</span><br /><br />
+
+              </h1>
+        <!--  <div class="govuk-panel__body">
+            Your reference number<br><strong>HDJ2123F</strong>
+          </div>-->
+        </div>
+        <h3 class="govuk-heading-m govuk-!-margin-bottom-4">
+      What you can do next
+        </h3>
+        <p class="govuk-body">You've logged 1 new applications for 1 person. They will be added to the relevant waitlists.</p>
+        <p class="govuk-body">You can continue <a href="activity-name-search">logging applications</a> or <a href="../../allocate/activity-dashboard-2?dashboardCategory=All">find activities with vacancies</a>.</p><p class="govuk-body">
+        </p>
+      </div>
+    </div>
+  </main>
+</div>
+      </div>
+
+</div>
+{% endblock %}

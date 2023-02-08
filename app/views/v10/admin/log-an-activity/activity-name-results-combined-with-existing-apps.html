@@ -1,0 +1,84 @@
+ga{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Select who is applying or being referred
+  </div>
+</div>
+
+
+
+
+
+<div class="govuk-grid-column-three-third">
+
+  <table class="govuk-table" data-module="moj-sortable-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+      <!--  <th scope="col" class="govuk-table__header" aria-sort="ascending">Candidate details</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none" style="width:28%">Non-associations on this activity</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none" >Security category</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
+        <th scope="col" class="govuk-table__header" aria-sort="none">Qualifications</th>-->
+
+        <th scope="col" class="govuk-table__header">Prisoner details</th>
+        <th scope="col" class="govuk-table__header" style="width:28%">Existing Activity applications</th>
+        <th scope="col" class="govuk-table__header">Application date</th>
+        <th scope="col" class="govuk-table__header">Application status</th>
+
+      </tr>
+    </thead>
+    <form method="post">
+    <tbody class="govuk-table__body">
+
+              <tr class="govuk-table__row">
+                <td data-sort-value="Lionel" class="">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate6" name="offenderAllocate" type="radio" value="Henry Tatton">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate6">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Mark Tatton</a></strong><br />
+                      BN7666F<br />
+                      1-A-068
+                    </label>
+                  </div>
+                </td>
+                <td class="" data-sort-value="0">None</td>
+                <td class="" data-sort-value="Unsentenced" style="padding-left:20px;"></td>
+              <td class="" data-sort-value="20290701"></td>
+              </tr>
+              <tr class="govuk-table__row">
+                <td data-sort-value="Lionel" class="">
+                  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="offenderAllocate6" name="offenderAllocate" type="radio" value="Henry Tatton">
+                      <label class="govuk-label govuk-radios__label" for="offenderAllocate6">
+                      <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Henry Tatton</a></strong><br />
+                      BN5297F<br />
+                      1-A-069
+                    </label>
+                  </div>
+                </td>
+                <td class="" data-sort-value="0">Maths level 3</td>
+                <td class="" data-sort-value="Unsentenced" style="padding-left:20px;">1 Jan 2023</td>
+              <td class="" data-sort-value="20290701">Pending</td>
+              </tr>
+
+    </tbody>
+</table>
+
+{% block pageScripts %}
+
+{% endblock %}
+{% endblock %}

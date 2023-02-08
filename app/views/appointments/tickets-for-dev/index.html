@@ -1,0 +1,128 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block header %}
+{% set homepageUrl %}
+{% if data['prototype'] == 'create' %}
+/?prototype=create
+{% elseif data['prototype'] == 'unlock' %}
+/unlock?prototype=unklock
+{% elseif data['prototype'] == 'appointments' %}
+/appointments?prototype=appointments
+{% endif %}
+{% endset %}
+
+{{ govukHeader({
+  homepageUrl: homepageUrl,
+  serviceName: serviceName,
+  serviceUrl: homepageUrl,
+  containerClasses: "govuk-width-container",
+  navigation: [
+  {
+    text: "Create and allocate",
+    href: "/?prototype=create"
+  },
+  {
+    text: "Unlock and attend",
+    href: "/unlock/?prototype=unlock"
+  },
+  {
+    text: "Appointments",
+    href: "/appointments/?prototype=appointments",
+    active: true
+  }]
+}) }}
+
+<div class="app-masthead">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="app-masthead__title govuk-heading-xl govuk-!-margin-bottom-3">
+          Appointments
+        </h1>
+        <h3 class="app-masthead__subtitle govuk-heading-l">Designs ready for development</h3>
+      </div>
+      <div class="govuk-grid-column-one-third">
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+   
+
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head" >
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" width="35%">Journey</th>
+          <th scope="col" class="govuk-table__header" width="15%">Included in which sprint</th>
+          <th scope="col" class="govuk-table__header">Links and information</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p class="govuk-!-font-weight-bold">Appointment view & Movement slip</p>
+          </td>
+         
+          <td class="govuk-table__cell" >
+            <p class="govuk-body">
+              Sprint 3
+            </p>
+          </td>
+          <td class="govuk-table__cell" >
+            <p class="govuk-body">
+              Single page, showing the high level appointment created view. also an HTML version of movement slip, utilising current 'as-is' design.
+            </p>
+            <li>
+              
+              <a href="designs/appointment-management/edit-appointment-option-4" class="govuk-link">Prototype design</a>
+            </li>
+            <li>
+              <a href="designs/appointment-management/movement-slip" class="govuk-link">HTML Movement slip</a>
+            </li>
+            <li>
+              <a href="https://dsdmoj.atlassian.net/wiki/spaces/APT/pages/4298146005/Appointment+view+-+Base+design" class="govuk-link">Confluence article</a>
+            </li>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p class="govuk-!-font-weight-bold">Single appointment (Happy path)</p>
+          </td>
+
+          <td class="govuk-table__cell" >
+            <p class="govuk-body">
+              Sprint 2
+            </p>
+          </td>
+          <td class="govuk-table__cell" >
+            <p class="govuk-body">
+              This flow is purely 'Happy path' and will require iteration through Beta.
+            </p>
+            <li>
+              <a href="../version-4/schedule-scenarios/scenario-1/select-prisoner" class="govuk-link">Prototype design</a>
+            </li>
+            <li>
+              <a href="https://dsdmoj.atlassian.net/browse/SAA-348" class="govuk-link">Jira ticket (SAA-348)</a>
+            </li>
+          </td>
+        </tr>
+
+        
+      </tbody>
+    </table>
+
+    
+  </div>
+</div>
+
+{% endblock %}
