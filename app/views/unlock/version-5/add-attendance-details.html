@@ -63,9 +63,19 @@ Add attendance details for {{prisonersNoun}}
 
 				{% if data['attendance-action'] == 'attended' %}
 
-				{% set caseNoteHtml %}
+				{% set bonusHtml %}
 				{{ govukTextarea({
-					name: "attendance-details[" + prisoner.id + "][pay-detail]",
+					name: "attendance-details[" + prisoner.id + "][bonus-detail]",
+					id: "bonus-detail-" + prisoner.id,
+					label: {
+						text: "Provide a short explanation for your decision, this will be added to their case notes."
+					}
+				}) }}
+				{% endset %}
+
+				{% set noPayHtml %}
+				{{ govukTextarea({
+					name: "attendance-details[" + prisoner.id + "][no-pay-detail]",
 					id: "bonus-detail-" + prisoner.id,
 					label: {
 						text: "Provide a short explanation for your decision, this will be added to their case notes."
@@ -90,7 +100,7 @@ Add attendance details for {{prisonersNoun}}
 						value: "bonus",
 						text: "Bonus pay",
 						conditional: {
-							html: caseNoteHtml
+							html: bonusHtml
 						}
 					},
 					{
@@ -100,7 +110,7 @@ Add attendance details for {{prisonersNoun}}
 						value: "none",
 						text: "No payment",
 						conditional: {
-							html: caseNoteHtml
+							html: noPayHtml
 						}
 					}
 					]
@@ -168,7 +178,7 @@ Add attendance details for {{prisonersNoun}}
 				}) }}
 				{{ govukRadios({
 					id: "not-listed-absence-type",
-					name: "not-listed-absence-type",
+					name: "attendance-details[" + prisoner.id + "][not-listed-absence-type]",
 					classes: "govuk-radios--small govuk-radios--inline",
 					fieldset: {
 						legend: {

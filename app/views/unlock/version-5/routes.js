@@ -113,12 +113,34 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
     Object.keys(attendanceDetails).forEach(prisonerId => {
         const details = attendanceDetails[prisonerId];
         const existingRecord = req.session.data.attendance[activityId][date][period].find(record => record.prisonerId === prisonerId);
+
+        let attendance = details.attendance;
+
+        let payReason = details['pay'] == 'bonus' ? details['bonus-detail'] : 
+        details['pay'] == 'none' ? details['no-pay-detail'] : 
+        null;
+
+        let attendanceDetail;
+        if(details['absence-reason'] == 'sick'){
+            attendanceDetail = 'Sick'
+        } else if(details['absence-reason'] == 'refused'){
+            attendanceDetail = 'Refused to attend'
+        } else if(details['absence-reason'] == 'not-required'){
+            attendanceDetail = 'Not required, excused or rest day'
+        } else if(details['absence-reason'] == 'other'){
+            attendanceDetail = 'Other'
+        } else {
+            attendanceDetail = null
+        }
+
+
         if (!existingRecord) {
             req.session.data.attendance[activityId][date][period].push({
                 prisonerId: prisonerId,
                 attendance: details.attendance,
+                attendanceDetail: attendanceDetail,
                 pay: details.pay,
-                payReason: details['pay-detail'],
+                payReason: payReason,
                 unacceptableAbsence: details.unacceptableAbsence,
                 incentiveLevelWarning: details.incentiveLevelWarning,
                 timestamp: {
@@ -129,8 +151,9 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
         } else {
             Object.assign(existingRecord, {
                 attendance: details.attendance,
+                attendanceDetail: attendanceDetail,
                 pay: details.pay,
-                payReason: details['pay-detail'],
+                payReason: payReason,
                 unacceptableAbsence: details.unacceptableAbsence,
                 incentiveLevelWarning: details.incentiveLevelWarning,
                 timestamp: {
@@ -139,6 +162,7 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
                 }
             });
         }
+        console.log(details['pay-detail'])
     });
 }
 
@@ -643,6 +667,11 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req
     let prisonersWithEvents = addEventsToPrisoners(prisonersByDateAndPeriod, activities, date, period, attendanceData);
 
     let prisonersList = addAttendanceDataToPrisoners(prisonersWithEvents, attendanceData, activityId, date, period);
+
+    // remove the current activity from the list of events - we don't need it
+    prisonersList.forEach(prisoner => {
+        prisoner.events = prisoner.events.filter(event => event.id != activityId);
+    });
 
     let notAttendedCount = countAttendance(req.session.data['attendance'], activityId, date, period, "not-attended");
     let attendedCount = countAttendance(req.session.data['attendance'], activityId, date, period, "attended");
