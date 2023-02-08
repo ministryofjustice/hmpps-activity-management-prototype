@@ -5,14 +5,33 @@
 		</p>
 		<div class="govuk-button-group govuk-!-margin-bottom-0">
 			{{ govukButton({
-				text: "Mark as not attended",
+				text: "Refused to attend",
 				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
-				value: "not-attended",
-				name: "attendance-action",
+				value: "refused",
+				name: "refusal-type",
 				attributes: {
 					formAction: houseblock + "/add-refusal-details"
 				}
 			}) }}
+			{{ govukButton({
+				text: "Sickness",
+				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
+				value: "sickness",
+				name: "refusal-type",
+				attributes: {
+					formAction: houseblock + "/add-refusal-details"
+				}
+			}) }}
+			{{ govukButton({
+				text: "Other non-attendance",
+				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
+				value: "other",
+				name: "refusal-type",
+				attributes: {
+					formAction: houseblock + "/add-refusal-details"
+				}
+			}) }}
+			<input type="hidden" name="attendance-action" value="not-attended">
 			<input type="hidden" name="attendance-url" value="refusals">
 		</div>
 	</div>

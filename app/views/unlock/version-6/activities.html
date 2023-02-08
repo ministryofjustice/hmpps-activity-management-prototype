@@ -3,7 +3,7 @@
 {% set activitiesCount =  activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
 
 {% block pageTitle %}
-{{activitiesCount}} activities scheduled for {{relativeDate or selectedDate|longDateFormat(selectedDate)}}
+Find an activity to record or edit attendance
 {% endblock %}
 
 {% block primaryNavigation %}
@@ -30,7 +30,8 @@
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
-			{{activitiesCount}} activities scheduled for {{relativeDate or selectedDate|longDateFormat(selectedDate)}}
+			<span class="govuk-caption-l">{{selectedDate|longDateFormat(selectedDate)}}</span>
+			Find an activity to record or edit attendance
 		</h1>
 
 		<ul class="govuk-list govuk-!-margin-bottom-6">
@@ -39,6 +40,20 @@
 			<li><a href="{{'_'|today}}" class="govuk-link--no-visited-state">View today's schedule</a></li>
 			{% endif %}
 		</ul>
+
+		<div class="app-search govuk-!-margin-bottom-6">
+			<form action="{{date}}" method="get" novalidate="">
+				<div class="govuk-form-group">
+					<label class="govuk-label app-search__label govuk-label--m" for="keywords">
+						Search by activity name
+					</label>
+					<input class="govuk-input app-search__input " id="keywords" name="search" type="search" value="{{data['search']}}">
+				</div>
+				<button class="govuk-button app-search__button" data-module="govuk-button">
+					Search
+				</button>
+			</form>
+		</div>
 	</div>
 </div>
 
@@ -204,7 +219,8 @@
 {% endset %}
 {{govukDetails({
 	html: attendanceDetailsHtml,
-	summaryText: attendanceTotals[period]['not-recorded'] + " prisoners are scheduled"
+	summaryText: attendanceTotals[period]['scheduled'] + " prisoners are scheduled",
+	classes: "govuk-!-margin-bottom-2"
 })}}
 
 <table class="govuk-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head govuk-!-margin-bottom-8" data-module="moj-sortable-table">
@@ -216,7 +232,7 @@
 			<th scope="col" class="govuk-table__header" aria-sort="none" style="white-space: nowrap; width: 1%;">Scheduled</th>
 			<th scope="col" class="govuk-table__header govuk-hint" aria-sort="none" style="white-space: nowrap; width: 1%;">Attended</th>
 			<th scope="col" class="govuk-table__header govuk-hint" aria-sort="none" style="white-space: nowrap; width: 1%;">Not recorded</th>
-			<th scope="col" class="govuk-table__header govuk-hint" aria-sort="none" style="white-space: nowrap; width: 1%;">Absent</th>
+			<th scope="col" class="govuk-table__header govuk-hint" aria-sort="none" style="white-space: nowrap; width: 1%;">All absences</th>
 		</tr>
 	</thead>
 	<tbody class="govuk-table__body">
@@ -227,13 +243,15 @@
 				{% for cancellation in activity.cancelledSessions %}
 				<br><span class="govuk-tag govuk-tag--red govuk-!-margin-top-1">Cancelled</span>
 				{% endfor %}
+				<!-- <br>
+				<span class="govuk-hint govuk-!-font-size-16">Another bit of text here</span> -->
 			</td>
 			<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
 			<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
 				{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
 			</td>
 			<td class="govuk-table__cell--numeric govuk-table__cell">{{activity.attendanceCount[period]['scheduled']}}</td>
-			<td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">
+			<td class="govuk-table__cell--numeric govuk-table__cell govuk-hint" data-sort-value="{{activity.attendanceCount[period]['attended']}}">
 				{% if activity.attendanceCount[period]['attended'] > 0 %}
 				<span class="govuk-tag govuk-tag--green">{{activity.attendanceCount[period]['attended']}}</span>
 				{% else %}
@@ -327,7 +345,7 @@
 			}
 			filterToggleBntText()
 		}
-		// toggleFilters()
+		toggleFilters()
 		filterToggleBntText()
 		filterToggle.on('click', toggleFilters)
 	})

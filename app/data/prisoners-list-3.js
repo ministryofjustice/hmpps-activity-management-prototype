@@ -66,7 +66,7 @@ module.exports = [
     },
     "dateOfBirth": "1986-10-29",
     "attendance": null,
-    "activity": [-4],
+    "activity": [52],
     "alerts": []
   },
   {
@@ -205,7 +205,7 @@ module.exports = [
     },
     "dateOfBirth": "1975-10-28",
     "attendance": null,
-    "activity": [-1],
+    "activity": [52],
     "alerts": []
   },
   {
@@ -455,7 +455,7 @@ module.exports = [
     },
     "dateOfBirth": "1990-01-21",
     "attendance": null,
-    "activity": [-3],
+    "activity": [52],
     "alerts": [
       "Controlled unlock"
     ]

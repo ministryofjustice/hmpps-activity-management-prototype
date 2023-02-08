@@ -191,7 +191,6 @@
 						</td>
 						<td class="govuk-table__cell">
 							{% for event in prisoner.events %}
-							{% if event.id != activityId %}
 							<div {% if not loop.last %}class="govuk-!-margin-bottom-4"{% endif %}>
 								<div>
 									{% if event.type == 'appointment' %}
@@ -211,14 +210,20 @@
 								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.times.endTime}}</div>
 								<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ event.location }}</div>
 							</div>
-							{% endif %}
 							{% endfor %}
 						</td>
 						<td class="govuk-table__cell">
 							{% if prisoner.attendance.attendance == "attended" %}
-							<a href="{{activity.id}}/{{prisoner.id}}"><span class="moj-badge moj-badge--large moj-badge--green">Attended</span></a>
+							<a href="{{activity.id}}/{{prisoner.id}}"><span class="moj-badge moj-tag--large moj-tag--green">Attended</span></a>
+							
+							{%- if prisoner.attendance.pay == 'none' %}
+							<span class="moj-badge moj-badge moj-badge--black">No pay</span>
+							{%- elif prisoner.attendance.pay == 'bonus' %}
+							<span class="moj-badge moj-badge moj-badge--blue">Bonus</span>
+							{% endif -%}
+
 							{% elif prisoner.attendance.attendance == "not-attended" %}
-							<a href="{{activity.id}}/{{prisoner.id}}"><span class="moj-badge moj-badge--large moj-badge--red">Absent</span></a>				
+							<a href="{{activity.id}}/{{prisoner.id}}"><span class="moj-badge moj-tag--large moj-tag--red">Absent</span></a>				
 							{% else %}
 							<span class="govuk-hint">Not recorded yet</span>
 							{% endif %}

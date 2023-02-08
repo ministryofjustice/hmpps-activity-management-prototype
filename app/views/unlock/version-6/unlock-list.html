@@ -1,10 +1,8 @@
 {% extends "layout_hmpps.html" %}
 {% set serviceName = "Activities Management" %}
-
 {% block pageTitle %}
 Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(date)}} ({{period|upper}})
 {% endblock %}
-
 {% block primaryNavigation %}
 {% endblock %}
 {% block beforeContent %}
@@ -23,7 +21,6 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 	]
 }) }}
 {% endblock %}
-
 {% block content %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
@@ -54,7 +51,6 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 		</div>
 	</div>
 </div>
-
 <div class="govuk-grid-row govuk-!-display-none-print">
 	<div class="govuk-grid-column-one-half">
 		<div class="govuk-button-group govuk-!-margin-top-5">
@@ -84,7 +80,7 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 					<option value="activity_DESC">Activity name (Z-A)</option>
 				</select>
 			</div>
-			<!-- <div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-left-3 govuk-!-margin-bottom-0" style="text-align: left">
+            <!-- <div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-left-3 govuk-!-margin-bottom-0" style="text-align: left">
 				<label class="govuk-label">
 					Group by
 				</label>
@@ -132,8 +128,7 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 								</div>
 							</div>
 						</fieldset>
-
-						<!-- <div class="govuk-form-group">
+                        <!-- <div class="govuk-form-group">
 							<label class="govuk-label" for="sort">
 								Sub-locations
 							</label>
@@ -149,7 +144,6 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 								{% endfor %}
 							</select>
 						</div> -->
-
 						<fieldset class="govuk-fieldset govuk-!-display-inline-block govuk-!-margin-right-3" style="width: 360px; position: relative; top: 14px;">
 							<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
 								Activities
@@ -172,7 +166,6 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 								</div>
 							</div>
 						</fieldset>
-
 						{{ govukSelect({
 							formGroup: {
 								classes: "govuk-!-display-inline-block"
@@ -199,7 +192,6 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 								value: 'Leaving'
 							}]
 						}) }}
-
 						{{ govukSelect({
 							formGroup: {
 								classes: "govuk-!-display-inline-block"
@@ -224,8 +216,7 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 								value: 'show'
 							}]
 						}) }}
-
-						<!-- {{ govukCheckboxes({
+                        <!-- {{ govukCheckboxes({
 							formGroup: {
 								classes: "govuk-!-display-inline-block"
 							},
@@ -250,7 +241,6 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 {% set totalPrisoners = prisonersWithEvents|length %}
 {% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
 <h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners</h2>
-
 {% if data['filters']['landings'] %}
 <form>
 	<div class="app-filter-area" id="filters" tabindex=0>
@@ -263,7 +253,6 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 	</div>
 </form>
 {% endif %}
-
 <table class="govuk-table app-whereabouts-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
 	<thead class="govuk-table__head">
 		<tr>
@@ -293,9 +282,9 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 			</td>
 			<td class="govuk-table__cell">
 				{% if prisoner.alerts.length > 0 %}
-				<ul class="govuk-list">
+				<ul class="alerts-list">
 					{% for alert in prisoner.alerts %}
-					<li class="govuk-!-display-inline-block govuk-!-margin-right-1"><span class="moj-badge moj-badge--grey">{{alert}}</span></li>
+					<li class="alert-status alert-status--{{alert|lower|replace(' ','-')}}">{{alert}}</li>
 					{% endfor %}
 				</ul>
 				{% endif %}
@@ -312,7 +301,6 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 						<a href="../../../activities/{{date}}/{{period}}/{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 						{% endif %}
 					</div>
-
 					{% if event.cancelled != true %}
 					{% if event.attendance == 'attended' %}
 					<span class="moj-badge moj-badge--green govuk-!-margin-bottom-1 govuk-!-margin-top-1">Attended</span>
@@ -322,7 +310,6 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 					{% else %}
 					<span class="moj-badge moj-badge--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Session cancelled</span>
 					{% endif %}
-
 					<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
 						{% if event.type == 'activity' %}
 						{{event.times.startTime}}&thinsp;–&thinsp;{{event.times.endTime}}
@@ -341,7 +328,6 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 		{% endfor %}
 	</tbody>
 </table>
-
 <div class="govuk-grid-row govuk-!-display-none-print">
 	<div class="govuk-grid-column-one-quarter">
 		<p class="govuk-body">
@@ -352,7 +338,6 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 		</p>
 	</div>
 </div>
-
 {% endblock %}
 {% block pageScripts %}
 <script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
@@ -395,6 +380,7 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 
 		let filters = $('#filters');
 		let filterToggle = $("#filter-toggle");
+
 		function filterToggleBntText() {
 			if (filters.is(':visible')) {
 				filterToggle.html('Hide filters')
@@ -402,6 +388,7 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 				filterToggle.html('Show filters')
 			}
 		}
+
 		function toggleFilters() {
 			if (filters.is(':visible')) {
 				filters.hide();
@@ -410,7 +397,7 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 			}
 			filterToggleBntText()
 		}
-		// toggleFilters()
+    // toggleFilters()
 		filterToggleBntText()
 		filterToggle.on('click', toggleFilters)
 	})

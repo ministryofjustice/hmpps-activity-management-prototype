@@ -52,28 +52,18 @@
 				name: "attendance-details[" + prisoner.id + "][pay]",
 				fieldset: {
 					legend: {
-						text: "What should " + prisoner.name.firstname + " " + prisoner.name.surname + " be paid?",
+						text: "Should " + prisoner.name.firstname + " " + prisoner.name.surname + " be paid?",
 						classes: "govuk-label--m"
 					}
 				},
 				items: [
 				{
 					value: "standard",
-					text: "Standard pay"
-				},
-				{
-					value: "bonus",
-					text: "Bonus pay",
-					conditional: {
-						html: caseNoteHtml
-					}
-				},
-				{
-					divider: "or"
+					text: "Yes"
 				},
 				{
 					value: "none",
-					text: "No payment",
+					text: "No",
 					conditional: {
 						html: caseNoteHtml
 					}
