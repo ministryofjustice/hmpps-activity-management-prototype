@@ -72,10 +72,12 @@ const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, dat
                     date: date,
                     period: period,
                     records: attendanceRecords.map(attendanceRecord => {
+                        console.log(attendanceRecord)
                         return {
                             attendance: attendanceRecord.attendance,
+                            attendanceDetail: attendanceRecord.attendanceDetail,
                             pay: attendanceRecord.pay,
-                            payReason: attendanceRecord['pay-detail'],
+                            payReason: attendanceRecord.attendanceDetail,
                             unacceptableAbsence: attendanceRecord.unacceptableAbsence,
                             incentiveLevelWarning: attendanceRecord.incentiveLevelWarning,
                             sessionCancelled: attendanceRecord.sessionCancelled,
@@ -139,7 +141,10 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
         } else if(details['absence-reason'] == 'refused'){
             attendanceDetail = 'Refused to attend'
         } else if(details['absence-reason'] == 'not-required'){
-            attendanceDetail = 'Not required, excused or rest day'
+            attendanceDetail = 'Not required or excused'
+            details.pay = 'standard'
+        } else if(details['absence-reason'] == 'rest-day'){
+            attendanceDetail = 'Rest day'
             details.pay = 'standard'
         } else if(details['absence-reason'] == 'other'){
             attendanceDetail = 'Other'
