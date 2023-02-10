@@ -1176,13 +1176,8 @@ router.post(version + '/admin/log-an-activity/check-existing-applications', func
 		res.redirect(version + '/admin/log-an-activity/search-for-activity?dashboardCategory=All')
 	}
 });
-router.post(version + '/admin/log-an-activity/search-for-activity', function(req, res) {
-	{
-		res.redirect(version + '/admin/log-an-activity/is-this-a-referral')
-	}
-});
 
-router.post(version + '/admin/log-an-activity/is-this-a-referral', function(req, res) {
+router.post(version + '/admin/log-an-activity/search-for-activity', function(req, res) {
 	{
 		res.redirect(version + '/admin/log-an-activity/enter-date')
 	}
@@ -1193,9 +1188,16 @@ router.post(version + '/admin/log-an-activity/enter-date', function(req, res) {
 		//Change numerical month to short month name
 		req.session.data.month = getMonthName(req.session.data.logMonth)
 		req.session.data.logDate = req.session.data.logDay + " " + req.session.data.month + " " + req.session.data.logYear
+		res.redirect(version + '/admin/log-an-activity/is-this-a-referral')
+	}
+});
+
+router.post(version + '/admin/log-an-activity/is-this-a-referral', function(req, res) {
+	{
 		res.redirect(version + '/admin/log-an-activity/review-activity-application')
 	}
 });
+
 
 router.post(version + '/admin/log-an-activity/review-activity-application', function(req, res) {
 	{
