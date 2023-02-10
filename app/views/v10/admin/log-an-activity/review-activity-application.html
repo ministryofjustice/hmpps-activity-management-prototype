@@ -13,18 +13,17 @@ Activities Management prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      Review new applications
+      Review your decision
   </div>
 </div>
 <div class="govuk-grid-column-three-third">
   <table class="govuk-table" data-module="moj-sortable-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Prisoner details</th>
+        <th scope="col" class="govuk-table__header">Applicant details</th>
         <th scope="col" class="govuk-table__header" style="width:28%">Activity being applied for</th>
         <th scope="col" class="govuk-table__header">Application date</th>
-        <th scope="col" class="govuk-table__header"></th>
-        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">Decision</th>
       </tr>
     </thead>
     <form method="post">
@@ -59,28 +58,16 @@ Activities Management prototype
         </td>
         <td class="govuk-table__cell" data-sort-value="0">Kitchens</td>
         <td class="govuk-table__cell" data-sort-value="0">4 February 2023</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced"><a href="#">Log another application for this person</a></td>
-        <td class="govuk-table__cell" data-sort-value="20290701"><a href="#">Remove</a></td>
+        <td class="govuk-table__cell" data-sort-value="Unsentenced">Add to waitlist as pending</td>
       </tr>
-      <tr class="govuk-table__row">
-        <td data-sort-value="Lionel" class="govuk-table__cell">
-          <input class="govuk-radios__input" id="offenderAllocate6" name="offenderAllocate" type="radio" value="Henry Tatton">
-          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Henry Tatton</a>
-          </strong><br />
-          BN15297F
-        </td>
-        <td class="govuk-table__cell" data-sort-value="0">Maths level 3</td>
-          <td class="govuk-table__cell" data-sort-value="0">1 February 2023</td>
-        <td class="govuk-table__cell" data-sort-value="Unsentenced"> <a href="#">Log another application for this person</a></td>
-      <td class="govuk-table__cell" data-sort-value="20290701"><a href="#">Remove</a></td>
-      </tr>
+
 
     {% endif %}
 
     </tbody>
 </table>
-<p><a href="#">Log another application for a different person</a></p>
-<button class="govuk-button" data-module="govuk-button">Confirm applications</button>
+<p><a href="#">Cancel and log a new application</a></p>
+<button class="govuk-button" data-module="govuk-button">Confirm</button>
 </form>
 
 {% block pageScripts %}

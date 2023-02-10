@@ -16,10 +16,11 @@ Activities Management prototype
           </div>
           <span class="govuk-caption-m">{{data.logOffenderName or 'Henry Tatton'}} | {{data.logOffenderID or 'BN7666F'}}| 2-003-198</span><br />
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
-        Who has made the application?
+        Accept or reject the application
         </h1><br />
       </div>
     </div>
+    <p>You can <a href="#">check the person applying is suitable</a> before making your decision. </p>
     <form method="post">
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
@@ -28,13 +29,19 @@ Activities Management prototype
           <div class="govuk-radios__item">
             <input class="govuk-radios__input" id="logApplicationMade" name="logApplicationMade" type="radio" value="yes">
             <label class="govuk-label govuk-radios__label" for="logApplicationMade">
-              {{data.logOffenderName or 'Henry Tatton'}}
+              <strong>Add to waitlist</strong> with status <strong>‘Pending’</strong> - the person’s suitability can be checked later
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logApplicationMade" name="logApplicationMade" type="radio" value="yes">
+            <label class="govuk-label govuk-radios__label" for="logApplicationMade">
+              <strong>Add to waitlist</strong> with status <strong>‘Approved’</strong> - you’ve confirmed that the person is suitable
             </label>
           </div>
           <div class="govuk-radios__item">
             <input class="govuk-radios__input" id="logApplicationMade" name="logApplicationMade" type="radio" value="no" data-aria-controls="conditional-contact-3">
             <label class="govuk-label govuk-radios__label" for="logApplicationMade">
-              Someone else, for example a member of staff, an activity leader or an orderly
+              <strong>Reject the application</strong> - the person will not be added to the waitlist
             </label>
           </div>
           <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-3">

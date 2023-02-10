@@ -1194,10 +1194,15 @@ router.post(version + '/admin/log-an-activity/enter-date', function(req, res) {
 
 router.post(version + '/admin/log-an-activity/is-this-a-referral', function(req, res) {
 	{
-		res.redirect(version + '/admin/log-an-activity/review-activity-application')
+		res.redirect(version + '/admin/log-an-activity/accept-or-reject')
 	}
 });
 
+router.post(version + '/admin/log-an-activity/accept-or-reject', function(req, res) {
+	{
+		res.redirect(version + '/admin/log-an-activity/review-activity-application')
+	}
+});
 
 router.post(version + '/admin/log-an-activity/review-activity-application', function(req, res) {
 	{
