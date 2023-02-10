@@ -49,6 +49,7 @@ module.exports = {
   'timetable-3': require('./timetable-3'),
   'residential-locations': require('./residential-list-1'),
   'residential-locations-2': require('./residential-list-2'),
+  'attendance-data-1': require('./attendance-data-1'),
   "times": "AM",
   "selected-locations": {},
   "prison-name": "HMP Leeds",
