@@ -21,7 +21,7 @@ Attendance dashboard
 <div class="app-search govuk-!-margin-bottom-6">
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
-			<form action="{{date}}" method="get" novalidate="">
+			<form novalidate="">
 				<div class="govuk-form-group">
 					<label class="govuk-label app-search__label" for="keywords">
 						Search by prisoner name
@@ -57,7 +57,7 @@ Attendance dashboard
 		<tr class="govuk-table__row">
 			{% set prisoner = data['timetable-complete-1']['prisoners'][range(12,223)|random] %}
 			<td class="govuk-table__cell">
-				<a href="#">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a>
+				<a href="prisoner/{{prisoner.id}}" class="govuk-link--no-visited-state">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a>
 			</td>
 			<td class="govuk-table__cell">
 				{{prisoner.id}}
@@ -66,7 +66,8 @@ Attendance dashboard
 				{{prisoner.location.cell}}
 			</td>
 			<td class="govuk-table__cell">
-				<a href="#">{{data['timetable-complete-1']['activities'][range(1,43)|random].name}}</a>
+				{% set activity = data['timetable-complete-1']['activities'][range(1,43)|random] %}
+				<a href="activities/2/AM/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
 			</td>
 			<td class="govuk-table__cell">
 				{% if data['page-title'] == 'Not recorded' %}
