@@ -208,13 +208,18 @@ data['attendance-data-1']['absences']['afternoon']["unknown"]
 			<div class="govuk-grid-column-one-quarter">
 				{{ dataCard({
 					title: "Paid (acceptable)",
-					count: data['attendance-data-1'][period|lower]['absences']['notRequired']
+					count: data['attendance-data-1'][period|lower]['absences']["sick"] +
+data['attendance-data-1'][period|lower]['absences']['notRequired'] +
+data['attendance-data-1'][period|lower]['absences']['restDay'] +
+data['attendance-data-1'][period|lower]['absences']['elsewhere']
 				}) }}
 			</div>
 			<div class="govuk-grid-column-one-quarter">
 				{{ dataCard({
 					title: "Not paid (unacceptable)",
-					count: data['attendance-data-1'][period|lower]['absences']['notRequired']
+					count: data['attendance-data-1'][period|lower]['absences']["refused"] +
+data['attendance-data-1'][period|lower]['absences']['other'] +
+data['attendance-data-1'][period|lower]['absences']['unknown']
 				}) }}
 			</div>
 		</div>
