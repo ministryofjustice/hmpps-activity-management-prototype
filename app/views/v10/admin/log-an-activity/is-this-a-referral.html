@@ -16,34 +16,43 @@ Activities Management prototype
           </div>
           <span class="govuk-caption-m">{{data.logOffenderName or 'Henry Tatton'}} | {{data.logOffenderID or 'BN7666F'}}| 2-003-198</span><br />
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
-          Is this an application made by {{data.logOffenderName or 'Henry Tatton'}}?
+        Who made the application?
         </h1><br />
       </div>
     </div>
     <form method="post">
     <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset">
+      <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-        </legend>
         <div class="govuk-radios" data-module="govuk-radios">
           <div class="govuk-radios__item">
             <input class="govuk-radios__input" id="logApplicationMade" name="logApplicationMade" type="radio" value="yes">
             <label class="govuk-label govuk-radios__label" for="logApplicationMade">
-              Yes
+              {{data.logOffenderName or 'Henry Tatton'}}
             </label>
           </div>
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="logApplicationMade2" name="logApplicationMade" type="radio" value="no">
-            <label class="govuk-label govuk-radios__label" for="logApplicationM"ade2">
-              No, it's a referral
+            <input class="govuk-radios__input" id="logApplicationMade" name="logApplicationMade" type="radio" value="no" data-aria-controls="conditional-contact-3">
+            <label class="govuk-label govuk-radios__label" for="logApplicationMade">
+              Someone else, for example a member of staff, an activity leader or an orderly
             </label>
           </div>
+          <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-3">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="contact-by-text">
+              Select the reason the application was made
+            </label>
+            <select class="govuk-select" id="categoryDropdown" name="show-grouping">
+              <option value="All" {% if data.dashboardCategory=="All" %}selected{% endif %}>Unemployed</option>
+              <option value="All" {% if data.dashboardCategory=="All" %}selected{% endif %}>Other</option>
+            </select>
+          </div>
         </div>
+          </div>
       </fieldset>
     </div>
-
           <button class="govuk-button" data-module="govuk-button">
-            Confirm
+            Continue
           </button>
         </form>
 
