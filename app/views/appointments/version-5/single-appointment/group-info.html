@@ -10,7 +10,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="group-info-5">
+<form id="form" method="post" action="non-associations">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
@@ -31,9 +31,9 @@ Appointments prototype
        
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
+            
             <th scope="col" class="govuk-table__header">Prison number</th>
             <th scope="col" class="govuk-table__header">Name</th>
-            
             <th scope="col" class="govuk-table__header">Location</th>
             <th scope="col" class="govuk-table__header">Earliest release date</th>
             <th scope="col" class="govuk-table__header"></th>
@@ -80,7 +80,66 @@ Appointments prototype
               <a href="#" class="govuk-link">Remove</a>
             </td>
           </tr>
-         
+          <tr class="govuk-table__row">
+            
+            <td class="govuk-table__cell">{{ data['person-5']}}</td>
+            <td class="govuk-table__cell">Ryan Gee</td>
+            <td class="govuk-table__cell">4-3-012</td>
+            <td class="govuk-table__cell">13 Sep 2025</td>
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link">Remove</a>
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            
+            <td class="govuk-table__cell">{{ data['person-6']}}</td>
+            <td class="govuk-table__cell">Robin Bab</td>
+            <td class="govuk-table__cell">1-1-013</td>
+            <td class="govuk-table__cell">1 May 2023</td>
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link">Remove</a>
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            
+            <td class="govuk-table__cell">{{ data['person-7']}}</td>
+            <td class="govuk-table__cell">Tommy-Lee Knox</td>
+            <td class="govuk-table__cell">4-6-023</td>
+            <td class="govuk-table__cell">2 Feb 2023</td>
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link">Remove</a>
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            
+            <td class="govuk-table__cell">{{ data['person-8']}}</td>
+            <td class="govuk-table__cell">Luther Drove</td>
+            <td class="govuk-table__cell">1-6-053</td>
+            <td class="govuk-table__cell">21 Aug 2024</td>
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link">Remove</a>
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            
+            <td class="govuk-table__cell">{{ data['person-9']}}</td>
+            <td class="govuk-table__cell">Logan Looker</td>
+            <td class="govuk-table__cell">4-6-023</td>
+            <td class="govuk-table__cell">2 Feb 2023</td>
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link">Remove</a>
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            
+            <td class="govuk-table__cell">{{ data['person-10']}}</td>
+            <td class="govuk-table__cell">Eric Sykes</td>
+            <td class="govuk-table__cell">4-6-023</td>
+            <td class="govuk-table__cell">2 Feb 2023</td>
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link">Remove</a>
+            </td>
+          </tr>
          
         </tbody>
       </table>
@@ -101,8 +160,8 @@ Appointments prototype
             }) %}
         <br>
             {{ govukInput({
-              id: 'person-5',
-              name: 'person-5',
+              id: 'person[0][first_name]',
+              name: 'person[0][first_name]',
               label: {
                 html: 'Search by prison number',
                 classes: 'govuk-!-font-weight-bold'
@@ -119,7 +178,8 @@ Appointments prototype
             <div class="moj-button-action">
               {{ govukButton({
                 text: 'Add another person',
-                classes: 'govuk-button--secondary  govuk-!-margin-bottom-4'
+                classes: 'govuk-button--secondary  govuk-!-margin-bottom-4',
+                href: "#"
               }) }}
             </div>
         </div>
@@ -129,10 +189,9 @@ Appointments prototype
         <div class="govuk-grid-column-two-thirds">
           <br><br>
           
-          {{ govukButton({
-            text: 'Continue',
-            href: "non-associations"
-          }) }}
+            {{ govukButton({
+              text: 'Continue'
+            }) }}
            
           </div>
       </div>
