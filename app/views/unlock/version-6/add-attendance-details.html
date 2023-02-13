@@ -330,9 +330,13 @@ Add attendance details for {{prisonersNoun}}
 				<p>
 					9:00&thinsp;&ndash;&thinsp;10:30 : Court video call
 				</p>
-				<!-- <p>
-					Some text about the prisoner being paid for the activity they are absent from.
-				</p> -->
+				<!-- {{ govukWarningText({
+					text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid unless their attendance has been properly recorded.",
+					iconFallbackText: "Warning"
+				}) }} -->
+				<p>
+					The prisoner will be paid and their attendance will be recorded as an acceptable absence.
+				</p>
 				{% endset %}
 
 				{% set unknownHtml %}
@@ -345,7 +349,7 @@ Add attendance details for {{prisonersNoun}}
 					rows: 3
 				}) }}
 				{{ govukWarningText({
-					text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid until their attendance has been properly recorded.",
+					text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid unless their attendance has been properly recorded.",
 					iconFallbackText: "Warning"
 				}) }}
 				{% endset %}
@@ -390,7 +394,7 @@ Add attendance details for {{prisonersNoun}}
 					},
 					{
 						value: "clash",
-						text: "Prisoner has a clash",
+						text: "Prisoner's schedule shows another activity",
 						conditional: {
 							html: elsewhereHtml
 						}

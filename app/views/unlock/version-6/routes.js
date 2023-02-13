@@ -1337,4 +1337,41 @@ router.get('/prisoner/:prisonerId', function(req, res) {
     })
 })
 
+
+router.get('/attendance-dashboard-3', function(req, res) {
+    let attendanceData = req.session.data['attendance-data-1']
+
+    delete req.session.data['attendance-data-1']['daily'];
+
+    function calculateTotals(data) {
+        let totals = {};
+        for (const period of Object.keys(data)) {
+            for (const key of Object.keys(data[period])) {
+                if (typeof data[period][key] === 'object') {
+                    if (!totals[key]) {
+                        totals[key] = {};
+                    }
+                    for (const subKey of Object.keys(data[period][key])) {
+                        if (!totals[key][subKey]) {
+                            totals[key][subKey] = 0;
+                        }
+                        totals[key][subKey] += data[period][key][subKey];
+                    }
+                } else {
+                    if (!totals[key]) {
+                        totals[key] = 0;
+                    }
+                    totals[key] += data[period][key];
+                }
+            }
+        }
+        return totals;
+    }
+
+    const totals = calculateTotals(attendanceData)
+    req.session.data['attendance-data-1']['daily'] = totals;
+
+    res.render('unlock/' + req.version + '/attendance-dashboard-3')
+});
+
 module.exports = router
