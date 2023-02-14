@@ -1,0 +1,103 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Check an decide on Henry Tatton's suitability for {{data.activityAllocateScheduleName or 'Wing cleaning A'}}
+    </h1>
+    <p><strong>Current application status: Pending</strong></p>
+    <p>You may need to carry out further checks to decide if this application should be approved or rejected.</p>
+    <p><strong>Comparison of Henry Tatton's details against the activity requirements</strong></p>
+  </div>
+</div>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Type of detail</th>
+        <th scope="col" class="govuk-table__header">Henry Tatton's details</th>
+        <th scope="col" class="govuk-table__header">Requirements for {{data.activityAllocateScheduleName or 'Wing cleaning A'}}</th>
+        <th scope="col" class="govuk-table__header">Requirements are met</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Workplace risk assessment level</td>
+        <td class="govuk-table__cell">Low</</td>
+        <td class="govuk-table__cell">Low or medium</</td>
+        <td class="govuk-table__cell"><strong <strong class="govuk-tag govuk-tag--blue">Yes</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">incentive level</td>
+        <td class="govuk-table__cell">Standard</td>
+        <td class="govuk-table__cell">Standard or enhanced</td>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Yes</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Education levels</td>
+        <td class="govuk-table__cell">English level 1</</td>
+        <td class="govuk-table__cell">English entry level<br /><span style="margin-bottom:5px;">BICS 1</span></td>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue"style="margin-bottom:5px;">Yes</strong><br />
+          <strong class="govuk-tag govuk-tag--grey">No</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>Further information about Henry Tatton</strong></p>
+
+
+
+
+
+
+  <button class="govuk-button" data-module="govuk-button">
+  Edit schedule times
+  </button>
+
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <form method="post">
+
+        <div class="govuk-form-group">
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+
+              </legend>
+              <div id="contact-hint" class="govuk-hint">
+                Select if the activity always happens at the times you selected for the first week or not.
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="activityWillItRecurYes" name="activityWillItRecur" type="radio" value="yes"  data-aria-controls="conditional-contact">
+                <label class="govuk-label govuk-radios__label" for="activityWillItRecurYes">
+                  Yes, it will repeat
+                </label>
+              </div>
+              <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                 <input class="govuk-radios__input" id="activityWillItRecurNo" name="activityWillItRecur" type="radio" value="no" data-aria-controls="conditional-contact">
+                  <label class="govuk-label govuk-radios__label" for="activityWillItRecurNo">
+                    No, it will not repeat
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+    <br /><br />
+  <button class="govuk-button" data-module="govuk-button">Continue</button>
+  </div>
+  </form>
+</div>
+
+{% endblock %}
