@@ -14,7 +14,7 @@ Activities Management prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      Check an decide on Henry Tatton's suitability for {{data.activityAllocateScheduleName or 'Wing cleaning A'}}
+      Check and decide on Henry Tatton's suitability for {{data.activityAllocateScheduleName or 'Wing cleaning A'}}
     </h1>
     <p><strong>Current application status: Pending</strong></p>
     <p>You may need to carry out further checks to decide if this application should be approved or rejected.</p>
@@ -53,51 +53,43 @@ Activities Management prototype
     </tbody>
   </table>
   <p><strong>Further information about Henry Tatton</strong></p>
-
-
-
-
-
-
-  <button class="govuk-button" data-module="govuk-button">
-  Edit schedule times
-  </button>
-
-
-
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+  <p class="govuk-body card__description">
+    <span style="width:20%; float:left;"><strong>Earlist release date:</strong></span><span>21 September 2024</span> <br /><br />
+    <span style="width:20%; float:left;"><strong>Non-assocations:</strong></span>Neil Rudge, BA5829L<br /><br />
+  </p>
+  <p><a href="#">View Henry Tatton's profile</a> or consult with other departments if you need more information.</p><br /><br />
       <form method="post">
 
         <div class="govuk-form-group">
           <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                Decide whether to approve or reject the application
               </legend>
               <div id="contact-hint" class="govuk-hint">
-                Select if the activity always happens at the times you selected for the first week or not.
+
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="activityWillItRecurYes" name="activityWillItRecur" type="radio" value="yes"  data-aria-controls="conditional-contact">
-                <label class="govuk-label govuk-radios__label" for="activityWillItRecurYes">
-                  Yes, it will repeat
+                <input class="govuk-radios__input" id="waitlistDecideCandidate1" name="waitlistDecideCandidate" type="radio" value="approve"  data-aria-controls="conditional-contact">
+                <label class="govuk-label govuk-radios__label" for="waitlistDecideCandidate1">
+                Approve - Henry Tatton can be allocated to {{data.activityAllocateScheduleName or 'Wing cleaning A'}}
                 </label>
               </div>
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                 <input class="govuk-radios__input" id="activityWillItRecurNo" name="activityWillItRecur" type="radio" value="no" data-aria-controls="conditional-contact">
-                  <label class="govuk-label govuk-radios__label" for="activityWillItRecurNo">
-                    No, it will not repeat
+                 <input class="govuk-radios__input" id="waitlistDecideCandidate2" name="waitlistDecideCandidate" type="radio" value="remove" data-aria-controls="conditional-contact">
+                  <label class="govuk-label govuk-radios__label" for="waitlistDecideCandidate2">
+                    Reject - Henry Tatton will be removed from the waitlist
                   </label>
                 </div>
               </div>
             </fieldset>
           </div>
     <br /><br />
-  <button class="govuk-button" data-module="govuk-button">Continue</button>
+  <button class="govuk-button" data-module="govuk-button">Confirm</button>
   </div>
   </form>
-</div>
+  <p><a href="#">Cancel and return to the waitlist</a></p>
+
 
 {% endblock %}
