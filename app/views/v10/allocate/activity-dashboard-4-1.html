@@ -2303,11 +2303,14 @@ AB5568F<br />
             Show people whose applications are:
           </label>
           <select class="govuk-select" id="show" name="waitlistStatus">
+            <option value="Both pending or approved" {% if data.waitlistStatus=="Both pending or approved" %}selected{% endif %}>Both pending or approved</option>
             <option value="Pending" {% if data.waitlistStatus=="Pending" %}selected{% endif %}>Pending</option>
             <option value="Approved" {% if data.waitlistStatus=="Approved" %}selected{% endif %}>Approved</option>
-            <option value="Both pending or approved" {% if data.waitlistStatus=="Both pending or approved" %}selected{% endif %}>Both pending or approved</option>
           </select>
         </div>
+        <button class="govuk-button" data-module="govuk-button">
+        Apply filters
+        </button>
       </div>
     </div>
 
@@ -2323,16 +2326,40 @@ AB5568F<br />
         <form method="post">
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
-            <td data-sort-value="Lionel" class="govuk-table__cell">
+            <td data-sort-value="Abdel Garcon" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Noff Rens">
-                  <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
+                  <input class="govuk-radios__input" id="offenderWaitlist" name="offenderWaitlist" type="radio" value="Abdel Garcon">
+                  <label class="govuk-label govuk-radios__label" for="offenderWaitlist">
                     <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Abdel Garcon</a></strong><br />AB1234A<br />1-A-178</label>
                 </div>
             </td>
-            <td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">D</td>
-            <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
+            <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">Approved</td>
+            <td class="govuk-table__cell" data-sort-value="20221109">9 November 2022</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td data-sort-value="Neil Melon" class="govuk-table__cell">
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="offenderWaitlist2" name="offenderWaitlist" type="radio" value="Noff Rens">
+                  <label class="govuk-label govuk-radios__label" for="offenderWaitlist2">
+                    <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Neil Melon</a></strong><br />GG4411B<br />2-D-071</label>
+                </div>
+            </td>
+            <td class="govuk-table__cell" data-sort-value="Pending" style="padding-left:20px;">Pending</td>
+            <td class="govuk-table__cell" data-sort-value="20221201">1 December 2022</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td data-sort-value="Way Tin Round" class="govuk-table__cell">
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="offenderWaitlist3" name="offenderWaitlist" type="radio" value="Way Tin Round">
+                  <label class="govuk-label govuk-radios__label" for="offenderWaitlist3">
+                    <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Way Tin Round</a></strong><br />BZ7294A<br />2-B-122</label>
+                </div>
+            </td>
+            <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">Approved</td>
+            <td class="govuk-table__cell" data-sort-value="20230203">3 February 2023</td>
           </tr>
          </tbody>
         </form>
