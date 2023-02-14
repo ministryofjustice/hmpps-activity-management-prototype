@@ -1180,7 +1180,7 @@ router.post(version +'/allocate/waitlist-check-pending', function(req, res) {
 		res.redirect(version + '/allocate/allocate-payment-details')
 	}
 	else{
-		res.redirect(version + '/allocate/activity-dashboard-4-1?pageToShow=1#waitlist')
+		res.redirect(version + '/allocate/activity-dashboard-4-1?pageToShow=1#allocate')
 	}
 });
 
