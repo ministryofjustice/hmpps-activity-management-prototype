@@ -2294,16 +2294,17 @@ AB5568F<br />
     </div>
 
     <div class="govuk-grid-row" style="background-color:#f1f1f1; padding-top:20px;">
-      <form method="post" action="poster">
+      <form method="post" action="waitlistFilter">
       <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
         <div class="govuk-form-group">
           <label class="govuk-label" for="sort">
             Show people whose applications are:
           </label>
-          <select class="govuk-select" id="show" name="waitlistStatus">
-            <option value="Both pending or approved" {% if data.waitlistStatus=="Either approved or pending" %}selected{% endif %}>Either approved or pending</option>
+          <select class="govuk-select" id="show4" name="waitlistStatus">
+            <option value="Either approved, pending or rejected" {% if data.waitlistStatus=="Either approved, pending or rejected" %}selected{% endif %}>Either approved, pending or rejected</option>
             <option value="Pending" {% if data.waitlistStatus=="Pending" %}selected{% endif %}>Pending</option>
             <option value="Approved" {% if data.waitlistStatus=="Approved" %}selected{% endif %}>Approved</option>
+                  <option value="Rejected" {% if data.waitlistStatus=="Rejected" %}selected{% endif %}>Rejected</option>
           </select>
         </div>
         <button class="govuk-button" data-module="govuk-button">
@@ -2322,8 +2323,12 @@ AB5568F<br />
             <th scope="col" class="govuk-table__header">Application date</th>
           </tr>
         </thead>
+
+
         <form method="post" name="waitlist">
         <tbody class="govuk-table__body">
+
+          {% if (data.waitlistStatus == "Either approved, pending or rejected") or (data.waitlistStatus == data.waitlistDecideCandidate) %}
           <tr class="govuk-table__row">
             <td data-sort-value="Neil Tatton" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -2336,6 +2341,9 @@ AB5568F<br />
             <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">{{data.waitlistDecideCandidate or 'Pending'}}</td>
             <td class="govuk-table__cell" data-sort-value="20221109">28 October 2022</td>
           </tr>
+          {% endif %}
+
+          {% if (data.waitlistStatus == "Either approved, pending or rejected") or (data.waitlistStatus == "Pending")%}
           <tr class="govuk-table__row">
             <td data-sort-value="Neil Tatton" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -2348,6 +2356,9 @@ AB5568F<br />
             <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">Pending</td>
             <td class="govuk-table__cell" data-sort-value="20221109">4 November 2022</td>
           </tr>
+          {% endif %}
+
+          {% if (data.waitlistStatus == "Either approved, pending or rejected") or (data.waitlistStatus == "Approved")%}
           <tr class="govuk-table__row">
             <td data-sort-value="Abdel Garcon" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -2360,6 +2371,9 @@ AB5568F<br />
             <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">Approved</td>
             <td class="govuk-table__cell" data-sort-value="20221109">9 November 2022</td>
           </tr>
+          {% endif %}
+
+          {% if (data.waitlistStatus == "Either approved, pending or rejected") or (data.waitlistStatus == "Pending")%}
           <tr class="govuk-table__row">
             <td data-sort-value="Neil Melon" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -2372,6 +2386,9 @@ AB5568F<br />
             <td class="govuk-table__cell" data-sort-value="Pending" style="padding-left:20px;">Pending</td>
             <td class="govuk-table__cell" data-sort-value="20221201">1 December 2022</td>
           </tr>
+          {% endif %}
+
+          {% if (data.waitlistStatus == "Either approved, pending or rejected") or (data.waitlistStatus == "Approved")%}
           <tr class="govuk-table__row">
             <td data-sort-value="Way Tin Round" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -2384,6 +2401,7 @@ AB5568F<br />
             <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">Approved</td>
             <td class="govuk-table__cell" data-sort-value="20230203">3 February 2023</td>
           </tr>
+          {% endif %}
          </tbody>
         </form>
       </table>

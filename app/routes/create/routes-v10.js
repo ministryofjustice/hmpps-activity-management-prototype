@@ -1142,18 +1142,19 @@ module.exports = function(router) {
 			else {req.session.data.vacanciesCount=10}
 
 		{
-
 			res.redirect(version + '/allocate/allocate-confirmation')
 		}
 	});
-
 
 	router.get(version +'/allocate/poster', function(req, res) {
 			res.redirect(version + '/allocate/activity-dashboard-4-1#allocate')
 });
 
+router.get(version +'/allocate/waitlistFilter', function(req, res) {
+		res.redirect(version + '/allocate/activity-dashboard-4-1?pageToShow=1#waitlist')
+});
 //Waitlist journey
-router.post(version +'/allocate/waitlist', function(req, res) {
+router.get(version +'/allocate/waitlist', function(req, res) {
 		res.redirect(version + '/allocate/waitlist-decide')
 });
 router.post(version +'/allocate/waitlist-check-decide', function(req, res) {
