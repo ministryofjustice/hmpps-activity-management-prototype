@@ -2303,7 +2303,7 @@ AB5568F<br />
             Show people whose applications are:
           </label>
           <select class="govuk-select" id="show" name="waitlistStatus">
-            <option value="Both pending or approved" {% if data.waitlistStatus=="Both pending or approved" %}selected{% endif %}>Both pending or approved</option>
+            <option value="Both pending or approved" {% if data.waitlistStatus=="Either approved or pending" %}selected{% endif %}>Either approved or pending</option>
             <option value="Pending" {% if data.waitlistStatus=="Pending" %}selected{% endif %}>Pending</option>
             <option value="Approved" {% if data.waitlistStatus=="Approved" %}selected{% endif %}>Approved</option>
           </select>
@@ -2327,11 +2327,35 @@ AB5568F<br />
         <form method="post">
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
+            <td data-sort-value="Neil Tatton" class="govuk-table__cell">
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="offenderWaitlist0" name="offenderWaitlist" type="radio" value=">Neil Tatton">
+                  <label class="govuk-label govuk-radios__label" for="offenderWaitlist0">
+                    <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Neil Tatton</a></strong><br />ZA1693P<br />2-B-341</label>
+                </div>
+            </td>
+            <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">Approved</td>
+            <td class="govuk-table__cell" data-sort-value="20221109">28 October 2022</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td data-sort-value="Neil Tatton" class="govuk-table__cell">
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="offenderWaitlist0" name="offenderWaitlist" type="radio" value=">Martin Sviderski">
+                  <label class="govuk-label govuk-radios__label" for="offenderWaitlist0">
+                    <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Martin Sviderski</a></strong><br />LL9033P<br />3-C-522</label>
+                </div>
+            </td>
+            <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">Pending</td>
+            <td class="govuk-table__cell" data-sort-value="20221109">4 November 2022</td>
+          </tr>
+          <tr class="govuk-table__row">
             <td data-sort-value="Abdel Garcon" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="offenderWaitlist" name="offenderWaitlist" type="radio" value="Abdel Garcon">
-                  <label class="govuk-label govuk-radios__label" for="offenderWaitlist">
+                  <input class="govuk-radios__input" id="offenderWaitlist1" name="offenderWaitlist" type="radio" value="Abdel Garcon">
+                  <label class="govuk-label govuk-radios__label" for="offenderWaitlist1">
                     <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Abdel Garcon</a></strong><br />AB1234A<br />1-A-178</label>
                 </div>
             </td>
@@ -2365,6 +2389,17 @@ AB5568F<br />
          </tbody>
         </form>
       </table>
+      <nav class="moj-pagination" aria-label="Pagination navigation">
+        <ul class="moj-pagination__list">
+          <li class="moj-pagination__item moj-pagination__item--active">1</li>
+          <li class="moj-pagination__item"><a class="moj-pagination__link" href="#">2</a></li>
+          <li class="moj-pagination__item"><a class="moj-pagination__link" href="#">3</a></li>
+          <li class="moj-pagination__item  moj-pagination__item--next">
+            <a class="moj-pagination__link" href="#">Next<span class="govuk-visually-hidden"> page</span></a>
+          </li>
+        </ul>
+        <p class="moj-pagination__results">Showing <b>1</b> to <b>15</b> of <b>15</b> results</p>
+        </nav><br /><br />
         <button class="govuk-button" data-module="govuk-button">
           Select
         </button>
