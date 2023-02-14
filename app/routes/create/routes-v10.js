@@ -1156,6 +1156,11 @@ module.exports = function(router) {
 router.post(version +'/allocate/waitlist', function(req, res) {
 		res.redirect(version + '/allocate/waitlist-decide')
 });
+router.post(version +'/allocate/waitlist-check-decide', function(req, res) {
+		res.redirect(version + '/allocate/activity-dashboard-4-1?pageToShow=1#waitlist')
+});
+
+
 
 
 //Admin journey
