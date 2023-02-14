@@ -999,7 +999,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/c
     // createAttendanceDetailsForMultiplePrisoners(selectedPrisoner, 'not-attended', 'standard', '', 'no')
 
     if(attendance == 'attended'){
-        res.redirect(req.params.prisonerId + '/change-pay')
+        res.redirect('change-pay')
     } else if(attendance == 'not-attended'){
         res.redirect('../add-attendance-details')
     } else if(attendance == 'unknown'){
@@ -1056,6 +1056,28 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/ch
         activityId,
         activity
     })
+})
+
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-pay', function(req, res) {
+    let prisonerId = req.params.prisonerId;
+    let attendanceData = req.session.data.attendance
+    let activityId = req.params.activityId;
+    let date = req.params.selectedDate;
+    let period = req.params.selectedPeriod;
+    let attendanceDataForActivity = attendanceData[activityId][date][period]
+
+    let selectedPrisoners = req.session.data['selected-prisoners'];
+    let prisoners = req.session.data['timetable-complete-1']['prisoners'];
+    let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
+
+    let attendanceDetails = req.session.data['attendance-details'];
+
+    updateAttendanceData(req, activityId, date, period, attendanceDetails)
+
+    // set the confirmation dialog to display
+    req.session.data['attendance-confirmation'] = 'true'
+
+    res.redirect('../../'+req.params.activityId)
 })
 
 
@@ -1337,9 +1359,9 @@ router.get('/prisoner/:prisonerId', function(req, res) {
     })
 })
 
-
 router.get('/attendance-dashboard-3', function(req, res) {
     let attendanceData = req.session.data['attendance-data-1']
+    let date = new Date().toISOString().slice(0, 10);
 
     delete req.session.data['attendance-data-1']['daily'];
 
@@ -1371,7 +1393,44 @@ router.get('/attendance-dashboard-3', function(req, res) {
     const totals = calculateTotals(attendanceData)
     req.session.data['attendance-data-1']['daily'] = totals;
 
-    res.render('unlock/' + req.version + '/attendance-dashboard-3')
+    res.render('unlock/' + req.version + '/attendance-dashboard-3', {date})
+});
+
+router.get('/attendance-dashboard-4', function(req, res) {
+    let attendanceData = req.session.data['attendance-data-1']
+    let date = new Date().toISOString().slice(0, 10);
+
+    delete req.session.data['attendance-data-1']['daily'];
+
+    function calculateTotals(data) {
+        let totals = {};
+        for (const period of Object.keys(data)) {
+            for (const key of Object.keys(data[period])) {
+                if (typeof data[period][key] === 'object') {
+                    if (!totals[key]) {
+                        totals[key] = {};
+                    }
+                    for (const subKey of Object.keys(data[period][key])) {
+                        if (!totals[key][subKey]) {
+                            totals[key][subKey] = 0;
+                        }
+                        totals[key][subKey] += data[period][key][subKey];
+                    }
+                } else {
+                    if (!totals[key]) {
+                        totals[key] = 0;
+                    }
+                    totals[key] += data[period][key];
+                }
+            }
+        }
+        return totals;
+    }
+
+    const totals = calculateTotals(attendanceData)
+    req.session.data['attendance-data-1']['daily'] = totals;
+
+    res.render('unlock/' + req.version + '/attendance-dashboard-4', {date})
 });
 
 module.exports = router

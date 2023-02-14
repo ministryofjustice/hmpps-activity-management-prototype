@@ -15,7 +15,7 @@ Attendance dashboard
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
 	{{data['page-title']}}
 	<span class="govuk-caption-l">
-		Thursday, 2 February 2023
+		{{date|today|convertShortDateToVeryLongDate}}
 	</span>
 </h1>
 <div class="app-search govuk-!-margin-bottom-6">
@@ -67,7 +67,7 @@ Attendance dashboard
 			</td>
 			<td class="govuk-table__cell">
 				{% set activity = data['timetable-complete-1']['activities'][range(1,43)|random] %}
-				<a href="activities/2/AM/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+				<a href="activities/{{date|today}}/AM/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
 			</td>
 			<td class="govuk-table__cell">
 				{% if data['page-title'] == 'Not recorded' %}
