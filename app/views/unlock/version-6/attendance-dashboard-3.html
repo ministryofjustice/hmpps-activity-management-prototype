@@ -25,7 +25,7 @@ Attendance dashboard
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
 	Attendance statistics
 	<span class="govuk-caption-l">
-		Thursday, 2 February 2023
+		{{date|today|convertShortDateToVeryLongDate}}
 	</span>
 </h1>
 {% set dateHtml %}
@@ -49,7 +49,7 @@ Attendance dashboard
 {% endset %}
 
 <p>
-	<a href="activities/2023-02-02" class="govuk-link--no-visited-state">View a list of activities for this date</a>
+	<a href="activities/{{date|today}}" class="govuk-link--no-visited-state">View a list of activities for this date</a>
 </p>
 
 {{ govukDetails({
@@ -66,7 +66,7 @@ Attendance dashboard
 <span class="govuk-heading-xl govuk-!-margin-0 govuk-!-padding-0 {{params.countClasses}}">{{ params.count }}</span>
 {% if params.linkHref %}
 <p class="govuk-!-margin-bottom-0">
-	<a href="{{ params.linkHref }}" class="govuk-!-font-weight-bold govuk-link--no-visited-state govuk-!-font-size-16">{{ params.linkText or "All " + (params.title | lower) }}</a>
+	<a href="{{params.linkHref}}?page-title={{'All ' + (params.title | lower)}}&count={{params.count}}" class="govuk-!-font-weight-bold govuk-link--no-visited-state govuk-!-font-size-16">{{ params.linkText or "All " + (params.title | lower) }}</a>
 </p>
 {% endif %}
 {% endmacro %}
@@ -121,7 +121,7 @@ data['attendance-data-1']['absences']['afternoon']["unknown"]
 		</h2>
 
 		<p>
-			850 prisoners allocated to activities on Thursday, 2 February 2023.
+			850 prisoners allocated to activities on {{date|today|convertShortDateToVeryLongDate}}.
 		</p>
 
 		<div class="govuk-grid-row">
@@ -129,7 +129,7 @@ data['attendance-data-1']['absences']['afternoon']["unknown"]
 				{{ dataCard({
 					title: "Absences",
 					count: totalAbsences,
-					linkHref: "attendance-dashboard-3-list?page-title=All absences&count="+totalAbsences,
+					linkHref: "attendance-dashboard-3-list",
 					linkText: "All absences"
 				}) }}
 			</div>
@@ -137,14 +137,14 @@ data['attendance-data-1']['absences']['afternoon']["unknown"]
 				{{ dataCard({
 					title: "Not recorded",
 					count: data['attendance-data-1'][period|lower]["notRecorded"],
-					linkHref: "attendance-dashboard-3-list?page-title=Not recorded&count=" + data['attendance-data-1'][period|lower]["notRecorded"]
+					linkHref: "attendance-dashboard-3-list"
 				}) }}
 			</div>
 			<div class="govuk-grid-column-one-quarter">
 				{{ dataCard({
 					title: "Unknown absences",
 					count: data['attendance-data-1'][period|lower]['absences']["unknown"],
-					linkHref: "attendance-dashboard-3-list?page-title=Unknown absences&count=" + data['attendance-data-1'][period|lower]['absences']["unknown"]
+					linkHref: "attendance-dashboard-3-attendance"
 				}) }}
 			</div>
 			<div class="govuk-grid-column-one-quarter">
@@ -260,8 +260,11 @@ data['attendance-data-1'][period|lower]['absences']['unknown']
 		</h2>
 		<div class="govuk-grid-row govuk-!-margin-bottom-8">
 			<div class="govuk-grid-column-one-quarter">
-				<h3 class="govuk-body govuk-hint govuk-!-font-size-19 govuk-!-margin-bottom-0">Suspended</h3>
-				<span class="govuk-heading-xl govuk-!-margin-0 govuk-!-padding-0">11</span>
+				{{ dataCard({
+					title: "Prisoners suspended",
+					count: 11,
+					linkHref: "#"
+				}) }}
 			</div>
 		</div>
 	</div>

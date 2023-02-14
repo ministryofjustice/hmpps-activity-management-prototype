@@ -95,6 +95,10 @@ module.exports = function(env) {
         return DateTime.now().toFormat("yyyy-MM-dd")
     }
 
+    filters.timestamp = function(date) {
+        return new Date().toLocaleTimeString('en-US', { hour12: false }).substr(0, 5);
+    }
+
     filters.dayBefore = function(inputDate) {
         return DateTime.fromFormat(inputDate, "yyyy-MM-dd").minus({
             days: 1
