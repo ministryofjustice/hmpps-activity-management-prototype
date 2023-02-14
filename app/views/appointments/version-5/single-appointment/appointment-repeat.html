@@ -1,0 +1,52 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="appointment-repeat-option">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Multiple appointment list</span>
+        Will the appointment repeat?
+       </h1>
+   
+      {{ govukRadios({
+        idPrefix: "appointment-repeat",
+        name: "appointment-repeat",
+       hint: {
+        text: "Select yes if the appointment will repeat"
+       },
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No"
+          }
+        ]
+      }) }}
+      
+    
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
+
+
+
+  </div>
+</div>
+{% endblock %}
