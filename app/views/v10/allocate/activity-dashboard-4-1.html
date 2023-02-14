@@ -87,17 +87,25 @@ Activities Management prototype
     <strong>  Currently allocated</strong>
     </a>
   </li>
+  <li class="govuk-tabs__list-item">
+    <a class="govuk-tabs__tab" href="#waitlist">
+      <strong>Manage waitlists</strong>
+    </a>
+  </li>
   <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
     <a class="govuk-tabs__tab" href="#allocate">
-      <strong>Candidates</strong>
+      <strong>Allocate</strong>
     </a>
   </li>
   <li class="govuk-tabs__list-item">
     <a class="govuk-tabs__tab" href="#schedule">
-      <strong>{{data.activityAllocateScheduleName  or 'Wing cleaning 1'}} schedule</strong>
+      <strong>Schedule for {{data.activityAllocateScheduleName  or 'Wing cleaning 1'}} </strong>
     </a>
   </li>
+
 </ul>
+
+
 
 <!--allocated-->
 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocated">
@@ -1027,8 +1035,6 @@ AB5568F<br />
   <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
     <div class="govuk-form-group">
         <label class="govuk-label" for="sort">
-
-
           Showing people who are:<br /><br />
         </label>
         <select class="govuk-select" id="show" name="allocateEmployed">
@@ -1064,11 +1070,6 @@ AB5568F<br />
         <option value="Basic or Standard" {% if data.allocateIncentive=="Basic or Standard" %}selected{% endif %}>Basic or Standard</option>
         <option value="Standard or Enhanced" {% if data.allocateIncentive=="Standard or Enhanced" %}selected{% endif %}>Standard or Enhanced</option>
         <option value="All" {% if data.allocateIncentive=="All" %}selected{% endif %}>All incentive levels</option>
-
-
-
-
-
       </select>
       </div>
     </div>
@@ -1081,18 +1082,11 @@ AB5568F<br />
   <table class="govuk-table" data-module="moj-sortable-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-      <!--  <th scope="col" class="govuk-table__header" aria-sort="ascending">Candidate details</th>
-        <th scope="col" class="govuk-table__header" aria-sort="none" style="width:28%">Non-associations on this activity</th>
-        <th scope="col" class="govuk-table__header" aria-sort="none" >Security category</th>
-        <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
-        <th scope="col" class="govuk-table__header" aria-sort="none">Qualifications</th>-->
-
         <th scope="col" class="govuk-table__header">Candidate details</th>
         <th scope="col" class="govuk-table__header" style="width:28%">Non-associations on this activity</th>
         <th scope="col" class="govuk-table__header">Security category</th>
         <th scope="col" class="govuk-table__header">Earliest release date</th>
         <th scope="col" class="govuk-table__header">Education level</th>
-
       </tr>
     </thead>
     <form method="post">
@@ -1100,7 +1094,6 @@ AB5568F<br />
 
         {% if data.allocateEmployed == "Available" %}
           {% if data.pageToShow == 1 %}
-
 
               {% if (data.offenderAllocatedStatusHenryTatton !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
               <tr class="govuk-table__row">
@@ -2274,7 +2267,73 @@ AB5568F<br />
   Edit schedule times
   </button>
   </div>
-</div>
+
+
+
+  <div class="govuk-tabs__panel" id="waitlist">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <p>View the status of applications which have been added to the waitlist.</p>
+        <p>Select someone if you need to approve or reject their application.</p>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label" for="event-name">
+            Search by name or prison number:
+          </label>
+        </h2>
+        <input class="govuk-input govuk-!-width-two-thirds" id="event-name" name="event-name" type="text" >
+        <button class="govuk-button" data-module="govuk-button" style="margin-left:-4px;">
+        Search
+        </button>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row" style="background-color:#f1f1f1; padding-top:20px;">
+      <form method="post" action="poster">
+      <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="sort">
+            Show people whose applications are:
+          </label>
+          <select class="govuk-select" id="show" name="waitlistStatus">
+            <option value="Pending" {% if data.waitlistStatus=="Pending" %}selected{% endif %}>Pending</option>
+            <option value="Approved" {% if data.waitlistStatus=="Approved" %}selected{% endif %}>Approved</option>
+            <option value="Both pending or approved" {% if data.waitlistStatus=="Both pending or approved" %}selected{% endif %}>Both pending or approved</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <table class="govuk-table" data-module="moj-sortable-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Applicant details</th>
+            <th scope="col" class="govuk-table__header">Applicant status</th>
+            <th scope="col" class="govuk-table__header">Application date</th>
+          </tr>
+        </thead>
+        <form method="post">
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td data-sort-value="Lionel" class="govuk-table__cell">
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="offenderAllocate5" name="offenderAllocate" type="radio" value="Noff Rens">
+                  <label class="govuk-label govuk-radios__label" for="offenderAllocate5">
+                    <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Abdel Garcon</a></strong><br />AB1234A<br />1-A-178</label>
+                </div>
+            </td>
+            <td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">D</td>
+            <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
+          </tr>
+         </tbody>
+        </form>
+      </table>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% block pageScripts %}
