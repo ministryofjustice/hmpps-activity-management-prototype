@@ -1,0 +1,484 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+
+    <div class="govuk-width-container">
+      
+      <main class="govuk-main-wrapper " id="main-content" role="main">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds-from-desktop">
+            <h1 class="govuk-heading-l">Check your appointment details before you accept and save</h1>
+            <h2 class="govuk-heading-m">Appointment details</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Type
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['appointment-type']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Appointment type</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Sub-type
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['appointment-sub-type']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Appointment type</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['appointment-location']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Appointment location</span>
+                  </a>
+                </dd>
+              </div>
+
+
+            
+
+              {% if data['  appointment-repeat'] === 'yes' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Start date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Date</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Frequency
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['appointment-frequency']}}  
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Number of repeats
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['number-of-appointments']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% else %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Appointment date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Date</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+              <!--<div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  End date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  12 2 2023 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                 
+                </dd>
+              </div>-->
+             
+              
+              {% if data['schedule-type'] === 'single-time' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Start time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours']}} {{ data['start-minutes']}}  
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+            </dl>
+
+            {% if data['schedule-type'] === 'multiple-times' %}
+
+            <h2 class="govuk-heading-m">Appointment times</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Neil Rudge, A4309SK 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-1']}}:{{ data['start-minutes-1']}}  <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-1']}}:{{ data['end-minutes-1']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Bert Hungerford, A9121FA 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                 {{ data['start-hours-2']}}:{{ data['start-minutes-2']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-2']}}:{{ data['end-minutes-2']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% if data.personMatthew=='Matthew' %}
+
+    
+             {% else %}
+             <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Matthew Doyle, A1291AZ 
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ data['start-hours-3']}}:{{ data['start-minutes-3']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-3']}}:{{ data['end-minutes-3']}} 
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">
+                  Change<span class="govuk-visually-hidden"> Time</span>
+                </a>
+              </dd>
+            </div>
+              {% endif %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Alex Sale, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-4']}}:{{ data['start-minutes-4']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-4']}}:{{ data['end-minutes-4']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Ryan Gee, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-5']}}:{{ data['start-minutes-5']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-5']}}:{{ data['end-minutes-5']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div> 
+              {% if data.personRobin=='Robin' %}
+
+    
+              {% else %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Robin Bab, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-6']}}:{{ data['start-minutes-6']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-6']}}:{{ data['end-minutes-6']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Tommy-Lee Knox, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-7']}}:{{ data['start-minutes-7']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-7']}}:{{ data['end-minutes-7']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Luther Drove, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-8']}}:{{ data['start-minutes-8']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-8']}}:{{ data['end-minutes-8']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Logan Looker, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-9']}}:{{ data['start-minutes-9']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-9']}}:{{ data['end-minutes-9']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Eric Sykes, A1291AZ 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-10']}}:{{ data['start-minutes-10']}} <span class="govuk-!-margin-left-3 govuk-!-margin-right-3">to</span>{{ data['end-hours-10']}}:{{ data['end-minutes-10']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+            </dl>
+
+
+
+            {% endif %}
+
+
+
+            <h2 class="govuk-heading-m">Prisoner details</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Total number of prisoners 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  10 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Neil Rudge, {{ data['person-1']}}  
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Bert Hungerford, {{ data['person-2']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% if data.personMatthew=='Matthew' %}
+
+    
+              {% else %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Matthew Doyle, {{ data['person-3']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Alex Sale, {{ data['person-4']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+             
+              {% if data['person-5'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Ryan Gee, {{ data['person-5']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+              {% if data.personRobin=='Robin' %}
+
+    
+              {% else %}
+              {% if data['person-6'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Robin Bab, {{ data['person-6']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+              {% endif %}
+
+              {% if data['person-7'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Tommy-Lee Knox, {{ data['person-7']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+
+              {% if data['person-8'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Luther Drove, {{ data['person-8']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+
+              {% if data['person-9'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Logan Looker, {{ data['person-9']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+
+              {% if data['person-10'] >= '' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner name and number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Eric Sykes, {{ data['person-10']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+
+              </dl>
+            
+            <form action="confirmation" method="post" novalidate>
+              <input type="hidden" name="answers-checked" value="true">
+              <button class="govuk-button" data-module="govuk-button">
+                Accept and save
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  
+{% endblock %}
