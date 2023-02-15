@@ -43,34 +43,20 @@ Activities Management prototype
 <div class="homepage-content">
 	<div class="govuk-width-container">
 		<ul class="govuk-grid-row card-group" id="sortable">
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_create">
+			{% for tile in data['config']['navigation-tiles'] %}
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_{{loop.index}}">
 				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
 					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{data['prototype-versions']['create-and-allocate']['url']}}">
-							Manage activities and schedules
-						</a>
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{tile.linkURL or 'whereabouts'}}">{{tile.linkText}}</a>
 					</h2>
-					<p class="govuk-body card__description">
-						Create and manage activities and schedules. Allocate people in prison to activities.
-					</p>
+					<p class="govuk-body card__description">{{tile.descriptionText}}</p>
 				</div>
 			</li>
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_unlock">
-				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
-					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{data['prototype-versions']['unlock-and-attend']['url']}}">
-							Manage prisoner unlock and attendance
-						</a>
-					</h2>
-					<p class="govuk-body card__description">
-						Create movement, unlock and attendance lists. Check and record attendance and manage pay.
-					</p>
-				</div>
-			</li>
+			{% endfor %}
 			<li class="govuk-grid-column-one-third card-group__item" id="tile_007">
 				<div class="card card--clickable" data-test="manage-appointments">
 					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{data['prototype-versions']['appointments']['url']}}">Create and manage appointments</a>
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="appointments-home">Create and manage appointments</a>
 					</h2>
 					<p class="govuk-body card__description">Add and edit appointments for individuals or groups of people</p>
 				</div>
@@ -123,6 +109,7 @@ Activities Management prototype
 					<p class="govuk-body card__description">Place a prisoner on report after an incident and view all of your completed reports.</p>
 				</div>
 			</li>
+			
 		</ul>
 	</div>
 </div>
