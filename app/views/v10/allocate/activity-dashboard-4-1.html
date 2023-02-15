@@ -1088,11 +1088,12 @@ AB5568F<br />
   <table class="govuk-table" data-module="moj-sortable-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Candidate details</th>
-        <th scope="col" class="govuk-table__header" style="width:28%">Non-associations on this activity</th>
-        <th scope="col" class="govuk-table__header">Security category</th>
+        <th scope="col" class="govuk-table__header">Prisoner details</th>
+        <th scope="col" class="govuk-table__header">Non-associations</th>
+        <th scope="col" class="govuk-table__header">Application date and status</th>
+        <th scope="col" class="govuk-table__header">Current allocation</th>
         <th scope="col" class="govuk-table__header">Earliest release date</th>
-        <th scope="col" class="govuk-table__header">Education level</th>
+        <th scope="col" class="govuk-table__header">Education level held</th>
       </tr>
     </thead>
     <form method="post">
@@ -1115,7 +1116,8 @@ AB5568F<br />
                   </div>
                 </td>
                 <td class="govuk-table__cell" data-sort-value="0">None</td>
-                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced">20 Sept 2022<br /><strong class="govuk-tag govuk-tag--grey">Pending</strong></td>
+                <td class="govuk-table__cell" data-sort-value="20290701">None</td>
                 <td class="govuk-table__cell" data-sort-value="20290701">1 July 2029</td>
                 {% if  data.activityAllocateName == 'Textiles' %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1144,8 +1146,9 @@ AB5568F<br />
                   </div>
                 </td>
                 <td class="govuk-table__cell" data-sort-value="0">None</td>
-                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
-                <td class="govuk-table__cell" data-sort-value="20250216">2 June 2040</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br /><strong class="govuk-tag govuk-tag--green">Approved</strong></td>
+                <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
+                  <td class="govuk-table__cell" data-sort-value="20290701">12 Aug 2025</td>
                 {% if  data.activityAllocateName == 'Textiles' %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
                 {% else %}
@@ -1173,8 +1176,9 @@ AB5568F<br />
                   </div>
                 </td>
                 <td class="govuk-table__cell" data-sort-value="0">None</td>
-                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
-                <td class="govuk-table__cell" data-sort-value="20250216">9 Nov 2024</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced"> Jan 2023<br /><strong class="govuk-tag govuk-tag--green">Approved</strong></td>
+                <td class="govuk-table__cell" data-sort-value="20290701">None</td>
+                  <td class="govuk-table__cell" data-sort-value="20290701">9 Nov 2023</td>
                 {% if  data.activityAllocateName == 'Textiles' %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
                 {% elseif  data.activityAllocateName == 'Kitchens' %}
@@ -1204,7 +1208,8 @@ AB5568F<br />
                   </div>
                 </td>
                 <td class="govuk-table__cell" data-sort-value="2">None</td>
-                <td class="govuk-table__cell" data-sort-value="C" style="padding-left:20px;">C</td>
+                  <td class="govuk-table__cell" data-sort-value="20290701">9 Nov 2023<br /><strong class="govuk-tag govuk-tag--green">Approved</strong></td>
+                <td class="govuk-table__cell" data-sort-value="20250216">None</td>
                 <td class="govuk-table__cell" data-sort-value="20250216">18 April 2025</td>
                 {% if  data.activityAllocateName == 'Textiles' %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1213,7 +1218,7 @@ AB5568F<br />
                 {% else %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
                 {% endif %}
-                              </tr>{% endif %}
+                </tr>{% endif %}
 
               {% if (data.offenderAllocatedStatusJairusCatalano !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
 
@@ -1230,8 +1235,11 @@ AB5568F<br />
                   </div>
                 </td>
                 <td class="govuk-table__cell" data-sort-value="2">None</td>
-                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
-                <td class="govuk-table__cell" data-sort-value="20250216">2 Mar 2023</td>
+                <td class="govuk-table__cell" data-sort-value="20250216">Did not apply<br /><strong class="govuk-tag govuk-tag--grey">Pending</strong></td>
+                <td class="govuk-table__cell" data-sort-value="20290701">Maths 1</td>
+                <td class="govuk-table__cell" data-sort-value="20290701">1 July 2029</td>
+
+
                 {% if  data.activityAllocateName == 'Textiles' %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
                 {% elseif  data.activityAllocateName == 'Kitchens' %}
@@ -1268,7 +1276,8 @@ AB5568F<br />
                   </div>
                 </td>
                 <td class="govuk-table__cell" data-sort-value="2">None</td>
-                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br /><strong class="govuk-tag govuk-tag--green">Approved</strong></td>
+                <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
                 <td class="govuk-table__cell" data-sort-value="20250216">28 Aug 2023</td>
                 {% if  data.activityAllocateName == 'Textiles' %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1299,7 +1308,8 @@ AB5568F<br />
                   </div>
                 </td>
                 <td class="govuk-table__cell" data-sort-value="2">None</td>
-                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">Unsentenced</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+                <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
                 <td class="govuk-table__cell" data-sort-value="20250216">15 May 2027</td>
                 {% if  data.activityAllocateName == 'Textiles' %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1329,7 +1339,8 @@ AB5568F<br />
                   </div>
                 </td>
                 <td class="govuk-table__cell" data-sort-value="2">None</td>
-                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br /><strong class="govuk-tag govuk-tag--green">Approved</strong></td>
+                <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
                 <td class="govuk-table__cell" data-sort-value="20250216">8 May 2024</td>
                 {% if  data.activityAllocateName == 'Textiles' %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1354,7 +1365,8 @@ AB5568F<br />
                   </div>
                 </td>
                 <td class="govuk-table__cell" data-sort-value="2">None</td>
-                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+                <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
                 <td class="govuk-table__cell" data-sort-value="20250216">16 Dec 2024</td>
                 {% if  data.activityAllocateName == 'Textiles' %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1383,7 +1395,8 @@ AB5568F<br />
                   </div>
                 </td>
                 <td class="govuk-table__cell" data-sort-value="2">None</td>
-                <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+                <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+                <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
                 <td class="govuk-table__cell" data-sort-value="20250216">3 June 2024</td>
                 {% if  data.activityAllocateName == 'Textiles' %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1391,7 +1404,8 @@ AB5568F<br />
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">English level 1</td>
                 {% else %}
                 <td class="govuk-table__cell" data-sort-value="Maths level 2">{{data.allocationEducation}}</td>
-                {% endif %}               </tr>{% endif %}
+                {% endif %}
+              </tr>{% endif %}
 
 
 
@@ -1421,7 +1435,8 @@ AB5568F<br />
               </div>
           </td>
           <td class="govuk-table__cell" data-sort-value="0">None</td>
-          <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">C</td>
+          <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+          <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
             <td class="govuk-table__cell" data-sort-value="20240709">9 July 2024</td>
             {% if  data.activityAllocateName == 'Textiles' %}
             <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1452,15 +1467,17 @@ AB5568F<br />
             </div>
           </td>
           <td class="govuk-table__cell" data-sort-value="1">Marcus Opaque, <span style="font-size:.85em;">LG1291A</span></td>
-          <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">D</td>
-            <td class="govuk-table__cell" data-sort-value="20230122">22 March 2023</td>
+          <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+          <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
             {% if  data.activityAllocateName == 'Textiles' %}
             <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
             {% elseif  data.activityAllocateName == 'Kitchens' %}
             <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
             {% else %}
             <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
-            {% endif %}           </tr>
+            {% endif %}
+            <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
+          </tr>
           {% endif %}
 
           {% if (data.offenderAllocatedStatusLionelDraganov !=="true" or data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName)%}
@@ -1487,8 +1504,9 @@ AB5568F<br />
             Lewis Holme, <span style="font-size:.85em;">LG1291B</span>
 
           </td>
-          <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">C</td>
-            <td class="govuk-table__cell" data-sort-value="20230122">16 Feb 2025</td>
+          <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+          <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
+          <td class="govuk-table__cell" data-sort-value="20230122">16 Feb 2025</td>
             {% if  data.activityAllocateName == 'Textiles' %}
             <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
             {% elseif  data.activityAllocateName == 'Kitchens' %}
@@ -1514,7 +1532,8 @@ AB5568F<br />
               </div>
           </td>
           <td class="govuk-table__cell" data-sort-value="2">More than 3<br /> <a href="#">See full list</a></td>
-          <td class="govuk-table__cell" data-sort-value="A" style="padding-left:20px;">D</td>
+          <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+          <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
             <td class="govuk-table__cell" data-sort-value="20230202">2 Mar 2023</td>
             {% if  data.activityAllocateName == 'Textiles' %}
             <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1543,7 +1562,8 @@ AB5568F<br />
               </div>
             </td>
             <td class="govuk-table__cell" data-sort-value="2">More than 3<br /> <a href="#">See full list</a></td>
-            <td class="govuk-table__cell" data-sort-value="D" style="padding-left:20px;">D</td>
+            <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+            <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
             <td class="govuk-table__cell" data-sort-value="20250216">4 Dec 2026</td>
             {% if  data.activityAllocateName == 'Textiles' %}
             <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1571,7 +1591,8 @@ AB5568F<br />
       </div>
     </td>
     <td class="govuk-table__cell" data-sort-value="0">None</td>
-    <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
+    <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+    <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
     <td class="govuk-table__cell" data-sort-value="20290701">1 July 2029</td>
     {% if  data.activityAllocateName == 'Textiles' %}
     <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1602,7 +1623,8 @@ AB5568F<br />
       </div>
     </td>
     <td class="govuk-table__cell" data-sort-value="0">None</td>
-    <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">C</td>
+    <td class="govuk-table__cell" data-sort-value="Unsentenced">5 Dec 2022<br />Approved</td>
+    <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
     <td class="govuk-table__cell" data-sort-value="20250216">2 June 2040</td>
     {% if  data.activityAllocateName == 'Textiles' %}
     <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1632,7 +1654,8 @@ AB5568F<br />
       </div>
     </td>
     <td class="govuk-table__cell" data-sort-value="0">None</td>
-    <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+    <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+    <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
     <td class="govuk-table__cell" data-sort-value="20250216">9 Nov 2024</td>
     {% if  data.activityAllocateName == 'Textiles' %}
     <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1662,8 +1685,9 @@ AB5568F<br />
       </div>
     </td>
     <td class="govuk-table__cell" data-sort-value="2">None</td>
-    <td class="govuk-table__cell" data-sort-value="C" style="padding-left:20px;">C</td>
-    <td class="govuk-table__cell" data-sort-value="20250216">18 April 2025</td>
+    <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+    <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
+    <td class="govuk-table__cell" data-sort-value="20250216">None</td>
     {% if  data.activityAllocateName == 'Textiles' %}
     <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
     {% elseif  data.activityAllocateName == 'Kitchens' %}
@@ -1687,7 +1711,8 @@ AB5568F<br />
       </div>
     </td>
     <td class="govuk-table__cell" data-sort-value="2">None</td>
-    <td class="govuk-table__cell" data-sort-value="Unsentenced" style="padding-left:20px;">D</td>
+    <td class="govuk-table__cell" data-sort-value="Unsentenced">4 Dec 2022<br />Approved</td>
+    <td class="govuk-table__cell" data-sort-value="20290701">Farms and gardens 1</td>
     <td class="govuk-table__cell" data-sort-value="20250216">2 Mar 2023</td>
     {% if  data.activityAllocateName == 'Textiles' %}
     <td class="govuk-table__cell" data-sort-value="Maths level 2">No match</td>
@@ -1762,6 +1787,7 @@ AB5568F<br />
       </div>
     </td>
     <td class="govuk-table__cell" data-sort-value="1">Marcus Opaque, <span style="font-size:.85em;">LG1291A</span></td>
+
     <td class="govuk-table__cell" data-sort-value="B" style="padding-left:20px;">D</td>
       <td class="govuk-table__cell" data-sort-value="20230122">22 March 2023</td>
       {% if  data.activityAllocateName == 'Textiles' %}
@@ -2294,16 +2320,17 @@ AB5568F<br />
     </div>
 
     <div class="govuk-grid-row" style="background-color:#f1f1f1; padding-top:20px;">
-      <form method="post" action="poster">
+      <form method="post" action="waitlistFilter">
       <div class="govuk-grid-column-one-third" style="background-color:#f1f1f1;">
         <div class="govuk-form-group">
           <label class="govuk-label" for="sort">
             Show people whose applications are:
           </label>
-          <select class="govuk-select" id="show" name="waitlistStatus">
-            <option value="Both pending or approved" {% if data.waitlistStatus=="Either approved or pending" %}selected{% endif %}>Either approved or pending</option>
+          <select class="govuk-select" id="show4" name="waitlistStatus">
+            <option value="Either approved, pending or rejected" {% if data.waitlistStatus=="Either approved, pending or rejected" %}selected{% endif %}>Either approved, pending or rejected</option>
             <option value="Pending" {% if data.waitlistStatus=="Pending" %}selected{% endif %}>Pending</option>
             <option value="Approved" {% if data.waitlistStatus=="Approved" %}selected{% endif %}>Approved</option>
+                  <option value="Rejected" {% if data.waitlistStatus=="Rejected" %}selected{% endif %}>Rejected</option>
           </select>
         </div>
         <button class="govuk-button" data-module="govuk-button">
@@ -2322,8 +2349,12 @@ AB5568F<br />
             <th scope="col" class="govuk-table__header">Application date</th>
           </tr>
         </thead>
+
+
         <form method="post" name="waitlist">
         <tbody class="govuk-table__body">
+
+          {% if (data.waitlistStatus == "Either approved, pending or rejected") or (data.waitlistStatus == data.waitlistDecideCandidate) %}
           <tr class="govuk-table__row">
             <td data-sort-value="Neil Tatton" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -2333,9 +2364,12 @@ AB5568F<br />
                     <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Henry Tatton</a></strong><br />BN5297F<br />1-A-069</label>
                 </div>
             </td>
-            <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">Approved</td>
+            <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">{{data.waitlistDecideCandidate or 'Pending'}}</td>
             <td class="govuk-table__cell" data-sort-value="20221109">28 October 2022</td>
           </tr>
+          {% endif %}
+
+          {% if (data.waitlistStatus == "Either approved, pending or rejected") or (data.waitlistStatus == "Pending")%}
           <tr class="govuk-table__row">
             <td data-sort-value="Neil Tatton" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -2348,6 +2382,9 @@ AB5568F<br />
             <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">Pending</td>
             <td class="govuk-table__cell" data-sort-value="20221109">4 November 2022</td>
           </tr>
+          {% endif %}
+
+          {% if (data.waitlistStatus == "Either approved, pending or rejected") or (data.waitlistStatus == "Approved")%}
           <tr class="govuk-table__row">
             <td data-sort-value="Abdel Garcon" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -2360,6 +2397,9 @@ AB5568F<br />
             <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">Approved</td>
             <td class="govuk-table__cell" data-sort-value="20221109">9 November 2022</td>
           </tr>
+          {% endif %}
+
+          {% if (data.waitlistStatus == "Either approved, pending or rejected") or (data.waitlistStatus == "Pending")%}
           <tr class="govuk-table__row">
             <td data-sort-value="Neil Melon" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -2372,6 +2412,9 @@ AB5568F<br />
             <td class="govuk-table__cell" data-sort-value="Pending" style="padding-left:20px;">Pending</td>
             <td class="govuk-table__cell" data-sort-value="20221201">1 December 2022</td>
           </tr>
+          {% endif %}
+
+          {% if (data.waitlistStatus == "Either approved, pending or rejected") or (data.waitlistStatus == "Approved")%}
           <tr class="govuk-table__row">
             <td data-sort-value="Way Tin Round" class="govuk-table__cell">
               <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -2384,6 +2427,7 @@ AB5568F<br />
             <td class="govuk-table__cell" data-sort-value="Approved" style="padding-left:20px;">Approved</td>
             <td class="govuk-table__cell" data-sort-value="20230203">3 February 2023</td>
           </tr>
+          {% endif %}
          </tbody>
         </form>
       </table>

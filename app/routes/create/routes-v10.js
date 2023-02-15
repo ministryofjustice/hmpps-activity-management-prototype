@@ -860,6 +860,7 @@ module.exports = function(router) {
 				}
 			else if (req.session.data.offenderAllocate=="Henry Tatton"){
 					req.session.data.offenderIDAllocate = 'BN5297F';
+
 					}
 			else if (req.session.data.offenderAllocate=="Alaric Messer"){
 				req.session.data.offenderIDAllocate = 'DE6192M';
@@ -889,8 +890,17 @@ module.exports = function(router) {
 			req.session.data.offenderAllocate="Neil Rudge";
 			req.session.data.offenderIDAllocate = 'AA4309K';
 					}
+
+
+
+
+
+
+
 		{
-				res.redirect(version + '/allocate/allocate-payment-details')
+			if(req.session.data.offenderAllocate=="Henry Tatton")
+				{res.redirect(version + '/allocate/waitlist-check-pending')}
+			else{res.redirect(version + '/allocate/allocate-payment-details')}
 			}
 	});
 
@@ -1142,21 +1152,37 @@ module.exports = function(router) {
 			else {req.session.data.vacanciesCount=10}
 
 		{
-
 			res.redirect(version + '/allocate/allocate-confirmation')
 		}
 	});
-
 
 	router.get(version +'/allocate/poster', function(req, res) {
 			res.redirect(version + '/allocate/activity-dashboard-4-1#allocate')
 });
 
+router.get(version +'/allocate/waitlistFilter', function(req, res) {
+		res.redirect(version + '/allocate/activity-dashboard-4-1?pageToShow=1#waitlist')
+});
 //Waitlist journey
-router.post(version +'/allocate/waitlist', function(req, res) {
+router.get(version +'/allocate/waitlist', function(req, res) {
 		res.redirect(version + '/allocate/waitlist-decide')
 });
+router.post(version +'/allocate/waitlist-check-decide', function(req, res) {
+		res.redirect(version + '/allocate/activity-dashboard-4-1?pageToShow=1#waitlist')
+});
 
+
+
+
+router.post(version +'/allocate/waitlist-check-pending', function(req, res) {
+
+	if (req.session.data.waitlistDecideCandidate=="Approved"){
+		res.redirect(version + '/allocate/allocate-payment-details')
+	}
+	else{
+		res.redirect(version + '/allocate/activity-dashboard-4-1?pageToShow=1#allocate')
+	}
+});
 
 //Admin journey
 router.post(version + '/admin/log-an-activity/activity-name-search', function(req, res) {
