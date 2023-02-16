@@ -49,5 +49,26 @@ const router = express.Router()
 		}
 	  });
 
+
+	  router.post(`/individual-appointment/prisoner-confirm-question`, function (req, res) {
+		const correctPerson = req.session.data['correct-person'];
+		if (correctPerson === 'Yes') {
+			res.redirect(`appointment-type`);
+		} else {
+			res.redirect(`search-person`);
+		}
+	  });
+
+
+	  router.post(`/individual-appointment/appointment-repeat-question`, function (req, res) {
+		const appointRepeat = req.session.data['appointment-repeat'];
+		if (appointRepeat === 'Yes') {
+			res.redirect(`appointment-frequency`);
+		} else {
+			res.redirect(`check-answers`);
+		}
+	  });
+
+
 	  
 module.exports = router
