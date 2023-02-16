@@ -10,7 +10,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="appointment-time">
+<form id="form" method="post" action="appointment-date">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <div class="back">
@@ -20,37 +20,23 @@ Appointments prototype
         <span class="govuk-caption-l">Individual appointment</span>
         When is the appointment?
        </h1>
-       <p class="govuk-body">
-        If it's a recurring appointment enter the date of the first appointment.
-       </p>
+      {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
       {{ govukDateInput({
-        id: "date-of-appointment",
-        namePrefix: "date-of-appointment",
-        
-        hint: {
-          text: "For example, 31 3 2023"
-        },
-        items: [
-          {
-            name: "day",
-            label: "Day",
-            
-            classes: "govuk-input--width-2"
-          },
-          {
-            name: "month",
-            label: "Month",
-            
-            classes: "govuk-input--width-2"
-          },
-          {
-            name: "year",
-            label: "Year",
-           
-            classes: "govuk-input--width-4"
+        id: "dateofappointment",
+        name:dateofappointment,
+        value:dateofappointment,
+        fieldset: {
+          legend: {
+            text: "If it's a recurring appointment enter the date of the first appointment."
           }
-        ]
+        },
+        hint: {
+          text: "For example, 29 12 2022"
+        }
       }) }}
+
+      {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
     
     {{ govukButton({
       text: "Continue"

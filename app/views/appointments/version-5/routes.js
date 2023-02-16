@@ -69,6 +69,23 @@ const router = express.Router()
 		}
 	  });
 
+	 
 
+
+
+router.post('/individual-appointment/appointment-date', function(req, res) {
+	{
+		//Change numerical month to short month name
+		req.session.data.month = getMonthName(req.session.data.month)
+		req.session.data.dateofappointment = req.session.data.day + " " + req.session.data.month + " " + req.session.data.year
+		res.redirect('appointment-time')
+	}
+});
+
+function getMonthName(monthNumber) {
+const date = new Date();
+date.setMonth(monthNumber - 1);
+return date.toLocaleString('en-US', { month: 'long' });
+}
 	  
 module.exports = router
