@@ -10,7 +10,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="numbers-of-appointment">
+<form id="form" method="post" action="../check-answers">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <div class="back">
@@ -19,7 +19,7 @@ Appointments prototype
 
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-l">Individual appointment</span>
-        Appointment occurences
+        Repeat appointments
        </h1>
       <h2 class="govuk-heading-m">
         How often will the appointment repeat?
@@ -28,7 +28,7 @@ Appointments prototype
       {{ govukRadios({
         idPrefix: "appointment-frequency",
         name: "appointment-frequency",
-       
+        value: data['appointment-frequency'],
         hint: {
           text: "Select how often the appointment will repeat"
         },
@@ -61,20 +61,12 @@ Appointments prototype
        
         How many times will the appointment repeat?
        </h2>
-     {{ govukInput({
-      id: "number-of-appointments",
-      name: "number-of-appointments",
-      label: {
-        text: "Enter the number of times the appointment will repeat up to a maximum of one year"
-      },
-           value: "12",
-      classes: "govuk-input--width-4"
-     }) }}
      
-     {{ govukInsetText({
-      html: "Last appointment on <b>24 August 2023</b>"
-     }) }}
-      
+     <label class="govuk-label">Enter the number of times the appointment will repeat up to a maximum of one year</label>
+     <input class="govuk-input govuk-input--width-4" id="number-of-appointments" name="number-of-appointments" type="text" value="{{ data['end-minutes']}}">
+
+    
+      <br><br>
     
     {{ govukButton({
       text: "Continue"

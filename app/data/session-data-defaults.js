@@ -70,8 +70,8 @@ module.exports = {
       'url': '/unlock/version-6/whereabouts'
     },
     'appointments': {
-      'latest-version': 'version-3',
-      'url': ''
+      'latest-version': 'version-5',
+      'url': '/appointments/version-5/appointments-home'
     }
   }
 }

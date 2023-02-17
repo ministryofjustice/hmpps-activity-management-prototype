@@ -10,31 +10,35 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="how-to-schedule-group">
+<form id="form" method="post" action="../check-answers">
   <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
-      
-   
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-l">Individual appointment</span>
-        How many times will the appointment repeat?
+        Will the appointment repeat?
        </h1>
-     {{ govukInput({
-      id: "number-of-appointments",
-      name: "number-of-appointments",
-      label: {
-        text: "Enter the number of times the appointment will repeat up to a maximum of one year"
-      },
-           value: "12",
-      classes: "govuk-input--width-4"
-     }) }}
-     
-     {{ govukInsetText({
-      html: "Last appointment on <b>24 August 2023</b>"
-     }) }}
+   
+      {{ govukRadios({
+        idPrefix: "appointment-repeat",
+        name: "appointment-repeat",
+       hint: {
+        text: "Select yes if the appointment will repeat"
+       },
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No"
+          }
+        ]
+      }) }}
+      
     
     {{ govukButton({
       text: "Continue"

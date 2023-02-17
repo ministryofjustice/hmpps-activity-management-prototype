@@ -47,13 +47,20 @@ Activities Management prototype
 			<li class="govuk-grid-column-one-third card-group__item" id="tile_{{loop.index}}">
 				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
 					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{tile.linkURL}}">{{tile.linkText}}</a>
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{tile.linkURL or 'whereabouts'}}">{{tile.linkText}}</a>
 					</h2>
 					<p class="govuk-body card__description">{{tile.descriptionText}}</p>
 				</div>
 			</li>
 			{% endfor %}
-			
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_007">
+				<div class="card card--clickable" data-test="manage-appointments">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="appointments-home">Create and manage appointments</a>
+					</h2>
+					<p class="govuk-body card__description">Add and edit appointments for individuals or groups of people</p>
+				</div>
+			</li>
 			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
 				<div class="card card--clickable" data-test="change-someones-cell">
 					<h2 class="govuk-heading-m card__heading">
@@ -102,6 +109,7 @@ Activities Management prototype
 					<p class="govuk-body card__description">Place a prisoner on report after an incident and view all of your completed reports.</p>
 				</div>
 			</li>
+			
 		</ul>
 	</div>
 </div>

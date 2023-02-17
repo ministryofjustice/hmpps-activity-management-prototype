@@ -49,5 +49,43 @@ const router = express.Router()
 		}
 	  });
 
+
+	  router.post(`/individual-appointment/prisoner-confirm-question`, function (req, res) {
+		const correctPerson = req.session.data['correct-person'];
+		if (correctPerson === 'Yes') {
+			res.redirect(`appointment-type`);
+		} else {
+			res.redirect(`search-person`);
+		}
+	  });
+
+
+	  router.post(`/individual-appointment/appointment-repeat-question`, function (req, res) {
+		const appointRepeat = req.session.data['appointment-repeat'];
+		if (appointRepeat === 'Yes') {
+			res.redirect(`appointment-frequency`);
+		} else {
+			res.redirect(`check-answers`);
+		}
+	  });
+
+	 
+
+
+
+router.post('/individual-appointment/appointment-date', function(req, res) {
+	{
+		//Change numerical month to short month name
+		req.session.data.month = getMonthName(req.session.data.month)
+		req.session.data.dateofappointment = req.session.data.day + " " + req.session.data.month + " " + req.session.data.year
+		res.redirect('appointment-time')
+	}
+});
+
+function getMonthName(monthNumber) {
+const date = new Date();
+date.setMonth(monthNumber - 1);
+return date.toLocaleString('en-US', { month: 'long' });
+}
 	  
 module.exports = router
