@@ -21,10 +21,52 @@ Attendance dashboard
 	]
 }) }}
 {% endblock %}
-
 {% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+			<span class="govuk-caption-l">
+				{{date|today|convertShortDateToVeryLongDate}}
+			</span>
+			Attendance summary
+		</h1>
+	</div>
+	<div class="govuk-grid-column-one-third">
+		<p class="govuk-hint govuk-!-font-size-16" style="text-align: right;">
+			Updated at {{time|timestamp}} on {{date|today|convertShortDateToLongDate}}
+		</p>
+	</div>
+</div>
+
+{% set dateHtml %}
+{{ govukDateInput({
+	id: "passport-issued",
+	namePrefix: "passport-issued",
+	fieldset: {
+		legend: {
+			text: "Date",
+			isPageHeading: false,
+			classes: "govuk-fieldset__legend--s"
+		}
+	},
+	hint: {
+		html: "For example, 27 1 2023.<br>The earliest date you can view is 27 January 2023."
+	}
+}) }}
+{{govukButton({
+	text: "Update results"
+})}}
+{% endset %}
+
+{{ govukDetails({
+	summaryText: "Choose a different date",
+	html: dateHtml,
+	classes: "govuk-!-margin-bottom-4"
+}) }}
+
 
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+
 {{ mojSubNavigation({
 	label: 'Sub navigation',
 	items: [{
@@ -47,7 +89,7 @@ Attendance dashboard
 <h3 class="govuk-body govuk-hint govuk-!-margin-bottom-0 {{params.titleClasses}}">{{ params.title }}</h3>
 <span class="govuk-heading-xl govuk-!-margin-0 govuk-!-padding-0 {{params.countClasses}}">
 	{{ params.count }}<span class="govuk-visually-hidden"> prisoners</span>
-	{% if params.showPercentage == true %}<span class="govuk-visually-hidden">, which is </span> <span class="govuk-tag {{params.tagClasses}} govuk-!-display-inline-block" style="vertical-align: middle;">{{(params.count / 850 * 100) | round(1)}}%</span>
+	{% if params.showPercentage == true %}<span class="govuk-visually-hidden">, which is </span> <span class="govuk-tag govuk-tag--grey govuk-!-display-inline-block" style="vertical-align: middle;">{{(params.count / 850 * 100) | round(1)}}%</span>
 </span>
 {% endif %}
 {% if params.linkHref %}
@@ -143,58 +185,28 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 	}]
 }) }}
 {{govukButton({
-	text: "Update"
+	text: "Update results"
 })}}
 {% endset %}
 
-<div class="govuk-grid-row">
-	<div class="govuk-grid-column-two-thirds">
-		<h2 class="govuk-heading-l govuk-!-margin-bottom-6">
-			<span class="govuk-caption-l">
-				{{date|today|convertShortDateToVeryLongDate}}
-			</span>
-			{{period}} summary for all activities
-		</h2>
-	</div>
-	<div class="govuk-grid-column-one-third">
-		<p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-bottom-0" style="text-align: right;">
-			Updated at {{time|timestamp}} on {{date|today|convertShortDateToLongDate}}
-		</p>
-	</div>
-</div>
+<h2 class="govuk-heading-l">
+	{{period}} summary for all activities
+</h2>
 
-{% set dateHtml %}
-{{ govukDateInput({
-	id: "passport-issued",
-	namePrefix: "passport-issued",
-	fieldset: {
-		legend: {
-			text: "Date",
-			isPageHeading: false,
-			classes: "govuk-fieldset__legend--s"
-		}
-	},
-	hint: {
-		html: "For example, 27 1 2023.<br>The earliest date you can view is 27 January 2023."
-	}
-}) }}
-{{govukButton({
-	text: "Update"
-})}}
-{% endset %}
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-<p class="govuk-body-l govuk-!-margin-bottom-4">
-	<b>850 prisoners</b> allocated to <a href="#" class="govuk-link--no-visited-state">56 activities</a> on {{date|today|convertShortDateToVeryLongDate}}:
+<p class="govuk-body-l">
+	850 prisoners allocated to <a href="#" class="govuk-link--no-visited-state">56 activities</a> on {{date|today|convertShortDateToVeryLongDate}}.
 </p>
 
-<div class="govuk-grid-row govuk-!-margin-bottom-6">
+<div class="govuk-grid-row govuk-!-margin-bottom-8">
 	<div class="govuk-grid-column-one-quarter">
 		{{ dataCard({
 			title: "Attended",
 			count: 850 - totalAbsences,
 			linkHref: "attendance-dashboard-3-list",
-			showPercentage: true,
-			tagClasses: "govuk-tag--green"
+			linkText: "All absences",
+			showPercentage: true
 		}) }}
 	</div>
 	<div class="govuk-grid-column-one-quarter">
@@ -202,8 +214,7 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 			title: "Missing data",
 			count: data['attendance-data-1'][period|lower]["notRecorded"] + data['attendance-data-1'][period|lower]['absences']["unknown"],
 			linkHref: "attendance-dashboard-3-attendance",
-			showPercentage: false,
-			tagClasses: "govuk-tag--grey"
+			showPercentage: true
 		}) }}
 	</div>
 	<div class="govuk-grid-column-one-quarter">
@@ -211,8 +222,8 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 			title: "Absences",
 			count: totalAbsences,
 			linkHref: "attendance-dashboard-3-list",
-			showPercentage: true,
-			tagClasses: "govuk-tag--green"
+			linkText: "All absences",
+			showPercentage: true
 		}) }}
 	</div>
 	<!-- <div class="govuk-grid-column-one-quarter">
@@ -222,15 +233,12 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 		}) }}
 	</div> -->
 </div>
+
 {{ govukDetails({
-	summaryText: "Choose a different date",
-	html: dateHtml,
-	classes: "govuk-!-margin-bottom-2"
-}) }}
-{{ govukDetails({
-	summaryText: "Filter data by activity category",
+	summaryText: "Show data for a single activity category",
 	html: filterHtml
 }) }}
+
 <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 <h2 class="govuk-heading-m">
 	Absences
@@ -253,7 +261,7 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 					count: data['attendance-data-1'][period|lower]['absences']["sick"],
 					titleClasses: "govuk-!-font-size-16",
 					countClasses: "govuk-!-font-size-36",
-					linkHref: "attendance-dashboard-3-list"
+					linkHref: "#"
 				}) }}
 			</div>
 			<div class="govuk-grid-column-one-quarter">
@@ -262,7 +270,7 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 					count: data['attendance-data-1'][period|lower]['absences']['notRequired'],
 					titleClasses: "govuk-!-font-size-16",
 					countClasses: "govuk-!-font-size-36",
-					linkHref: "attendance-dashboard-3-list"
+					linkHref: "#"
 				}) }}
 			</div>
 			<div class="govuk-grid-column-one-quarter">
@@ -271,7 +279,7 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 					count: data['attendance-data-1'][period|lower]['absences']['restDay'],
 					titleClasses: "govuk-!-font-size-16",
 					countClasses: "govuk-!-font-size-36",
-					linkHref: "attendance-dashboard-3-list"
+					linkHref: "#"
 				}) }}
 			</div>
 			<div class="govuk-grid-column-one-quarter">
@@ -280,7 +288,7 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 					count: data['attendance-data-1'][period|lower]['absences']['elsewhere'],
 					titleClasses: "govuk-!-font-size-16",
 					countClasses: "govuk-!-font-size-36",
-					linkHref: "attendance-dashboard-3-list"
+					linkHref: "#"
 				}) }}
 			</div>
 		</div>
@@ -304,7 +312,7 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 					count: data['attendance-data-1'][period|lower]['absences']["refused"],
 					titleClasses: "govuk-!-font-size-16",
 					countClasses: "govuk-!-font-size-36",
-					linkHref: "attendance-dashboard-3-list"
+					linkHref: "#"
 				}) }}
 			</div>
 			<div class="govuk-grid-column-one-quarter">
@@ -313,7 +321,7 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 					count: data['attendance-data-1'][period|lower]['absences']['other'],
 					titleClasses: "govuk-!-font-size-16",
 					countClasses: "govuk-!-font-size-36",
-					linkHref: "attendance-dashboard-3-list"
+					linkHref: "#"
 				}) }}
 			</div>
 			<div class="govuk-grid-column-one-quarter">
@@ -322,7 +330,7 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 					count: data['attendance-data-1'][period|lower]['absences']['unknown'],
 					titleClasses: "govuk-!-font-size-16",
 					countClasses: "govuk-!-font-size-36",
-					linkHref: "attendance-dashboard-3-list"
+					linkHref: "#"
 				}) }}
 			</div>
 		</div>

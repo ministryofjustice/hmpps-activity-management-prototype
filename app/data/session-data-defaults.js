@@ -26,13 +26,18 @@ module.exports = {
     "attend-pattern": "separate",
     "select-activity-pattern": "select-date-table",
     "navigation-tiles": [{
-      "linkText": "Manage prisoner unlock and attendance",
-      "descriptionText":"Create movement, unlock and attendance lists. Check and record attendance and manage pay.",
+      "linkText": "Manage unlock and movement",
+      "descriptionText":"Create unlock and movement lists. Record unlock sickness, refusals and absences. ",
       "linkURL":""
     },
     {
-      "linkText":"Manage activities and schedules",
-      "descriptionText":"Create and manage activities and schedules. Allocate people in prison to activities.",
+      "linkText":"Manage activities",
+      "descriptionText":"Create and manage activities. Log applications and allocate people to activities. Check and record attendance.",
+      "linkURL":"/v9/dps-home-2"
+    },
+    {
+      "linkText":"Create and manage appointments",
+      "descriptionText":"Add and edit appointments for individuals and groups of people.",
       "linkURL":"/v9/dps-home-2"
     }]
   },
