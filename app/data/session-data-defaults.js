@@ -62,16 +62,16 @@ module.exports = {
   "date": "2023-01-02",
   "prototype-versions": {
     'create-and-allocate': {
-      'latest-version': 'v9',
-      'url': '/v9/dps-home-2'
+      'latest-version': 'v10',
+      'url': '/v10/dps-home-2'
     },
     'unlock-and-attend': {
-      'latest-version': 'version-5',
+      'latest-version': 'version-6',
       'url': '/unlock/version-6/whereabouts'
     },
     'appointments': {
       'latest-version': 'version-5',
-      'url': '/appointments/version-5/appointments-home'
+      'url': '/appointments/version-5/dps-home'
     }
   }
 }
