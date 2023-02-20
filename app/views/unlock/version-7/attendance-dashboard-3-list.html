@@ -1,0 +1,88 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Attendance dashboard
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back to attendance statistics",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+	{{data['page-title']}}
+	<span class="govuk-caption-l">
+		{{date|today|convertShortDateToVeryLongDate}}
+	</span>
+</h1>
+<div class="app-search govuk-!-margin-bottom-6">
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form novalidate="">
+				<div class="govuk-form-group">
+					<label class="govuk-label app-search__label" for="keywords">
+						Search by prisoner name
+					</label>
+					<input class="govuk-input app-search__input" id="keywords" name="search" type="search" value="{{data['search']}}">
+				</div>
+				<button class="govuk-button app-search__button" data-module="govuk-button">
+					Search
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+	{{data['count']}} prisoners
+</h2>
+<table class="govuk-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+	<thead class="govuk-table__head">
+		<tr class="govuk-table__row">
+			<th scope="col" class="govuk-table__header" aria-sort="none">Name</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none" style="white-space: nowrap; width: 1%;">Prison number</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none" style="white-space: nowrap; width: 1%;">Location</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none" width="350">Activity</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none">Attendance</th>
+			<th scope="col" class="govuk-table__header govuk-hint" aria-sort="none" style="white-space: nowrap; width: 1%;">Pay</th>
+		</tr>
+	</thead>
+	<tbody class="govuk-table__body">
+		{% for prisoner in data['timetable-complete-1']['prisoners'] | sort(false, true, 'name.firstname') %}
+		{% if loop.index < data['count'] %}
+		{% set attendance = ["Not attended"] | random %}
+		<tr class="govuk-table__row">
+			{% set prisoner = data['timetable-complete-1']['prisoners'][range(12,223)|random] %}
+			<td class="govuk-table__cell">
+				<a href="prisoner/{{prisoner.id}}" class="govuk-link--no-visited-state">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a>
+			</td>
+			<td class="govuk-table__cell">
+				{{prisoner.id}}
+			</td>
+			<td class="govuk-table__cell">
+				{{prisoner.location.cell}}
+			</td>
+			<td class="govuk-table__cell">
+				{% set activity = data['timetable-complete-1']['activities'][range(1,43)|random] %}
+				<a href="activities/{{date|today}}/AM/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+			</td>
+			<td class="govuk-table__cell">
+				{% if data['page-title'] == 'Not recorded' %}
+				<span class="govuk-hint">Not recorded yet</span>
+				{% else %}
+				<a href="#">{{attendance}}</a>
+				{% endif %}
+			</td>
+			<td class="govuk-table__cell--numeric govuk-table__cell">
+				{{ "&pound;1.45"|safe if attendance == "Attended" else "None" }}
+			</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</tbody>
+</table>
+</div>
+{% endblock %}

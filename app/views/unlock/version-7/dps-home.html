@@ -43,38 +43,17 @@ Activities Management prototype
 <div class="homepage-content">
 	<div class="govuk-width-container">
 		<ul class="govuk-grid-row card-group" id="sortable">
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_create">
+			{% for tile in data['config']['navigation-tiles'] %}
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_{{loop.index}}">
 				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
 					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{data['prototype-versions']['create-and-allocate']['url']}}">
-							Manage activities
-						</a>
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{tile.linkURL or 'whereabouts'}}">{{tile.linkText}}</a>
 					</h2>
-					<p class="govuk-body card__description">
-						Create and manage activities. Log applications and allocate people to activities. Check and record attendance.
-					</p>
+					<p class="govuk-body card__description">{{tile.descriptionText}}</p>
 				</div>
 			</li>
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_unlock">
-				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
-					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{data['prototype-versions']['unlock-and-attend']['url']}}">
-							Manage unlock and movement
-						</a>
-					</h2>
-					<p class="govuk-body card__description">
-						Create unlock and movement lists. Record unlock sickness, refusals and absences.
-					</p>
-				</div>
-			</li>
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_007">
-				<div class="card card--clickable" data-test="manage-appointments">
-					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{data['prototype-versions']['appointments']['url']}}">Create and manage appointments</a>
-					</h2>
-					<p class="govuk-body card__description">Add and edit appointments for individuals and groups of people.</p>
-				</div>
-			</li>
+			{% endfor %}
+			
 			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
 				<div class="card card--clickable" data-test="change-someones-cell">
 					<h2 class="govuk-heading-m card__heading">

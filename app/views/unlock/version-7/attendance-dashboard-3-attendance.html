@@ -1,0 +1,161 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Attendance dashboard
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+<form>
+<div class="govuk-width-container">
+	{% block beforeContent %}
+	{{govukBackLink({
+		text: "Back to attendance statistics",
+		"href": "javascript: window.history.go(-1)"
+	})}}
+	{% endblock %}
+
+	<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+		{% block content %}
+		<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+			{{data['page-title']}}
+			<span class="govuk-caption-l">
+				{{date|today|convertShortDateToVeryLongDate}}
+			</span>
+		</h1>
+
+		<div class="app-search govuk-!-margin-bottom-6">
+			<div class="govuk-grid-row">
+				<div class="govuk-grid-column-two-thirds">
+					<div class="app-search__container">
+						<div class="govuk-form-group">
+							<label class="govuk-label app-search__label" for="keywords">
+								Search by prisoner name
+							</label>
+							<input class="govuk-input app-search__input" id="keywords" name="search" type="search" value="">
+						</div>
+						<button class="govuk-button app-search__button" data-module="govuk-button">
+							Search
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+			{{data['count']}} prisoners
+		</h2>
+		<table class="govuk-table app-whereabouts-table app-whereabouts-table--sticky-head app-whereabouts-table--font-size-normal govuk-!-margin-bottom-5" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+			<thead class="govuk-table__head">
+				<tr class="govuk-table__row">
+					<th class="govuk-table__header govuk-!-padding-left-2" scope="col" id="select-all"></th>
+					<th scope="col" class="govuk-table__header" aria-sort="none">Name</th>
+					<th scope="col" class="govuk-table__header" aria-sort="none" style="white-space: nowrap; width: 1%;">Prison number</th>
+					<th scope="col" class="govuk-table__header" aria-sort="none" style="white-space: nowrap; width: 1%;">Location</th>
+					<th scope="col" class="govuk-table__header" aria-sort="none" width="350">Activity</th>
+					<th scope="col" class="govuk-table__header" aria-sort="none">Attendance</th>
+					<th scope="col" class="govuk-table__header govuk-hint" aria-sort="none" style="white-space: nowrap; width: 1%;">Pay</th>
+				</tr>
+			</thead>
+			<tbody class="govuk-table__body">
+				{% for prisoner in data['timetable-complete-1']['prisoners'] | sort(false, true, 'name.firstname') %}
+				{% if loop.index < data['count'] %}
+				{% set attendance = ["Not attended"] | random %}
+				<tr class="govuk-table__row">
+					<td class="govuk-table__cell">
+						<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-left-2">
+							<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}" name="selected-prisoners" value="{{prisoner.id}}">
+							<label class="govuk-label govuk-checkboxes__label" for="prisoner-{{loop.index}}">
+								<span class="govuk-visually-hidden">Select Surname, Forename</span>
+							</label>
+						</div>
+					</td>
+					{% set prisoner = data['timetable-complete-1']['prisoners'][range(12,223)|random] %}
+					<td class="govuk-table__cell">
+						<a href="prisoner/{{prisoner.id}}" class="govuk-link--no-visited-state">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a>
+					</td>
+					<td class="govuk-table__cell">
+						{{prisoner.id}}
+					</td>
+					<td class="govuk-table__cell">
+						{{prisoner.location.cell}}
+					</td>
+					<td class="govuk-table__cell">
+						{% set activity = data['timetable-complete-1']['activities'][range(1,43)|random] %}
+						<a href="activities/{{date|today}}/AM/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+					</td>
+					<td class="govuk-table__cell">
+						{% if data['page-title'] == 'Not recorded' %}
+						<span class="govuk-hint">Not recorded yet</span>
+						{% else %}
+						<a href="#">{{attendance}}</a>
+						{% endif %}
+					</td>
+					<td class="govuk-table__cell--numeric govuk-table__cell">
+						{{ "&pound;1.45"|safe if attendance == "Attended" else "None" }}
+					</td>
+				</tr>
+				{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+		{% endblock %}
+	</main>
+</div>
+{% include './_includes/attendance-toolbar.html' %}
+</form>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		function toggleToolbar(btn) {
+			let checkbox = $('.app-whereabouts-table input[type="checkbox"]')
+			let count = checkbox.filter(':checked').length - $('th .moj-multi-select__checkbox input:checkbox:checked').length
+
+			if( ! btn.data('html')){
+				$.each(btn, function(){
+					$(this).attr('data-html', $(this).html())
+				})
+
+				$('#app-selected-count').attr('data-html', $('#app-selected-count').html())
+			}
+
+			if (checkbox.is(':checked')) {
+				let countText = ( count > 1 ) ? "prisoners" : "prisoner"
+
+				$('#app-selected-count').html(count + " " + countText + " selected")
+
+				$.each(btn, function(){
+					$(this).attr("disabled", false).html($(this).data('html'))
+				})
+
+				$('.app-attendance-sticky-bar--bottom').addClass('active').find('.govuk-button-group').show()
+			} else {
+				$.each(btn, function(){
+					$(this).attr("disabled", true).html($(this).data('html'))
+				})
+
+				$('.app-attendance-sticky-bar--bottom').removeClass('active').find('.govuk-button-group').hide()
+				$('#app-selected-count').html($('#app-selected-count').data('html'))
+			}
+		}
+		$(window).load(function(){
+			toggleToolbar($('.app-attendance-btn'))
+		})
+		$('.app-whereabouts-table input[type="checkbox"]').on('change', function() {
+			toggleToolbar($('.app-attendance-btn'))
+		})
+
+		const el = document.querySelector(".app-attendance-sticky-bar--bottom")
+		const observer = new IntersectionObserver( 
+			([e]) => e.target.classList.toggle("is-pinned", e.intersectionRatio < 1),
+			{ threshold: [1] }
+			);
+
+		observer.observe(el);
+	})
+</script>
+{% endblock %}

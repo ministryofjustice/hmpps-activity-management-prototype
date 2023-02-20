@@ -133,7 +133,7 @@ Add attendance details for {{prisonersNoun}}
 					name: "attendance-details[" + prisoner.id + "][incentive-level-warning-detail]",
 					id: "incentive-level-warning-detail-" + prisoner.id,
 					label: {
-						text: "Add a case note"
+						text: "Case note"
 					}
 				}) }}
 				{% endset %}
@@ -200,75 +200,9 @@ Add attendance details for {{prisonersNoun}}
 				}) }}
 				{% endset %}
 
-				{% set refusedHtml %}
-				{{ govukWarningText({
-					text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid because this is an unacceptable absence.",
-					iconFallbackText: "Warning"
-				}) }}
-				{{ govukTextarea({
-					name: "more-detail",
-					id: "more-detail",
-					label: {
-						text: "Add a case note"
-					}
-				}) }}
-				{{ govukRadios({
-					id: "not-listed-absence-type",
-					name: "not-listed-absence-type",
-					classes: "govuk-radios--small govuk-radios--inline",
-					fieldset: {
-						legend: {
-							text: "Should this be recorded as an Incentive level warning?"
-						}
-					},
-					items: [
-					{
-						value: "yes",
-						text: "Yes"
-
-					},
-					{
-						value: "no",
-						text: "No"
-					}
-					]
-				}) }}
-				{% endset %}
-
-				{% set sickHtml %}
-				{{ govukRadios({
-					id: "pay-prisoner--sick",
-					name: "pay-prisoner--sick",
-					classes: "govuk-radios--small govuk-radios--inline",
-					fieldset: {
-						legend: {
-							text: "Should the prisoner be paid?"
-						}
-					},
-					items: [
-					{
-						value: "yes",
-						text: "Yes"
-
-					},
-					{
-						value: "no",
-						text: "No"
-					}
-					]
-				}) }}
-				<!-- {{ govukTextarea({
-					name: "more-detail",
-					id: "more-detail",
-					label: {
-						text: "Can you provide more detail?"
-					}
-				}) }} -->
-				{% endset %}
-
 				{% set notRequiredHtml %}
 				<p>
-					The prisoner will be paid and their attendance will be recorded as an acceptable absence.
+					This will be recorded as an acceptable absence and {{prisoner.name.firstname}} {{prisoner.name.surname}} will be paid.
 				</p>
 				<!-- {{ govukRadios({
 					id: "acceptable-absence",
@@ -330,13 +264,9 @@ Add attendance details for {{prisonersNoun}}
 				<p>
 					9:00&thinsp;&ndash;&thinsp;10:30 : Court video call
 				</p>
-				<!-- {{ govukWarningText({
-					text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid unless their attendance has been properly recorded.",
-					iconFallbackText: "Warning"
-				}) }} -->
-				<p>
-					The prisoner will be paid and their attendance will be recorded as an acceptable absence.
-				</p>
+				<!-- <p>
+					Some text about the prisoner being paid for the activity they are absent from.
+				</p> -->
 				{% endset %}
 
 				{% set unknownHtml %}
@@ -348,10 +278,9 @@ Add attendance details for {{prisonersNoun}}
 					},
 					rows: 3
 				}) }}
-				{{ govukWarningText({
-					text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid unless their attendance has been properly recorded.",
-					iconFallbackText: "Warning"
-				}) }}
+				<p>
+					Some helpful text here that the prisoner will not be paid.
+				</p>
 				{% endset %}
 
 				{{ govukRadios({
@@ -364,20 +293,6 @@ Add attendance details for {{prisonersNoun}}
 						}
 					},
 					items: [
-					{
-						value: "sick",
-						text: "Sick",
-						conditional: {
-							html: sickHtml
-						}
-					},
-					{
-						value: "refused",
-						text: "Refused to attend",
-						conditional: {
-							html: refusedHtml
-						}
-					},
 					{
 						value: "not-required",
 						text: "Not required or excused",
@@ -394,7 +309,7 @@ Add attendance details for {{prisonersNoun}}
 					},
 					{
 						value: "clash",
-						text: "Prisoner's schedule shows another activity",
+						text: "Prisoner has a clash",
 						conditional: {
 							html: elsewhereHtml
 						}
@@ -412,7 +327,7 @@ Add attendance details for {{prisonersNoun}}
 			</div>
 			{% endfor %}
 
-			<div class="govuk-button-group govuk-!-margin-top-5">
+			<div class="govuk-button-group govuk-!-margin-top-6">
 				{{govukButton({
 					text: "Record attendance and finish"
 				})}}
