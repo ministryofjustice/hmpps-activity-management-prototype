@@ -1,0 +1,162 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "dps-home"
+	},
+	{
+		text: "Manage prisoner unlock and attendance",
+		href: "whereabouts"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-l">
+			Choose movement list details
+		</h1>
+		<form method="post">
+			{% set dateHtml %}
+			{{ govukDateInput({
+				id: "other-date",
+				namePrefix: "other-date",
+				fieldset: {
+					legend: {
+						text: "Date"
+					}
+				},
+				hint: {
+					html: "You can get unlock lists for dates up to 2 weeks from today.<br>
+					For example, 27 3 2022"
+				}
+			}) }}
+			{% endset %}
+
+			{% set today = '_'|today() %}
+			{{ govukRadios({
+				name: "date",
+				fieldset: {
+					legend: {
+						text: "Select unlock date",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: today,
+					text: "Today"
+				},
+				{
+					value: today|dayAfter,
+					text: "Tomorrow"
+				},
+				{
+					value: "other-date",
+					text: "A different date",
+					conditional: {
+						html: dateHtml
+					}
+				}
+				]
+			}) }}
+
+			{{ govukRadios({
+				name: "period",
+				fieldset: {
+					legend: {
+						text: "Time period",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "am",
+					text: "Morning (AM)"
+				},
+				{
+					value: "pm",
+					text: "Afternoon (PM)"
+				},
+				{
+					value: "ed",
+					text: "Evening (ED)"
+				}
+				]
+			}) }}
+
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-label--m" for="by-location">
+					Select a location
+				</label>
+				<div id="by-location-hint" class="govuk-hint">
+					Not all locations will show in this list. You’ll only see the locations where there are activities or appointments happening at this time.
+				</div>
+				<select class="govuk-select" id="by-location" name="location" aria-describedby="by-location-hint">
+					<option value="" selected=""></option>
+					<option value="Chapel">Chapel</option>
+					<option value="Farms/gardens">Farms/gardens</option>
+					<option value="Gym">Gym</option>
+					<option value="Health Care">Health Care</option>
+					<option value="Houseblock 1">Houseblock 1</option>
+					<option value="Houseblock 2">Houseblock 2</option>
+					<option value="Houseblock 3">Houseblock 3</option>
+					<option value="Houseblock 4">Houseblock 4</option>
+					<option value="Houseblock 5">Houseblock 5</option>
+					<option value="Houseblock 6">Houseblock 6</option>
+					<option value="Houseblock 7">Houseblock 7</option>
+					<option value="Interview Room">Interview Room</option>
+					<option value="Kitchen">Kitchen</option>
+					<option value="Library">Library</option>
+					<option value="Main/stores">Main/stores</option>
+					<option value="Res 1 Education">Res 1 Education</option>
+					<option value="Res 2 Education">Res 2 Education</option>
+					<option value="Sports Hall">Sports Hall</option>
+					<option value="Workshop 1">Workshop 1</option>
+					<option value="Workshop 10">Workshop 10</option>
+					<option value="Workshop 12">Workshop 12</option>
+					<option value="Workshop 13">Workshop 13</option>
+					<option value="Workshop 14">Workshop 14</option>
+					<option value="Workshop 15">Workshop 15</option>
+					<option value="Workshop 16">Workshop 16</option>
+					<option value="Workshop 17">Workshop 17</option>
+					<option value="Workshop 18">Workshop 18</option>
+					<option value="Workshop 19">Workshop 19</option>
+					<option value="Workshop 2">Workshop 2</option>
+					<option value="Workshop 3">Workshop 3</option>
+					<option value="Workshop 4">Workshop 4</option>
+					<option value="Workshop 6">Workshop 6</option>
+					<option value="Workshop 8">Workshop 8</option>
+				</select>
+			</div>
+
+			{{govukButton({
+				text: "Continue"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-location'),
+		showAllValues: true
+	})
+</script>
+{% endblock %}

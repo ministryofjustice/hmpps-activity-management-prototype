@@ -1,0 +1,387 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+{{activity.name}} at {{activityTimes.startTime}} on {{date|convertShortDateToVeryLongDate}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+<form>
+	<div class="govuk-width-container">
+		{% block beforeContent %}
+		{{govukBackLink({
+			text: "Back",
+			"href": "../../"+date
+		})}}
+		{% endblock %}
+
+		{% set totalPrisoners = prisonersList|length %}
+		{% set notRecorded = totalPrisoners - notAttendedCount - attendedCount %}
+
+		{% set cancelled = false %}
+		{% set reason = '' %}
+
+		{% for session in activitySchedule[0].cancelledSessions %}
+		{% if session.date == date and session.period|upper == period %}
+		{% set cancelled = true %}
+		{% set reason = session.reason %}
+		{% endif %}
+		{% endfor %}
+
+		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+			{% if cancelled == true %}
+			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+			{% set cancelledHtml %}
+			<h3 class="govuk-notification-banner__heading">
+				Session cancelled
+			</h3>
+			<p class="govuk-body">This activity session has been cancelled for the following reason: {{reason}}</p>
+			{% endset %}
+			{{ govukNotificationBanner({
+				html: cancelledHtml,
+				type: 'error'
+			}) }}
+			{% endif %}
+
+			<div class="govuk-grid-row govuk-!-margin-bottom-2">
+				<div class="govuk-grid-column-three-quarters">
+					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+						<span class="govuk-caption-l">
+							Record attendance
+						</span>
+
+						{{ activity.name }}: {{activity.location}}
+
+						<span class="govuk-caption-l">
+							{{activityTimes.startTime}}&thinsp;&ndash;&thinsp;{{activityTimes.endTime}} ({{period}}) on {{date|convertShortDateToVeryLongDate}}
+						</span>
+					</h1>
+
+					<ul class="govuk-list">
+						<!-- <li>
+							<a href="../../{{date}}" class="govuk-link--no-visited-state">Choose a different activity</a>
+						</li>
+						<li>
+							<a href="../../../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
+						</li> -->
+						{% if cancelled == false %}
+						<li>
+							<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-link--no-visited-state">Cancel this session</a>
+						</li>
+						{% else %}
+						<li>
+							<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-link--no-visited-state">Un-cancel this session</a>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+
+				<div class="govuk-grid-column-one-quarter">
+					<p class="govuk-body" style="text-align: right;">
+						{{govukButton({
+							text: "Print attendance list",
+							classes: "govuk-button--secondary"
+						})}}
+					</p>
+				</div>
+			</div>
+
+			{% if data['selected-prisoners'].length == 1 %}
+			{% set prisonerName %}
+			{% for prisoner in prisonersList %}
+			{% if data['selected-prisoners'][0] == prisoner.id %}
+			{{prisoner.name.firstname}} {{prisoner.name.surname}}
+			{% endif %}
+			{% endfor %}
+			{%- endset -%}
+			{% endif %}
+
+			<!-- {% if data['attendance-confirmation'] == 'true' %}
+			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+			{% set html %}
+			<h3 class="govuk-notification-banner__heading">
+				Attendance recorded
+			</h3>
+			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisonerName}}.</p>
+			{% endset %}
+			{{ govukNotificationBanner({
+				html: html,
+				type: 'success'
+			}) }}
+			{% endif %} -->
+
+			{% include './_includes/table-navbar.html' %}
+
+			<h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners allocated</h2>
+
+			{% set attendanceDetailsHtml %}
+			<ul class="govuk-list">
+				<li>Attended: <b>{{attendedCount}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (attendedCount / totalPrisoners * 100) | round(1) }}%)</span></li>
+				<li>Absent: <b>{{notAttendedCount}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (notAttendedCount / totalPrisoners * 100) | round(1) }}%)</span></li>
+				<li>Not recorded: <b>{{notRecorded}}</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">({{ (notRecorded / totalPrisoners * 100) | round(1) }}%)</span></li>
+			</ul>
+			{% endset %}
+			<!-- {{ govukDetails({
+				summaryText: "Attendance summary",
+				html: attendanceDetailsHtml
+			}) }} -->
+			{{attendanceDetailsHtml|safe}}
+
+
+<!-- <div class="govuk-tabs govuk-!-margin-bottom-6" data-module="govuk-tabs">
+	<h2 class="govuk-tabs__title">
+		Contents
+	</h2>
+	<ul class="govuk-tabs__list">
+		<li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+			<a class="govuk-tabs__tab" href="#all">
+				All attendees
+			</a>
+		</li>
+		<li class="govuk-tabs__list-item">
+			<a class="govuk-tabs__tab" href="#not-marked">
+				Not marked yet
+			</a>
+		</li>
+		<li class="govuk-tabs__list-item">
+			<a class="govuk-tabs__tab" href="#attended">
+				Attended
+			</a>
+		</li>
+		<li class="govuk-tabs__list-item">
+			<a class="govuk-tabs__tab" href="#not-attended">
+				Not attended
+			</a>
+		</li>
+	</ul>
+
+	<div class="govuk-tabs__panel" id="{{period|lower}}-sessions"> -->
+		<table class="govuk-table app-whereabouts-table app-whereabouts-table--sticky-head app-whereabouts-table--font-size-normal govuk-!-margin-bottom-5" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+			<thead class="govuk-table__head">
+				<tr>
+					{% if notRecorded > 0 %}<th class="govuk-table__header govuk-!-padding-left-2" scope="col" id="select-all"></th>{% endif %}
+					<th class="govuk-table__header">
+						Name
+					</th>
+					<th class="govuk-table__header">
+						Location
+					</th>
+					<th class="govuk-table__header" width="250">
+						Relevant alerts
+					</th>
+					<th class="govuk-table__header">
+						Other scheduled events
+					</th>
+					<th class="govuk-table__header" colspan="2" width="320">
+						Attendance
+					</th>
+				</tr>
+			</thead>
+			<tbody class="govuk-table__body">
+				{% set sortOrder = data['sort-by'] %}
+				{% for prisoner in prisonersList %}
+				<tr class="govuk-table__row">
+					{% if notRecorded > 0 %}
+					<td class="govuk-table__cell">
+						{% if not prisoner.attendance.attendance %}
+						<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-left-2">
+							<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}" name="selected-prisoners" value="{{prisoner.id}}">
+							<label class="govuk-label govuk-checkboxes__label" for="prisoner-{{loop.index}}">
+								<span class="govuk-visually-hidden">Select Surname, Forename</span>
+							</label>
+						</div>
+						{% endif %}
+					</td>
+					{% endif %}
+					<td class="govuk-table__cell" width="180">
+						<a href="../../../prisoner/{{prisoner.id}}" class="govuk-link--no-visited-state"><b>{{prisoner.name.surname}}</b>, {{prisoner.name.firstname}}</a><br>
+						<span class="govuk-hint govuk-!-font-size-16">{{prisoner.id}}</span>
+					</td>
+					<td class="govuk-table__cell">
+						{{prisoner.location.cell}}
+					</td>
+					<td class="govuk-table__cell">
+						{% if prisoner.alerts.length > 0 %}
+						<ul class="alerts-list">
+							{% for alert in prisoner.alerts %}
+							<li class="alert-status alert-status--{{alert|lower|replace(' ','-')}}">{{alert}}</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+					</td>
+					<td class="govuk-table__cell">
+						{% for event in prisoner.events %}
+						<div {% if not loop.last %}class="govuk-!-margin-bottom-4"{% endif %}>
+							<div>
+								{% if event.type == 'appointment' %}
+								<a href="#" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
+								<span class="govuk-tag govuk-tag--orange">Appointment</span>
+								{% else %}
+								<a href="{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
+								{% endif %}
+							</div>
+
+							{% if event.cancelled != true %}
+							{% if event.attendance == 'attended' %}
+							<span class="moj-badge moj-tag--green govuk-!-margin-bottom-1 govuk-!-margin-top-1" style="text-transform: capitalize;">Attended</span>
+							{% elif event.attendance == 'not-attended' %}
+							<span class="moj-badge moj-tag--red govuk-!-margin-bottom-1 govuk-!-margin-top-1" style="text-transform: capitalize;">Not attended</span>
+							{% endif %}
+							{% else %}
+							<span class="moj-badge moj-tag--red govuk-!-margin-bottom-1 govuk-!-margin-top-1" style="text-transform: capitalize;">Session cancelled</span>
+							{% endif %}
+
+							<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{event.times.startTime}}&thinsp;–&thinsp;{{event.times.endTime}}</div>
+							<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{ event.location }}</div>
+						</div>
+						{% endfor %}
+					</td>
+					<td class="govuk-table__cell" {%- if not prisoner.attendance.attendance %}colspan="2"{% endif -%}>
+						{% set attendance = prisoner.attendance.records[prisoner.attendance.records|length-1].attendance %}
+						<!-- {{prisoner.attendance.records[prisoner.attendance.records|length-1]|dump}} -->
+						{{prisoner.latestAttendance.attendance}}
+						<ul class="govuk-list">
+							<!-- {%- if prisoner.attendance.attendance == "attended" %}
+							<li><span class="moj-badge moj-badge--large moj-tag--green" style="text-transform: capitalize;">Attended</span></li>
+
+							{%- if prisoner.attendance.pay == 'none' %}
+							<li><span class="govuk-tag govuk-tag--red" style="text-transform: capitalize;">No pay</span></li>
+							{%- elif prisoner.attendance.pay == 'bonus' %}
+							<li><span class="govuk-tag govuk-tag--blue" style="text-transform: capitalize;">Bonus</span></li>
+							{% endif -%}
+
+							{%- elif prisoner.attendance.attendance == "not-attended" %}
+							{%- if prisoner.attendance.sessionCancelled == true %}
+							<li><span class="moj-badge moj-badge--large moj-tag--blue" style="text-transform: capitalize;">Session cancelled</span></li>
+							{% else %}
+							<li><span class="moj-badge moj-badge--large moj-tag--red" style="text-transform: capitalize;">Absent</span></li>
+							{% endif -%}
+							{%- else %}
+							<li><span class="govuk-hint">Not recorded yet</span></li>
+							{% endif -%}
+
+							{% if prisoner.attendance.pay == 'standard' %}
+							<li><span class="govuk-tag govuk-tag--green" style="text-transform: capitalize;">Pay</span></li>
+							{%- elif prisoner.attendance.attendance == "not-attended" and prisoner.attendance.pay == null %}
+							<li><span class="govuk-tag govuk-tag--red" style="text-transform: capitalize;">No pay</span></li>
+							{% endif %} -->
+
+							{%- if prisoner.attendance.attendance == "attended" %}
+							<span class="moj-badge moj-badge--large moj-tag--green" style="text-transform: none;">Attended</span>
+
+							{%- if prisoner.attendance.pay == 'none' %}
+							<span class="govuk-tag govuk-tag--red" style="text-transform: none;">No pay</span>
+							{%- elif prisoner.attendance.pay == 'bonus' %}
+							<span class="govuk-tag govuk-tag--blue" style="text-transform: none;">Bonus</span>
+							{% endif -%}
+							{%- elif prisoner.attendance.attendance == "not-attended" %}
+							{%- if prisoner.attendance.sessionCancelled == true %}
+							<span class="moj-badge moj-badge--large moj-tag--blue" style="text-transform: none;">Session cancelled</span>
+							{% elif prisoner.attendance.attendanceDetail == 'Sick' %}
+							<span class="moj-badge moj-badge--large moj-tag--green" style="text-transform: none;">Sick</span>
+							{% elif prisoner.attendance.attendanceDetail == 'Rest day' %}
+							<span class="moj-badge moj-badge--large moj-tag--green" style="text-transform: none;">Rest day</span>
+							{% elif prisoner.attendance.attendanceDetail == 'Refused to attend' %}
+							<span class="moj-badge moj-badge--large moj-tag--red" style="text-transform: none;">Refused to attend</span>
+							{% else %}
+							<span class="moj-badge moj-badge--large moj-tag--red" style="text-transform: none;">Absent</span>
+							{% endif -%}
+							{%- else %}
+							<span class="govuk-hint">Not recorded yet</span>
+							{% endif -%}
+
+							{% if prisoner.attendance.pay == 'standard' %}
+							<span class="govuk-tag govuk-tag--green" style="text-transform: none;">Pay</span>
+							{%- elif prisoner.attendance.attendance == "not-attended" and prisoner.attendance.pay == null %}
+							<span class="govuk-tag govuk-tag--red" style="text-transform: none;">No pay</span>
+							{% endif %}
+						</ul>
+					</td>
+					{%- if prisoner.attendance.attendance %}
+					<td class="govuk-table__cell">
+						<a href="{{activity.id}}/{{prisoner.id}}" class="govuk-link--no-visited-state">View or edit</a>
+					</td>
+					{% endif -%}
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<!-- </div>
+		</div> -->
+		{% set dayBefore = date | dayBefore() %}
+		{% set dayAfter = date | dayAfter() %}
+		{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+		{{ govukPagination({
+			previous: {
+				text: "Previous session",
+				labelText: previousSessionDate.date | convertShortDateToVeryLongDate + ' (' + previousSessionDate.period + ')',
+				href: "../../" + previousSessionDate.date+"/" + previousSessionDate.period + "/" + activityId
+			},
+			next: {
+				text: "Next session",
+				labelText: nextSessionDate.date | convertShortDateToVeryLongDate + ' (' + nextSessionDate.period + ')',
+				href: "../../" + nextSessionDate.date+"/" + nextSessionDate.period + "/" + activityId
+			}
+		}) }}
+	</main>
+</div>
+
+{% include './_includes/attendance-toolbar.html' %}
+</form>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		function toggleToolbar(btn) {
+			let checkbox = $('.app-whereabouts-table input[type="checkbox"]')
+			let count = checkbox.filter(':checked').length - $('th .moj-multi-select__checkbox input:checkbox:checked').length
+			
+			if( ! btn.data('html')){
+				$.each(btn, function(){
+					$(this).attr('data-html', $(this).html())
+				})
+
+				$('#app-selected-count').attr('data-html', $('#app-selected-count').html())
+			}
+
+			if (checkbox.is(':checked')) {
+				let countText = ( count > 1 ) ? "prisoners" : "prisoner"
+
+				$('#app-selected-count').html(count + " " + countText + " selected")
+
+				$.each(btn, function(){
+					$(this).attr("disabled", false).html($(this).data('html'))
+				})
+
+				$('.app-attendance-sticky-bar--bottom').addClass('active').find('.govuk-button-group').show()
+			} else {
+				$.each(btn, function(){
+					$(this).attr("disabled", true).html($(this).data('html'))
+				})
+
+				$('.app-attendance-sticky-bar--bottom').removeClass('active').find('.govuk-button-group').hide()
+				$('#app-selected-count').html($('#app-selected-count').data('html'))
+			}
+		}
+		$(window).load(function(){
+			toggleToolbar($('.app-attendance-btn'))
+		})
+		$('.app-whereabouts-table input[type="checkbox"]').on('change', function() {
+			toggleToolbar($('.app-attendance-btn'))
+		})
+
+		const el = document.querySelector(".app-attendance-sticky-bar--bottom")
+		const observer = new IntersectionObserver( 
+			([e]) => e.target.classList.toggle("is-pinned", e.intersectionRatio < 1),
+			{ threshold: [1] }
+			);
+
+		observer.observe(el);
+	})
+</script>
+{% endblock %}

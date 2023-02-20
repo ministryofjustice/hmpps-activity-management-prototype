@@ -33,12 +33,12 @@ module.exports = {
     {
       "linkText":"Manage activities",
       "descriptionText":"Create and manage activities. Log applications and allocate people to activities. Check and record attendance.",
-      "linkURL":"/v9/dps-home-2"
+      "linkURL":"/v10/dps-home-2"
     },
     {
       "linkText":"Create and manage appointments",
       "descriptionText":"Add and edit appointments for individuals and groups of people.",
-      "linkURL":"/v9/dps-home-2"
+      "linkURL":"/v10/dps-home-2"
     }]
   },
   "activity": "Workshop",
@@ -66,8 +66,8 @@ module.exports = {
       'url': '/v10/dps-home-2'
     },
     'unlock-and-attend': {
-      'latest-version': 'version-6',
-      'url': '/unlock/version-6/whereabouts'
+      'latest-version': 'version-7',
+      'url': '/unlock/version-7/whereabouts'
     },
     'appointments': {
       'latest-version': 'version-5',
