@@ -2294,8 +2294,6 @@ AB5568F<br />
   </button>
   </div>
 
-
-
   <div class="govuk-tabs__panel" id="waitlist">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
@@ -2344,6 +2342,22 @@ AB5568F<br />
             <th scope="col" class="govuk-table__header">Application date</th>
           </tr>
         </thead>
+
+{% if data.waitlistDecideCandidate=="Approved" or data.waitlistDecideCandidate=="Rejected" %}
+        <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      Notification
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <p class="govuk-notification-banner__heading">
+       You've updated Henry Tatton's application. The new status is {{data.waitlistDecideCandidate}}
+    </p>
+  </div>
+</div>
+{% endif %}
+
 
 
         <form method="post" name="waitlist">

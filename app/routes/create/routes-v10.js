@@ -890,16 +890,12 @@ module.exports = function(router) {
 			req.session.data.offenderAllocate="Neil Rudge";
 			req.session.data.offenderIDAllocate = 'AA4309K';
 					}
-
-
-
-
-
-
-
 		{
 			if(req.session.data.offenderAllocate=="Henry Tatton")
-				{res.redirect(version + '/allocate/waitlist-check-pending')}
+				{
+
+					res.redirect(version + '/allocate/waitlist-check-pending')
+				}
 			else{res.redirect(version + '/allocate/allocate-payment-details')}
 			}
 	});
