@@ -25,7 +25,7 @@ Activities Management prototype
   <p class="govuk-body card__description">
     <span style="width:370px; float:left;"><strong>Earliest release date:</strong></span>21 September 2024<br /><br />
     <span style="width:370px; float:left;"><strong>Non-assocations:</strong></span>Neil Rudge, BA5829L<br /><br />
-    <span style="width:370px; float:left;"><strong>Current application status: </strong></span> Pending
+    <span style="width:370px; float:left;"><strong>Current application status: </strong></span> {{data.waitlistDecideCandidate}}
   </p><br />
   <p><a href="#">View Henry Tatton's profile</a> or consult with other departments if you need more information.</p><br /><br />
 
@@ -69,12 +69,24 @@ Activities Management prototype
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                 Decide whether to approve or reject the application
               </legend>
+
+              {% if data.waitlistDecideCandidate!="Approved" %}
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="waitlistDecideCandidate1" name="waitlistDecideCandidate" type="radio" value="Approved">
                 <label class="govuk-label govuk-radios__label" for="waitlistDecideCandidate1">
                 Approve - Henry Tatton can be allocated to {{data.activityAllocateScheduleName or 'Wing cleaning A'}}
                 </label>
               </div>
+
+              {% else %}
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="waitlistDecideCandidate1" name="waitlistDecideCandidate" type="radio" value="Approved">
+                <label class="govuk-label govuk-radios__label" for="waitlistDecideCandidate1">
+                Keep - Henry Tatton can be allocated to {{data.activityAllocateScheduleName or 'Wing cleaning A'}}
+                </label>
+              </div>
+              {% endif %}
+
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
                  <input class="govuk-radios__input" id="waitlistDecideCandidate2" name="waitlistDecideCandidate" type="radio" value="Rejected">
