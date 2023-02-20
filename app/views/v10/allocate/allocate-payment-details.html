@@ -18,51 +18,34 @@ Activities Management prototype
     </h1>
   <!--  <p class="govuk-body">{{ data.offenderAllocate }}'s current incentive level is <strong>Basic</strong>. </p>-->
   </div>
-</div><!--
-<div class="govuk-width-container">
-  <ul class="govuk-grid-row card-group" id="sortable">
-    <li class="govuk-grid-column-one-half card-group__item" id="tile_unlock">
-      <div class="card card--clickable" data-test="manage-prisoner-whereabouts">
-        <div style="height:20px; width:100%; padding:0; margin:0; background-color:#f1f1f1;">
-        &nbsp;
-        <div>
-        <h2 class="govuk-heading-m card__heading">
-      <!--    <a class="govuk-link card__link govuk-link--no-visi ted-state" href="{{data['prototype-versions']['unlock-and-attend']['url']}}">-->
-          <!--{{ data.offenderAllocate }}, {{ data.offenderIDAllocate }}
+</div>
+{%if data.offenderStatus=="pending" %}
+{% endif %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Important
         </h2>
-
-          <p class="govuk-body card__description">
-            <span style="width:60%; float:left;"><strong>Incentive level:</strong></span><span>{{ data.offenderAllocateIncentiveLevel or 'Standard' }}</span> <br /><br />
-            <span style="width:60%; float:left;"><strong>Workplace risk assessment level:</strong></span><span>{{ data.offenderAllocateRisk or 'Low' }}</span><br /><br />
-          </p>
-
       </div>
-    </li>
-    <li class="govuk-grid-column-one-half card-group__item" id="tile_unlock">
-      <div class="card card--clickable" data-test="manage-prisoner-whereabouts">
-        <div style="height:20px; width:100%; padding:0; margin:0; background-color:#f1f1f1;">
-        &nbsp;
-        <div>
-        <h2 class="govuk-heading-m card__heading">
-          {{data.activityAllocateScheduleName  or 'Wing cleaning 1'}}
-        </h2>
-        <p class="govuk-body card__description">
-          <span style="width:60%; float:left;"><strong>Required incentive level:</strong></span><span>{{ data.offenderAllocateIncentiveLevel or 'Standard' }}</span> <br /><br />
-          <span style="width:60%; float:left;"><strong>Activity risk level:</strong></span><span>{{ data.offenderAllocateRisk or 'Low' }}</span><br /><br />
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">
+          You can select a pay rate and allocate  {{ data.offenderAllocate }}, <strong>{{ data.offenderIDAllocate }}. Their application will be updated from pending to approved.
         </p>
       </div>
-    </li>
-
-  </ul>
-</div>-->
-
-
-<!--START NEW -->
+    </div>
+  </div>
+</div>
 
   <div class="govuk-form-group">
     <form method="post">
-      <p>{{ data.offenderAllocate }}'s' current incentive level is {% if data.activityAllocateName=="Kitchens" %}Enhanced {% else %}Standard.{% endif %}
-<p>Select the correct pay rate. There may only be one available.</p><br />
+      <p>{{ data.offenderAllocate }}'s current incentive level is {% if data.activityAllocateName=="Kitchens" %}Enhanced {% else %}Standard.{% endif %}
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-10">Select the correct pay rate</h2>
+  <div id="passport-issued-hint" class="govuk-hint">
+  There may only be one available.
+  </div>
+
   {% for level, details in data.payrates %}
     {% if details|length > 0 %}
           {% if (level=='Standard') %}
@@ -111,8 +94,11 @@ Activities Management prototype
         <p class="govuk-body">If the rate you need is not listed you can <a href="allocate-check-your-answers-payment">add or change rates for this activity.</a></p>
 
       <br />  <br />
-    <button class="govuk-button" data-module="govuk-button">Assign pay rate</button>
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
     </form>
+    <p><a href="activity-dashboard-4-1?pageToShow=1#waitlist">Cancel and return to the allocate list</a></p>
+
 </div>
+
 
 {% endblock %}
