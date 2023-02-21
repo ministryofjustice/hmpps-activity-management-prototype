@@ -14,13 +14,12 @@ Activities Management prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+
         Check and decide on Henry Tatton's suitability for {{data.activityAllocateScheduleName or 'Wing cleaning A'}}
+
     </h1>
-    {% if data.waitlistDecideCandidate!="Approved" %}
+
     <p>You may need to carry out further checks to decide if this application should be approved or rejected.</p>
-    {% else %}
-    <p>Decide whether to keep or reject the application.</p>
-    {% endif %}
   </div>
 </div>
 
@@ -74,7 +73,11 @@ Activities Management prototype
           <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                Decide whether to approve or reject the application
+                {% if data.waitlistDecideCandidate!="Approved" %}
+                  Decide whether to approve or reject the application
+                {% else %}
+                  Decide whether to keep or reject the application
+                {% endif %}
               </legend>
 
               {% if data.waitlistDecideCandidate!="Approved" %}
