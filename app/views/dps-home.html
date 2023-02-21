@@ -43,18 +43,6 @@ Activities Management prototype
 <div class="homepage-content">
 	<div class="govuk-width-container">
 		<ul class="govuk-grid-row card-group" id="sortable">
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_create">
-				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
-					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{data['prototype-versions']['create-and-allocate']['url']}}">
-							Manage activities
-						</a>
-					</h2>
-					<p class="govuk-body card__description">
-						Create and manage activities. Log applications and allocate people to activities. Check and record attendance.
-					</p>
-				</div>
-			</li>
 			<li class="govuk-grid-column-one-third card-group__item" id="tile_unlock">
 				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
 					<h2 class="govuk-heading-m card__heading">
@@ -64,6 +52,18 @@ Activities Management prototype
 					</h2>
 					<p class="govuk-body card__description">
 						Create unlock and movement lists. Record unlock sickness, refusals and absences.
+					</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_create">
+				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{data['prototype-versions']['create-and-allocate']['url']}}">
+							Manage activities
+						</a>
+					</h2>
+					<p class="govuk-body card__description">
+						Create and manage activities. Log applications and allocate people to activities. Check and record attendance.
 					</p>
 				</div>
 			</li>
@@ -131,21 +131,21 @@ Activities Management prototype
 <script src="/public/javascripts/cards.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
-	$(document).ready( function() {
-		var $list = "ul#sortable"
-		$($list).sortable({
-			update: function(event, ui) {
-				var order = [];
-				var data = $(this).sortable('serialize');
+	// $(document).ready( function() {
+	// 	var $list = "ul#sortable"
+	// 	$($list).sortable({
+	// 		update: function(event, ui) {
+	// 			var order = [];
+	// 			var data = $(this).sortable('serialize');
 
-				$($list + ' li').each( function(e) {
-					order.push( $(this).find('a').html() );
-				});
+	// 			$($list + ' li').each( function(e) {
+	// 				order.push( $(this).find('a').html() );
+	// 			});
 
-				console.log( order , data );
-			}
-		});
-		$($list).disableSelection();
-	} );
+	// 			console.log( order , data );
+	// 		}
+	// 	});
+	// 	$($list).disableSelection();
+	// } );
 </script>
 {% endblock %}
