@@ -60,13 +60,13 @@
 						</span>
 					</h1>
 
-					<ul class="govuk-list">
-						<!-- <li>
+					<!-- <ul class="govuk-list">
+						<li>
 							<a href="../../{{date}}" class="govuk-link--no-visited-state">Choose a different activity</a>
 						</li>
 						<li>
 							<a href="../../../select-activity" class="govuk-link--no-visited-state">View the schedule for a different day</a>
-						</li> -->
+						</li>
 						{% if cancelled == false %}
 						<li>
 							<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-link--no-visited-state">Cancel this session</a>
@@ -76,19 +76,18 @@
 							<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-link--no-visited-state">Un-cancel this session</a>
 						</li>
 						{% endif %}
-					</ul>
+					</ul> -->
 				</div>
 
-				<div class="govuk-grid-column-one-quarter">
+				<!-- <div class="govuk-grid-column-one-quarter">
 					<p class="govuk-body" style="text-align: right;">
 						{{govukButton({
 							text: "Print attendance list",
 							classes: "govuk-button--secondary"
 						})}}
 					</p>
-				</div>
+				</div> -->
 			</div>
-
 			{% if data['selected-prisoners'].length == 1 %}
 			{% set prisonerName %}
 			{% for prisoner in prisonersList %}
@@ -114,6 +113,14 @@
 			{% endif %} -->
 
 			{% include './_includes/table-navbar.html' %}
+
+			<div class="govuk-button-group">
+				{{govukButton({
+					text: "Print attendance list",
+					classes: "govuk-button--blue"
+				})}}
+				<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-button govuk-button--secondary">Cancel this session</a>
+			</div>
 
 			<h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners allocated</h2>
 
@@ -270,33 +277,32 @@
 							{% endif %} -->
 
 							{%- if prisoner.attendance.attendance == "attended" %}
-							<span class="moj-badge moj-badge--large moj-tag--green" style="text-transform: none;">Attended</span>
+							<li class="govuk-!-display-inline-block"><span class="app-tag app-tag--attended" style="text-transform: none;">Attended</span></li>
 
 							{%- if prisoner.attendance.pay == 'none' %}
-							<span class="govuk-tag govuk-tag--red" style="text-transform: none;">No pay</span>
-							{%- elif prisoner.attendance.pay == 'bonus' %}
-							<span class="govuk-tag govuk-tag--blue" style="text-transform: none;">Bonus</span>
+							<li class="govuk-!-display-inline-block"><span class="app-tag app-tag--no-pay" style="text-transform: none;">No pay</span></li>
 							{% endif -%}
+
 							{%- elif prisoner.attendance.attendance == "not-attended" %}
 							{%- if prisoner.attendance.sessionCancelled == true %}
-							<span class="moj-badge moj-badge--large moj-tag--blue" style="text-transform: none;">Session cancelled</span>
+							<li class="govuk-!-display-inline-block"><span class="app-tag app-tag--cancelled" style="text-transform: none;">Session cancelled</span></li>
 							{% elif prisoner.attendance.attendanceDetail == 'Sick' %}
-							<span class="moj-badge moj-badge--large moj-tag--green" style="text-transform: none;">Sick</span>
+							<li class="govuk-!-display-inline-block"><span class="app-tag app-tag--attended" style="text-transform: none;">Sick</span></li>
 							{% elif prisoner.attendance.attendanceDetail == 'Rest day' %}
-							<span class="moj-badge moj-badge--large moj-tag--green" style="text-transform: none;">Rest day</span>
+							<li class="govuk-!-display-inline-block"><span class="app-tag app-tag--attended" style="text-transform: none;">Rest day</span></li>
 							{% elif prisoner.attendance.attendanceDetail == 'Refused to attend' %}
-							<span class="moj-badge moj-badge--large moj-tag--red" style="text-transform: none;">Refused to attend</span>
+							<li class="govuk-!-display-inline-block"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Refused to attend</span></li>
 							{% else %}
-							<span class="moj-badge moj-badge--large moj-tag--red" style="text-transform: none;">Absent</span>
+							<li class="govuk-!-display-inline-block"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Absent</span></li>
 							{% endif -%}
 							{%- else %}
 							<span class="govuk-hint">Not recorded yet</span>
 							{% endif -%}
 
 							{% if prisoner.attendance.pay == 'standard' %}
-							<span class="govuk-tag govuk-tag--green" style="text-transform: none;">Pay</span>
+							<li class="govuk-!-display-inline-block"><span class="app-tag app-tag--pay" style="text-transform: none;">Pay</span></li>
 							{%- elif prisoner.attendance.attendance == "not-attended" and prisoner.attendance.pay == null %}
-							<span class="govuk-tag govuk-tag--red" style="text-transform: none;">No pay</span>
+							<li class="govuk-!-display-inline-block"><span class="app-tag app-tag--no-pay" style="text-transform: none;">No pay</span></li>
 							{% endif %}
 						</ul>
 					</td>
