@@ -20,7 +20,48 @@ Activities Management prototype
         </h1><br />
       </div>
     </div>
-    <p>You can <a href="#">check the person applying is suitable</a> before making your decision. </p>
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+        Check how suitable this person is
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <div class="govuk-width-container">
+          <ul class="govuk-grid-row card-group" id="sortable">
+            <li class="govuk-grid-column-one-half card-group__item" id="tile">
+              <div class="card card--clickable">
+                <h2 class="govuk-heading-m card__heading" style="background-color:#f1f1f1;">
+                    Activity requirements
+                  </h2>
+                  <p class="govuk-body card__description">
+                    <span style="width:370px; float:left;"><strong>Suitable for workplace risk assessment:</strong></span> {{ data.allocationRisk }}<br /><br />
+                    <span style="width:370px; float:left;"><strong>Suitable for incentive level:</strong></span> {{ data.allocationIncentive }}<br /><br />
+                    <span style="width:370px; float:left;"><strong>Education level:</strong></span> {{ data.allocationEducation }}
+                  </p>
+
+              </div>
+            </li>
+            <li class="govuk-grid-column-one-half card-group__item">
+              <div class="card card--clickable">
+                <h2 class="govuk-heading-m card__heading" style="background-color:#f1f1f1;">
+                  Prisoner details
+                </h2>
+                <p class="govuk-body card__description">
+                  <span style="width:370px; float:left;"><strong>Suitable for workplace risk assessment:</strong></span> {{ data.allocationRisk }}<br /><br />
+                  <span style="width:370px; float:left;"><strong>Suitable for incentive level:</strong></span> {{ data.allocationIncentive }}<br /><br />
+                  <span style="width:370px; float:left;"><strong>Education level:</strong></span> {{ data.allocationEducation }}
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+
+
+
     <form method="post">
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
@@ -50,6 +91,7 @@ Activities Management prototype
               Select the reason the application was rejected
             </label>
             <select class="govuk-select" id="categoryDropdown" name="show-grouping">
+              <option value="Security" {% if data.dashboardCategory=="Security" %}selected{% endif %}>Security</option>
               <option value="Health" {% if data.dashboardCategory=="Health" %}selected{% endif %}>Health</option>
               <option value="Length of sentence" {% if data.dashboardCategory=="Length of sentence" %}selected{% endif %}>Length of sentence</option>
               <option value="Education level" {% if data.dashboardCategory=="Education level" %}selected{% endif %}>Education level</option>
