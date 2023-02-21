@@ -499,6 +499,16 @@ function getPreviousSession(activity, selectedDate, selectedPeriod) {
     return "No upcoming sessions found";
 }
 
+const checkDateTense = (date) => {
+    if(date > new Date().toISOString().slice(0, 10)){
+        return 'future';
+    } else if(date < new Date().toISOString().slice(0, 10)){
+        return 'past';
+    } else if(date == new Date().toISOString().slice(0, 10)){
+        return 'present';
+    }
+}
+
 function getFilteredPrisoners(selectedPrisoners, prisonerList) {
     let filteredPrisoners = []
 
@@ -529,6 +539,8 @@ function getWings(data) {
 
     return locations
 }
+
+// const activityLocations = 
 
 function getAttendanceData(date, activityId, attendanceData, filteredPrisoners) {
     let updatedFilteredPrisoners = [];
@@ -724,6 +736,8 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req
     let activitySchedule = activity.schedule.filter(schedule => schedule.day.toString() === day.toString());
     let activityTimes = activitySchedule[0][period.toLowerCase()][0]
 
+    let dateTense = checkDateTense(date);
+
     // remove the confirmation notification on refreshing the page
     if (req.session.data['attendance-confirmation'] == 'true') {
         delete req.session.data['attendance-confirmation']
@@ -733,6 +747,7 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req
         activity,
         day,
         date,
+        dateTense,
         period,
         activityTimes,
         prisonersList,
@@ -810,9 +825,11 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
 router.get('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function(req, res) {
     delete req.session.data['attendance-details']
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
+    let dateTense = checkDateTense(req.params.selectedDate);
 
     res.render('unlock/' + req.version + '/add-attendance-details', {
-        filteredPrisoners
+        filteredPrisoners,
+        dateTense
     })
 });
 router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function(req, res) {
