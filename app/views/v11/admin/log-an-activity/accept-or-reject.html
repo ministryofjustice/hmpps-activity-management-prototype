@@ -1,0 +1,119 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block back %}
+{% endblock %}
+{% block content %}
+
+<div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-thirds">
+        <div class="back">
+          <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+          </div>
+          <span class="govuk-caption-m">{{data.logOffenderName or 'Henry Tatton'}} | {{data.logOffenderID or 'BN7666F'}}| 2-003-198</span><br />
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
+        Accept or reject the application
+        </h1><br />
+      </div>
+    </div>
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+        Check how suitable this person is
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+          <p class="govuk-body card__description">
+            <span style="width:370px; float:left;"><strong>Earliest release date:</strong></span>21 September 2024<br /><br />
+            <span style="width:370px; float:left;"><strong>Non-assocations:</strong></span>Neil Rudge, BA5829L<br />
+          </p><br />
+          <p><a href="#">View {{data.logOffenderName or 'Henry Tatton'}}'s profile</a> or consult with other departments if you need more information.</p><br />
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Type of detail</th>
+                <th scope="col" class="govuk-table__header">{{data.logOffenderName or 'Henry Tatton'}}'s details</th>
+                <th scope="col" class="govuk-table__header">Requirements for {{data.activityAllocateScheduleName or 'Wing cleaning A'}}</th>
+                <th scope="col" class="govuk-table__header">Requirements are met</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">Workplace risk assessment level</td>
+                <td class="govuk-table__cell">Low</</td>
+                <td class="govuk-table__cell">Low or medium</</td>
+                <td class="govuk-table__cell"><strong <strong class="govuk-tag govuk-tag--blue">Yes</strong></td>
+              </tr>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">incentive level</td>
+                <td class="govuk-table__cell">Standard</td>
+                <td class="govuk-table__cell">Standard or enhanced</td>
+                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Yes</strong></td>
+              </tr>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">Education levels</td>
+                <td class="govuk-table__cell">English level 1</</td>
+                <td class="govuk-table__cell">English entry level<br /><span style="margin-bottom:5px;">BICS 1</span></td>
+                <td class="govuk-table__cell">  <strong class="govuk-tag govuk-tag--grey">No</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+      </div>
+    </details>
+
+
+
+
+    <form method="post">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logWaitlist" name="logWaitlist" type="radio" value="Pending">
+            <label class="govuk-label govuk-radios__label" for="logWaitlist">
+              <strong>Add to waitlist</strong> with status <strong>‘Pending’</strong> - the person’s suitability can be checked later
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logWaitlist2" name="logWaitlist" type="radio" value="Approved">
+            <label class="govuk-label govuk-radios__label" for="logWaitlist2">
+              <strong>Add to waitlist</strong> with status <strong>‘Approved’</strong> - you’ve confirmed that the person is suitable
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logWaitlist3" name="logWaitlist" type="radio" value="reject" data-aria-controls="conditional-contact-3">
+            <label class="govuk-label govuk-radios__label" for="logWaitlist3">
+              <strong>Reject the application</strong> - the person will not be added to the waitlist
+            </label>
+          </div>
+          <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-3">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="contact-by-text">
+              Select the reason the application was rejected
+            </label>
+            <select class="govuk-select" id="categoryDropdown" name="show-grouping">
+              <option value="Security" {% if data.dashboardCategory=="Security" %}selected{% endif %}>Security</option>
+              <option value="Health" {% if data.dashboardCategory=="Health" %}selected{% endif %}>Health</option>
+              <option value="Length of sentence" {% if data.dashboardCategory=="Length of sentence" %}selected{% endif %}>Length of sentence</option>
+              <option value="Education level" {% if data.dashboardCategory=="Education level" %}selected{% endif %}>Education level</option>
+              <option value="Incentive level" {% if data.dashboardCategory=="Incentive level" %}selected{% endif %}>Incentive level</option>
+              <option value="Pathway" {% if data.dashboardCategory=="Pathway" %}selected{% endif %}>Pathway</option>
+              <option value="Other" {% if data.dashboardCategory=="Other" %}selected{% endif %}>Other</option>
+            </select>
+          </div>
+        </div>
+          </div>
+      </fieldset>
+    </div>
+          <button class="govuk-button" data-module="govuk-button">
+            Continue
+          </button>
+        </form>
+
+{% endblock %}

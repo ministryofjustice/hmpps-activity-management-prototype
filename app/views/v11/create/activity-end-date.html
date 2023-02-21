@@ -1,0 +1,60 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+<form method="post">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <span class="govuk-caption-m">{{data.category or 'Education'}}  | Risk level: {{data.riskLevel or 'Low'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}} | Start date: {{data.activityCreateScheduleStartDate or '3 Jan 2023'}}</span>
+      <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Enter the end date for this schedule
+    </h1>
+  </div>
+
+  <div class="govuk-form-group">
+<fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
+<div id="passport-issued-hint" class="govuk-hint">
+  For example, 27 3 2007
+</div>
+<div class="govuk-date-input" id="passport-issued">
+  <div class="govuk-date-input__item">
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
+        Day
+      </label>
+      <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-day" name="endDay" type="text" inputmode="numeric">
+    </div>
+  </div>
+  <div class="govuk-date-input__item">
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
+        Month
+      </label>
+      <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-month" name="endMonth" type="text" inputmode="numeric">
+    </div>
+  </div>
+  <div class="govuk-date-input__item">
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-date-input__label" for="passport-issued-year">
+        Year
+      </label>
+      <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="passport-issued-year" name="endYear" type="text" inputmode="numeric">
+    </div>
+  </div>
+</div>
+</fieldset>
+</div>
+<br />
+<button class="govuk-button" data-module="govuk-button">Continue</button>
+</form>
+
+{% endblock %}

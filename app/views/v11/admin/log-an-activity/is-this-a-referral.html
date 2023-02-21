@@ -1,0 +1,59 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block back %}
+{% endblock %}
+{% block content %}
+
+<div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-thirds">
+        <div class="back">
+          <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+          </div>
+          <span class="govuk-caption-m">{{data.logOffenderName or 'Henry Tatton'}} | {{data.logOffenderID or 'BN7666F'}}| 2-003-198</span><br />
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
+        Who made the application?
+        </h1><br />
+      </div>
+    </div>
+    <form method="post">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logApplicationMade" name="logApplicationMade" type="radio" value="yes">
+            <label class="govuk-label govuk-radios__label" for="logApplicationMade">
+              {{data.logOffenderName or 'Henry Tatton'}}
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="logApplicationMade" name="logApplicationMade" type="radio" value="no" data-aria-controls="conditional-contact-3">
+            <label class="govuk-label govuk-radios__label" for="logApplicationMade">
+              Someone else, for example a member of staff, an activity leader or an orderly
+            </label>
+          </div>
+          <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-3">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="contact-by-text">
+              Select the reason the application was made
+            </label>
+            <select class="govuk-select" id="categoryDropdown" name="show-grouping">
+              <option value="All" {% if data.dashboardCategory=="All" %}selected{% endif %}>Unemployed</option>
+              <option value="All" {% if data.dashboardCategory=="All" %}selected{% endif %}>Other</option>
+            </select>
+          </div>
+        </div>
+          </div>
+      </fieldset>
+    </div>
+          <button class="govuk-button" data-module="govuk-button">
+            Continue
+          </button>
+        </form>
+
+{% endblock %}

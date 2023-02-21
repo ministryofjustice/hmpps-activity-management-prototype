@@ -1,0 +1,104 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block back %}
+{% endblock %}
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+    </div>
+
+    <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'High'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
+    <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
+
+    {% if data['show-delete-dialog'] == true %}
+    {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+    {% set html %}
+    <h3 class="govuk-notification-banner__heading">
+      Pay rate {{rate.name or 'Payment rate A'}} removed
+    </h3>
+    {% endset %}
+    {{ govukNotificationBanner({
+      html: html,
+      type: 'success'
+    }) }}
+    {% endif %}
+
+
+    {% for level, details in data.payrates %}
+    {% if details|length > 0 %}
+    <h2 class="govuk-heading-m">{{level}} incentive level payments</h2>
+    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+      {% for rate in details %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          {{rate.name or 'Payment rate A'}}
+
+        </dt>
+        <dd class="govuk-summary-list__value">
+          &pound; {{rate.amount or '1.10'}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
+            <a class="govuk-link govuk-!-margin-right-3" href="allocate-payment-details-change?id={{rate.id}}">
+              Change<span class="govuk-visually-hidden"> incentive payment</span>
+            </a>
+            <a class="govuk-link" href="allocate-payment-remove?id={{rate.id}}&incentive-level={{level}}">
+              Remove<span class="govuk-visually-hidden"> incentive payment</span>
+            </a>
+          </dd>
+
+        </div>
+        {% endfor %}
+      </dl>
+
+      {% endif %}
+
+
+      {% else %}
+      <!--If nothing is set on first entry to page-->
+      <h2 class="govuk-heading-m">{{level}} incentive level payments</h2>
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            {{rate.name or 'Payment rate A'}}
+
+          </dt>
+          <dd class="govuk-summary-list__value">
+            &pound; {{rate.amount or '1.10'}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
+              <a class="govuk-link govuk-!-margin-right-3" href="allocate-payment-details-change?id={{rate.id}}">
+                Change<span class="govuk-visually-hidden"> incentive payment</span>
+              </a>
+              <a class="govuk-link" href="allocate-payment-remove?id={{rate.id}}&incentive-level={{level}}">
+                Remove<span class="govuk-visually-hidden"> incentive payment</span>
+              </a>
+            </dd>
+
+          </div>
+
+        </dl>
+
+      {% endfor %}
+      <form>
+        <button class="govuk-button" data-module="govuk-button" value="confirmPay" formaction="allocate-payment-details">
+          Confirm pay rates
+        </button>
+        <button style="margin-left:30px;" class="govuk-button govuk-button--secondary" data-module="govuk-button" value="addAnother" formaction="allocate-payment-details-change">
+          Add another pay rate
+        </button>
+      </form>
+    </div>
+  </div>
+
+  {% endblock %}

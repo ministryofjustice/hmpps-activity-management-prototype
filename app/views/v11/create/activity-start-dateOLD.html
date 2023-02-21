@@ -1,0 +1,63 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <span class="govuk-caption-m">{{data.category or 'Education'}}  | Risk level: {{data.riskLevel or 'Low'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}}</span>
+      <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Enter the start and end dates for this schedule
+    </h1>
+  </div>
+  <p>Give the date the schedule is due to start. You can add an end date if you want to.</p>
+
+      <div class="govuk-form-group">
+        <form method="post">
+        {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+        {{ govukDateInput({
+          id: "start-date",
+          name:startDate,
+          value:startDate,
+          fieldset: {
+            legend: {
+              text: "Start date"
+            }
+          },
+          hint: {
+            text: "For example, 29 12 2022"
+          }
+        }) }}
+        {{ govukDateInput({
+          id: "end-date",
+          name:endDate,
+          value:endDate,
+          fieldset: {
+            legend: {
+              text: "End date (optional)"
+            }
+          },
+          hint: {
+            text: "For example, 31 01 2023"
+          }
+        }) }}
+
+        {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+      </div>
+      <br />
+      <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+</div>
+
+{% endblock %}

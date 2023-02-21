@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block back %}
+{% endblock %}
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
+      {% if (data.action=="archiveActivity") %}
+      Are you sure you want to archive the following activity?
+      {% endif %}
+
+      {% if (data.action=="suspendActivity") %}
+      Are you sure you want to suspend the following activity?
+      {% endif %}
+
+        {% if (data.action=="unSuspendActivity") %}
+        Are you sure you want to unsuspend the following activity?
+        {% endif %}
+
+      {% if (data.action=="archiveSchedule") %}
+      Are you sure you want to archive the following schedules?
+      {% endif %}
+
+      {% if (data.action=="suspendSchedule") %}
+      Are you sure you want to suspend the following schedule?
+      {% endif %}
+
+    </h1><br />
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Activity Name:
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data.activityName}}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Number of Schedules:
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data.numberOfSchedules}}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <a href="activity-dashboard?dashboardView=all">
+    <button style="margin-left:10px;" class="govuk-button" data-module="govuk-button">
+      {% if (data.action=="suspendActivity" or data.action=="suspendSchedule" ) %}
+        Confirm supension
+      {% endif %}
+      {% if (data.action=="archiveActivity" or data.action=="archiveSchedule") %}
+        Confirm archive
+      {% endif %}
+      {% if (data.action=="unSuspendActivity" or data.action=="unSuspendSchedule") %}
+        Confirm unsupension
+      {% endif %}
+    </button>
+    <a/>
+      <a href="activity-dashboard?dashboardView=all">
+    <button style="margin-left:25px;" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+      Go back
+    </button>
+    </a>
+  </div>
+</div>
+
+{% endblock %}

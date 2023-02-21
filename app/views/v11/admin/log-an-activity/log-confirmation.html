@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div id="event-name-hint" class="govuk-hint">
+  </div>
+  <form method="post">
+    <div class="govuk-form-group">
+      <div class="govuk-width-container">
+        <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+              <div class="govuk-panel govuk-panel--confirmation">
+                <h1 class="govuk-panel__title">
+                  You've logged<br /> {{ data.logOffenderName or 'Henry Tatton' }}'s application<br /> for {{data.logOffenderActivity or 'Kitchens'}}
+                </h1>
+              <!--  <div class="govuk-panel__body">
+                  Your reference number<br><strong>HDJ2123F</strong>
+                </div>-->
+              </div>
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-4">
+            What you can do next
+              </h3>
+
+              {% if data.logWaitlist=='approved' %}
+                <p>You can <a href="../../allocate/activity-dashboard-3?activityAllocateName={{data.logOffenderActivity or 'Kitchens'}}">allocate {{ data.logOffenderName or 'Henry Tatton' }} to {{data.logOffenderActivity or 'Kitchens'}}</a>.</p>
+                <p><strong>Current allocation for {{data.logOffenderActivity or 'Kitchens'}}</<strong></p>
+                <p>Vacancies: 1</p>
+                <p>Allocated: 16</p>
+                <p>Capacity: 17</p>
+
+              {% endif %}
+              <p class="govuk-body">You can {% if data.logWaitlist=='approved' %}also {% endif %}either:
+              <ul class="govuk-list govuk-list--bullet">
+                <li><a class="govuk-link" href="check-existing-applications">log another application for {{ data.logOffenderName or 'Henry Tatton' }}</a> </li>
+                <li><a class="govuk-link" href="activity-name-search">log an application for someone else</a></li>
+              </ul>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,69 @@
+ga{% extends "layout.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Select who the application is for
+  </div>
+</div>
+<div class="govuk-grid-column-three-third">
+<form method="post">
+<table class="govuk-table" data-module="moj-sortable-table">
+<thead class="govuk-table__head">
+<tr class="govuk-table__row">
+<th scope="col" class="govuk-table__header" aria-sort="ascending" >Prisoner name</th>
+<th scope="col" class="govuk-table__header" aria-sort="ascending" >Prison number</th>
+<th scope="col" class="govuk-table__header"style="width:28%" aria-sort="ascending">Cell location</th>
+<th scope="col" class="govuk-table__header"style="width:1%"></th>
+</tr>
+</thead>
+
+<tbody class="govuk-table__body">
+  <tr class="govuk-table__row">
+    <td data-sort-value="Henry Tatton" class="govuk-table__cell">
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="offenderAllocate6" name="logOffenderName" type="radio" value="Henry Tatton">
+          <label class="govuk-label govuk-radios__label" for="offenderAllocate6">
+          <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Henry Tatton</a></strong><br />
+        </label>
+      </div>
+    </td>
+    <td class="govuk-table__cell"  data-sort-value="BN7666F">BN7666F</td>
+    <td class="govuk-table__cell"  data-sort-value="2-003-198">2-003-198</td>
+    <td class="govuk-table__cell"  data-sort-value=""></td>
+  </tr>
+  <tr class="govuk-table__row">
+    <td data-sort-value="Mark Tatton" class="govuk-table__cell">
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="offenderAllocate6" name="logOffenderName" type="radio" value="Mark Tatton">
+          <label class="govuk-label govuk-radios__label" for="offenderAllocate6">
+          <strong>
+            <a href="/unlock/version-5/prisoner-profile" target="_blank">Mark Tatton</a>
+          </strong><br />
+        </label>
+      </div>
+    </td>
+    <td class="govuk-table__cell" data-sort-value="BA8772G">BA8772G</td>
+    <td class="govuk-table__cell"  data-sort-value="1-012-431<">1-012-431</td>
+    <td class="govuk-table__cell"  data-sort-value=""></td>
+  </tr>
+</tbody>
+</table>
+<p><a href="activity-name-search">Cancel and search for someone else</a></p>
+<button class="govuk-button" data-module="govuk-button">
+  Continue
+  </button>
+  </<form>
+
+{% endblock %}

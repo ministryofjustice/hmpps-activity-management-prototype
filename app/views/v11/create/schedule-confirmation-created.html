@@ -1,0 +1,45 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+
+  </div>
+  <div id="event-name-hint" class="govuk-hint">
+  </div>
+    <form method="post">
+      <div class="govuk-form-group">
+        <div class="govuk-width-container">
+  <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+              You've built a new schedule for {{data.activityName or 'Maths level 1'}} -  {{data.scheduleName or 'Schedule A'}}
+          </h1>
+        <!--  <div class="govuk-panel__body">
+            Your reference number<br><strong>HDJ2123F</strong>
+          </div>-->
+        </div>
+
+        <p class="govuk-body">You can start <a href="allocate/activity-dashboard-1">allocating people to this schedule</a>.</p>
+        <p class="govuk-body">You can also:<br />
+        <ul  class="govuk-list govuk-list--bullet">
+          <li><a href="schedule-name">Build another schedule for {{data.activityName or 'Maths level 1'}}</a></li>
+          <li><a href="activity-dashboard?dashboardCategory=All&dashboardView=live">Use the activities dashboard</a> to find a different activity</li>
+        </ul>
+        </p>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+</div>
+{% endblock %}

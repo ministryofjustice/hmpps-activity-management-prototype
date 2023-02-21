@@ -1,0 +1,59 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <span class="govuk-caption-m">Education | Risk level: {{data.riskLevel or 'High'}} </span>
+      <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      What's the minimum incentive level?
+    </h1>
+  </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <form method="post">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            </legend>
+            <div id="contact-hint" class="govuk-hint">
+            </div>
+            <div class="govuk-radios" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+               <input class="govuk-radios__input" id="incentiveLevelBasic" name="incentiveLevel" type="radio" {% if data.incentiveLevel=='Basic' %}checked {% endif %} value="Basic"  data-aria-controls="conditional-contact">
+                <label class="govuk-label govuk-radios__label" for="incentiveLevelBasic">
+                  Basic
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="incentiveLevelStandard" name="incentiveLevel" type="radio" {% if data.incentiveLevel=='Standard' %}checked {% endif %} value="Standard" data-aria-controls="conditional-contact">
+                <label class="govuk-label govuk-radios__label" for="incentiveLevelStandard">
+                  Standard
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="incentiveLevelAdvanced" name="incentiveLevel" type="radio" {% if data.incentiveLevel=='Advanced' %}checked {% endif %} value="Advanced" data-aria-controls="conditional-contact">
+                <label class="govuk-label govuk-radios__label" for="incentiveLevelAdvanced">
+                  Enhanced
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+    <br />  <br />
+  <button class="govuk-button" data-module="govuk-button">Continue</button>
+  </div>
+</div>
+
+{% endblock %}
