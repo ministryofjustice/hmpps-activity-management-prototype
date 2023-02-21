@@ -15,30 +15,6 @@ Activities Management prototype
 <div class="homepage-content">
 	<div class="govuk-width-container">
 		<ul class="govuk-grid-row card-group" id="sortable">
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
-				<div class="card card--clickable" data-test="change-someones-cell">
-					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/select-activity">Record and edit attendance</a>
-					</h2>
-					<p class="govuk-body card__description">View, mark and change activity attendance.</p>
-				</div>
-			</li>
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
-				<div class="card card--clickable" data-test="change-someones-cell">
-					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/attendance-dashboard-4">View attendance daily summary</a>
-					</h2>
-					<p class="govuk-body card__description">See daily attendance figures, including prisoners not yet attended, absences, activity cancellations and suspended prisoners.</p>
-				</div>
-			</li>
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
-				<div class="card card--clickable" data-test="change-someones-cell">
-					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/attendance-dashboard-3-attendance?page-title=All%20missing%20data&count=47">View and update not attended prisoners</a>
-					</h2>
-					<p class="govuk-body card__description">Find today’s prisoners with no recorded attendance information.</p>
-				</div>
-			</li>
 			<li class="govuk-grid-column-one-third card-group__item" id="tile_003">
 				<div class="card card--clickable" data-test="incentives">
 					<h2 class="govuk-heading-m card__heading">
@@ -73,6 +49,30 @@ Activities Management prototype
 					<p class="govuk-body card__description">Record details of applications or referrals for an activity so people can be allocated or added to a waitlist.</p>
 				</div>
 			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/select-activity">Record and edit attendance</a>
+					</h2>
+					<p class="govuk-body card__description">View, mark and change activity attendance.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/attendance-dashboard-4">View attendance daily summary</a>
+					</h2>
+					<p class="govuk-body card__description">See daily attendance figures, including prisoners not yet attended, absences, activity cancellations and suspended prisoners.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/attendance-dashboard-3-attendance?page-title=All%20missing%20data&count=47">View and update not attended prisoners</a>
+					</h2>
+					<p class="govuk-body card__description">Find today’s prisoners with no recorded attendance information.</p>
+				</div>
+			</li>
 		</ul>
 	</div>
 </div>
@@ -81,21 +81,21 @@ Activities Management prototype
 <script src="/public/javascripts/cards.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
-	$(document).ready( function() {
-		var $list = "ul#sortable"
-		$($list).sortable({
-			update: function(event, ui) {
-				var order = [];
-				var data = $(this).sortable('serialize');
+	// $(document).ready( function() {
+	// 	var $list = "ul#sortable"
+	// 	$($list).sortable({
+	// 		update: function(event, ui) {
+	// 			var order = [];
+	// 			var data = $(this).sortable('serialize');
 
-				$($list + ' li').each( function(e) {
-					order.push( $(this).find('a').html() );
-				});
+	// 			$($list + ' li').each( function(e) {
+	// 				order.push( $(this).find('a').html() );
+	// 			});
 
-				console.log( order , data );
-			}
-		});
-		$($list).disableSelection();
-	} );
+	// 			console.log( order , data );
+	// 		}
+	// 	});
+	// 	$($list).disableSelection();
+	// } );
 </script>
 {% endblock %}

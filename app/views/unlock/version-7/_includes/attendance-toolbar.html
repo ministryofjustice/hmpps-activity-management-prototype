@@ -4,6 +4,7 @@
 			No prisoners selected. Select prisoners to begin marking attendance.
 		</p>
 		<div class="govuk-button-group govuk-!-margin-bottom-0">
+			{% if dateTense != 'future' %}
 			{{ govukButton({
 				text: "Mark as attended",
 				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
@@ -14,6 +15,7 @@
 					formMethod: "post"
 				}
 			}) }}
+			{% endif %}
 			{{ govukButton({
 				text: "Mark as not attended",
 				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
