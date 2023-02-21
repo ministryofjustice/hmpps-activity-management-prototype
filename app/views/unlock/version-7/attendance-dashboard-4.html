@@ -52,7 +52,7 @@ Attendance dashboard
 {% endif %}
 {% if params.linkHref %}
 <p class="govuk-!-margin-bottom-0">
-	<a href="{{params.linkHref}}?page-title={{'All ' + (params.title | lower)}}&count={{params.count}}" class="govuk-!-font-weight-bold govuk-link--no-visited-state govuk-!-font-size-16">{{ params.linkText or "All " + (params.title | lower) }}</a>
+	<a href="{{params.linkHref}}?page-title={{params.nextPageTitle or ('All '+(params.title | lower))}}&count={{params.count}}" class="govuk-!-font-weight-bold govuk-link--no-visited-state govuk-!-font-size-16">{{ params.linkText or "All " + (params.title | lower) }}</a>
 </p>
 {% endif %}
 {% endmacro %}
@@ -199,10 +199,11 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 	</div>
 	<div class="govuk-grid-column-one-quarter">
 		{{ dataCard({
-			title: "Missing data",
+			title: "Not yet attended",
 			count: data['attendance-data-1'][period|lower]["notRecorded"] + data['attendance-data-1'][period|lower]['absences']["unknown"],
 			linkHref: "attendance-dashboard-3-attendance",
 			showPercentage: false,
+			nextPageTitle: "Find and update not attended prisoners",
 			tagClasses: "govuk-tag--grey"
 		}) }}
 	</div>
@@ -276,7 +277,7 @@ data['attendance-data-1'][period|lower]['absences']["unknown"] %}
 			</div>
 			<div class="govuk-grid-column-one-quarter">
 				{{ dataCard({
-					title: "Prisoner has a clash",
+					title: "Prisoners with clashes",
 					count: data['attendance-data-1'][period|lower]['absences']['elsewhere'],
 					titleClasses: "govuk-!-font-size-16",
 					countClasses: "govuk-!-font-size-36",
