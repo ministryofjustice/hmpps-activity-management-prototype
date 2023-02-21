@@ -119,7 +119,12 @@
 					text: "Print attendance list",
 					classes: "govuk-button--blue"
 				})}}
+				{% if cancelled == false %}
 				<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-button govuk-button--secondary">Cancel this session</a>
+				{% else %}
+				<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-link govuk-link--no-visited-state">Un-cancel this session</a>
+				{% endif %}
+				
 			</div>
 
 			<h2 class="govuk-heading-m" id="expected">{{totalPrisoners}} prisoners allocated</h2>
@@ -225,7 +230,8 @@
 							<div>
 								{% if event.type == 'appointment' %}
 								<a href="#" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
-								<span class="govuk-tag govuk-tag--orange">Appointment</span>
+								<br>
+								<span class="govuk-tag">Appointment</span>
 								{% else %}
 								<a href="{{event.id}}" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name }}</a>
 								{% endif %}
