@@ -14,13 +14,24 @@ Activities Management prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      Check and decide on Henry Tatton's suitability for {{data.activityAllocateScheduleName or 'Wing cleaning A'}}.
-    </h1>
-    <p><strong>Current application status: Pending</strong></p>
+      Check and decide on Henry Tatton's suitability for {{data.activityAllocateScheduleName or 'Wing cleaning A'}}</h1>
     <p>You may need to carry out further checks to decide if this application should be approved or rejected.</p>
-    <p><strong>Comparison of Henry Tatton's details against the activity requirements.</strong></p>
   </div>
 </div>
+
+  <h2 class="govuk-heading-m card__heading">
+    Applicant details
+  </h2>
+  <p class="govuk-body card__description">
+    <span style="width:370px; float:left;"><strong>Earliest release date:</strong></span>21 September 2024<br /><br />
+    <span style="width:370px; float:left;"><strong>Non-assocations:</strong></span>Neil Rudge, BA5829L<br /><br />
+    <span style="width:370px; float:left;"><strong>Current application status: </strong></span> {{data.waitlistDecideCandidate}}
+  </p><br />
+  <p><a href="#">View Henry Tatton's profile</a> or consult with other departments if you need more information.</p><br /><br />
+
+
+<h1 class="govuk-heading-m govuk-!-margin-bottom-4"><strong>Check Henry Tatton's details against the activity requirements</strong></h2>
+
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
@@ -51,32 +62,34 @@ Activities Management prototype
       </tr>
     </tbody>
   </table>
-  <p><strong>Further information about Henry Tatton</strong></p>
-  <p class="govuk-body card__description">
-    <span style="width:20%; float:left;"><strong>Earlist release date:</strong></span><span>21 September 2024</span> <br /><br />
-    <span style="width:20%; float:left;"><strong>Non-assocations:</strong></span>Neil Rudge, BA5829L<br /><br />
-  </p>
-  <p><a href="#">View Henry Tatton's profile</a> or consult with other departments if you need more information.</p><br /><br />
       <form method="post">
-
         <div class="govuk-form-group">
           <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                 Decide whether to approve or reject the application
               </legend>
-              <div id="contact-hint" class="govuk-hint">
 
-              </div>
+              {% if data.waitlistDecideCandidate!="Approved" %}
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="waitlistDecideCandidate1" name="waitlistDecideCandidate" type="radio" value="Approved"  data-aria-controls="conditional-contact">
+                <input class="govuk-radios__input" id="waitlistDecideCandidate1" name="waitlistDecideCandidate" type="radio" value="Approved">
                 <label class="govuk-label govuk-radios__label" for="waitlistDecideCandidate1">
                 Approve - Henry Tatton can be allocated to {{data.activityAllocateScheduleName or 'Wing cleaning A'}}
                 </label>
               </div>
+
+              {% else %}
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="waitlistDecideCandidate1" name="waitlistDecideCandidate" type="radio" value="Approved">
+                <label class="govuk-label govuk-radios__label" for="waitlistDecideCandidate1">
+                Keep - Henry Tatton can be allocated to {{data.activityAllocateScheduleName or 'Wing cleaning A'}}
+                </label>
+              </div>
+              {% endif %}
+
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                 <input class="govuk-radios__input" id="waitlistDecideCandidate2" name="waitlistDecideCandidate" type="radio" value="Rejected" data-aria-controls="conditional-contact">
+                 <input class="govuk-radios__input" id="waitlistDecideCandidate2" name="waitlistDecideCandidate" type="radio" value="Rejected">
                   <label class="govuk-label govuk-radios__label" for="waitlistDecideCandidate2">
                     Reject - Henry Tatton will be removed from the waitlist
                   </label>
@@ -85,7 +98,7 @@ Activities Management prototype
             </fieldset>
           </div>
     <br /><br />
-  <button class="govuk-button" data-module="govuk-button">Select</button>
+  <button class="govuk-button" data-module="govuk-button">Continue</button>
   </div>
   </form>
   <p><a href="activity-dashboard-4-1?pageToShow=1#waitlist">Cancel and return to the waitlist</a></p>
