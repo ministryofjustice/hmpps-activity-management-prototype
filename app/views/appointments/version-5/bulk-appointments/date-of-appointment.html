@@ -10,14 +10,14 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="../check-answers">
+<form id="form" method="post" action="upload-file-info-bulk">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
       <h1 class="govuk-heading-l">
-        <span class="govuk-caption-l">Individual appointment</span>
+        <span class="govuk-caption-l">Bulk appointments</span>
         When is the appointment?
        </h1>
       {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
@@ -25,11 +25,14 @@ Appointments prototype
       {{ govukDateInput({
         id: "dateofappointment",
         name:dateofappointment,
-        value: data['dateofappointment'],
+        value:dateofappointment,
         fieldset: {
           legend: {
             text: "If it's a recurring appointment enter the date of the first appointment."
           }
+        },
+        hint: {
+          text: "For example, 29 12 2022"
         }
       }) }}
 

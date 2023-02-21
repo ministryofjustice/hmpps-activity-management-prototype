@@ -69,8 +69,18 @@ const router = express.Router()
 		}
 	  });
 
-	 
 
+	  router.post(`/individual-appointment/check-answer/appointment-repeat-question-check-answer`, function (req, res) {
+		const appointRepeat = req.session.data['appointment-repeat'];
+		if (appointRepeat === 'Yes') {
+			res.redirect(`appointment-frequency`);
+		} else {
+			res.redirect(`../check-answers`);
+		}
+	  });
+
+	 
+	  
 
 
 router.post('/individual-appointment/appointment-date', function(req, res) {
@@ -87,5 +97,18 @@ const date = new Date();
 date.setMonth(monthNumber - 1);
 return date.toLocaleString('en-US', { month: 'long' });
 }
+
+
+
+router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
+	const peoleRepeat = req.session.data['add-another-person-question'];
+	if (peoleRepeat === 'Yes') {
+		res.redirect(`upload-file`);
+	} else {
+		res.redirect(`appointment-time`);
+	}
+  });
+
+
 	  
 module.exports = router
