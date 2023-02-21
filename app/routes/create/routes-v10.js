@@ -1188,7 +1188,13 @@ router.post(version + '/admin/log-an-activity/activity-name-search', function(re
 			return /^[A-Za-z]*$/.test(str);
 		}
 			req.session.data.offenderIsaName = onlyLetters(req.session.data.logActivityName);
+			if(req.session.data.logActivityName=="Ben Varnam"){
+				req.session.data.logOffenderName="Ben Varnam"
+				res.redirect(version + '/admin/log-an-activity/check-existing-applications')
+			}
+			else{
 			res.redirect(version + '/admin/log-an-activity/activity-name-results')
+		}
 	}
 });
 
