@@ -10,7 +10,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="check-answers">
+<form id="form" method="post" action="numbers-of-appointment">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <div class="back">
@@ -18,8 +18,8 @@ Appointments prototype
       </div>
 
       <h1 class="govuk-heading-l">
-        <span class="govuk-caption-l">Individual appointment</span>
-        Repeat appointments
+        <span class="govuk-caption-l">Bulk appointments</span>
+        Appointment occurences
        </h1>
       <h2 class="govuk-heading-m">
         How often will the appointment repeat?
@@ -29,7 +29,9 @@ Appointments prototype
         idPrefix: "appointment-frequency",
         name: "appointment-frequency",
        
-       
+        hint: {
+          text: "Select how often the appointment will repeat"
+        },
         items: [
           {
             value: "Every weekday (Monday to Friday)",
@@ -65,13 +67,13 @@ Appointments prototype
       label: {
         text: "Enter the number of times the appointment will repeat up to a maximum of one year"
       },
-           
+           value: "12",
       classes: "govuk-input--width-4"
      }) }}
      
-     <!--{{ govukInsetText({
+     {{ govukInsetText({
       html: "Last appointment on <b>24 August 2023</b>"
-     }) }}-->
+     }) }}
       
     
     {{ govukButton({

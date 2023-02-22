@@ -10,7 +10,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="../check-answers">
+<form id="form" method="post" action="appointment-frequency">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <div class="back">
@@ -18,22 +18,25 @@ Appointments prototype
       </div>
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-l">Individual appointment</span>
-        When is the appointment?
+        Will the appointment repeat?
        </h1>
-      {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
-
-      {{ govukDateInput({
-        id: "dateofappointment",
-        name:dateofappointment,
-        value: data['dateofappointment'],
-        fieldset: {
-          legend: {
-            text: "If it's a recurring appointment enter the date of the first appointment."
+   
+      {{ govukRadios({
+        idPrefix: "appointment-repeat",
+        name: "appointment-repeat",
+      
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No"
           }
-        }
+        ]
       }) }}
-
-      {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+      
     
     {{ govukButton({
       text: "Continue"
@@ -44,5 +47,4 @@ Appointments prototype
 
   </div>
 </div>
-</form>
 {% endblock %}
