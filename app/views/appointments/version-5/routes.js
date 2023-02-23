@@ -12,7 +12,7 @@ const router = express.Router()
 	router.post(`/group-appointments/add-people-route`, function (req, res) {
 		const peopleRoute = req.session.data['add-people-method'];
 		if (peopleRoute === 'upload-file') {
-			res.redirect(`upload-file`);
+			res.redirect(`upload-file-info`);
 		} else {
 			res.redirect(`search-person`);
 		}
@@ -108,6 +108,18 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 		res.redirect(`appointment-time`);
 	}
   });
+
+
+  router.post(`/group-appointments/add-more-people`, function (req, res) {
+	const peoleRepeat = req.session.data['add-another-person-question'];
+	if (peoleRepeat === 'Yes') {
+		res.redirect(`upload-or-per-person`);
+	} else {
+		res.redirect(`non-associations`);
+	}
+  });
+
+  
 
 
 	  
