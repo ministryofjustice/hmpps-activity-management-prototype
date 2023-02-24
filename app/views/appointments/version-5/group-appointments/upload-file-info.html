@@ -9,7 +9,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="person-add-another">
+<form id="form" method="post" action="upload-file">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
@@ -17,29 +17,26 @@ Appointments prototype
       </div>
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-l">Group appointment</span>
-        Upload a CSV file to create a group appointment
+        Use a CSV file to create a group appointment
       </h1>
+   
+    <p class="govuk-body">
+      You can use a CSV file (a type of spreadsheet) to create a one-off or repeat appointment for a group of people.
+    </p>
+    <p class="govuk-body">
+      You must include a prison number for each individual.
+    </p>
 
-      <p class="govuk-body">
-        Upload a CSV file to create a one-off or repeat appointment for a group of people.
-
-      </p>
-      
-            {{ govukFileUpload({
-              id: "file-upload-1",
-              name: "file-upload-1",
-              label: {
-                text: "You must include prison numbers. "
-              }
-            }) }}
-
-    <div class="govuk-button-group">
+    <p class="govuk-body">
+      <a href="#" class="govuk-link">Download CSV file template</a>
+    </p>
+    <p class="govuk-body">
+      Continue to upload a CSV file with the details of the group appointment.
+    </p>
     
     {{ govukButton({
       text: "Continue"
     }) }}
-    <a href="#" class="govuk-link">Cancel</a>
   </div>
-</div>
 </div>
 {% endblock %}
