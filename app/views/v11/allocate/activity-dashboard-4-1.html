@@ -156,14 +156,15 @@ Activities Management prototype
         </tr>
         {% endif %}
 
+        {% if (data.offenderAllocatedAlready !=="Martin Swiderski")%}
 
         <tr class="govuk-table__row">
           <td data-sort-value="Neil Tatton" class="govuk-table__cell">
             <div class="govuk-radios govuk-radios--small " data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="OffenderAllocateRemove0" name="OffenderAllocateRemove" type="radio" value="Martin Sviderski">
+                <input class="govuk-radios__input" id="OffenderAllocateRemove0" name="OffenderAllocateRemove" type="radio" value="Martin Swiderski">
                 <label class="govuk-label govuk-radios__label" for="OffenderAllocateRemove0">
-                  <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Martin Sviderski</a></strong><br />LL9033P<br />3-C-522</label>
+                  <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Martin Swiderski</a></strong><br />LL9033P<br />3-C-522</label>
               </div>
             </div>
           </td>
@@ -172,7 +173,7 @@ Activities Management prototype
           <td class="govuk-table__cell" data-sort-value="20250216">Farms and gardens 1</td>
           <td class="govuk-table__cell" data-sort-value="Maths level 2">22 Oct 2024</td>
         </tr>
-
+        {% endif %}
 
 
 
@@ -1541,13 +1542,15 @@ Activities Management prototype
   </tr>
 
   {% else %}
+  {% if (data.offenderAllocatedAlready !=="Ricky Holden")%}
+
   <tr class="govuk-table__row">
     <td data-sort-value="Lionel" class="govuk-table__cell">
       <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="OffenderAllocateRemove43" name="OffenderAllocateRemove" type="radio" value="Ricky Holder">
+          <input class="govuk-radios__input" id="OffenderAllocateRemove43" name="OffenderAllocateRemove" type="radio" value="Ricky Holden">
           <label class="govuk-label govuk-radios__label" for="OffenderAllocateRemove43">
-            <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ricky Holder</a></strong><br />
+            <strong><a href="/unlock/version-5/prisoner-profile" target="_blank">Ricky Holden</a></strong><br />
             ZX2862P<br />
             {% if data.activityAllocateName == 'Wing cleaning'%}
               1-A-123
@@ -1564,6 +1567,7 @@ Activities Management prototype
     <td class="govuk-table__cell" data-sort-value="20250216">21 Nov 2024</td>
   </tr>
   {% endif %}
+    {% endif %}
       </tbody>
     </table>
 

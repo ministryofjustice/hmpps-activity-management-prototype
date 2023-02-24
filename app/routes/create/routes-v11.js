@@ -785,6 +785,7 @@ module.exports = function(router) {
 
 	router.post(version + '/allocate/AllocateRemove', function(req, res) {
 		{
+
 			res.redirect(version + '/allocate/allocate-remove-offender')
 		}
 	});
@@ -798,6 +799,7 @@ module.exports = function(router) {
 				req.session.data.LanceArm = LanceArm
 				res.redirect(version + '/allocate/activity-dashboard-4-1#allocated')
 			} else {
+				req.session.data.offenderAllocatedAlready = req.session.data.OffenderAllocateRemove
 				res.redirect(version + '/allocate/activity-dashboard-4-1#allocated')
 			}
 		}
