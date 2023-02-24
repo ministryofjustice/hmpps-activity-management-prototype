@@ -793,7 +793,7 @@ module.exports = function(router) {
     //Removal of offender ALREADY allocated to an activity
 	router.post(version + '/allocate/allocate-remove-offender', function(req, res) {
 		if (req.session.data.activityConfirmRemoval == 'yes') {
-			if (req.session.data.RemoveOffenderName[0] == 'Lance Arm') {
+			if (req.session.data.RemoveOffenderName == 'Lance Arm') {
 				var LanceArm = 'NotAllocated'
 				req.session.data.LanceArm = LanceArm
 				res.redirect(version + '/allocate/activity-dashboard-4-1#allocated')
@@ -819,6 +819,7 @@ module.exports = function(router) {
 	router.post(version + '/allocate/activity-dashboard-4-1', function(req, res) {
 
 		if (req.session.data.currentActivityAllocateScheduleName !== req.session.data.activityAllocateScheduleName){
+
 
 		req.session.data.offenderAllocatedStatusNeilRudge = 'false';
 		req.session.data.offenderAllocatedStatusIvorNorisk = 'false';
@@ -892,13 +893,14 @@ module.exports = function(router) {
 					}
 
 		{
-			if(req.session.data.offenderAllocate=="Henry Tatton")
-
+			if(req.session.data.offenderAllocate=="Henry Tatton"){
+				//For when Henry has been approved on waitlist to skip the check page
 				if (req.session.data.waitlistDecideCandidate=="Approved"){
 					res.redirect(version + '/allocate/allocate-payment-details')
 				}
 						else	{res.redirect(version + '/allocate/waitlist-check-pending')}
 			}
+		}
 	});
 
 	router.post(version + '/allocate/activity-dashboard-5-1', function(req, res) {
