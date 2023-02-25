@@ -22,10 +22,11 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		</h1>
 
 		<div class="govuk-inset-text">
-				<a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a> on {{ date | convertShortDateToLongDate(date) }} ({{period}})
+			<a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a> on {{ date | convertShortDateToLongDate(date) }} ({{period}})
 		</div>
 
 		{% for record in attendanceData | reverse %}
+		<!-- {{record|dump}} -->
 		{% if loop.index == 1 %}
 		<h2 class="govuk-heading-m">
 			Recorded on {{record.timestamp.date|convertShortDateToLongDate(record.timestamp.date)}} at {{record.timestamp.time | truncate(5, true, "")}}
@@ -41,20 +42,6 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		</h2>
 		{% endif %}
 		<dl class="govuk-summary-list">
-			<!-- <div class="govuk-summary-list__row">
-				<dt class="govuk-summary-list__key">
-					Activity
-				</dt>
-				<dd class="govuk-summary-list__value">
-					<p>
-						<a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
-					</p>
-					<p>
-						{{ date | convertShortDateToLongDate(date) }} ({{period}})
-					</p>
-				</dd>
-			</div> -->
-
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 					Attendance
@@ -63,7 +50,7 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 					{% if record.attendance == "attended" %}
 					Attended
 					{% elif record.attendance == "not-attended" %}
-					Absent - {{record.attendanceDetail}}
+					Not attended - {{record.attendanceStatus|capitalize}}
 					{% endif %}
 					<!-- <p class="govuk-hint">
 						You can change the pay for this attendance record until 9 February 2023 at 11:36.
@@ -83,32 +70,10 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 					Pay
 				</dt>
 				<dd class="govuk-summary-list__value">
-					{% if record.pay != null %}
-
-					<p>
-						{{ '£1.54' if record.pay == 'standard' else 'None' }}
-					</p>
-
-					{% if record.payReason != null %}
-					<p>
-						&ldquo;{{record.payReason}}&rdquo;
-					</p>
-					{% endif %}
-
+					{% if record.pay == true %}
+					£1.54
 					{% else %}
-
-					{% if record.attendanceDetail == 'Sick' %}
-					<p>
-						£1.54
-					</p>
-
-					{% else %}
-
-					<p>
-						None
-					</p>
-
-					{% endif %}
+					None
 					{% endif %}
 				</dd>
 				{% if loop.index == 1 %}
@@ -119,6 +84,25 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 				</dd>
 				{% endif %}
 			</div>
+
+			{% if record.attendanceStatus == "refused" %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Incentive level warning
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{record.incentiveLevelWarning|capitalize}}
+				</dd>
+			</div>
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Case note
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{record.caseNote}}
+				</dd>
+			</div>
+			{% endif %}
 
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">

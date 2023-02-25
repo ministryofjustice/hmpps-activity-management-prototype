@@ -37,7 +37,7 @@
 			
 			{% set caseNoteHtml %}
 			{{ govukTextarea({
-				name: "attendance-details[" + prisoner.id + "][pay-detail]",
+				name: "case-note",
 				id: "bonus-detail-" + prisoner.id,
 				label: {
 					text: "Provide a short explanation for your decision, this will be added to their case notes."
@@ -45,11 +45,9 @@
 			}) }}
 			{% endset %}
 
-			<!-- {{data['attendance']|dump}} -->
-
 			{{ govukRadios({
 				id: "pay-details-" + prisoner.id,
-				name: "attendance-details[" + prisoner.id + "][pay]",
+				name: "pay-prisoner",
 				fieldset: {
 					legend: {
 						text: "Should " + prisoner.name.firstname + " " + prisoner.name.surname + " be paid?",
@@ -58,11 +56,11 @@
 				},
 				items: [
 				{
-					value: "standard",
+					value: "yes",
 					text: "Yes"
 				},
 				{
-					value: "none",
+					value: "no",
 					text: "No",
 					conditional: {
 						html: caseNoteHtml
@@ -71,36 +69,10 @@
 				]
 			}) }}
 
-			<!-- {{ govukRadios({
-				name: "standard-pay-all",
-				fieldset: {
-					legend: {
-						text: titleText,
-						isPageHeading: true,
-						classes: "govuk-fieldset__legend--l"
-					}
-				},
-				items: [
-				{
-					value: "yes",
-					html: 'Yes'
-				},
-				{
-					value: "no",
-					html: "No"
-				}
-				]
-			}) }} -->
-
-			
-
 			{{govukButton({
 				text: "Continue"
 			})}}
 		</form>
 	</div>
 </div>
-{% endblock %}
-
-{% block pageScripts %}
 {% endblock %}
