@@ -1,0 +1,104 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-10">
+    Select how much you want to pay  {{ data.offenderAllocate }}, <strong>{{ data.offenderIDAllocate }}</strong><br />
+    </h1>
+  <!--  <p class="govuk-body">{{ data.offenderAllocate }}'s current incentive level is <strong>Basic</strong>. </p>-->
+  </div>
+</div>
+{%if data.offenderStatus=="pending" %}
+{% endif %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Important
+        </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">
+          You can select a pay rate and allocate  {{ data.offenderAllocate }}, <strong>{{ data.offenderIDAllocate }}. Their application will be updated from pending to approved.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="govuk-form-group">
+    <form method="post">
+      <p>{{ data.offenderAllocate }}'s current incentive level is {% if data.activityAllocateName=="Kitchens" %}Enhanced {% else %}Standard.{% endif %}
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-10">Select the correct pay rate</h2>
+  <div id="passport-issued-hint" class="govuk-hint">
+  There may only be one available.
+  </div>
+
+  {% for level, details in data.payrates %}
+    {% if details|length > 0 %}
+          {% if (level=='Standard') %}
+
+           <h2 class="govuk-heading-m">Standard incentive level </h2>
+
+            {% for rate in details %}
+
+            <div class="govuk-form-group">
+              <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="AllocatePaymentCurrent" name="AllocatePayment" value="{{rate.amount}}" type="radio" >
+                  <label class="govuk-label govuk-radios__label" for="AllocatePaymentCurrent">
+                <span style="margin-right:50px">&pound;{{rate.amount or '1.21'}}</span>
+
+                {% if data.activityAllocateName=="Kitchens" %}
+                      Enhanced
+                        {% else %}
+                          {{ data.offenderAllocateIncentiveLevel or 'Standard' }}
+                            {% endif %}
+                                incentive level, {{rate.name or 'pay band 1'}}
+                                  </label>
+                              </div>
+                              {% endfor %}
+                            {% endif %}
+                          {% endif %}
+
+        {% else %}
+
+        <!--If nothing is set on first entry to page-->
+
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="AllocatePaymentCurrent" name="AllocatePayment" type="radio" value="1.21">
+          <label class="govuk-label govuk-radios__label" for="AllocatePaymentCurrent">
+         <span style="margin-right:50px">&pound;{{rate.amount or '1.21'}}</span> {% if data.activityAllocateName=="Kitchens" %}
+               Enhanced
+                 {% else %}
+                   {{ data.offenderAllocateIncentiveLevel or 'Standard' }}
+                     {% endif %}
+                      incentive level,  {{rate.name or 'pay band 1'}}
+          </label>
+      </div>
+        {% endfor %}
+        <br />  <br />
+
+        <p class="govuk-body">If the rate you need is not listed you can <a href="allocate-check-your-answers-payment">add or change rates for this activity.</a></p>
+
+      <br />  <br />
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+    <p><a href="activity-dashboard-4-1?pageToShow=1#waitlist">Cancel and return to the allocate list</a></p>
+
+</div>
+
+
+{% endblock %}

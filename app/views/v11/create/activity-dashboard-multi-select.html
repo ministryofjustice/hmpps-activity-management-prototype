@@ -1,0 +1,362 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      Activities dashboard
+    </h1>
+  </div>
+
+
+  <div class="govuk-grid-column-one-third">
+    <p class="govuk-body"><strong>Related tasks</strong><br />
+    <a href="activity-type-select-with-category">Create an activity</a><br />
+    <a href="../allocate/activity-dashboard-1">See vacancies and allocate people</a></p>
+  </div>
+
+
+<div class="govuk-grid-column-three-thirds" style="margin:10px 0 0 15px ;">
+  <p class="govuk-body">Select an activity to view details including schedules, and make changes.</p>
+</div>
+
+
+<div class="govuk-grid-row" style="background-color:#f1f1f1; margin:10px 0 0 5px ;">
+  <div class="govuk-grid-column-two-thirds">
+  <h2 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--s" for="event-name" style="margin:10px 0 0 5px ;">
+      Select filters to see all the activities in that category or categories.
+    </label>
+  </h2>
+  </div>
+  </div>
+
+  <div class="govuk-grid-row" style="background-color:#f1f1f1; margin:0px 0 0 5px ;">
+  <div class="govuk-grid-column-one-third">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+          </h1>
+        </legend>
+        <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes"style="margin:10px 0 0 10px ;">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+            <label class="govuk-label govuk-checkboxes__label" for="organisation">
+              Education
+            </label>
+          </div>
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="organisation-2" name="organisation" type="checkbox" value="employment-tribunal">
+            <label class="govuk-label govuk-checkboxes__label" for="organisation-2">
+              Industries
+            </label>
+          </div>
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="organisation-3" name="organisation" type="checkbox" value="MOD">
+            <label class="govuk-label govuk-checkboxes__label" for="organisation-3">
+              Prison jobs
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          </legend>
+          <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+              <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                Gym, sport and fitness
+              </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="organisation-2" name="organisation" type="checkbox" value="employment-tribunal">
+              <label class="govuk-label govuk-checkboxes__label" for="organisation-2">
+                Induction
+              </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="organisation-3" name="organisation" type="checkbox" value="MOD">
+              <label class="govuk-label govuk-checkboxes__label" for="organisation-3">
+                Intervention programmes
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+
+    <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-label-wrapper" style="margin-top:10px">
+        <label class="govuk-label govuk-label--s" for="event-name">
+        </label>
+      </h2>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+              <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                Faith
+              </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="organisation-2" name="organisation" type="checkbox" value="employment-tribunal">
+              <label class="govuk-label govuk-checkboxes__label" for="organisation-2">
+                Other
+              </label>
+            </div>
+        </fieldset>
+      </div>
+    </div>
+</div>
+
+
+<div class="govuk-grid-row" style="background-color:#f1f1f1; margin:0px 0 0 5px ;">
+  <h2 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--s" for="event-name" style="margin:0px 0 0 25px ;">
+      Include archived or suspended activities
+    </label>
+  </h2>
+  <div class="govuk-grid-column-one-third">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          </legend>
+          <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes" style="margin:0px 0 0 10px ;">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+              <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                Include archived activities
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button class="govuk-button" data-module="govuk-button" style="margin:0px 0 20px 4px;">
+      Apply filters
+      </button>
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            </legend>
+            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+                <label class="govuk-label govuk-checkboxes__label" for="organisation">
+                  Include suspended activities
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+  </div><br />
+
+
+<form method="post">
+<table class="govuk-table" data-module="moj-sortable-table" style="margin:0 0 0 10px;">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" style="width:35%;"  aria-sort="ascending" >Activity name</th>
+      <th scope="col" class="govuk-table__header" style="width:23%;"aria-sort="none">Date created</th>
+      <th scope="col" class="govuk-table__header" style="width:25%;" aria-sort="none">Activity category</th>
+      <th scope="col" class="govuk-table__header" aria-sort="none">Number of schedules</th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+        <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="Maths Level 1">
+            <label class="govuk-label govuk-checkboxes__label" for="organisation">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Maths&nbsp;level&nbsp;1&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                  Maths level 1
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="20220902">2 Sept 2022</td>
+      <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+      <td class="govuk-table__cell" data-sort-value="0">
+        0  <button class="govuk-button govuk-button--secondary" name="editDashboard" value="schedule" data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
+        </button>
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Entry level English, level 3">
+        <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="Entry level English, level 3">
+            <label class="govuk-label govuk-checkboxes__label" for="organisation">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level English, level 3&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                  Entry level English, level 3
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="20220918">18 Sept 2022</td>
+      <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+      <td class="govuk-table__cell" data-sort-value="1">
+        1
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Entry level Maths">
+        <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="Entry level maths, level 3">
+            <label class="govuk-label govuk-checkboxes__label" for="organisation">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Entry level maths, level 3&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                  Entry level maths, level 3
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="20231215">15 Dec 2023</td>
+      <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+      <td class="govuk-table__cell" data-sort-value="1">
+        1
+      </td>
+    </tr>
+    <tr class="govuk-table__row" >
+      <td class="govuk-table__cell" data-sort-value="Maths level 2">
+        <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="Maths level 2">
+            <label class="govuk-label govuk-checkboxes__label" for="organisation">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Maths level 2&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                  Maths level 2
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="20220903">3 Sept 2022</td>
+          <td class="govuk-table__cell" data-sort-value="Education">Education</td>
+      <td class="govuk-table__cell" data-sort-value="3">3</td>
+    </tr>
+    <tr class="govuk-table__row" >
+      <td class="govuk-table__cell" data-sort-value="Wing cleaning">
+        <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="Wing cleaning">
+            <label class="govuk-label govuk-checkboxes__label" for="organisation">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Wing cleaning&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                  Wing cleaning
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="20221028">28 Oct 2022</td>
+          <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+      <td class="govuk-table__cell" data-sort-value="8">8</td>
+    </tr>
+    <tr class="govuk-table__row" >
+      <td class="govuk-table__cell" data-sort-value="General cleaning">
+        <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="General cleaning">
+            <label class="govuk-label govuk-checkboxes__label" for="organisation">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=General cleaning&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                  General cleaning
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="20221104">4 Nov 2022</td>
+          <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+      <td class="govuk-table__cell" data-sort-value="2">2</td>
+    </tr>
+    <tr class="govuk-table__row" >
+      <td class="govuk-table__cell" data-sort-value="Servery work">
+        <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="Servery work">
+            <label class="govuk-label govuk-checkboxes__label" for="organisation">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Servery work&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                  Servery work
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="20221128">28 Nov 2022</td>
+      <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+      <td class="govuk-table__cell" data-sort-value="0">
+        0  <button class="govuk-button govuk-button--secondary"  name="editDashboard" value="schedule"  data-module="govuk-button" style="margin: -2px 0 -20px 20px;">Build a schedule
+        </button>
+      </td>
+    </tr>
+    <tr class="govuk-table__row" >
+      <td class="govuk-table__cell" data-sort-value="Gardening">
+        <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="organisation" name="RemoveOffenderName" type="checkbox" value="Gardening">
+            <label class="govuk-label govuk-checkboxes__label" for="organisation">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
+                <a href="activity-check-your-answers?showSchedules=false&activityNameDashboard=Gardening&fromActivityDashboard=true&riskLevel=High&category=Education&incentiveLevel=Basic&changedCategory=false" class="govuk-link govuk-link--no-visited-state">
+                  Gardening
+                </a>
+              </h3>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell" data-sort-value="20220809">9 Aug 2022</td>
+          <td class="govuk-table__cell" data-sort-value="Prison jobs">Prison jobs</td>
+      <td class="govuk-table__cell" data-sort-value="2">2</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<button class="govuk-button govuk-button--warning" data-module="govuk-button" name="editDashboard" value="archive">
+Archive selected activities
+</button>
+<button class="govuk-button" data-module="govuk-button" style="margin-left:30px;" name="editDashboard" value="suspend">
+Suspend selected activities
+</button>
+  </form>
+
+{% endblock %}

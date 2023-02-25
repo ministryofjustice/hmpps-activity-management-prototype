@@ -1,0 +1,75 @@
+
+{% extends "layout.html" %}
+
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block back %}
+{% endblock %}
+{% block content %}
+
+<div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-thirds">
+        <div class="back">
+          <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+          </div>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
+
+          {% if data.cancelAllocation=="true" %}
+            Are you sure you wish to cancel allocating {{ data.offenderAllocate }} to {{ data.activityAllocateName }}?
+          {% else %}
+          Are you sure you wish to remove {{ data.OffenderAllocateRemove }} from {{ data.activityAllocateName }}?
+          {% endif %}
+        </h1><br />
+      </div>
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+              <h1 class="govuk-fieldset__heading">
+              </h1>
+            </legend>
+            <div id="changed-name-hint" class="govuk-hint">
+            <form method="post">
+            </div>
+            <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+
+              {% if data.cancelAllocation=="true" %}
+              <input class="govuk-radios__input" id="changed-name" name="cancelAllocation" type="radio" value="yes">
+              <label class="govuk-label govuk-radios__label" for="changed-name">
+                Yes
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="changed-name-2" name="cancelAllocation" type="radio" value="no">
+              <label class="govuk-label govuk-radios__label" for="changed-name-2">
+                No
+              </label>
+
+              {% else %}
+                <input class="govuk-radios__input" id="changed-name" name="activityConfirmRemoval" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="changed-name">
+                  Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="changed-name-2" name="activityConfirmRemoval" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="changed-name-2">
+                  No
+                </label>
+                {% endif %}
+
+              </div>
+            </div>
+          </fieldset>
+        </div>
+          <button class="govuk-button" data-module="govuk-button">
+            Confirm
+          </button>
+          <input type="hidden" name="cancelAllocation" value="false">
+        </form>
+      </div>
+</div>
+{% endblock %}
