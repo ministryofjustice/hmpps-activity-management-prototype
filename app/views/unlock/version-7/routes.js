@@ -124,7 +124,7 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
     Object.keys(attendanceDetails).forEach(prisonerId => {
         const details = attendanceDetails[prisonerId];
         let reason = details['absence-reason'];
-        console.log(reason)
+        console.log(details.attendance)
 
         let attendanceStatus;
         if( reason == 'sick' ){
@@ -170,8 +170,6 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
         } else {
             sessionCancelled = false;
         }
-
-        console.log(details['case-note'])
 
         req.session.data.attendance[activityId][date][period][prisonerId].push({
             attendance: details.attendance,
@@ -613,8 +611,10 @@ function countAttendance(data, activityId, date, period, status) {
 
     // Iterate through the prisoners in the class on the given date
     for (const prisonerId in data[activityId][date][period]) {
+        let prisonerAttendance = data[activityId][date][period][prisonerId]
+
         // Check if the prisoner's status is "attended"
-        if (data[activityId][date][period][prisonerId][0]["attendance"] === status) {
+        if (prisonerAttendance[prisonerAttendance.length - 1]["attendance"] === status) {
             // If the prisoner's status is "attended", increment the attendedCount
             attendedCount++;
         }
@@ -622,7 +622,6 @@ function countAttendance(data, activityId, date, period, status) {
 
     // Return the attendedCount
     return attendedCount;
-
 }
 
 const addAttendanceCountsToActivities = (activities, attendanceData, selectedDate, prisonersList) => {
