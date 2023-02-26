@@ -665,9 +665,10 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
                 const amAttendance = attendanceData[activity.id.toString()][date].AM;
                 for (let prisonerId in amAttendance) {
                     if (prisonerId === prisoner.id.toString()) {
-                        if (amAttendance[prisonerId][0].attendance === 'attended') {
+                        let prisonerAMAttendance = amAttendance[prisonerId]
+                        if (prisonerAMAttendance[prisonerAMAttendance.length - 1].attendance === 'attended') {
                             attendanceCountAM[attendedKey]++;
-                        } else if (amAttendance[prisonerId][0].attendance === 'not-attended') {
+                        } else if (prisonerAMAttendance[prisonerAMAttendance.length - 1].attendance === 'not-attended') {
                             attendanceCountAM[notAttendedKey]++;
                         }
                     }
@@ -684,9 +685,10 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
                 const pmAttendance = attendanceData[activity.id.toString()][date].PM;
                 for (let prisonerId in pmAttendance) {
                     if (prisonerId === prisoner.id.toString()) {
-                        if (pmAttendance[prisonerId][0].attendance === 'attended') {
+                        let prisonerPMAttendance = pmAttendance[prisonerId]
+                        if (prisonerPMAttendance[prisonerPMAttendance - 1].attendance === 'attended') {
                             attendanceCountPM[attendedKey]++;
-                        } else if (pmAttendance[prisonerId][0].attendance === 'not-attended') {
+                        } else if (prisonerPMAttendance[prisonerPMAttendance - 1].attendance === 'not-attended') {
                             attendanceCountPM[notAttendedKey]++;
                         }
                     }
