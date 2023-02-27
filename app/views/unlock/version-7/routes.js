@@ -878,7 +878,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendanc
 });
 
 // refusals
-router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-refusal-details', function(req, res) {
+router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-absence-details', function(req, res) {
     delete req.session.data['attendance-details']
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
@@ -888,13 +888,13 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add
     } else if(req.session.data['refusal-type'] == 'refused'){
         refusalPage = 'add-refusal-details'
     } else {
-        refusalPage = 'add-absent-details'
+        refusalPage = 'add-other-absence-details'
     }
     res.render('unlock/' + req.version + '/' + refusalPage, {
         filteredPrisoners
     })
 });
-router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-refusal-details', function(req, res) {
+router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-absence-details', function(req, res) {
     let prisoners = req.session.data['timetable-complete-1']['prisoners'];
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
 
@@ -921,6 +921,7 @@ router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/ad
             // if there's an activity and it has an ID, set it and update the prisoner's attendance for each activity
             if(activity[0] && activity[0].id){
                 activityId = activity[0].id
+                console.log(attendanceDetails)
                 updateAttendanceData(req, activityId, date, period, attendanceDetails)
             }
         })

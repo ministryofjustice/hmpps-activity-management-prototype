@@ -60,11 +60,11 @@ Add attendance details for {{prisonersNoun}}
 				{% endif %}
 
 				<input type="hidden" name="attendance-details[{{prisoner.id}}][attendance]" value="{{data['attendance-action']}}">
+				<input type="hidden" name="attendance-details[{{prisoner.id}}][absence-reason]" value="sick">
 
-				
 				{{ govukRadios({
-					id: "acceptable-absence",
-					name: "acceptable-absence",
+					id: "pay-prisoner--sick",
+					name: "attendance-details[" + prisoner.id + "][pay-prisoner]",
 					classes: "govuk-radios--small govuk-radios--inline",
 					fieldset: {
 						legend: {
@@ -74,12 +74,14 @@ Add attendance details for {{prisonersNoun}}
 					items: [
 					{
 						value: "yes",
-						text: "Yes"
+						text: "Yes",
+						id: "sick-pay-1-" + prisoner.id
 
 					},
 					{
 						value: "no",
-						text: "No"
+						text: "No",
+						id: "sick-pay-2-" + prisoner.id
 					}
 					]
 				}) }}
