@@ -10,8 +10,8 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 
 {% block beforeContent %}
 {{govukBackLink({
-	text: "Back",
-	"href": "javascript: window.history.go(-1)"
+	text: "Back to attendance list",
+	"href": "../"+activity.id
 })}}
 {% endblock %}
 {% block content %}
@@ -50,7 +50,7 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 					{% if record.attendance == "attended" %}
 					Attended
 					{% elif record.attendance == "not-attended" %}
-					Not attended - {{record.attendanceStatus|capitalize}}
+					Not attended - {{record.attendanceStatus|capitalize|replace('-',' ')}}
 					{% endif %}
 					<!-- <p class="govuk-hint">
 						You can change the pay for this attendance record until 9 February 2023 at 11:36.
@@ -77,11 +77,13 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 					{% endif %}
 				</dd>
 				{% if loop.index == 1 %}
+				{% if record.attendance == 'attended' or record.attendanceStatus == 'sick' or record.attendanceStatus == 'rest-day' or record.attendanceStatus == 'other' %}
 				<dd class="govuk-summary-list__actions">
 					<a class="govuk-link govuk-link--no-visited-state" href="{{prisoner.id}}/change-pay">
 						Change<span class="govuk-visually-hidden"> pay</span>
 					</a>
 				</dd>
+				{% endif %}
 				{% endif %}
 			</div>
 

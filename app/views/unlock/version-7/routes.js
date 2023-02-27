@@ -304,7 +304,8 @@ const addEventsToPrisoners = (prisoners, activities, date, period, attendanceDat
             if(eventAttendance) {
                 Object.keys(eventAttendance).forEach(prisonerId => {
                     if(prisonerId === prisoner.id) {
-                        event.attendance = eventAttendance[prisonerId][0].attendance;
+                        let prisonerAttendanceData = eventAttendance[prisonerId]
+                        event.attendance = prisonerAttendanceData[prisonerAttendanceData.length - 1].attendance;
                     }
                 });
             }
@@ -1128,7 +1129,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/c
     // set the confirmation dialog to display
     req.session.data['attendance-confirmation'] = 'true'
 
-    res.redirect('../../'+req.params.activityId)
+    res.redirect('../../'+req.params.activityId+"/"+prisonerId)
 })
 
 
