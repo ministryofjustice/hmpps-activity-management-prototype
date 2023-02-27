@@ -119,7 +119,14 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
-  
+  router.post(`../../tickets-for-dev/designs/recurring-single-appointment/appointment-repeat-question`, function (req, res) {
+	const appointRepeat = req.session.data['appointment-repeat'];
+	if (appointRepeat === 'Yes') {
+		res.redirect(`appointment-frequency`);
+	} else {
+		res.redirect(`check-answers`);
+	}
+  });
 
 
 	  
