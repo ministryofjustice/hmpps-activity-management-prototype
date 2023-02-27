@@ -1,0 +1,305 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Attendance dashboard
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "dps-home"
+	},
+	{
+		text: "Manage prisoner unlock and attendance",
+		href: "whereabouts"
+	}
+	]
+}) }}
+{% endblock %}
+
+{% block content %}
+
+{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+{{ mojSubNavigation({
+	label: 'Sub navigation',
+	items: [{
+		text: 'Daily summary',
+		href: 'daily',
+		active: true
+	}, {
+		text: 'Morning',
+		href: 'AM'
+	}, {
+		text: 'Afternoon',
+		href: 'PM'
+	}, {
+		text: 'Evening',
+		href: '#'
+	}]
+}) }}
+
+{% macro dataCard(params) %}
+<h3 class="govuk-body govuk-hint govuk-!-margin-bottom-0 {{params.titleClasses}}">{{ params.title }}</h3>
+<span class="govuk-heading-xl govuk-!-margin-0 govuk-!-padding-0 {{params.countClasses}}">
+	{{ params.count }}<span class="govuk-visually-hidden"> prisoners</span>
+	{% if params.showPercentage == true %}<span class="govuk-visually-hidden">, which is </span> <span class="govuk-tag {{params.tagClasses}} govuk-!-display-inline-block" style="vertical-align: middle;">{{(params.count / 850 * 100) | round(1)}}%</span>
+</span>
+{% endif %}
+{% if params.linkHref %}
+<p class="govuk-!-margin-bottom-0">
+	<a href="{{params.linkHref}}?page-title={{params.nextPageTitle or ('All '+(params.title | lower))}}&count={{params.count}}" class="govuk-!-font-weight-bold govuk-link--no-visited-state govuk-!-font-size-16">{{ params.linkText or "All " + (params.title | lower) }}</a>
+</p>
+{% endif %}
+{% endmacro %}
+
+{% set filterHtml %}
+{{ govukSelect({
+	label: {
+		text: "Category",
+		classes: "govuk-label--s"
+	},
+	idPrefix: 'attendance',
+	name: 'filters[attendance]',
+	items: [{
+		text: 'All categories',
+		id: 'all',
+		value: 'all'
+	},
+	{
+		text: 'Education',
+		id: 'all',
+		value: 'all'
+	},
+	{
+		text: 'Industries',
+		id: 'all',
+		value: 'all'
+	},
+	{
+		text: 'Prison jobs',
+		id: 'all',
+		value: 'all'
+	},
+	{
+		text: 'Gym, sport and fitness',
+		id: 'all',
+		value: 'all'
+	},
+	{
+		text: 'Induction',
+		id: 'all',
+		value: 'all'
+	},
+	{
+		text: 'Intervention programmes',
+		id: 'all',
+		value: 'all'
+	},
+	{
+		text: 'Faith',
+		id: 'all',
+		value: 'all'
+	},
+	{
+		text: 'Other',
+		id: 'all',
+		value: 'all'
+	}]
+}) }}
+{{govukButton({
+	text: "Update"
+})}}
+{% endset %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h2 class="govuk-heading-l govuk-!-margin-bottom-6">
+			<span class="govuk-caption-l">
+				{{date|today|convertShortDateToVeryLongDate}}
+			</span>
+			{{timeOfDay}} summary for all activities
+		</h2>
+	</div>
+	<div class="govuk-grid-column-one-third">
+		<p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-bottom-0" style="text-align: right;">
+			Updated at {{time|timestamp}} on {{date|today|convertShortDateToLongDate}}
+		</p>
+	</div>
+</div>
+
+{% set dateHtml %}
+{{ govukDateInput({
+	id: "passport-issued",
+	namePrefix: "passport-issued",
+	fieldset: {
+		legend: {
+			text: "Date",
+			isPageHeading: false,
+			classes: "govuk-fieldset__legend--s"
+		}
+	},
+	hint: {
+		html: "For example, 27 1 2023.<br>The earliest date you can view is 27 January 2023."
+	}
+}) }}
+{{govukButton({
+	text: "Update"
+})}}
+{% endset %}
+
+<p class="govuk-body-l govuk-!-margin-bottom-4">
+	<b>{{counts.allocated}} prisoners</b> allocated to <a href="activities/{{dateString}}" class="govuk-link--no-visited-state">{{activitiesForDate.morning|length + activitiesForDate.afternoon|length}} activities</a> on {{date|today|convertShortDateToVeryLongDate}}:
+</p>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-6">
+	<div class="govuk-grid-column-one-quarter">
+		{{ dataCard({
+			title: "Attended",
+			count: counts.attended,
+			linkHref: "attendance-dashboard-3-list",
+			showPercentage: true,
+			tagClasses: "govuk-tag--green"
+		}) }}
+	</div>
+	<div class="govuk-grid-column-one-quarter">
+		{{ dataCard({
+			title: "Not yet attended",
+			count: counts['not-recorded'],
+			linkHref: "attendance-dashboard-3-attendance",
+			showPercentage: false,
+			nextPageTitle: "Find and update not attended prisoners",
+			tagClasses: "govuk-tag--grey"
+		}) }}
+	</div>
+	<div class="govuk-grid-column-one-quarter">
+		{{ dataCard({
+			title: "Absences",
+			count: counts['not-attended'],
+			linkHref: "attendance-dashboard-3-list",
+			showPercentage: true,
+			tagClasses: "govuk-tag--green"
+		}) }}
+	</div>
+	<!-- <div class="govuk-grid-column-one-quarter">
+		{{ dataCard({
+			title: "Attendance rate (percentage)",
+			count: ((850 - totalAbsences) / 850 * 100) | round(1, "floor")
+		}) }}
+	</div> -->
+</div>
+{{ govukDetails({
+	summaryText: "Choose a different date",
+	html: dateHtml,
+	classes: "govuk-!-margin-bottom-2"
+}) }}
+{{ govukDetails({
+	summaryText: "Filter data by activity category",
+	html: filterHtml
+}) }}
+<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+<h2 class="govuk-heading-m">
+	Absences
+</h2>
+<div class="govuk-grid-row govuk-!-margin-bottom-5">
+	<div class="govuk-grid-column-one-quarter">
+		{{ dataCard({
+			title: "Paid",
+			count: counts.absences['with-pay'].total
+		}) }}
+	</div>
+	<div class="govuk-grid-column-three-quarters">
+		<div class="govuk-grid-row">
+			{% for type,count in counts.absences['with-pay'] %}
+			{% if type != 'total' %}
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+					title: type|capitalize|replace('-',' '),
+					count: count,
+					titleClasses: "govuk-!-font-size-16",
+					countClasses: "govuk-!-font-size-36",
+					linkHref: "attendance-dashboard-3-list"
+				}) }}
+			</div>
+			{% endif %}
+			{% endfor %}
+		</div>
+		<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-bottom-2">
+	</div>
+</div>
+<div class="govuk-grid-row govuk-!-margin-bottom-5">
+	<div class="govuk-grid-column-one-quarter">
+		{{ dataCard({
+			title: "Not paid",
+			count: counts.absences['without-pay'].total
+		}) }}
+	</div>
+	<div class="govuk-grid-column-three-quarters">
+		<div class="govuk-grid-row">
+			{% for type,count in counts.absences['without-pay'] %}
+			{% if type != 'total' %}
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+					title: type|capitalize|replace('-',' '),
+					count: count,
+					titleClasses: "govuk-!-font-size-16",
+					countClasses: "govuk-!-font-size-36",
+					linkHref: "attendance-dashboard-3-list"
+				}) }}
+			</div>
+			{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</div>
+<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+<h2 class="govuk-heading-m">
+	Cancellations
+</h2>
+<div class="govuk-grid-row govuk-!-margin-bottom-5">
+	<div class="govuk-grid-column-one-quarter">
+		{{ dataCard({
+			title: "Sessions cancelled",
+			count: data['attendance-data-1'][period|lower]['cancellations']|length,
+			linkHref: "#"
+		}) }}
+	</div>
+	<div class="govuk-grid-column-three-quarters">
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+					title: "Staff unavailable",
+					titleClasses: "govuk-!-font-size-16",
+					count: 1,
+					countClasses: "govuk-!-font-size-36"
+				}) }}
+			</div>
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+					title: "Location unavailable",
+					titleClasses: "govuk-!-font-size-16",
+					count: 1,
+					countClasses: "govuk-!-font-size-36"
+				}) }}
+			</div>
+		</div>
+	</div>
+</div>
+<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+<h2 class="govuk-heading-m">
+	Prisoners suspended
+</h2>
+<div class="govuk-grid-row govuk-!-margin-bottom-8">
+	<div class="govuk-grid-column-one-quarter">
+		{{ dataCard({
+			title: "Prisoners suspended",
+			count: 11,
+			linkHref: "#"
+		}) }}
+	</div>
+</div>
+{% endblock %}
