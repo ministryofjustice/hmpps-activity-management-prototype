@@ -171,6 +171,34 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 				checked: true
 			}]
 		}) }}
+
+		{{ govukRadios({
+			fieldset: {
+				legend: {
+					text: "Staying or leaving wing",
+					classes: "govuk-label--m"
+				}
+			},
+			idPrefix: 'attendance',
+			classes: "govuk-radios--small",
+			name: 'filters[attendance]',
+			items: [{
+				text: 'All',
+				id: 'all',
+				value: 'all',
+				checked: true
+			},
+			{
+				text: 'Staying on wing',
+				id: 'Staying',
+				value: 'Staying'
+			},
+			{
+				text: 'Leaving wing',
+				id: 'Leaving',
+				value: 'Leaving'
+			}]
+		}) }}
 		{% endset %}
 
 		<div class="moj-filter">
