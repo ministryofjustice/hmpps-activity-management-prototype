@@ -22,7 +22,7 @@ const router = express.Router()
 		//Change numerical month to short month name
 		req.session.data.month = getMonthName(req.session.data.month)
 		req.session.data.dateofappointment = req.session.data.day + " " + req.session.data.month + " " + req.session.data.year
-		res.redirect('appointment-repeat')
+		
 	}
 });
 
