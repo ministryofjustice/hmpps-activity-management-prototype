@@ -823,7 +823,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
             return idArray;
         };
         
-        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners, {
+        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(getPrisonerIds(prisonersByDateAndPeriod), {
             attendance: 'not-attended',
             attendanceStatus: 'session-cancelled',
             pay: true,

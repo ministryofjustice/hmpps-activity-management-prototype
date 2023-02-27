@@ -260,7 +260,7 @@
 							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--attended" style="text-transform: none;">Attended</span></li>
 
 							{%- elif prisoner.attendance.attendance == 'not-attended' %}
-							{%- if prisoner.attendance.attendanceStatus == 'session-cancelled' %}
+							{%- if prisoner.attendance.sessionCancelled == true %}
 							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--cancelled" style="text-transform: none;">Session cancelled</span></li>
 							{% elif prisoner.attendance.attendanceStatus == 'sick' %}
 							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Sick</span></li>
