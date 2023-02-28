@@ -15,21 +15,7 @@ Appointments prototype
       <span class="govuk-caption-l">Group appointment</span>
       Check for non-associations
     </h1>
-    <p class="govuk-body">
-       
-    </p>
-
-
-
-
-
-
-
-
-
-
-
-
+   
 <div class="govuk-form-group">
 
 <table class="govuk-table" data-module="moj-sortable-table" style="margin:30px 0 0 10px;">
@@ -40,24 +26,6 @@ Appointments prototype
     </tr>
   </thead>
   <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell" data-sort-value="Maths level 1">
-        <div class="govuk-checkboxes__item">
-          <input class="govuk-checkboxes__input" id="person" name="person" type="checkbox" value="Neil">
-          <label class="govuk-label govuk-checkboxes__label" for="waste">
-            Neil Rudge, {{ data['person-1']}} 
-          </label>
-        </div>
-      </div>
-      </td>
-      <td class="govuk-table__cell" >
-        <strong class="govuk-tag govuk-tag--red ">
-          Matthew Doyle, {{ data['person-3']}} 
-        </strong>
-      </td>
-    </tr>
-
-
     {% if data.personMatthew=='Matthew' and data.rem-prisoner=="Yes" %}
 
     {% else %}
@@ -67,33 +35,40 @@ Appointments prototype
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="person" name="personMatthew" type="checkbox" value="Matthew">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
-              Matthew Doyle, {{ data['person-3']}}
+              <a href="#" class="govuk-link"><b>Doyle</b>, Matthew</a><br>E4911C 
             </label>
           </div>
         </div>
        </td>
       <td class="govuk-table__cell" >
         <strong class="govuk-tag govuk-tag--red ">
-          Neil Rudge, {{ data['person-1']}} 
+          <b>Rudge</b>, Neil<br>G2044E
         </strong>
-        {% if data['person-6'] >= '' %}
         <strong class="govuk-tag govuk-tag--red ">
-          Robin Bab, {{ data['person-6']}}
+          <b>Bab</b>, Robin<br>F4933A
         </strong>
-        {% endif  %}
-        {% if data['person-8'] >= '' %}
-        <strong class="govuk-tag govuk-tag--red ">
-          Luther Drove, {{ data['person-8']}}
-        </strong>
-        {% endif  %}
-        {% if data['person-9'] >= '' %}
-        <strong class="govuk-tag govuk-tag--red ">
-          Logan Looker, {{ data['person-9']}} 
-        </strong>
-        {% endif  %}
       </td>
     </tr>
     {% endif %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="person" name="person" type="checkbox" value="Neil">
+          <label class="govuk-label govuk-checkboxes__label" for="waste">
+            <a href="#" class="govuk-link"><b>Rudge</b>, Neil</a><br>G2044E
+          </label>
+        </div>
+      </div>
+      </td>
+      <td class="govuk-table__cell" >
+        <strong class="govuk-tag govuk-tag--red ">
+          <b>Doyle</b>, Matthew<br>E4911C 
+        </strong>
+      </td>
+    </tr>
+
+
+   
 
 
 
@@ -105,14 +80,14 @@ Appointments prototype
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="person" name="personRobin" type="checkbox" value="Robin">
             <label class="govuk-label govuk-checkboxes__label" for="waste">
-              Robin Bab, {{ data['person-6']}}
+              <a href="#" class="govuk-link"><b>Bab</b>, Robin</a><br>F4933A 
             </label>
           </div>
         </div>
        </td>
       <td class="govuk-table__cell" >
         <strong class="govuk-tag govuk-tag--red ">
-          Matthew Doyle, {{ data['person-3']}} 
+          <b>Doyle</b>, Matthew<br>E4911C 
         </strong>
         {% if data['person-10'] >= '' %}
         <strong class="govuk-tag govuk-tag--red ">
