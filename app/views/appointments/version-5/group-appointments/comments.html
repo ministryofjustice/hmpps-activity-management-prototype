@@ -10,104 +10,63 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<head>
-  <style>
-* {
-box-sizing: border-box;
-}
 
-body {
-font: 16px Arial;
-}
-
-/*the container must be positioned relative:*/
-.autocomplete {
-position: relative;
-display: inline-block;
-}
-
-input {
-border: 2px solid black;
-background-color: #fff;
-padding: 10px;
-font-size: 16px;
-}
-
-input[type=text] {
-background-color: #fff;
-width: 100%;
-}
-
-input[type=submit] {
-background-color: DodgerBlue;
-color: #fff;
-cursor: pointer;
-}
-
-.autocomplete-items {
-position: absolute;
-border: 1px solid #d4d4d4;
-border-bottom: none;
-border-top: none;
-z-index: 99;
-/*position the autocomplete items to be the same width as the container:*/
-top: 100%;
-left: 0;
-right: 0;
-}
-
-.autocomplete-items div {
-padding: 10px;
-cursor: pointer;
-background-color: #fff;
-border-bottom: 1px solid #d4d4d4;
-}
-
-/*when hovering an item:*/
-.autocomplete-items div:hover {
-background-color: #e9e9e9;
-}
-
-/*when navigating through the items using the arrow keys:*/
-.autocomplete-active {
-background-color: DodgerBlue !important;
-color: #ffffff;
-}
-</style>
-</head>
-<form id="form" method="post" action="appointment-repeat">
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <div class="back">
-      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-      </div>
-   
-      <h1 class="govuk-heading-l">
-        <span class="govuk-caption-l">Group appointment</span>
-        Where is the appointment?
-       </h1>
-         
+<form id="form" method="post" action="check-answers">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
       
+      <div class="back">
+        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+        </div>
+     
+     <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">Group appointments</span>
+      Add comments
+     </h1>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header ">Name</th>
+        <th scope="col" class="govuk-table__header "></th>
+        <th scope="col" class="govuk-table__header "></th>
+        
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <!--<tr class="govuk-table__row">
+        <td class="govuk-table__cell "><b>All prisoners</b> </td>
+        <td class="govuk-table__cell "> <span class="moj-badge">No comment</span></td>
+        <td class="govuk-table__cell "> <a href="individual-comments/prisoner-comments" class="govuk-link">Add comment</a></td>
+      </tr>-->
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell ">Neil Rudge, {{ data['person-1']}} </td>
+        <td class="govuk-table__cell "> <span class="govuk-tag">No comment</span></td>
+        <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell ">Bill Edwards, {{ data['person-1']}} </td>
+          <td class="govuk-table__cell "> <span class="govuk-tag">No comment</span></td>
+          <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell ">Smokie Bandit, {{ data['person-1']}} </td>
+            <td class="govuk-table__cell "> <span class="govuk-tag govuk-tag--green">comment added</span> </td>
+            <td class="govuk-table__cell "> <a href="individual-comments/comments-to-edit" class="govuk-link">View and edit</a></td>
+          </tr>
+        </tbody>
+  </table>
 
 
-<div class="govuk-grid-row">
   
-<div class="govuk-grid-column-full">
-  <div id="event-name-hint" class="govuk-hint">
-    Start typing a location and select from the list of options
+
+
+  
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </div>
   </div>
-   <div class="autocomplete" style="width:300px;">
-    <input id="location" type="text" name="locationChoice" placeholder="">
-  </div>
-</div>
-</div>
-<br><br>
-    {{ govukButton({
-      text: "Continue"
-    }) }}
-  </div>
-</div>
-</form>
+  </form>
 
 <script>
   function autocomplete(inp, arr) {
@@ -207,91 +166,63 @@ color: #ffffff;
     });
   }
   
-  /*An array containing all the locations*/
-  var courses = [
-  'Association',
-  'Badminton',
-  'Basketball',
-  'Carat Group Room 1',
-  'Carat Group Room 2',
-  'Cardio',
-  'CES',
-  'Chapel',
-  'Circuit',
-  'Classroom',
-  'Closed visits',
-  'Enhanced Visits',
-  'Exercize',
-  'Farms/gardens',
-  'Fit ball',
-  'Football',
-  'Football squad',
-  'Gym',
-  'HB1 Classroom 1',
-  'HB1 Doctors',
-  'HB1 Exercise',
-  'HB1 Weights',
-  'HB2 Classroom 1',
-  'HB2 Doctors',
-  'HB2 Exercise',
-  'HB2 Weights',
-  'HB3 Classroom 1',
-  'HB3 Doctors',
-  'HB3 Exercise',
-  'HB3 Weights',
-  'HB4 Classroom 1',
-  'HB4 Doctors',
-  'HB4 Exercise',
-  'HB4 Weights',
-  'HB5a Exercise',
-  'HBfA2 Classroom',
-  'Healthcare',
-  'Houseblock 1',
-  'Houseblock 2',
-  'Houseblock 3',
-  'Houseblock 4',
-  'Houseblock 5',
-  'Interview room',
-  'Kitchen',
+  /*An array containing all the categories*/
+  var category = [
+  'Activities',
+  'Adjudication review',
+  'Canteen',
+  'Careers Adviser Appointment',
+  'Case - Baile Apps',
+  'Case - Benefits',
+  'Case - Housing',
+  'Case - Legal aid',
+  'Case - Other',
+  'Case - Probation',
+  'Case - RAPT',
+  'Case - Substance misuse services',
+  'Chaplaincy',
+  'Children and families',
+  'Counselling session',
+  'Education',
+  'Governor',
+  'Gym - Football',
+  'Gym - PE Course',
+  'Gym - Sports hall activity',
+  'Gym - Weights',
+  'Gym - Remedial physiotherapy',
+  'Gym - Walking to health',
+  'IMB',
+  'Immigration appointment',
+  'Induction meeting',
+  'Interventions',
+  'Job Centre Plus',
+  'Labour control',
   'Library',
-  'Lifer room',
-  'Main/stores',
-  'MDT',
-  'Official visits',
-  'Over 35 Circuit',
-  'Pump fusion',
-  'Res 1 Education',
-  'Res 2 education',
-  'Rugby squad',
-  'Running',
-  'Social visits',
-  'Soft tennis',
-  'Sports hall',
-  'Strongman',
-  'Tag rugby',
-  'VCC Room 1',
-  'VCC Room 2',
-  'VCC Room 3',
-  'Volleyball',
-  'Walking',
-  'Waste management',
-  'Workshop 1 - Vt catering',
-  'Workshop 10 - Bricks',
-  'Workshop 11',
-  'Workshop 12 - Furniture repair',
-  'Workshop 13 - Waste management',
-  'Workshop 14 - Yard party',
-  'Workshop 15 - Clothing Exchange Store',
-  'Workshop 16 - Joinery',
-  'Workshop 17 - DHL',
-  'Workshop 19 Braille',
-  'Workshop 2',
-  'Workshop 3',
-  'Workshop 4',
-  'Workshop5'
+  'Medical - Dentist',
+  'Medical - Doctor',
+  'Medical - Other',
+  'Medical - Psy',
+  'Medical - X-Ray',
+  'OMU Appointment',
+  'Other',
+  'Pre-release meeting',
+  'Programme appointment',
+  'ROTL Board',
+  'Rec - MPU photo',
+  'Rec - Other',
+  'Rec - Prop',
+  'Reset appointment',
+  'Resolve',
+  'SOTP Assessment',
+  'Storybook Dads appointment',
+  'TSP Appointment',
+  'Toe by Toe appointment',
+  'Trailblazers Appointment',
+  'User Voice Session',
+  'Video Link Booking'
   ];
   
   /*initiate the autocomplete function on the "education" element, and pass along the countries array as possible autocomplete values:*/
-  autocomplete(document.getElementById("location"), courses);
+  autocomplete(document.getElementById("category"), category);
   </script>
 {% endblock %}

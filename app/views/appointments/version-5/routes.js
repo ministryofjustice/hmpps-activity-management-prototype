@@ -31,7 +31,7 @@ const router = express.Router()
 		}
 	  });
 
-	  router.post(`/group-appointments/appointment-repeat-option`, function (req, res) {
+	  router.post(`/group-appointments/appointment-repeat-question`, function (req, res) {
 		const appRepeat = req.session.data['appointment-repeat'];
 		if (appRepeat === 'Yes') {
 			res.redirect(`appointment-frequency`);
@@ -80,7 +80,7 @@ const router = express.Router()
 	  });
 
 	 
-	  
+	 
 
 
 router.post('/individual-appointment/appointment-date', function(req, res) {
