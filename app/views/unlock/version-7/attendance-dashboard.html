@@ -23,7 +23,6 @@ Attendance dashboard
 {% endblock %}
 
 {% block content %}
-
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {{ mojSubNavigation({
 	label: 'Sub navigation',
@@ -122,7 +121,7 @@ Attendance dashboard
 	<div class="govuk-grid-column-two-thirds">
 		<h2 class="govuk-heading-l govuk-!-margin-bottom-6">
 			<span class="govuk-caption-l">
-				{{date|today|convertShortDateToVeryLongDate}}
+				{{date|convertShortDateToVeryLongDate}}
 			</span>
 			{{timeOfDay}} summary for all activities
 		</h2>
@@ -155,7 +154,7 @@ Attendance dashboard
 {% endset %}
 
 <p class="govuk-body-l govuk-!-margin-bottom-4">
-	<b>{{counts.allocated}} prisoners</b> allocated to <a href="activities/{{dateString}}" class="govuk-link--no-visited-state">{{activitiesForDate.morning|length + activitiesForDate.afternoon|length}} activities</a> on {{date|today|convertShortDateToVeryLongDate}}:
+	<b>{{counts.allocated}} prisoners</b> allocated to <a href="activities/{{dateString}}" class="govuk-link--no-visited-state">{{activitiesForDate.morning|length + activitiesForDate.afternoon|length}} activities</a> on {{date|convertShortDateToVeryLongDate}}:
 </p>
 
 <div class="govuk-grid-row govuk-!-margin-bottom-6">

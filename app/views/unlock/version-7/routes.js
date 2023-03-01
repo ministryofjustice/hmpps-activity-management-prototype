@@ -688,9 +688,9 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
                 for (let prisonerId in pmAttendance) {
                     if (prisonerId === prisoner.id.toString()) {
                         let prisonerPMAttendance = pmAttendance[prisonerId]
-                        if (prisonerPMAttendance[prisonerPMAttendance - 1].attendance === 'attended') {
+                        if (prisonerPMAttendance[prisonerPMAttendance.length - 1].attendance === 'attended') {
                             attendanceCountPM[attendedKey]++;
-                        } else if (prisonerPMAttendance[prisonerPMAttendance - 1].attendance === 'not-attended') {
+                        } else if (prisonerPMAttendance[prisonerPMAttendance.length - 1].attendance === 'not-attended') {
                             attendanceCountPM[notAttendedKey]++;
                         }
                     }
@@ -1347,7 +1347,7 @@ router.post('/select-activity', function(req, res) {
         res.redirect('activities/' + date)
     }
 });
-// SELECT ACTIVITY RESULTS
+// SELECT ACTIVITY
 router.get('/activities/:selectedDate', function(req, res) {
     let selectedDate = req.params.selectedDate
     let period = req.session.data['times'].toUpperCase()
@@ -1501,33 +1501,39 @@ router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function(req, 
     }
     activitiesForDateWithCounts.morning = addAttendanceCountsToActivities(activitiesForDate.morning, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
     activitiesForDateWithCounts.afternoon = addAttendanceCountsToActivities(activitiesForDate.afternoon, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
+    
     let attendanceTotals = {};
     for (const period in activitiesForDate) {
         attendanceTotals[period] = attendanceTotals[period] || {};
         for (const activity of activitiesForDate[period]) {
             for (const type in activity.attendanceCount[period]) {
                 attendanceTotals[period][type] = (attendanceTotals[period][type] || 0) +
-                    (activity.attendanceCount[period][type] > 0 ? activity.attendanceCount[period][type] : 0);
+                (activity.attendanceCount[period][type] > 0 ? activity.attendanceCount[period][type] : 0);
             }
         }
     }
 
     function calculateAttendanceFigures(data, period, date) {
         let totalAllocated;
-        if (period == "AM") {
+
+        if (period == "AM" || period == "Morning" || period == "morning") {
             totalAllocated = attendanceTotals.morning['scheduled']
-        } else if (period == "PM") {
+            period = "AM"
+        } else if (period == "PM" || period == "Afternoon" || period == "afternoon") {
             totalAllocated = attendanceTotals.afternoon['scheduled']
-        } else {
+            period = "PM"
+        } else if (period == "daily" || period == "Daily") {
             totalAllocated = attendanceTotals.morning['scheduled'] + attendanceTotals.afternoon['scheduled']
+            period = "daily"
+        } else {
+            throw new Error("Invalid period input");
         }
 
         const attendanceCounts = {
             allocated: totalAllocated,
             attended: 0,
             'not-attended': 0,
-            'not-recorded': 0,
-            // 'with-pay': {},
+            'not-recorded': totalAllocated,
             absences: {
                 'with-pay': {
                     total: 0
@@ -1541,39 +1547,37 @@ router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function(req, 
         if (data) {
             Object.values(data).forEach(activity => {
                 if (activity[date]) {
-                    Object.values(activity).forEach(date => {
-                        Object.values(date).forEach(period => {
-                            Object.values(period).forEach(attendanceRecord => {
-                                const record = attendanceRecord[attendanceRecord.length - 1];
-                                const attendanceType = record.attendance;
-                                const attendanceStatus = record.attendanceStatus || 'not-recorded';
-                                const payStatus = record.pay;
+                    const periodData = period === 'daily' ? (activity[date].AM ? Object.values(activity[date].AM) : []).concat(activity[date].PM ? Object.values(activity[date].PM) : []) : activity[date][period] ? Object.values(activity[date][period]) : [];
+                    periodData.forEach(prisonerRecord => {
+                        const record = prisonerRecord[prisonerRecord.length - 1];
+                        const attendanceType = record.attendance;
+                        const attendanceStatus = record.attendanceStatus || 'not-recorded';
+                        const payStatus = record.pay;
 
-                                if (attendanceType === 'attended') {
-                                    attendanceCounts.attended++;
-                                } else if (attendanceType === 'not-attended') {
-                                    attendanceCounts['not-attended']++;
-                                    if (payStatus == true) {
-                                        attendanceCounts.absences['with-pay'].total++;
-                                        attendanceCounts.absences['with-pay'][attendanceStatus] = (attendanceCounts.absences['with-pay'][attendanceStatus] || 0) + 1;
-                                    } else {
-                                        attendanceCounts.absences['without-pay'].total++;
-                                        attendanceCounts.absences['without-pay'][attendanceStatus] = (attendanceCounts.absences['without-pay'][attendanceStatus] || 0) + 1;
-                                    }
-                                } else {
-                                    attendanceCounts['not-recorded']++;
-                                }
-                            });
-                        });
+                        if (attendanceType === 'attended') {
+                            attendanceCounts.attended++;
+                            attendanceCounts['not-recorded']--;
+                        } else if (attendanceType === 'not-attended') {
+                            attendanceCounts['not-attended']++;
+                            if (payStatus == true) {
+                                attendanceCounts.absences['with-pay'].total++;
+                                attendanceCounts.absences['with-pay'][attendanceStatus] = (attendanceCounts.absences['with-pay'][attendanceStatus] || 0) + 1;
+                            } else {
+                                attendanceCounts.absences['without-pay'].total++;
+                                attendanceCounts.absences['without-pay'][attendanceStatus] = (attendanceCounts.absences['without-pay'][attendanceStatus] || 0) + 1;
+                            }
+                            attendanceCounts['not-recorded']--;
+                        } else {
+                            attendanceCounts['not-recorded']++;
+                        }
                     });
                 }
             });
         }
 
-        attendanceCounts['not-recorded'] = totalAllocated - attendanceCounts.attended - attendanceCounts['not-attended'];
-
         return attendanceCounts;
     }
+
     let counts = calculateAttendanceFigures(req.session.data['attendance'], period, date)
     let timeOfDay = period === 'AM' ? 'Morning' : period === 'PM' ? 'Afternoon' : 'Daily';
 
