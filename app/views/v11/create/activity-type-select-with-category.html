@@ -91,6 +91,15 @@ Activities Management prototype
                 </div>
               </div>
               <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="Other" name="category" type="radio" {% if (data.category=='NotInWork')%} checked {% endif %} value="NotInWork" aria-describedby="sign-in-item-hint">
+                <label class="govuk-label govuk-radios__label" for="NotInWork">
+                  Not in work
+                </label>
+                <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
+              Such as unemployed, retired, long-term sick, or on remand
+                </div>
+              </div>
+              <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="Other" name="category" type="radio" {% if (data.category=='Other')%} checked {% endif %} value="Other" aria-describedby="sign-in-item-hint">
                 <label class="govuk-label govuk-radios__label" for="Other">
                   Other

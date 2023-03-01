@@ -14,10 +14,10 @@ Activities Management prototype
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
-      <span class="govuk-caption-m">{{data.category or 'Education'}}  | Risk level: {{data.riskLevel or 'Low'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}} |  Start date: {{data.activityCreateScheduleStartDate or '3 Jan 2023'}}</span>
+      <span class="govuk-caption-m">{{data.category or 'Education'}}  | Risk level: {{data.riskLevel or 'Low'}} | Minimum incentive: {{data.incentiveLevel or 'Basic'}} | Start date: {{data.activityCreateScheduleStartDate or '3 Jan 2023'}} | End date: {{data.activityCreateScheduleEndDate or 'Not set'}}</span>
       <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      Do you want to enter an end date for this activity?
+      Does the activity run on bank holidays?
     </h1><br />
   </div>
 
@@ -34,14 +34,14 @@ Activities Management prototype
         </div>
         <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="changed-name" name="ScheduleEndDate" type="radio" value="yes">
-            <label class="govuk-label govuk-radios__label" for="changed-name">
+            <input class="govuk-radios__input" id="actitivyBankHolsYes" name="actitivyBankHols" type="radio" value="Yes">
+            <label class="govuk-label govuk-radios__label" for="actitivyBankHolsYes">
               Yes
             </label>
           </div>
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="changed-name-2" name="ScheduleEndDate" type="radio" value="no">
-            <label class="govuk-label govuk-radios__label" for="changed-name-2">
+            <input class="govuk-radios__input" id="actitivyBankHolsNo" name="actitivyBankHols" type="radio" value="No">
+            <label class="govuk-label govuk-radios__label" for="actitivyBankHolsNo">
               No
             </label>
           </div>

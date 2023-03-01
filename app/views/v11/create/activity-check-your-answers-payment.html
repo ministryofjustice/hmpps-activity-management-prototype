@@ -52,8 +52,12 @@ Activities Management prototype
         {% endif %}
         {% endfor %}
         <form>
+          {% if data.checkYourAnswersLink=="true" %}
+            <button class="govuk-button" data-module="govuk-button" value="confirmPay" formaction="schedule-check-your-answers">
+          {% else %}
             <button class="govuk-button" data-module="govuk-button" value="confirmPay" formaction="activity-is-education-needed">
-                Confirm pay rates
+          {% endif %}
+              Confirm pay rates
             </button>
             <button style="margin-left:30px;" class="govuk-button govuk-button--secondary" data-module="govuk-button" value="addAnother" formaction="activity-payment-details">
                 Add another pay rate

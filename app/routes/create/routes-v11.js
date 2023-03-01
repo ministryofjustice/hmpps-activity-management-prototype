@@ -253,11 +253,9 @@ module.exports = function(router) {
 			res.redirect(version + '/create/activity-add-education-new')
 		}
 		else {
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/activity-start-date')
 		}
 	});
-
-
 
 
 	router.post(version + '/create/activity-add-education-new', function(req, res) {
@@ -317,40 +315,6 @@ module.exports = function(router) {
 
 
 
-	router.post(version + '/create/addEducation', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-add-education-one-added')
-		}
-	});
-	router.post(version + '/create/addEducation2', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-add-education-two-added')
-		}
-	});
-
-	router.post(version + '/create/activity-add-education', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-check-your-answers')
-		}
-	});
-
-	router.post(version + '/create/activity-add-education-one-added', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-check-your-answers')
-		}
-	});
-	router.post(version + '/create/activity-add-education-two-added', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-check-your-answers')
-		}
-	});
-	router.post(version + '/create/activity-add-education-three-added', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-check-your-answers')
-		}
-	});
-
-
     //SCHEDULING//
 
 	router.post(version + '/create/activity-name-2', function(req, res) {
@@ -407,10 +371,15 @@ module.exports = function(router) {
 
 	router.post(version + '/create/activity-start-time', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-location-dropdown')
+			res.redirect(version + '/create/activity-does-it-run-bank-hols')
 		}
 	});
 
+	router.post(version + '/create/activity-does-it-run-bank-hols', function(req, res) {
+		{
+			res.redirect(version + '/create/activity-location-dropdown')
+		}
+	});
 
 
     //If repeat
@@ -439,12 +408,15 @@ module.exports = function(router) {
 	});
 	router.post(version + '/create/activity-capacity', function(req, res) {
 		{
+				req.session.data['checkYourAnswersLink'] = 'true'
 			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 	router.post(version + '/create/schedule-check-your-answers', function(req, res) {
 		{
 			req.session.data['edit'] = 'false'
+			req.session.data['checkYourAnswersLink'] = 'false'
+
 			res.redirect(version + '/create/schedule-confirmation-created')
 		}
 	});
@@ -474,6 +446,7 @@ module.exports = function(router) {
 
 	router.post(version + '/create/check/activity-capacity', function(req, res) {
 		{
+				req.session.data['checkYourAnswersLink'] = 'true'
 			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});

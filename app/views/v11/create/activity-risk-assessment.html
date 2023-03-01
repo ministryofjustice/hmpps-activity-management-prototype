@@ -20,7 +20,7 @@ Activities Management prototype
     <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      Select the risk assessment level
+    Workplace risk assessment levels: which ones are suitable for this activity?
     </h1>
   </div>
 </div>
@@ -32,28 +32,25 @@ Activities Management prototype
             <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
               </legend>
-              <p>Set the risk assessment level for this activity. Contact your manager or the security team if you don't have an up-to-date risk assessment.</p>
-              <p>This information will be displayed when you're allocating people so you can see how suitable the activity is.</p>
-
-
+              <p>The risk assessment levels you set on this page will be used to filter the list of people you'll see when allocating to this activity.</p>
               <div class="govuk-radios" data-module="govuk-radios">
                 <form method="post">
                   <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="incentiveLevelAdvanced" name="riskLevel" type="radio" value="Low" {% if data.riskLevel=='Low' %}checked {% endif %} data-aria-controls="conditional-contact">
+                    <input class="govuk-radios__input" id="incentiveLevelAdvanced" name="riskLevel" type="radio" value="Only low" {% if data.riskLevel=='Only low' %}checked {% endif %} data-aria-controls="conditional-contact">
                     <label class="govuk-label govuk-radios__label" for="incentiveLevelAdvanced">
-                      Low risk
+                      Only <strong>low workplace risk assessment </strong>is suitable
                     </label>
                   </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="incentiveLevelStandard" name="riskLevel" {% if data.riskLevel=='Medium' %}checked {% endif %}type="radio" value="Medium"  data-aria-controls="conditional-contact">
+                  <input class="govuk-radios__input" id="incentiveLevelStandard" name="riskLevel" {% if data.riskLevel=='Either low or medium' %}checked {% endif %}type="radio" value="Either low or medium"  data-aria-controls="conditional-contact">
                   <label class="govuk-label govuk-radios__label" for="incentiveLevelStandard">
-                    Medium risk
+                    <strong>Either low or medium workplace risk assessment </strong>is suitable
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                 <input class="govuk-radios__input" id="incentiveLevelBasic" name="riskLevel" type="radio" {% if data.riskLevel=='High' %}checked {% endif %} value="High" data-aria-controls="conditional-contact">
+                 <input class="govuk-radios__input" id="incentiveLevelBasic" name="riskLevel" type="radio" {% if data.riskLevel=='Any of low, medium or high' %}checked {% endif %} value="Any of low, medium or high" data-aria-controls="conditional-contact">
                   <label class="govuk-label govuk-radios__label" for="incentiveLevelBasic">
-                    High risk
+                    <strong>Any of low, medium or high workplace risk assessment </strong>is suitable
                   </label>
                 </div>
 
