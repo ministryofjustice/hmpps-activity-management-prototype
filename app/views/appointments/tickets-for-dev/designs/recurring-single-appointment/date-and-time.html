@@ -1,0 +1,272 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="appointment-repeat">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+   <h1 class="govuk-heading-l">
+    When is the appointment?
+   </h1>
+   <p class="govuk-body">
+    Select a date and time
+   </p>
+   {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+   {{ govukDateInput({
+     id: "dateofappointment",
+     name:dateofappointment,
+     value:dateofappointment,
+    
+     hint: {
+       text: "For example, 29 12 2022"
+     }
+   }) }}
+
+   {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+
+  
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <div class="govuk-button-group">
+          <h3 class="govuk-heading-m">
+            Start time
+          </h3>
+          <ul class="time-input">
+            <li>
+              {{ govukSelect({
+                id: "start-hours",
+                name: "start-hours",
+                items: [
+                {
+                  value: "--",
+                  text: "--",
+                selected: true},
+                  {
+                    value: "08",
+                    text: "08"
+                  },
+                  {
+                    value: "09",
+                    text: "09"
+                  },
+                  {
+                    value: "10",
+                    text: "10"
+                  },
+                  {
+                    value: "11",
+                    text: "11"
+                  },
+                  {
+                    value: "12",
+                    text: "12"
+                  },
+                  {
+                    value: "13",
+                    text: "13"
+                  },
+                  {
+                    value: "14",
+                    text: "14"
+                  },
+                  {
+                    value: "15",
+                    text: "15"
+                  },
+                  {
+                    value: "16",
+                    text: "16"
+                  },
+                  {
+                    value: "17",
+                    text: "17"
+                  },
+                  {
+                    value: "18",
+                    text: "18"
+                  },
+                  {
+                    value: "19",
+                    text: "19"
+                  },
+                  {
+                    value: "20",
+                    text: "20"
+                  },
+                  {
+                    value: "21",
+                    text: "21"
+                  },
+                  {
+                    value: "22",
+                    text: "22"
+                  }
+                  
+                ]
+              }) }}
+            </li>
+            <li class="minutes">
+              {{ govukSelect({
+                id: "start-minutes",
+                name: "start-minutes",
+                items: [
+                {
+                  value: "--",
+                  text: "--",
+                selected: true},
+                  {
+                    value: "00",
+                    text: "00"
+                  },
+                  {
+                    value: "15",
+                    text: "15"
+                  },
+                  {
+                    value: "30",
+                    text: "30"
+                  },
+                  {
+                    value: "45",
+                    text: "45"
+                  }
+                ]
+              }) }}
+            </li>
+          </ul>
+      </div>
+    </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <div class="govuk-button-group">
+          <h3 class="govuk-heading-m">
+            End time 
+          </h3>
+          <ul class="time-input">
+            <li>
+              {{ govukSelect({
+                id: "end-hours",
+                name: "end-hours",
+                items: [
+                {
+                  value: "--",
+                  text: "--",
+                selected: true},
+                  {
+                    value: "08",
+                    text: "08"
+                  },
+                  {
+                    value: "09",
+                    text: "09"
+                  },
+                  {
+                    value: "10",
+                    text: "10"
+                  },
+                  {
+                    value: "11",
+                    text: "11"
+                  },
+                  {
+                    value: "12",
+                    text: "12"
+                  },
+                  {
+                    value: "13",
+                    text: "13"
+                  },
+                  {
+                    value: "14",
+                    text: "14"
+                  },
+                  {
+                    value: "15",
+                    text: "15"
+                  },
+                  {
+                    value: "16",
+                    text: "16"
+                  },
+                  {
+                    value: "17",
+                    text: "17"
+                  },
+                  {
+                    value: "18",
+                    text: "18"
+                  },
+                  {
+                    value: "19",
+                    text: "19"
+                  },
+                  {
+                    value: "20",
+                    text: "20"
+                  },
+                  {
+                    value: "21",
+                    text: "21"
+                  },
+                  {
+                    value: "22",
+                    text: "22"
+                  }
+                  
+                ]
+              }) }}
+            </li>
+            <li class="minutes">
+              {{ govukSelect({
+                id: "end-minutes",
+                name: "end-minutes",
+                items: [
+                {
+                  value: "--",
+                  text: "--",
+                selected: true},
+                  {
+                    value: "00",
+                    text: "00"
+                  },
+                  {
+                    value: "15",
+                    text: "15"
+                  },
+                  {
+                    value: "30",
+                    text: "30"
+                  },
+                  {
+                    value: "45",
+                    text: "45"
+                  }
+                ]
+              }) }}
+            </li>
+          </ul>
+
+           
+         
+    </div>
+    </div>
+  </div>
+  {{ govukButton({
+    text: "Continue"
+  }) }}  
+    
+   </div>
+   
+  </div>
+</div>
+</form>
+{% endblock %}

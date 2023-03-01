@@ -1,0 +1,137 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+
+    <div class="govuk-width-container">
+      
+      <main class="govuk-main-wrapper " id="main-content" role="main">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds-from-desktop">
+            <h1 class="govuk-heading-l">Check your appointment details before you accept and save</h1>
+            <h2 class="govuk-heading-m">Appointment details</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Name of prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Fred Brut, {{ data['prisoner-name']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Name of prisoner</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Appointment type
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['categoryChoice']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Appointment type</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Appointment location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['locationChoice']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Appointment location</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Tuesday 12 January 2023
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Date</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Start time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours']}}:{{ data['start-minutes']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  End time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['end-hours']}}:{{ data['end-minutes']}}  
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% if data['appointment-repeat'] === 'Yes' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Frequency
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['appointment-frequency']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-frequency#appointment-frequency">
+                    Change<span class="govuk-visually-hidden"> Frequency</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Occurences
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['number-of-appointments']}}   
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-frequency">
+                    Change<span class="govuk-visually-hidden"> Occurences left</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+            </dl>
+            
+            
+            <form action="confirmation" method="post" novalidate>
+              <input type="hidden" name="answers-checked" value="true">
+              <button class="govuk-button" data-module="govuk-button">
+                Accept and save
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  
+{% endblock %}

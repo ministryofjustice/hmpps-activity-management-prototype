@@ -1,0 +1,46 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<div class="back">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+        titleText: "Appointment created"
+      }) }}
+
+
+      {% if data['appointment-repeat'] === 'Yes' %}
+                   
+      <p class="govuk-body">
+        You have successfully created an appointment for [no of prisoners] prisoners starting on [start date]. It will repeat [daily, weekly etc]  for [number of occurences]  occurrences.
+      </p>
+   
+    
+    {% else  %}
+   
+    <p class="govuk-body">
+      You have successfully created a group appointment for [no of prisoners] prisoners on [start date].
+
+     </p>
+    
+    {% endif %}
+
+
+
+
+
+    
+      <h2 class="govuk-heading-m">What you can do next</h2>
+      <p class="govuk-body">
+      <a href="../dps-home?prototype-versions[appointments][url]=/appointments/version-5/dps-home" class="govuk-link">Create another appointment</a>
+      </p>
+      <p class="govuk-body">
+        <a href="../appointment-management/version-2/start" class="govuk-link">View and edit appointment details</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

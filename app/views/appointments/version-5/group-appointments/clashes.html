@@ -36,7 +36,7 @@ Appointments prototype
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <form method="post" action="check-answers">
+    <form method="post" action="comments">
 
 
 
@@ -57,7 +57,8 @@ Appointments prototype
             <div class="govuk-checkboxes__item">
               <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
               <label class="govuk-label govuk-checkboxes__label" for="waste">
-                Bert Hungerford, {{ data['person-2']}}
+                <a href="#" class="govuk-link"><b>Hungerford</b>, Bert</a><br>
+                C2598E
               </label>
             </div>
           </div>
@@ -79,9 +80,11 @@ Appointments prototype
                     <li class="nobox">
                       <b>Time:</b> 13:00 to 16:30
                     </li>
+                   
                     <li class="nobox">
                       <b>Clashes with:</b> 2 occurrences
                     </li>
+                    
                     <li class="nobox">
                       <b>Created by:</b> John Smith
                     </li>
@@ -91,12 +94,24 @@ Appointments prototype
                  
                 </li>
                 <li>
-                  <b>Kitchen</b><br>
-                  13:00 to 16:30<br>
-                  Created by: Bill Jones<br>
-                  {% if data['appointment-repeat'] === 'Yes' %}
-                  Clashes with {{ data['number-of-appointments']}} instances
-                  {% endif %}
+                  <b>Kitchen</b>
+                  <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
+                    <li class="nobox">
+                      <b>Time:</b> 13:00 to 16:30
+                    </li>
+                   
+                    <li class="nobox">
+                      <b>Clashes with:</b> 10 occurrences
+                    </li>
+                    
+                    <li class="nobox">
+                      <b>Created by:</b> Bill Jones
+                    </li>
+                    
+                  </ul>
+
+
+                  
                 </li>
               </ul>
             </div>
@@ -118,7 +133,8 @@ Appointments prototype
             <div class="govuk-checkboxes__item">
               <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
               <label class="govuk-label govuk-checkboxes__label" for="waste">
-                Alex Sale, {{ data['person-4']}}
+                <a href="#" class="govuk-link"><b>Gee</b>, Ryan</a><br>
+                F5132C
               </label>
             </div>
           </div>
@@ -135,12 +151,24 @@ Appointments prototype
               <ul class="appointment-event">
                
                 <li>
-                  <b>Kitchen</b><br>
-                  13:00 to 16:30<br>
-                  Created by: Bill Jones<br>
-                  {% if data['appointment-repeat'] === 'Yes' %}
-                  Clashes with {{ data['number-of-appointments']}} instances
-                  {% endif %}
+                  <b>Kitchen</b>
+                  <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
+                    <li class="nobox">
+                      <b>Time:</b> 13:00 to 16:30
+                    </li>
+                   
+                    <li class="nobox">
+                      <b>Clashes with:</b> 10 occurrences
+                    </li>
+                    
+                    <li class="nobox">
+                      <b>Created by:</b> Bill Jones
+                    </li>
+                    
+                  </ul>
+
+
+                  
                 </li>
               </ul>
             </div>
@@ -162,7 +190,8 @@ Appointments prototype
             <div class="govuk-checkboxes__item">
               <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
               <label class="govuk-label govuk-checkboxes__label" for="waste">
-                Ryan Gee, {{ data['person-5']}}
+                <a href="#" class="govuk-link"><b>Knox</b>, Tommy-Lee</a><br>
+                C8361E
               </label>
             </div>
           </div>
@@ -179,13 +208,24 @@ Appointments prototype
               <ul class="appointment-event">
                
                 <li>
-                  <b>Kitchen</b><br>
-                  13:00 to 16:30m<br>
-                  Created by: Bill Jones<br>
+                  <b>Kitchen</b>
+                  <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
+                    <li class="nobox">
+                      <b>Time:</b> 13:00 to 16:30
+                    </li>
+                   
+                    <li class="nobox">
+                      <b>Clashes with:</b> 10 occurrences
+                    </li>
+                    
+                    <li class="nobox">
+                      <b>Created by:</b> Bill Jones
+                    </li>
+                    
+                  </ul>
 
-                  {% if data['appointment-repeat'] === 'Yes' %}
-                  Clashes with {{ data['number-of-appointments']}} instances
-                  {% endif %}
+
+                  
                 </li>
               </ul>
             </div>
@@ -212,11 +252,13 @@ Appointments prototype
 <button class="govuk-button govuk-button--warning" data-module="govuk-button" name="editDashboard" value="archive">
 Remove selected prisoners
 </button>
-<button class="govuk-button" data-module="govuk-button" style="margin-left:30px;" name="editDashboard" value="suspend">
+<button class="govuk-button" data-module="govuk-button"  name="editDashboard" value="suspend">
 Continue
 </button>
   </form>
-
+<p class="govuk-body">
+  <a href="#" class="govuk-link">Choose a new time</a>
+</p>
 </div>
 </div>
 </div>

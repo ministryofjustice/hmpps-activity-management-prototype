@@ -72,13 +72,12 @@ const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, dat
                     date: date,
                     period: period,
                     records: attendanceRecords.map(attendanceRecord => {
-                        console.log(attendanceRecord)
+                        // console.log(attendanceRecord)
                         return {
                             attendance: attendanceRecord.attendance,
-                            attendanceDetail: attendanceRecord.attendanceDetail,
+                            attendanceStatus: attendanceRecord.attendanceStatus,
                             pay: attendanceRecord.pay,
-                            payReason: attendanceRecord.attendanceDetail,
-                            unacceptableAbsence: attendanceRecord.unacceptableAbsence,
+                            caseNote: attendanceRecord.incentiveLevelWarning,
                             incentiveLevelWarning: attendanceRecord.incentiveLevelWarning,
                             sessionCancelled: attendanceRecord.sessionCancelled,
                             timestamp: attendanceRecord.timestamp
@@ -93,17 +92,18 @@ const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, dat
 }
 
 // function to create an attendanceDetails object to pass in to updateAttendanceData and mark all selected prisoners as 'not-attended' and 'standard' pay
-function createAttendanceDetailsForMultiplePrisoners(prisoners, attendance, pay, reason, unacceptableAbsence) {
+function createAttendanceDetailsForMultiplePrisoners(prisoners, {attendance, attendanceStatus, pay, caseNote, incentiveLevelWarning}) {
     const attendanceDetails = {};
     prisoners.forEach(prisonerId => {
         attendanceDetails[prisonerId] = {
             attendance: attendance,
-            pay: pay,
-            payReason: reason,
-            'pay-detail': reason,
-            attendanceDetail: "Session cancelled",
-            unacceptableAbsence: unacceptableAbsence,
-            incentiveLevelWarning: ''
+            attendanceStatus,
+            pay,
+            caseNote,
+            incentiveLevelWarning
+            // attendanceDetail: "Session cancelled",
+            // unacceptableAbsence: unacceptableAbsence,
+            // incentiveLevelWarning: ''
         };
     });
     return attendanceDetails;
@@ -124,30 +124,41 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
     }
     Object.keys(attendanceDetails).forEach(prisonerId => {
         const details = attendanceDetails[prisonerId];
+        let reason = details['absence-reason'];
+        // console.log(details.attendance)
 
-        let payReason;
-        if(details['pay'] == 'bonus'){
-            payReason = details['bonus-detail']
-        } else if(details['pay'] == 'none'){
-            payReason = details['no-pay-detail']
-        } else {
-            payReason = null;
-        }
-
-        let attendanceDetail;
-        if(details['absence-reason'] == 'sick'){
-            attendanceDetail = 'Sick'
-            details.pay = 'standard'
-        } else if(details['absence-reason'] == 'refused'){
-            attendanceDetail = 'Refused to attend'
-        } else if(details['absence-reason'] == 'not-required'){
-            attendanceDetail = 'Not required or excused'
-            details.pay = 'standard'
-        } else if(details['absence-reason'] == 'rest-day'){
-            attendanceDetail = 'Rest day'
-            details.pay = 'standard'
-        } else if(details['absence-reason'] == 'other'){
-            attendanceDetail = 'Other'
+        let attendanceStatus;
+        if( reason == 'sick' ){
+            // attendanceStatus = 'Sick'
+            if ( details['pay-prisoner'] == 'yes' ){
+                details.pay = true
+            } else {
+                details.pay = false
+            }
+        } else if( reason == 'refused' ){
+            // attendanceStatus = 'Refused to attend'
+            details.pay = false
+        } else if( reason == 'not-required' ){
+            // attendanceStatus = 'Not required or excused'
+            details.pay = true
+        } else if( reason == 'rest-day' ){
+            // attendanceStatus = 'Rest day'
+            if ( details['pay-prisoner'] == 'yes' ){
+                details.pay = true
+            } else {
+                details.pay = false
+            }
+        } else if( reason == 'clash' ){
+            // attendanceStatus = 'Other activity'
+            details.pay = true
+        } 
+        else if( reason == 'other' ){
+            // attendanceStatus = 'Other'
+            if ( details['pay-prisoner'] == 'yes' ){
+                details.pay = true
+            } else {
+                details.pay = false
+            }
         }
 
         if (!req.session.data.attendance[activityId][date][period][prisonerId]) {
@@ -163,12 +174,12 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
 
         req.session.data.attendance[activityId][date][period][prisonerId].push({
             attendance: details.attendance,
-            attendanceDetail: attendanceDetail,
+            attendanceStatus: reason,
             pay: details.pay,
-            payReason: payReason,
             sessionCancelled: sessionCancelled,
-            unacceptableAbsence: details.unacceptableAbsence,
-            incentiveLevelWarning: details.incentiveLevelWarning,
+            // unacceptableAbsence: details.unacceptableAbsence,
+            incentiveLevelWarning: details['incentive-level-warning'],
+            caseNote: details['case-note'],
             timestamp: {
                 date: new Date().toISOString().slice(0, 10),
                 time: new Date().toTimeString().slice(0, 8)
@@ -294,7 +305,8 @@ const addEventsToPrisoners = (prisoners, activities, date, period, attendanceDat
             if(eventAttendance) {
                 Object.keys(eventAttendance).forEach(prisonerId => {
                     if(prisonerId === prisoner.id) {
-                        event.attendance = eventAttendance[prisonerId][0].attendance;
+                        let prisonerAttendanceData = eventAttendance[prisonerId]
+                        event.attendance = prisonerAttendanceData[prisonerAttendanceData.length - 1].attendance;
                     }
                 });
             }
@@ -601,8 +613,10 @@ function countAttendance(data, activityId, date, period, status) {
 
     // Iterate through the prisoners in the class on the given date
     for (const prisonerId in data[activityId][date][period]) {
+        let prisonerAttendance = data[activityId][date][period][prisonerId]
+
         // Check if the prisoner's status is "attended"
-        if (data[activityId][date][period][prisonerId][0]["attendance"] === status) {
+        if (prisonerAttendance[prisonerAttendance.length - 1]["attendance"] === status) {
             // If the prisoner's status is "attended", increment the attendedCount
             attendedCount++;
         }
@@ -610,7 +624,6 @@ function countAttendance(data, activityId, date, period, status) {
 
     // Return the attendedCount
     return attendedCount;
-
 }
 
 const addAttendanceCountsToActivities = (activities, attendanceData, selectedDate, prisonersList) => {
@@ -654,9 +667,10 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
                 const amAttendance = attendanceData[activity.id.toString()][date].AM;
                 for (let prisonerId in amAttendance) {
                     if (prisonerId === prisoner.id.toString()) {
-                        if (amAttendance[prisonerId][0].attendance === 'attended') {
+                        let prisonerAMAttendance = amAttendance[prisonerId]
+                        if (prisonerAMAttendance[prisonerAMAttendance.length - 1].attendance === 'attended') {
                             attendanceCountAM[attendedKey]++;
-                        } else if (amAttendance[prisonerId][0].attendance === 'not-attended') {
+                        } else if (prisonerAMAttendance[prisonerAMAttendance.length - 1].attendance === 'not-attended') {
                             attendanceCountAM[notAttendedKey]++;
                         }
                     }
@@ -673,9 +687,10 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
                 const pmAttendance = attendanceData[activity.id.toString()][date].PM;
                 for (let prisonerId in pmAttendance) {
                     if (prisonerId === prisoner.id.toString()) {
-                        if (pmAttendance[prisonerId][0].attendance === 'attended') {
+                        let prisonerPMAttendance = pmAttendance[prisonerId]
+                        if (prisonerPMAttendance[prisonerPMAttendance.length - 1].attendance === 'attended') {
                             attendanceCountPM[attendedKey]++;
-                        } else if (pmAttendance[prisonerId][0].attendance === 'not-attended') {
+                        } else if (prisonerPMAttendance[prisonerPMAttendance.length - 1].attendance === 'not-attended') {
                             attendanceCountPM[notAttendedKey]++;
                         }
                     }
@@ -809,12 +824,19 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
             return idArray;
         };
         
-        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(getPrisonerIds(prisonersByDateAndPeriod), 'not-attended', 'standard', reason, 'no')
+        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(getPrisonerIds(prisonersByDateAndPeriod), {
+            attendance: 'not-attended',
+            attendanceStatus: 'session-cancelled',
+            pay: true,
+            caseNote: false,
+            incentiveLevelWarning: false
+        })
+
         Object.keys(attendanceDetails).forEach(prisonerId => {
             const details = attendanceDetails[prisonerId];
             details.sessionCancelled = true
+            details['absence-reason'] = 'session-cancelled'
         })
-        // console.log(attendanceDetails)
         updateAttendanceData(req, activityId, date, period, attendanceDetails)
     }
 
@@ -854,11 +876,14 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendanc
     let referrer = req.session.data['attendance-url']
     let url = (referrer == 'refusals') ? ('refusals-list') : ('../' + activityId)
 
+    // add something here to redirect to a different URL if any of the prisoners have incentive level warnings
+    let incentiveLevelWarnings = '';
+
     res.redirect(url)
 });
 
 // refusals
-router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-refusal-details', function(req, res) {
+router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-absence-details', function(req, res) {
     delete req.session.data['attendance-details']
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
@@ -868,13 +893,13 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add
     } else if(req.session.data['refusal-type'] == 'refused'){
         refusalPage = 'add-refusal-details'
     } else {
-        refusalPage = 'add-absent-details'
+        refusalPage = 'add-other-absence-details'
     }
     res.render('unlock/' + req.version + '/' + refusalPage, {
         filteredPrisoners
     })
 });
-router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-refusal-details', function(req, res) {
+router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-absence-details', function(req, res) {
     let prisoners = req.session.data['timetable-complete-1']['prisoners'];
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
 
@@ -901,6 +926,7 @@ router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/ad
             // if there's an activity and it has an ID, set it and update the prisoner's attendance for each activity
             if(activity[0] && activity[0].id){
                 activityId = activity[0].id
+                // console.log(attendanceDetails)
                 updateAttendanceData(req, activityId, date, period, attendanceDetails)
             }
         })
@@ -922,7 +948,13 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/attend-and-pa
     let period = req.params.selectedPeriod
     let date = req.params.selectedDate
 
-    let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners, 'attended', 'standard', '', 'no')
+    let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners, {
+        attendance: 'attended',
+        attendanceStatus: 'attended',
+        pay: true,
+        caseNote: false,
+        incentiveLevelWarning: false
+    })
 
     updateAttendanceData(req, activityId, date, period, attendanceDetails)
 
@@ -951,7 +983,13 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-variabl
         res.redirect('add-attendance-details')
     } else {
     	let attendanceAction = req.session.data['attendance-action']
-        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners, 'attended', 'standard', '', 'no')
+        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners, {
+            attendance: 'attended',
+            attendanceStatus: 'attended',
+            pay: true,
+            caseNote: false,
+            incentiveLevelWarning: false
+        })
 
         updateAttendanceData(req, activityId, date, period, attendanceDetails)
 
@@ -1010,16 +1048,11 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/ch
 router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-attendance', function(req, res) {
     let attendance = req.session.data['attendance-action']
 
-    // let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
-    // req.session.data = [prisoner.id]
-
-    // createAttendanceDetailsForMultiplePrisoners(selectedPrisoner, 'not-attended', 'standard', '', 'no')
-
     if(attendance == 'attended'){
         res.redirect('change-pay')
     } else if(attendance == 'not-attended'){
         res.redirect('../add-attendance-details')
-    } else if(attendance == 'unknown'){
+    } else if(attendance == 'remove'){
         res.redirect('confirm-remove-attendance')
     }
 })
@@ -1068,6 +1101,7 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/ch
 
     res.render('unlock/' + req.version + '/change-pay', {
         prisoner,
+        prisonerId,
         date,
         period,
         activityId,
@@ -1083,18 +1117,25 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/c
     let period = req.params.selectedPeriod;
     let attendanceDataForActivity = attendanceData[activityId][date][period]
 
-    let selectedPrisoners = req.session.data['selected-prisoners'];
-    let prisoners = req.session.data['timetable-complete-1']['prisoners'];
-    let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
-
-    let attendanceDetails = req.session.data['attendance-details'];
-
+    let pay;
+    if(req.session.data['pay-prisoner'] != 'yes'){
+        pay = false
+    } else {
+        pay = true
+    }
+    let attendanceDetails = createAttendanceDetailsForMultiplePrisoners([prisonerId], {
+        attendance: 'attended',
+        attendanceStatus: 'session-cancelled',
+        pay: pay,
+        caseNote: req.session.data['case-note'],
+        incentiveLevelWarning: false
+    })
     updateAttendanceData(req, activityId, date, period, attendanceDetails)
 
     // set the confirmation dialog to display
     req.session.data['attendance-confirmation'] = 'true'
 
-    res.redirect('../../'+req.params.activityId)
+    res.redirect('../../'+req.params.activityId+"/"+prisonerId)
 })
 
 
@@ -1306,7 +1347,7 @@ router.post('/select-activity', function(req, res) {
         res.redirect('activities/' + date)
     }
 });
-// SELECT ACTIVITY RESULTS
+// SELECT ACTIVITY
 router.get('/activities/:selectedDate', function(req, res) {
     let selectedDate = req.params.selectedDate
     let period = req.session.data['times'].toUpperCase()
@@ -1340,11 +1381,6 @@ router.get('/activities/:selectedDate', function(req, res) {
 
     let locations = [];
     let attendanceTotals = {};
-
-        // 'scheduled': 0,
-        // 'not-attended': 0,
-        // 'attended': 0,
-        // 'not-recorded': 0
     
     for (const period in activitiesForDate) {
         attendanceTotals[period] = attendanceTotals[period] || {};
@@ -1448,6 +1484,113 @@ router.get('/attendance-dashboard-4', function(req, res) {
     req.session.data['attendance-data-1']['daily'] = totals;
 
     res.render('unlock/' + req.version + '/attendance-dashboard-4', {date})
+});
+
+router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function(req, res) {
+    let attendanceData = req.session.data['attendance-data-1']
+    let date = req.params.selectedDate;
+    let dateString = new Date(date);
+    let prisoners = req.session.data['timetable-complete-1']['prisoners'];
+    let activities = req.session.data['timetable-complete-1']['activities'];
+    let period = req.params.selectedPeriod;
+    let activitiesForDate = activitiesByDate(req.session.data['timetable-complete-1']['activities'], dateString);
+
+    let activitiesForDateWithCounts = {
+        'morning': [],
+        'afternoon': []
+    }
+    activitiesForDateWithCounts.morning = addAttendanceCountsToActivities(activitiesForDate.morning, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
+    activitiesForDateWithCounts.afternoon = addAttendanceCountsToActivities(activitiesForDate.afternoon, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
+    
+    let attendanceTotals = {};
+    for (const period in activitiesForDate) {
+        attendanceTotals[period] = attendanceTotals[period] || {};
+        for (const activity of activitiesForDate[period]) {
+            for (const type in activity.attendanceCount[period]) {
+                attendanceTotals[period][type] = (attendanceTotals[period][type] || 0) +
+                (activity.attendanceCount[period][type] > 0 ? activity.attendanceCount[period][type] : 0);
+            }
+        }
+    }
+
+    function calculateAttendanceFigures(data, period, date) {
+        let totalAllocated;
+
+        if (period == "AM" || period == "Morning" || period == "morning") {
+            totalAllocated = attendanceTotals.morning['scheduled']
+            period = "AM"
+        } else if (period == "PM" || period == "Afternoon" || period == "afternoon") {
+            totalAllocated = attendanceTotals.afternoon['scheduled']
+            period = "PM"
+        } else if (period == "daily" || period == "Daily") {
+            totalAllocated = attendanceTotals.morning['scheduled'] + attendanceTotals.afternoon['scheduled']
+            period = "daily"
+        } else {
+            throw new Error("Invalid period input");
+        }
+
+        const attendanceCounts = {
+            allocated: totalAllocated,
+            attended: 0,
+            'not-attended': 0,
+            'not-recorded': totalAllocated,
+            absences: {
+                'with-pay': {
+                    total: 0
+                },
+                'without-pay': {
+                    total: 0
+                }
+            }
+        };
+
+        if (data) {
+            Object.values(data).forEach(activity => {
+                if (activity[date]) {
+                    const periodData = period === 'daily' ? (activity[date].AM ? Object.values(activity[date].AM) : []).concat(activity[date].PM ? Object.values(activity[date].PM) : []) : activity[date][period] ? Object.values(activity[date][period]) : [];
+                    periodData.forEach(prisonerRecord => {
+                        const record = prisonerRecord[prisonerRecord.length - 1];
+                        const attendanceType = record.attendance;
+                        const attendanceStatus = record.attendanceStatus || 'not-recorded';
+                        const payStatus = record.pay;
+
+                        if (attendanceType === 'attended') {
+                            attendanceCounts.attended++;
+                            attendanceCounts['not-recorded']--;
+                        } else if (attendanceType === 'not-attended') {
+                            attendanceCounts['not-attended']++;
+                            if (payStatus == true) {
+                                attendanceCounts.absences['with-pay'].total++;
+                                attendanceCounts.absences['with-pay'][attendanceStatus] = (attendanceCounts.absences['with-pay'][attendanceStatus] || 0) + 1;
+                            } else {
+                                attendanceCounts.absences['without-pay'].total++;
+                                attendanceCounts.absences['without-pay'][attendanceStatus] = (attendanceCounts.absences['without-pay'][attendanceStatus] || 0) + 1;
+                            }
+                            attendanceCounts['not-recorded']--;
+                        } else {
+                            attendanceCounts['not-recorded']++;
+                        }
+                    });
+                }
+            });
+        }
+
+        return attendanceCounts;
+    }
+
+    let counts = calculateAttendanceFigures(req.session.data['attendance'], period, date)
+    let timeOfDay = period === 'AM' ? 'Morning' : period === 'PM' ? 'Afternoon' : 'Daily';
+
+    res.render('unlock/' + req.version + '/attendance-dashboard', {
+        date,
+        dateString,
+        attendanceTotals,
+        activitiesForDate,
+        activitiesForDateWithCounts,
+        counts,
+        period,
+        timeOfDay
+    })
 });
 
 module.exports = router

@@ -60,21 +60,22 @@ Add attendance details for {{prisonersNoun}}
 				{% endif %}
 
 				<input type="hidden" name="attendance-details[{{prisoner.id}}][attendance]" value="{{data['attendance-action']}}">
+				<input type="hidden" name="attendance-details[{{prisoner.id}}][absence-reason]" value="refused">
 
 				{{ govukWarningText({
 					text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid because this is an unacceptable absence.",
 					iconFallbackText: "Warning"
 				}) }}
 				{{ govukTextarea({
-					name: "more-detail",
-					id: "more-detail",
+					name: "attendance-details[" + prisoner.id + "][case-note]",
+					id: "more-detail-" + prisoner.id,
 					label: {
-						text: "Case note"
+						text: "Add a case note"
 					}
 				}) }}
 				{{ govukRadios({
-					id: "not-listed-absence-type",
-					name: "not-listed-absence-type",
+					id: "incentive-level-warning",
+					name: "attendance-details[" + prisoner.id + "][incentive-level-warning]",
 					classes: "govuk-radios--small govuk-radios--inline",
 					fieldset: {
 						legend: {
@@ -84,12 +85,14 @@ Add attendance details for {{prisonersNoun}}
 					items: [
 					{
 						value: "yes",
-						text: "Yes"
+						text: "Yes",
+						id: "incentive-level-warning-1-" + prisoner.id
 
 					},
 					{
 						value: "no",
-						text: "No"
+						text: "No",
+						id: "incentive-level-warning-2-" + prisoner.id
 					}
 					]
 				}) }}
