@@ -60,7 +60,7 @@ const router = express.Router()
 	  });
 
 
-	  router.post(`/individual-appointment/appointment-repeat-question`, function (req, res) {
+	  router.post(`/individual-appointment/appointment-repeat-result`, function (req, res) {
 		const appointRepeat = req.session.data['appointment-repeat-single'];
 		if (appointRepeat === 'Yes') {
 			res.redirect(`appointment-frequency`);
@@ -83,20 +83,7 @@ const router = express.Router()
 	 
 
 
-router.post('/individual-appointment/appointment-date', function(req, res) {
-	{
-		//Change numerical month to short month name
-		req.session.data.month = getMonthName(req.session.data.month)
-		req.session.data.dateofappointmentsingle = req.session.data.day + " " + req.session.data.month + " " + req.session.data.year
-		res.redirect('appointment-time')
-	}
-});
 
-function getMonthName(monthNumber) {
-const date = new Date();
-date.setMonth(monthNumber - 1);
-return date.toLocaleString('en-US', { month: 'long' });
-}
 
 
 
@@ -128,6 +115,15 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
+  router.post(`/individual-appointment/prisoner-confirmed-question`, function (req, res) {
+	const peoleRepeat = req.session.data['correct-person-single'];
+	if (peoleRepeat === 'No') {
+		res.redirect(`search-person`);
+	} else {
+		res.redirect(`prisoner-comments`);
+	}
+  });
+  
 
 	  
 module.exports = router
