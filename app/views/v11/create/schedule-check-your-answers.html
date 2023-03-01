@@ -15,25 +15,98 @@ Activities Management prototype
           <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
           </div>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4" style="margin-left:10px;">
-          Check details for {{data.activityName or 'Maths level 1'}} - {{data.scheduleName or 'Schedule A'}}
+          Check details for {{data.activityName or 'Maths level 1'}}
         </h1><br />
       </div>
       <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-m">Schedule details</h2>
+        <h2 class="govuk-heading-m" style="background-color:#f1f1f1;">Activity details</h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
-              Schedule name
+              Activity category
             </dt>
             <dd class="govuk-summary-list__value">
-            {{data.scheduleName or 'Schedule A'}}
+              {{data.category or 'Education'}}
             </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/schedule-name">
-                Change<span class="govuk-visually-hidden"> licence type</span>
+            <dd class="govuk-summary-list__actions" style="width:30%;">
+              <a class="govuk-link" href="activity-check-your-answers?edit=true">
+                Change<span class="govuk-visually-hidden"> name</span>
               </a>
             </dd>
           </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Activity name
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data.activityName or 'Maths level 1'}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-name">
+              Change  <span class="govuk-visually-hidden"> name</span>
+              </a>
+            </dd>
+          </div>
+          </dl>
+
+          <h2 class="govuk-heading-m">Requirements and pay</h2>
+          <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Risk assessment level
+              </dt>
+              <dd class="govuk-summary-list__value">
+                  {{data.riskLevel or 'Low'}}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="check/activity-risk-assessment">
+                Change  <span class="govuk-visually-hidden"> licence type</span>
+                </a>
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Education requirements
+              </dt>
+              <dd class="govuk-summary-list__value">
+                	Entry level maths, level 3<br />	Entry level English, level 3
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="check/activity-add-education">
+                  Change<span class="govuk-visually-hidden"> licence period</span>
+                </a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Pay rates
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {% for level, details in data.payrates %}
+                  {% if details|length > 0 %}
+                  {{level}} incentive level payments<br />
+
+                  {% for rate in details %}
+                    {{rate.name or 'Payment rate A'}} :
+                    &pound; {{rate.amount or '1.10'}}<br />
+
+                    {% endfor %}
+
+                  {% endif %}<br />
+                  {% endfor %}
+                </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="activity-check-your-answers-payment">
+                  Change
+                  <span class="govuk-visually-hidden"> licence period</span>
+                </a>
+              </dd>
+            </div>
+          </dl>
+
+          <h2 class="govuk-heading-m">Dates and schedule</h2>
+          <dl class="govuk-summary-list govuk-!-margin-bottom-9">
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Start date
@@ -66,7 +139,7 @@ Activities Management prototype
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
-              Schedule
+              Days and times
             </dt>
             <dd class="govuk-summary-list__value">
               <!--Check days entered on time enter page-->
@@ -132,6 +205,22 @@ Activities Management prototype
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
+              Runs on bank holidays
+            </dt>
+            <dd class="govuk-summary-list__value">
+               {{data.actitivyBankHols or 'No'}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="check/activity-location-dropdown">
+                Change<span class="govuk-visually-hidden"> licence type</span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+        <h2 class="govuk-heading-m">Location and capacity</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
               Location
             </dt>
             <dd class="govuk-summary-list__value">
@@ -157,84 +246,11 @@ Activities Management prototype
             </dd>
           </div>
         </dl>
+        <!--
         <h2 class="govuk-heading-m">Activity details</h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Activity category
-            </dt>
-            <dd class="govuk-summary-list__value">
-            </dd>
-            <dd class="govuk-summary-list__actions" style="width:30%;">
-              <a class="govuk-link" href="activity-check-your-answers?edit=true">
-                Change activity details<span class="govuk-visually-hidden"> name</span>
-              </a>
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Name
-            </dt>
-            <dd class="govuk-summary-list__value">
-              {{data.activityName or 'Maths level 1'}}
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-name">
-                <span class="govuk-visually-hidden"> name</span>
-              </a>
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Risk level
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{data.riskLevel or 'Low'}}
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-risk-assessment">
-                <span class="govuk-visually-hidden"> licence type</span>
-              </a>
-            </dd>
-          </div>
 
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Education level
-            </dt>
-            <dd class="govuk-summary-list__value">
-              	Entry level maths, level 3<br />	Entry level English, level 3
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-add-education">
-                <span class="govuk-visually-hidden"> licence period</span>
-              </a>
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Pay rates
-            </dt>
-            <dd class="govuk-summary-list__value">
-              {% for level, details in data.payrates %}
-                {% if details|length > 0 %}
-                {{level}} incentive level payments<br />
 
-                {% for rate in details %}
-                  {{rate.name or 'Payment rate A'}} :
-                  &pound; {{rate.amount or '1.10'}}<br />
-
-                  {% endfor %}
-
-                {% endif %}<br />
-                {% endfor %}
-              </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="check/activity-payment-details">
-                <span class="govuk-visually-hidden"> licence period</span>
-              </a>
-            </dd>
-          </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Incentive level
@@ -249,14 +265,14 @@ Activities Management prototype
               </a>
             </dd>
 
-        </dl>
+        </dl>-->
         <div id="event-name-hint" class="govuk-hint">
         <a href="activity-dashboard?dashboardCategory=All&dashboardView=live">Cancel and return to activities dashboard</a>
         </div><br />
 
         <form method="post">
           <button class="govuk-button" data-module="govuk-button">
-            Create schedule
+            Create activity
           </button>
         </form>
 
