@@ -18,16 +18,35 @@ Appointments prototype
       {{ govukPanel({
         titleText: "Appointment created"
       }) }}
-     <p class="govuk-body">
+
+
+      {% if data['appointment-repeat'] === 'Yes' %}
+                   
+      <p class="govuk-body">
+        You have successfully created an appointment for 14 prisoners starting on 3 Mar 2023. It will repeat {{ data['appointment-frequency']}}  for {{ data['number-of-appointments']}}  occurrences.
+      </p>
+   
+    
+    {% else  %}
+   
+    <p class="govuk-body">
       You have successfully created a group appointment for 14 prisoners on 3 March 2023.
 
      </p>
+    
+    {% endif %}
+
+
+
+
+
+    
       <h2 class="govuk-heading-m">What you can do next</h2>
       <p class="govuk-body">
       <a href="../dps-home?prototype-versions[appointments][url]=/appointments/version-5/dps-home" class="govuk-link">Create another appointment</a>
       </p>
       <p class="govuk-body">
-        <a href="#" class="govuk-link">View and edit appointment details</a>
+        <a href="../appointment-management/version-2/start" class="govuk-link">View and edit appointment details</a>
       </p>
     </div>
   </div>
