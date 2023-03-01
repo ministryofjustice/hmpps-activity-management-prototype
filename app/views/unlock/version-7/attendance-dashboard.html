@@ -48,7 +48,7 @@ Attendance dashboard
 <h3 class="govuk-body govuk-hint govuk-!-margin-bottom-0 {{params.titleClasses}}">{{ params.title }}</h3>
 <span class="govuk-heading-xl govuk-!-margin-0 govuk-!-padding-0 {{params.countClasses}}">
 	{{ params.count }}<span class="govuk-visually-hidden"> prisoners</span>
-	{% if params.showPercentage == true %}<span class="govuk-visually-hidden">, which is </span> <span class="govuk-tag {{params.tagClasses}} govuk-!-display-inline-block" style="vertical-align: middle;">{{(params.count / 850 * 100) | round(1)}}%</span>
+	{% if params.showPercentage == true %}<span class="govuk-visually-hidden">, which is </span> <span class="govuk-tag {{params.tagClasses}} govuk-!-display-inline-block" style="vertical-align: middle;">{{(params.count / counts.allocated * 100) | round(1)}}%</span>
 </span>
 {% endif %}
 {% if params.linkHref %}
@@ -164,7 +164,7 @@ Attendance dashboard
 			count: counts.attended,
 			linkHref: "attendance-dashboard-3-list",
 			showPercentage: true,
-			tagClasses: "govuk-tag--green"
+			tagClasses: "govuk-tag--grey"
 		}) }}
 	</div>
 	<div class="govuk-grid-column-one-quarter">
@@ -172,7 +172,7 @@ Attendance dashboard
 			title: "Not yet attended",
 			count: counts['not-recorded'],
 			linkHref: "attendance-dashboard-3-attendance",
-			showPercentage: false,
+			showPercentage: true,
 			nextPageTitle: "Find and update not attended prisoners",
 			tagClasses: "govuk-tag--grey"
 		}) }}
@@ -183,15 +183,9 @@ Attendance dashboard
 			count: counts['not-attended'],
 			linkHref: "attendance-dashboard-3-list",
 			showPercentage: true,
-			tagClasses: "govuk-tag--green"
+			tagClasses: "govuk-tag--grey"
 		}) }}
 	</div>
-	<!-- <div class="govuk-grid-column-one-quarter">
-		{{ dataCard({
-			title: "Attendance rate (percentage)",
-			count: ((850 - totalAbsences) / 850 * 100) | round(1, "floor")
-		}) }}
-	</div> -->
 </div>
 {{ govukDetails({
 	summaryText: "Choose a different date",
@@ -202,10 +196,13 @@ Attendance dashboard
 	summaryText: "Filter data by activity category",
 	html: filterHtml
 }) }}
+
+{% if counts.absences['with-pay'].total > 0 or counts.absences['without-pay'].total > 0 %}
 <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 <h2 class="govuk-heading-m">
 	Absences
 </h2>
+{% if counts.absences['with-pay'].total > 0 %}
 <div class="govuk-grid-row govuk-!-margin-bottom-5">
 	<div class="govuk-grid-column-one-quarter">
 		{{ dataCard({
@@ -232,6 +229,8 @@ Attendance dashboard
 		<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-bottom-2">
 	</div>
 </div>
+{% endif %}
+{% if counts.absences['without-pay'].total > 0 %}
 <div class="govuk-grid-row govuk-!-margin-bottom-5">
 	<div class="govuk-grid-column-one-quarter">
 		{{ dataCard({
@@ -257,6 +256,9 @@ Attendance dashboard
 		</div>
 	</div>
 </div>
+{% endif %}
+{% endif %}
+
 <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 <h2 class="govuk-heading-m">
 	Cancellations
