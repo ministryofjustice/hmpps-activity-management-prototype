@@ -63,6 +63,14 @@ module.exports = function(env) {
         return prisoner
     }
 
+    filters.getPrisonerDetails = function(prisonerId) {
+        const timetable = require('./data/timetable-complete-1')
+        let match = timetable.prisoners.filter(prisoner => prisoner.id == prisonerId);
+        let prisoner = match[0]
+
+        return prisoner
+    }
+
     filters.getHouseblock = function(houseblockId) {
         const locations = require('./data/residential-list-1')
         let match = locations.filter(location => location.id == houseblockId);
