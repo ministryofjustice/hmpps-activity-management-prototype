@@ -10,7 +10,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="prisoner-confirm-question">
+<form id="form" method="post" action="appointment-type">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
@@ -18,7 +18,7 @@ Appointments prototype
       </div>
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-l">Individual appointment</span>
-        Add comments for {{ data['prisoner-name']}}, AB76394YT
+        Add comments for {{ data['prisoner-name-single']}}, AB76394YT
        </h1>
 
   </div>
@@ -28,8 +28,8 @@ Appointments prototype
     <div class="govuk-grid-column-two-thirds">
     
     {{ govukTextarea({
-      id: "comments",
-      name: "comments",
+      id: "comments-single-single",
+      name: "comments-single-single",
       label: {
         html: "<b class='govuk-fieldset__legend--m'>Comments (optional)</b>"
       },
