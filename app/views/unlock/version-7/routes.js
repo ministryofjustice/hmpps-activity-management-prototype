@@ -99,11 +99,10 @@ function createAttendanceDetailsForMultiplePrisoners(prisoners, {attendance, att
             attendance: attendance,
             attendanceStatus,
             pay,
-            caseNote,
-            incentiveLevelWarning
+            'case-note': caseNote,
+            'incentive-level-warning': incentiveLevelWarning,
             // attendanceDetail: "Session cancelled",
             // unacceptableAbsence: unacceptableAbsence,
-            // incentiveLevelWarning: ''
         };
     });
     return attendanceDetails;
@@ -180,6 +179,7 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
             // unacceptableAbsence: details.unacceptableAbsence,
             incentiveLevelWarning: details['incentive-level-warning'],
             caseNote: details['case-note'],
+            detail: details.detail,
             timestamp: {
                 date: new Date().toISOString().slice(0, 10),
                 time: new Date().toTimeString().slice(0, 8)
@@ -774,7 +774,7 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req
     };
     let showCancelButton = checkIsCancellable(date)
 
-    res.render('unlock/' + req.version + '/activity-list', {
+    res.render('unlock/' + req.version + '/attendance-list', {
         activity,
         day,
         date,
@@ -1103,7 +1103,7 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', 
 router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', function(req, res) {
     res.redirect(req.params.prisonerId + '/change')
 });
-
+// ------------------------------------------------------------------------
 
 router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-attendance', function(req, res) {
     let activityId = req.params.activityId;
@@ -1138,6 +1138,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/c
         res.redirect('confirm-remove-attendance')
     }
 })
+// ------------------------------------------------------------------------
 
 router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-attendance', function(req, res) {
     let prisonerId = req.params.prisonerId;
@@ -1164,6 +1165,37 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/c
 
     res.redirect('../../'+req.params.activityId)
 })
+// ------------------------------------------------------------------------
+
+// confirm remove pay
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-pay', function(req, res) {
+    let prisonerId = req.params.prisonerId;
+    let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
+
+    res.render('unlock/' + req.version + '/confirm-remove-pay', {
+        prisoner
+    })
+})
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-pay', function(req, res) {
+    let prisonerId = req.params.prisonerId;
+    let attendanceData = req.session.data.attendance
+    let activityId = req.params.activityId;
+    let date = req.params.selectedDate;
+    let period = req.params.selectedPeriod;
+    
+    if(req.session.data['confirm-remove-pay'] == 'yes'){
+        let attendanceDetails = createAttendanceDetailsForMultiplePrisoners([prisonerId], {
+            attendance: 'attended',
+            pay: false,
+            caseNote: req.session.data['case-note'],
+            incentiveLevelWarning: false
+        })
+        updateAttendanceData(req, activityId, date, period, attendanceDetails)
+    }
+
+    res.redirect('../'+prisonerId)
+})
+// ------------------------------------------------------------------------
 
 router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-attendance-details', function(req, res) {
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])

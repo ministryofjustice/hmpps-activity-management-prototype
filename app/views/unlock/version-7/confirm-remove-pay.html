@@ -1,0 +1,64 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% set titleText %}
+
+{% endset %}
+
+{% block pageTitle %}
+{{titleText}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			{% set caseNoteHtml %}
+			{{ govukTextarea({
+				name: "case-note",
+				id: "case-note",
+				label: {
+					text: "Provide a short explanation for your decision, this will be added to their case notes."
+				}
+			}) }}
+			{% endset %}
+
+			{{ govukRadios({
+				name: "confirm-remove-pay",
+				fieldset: {
+					legend: {
+						text: "Are you sure you want to remove pay for "+prisoner.name.firstname+" "+prisoner.name.surname+"?",
+						isPageHeading: true,
+						classes: "govuk-fieldset__legend--l"
+					}
+				},
+				items: [
+				{
+					value: "yes",
+					html: 'Yes',
+					conditional: {
+						html: caseNoteHtml
+					}
+				},
+				{
+					value: "no",
+					html: 'No'
+				}
+				]
+			}) }}
+
+			{{govukButton({
+				text: "Continue"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}

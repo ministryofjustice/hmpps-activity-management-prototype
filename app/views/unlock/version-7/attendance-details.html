@@ -26,7 +26,6 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		</div>
 
 		{% for record in attendanceData | reverse %}
-		<!-- {{record|dump}} -->
 		{% if loop.index == 1 %}
 		<h2 class="govuk-heading-m">
 			Recorded on {{record.timestamp.date|convertShortDateToLongDate(record.timestamp.date)}} at {{record.timestamp.time | truncate(5, true, "")}}
@@ -64,6 +63,17 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 				</dd>
 				{% endif %}
 			</div>
+
+			{% if record.attendanceStatus == 'sick' or record.attendanceStatus == 'other' %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Details
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{record.detail}}
+				</dd>
+			</div>
+			{% endif %}
 			
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
@@ -78,11 +88,11 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 				</dd>
 				{% if loop.index == 1 %}
 				{% if record.attendance == 'attended' or record.attendanceStatus == 'sick' or record.attendanceStatus == 'rest-day' or record.attendanceStatus == 'other' %}
-				<dd class="govuk-summary-list__actions">
+				<!-- <dd class="govuk-summary-list__actions">
 					<a class="govuk-link govuk-link--no-visited-state" href="{{prisoner.id}}/change-pay">
 						Change<span class="govuk-visually-hidden"> pay</span>
 					</a>
-				</dd>
+				</dd> -->
 				{% endif %}
 				{% endif %}
 			</div>
@@ -96,6 +106,9 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 					{{record.incentiveLevelWarning|capitalize}}
 				</dd>
 			</div>
+			{% endif %}
+
+			{% if record.caseNote %}
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 					Case note
@@ -115,6 +128,15 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 				</dd>
 			</div>
 		</dl>
+		{% if record.attendance == "attended" and record.pay == true %}
+		{% if loop.index == 1 %}
+		{{govukButton({
+			text: "Remove pay for bad behaviour",
+			classes: "govuk-button--warning",
+			href: prisoner.id + "/confirm-remove-pay"
+		})}}
+		{% endif %}
+		{% endif %}
 		{% endfor %}
 
 		<p>

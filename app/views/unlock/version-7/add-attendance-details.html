@@ -25,12 +25,25 @@ Add attendance details for {{prisonersNoun}}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-l">
-			{% if data['attendance-action'] == 'not-attended' %}
+			{% if isFutureDate == false %}
 			Select a reason why {{prisonersNoun}} did not attend
 			{% else %}
-			Add pay details for {{prisonersNoun}}
+			Check and confirm attendance for {{prisonersNoun}}
 			{% endif %}
 		</h1>
+
+		{% if isFutureDate == true %}
+		{% if filteredPrisoners.length > 1 %}
+		<ul class="govuk-list govuk-list--bullet">
+			{% for prisoner in filteredPrisoners %}
+			<li>{{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		<p>
+			{{prisonersNoun}} will be paid and their attendance will be recorded as 'Not required or excused'.
+		</p>
+		{% endif %}
 
 		{% if filteredPrisoners|length > 3 %}
 		<div class="app-search">
@@ -50,6 +63,168 @@ Add attendance details for {{prisonersNoun}}
 
 		<form method="post">
 			{% for prisoner in filteredPrisoners %}
+			{% set notListedHtml %}
+			{{ govukInput({
+				name: "more-detail",
+				classes: "govuk-input--width-30",
+				id: "more-detail",
+				label: {
+					text: "Add an absence reason"
+				}
+			}) }}
+			{{ govukRadios({
+				id: "pay-prisoner-other",
+				name: "attendance-details[" + prisoner.id + "][pay-prisoner]",
+				classes: "govuk-radios--small govuk-radios--inline",
+				fieldset: {
+					legend: {
+						text: "Was this an acceptable absence and should the prisoner be paid?"
+					}
+				},
+				items: [
+				{
+					value: "yes",
+					text: "Yes",
+					id: "other-pay-1-" + prisoner.id
+
+				},
+				{
+					value: "no",
+					text: "No",
+					id: "other-pay-2-" + prisoner.id
+				}
+				]
+			}) }}
+			{% endset %}
+
+			{% set refusedHtml %}
+			{{ govukWarningText({
+				text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid because this is an unacceptable absence.",
+				iconFallbackText: "Warning"
+			}) }}
+			{{ govukTextarea({
+				name: "attendance-details[" + prisoner.id + "][case-note]",
+				id: "more-detail-" + prisoner.id,
+				label: {
+					text: "Add a case note"
+				}
+			}) }}
+			{{ govukRadios({
+				id: "incentive-level-warning",
+				name: "attendance-details[" + prisoner.id + "][incentive-level-warning]",
+				classes: "govuk-radios--small govuk-radios--inline",
+				fieldset: {
+					legend: {
+						text: "Should this be recorded as an Incentive level warning?"
+					}
+				},
+				items: [
+				{
+					value: "yes",
+					text: "Yes",
+					id: "incentive-level-warning-1-" + prisoner.id
+
+				},
+				{
+					value: "no",
+					text: "No",
+					id: "incentive-level-warning-2-" + prisoner.id
+				}
+				]
+			}) }}
+			{% endset %}
+
+			{% set sickHtml %}
+			{{ govukRadios({
+				id: "pay-prisoner--sick",
+				name: "attendance-details[" + prisoner.id + "][pay-prisoner]",
+				classes: "govuk-radios--small govuk-radios--inline",
+				fieldset: {
+					legend: {
+						text: "Should the prisoner be paid?"
+					}
+				},
+				items: [
+				{
+					value: "yes",
+					text: "Yes",
+					id: "sick-pay-1-" + prisoner.id
+
+				},
+				{
+					value: "no",
+					text: "No",
+					id: "sick-pay-2-" + prisoner.id
+				}
+				]
+			}) }}
+			{{ govukInput({
+				name: "attendance-details[" + prisoner.id + "][detail]",
+				classes: "govuk-input--width-30",
+				id: "sick-detail" + prisoner.id,
+				label: {
+					text: "Can you provide more detail? (optional)"
+				}
+			}) }}
+			{% endset %}
+
+			{% set notRequiredHtml %}
+			<p>
+				The prisoner will be paid and their attendance will be recorded as an acceptable absence.
+			</p>
+			{% endset %}
+
+			{% set restDayHtml %}
+			{{ govukRadios({
+				id: "pay-prisoner-rest",
+				name: "attendance-details[" + prisoner.id + "][pay-prisoner]",
+				classes: "govuk-radios--small govuk-radios--inline",
+				fieldset: {
+					legend: {
+						text: "Should the prisoner be paid?"
+					}
+				},
+				items: [
+				{
+					id: "rest-pay-1-" + prisoner.id,
+					value: "yes",
+					text: "Yes"
+
+				},
+				{
+					id: "rest-pay-2-" + prisoner.id,
+					value: "no",
+					text: "No"
+				}
+				]
+			}) }}
+			{% endset %}
+
+			{% set elsewhereHtml %}
+			<p>
+				9:00&thinsp;&ndash;&thinsp;10:30 : Court video call
+			</p>
+			<p>
+				The prisoner will be paid and their attendance will be recorded as an acceptable absence.
+			</p>
+			{% endset %}
+
+			{% set unknownHtml %}
+			{{ govukTextarea({
+				name: "attendance-details[" + prisoner.id + "][detail]",
+				id: "other-detail-" + prisoner.id,
+				label: {
+					text: "Provide more detail (optional)"
+				},
+				rows: 3
+			}) }}
+			{{ govukWarningText({
+				text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid unless their attendance has been properly recorded.",
+				iconFallbackText: "Warning"
+			}) }}
+			{% endset %}
+
+			{% if isFutureDate == false %}
 			<div class="prisoner">
 				{% if filteredPrisoners.length > 1 %}
 				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
@@ -58,170 +233,6 @@ Add attendance details for {{prisonersNoun}}
 					<span class="govuk-caption-m">{{prisoner.id}}</span>
 				</h2>
 				{% endif %}
-
-				<input type="hidden" name="attendance-details[{{prisoner.id}}][attendance]" value="{{data['attendance-action']}}">
-
-				{% set notListedHtml %}
-				{{ govukInput({
-					name: "more-detail",
-					classes: "govuk-input--width-30",
-					id: "more-detail",
-					label: {
-						text: "Add an absence reason"
-					}
-				}) }}
-				{{ govukRadios({
-					id: "pay-prisoner-other",
-					name: "attendance-details[" + prisoner.id + "][pay-prisoner]",
-					classes: "govuk-radios--small govuk-radios--inline",
-					fieldset: {
-						legend: {
-							text: "Was this an acceptable absence and should the prisoner be paid?"
-						}
-					},
-					items: [
-					{
-						value: "yes",
-						text: "Yes",
-						id: "other-pay-1-" + prisoner.id
-
-					},
-					{
-						value: "no",
-						text: "No",
-						id: "other-pay-2-" + prisoner.id
-					}
-					]
-				}) }}
-				{% endset %}
-
-				{% set refusedHtml %}
-				{{ govukWarningText({
-					text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid because this is an unacceptable absence.",
-					iconFallbackText: "Warning"
-				}) }}
-				{{ govukTextarea({
-					name: "attendance-details[" + prisoner.id + "][case-note]",
-					id: "more-detail-" + prisoner.id,
-					label: {
-						text: "Add a case note"
-					}
-				}) }}
-				{{ govukRadios({
-					id: "incentive-level-warning",
-					name: "attendance-details[" + prisoner.id + "][incentive-level-warning]",
-					classes: "govuk-radios--small govuk-radios--inline",
-					fieldset: {
-						legend: {
-							text: "Should this be recorded as an Incentive level warning?"
-						}
-					},
-					items: [
-					{
-						value: "yes",
-						text: "Yes",
-						id: "incentive-level-warning-1-" + prisoner.id
-
-					},
-					{
-						value: "no",
-						text: "No",
-						id: "incentive-level-warning-2-" + prisoner.id
-					}
-					]
-				}) }}
-				{% endset %}
-
-				{% set sickHtml %}
-				{{ govukRadios({
-					id: "pay-prisoner--sick",
-					name: "attendance-details[" + prisoner.id + "][pay-prisoner]",
-					classes: "govuk-radios--small govuk-radios--inline",
-					fieldset: {
-						legend: {
-							text: "Should the prisoner be paid?"
-						}
-					},
-					items: [
-					{
-						value: "yes",
-						text: "Yes",
-						id: "sick-pay-1-" + prisoner.id
-
-					},
-					{
-						value: "no",
-						text: "No",
-						id: "sick-pay-2-" + prisoner.id
-					}
-					]
-				}) }}
-				{% endset %}
-
-				{% set notRequiredHtml %}
-				<p>
-					The prisoner will be paid and their attendance will be recorded as an acceptable absence.
-				</p>
-				{% endset %}
-
-				{% set restDayHtml %}
-				{{ govukRadios({
-					id: "pay-prisoner-rest",
-					name: "attendance-details[" + prisoner.id + "][pay-prisoner]",
-					classes: "govuk-radios--small govuk-radios--inline",
-					fieldset: {
-						legend: {
-							text: "Should the prisoner be paid?"
-						}
-					},
-					items: [
-					{
-						id: "rest-pay-1-" + prisoner.id,
-						value: "yes",
-						text: "Yes"
-
-					},
-					{
-						id: "rest-pay-2-" + prisoner.id,
-						value: "no",
-						text: "No"
-					}
-					]
-				}) }}
-				{% endset %}
-
-				{% set elsewhereHtml %}
-				{% set freeTextHtml %}
-				{{ govukTextarea({
-					name: "more-detail",
-					id: "more-detail",
-					label: {
-						text: "Provide more detail"
-					}
-				}) }}
-				{% endset %}
-				<p>
-					9:00&thinsp;&ndash;&thinsp;10:30 : Court video call
-				</p>
-				<p>
-					The prisoner will be paid and their attendance will be recorded as an acceptable absence.
-				</p>
-				{% endset %}
-
-				{% set unknownHtml %}
-				{{ govukTextarea({
-					name: "more-detail",
-					id: "more-detail",
-					label: {
-						text: "Provide more detail (optional)"
-					},
-					rows: 3
-				}) }}
-				{{ govukWarningText({
-					text: prisoner.name.firstname + " " + prisoner.name.surname + " won't be paid unless their attendance has been properly recorded.",
-					iconFallbackText: "Warning"
-				}) }}
-				{% endset %}
 
 				{{ govukRadios({
 					id: "absence-reason-" + prisoner.id,
@@ -278,11 +289,16 @@ Add attendance details for {{prisonersNoun}}
 					]
 				}) }}
 			</div>
+			{% else %}
+			<input name="attendance-details[{{prisoner.id}}][absence-reason]" value="not-required" type="hidden">
+			{% endif %}
+
+			<input type="hidden" name="attendance-details[{{prisoner.id}}][attendance]" value="{{data['attendance-action']}}">
 			{% endfor %}
 
 			<div class="govuk-button-group govuk-!-margin-top-5">
 				{{govukButton({
-					text: "Record attendance and finish"
+					text: "Confirm and record attendance"
 				})}}
 			</div>
 		</form>

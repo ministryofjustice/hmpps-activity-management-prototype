@@ -119,9 +119,9 @@
 					text: "Print attendance list",
 					classes: "govuk-button--blue"
 				})}}
-				{% if cancelled == false %}
+				{% if showCancelButton == true and cancelled == false %}
 				<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-button govuk-button--secondary">Cancel this session</a>
-				{% else %}
+				{% elif cancelled == true %}
 				<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-link govuk-link--no-visited-state">Un-cancel this session</a>
 				{% endif %}
 				
@@ -141,40 +141,10 @@
 				html: attendanceDetailsHtml
 			}) }} -->
 			{{attendanceDetailsHtml|safe}}
-
-
-<!-- <div class="govuk-tabs govuk-!-margin-bottom-6" data-module="govuk-tabs">
-	<h2 class="govuk-tabs__title">
-		Contents
-	</h2>
-	<ul class="govuk-tabs__list">
-		<li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-			<a class="govuk-tabs__tab" href="#all">
-				All attendees
-			</a>
-		</li>
-		<li class="govuk-tabs__list-item">
-			<a class="govuk-tabs__tab" href="#not-marked">
-				Not marked yet
-			</a>
-		</li>
-		<li class="govuk-tabs__list-item">
-			<a class="govuk-tabs__tab" href="#attended">
-				Attended
-			</a>
-		</li>
-		<li class="govuk-tabs__list-item">
-			<a class="govuk-tabs__tab" href="#not-attended">
-				Not attended
-			</a>
-		</li>
-	</ul>
-
-	<div class="govuk-tabs__panel" id="{{period|lower}}-sessions"> -->
 		<table class="govuk-table app-whereabouts-table app-whereabouts-table--sticky-head app-whereabouts-table--font-size-normal govuk-!-margin-bottom-5" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
 			<thead class="govuk-table__head">
 				<tr>
-					{% if notRecorded > 0 %}<th class="govuk-table__header govuk-!-padding-left-2" scope="col" id="select-all"></th>{% endif %}
+					{% if notRecorded > 0 %}<th class="govuk-table__header govuk-!-padding-right-2 govuk-!-padding-left-1" scope="col" id="select-all"></th>{% endif %}
 					<th class="govuk-table__header">
 						Name
 					</th>
@@ -187,7 +157,7 @@
 					<th class="govuk-table__header">
 						Other scheduled events
 					</th>
-					<th class="govuk-table__header" colspan="2" width="320">
+					<th class="govuk-table__header" colspan="2" width="400">
 						Attendance
 					</th>
 				</tr>
@@ -199,7 +169,7 @@
 					{% if notRecorded > 0 %}
 					<td class="govuk-table__cell">
 						{% if not prisoner.attendance.attendance %}
-						<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-left-2">
+						<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-right-2 govuk-!-margin-left-1">
 							<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}" name="selected-prisoners" value="{{prisoner.id}}">
 							<label class="govuk-label govuk-checkboxes__label" for="prisoner-{{loop.index}}">
 								<span class="govuk-visually-hidden">Select Surname, Forename</span>
@@ -254,26 +224,14 @@
 					</td>
 					<td class="govuk-table__cell" {%- if not prisoner.attendance.attendance %}colspan="2"{% endif -%}>
 						{% set attendance = prisoner.attendance.records[prisoner.attendance.records|length-1].attendance %}
-						<!-- {{prisoner.attendance|dump}} -->
 						<ul class="govuk-list govuk-!-margin-0">
 							{%- if prisoner.attendance.attendance == 'attended' %}
 							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--attended" style="text-transform: none;">Attended</span></li>
-
 							{%- elif prisoner.attendance.attendance == 'not-attended' %}
 							{%- if prisoner.attendance.sessionCancelled == true %}
 							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--cancelled" style="text-transform: none;">Session cancelled</span></li>
-							{% elif prisoner.attendance.attendanceStatus == 'sick' %}
-							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Sick</span></li>
-							{% elif prisoner.attendance.attendanceStatus == 'rest-day' %}
-							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Rest day</span></li>
-							{% elif prisoner.attendance.attendanceStatus == 'not-required' %}
-							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Not required</span></li>
-							{% elif prisoner.attendance.attendanceStatus == 'refused' %}
-							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Refused to attend</span></li>
-							{% elif prisoner.attendance.attendanceStatus == 'other' %}
-							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Other</span></li>
 							{% else %}
-							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Absent</span></li>
+							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Not attended</span></li>
 							{% endif -%}
 							{%- else %}
 							<span class="govuk-hint">Not recorded yet</span>
@@ -295,8 +253,7 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		<!-- </div>
-		</div> -->
+		
 		{% set dayBefore = date | dayBefore() %}
 		{% set dayAfter = date | dayAfter() %}
 		{% from "govuk/components/pagination/macro.njk" import govukPagination %}

@@ -39,7 +39,7 @@ Find an activity to record or edit attendance
 			{% if selectedDate != '_'|today %}
 			<li class=""><a href="{{'_'|today}}" class="govuk-link--no-visited-state">View today's schedule</a></li>
 			{% endif %}
-			<li class=""><a href="{{'_'|today}}" class="govuk-link--no-visited-state">Go to attendance dashboard</a></li>
+			<li class=""><a href="../attendance-dashboard/{{selectedDate}}/daily" class="govuk-link--no-visited-state">Go to attendance dashboard</a></li>
 		</ul>
 
 		<div class="moj-search govuk-!-margin-bottom-6">
@@ -94,7 +94,7 @@ Find an activity to record or edit attendance
 			}]
 		}) }}
 
-		<fieldset class="govuk-fieldset govuk-!-margin-bottom-7">
+		<!-- <fieldset class="govuk-fieldset govuk-!-margin-bottom-7">
 			<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
 				Locations
 			</legend>
@@ -115,66 +115,64 @@ Find an activity to record or edit attendance
 					</div>
 				</div>
 			</div>
-		</fieldset>
+		</fieldset> -->
 
-		{{ govukCheckboxes({
+		{{ govukRadios({
 			fieldset: {
 				legend: {
 					text: "Category",
 					classes: "govuk-label--m"
 				}
 			},
-			classes: "govuk-checkboxes--small",
+			classes: "govuk-radios--small",
 			idPrefix: 'attendance',
 			name: 'filters[attendance]',
 			items: [
 			{
+				text: 'All categories',
+				id: 'all',
+				value: 'all',
+				checked: true
+			},
+			{
 				text: 'Education',
 				id: 'education',
-				value: 'Education',
-				checked: true
+				value: 'Education'
 			},
 			{
 				text: 'Industries',
 				id: 'industries',
-				value: 'Industries',
-				checked: true
+				value: 'Industries'
 			},
 			{
 				text: 'Prison jobs',
 				id: 'prison',
-				value: 'Prison jobs',
-				checked: true
+				value: 'Prison jobs'
 			},
 			{
 				text: 'Gym, sport and fitness',
 				id: 'gym',
-				value: 'Gym, sport and fitness',
-				checked: true
+				value: 'Gym, sport and fitness'
 			},
 			{
 				text: 'Induction',
 				id: 'induction',
-				value: 'Induction',
-				checked: true
+				value: 'Induction'
 			},
 			{
 				text: 'Intervention programmes',
 				id: 'intervention',
-				value: 'Intervention programmes',
-				checked: true
+				value: 'Intervention programmes'
 			},
 			{
 				text: 'Faith',
 				id: 'faith',
-				value: 'Faith',
-				checked: true
+				value: 'Faith'
 			},
 			{
 				text: 'Other',
 				id: 'other',
-				value: 'Other',
-				checked: true
+				value: 'Other'
 			}]
 		}) }}
 		{% endset %}
@@ -259,77 +257,77 @@ Find an activity to record or edit attendance
 							{% for cancellation in activity.cancelledSessions %}
 							<br><span class="govuk-tag govuk-tag--red govuk-!-margin-top-1">Cancelled</span>
 							{% endfor %}
-				<!-- <br>
-					<span class="govuk-hint govuk-!-font-size-16">Another bit of text here</span> -->
-				</td>
-				<td class="govuk-table__cell" data-sort-value="{{activity.location}}">{{activity.location}}</td>
-				<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
-					{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
-				</td>
-				<td class="govuk-table__cell--numeric govuk-table__cell">{{activity.attendanceCount[period]['scheduled']}}</td>
-				<td class="govuk-table__cell--numeric govuk-table__cell govuk-hint" data-sort-value="{{activity.attendanceCount[period]['attended']}}">
-					{% if activity.attendanceCount[period]['attended'] > 0 %}
-					<span class="govuk-tag govuk-tag--green">{{activity.attendanceCount[period]['attended']}}</span>
-					{% else %}
-					{{activity.attendanceCount[period]['attended']}}
-					{% endif %}
-				</td>
-				<td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">{{activity.attendanceCount[period]['not-recorded']}}</td>
-				<td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">
-					{% if activity.attendanceCount[period]['not-attended'] > 0 %}
-					<span class="govuk-tag govuk-tag--red">{{activity.attendanceCount[period]['not-attended']}}</span>
-					{% else %}
-					{{activity.attendanceCount[period]['not-attended']}}
-					{% endif %}
-				</td>
-			</tr>
+						</td>
+						<td class="govuk-table__cell" data-sort-value="{{activity.location}}">
+							{{activity.location}}
+						</td>
+						<td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
+							{{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
+						</td>
+						<td class="govuk-table__cell--numeric govuk-table__cell">
+							{{activity.attendanceCount[period]['scheduled']}}
+						</td>
+						<td class="govuk-table__cell--numeric govuk-table__cell govuk-hint" data-sort-value="{{activity.attendanceCount[period]['attended']}}">
+							<span class="{{'govuk-tag govuk-tag--green' if activity.attendanceCount[period]['attended'] > 0}}">
+								{{activity.attendanceCount[period]['attended']}}
+							</span>
+						</td>
+						<td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">
+							{{activity.attendanceCount[period]['not-recorded']}}
+						</td>
+						<td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">
+							<span class="{{'govuk-tag govuk-tag--red' if activity.attendanceCount[period]['not-attended'] > 0}}">
+								{{activity.attendanceCount[period]['not-attended']}}
+							</span>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 			{% endfor %}
-		</tbody>
-	</table>
-	{% endfor %}
-</div>
-</div>
+		</div>
+	</div>
 
-{% set dayBefore = selectedDate | dayBefore %}
-{% set dayAfter = selectedDate | dayAfter %}
-{% from "govuk/components/pagination/macro.njk" import govukPagination %}
-{{ govukPagination({
-	previous: {
-		text: "Previous day",
-		labelText: dayBefore | convertShortDateToVeryLongDate,
-		href: dayBefore
-	},
-	next: {
-		text: "Next day",
-		labelText: dayAfter | convertShortDateToVeryLongDate,
-		href: dayAfter
-	}
-}) }}
-{% endblock %}
+	{% set dayBefore = selectedDate | dayBefore %}
+	{% set dayAfter = selectedDate | dayAfter %}
+	{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+	{{ govukPagination({
+		previous: {
+			text: "Previous day",
+			labelText: dayBefore | convertShortDateToVeryLongDate,
+			href: dayBefore
+		},
+		next: {
+			text: "Next day",
+			labelText: dayAfter | convertShortDateToVeryLongDate,
+			href: dayAfter
+		}
+	}) }}
+	{% endblock %}
 
-{% block pageScripts %}
-<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
-<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
-<script type="text/javascript" src="/public/javascripts/vanillaSelectBox.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		new MOJFrontend.FilterToggleButton({
-			bigModeMediaQuery: "(min-width: 48.063em)",
-			startHidden: true,
-			toggleButton: {
-				container: $(".moj-filter-button"),
-				showText: "Show filter",
-				hideText: "Hide filter",
-				classes: "govuk-button--secondary",
-			},
-			closeButton: {
-				container: $(".moj-filter__header-action"),
-				text: "Close",
-			},
-			filter: {
-				container: $(".moj-filter"),
-			},
-		});
-	})
-</script>
-{% endblock %}
+	{% block pageScripts %}
+	<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
+	<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
+	<script type="text/javascript" src="/public/javascripts/vanillaSelectBox.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			new MOJFrontend.FilterToggleButton({
+				bigModeMediaQuery: "(min-width: 48.063em)",
+				startHidden: true,
+				toggleButton: {
+					container: $(".moj-filter-button"),
+					showText: "Show filter",
+					hideText: "Hide filter",
+					classes: "govuk-button--secondary",
+				},
+				closeButton: {
+					container: $(".moj-filter__header-action"),
+					text: "Close",
+				},
+				filter: {
+					container: $(".moj-filter"),
+				},
+			});
+		})
+	</script>
+	{% endblock %}
