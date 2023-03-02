@@ -705,8 +705,9 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
 }
 
 
-// Activity attendance prisoner list
-// '/activities/'
+// PAGE: Activity attendance prisoner list
+// TAGS: attendance list, prisoner list
+// URL: '/activities/DATE/PERIOD/ACTIVITYID'
 router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req, res) {
     let activityId = req.params.activityId;
     let date = req.params.selectedDate
@@ -759,6 +760,20 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req
         delete req.session.data['attendance-confirmation']
     }
 
+
+    const checkIsCancellable = (date) => {
+        const inputDate = new Date(date);
+        const currentDate = new Date();
+
+        inputDate.setHours(23);
+        inputDate.setMinutes(59);
+
+        const isSameDateOrFuture = inputDate >= currentDate;
+
+        return isSameDateOrFuture;
+    };
+    let showCancelButton = checkIsCancellable(date)
+
     res.render('unlock/' + req.version + '/activity-list', {
         activity,
         day,
@@ -772,7 +787,8 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req
         activityId,
         nextSessionDate,
         previousSessionDate,
-        activitySchedule
+        activitySchedule,
+        showCancelButton
     })
 });
 
@@ -847,12 +863,25 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
 // Add attendance details page
 router.get('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function(req, res) {
     delete req.session.data['attendance-details']
+    let date = req.params.selectedDate;
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
     let dateTense = checkDateTense(req.params.selectedDate);
 
+    const checkIsFutureDate = (date) => {
+        const inputDate = new Date(date);
+        const currentDate = new Date();
+
+        // Check if input date is in the future
+        const isFutureDate = inputDate > currentDate;
+
+        // Return true if input date is in the future
+        return isFutureDate;
+    };
+    let isFutureDate = checkIsFutureDate(date)
     res.render('unlock/' + req.version + '/add-attendance-details', {
         filteredPrisoners,
-        dateTense
+        dateTense,
+        isFutureDate
     })
 });
 router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function(req, res) {
@@ -888,7 +917,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendanc
 router.get([
     '/activities/:selectedDate/:selectedPeriod/:activityId/check-print-incentive-level-warning',
     '/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/check-print-incentive-level-warning'
-], function(req, res) {
+    ], function(req, res) {
     let attendanceDetails = req.session.data['attendance-details'];
 
     let prisonersWithWarnings = {};
@@ -1403,7 +1432,9 @@ router.post('/select-activity', function(req, res) {
         res.redirect('activities/' + date)
     }
 });
-// SELECT ACTIVITY
+
+// PAGE: Activity selection page
+// TAGS: List of activities, activity list, schedule page
 router.get('/activities/:selectedDate', function(req, res) {
     let selectedDate = req.params.selectedDate
     let period = req.session.data['times'].toUpperCase()
@@ -1429,6 +1460,7 @@ router.get('/activities/:selectedDate', function(req, res) {
     activitiesForDateWithCounts.morning = addAttendanceCountsToActivities(activitiesForDate.morning, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
     activitiesForDateWithCounts.afternoon = addAttendanceCountsToActivities(activitiesForDate.afternoon, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
 
+    // search functionality
     if (req.query.search) {
         const searchTerm = req.query.search.toLowerCase().replace(/\s/g, "");
         activitiesForDate.morning = activitiesForDate.morning.filter(activity => activity.name.toLowerCase().replace(/\s/g, "").includes(searchTerm));
@@ -1436,8 +1468,10 @@ router.get('/activities/:selectedDate', function(req, res) {
     }
 
     let locations = [];
+
+    // attendance totals
+    // (not used any more)
     let attendanceTotals = {};
-    
     for (const period in activitiesForDate) {
         attendanceTotals[period] = attendanceTotals[period] || {};
         for (const activity of activitiesForDate[period]) {
@@ -1473,6 +1507,7 @@ router.get('/attendance-dashboard', function(req, res) {
     res.redirect('attendance-dashboard/'+date+'/daily');
 })
 
+// PAGE: Activity dashboard
 router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function(req, res) {
     let attendanceData = req.session.data['attendance-data-1']
     let date = req.params.selectedDate;
