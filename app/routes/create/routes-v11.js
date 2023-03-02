@@ -431,16 +431,16 @@ module.exports = function(router) {
 			if (req.session.data.temp !== req.session.data.category) {
 				var changedCategory
 				req.session.data.changedCategory = 'changed'
-				res.redirect(version + '/create/activity-check-your-answers')
+				res.redirect(version + '/create/schedule-check-your-answers')
 
 			}
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
 	router.post(version + '/create/check/activity-name', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
@@ -489,14 +489,14 @@ module.exports = function(router) {
     //Recurring
 	router.post(version + '/create/check/activity-which-days', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
 
 	router.post(version + '/create/check/activity-location-dashboard-1', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
@@ -508,13 +508,13 @@ module.exports = function(router) {
 
 	router.post(version + '/create/check/activity-incentive-level', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
 	router.post(version + '/create/check/activity-risk-assessment', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
     //Add another submit button
@@ -532,25 +532,25 @@ module.exports = function(router) {
 
 	router.post(version + '/create/check/activity-add-alerts-one-added', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
 	router.post(version + '/create/check/activity-add-alerts-two-added', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
 	router.post(version + '/create/check/activity-add-alerts', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
 	router.post(version + '/create/check/activity-payment-details', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 	router.post(version + '/create/check/addEducation', function(req, res) {
@@ -571,33 +571,33 @@ module.exports = function(router) {
 
 	router.post(version + '/create/check/activity-add-education', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
 	router.post(version + '/create/check/activity-add-education-one-added', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 	router.post(version + '/create/check/activity-add-education-two-added', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 	router.post(version + '/create/check/activity-add-education-three-added', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
 	router.post(version + '/create/check/activity-add-education-three-added', function(req, res) {
 		{
-			res.redirect(version + '/create/activity-check-your-answers')
+			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
-	router.post(version + '/create/activity-check-your-answers', function(req, res) {
+	router.post(version + '/create/schedule-check-your-answers', function(req, res) {
 		if (req.session.data.returnToDashboard == 'false') {
 			res.redirect(version + '/create/activity-confirmation-created')
 		} else if (req.session.data.fromActivityDashboard == 'true') {

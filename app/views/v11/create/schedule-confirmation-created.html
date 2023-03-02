@@ -22,18 +22,20 @@ Activities Management prototype
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-panel govuk-panel--confirmation">
           <h1 class="govuk-panel__title">
-              You've built a new schedule for {{data.activityName or 'Maths level 1'}} -  {{data.scheduleName or 'Schedule A'}}
+              You've created a new activity for {{data.activityName or 'Maths level 1'}}
           </h1>
         <!--  <div class="govuk-panel__body">
             Your reference number<br><strong>HDJ2123F</strong>
           </div>-->
         </div>
-
-        <p class="govuk-body">You can start <a href="allocate/activity-dashboard-1">allocating people to this schedule</a>.</p>
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-4">
+            What you can do next
+        </h2>
+        <p class="govuk-body">You <a href="../allocate/activity-dashboard-4-1?waitlistStatus=Either approved or pending&pageToShow=1&allocateEmployed=Available&allocationEducation=Food hygiene level 1, English level 1&allocationIncentive=Enhanced&allocationRisk=Low&capacityCount={{data.ActivityCapacity}}&vacanciesCount={{data.ActivityCapacity-2}}&allocatedCount=2&activityAllocateScheduleName={{data.activityName or 'Wing cleaning'}} 1&allocateRisk=Low&allocateIncentive=Enhanced"">allocating people to this activty</a>.</p>
         <p class="govuk-body">You can also:<br />
         <ul  class="govuk-list govuk-list--bullet">
-          <li><a href="schedule-name">Build another schedule for {{data.activityName or 'Maths level 1'}}</a></li>
-          <li><a href="activity-dashboard?dashboardCategory=All&dashboardView=live">Use the activities dashboard</a> to find a different activity</li>
+          <li><a href="activity-type-select-with-category">Create another activity</a></li>
+          <li>use the activities dashboard to <a href="activity-dashboard?dashboardCategory=All&dashboardView=live">edit a existing activity</a></li>
         </ul>
         </p>
       </div>
