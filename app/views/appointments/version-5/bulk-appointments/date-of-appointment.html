@@ -20,23 +20,34 @@ Appointments prototype
         <span class="govuk-caption-l">Bulk appointments</span>
         When is the appointment?
        </h1>
-      {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
-
-      {{ govukDateInput({
-        id: "dateofappointmentbulk",
-        name:dateofappointmentbulk,
-        value:dateofappointmentbulk,
-        fieldset: {
-          legend: {
-            text: "If it's a recurring appointment enter the date of the first appointment."
-          }
-        },
+       {{ govukDateInput({
+        id: "date-of-appointment",
+        namePrefix: "date-of-appointment",
+        
         hint: {
-          text: "For example, 29 12 2022"
-        }
+          text: "For example, 31 3 2023"
+        },
+        items: [
+          {
+            name: "day",
+            label: "Day",
+            
+            classes: "govuk-input--width-2"
+          },
+          {
+            name: "month",
+            label: "Month",
+            
+            classes: "govuk-input--width-2"
+          },
+          {
+            name: "year",
+            label: "Year",
+           
+            classes: "govuk-input--width-4"
+          }
+        ]
       }) }}
-
-      {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
     
     {{ govukButton({
       text: "Continue"
