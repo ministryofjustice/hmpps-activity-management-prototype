@@ -171,6 +171,14 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
             sessionCancelled = false;
         }
 
+        let detailText;
+        console.log(reason)
+        if(reason == 'sick'){
+            detailText = details['sick-detail'];
+        } else if(reason == 'other'){
+            detailText = details['other-detail']
+        }
+
         req.session.data.attendance[activityId][date][period][prisonerId].push({
             attendance: details.attendance,
             attendanceStatus: reason,
@@ -179,7 +187,7 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
             // unacceptableAbsence: details.unacceptableAbsence,
             incentiveLevelWarning: details['incentive-level-warning'],
             caseNote: details['case-note'],
-            detail: details.detail,
+            detail: detailText,
             timestamp: {
                 date: new Date().toISOString().slice(0, 10),
                 time: new Date().toTimeString().slice(0, 8)

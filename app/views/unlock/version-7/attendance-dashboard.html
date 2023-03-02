@@ -153,8 +153,16 @@ Attendance dashboard
 })}}
 {% endset %}
 
+{% if period == 'AM' %}
+{% set activityCount = activitiesForDate.morning|length %}
+{% elif period == 'PM' %}
+{% set activityCount = activitiesForDate.afternoon|length %}
+{% elif period == 'daily' %}
+{% set activityCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+{% endif %}
+
 <p class="govuk-body-l govuk-!-margin-bottom-4">
-	<b>{{counts.allocated}} prisoners</b> allocated to <a href="../../activities/{{date}}" class="govuk-link--no-visited-state">{{activitiesForDate.morning|length + activitiesForDate.afternoon|length}} activities</a> on {{date|convertShortDateToVeryLongDate}}:
+	<b>{{counts.allocated}} allocations</b> for <a href="../../activities/{{date}}" class="govuk-link--no-visited-state">{{activityCount}} activities</a> on {{date|convertShortDateToVeryLongDate}}:
 </p>
 
 <div class="govuk-grid-row govuk-!-margin-bottom-6">

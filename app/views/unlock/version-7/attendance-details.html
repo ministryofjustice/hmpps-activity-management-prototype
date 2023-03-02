@@ -16,7 +16,7 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-two-thirds">
+	<div class="govuk-grid-column-three-quarters">
 		<h1 class="govuk-heading-l">
 			Attendance record for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		</h1>
@@ -64,6 +64,17 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 				{% endif %}
 			</div>
 
+			{% if record.attendanceStatus == 'session-cancelled' %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Details
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{record.detail}}
+				</dd>
+			</div>
+			{% endif %}
+
 			{% if record.attendanceStatus == 'sick' or record.attendanceStatus == 'other' %}
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
@@ -81,9 +92,9 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 				</dt>
 				<dd class="govuk-summary-list__value">
 					{% if record.pay == true %}
-					£1.54
+					<p>£1.54</p>
 					{% else %}
-					None
+					<p>None</p>
 					{% endif %}
 				</dd>
 				{% if loop.index == 1 %}
@@ -114,7 +125,12 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 					Case note
 				</dt>
 				<dd class="govuk-summary-list__value">
-					{{record.caseNote}}
+					{{record.caseNote | striptags(true) | escape | nl2br}}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link govuk-link--no-visited-state" href="{{prisoner.id}}/change-attendance">
+						View<span class="govuk-visually-hidden"> case note</span>
+					</a>
 				</dd>
 			</div>
 			{% endif %}
@@ -131,7 +147,7 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		{% if record.attendance == "attended" and record.pay == true %}
 		{% if loop.index == 1 %}
 		{{govukButton({
-			text: "Remove pay for bad behaviour",
+			text: "Remove pay and add case note",
 			classes: "govuk-button--warning",
 			href: prisoner.id + "/confirm-remove-pay"
 		})}}

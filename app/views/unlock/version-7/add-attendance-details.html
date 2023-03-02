@@ -65,9 +65,9 @@ Add attendance details for {{prisonersNoun}}
 			{% for prisoner in filteredPrisoners %}
 			{% set notListedHtml %}
 			{{ govukInput({
-				name: "more-detail",
+				name: "attendance-details[" + prisoner.id + "][other-detail]",
+				id: "other-detail-" + prisoner.id,
 				classes: "govuk-input--width-30",
-				id: "more-detail",
 				label: {
 					text: "Add an absence reason"
 				}
@@ -159,7 +159,7 @@ Add attendance details for {{prisonersNoun}}
 				]
 			}) }}
 			{{ govukInput({
-				name: "attendance-details[" + prisoner.id + "][detail]",
+				name: "attendance-details[" + prisoner.id + "][sick-detail]",
 				classes: "govuk-input--width-30",
 				id: "sick-detail" + prisoner.id,
 				label: {
@@ -211,8 +211,8 @@ Add attendance details for {{prisonersNoun}}
 
 			{% set unknownHtml %}
 			{{ govukTextarea({
-				name: "attendance-details[" + prisoner.id + "][detail]",
-				id: "other-detail-" + prisoner.id,
+				name: "attendance-details[" + prisoner.id + "][unknown-detail]",
+				id: "unknown-detail-" + prisoner.id,
 				label: {
 					text: "Provide more detail (optional)"
 				},

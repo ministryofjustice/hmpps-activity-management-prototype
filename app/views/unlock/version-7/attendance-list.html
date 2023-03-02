@@ -231,7 +231,19 @@
 							{%- if prisoner.attendance.sessionCancelled == true %}
 							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--cancelled" style="text-transform: none;">Session cancelled</span></li>
 							{% else %}
-							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Not attended</span></li>
+							{%- if prisoner.attendance.attendanceStatus == 'sick' %}
+							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Sick</span></li>
+							{% elif prisoner.attendance.attendanceStatus == 'rest-day' %}
+							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Rest day</span></li>
+							{% elif prisoner.attendance.attendanceStatus == 'not-required' %}
+							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Not required</span></li>
+							{% elif prisoner.attendance.attendanceStatus == 'refused' %}
+							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Refused to attend</span></li>
+							{% elif prisoner.attendance.attendanceStatus == 'other' %}
+							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Absent – other</span></li>
+							{% elif prisoner.attendance.attendanceStatus == 'clash' %}
+							<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Other activity</span></li>
+							{% endif -%}
 							{% endif -%}
 							{%- else %}
 							<span class="govuk-hint">Not recorded yet</span>
