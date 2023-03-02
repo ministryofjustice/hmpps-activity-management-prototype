@@ -12,11 +12,11 @@ Attendance dashboard
 	items: [
 	{
 		text: "Digital Prison Services",
-		href: "dps-home"
+		href: "../../../../dps-home"
 	},
 	{
 		text: "Manage prisoner unlock and attendance",
-		href: "whereabouts"
+		href: "../../whereabouts"
 	}
 	]
 }) }}
@@ -154,7 +154,7 @@ Attendance dashboard
 {% endset %}
 
 <p class="govuk-body-l govuk-!-margin-bottom-4">
-	<b>{{counts.allocated}} prisoners</b> allocated to <a href="activities/{{dateString}}" class="govuk-link--no-visited-state">{{activitiesForDate.morning|length + activitiesForDate.afternoon|length}} activities</a> on {{date|convertShortDateToVeryLongDate}}:
+	<b>{{counts.allocated}} prisoners</b> allocated to <a href="../../activities/{{date}}" class="govuk-link--no-visited-state">{{activitiesForDate.morning|length + activitiesForDate.afternoon|length}} activities</a> on {{date|convertShortDateToVeryLongDate}}:
 </p>
 
 <div class="govuk-grid-row govuk-!-margin-bottom-6">
@@ -226,7 +226,9 @@ Attendance dashboard
 			{% endif %}
 			{% endfor %}
 		</div>
+		{% if counts.absences['without-pay'].total > 0 %}
 		<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-bottom-2">
+		{% endif %}
 	</div>
 </div>
 {% endif %}
@@ -259,6 +261,7 @@ Attendance dashboard
 {% endif %}
 {% endif %}
 
+{% if counts['sessions-cancelled'] > 0 %}
 <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 <h2 class="govuk-heading-m">
 	Cancellations
@@ -267,7 +270,7 @@ Attendance dashboard
 	<div class="govuk-grid-column-one-quarter">
 		{{ dataCard({
 			title: "Sessions cancelled",
-			count: data['attendance-data-1'][period|lower]['cancellations']|length,
+			count: counts['sessions-cancelled'],
 			linkHref: "#"
 		}) }}
 	</div>
@@ -292,6 +295,8 @@ Attendance dashboard
 		</div>
 	</div>
 </div>
+{% endif %}
+
 <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 <h2 class="govuk-heading-m">
 	Prisoners suspended

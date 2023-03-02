@@ -1,0 +1,80 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			{% if prisonersWithWarnings|length > 1 %}
+			<div class="govuk-form-group">
+				<fieldset class="govuk-fieldset" aria-describedby="print-incentive-level-warnings-hint">
+					<legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+						<h1 class="govuk-fieldset__heading">
+							Select incentive level warnings to print
+						</h1>
+					</legend>
+					<div id="print-incentive-level-warnings-hint" class="govuk-hint">
+						You added incentive level warnings for {{prisonersWithWarnings|length}} prisoners.
+					</div>
+					<div class="govuk-checkboxes" data-module="govuk-checkboxes">
+						{% for id, attendance in prisonersWithWarnings %}
+						{% set prisoner = id|getPrisonerDetails %}
+						<div class="govuk-checkboxes__item">
+							<input class="govuk-checkboxes__input" id="print-incentive-level-warnings-{{loop.index}}" name="print-incentive-level-warnings" type="checkbox" value="yes">
+							<label class="govuk-label govuk-checkboxes__label" for="print-incentive-level-warnings-{{loop.index}}">
+								{{prisoner.name.firstname}} {{prisoner.name.surname}}
+							</label>
+						</div>
+						{% endfor %}
+						<div class="govuk-checkboxes__divider">or</div>
+						<div class="govuk-checkboxes__item">
+							<input class="govuk-checkboxes__input" id="print-incentive-level-warnings-{{loop.index}}" name="print-incentive-level-warnings" type="checkbox" value="none" data-behaviour="exclusive">
+							<label class="govuk-label govuk-checkboxes__label" for="print-incentive-level-warnings-{{loop.index}}">
+								I do not need to print now
+							</label>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+			{% else %}
+			{% for id, attendance in prisonersWithWarnings %}
+			{% set prisoner = id|getPrisonerDetails %}
+			{{ govukRadios({
+				name: "print-incentive-level-warnings",
+				fieldset: {
+					legend: {
+						text: "Do you need to print the incentive level warning for " + prisoner.name.firstname + " " + prisoner.name.surname + "?",
+						isPageHeading: true,
+						classes: "govuk-fieldset__legend--l"
+					}
+				},
+				items: [
+				{
+					value: "yes",
+					html: 'Yes'
+				},
+				{
+					value: "no",
+					html: 'Not now'
+				}
+				]
+			}) }}
+			{% endfor %}
+			{% endif %}
+			{{govukButton({
+				text: "Continue"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}

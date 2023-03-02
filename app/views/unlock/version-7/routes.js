@@ -705,7 +705,8 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
 }
 
 
-// ATTENDANCE LIST
+// Activity attendance prisoner list
+// '/activities/'
 router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req, res) {
     let activityId = req.params.activityId;
     let date = req.params.selectedDate
@@ -779,7 +780,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId', function(re
     res.redirect('add-attendance-details')
 });
 
-// cancellation  details
+// Cancel a session - cancellation  details
 router.get('/activities/:selectedDate/:selectedPeriod/:activityId/cancel', function(req, res) {
     let activityId = req.params.activityId;
     let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
@@ -843,7 +844,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
     res.redirect('/unlock/' + req.version + '/activities/' + date + '/' + period + '/' + activityId)
 })
 
-// ATTENDANCE DETAILS
+// Add attendance details page
 router.get('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function(req, res) {
     delete req.session.data['attendance-details']
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
@@ -862,11 +863,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendanc
     let date = req.params.selectedDate;
     let period = req.params.selectedPeriod;
 
-    // let attendanceAction = req.session.data['attendance-action'];
     let attendanceDetails = req.session.data['attendance-details'];
-
-    // let activity = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId)
-    // let activityPrisonerList = getPrisonersByDateAndPeriod(prisoners, activity, date, period, 'attendance')
 
     updateAttendanceData(req, activityId, date, period, attendanceDetails)
 
@@ -876,11 +873,52 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendanc
     let referrer = req.session.data['attendance-url']
     let url = (referrer == 'refusals') ? ('refusals-list') : ('../' + activityId)
 
-    // add something here to redirect to a different URL if any of the prisoners have incentive level warnings
-    let incentiveLevelWarnings = '';
+    // redirect to a different URL if any of the prisoners have incentive level warnings
+    Object.keys(attendanceDetails).forEach(prisonerId => {
+        const details = attendanceDetails[prisonerId];
+        if(details['incentive-level-warning'] == 'yes'){
+            url = 'check-print-incentive-level-warning'
+        }
+    })
 
     res.redirect(url)
 });
+
+// check print warnings for incentive level warnings
+router.get([
+    '/activities/:selectedDate/:selectedPeriod/:activityId/check-print-incentive-level-warning',
+    '/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/check-print-incentive-level-warning'
+], function(req, res) {
+    let attendanceDetails = req.session.data['attendance-details'];
+
+    let prisonersWithWarnings = {};
+    Object.keys(attendanceDetails).forEach(prisonerId => {
+        const details = attendanceDetails[prisonerId];
+        if(details['incentive-level-warning'] == 'yes'){
+            prisonersWithWarnings[prisonerId] = details
+        }
+    })
+
+    res.render('unlock/' + req.version + '/check-print-incentive-level-warning', {
+        prisonersWithWarnings
+    })
+})
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-print-incentive-level-warning', function(req, res) {
+    let activityId = req.params.activityId;
+    let date = req.params.selectedDate;
+    let period = req.params.selectedPeriod;
+
+    if(req.session.data['print-incentive-level-warnings'] == 'yes'){
+        res.redirect('confirm-print-incentive-level-warning')
+    } else {
+        res.redirect('/unlock/' + req.version + '/activities/' + date + '/' + period + '/' + activityId)
+    }
+})
+
+
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-print-incentive-level-warning', function(req, res) {
+    res.render('unlock/' + req.version + '/confirm-print-incentive-level-warning')
+})
 
 // refusals
 router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-absence-details', function(req, res) {
@@ -932,14 +970,29 @@ router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/ad
         })
     })
 
-    // set the confirmation dialog to display
-    req.session.data['attendance-confirmation'] = 'true'
+    let url = houseblock;
 
-    // set the confirmation dialog to display
-    req.session.data['attendance-confirmation'] = 'true'
+    // redirect to a different URL if any of the prisoners have incentive level warnings
+    Object.keys(attendanceDetails).forEach(prisonerId => {
+        const details = attendanceDetails[prisonerId];
+        if(details['incentive-level-warning'] == 'yes'){
+            url = houseblock + '/check-print-incentive-level-warning'
+        }
+    })
 
-    res.redirect('../' + houseblock)
+    res.redirect('../' + url)
 });
+router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/check-print-incentive-level-warning', function(req, res) {
+    let houseblock = req.params.selectedHouseblock;
+    let date = req.params.selectedDate;
+    let period = req.params.selectedPeriod;
+
+    if(req.session.data['print-incentive-level-warnings'] == 'yes'){
+        res.redirect('confirm-print-incentive-level-warning')
+    } else {
+        res.redirect('../' + houseblock)
+    }
+})
 
 // attend and pay
 router.post('/activities/:selectedDate/:selectedPeriod/:activityId/attend-and-pay', function(req, res) {
@@ -1240,8 +1293,11 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', f
     })
 });
 
-// SELECT UNLOCK LOCATIONS	
-router.post('/select-unlock-locations', function(req, res) {
+// SELECT UNLOCK LOCATIONS
+router.get('/unlock-list/select-date-and-location', function(req, res) {
+    res.render('unlock/' + req.version + '/select-unlock-locations')
+});
+router.post('/unlock-list/select-date-and-location', function(req, res) {
     let date = req.session.data['date']
     let period = req.session.data['period'].toUpperCase()
     let locations = getWings(req.session.data['selected-locations']);
@@ -1255,7 +1311,7 @@ router.post('/select-unlock-locations', function(req, res) {
             res.redirect('select-unlock-locations');
         }
     } else {
-        res.redirect('unlock-list/' + date + '/' + period + '/' + houseblock)
+        res.redirect(date + '/' + period + '/' + houseblock)
     }
 });
 
@@ -1412,79 +1468,10 @@ router.get('/prisoner/:prisonerId', function(req, res) {
     })
 })
 
-router.get('/attendance-dashboard-3', function(req, res) {
-    let attendanceData = req.session.data['attendance-data-1']
-    let date = new Date().toISOString().slice(0, 10);
-
-    delete req.session.data['attendance-data-1']['daily'];
-
-    function calculateTotals(data) {
-        let totals = {};
-        for (const period of Object.keys(data)) {
-            for (const key of Object.keys(data[period])) {
-                if (typeof data[period][key] === 'object') {
-                    if (!totals[key]) {
-                        totals[key] = {};
-                    }
-                    for (const subKey of Object.keys(data[period][key])) {
-                        if (!totals[key][subKey]) {
-                            totals[key][subKey] = 0;
-                        }
-                        totals[key][subKey] += data[period][key][subKey];
-                    }
-                } else {
-                    if (!totals[key]) {
-                        totals[key] = 0;
-                    }
-                    totals[key] += data[period][key];
-                }
-            }
-        }
-        return totals;
-    }
-
-    const totals = calculateTotals(attendanceData)
-    req.session.data['attendance-data-1']['daily'] = totals;
-
-    res.render('unlock/' + req.version + '/attendance-dashboard-3', {date})
-});
-
-router.get('/attendance-dashboard-4', function(req, res) {
-    let attendanceData = req.session.data['attendance-data-1']
-    let date = new Date().toISOString().slice(0, 10);
-
-    delete req.session.data['attendance-data-1']['daily'];
-
-    function calculateTotals(data) {
-        let totals = {};
-        for (const period of Object.keys(data)) {
-            for (const key of Object.keys(data[period])) {
-                if (typeof data[period][key] === 'object') {
-                    if (!totals[key]) {
-                        totals[key] = {};
-                    }
-                    for (const subKey of Object.keys(data[period][key])) {
-                        if (!totals[key][subKey]) {
-                            totals[key][subKey] = 0;
-                        }
-                        totals[key][subKey] += data[period][key][subKey];
-                    }
-                } else {
-                    if (!totals[key]) {
-                        totals[key] = 0;
-                    }
-                    totals[key] += data[period][key];
-                }
-            }
-        }
-        return totals;
-    }
-
-    const totals = calculateTotals(attendanceData)
-    req.session.data['attendance-data-1']['daily'] = totals;
-
-    res.render('unlock/' + req.version + '/attendance-dashboard-4', {date})
-});
+router.get('/attendance-dashboard', function(req, res) {
+    let date = new Date().toISOString().slice(0,10)
+    res.redirect('attendance-dashboard/'+date+'/daily');
+})
 
 router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function(req, res) {
     let attendanceData = req.session.data['attendance-data-1']
@@ -1541,7 +1528,8 @@ router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function(req, 
                 'without-pay': {
                     total: 0
                 }
-            }
+            },
+            'sessions-cancelled': 0
         };
 
         if (data) {
@@ -1553,6 +1541,7 @@ router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function(req, 
                         const attendanceType = record.attendance;
                         const attendanceStatus = record.attendanceStatus || 'not-recorded';
                         const payStatus = record.pay;
+                        const sessionCancelled = record.sessionCancelled;
 
                         if (attendanceType === 'attended') {
                             attendanceCounts.attended++;
@@ -1569,6 +1558,10 @@ router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function(req, 
                             attendanceCounts['not-recorded']--;
                         } else {
                             attendanceCounts['not-recorded']++;
+                        }
+
+                        if (sessionCancelled == true){
+                            attendanceCounts['sessions-cancelled']++;
                         }
                     });
                 }
