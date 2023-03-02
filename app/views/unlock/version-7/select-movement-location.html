@@ -7,105 +7,26 @@ Activities Management prototype
 {% endblock %}
 {% block beforeContent %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{{ govukBreadcrumbs({
-	classes: "govuk-!-display-none-print",
-	items: [
-	{
-		text: "Digital Prison Services",
-		href: "dps-home"
-	},
-	{
-		text: "Manage prisoner unlock and attendance",
-		href: "whereabouts"
-	}
-	]
-}) }}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
 {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<h1 class="govuk-heading-l">
-			Choose movement list details
-		</h1>
 		<form method="post">
-			{% set dateHtml %}
-			{{ govukDateInput({
-				id: "other-date",
-				namePrefix: "other-date",
-				fieldset: {
-					legend: {
-						text: "Date"
-					}
-				},
-				hint: {
-					html: "You can get unlock lists for dates up to 2 weeks from today.<br>
-					For example, 27 3 2022"
-				}
-			}) }}
-			{% endset %}
-
-			{% set today = '_'|today() %}
-			{{ govukRadios({
-				name: "date",
-				fieldset: {
-					legend: {
-						text: "Select unlock date",
-						isPageHeading: false,
-						classes: "govuk-fieldset__legend--m"
-					}
-				},
-				items: [
-				{
-					value: today,
-					text: "Today"
-				},
-				{
-					value: today|dayAfter,
-					text: "Tomorrow"
-				},
-				{
-					value: "other-date",
-					text: "A different date",
-					conditional: {
-						html: dateHtml
-					}
-				}
-				]
-			}) }}
-
-			{{ govukRadios({
-				name: "period",
-				fieldset: {
-					legend: {
-						text: "Time period",
-						isPageHeading: false,
-						classes: "govuk-fieldset__legend--m"
-					}
-				},
-				items: [
-				{
-					value: "am",
-					text: "Morning (AM)"
-				},
-				{
-					value: "pm",
-					text: "Afternoon (PM)"
-				},
-				{
-					value: "ed",
-					text: "Evening (ED)"
-				}
-				]
-			}) }}
-
 			<div class="govuk-form-group">
-				<label class="govuk-label govuk-label--m" for="by-location">
-					Select a location
-				</label>
-				<div id="by-location-hint" class="govuk-hint">
-					Not all locations will show in this list. You’ll only see the locations where there are activities or appointments happening at this time.
+				<h1 class="govuk-label-wrapper">
+					<label class="govuk-label govuk-label--l" for="movement-location">
+						Select the movement list location
+					</label>
+				</h1>
+
+				<div id="movement-location-hint" class="govuk-hint">
+					Not all locations will show in this list. You’ll only see the locations where there are activities or appointments happening at the selected time and period.
 				</div>
-				<select class="govuk-select" id="by-location" name="location" aria-describedby="by-location-hint">
+				<select class="govuk-select" id="movement-location" name="location" aria-describedby="movement-location-hint">
 					<option value="" selected=""></option>
 					<option value="Chapel">Chapel</option>
 					<option value="Farms/gardens">Farms/gardens</option>
@@ -155,7 +76,7 @@ Activities Management prototype
 <script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
 <script>
 	accessibleAutocomplete.enhanceSelectElement({
-		selectElement: document.querySelector('#by-location'),
+		selectElement: document.querySelector('#movement-location'),
 		showAllValues: true
 	})
 </script>
