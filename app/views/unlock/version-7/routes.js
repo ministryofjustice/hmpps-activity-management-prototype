@@ -45,7 +45,6 @@ const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, dat
                     date: date,
                     period: period,
                     records: attendanceRecords.map(attendanceRecord => {
-                        // console.log(attendanceRecord)
                         return {
                             attendance: attendanceRecord.attendance,
                             attendanceStatus: attendanceRecord.attendanceStatus,
@@ -57,7 +56,6 @@ const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, dat
                         }
                     })
                 };
-                // console.log(prisonerObject.attendance)
             }
         });
     }
@@ -97,40 +95,25 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
     Object.keys(attendanceDetails).forEach(prisonerId => {
         const details = attendanceDetails[prisonerId];
         let reason = details['absence-reason'];
-        // console.log(details.attendance)
 
-        let attendanceStatus;
-        if (reason == 'sick') {
-            // attendanceStatus = 'Sick'
-            if (details['pay-prisoner'] == 'yes') {
-                details.pay = true
-            } else {
-                details.pay = false
-            }
-        } else if (reason == 'refused') {
-            // attendanceStatus = 'Refused to attend'
-            details.pay = false
-        } else if (reason == 'not-required') {
-            // attendanceStatus = 'Not required or excused'
-            details.pay = true
-        } else if (reason == 'rest-day') {
-            // attendanceStatus = 'Rest day'
-            if (details['pay-prisoner'] == 'yes') {
-                details.pay = true
-            } else {
-                details.pay = false
-            }
-        } else if (reason == 'clash') {
-            // attendanceStatus = 'Other activity'
-            details.pay = true
-        }
-        else if (reason == 'other') {
-            // attendanceStatus = 'Other'
-            if (details['pay-prisoner'] == 'yes') {
-                details.pay = true
-            } else {
-                details.pay = false
-            }
+        switch (reason) {
+            // If the prisoner is sick, on a rest day, or for some other reason and pay is required, set pay to true, otherwise false
+            case 'sick':
+            case 'rest-day':
+            case 'other':
+                details.pay = (details['pay-prisoner'] == 'yes');
+                break;
+
+            // If the prisoner refused to work or the work is not required, set pay to false
+            case 'refused':
+            case 'not-required':
+                details.pay = false;
+                break;
+
+            // If there's a clash or payment is required, set pay to true
+            case 'clash':
+                details.pay = true;
+                break;
         }
 
         if (!req.session.data.attendance[activityId][date][period][prisonerId]) {
@@ -1368,7 +1351,14 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', f
 
 // SELECT UNLOCK LOCATIONS
 router.get('/unlock-list/select-date-and-location', function (req, res) {
-    res.render('unlock/' + req.version + '/select-unlock-locations')
+    let date = new Date();
+    let dateFormatted = date.toISOString().slice(0, 10);
+    let dateIn60Days = DateTime.fromFormat(dateFormatted, 'yyyy-MM-dd').plus({
+        days: 60
+    }).toFormat('yyyy-MM-dd');
+    dateIn60Days = dateIn60Days.slice(0,8) + '27';
+    
+    res.render('unlock/' + req.version + '/select-unlock-locations', { dateIn60Days })
 });
 router.post('/unlock-list/select-date-and-location', function (req, res) {
     let date = req.session.data['date']
