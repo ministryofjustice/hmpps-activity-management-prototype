@@ -8,23 +8,23 @@ const {
 const prisoners = require('../../../data/prisoners-list-3')
 
 //redirect the root url to the start page
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
     res.redirect(req.version + '/config')
 });
 
 // CONFIG
-router.get('/config', function(req, res) {
+router.get('/config', function (req, res) {
     let version = req.version
     req.session.data["config"]["navigation-tiles"][0]["linkURL"] = "/unlock/" + version + "/whereabouts"
     res.render('unlock/' + req.version + '/config', {
         version
     })
 });
-router.post('/config', function(req, res) {
+router.post('/config', function (req, res) {
     res.redirect('dps-home')
 });
 
-router.post('/reset-config', function(req, res) {
+router.post('/reset-config', function (req, res) {
     delete req.session.data['config']
     res.redirect('config')
 })
@@ -33,33 +33,6 @@ router.post('/reset-config', function(req, res) {
 const getPrisonersByHouseblock = (prisoners, houseblock) => {
     return prisoners.filter(prisoner => prisoner.location.houseblock === houseblock);
 }
-
-// Function to return prisoner details
-const findMatchingPrisoner = (prisoners, prisonerIds) => {
-    let selectedPrisoners = [];
-    if (Array.isArray(prisonerIds)) {
-        prisonerIds.forEach(id => {
-            let matchingPrisoner = prisoners.find(prisoner => {
-                return prisoner.id === id;
-            });
-            selectedPrisoners.push({
-                firstname: matchingPrisoner.name.firstname,
-                surname: matchingPrisoner.name.surname,
-                id: matchingPrisoner.id
-            });
-        });
-    } else {
-        let matchingPrisoner = prisoners.find(prisoner => {
-            return prisoner.id === prisonerIds;
-        });
-        selectedPrisoners.push({
-            firstname: matchingPrisoner.name.firstname,
-            surname: matchingPrisoner.name.surname,
-            id: matchingPrisoner.id
-        });
-    }
-    return selectedPrisoners;
-};
 
 const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, date, period) => {
     if (attendanceData && attendanceData[activityId] && attendanceData[activityId][date] && attendanceData[activityId][date][period]) {
@@ -92,7 +65,7 @@ const addAttendanceDataToPrisoners = (prisoners, attendanceData, activityId, dat
 }
 
 // function to create an attendanceDetails object to pass in to updateAttendanceData and mark all selected prisoners as 'not-attended' and 'standard' pay
-function createAttendanceDetailsForMultiplePrisoners(prisoners, {attendance, attendanceStatus, pay, caseNote, incentiveLevelWarning}) {
+function createAttendanceDetailsForMultiplePrisoners(prisoners, { attendance, attendanceStatus, pay, caseNote, incentiveLevelWarning }) {
     const attendanceDetails = {};
     prisoners.forEach(prisonerId => {
         attendanceDetails[prisonerId] = {
@@ -127,33 +100,33 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
         // console.log(details.attendance)
 
         let attendanceStatus;
-        if( reason == 'sick' ){
+        if (reason == 'sick') {
             // attendanceStatus = 'Sick'
-            if ( details['pay-prisoner'] == 'yes' ){
+            if (details['pay-prisoner'] == 'yes') {
                 details.pay = true
             } else {
                 details.pay = false
             }
-        } else if( reason == 'refused' ){
+        } else if (reason == 'refused') {
             // attendanceStatus = 'Refused to attend'
             details.pay = false
-        } else if( reason == 'not-required' ){
+        } else if (reason == 'not-required') {
             // attendanceStatus = 'Not required or excused'
             details.pay = true
-        } else if( reason == 'rest-day' ){
+        } else if (reason == 'rest-day') {
             // attendanceStatus = 'Rest day'
-            if ( details['pay-prisoner'] == 'yes' ){
+            if (details['pay-prisoner'] == 'yes') {
                 details.pay = true
             } else {
                 details.pay = false
             }
-        } else if( reason == 'clash' ){
+        } else if (reason == 'clash') {
             // attendanceStatus = 'Other activity'
             details.pay = true
-        } 
-        else if( reason == 'other' ){
+        }
+        else if (reason == 'other') {
             // attendanceStatus = 'Other'
-            if ( details['pay-prisoner'] == 'yes' ){
+            if (details['pay-prisoner'] == 'yes') {
                 details.pay = true
             } else {
                 details.pay = false
@@ -165,7 +138,7 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
         }
 
         let sessionCancelled;
-        if(details.sessionCancelled == true){
+        if (details.sessionCancelled == true) {
             sessionCancelled = true;
         } else {
             sessionCancelled = false;
@@ -173,9 +146,9 @@ function updateAttendanceData(req, activityId, date, period, attendanceDetails) 
 
         let detailText;
         console.log(reason)
-        if(reason == 'sick'){
+        if (reason == 'sick') {
             detailText = details['sick-detail'];
-        } else if(reason == 'other'){
+        } else if (reason == 'other') {
             detailText = details['other-detail']
         }
 
@@ -277,12 +250,12 @@ const addEventsToPrisoners = (prisoners, activities, date, period, attendanceDat
             let isSessionCancelled = false;
 
             if (scheduleForDay) {
-                if(scheduleForDay.cancelledSessions){
+                if (scheduleForDay.cancelledSessions) {
                     isSessionCancelled = true
                 }
 
                 const timesForPeriod = scheduleForDay[period.toLowerCase()];
-                
+
                 if (timesForPeriod && timesForPeriod.length > 0) {
                     return {
                         id: activity.id,
@@ -310,9 +283,9 @@ const addEventsToPrisoners = (prisoners, activities, date, period, attendanceDat
         const events = [...activitiesForDate, ...appointmentsForDate];
         events.forEach(event => {
             const eventAttendance = attendanceData && attendanceData[event.id] && attendanceData[event.id][date] && attendanceData[event.id][date][event.period];
-            if(eventAttendance) {
+            if (eventAttendance) {
                 Object.keys(eventAttendance).forEach(prisonerId => {
-                    if(prisonerId === prisoner.id) {
+                    if (prisonerId === prisoner.id) {
                         let prisonerAttendanceData = eventAttendance[prisonerId]
                         event.attendance = prisonerAttendanceData[prisonerAttendanceData.length - 1].attendance;
                     }
@@ -345,8 +318,8 @@ const activitiesByDate = (activities, date) => {
                 if (schedule.day === dayOfWeek) {
                     if (schedule.am) {
                         let cancelledSessionsAM;
-                        if(schedule.cancelledSessions){
-                            cancelledSessionsAM = schedule.cancelledSessions.filter(cancellation => cancellation.date === date.toISOString().slice(0,10) && cancellation.period.toLowerCase() === 'am')
+                        if (schedule.cancelledSessions) {
+                            cancelledSessionsAM = schedule.cancelledSessions.filter(cancellation => cancellation.date === date.toISOString().slice(0, 10) && cancellation.period.toLowerCase() === 'am')
                         }
                         filteredActivities.morning.push({
                             ...activity,
@@ -358,8 +331,8 @@ const activitiesByDate = (activities, date) => {
                     }
                     if (schedule.pm) {
                         let cancelledSessionsPM;
-                        if(schedule.cancelledSessions){
-                            cancelledSessionsPM = schedule.cancelledSessions.filter(cancellation => cancellation.date === date.toISOString().slice(0,10) && cancellation.period.toLowerCase() === 'pm')
+                        if (schedule.cancelledSessions) {
+                            cancelledSessionsPM = schedule.cancelledSessions.filter(cancellation => cancellation.date === date.toISOString().slice(0, 10) && cancellation.period.toLowerCase() === 'pm')
                         }
                         filteredActivities.afternoon.push({
                             ...activity,
@@ -520,11 +493,11 @@ function getPreviousSession(activity, selectedDate, selectedPeriod) {
 }
 
 const checkDateTense = (date) => {
-    if(date > new Date().toISOString().slice(0, 10)){
+    if (date > new Date().toISOString().slice(0, 10)) {
         return 'future';
-    } else if(date < new Date().toISOString().slice(0, 10)){
+    } else if (date < new Date().toISOString().slice(0, 10)) {
         return 'past';
-    } else if(date == new Date().toISOString().slice(0, 10)){
+    } else if (date == new Date().toISOString().slice(0, 10)) {
         return 'present';
     }
 }
@@ -669,7 +642,7 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
             attendanceCountPM[scheduledKey] = prisonerList.length;
             attendanceCountPM[notRecordedKey] = prisonerList.length;
 
-            if(!attendanceData || (!attendanceData[activity.id.toString()] || !attendanceData[activity.id.toString()][date] || !attendanceData[activity.id.toString()][date].AM)) {
+            if (!attendanceData || (!attendanceData[activity.id.toString()] || !attendanceData[activity.id.toString()][date] || !attendanceData[activity.id.toString()][date].AM)) {
                 activity.attendanceCount.morning = attendanceCountAM;
             } else if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date] && attendanceData[activity.id.toString()][date].AM) {
                 const amAttendance = attendanceData[activity.id.toString()][date].AM;
@@ -688,7 +661,7 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
             } else {
                 activity.attendanceCount.morning = attendanceCountAM;
             }
-            
+
             if (attendanceData == undefined || (!attendanceData[activity.id.toString()] || !attendanceData[activity.id.toString()][date] || !attendanceData[activity.id.toString()][date].PM)) {
                 activity.attendanceCount.afternoon = attendanceCountPM;
             } else if (attendanceData && attendanceData[activity.id.toString()] && attendanceData[activity.id.toString()][date] && attendanceData[activity.id.toString()][date].PM) {
@@ -716,7 +689,7 @@ const addAttendanceCountsToActivities = (activities, attendanceData, selectedDat
 // PAGE: Activity attendance prisoner list
 // TAGS: attendance list, prisoner list
 // URL: '/activities/DATE/PERIOD/ACTIVITYID'
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function (req, res) {
     let activityId = req.params.activityId;
     let date = req.params.selectedDate
     let period = req.params.selectedPeriod;
@@ -800,12 +773,12 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function(req
     })
 });
 
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId', function (req, res) {
     res.redirect('add-attendance-details')
 });
 
 // Cancel a session - cancellation  details
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId/cancel', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/cancel', function (req, res) {
     let activityId = req.params.activityId;
     let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
 
@@ -813,13 +786,13 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/cancel', funct
         activity
     })
 })
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId/cancel', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/cancel', function (req, res) {
     res.redirect('confirm-cancellation')
 })
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation', function (req, res) {
     res.render('unlock/' + req.version + '/confirm-cancellation')
 })
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation', function (req, res) {
     let date = req.params.selectedDate
     let period = req.params.selectedPeriod
     let activityId = req.params.activityId;
@@ -830,11 +803,11 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
         let reason = req.session.data['cancellation-reason'];
         let activitySchedule = activity.schedule.find(schedule => schedule.day.toString() === day.toString());
 
-        if ( ! activitySchedule.cancelledSessions){
+        if (!activitySchedule.cancelledSessions) {
             activitySchedule.cancelledSessions = []
         }
 
-        activitySchedule.cancelledSessions.push({date, period, reason});
+        activitySchedule.cancelledSessions.push({ date, period, reason });
 
         let newActivities = req.session.data['timetable-complete-1']['activities'].filter(activity => activity.id.toString() === activityId.toString());
         let prisonersData = req.session.data['timetable-complete-1']['prisoners']
@@ -848,7 +821,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
             });
             return idArray;
         };
-        
+
         let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(getPrisonerIds(prisonersByDateAndPeriod), {
             attendance: 'not-attended',
             attendanceStatus: 'session-cancelled',
@@ -868,8 +841,39 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cance
     res.redirect('/unlock/' + req.version + '/activities/' + date + '/' + period + '/' + activityId)
 })
 
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-uncancellation', function (req, res) {
+    res.render('unlock/' + req.version + '/confirm-uncancellation')
+})
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-uncancellation', function (req, res) {
+    let date = req.params.selectedDate
+    let period = req.params.selectedPeriod
+    let activityId = req.params.activityId;
+    let attendanceData = req.session.data['attendance'];
+    let attendanceDataForActivity = attendanceData[activityId][date][period];
+
+    // if user confirms uncancellation
+    if (req.session.data['confirm-uncancellation'] == 'yes') {
+        // delete the prisoner attendance records for the cancelled session
+        for (let prisonerId in attendanceDataForActivity) {
+            if (attendanceDataForActivity.hasOwnProperty(prisonerId)) {
+                delete attendanceDataForActivity[prisonerId];
+            }
+        }
+
+        // remove the cancelled session from the activity schedule
+        let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId);
+        let day = new Date(date).getDay();
+        let activitySchedule = activity.schedule.find(schedule => schedule.day.toString() === day.toString());
+
+        //remove the last cancelled session from the activity schedule
+        activitySchedule.cancelledSessions.pop();
+    }
+
+    res.redirect('/unlock/' + req.version + '/activities/' + date + '/' + period + '/' + activityId)
+})
+
 // Add attendance details page
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function (req, res) {
     delete req.session.data['attendance-details']
     let date = req.params.selectedDate;
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
@@ -892,7 +896,7 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance
         isFutureDate
     })
 });
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendance-details', function (req, res) {
     let selectedPrisoners = req.session.data['selected-prisoners'];
     let prisoners = req.session.data['timetable-complete-1']['prisoners'];
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
@@ -913,7 +917,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendanc
     // redirect to a different URL if any of the prisoners have incentive level warnings
     Object.keys(attendanceDetails).forEach(prisonerId => {
         const details = attendanceDetails[prisonerId];
-        if(details['incentive-level-warning'] == 'yes'){
+        if (details['incentive-level-warning'] == 'yes') {
             url = 'check-print-incentive-level-warning'
         }
     })
@@ -925,13 +929,13 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/add-attendanc
 router.get([
     '/activities/:selectedDate/:selectedPeriod/:activityId/check-print-incentive-level-warning',
     '/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/check-print-incentive-level-warning'
-    ], function(req, res) {
+], function (req, res) {
     let attendanceDetails = req.session.data['attendance-details'];
 
     let prisonersWithWarnings = {};
     Object.keys(attendanceDetails).forEach(prisonerId => {
         const details = attendanceDetails[prisonerId];
-        if(details['incentive-level-warning'] == 'yes'){
+        if (details['incentive-level-warning'] == 'yes') {
             prisonersWithWarnings[prisonerId] = details
         }
     })
@@ -940,12 +944,12 @@ router.get([
         prisonersWithWarnings
     })
 })
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-print-incentive-level-warning', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-print-incentive-level-warning', function (req, res) {
     let activityId = req.params.activityId;
     let date = req.params.selectedDate;
     let period = req.params.selectedPeriod;
 
-    if(req.session.data['print-incentive-level-warnings'] == 'yes'){
+    if (req.session.data['print-incentive-level-warnings'] == 'yes') {
         res.redirect('confirm-print-incentive-level-warning')
     } else {
         res.redirect('/unlock/' + req.version + '/activities/' + date + '/' + period + '/' + activityId)
@@ -953,19 +957,19 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-print-i
 })
 
 
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-print-incentive-level-warning', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-print-incentive-level-warning', function (req, res) {
     res.render('unlock/' + req.version + '/confirm-print-incentive-level-warning')
 })
 
 // refusals
-router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-absence-details', function(req, res) {
+router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-absence-details', function (req, res) {
     delete req.session.data['attendance-details']
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
     let pageToRender;
-    if(req.session.data['refusal-type'] == 'sickness'){
+    if (req.session.data['refusal-type'] == 'sickness') {
         refusalPage = 'add-sickness-details'
-    } else if(req.session.data['refusal-type'] == 'refused'){
+    } else if (req.session.data['refusal-type'] == 'refused') {
         refusalPage = 'add-refusal-details'
     } else {
         refusalPage = 'add-other-absence-details'
@@ -974,7 +978,7 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add
         filteredPrisoners
     })
 });
-router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-absence-details', function(req, res) {
+router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/add-absence-details', function (req, res) {
     let prisoners = req.session.data['timetable-complete-1']['prisoners'];
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], prisoners);
 
@@ -995,11 +999,11 @@ router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/ad
         // and for each activity in each prisoner
         prisoner.activity.forEach(prisonerActivity => {
             // get the activity detail
-            let activity = activitiesForDate[periodWord].filter(a => a.id === prisonerActivity)            
+            let activity = activitiesForDate[periodWord].filter(a => a.id === prisonerActivity)
             let activityId;
 
             // if there's an activity and it has an ID, set it and update the prisoner's attendance for each activity
-            if(activity[0] && activity[0].id){
+            if (activity[0] && activity[0].id) {
                 activityId = activity[0].id
                 // console.log(attendanceDetails)
                 updateAttendanceData(req, activityId, date, period, attendanceDetails)
@@ -1012,19 +1016,19 @@ router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/ad
     // redirect to a different URL if any of the prisoners have incentive level warnings
     Object.keys(attendanceDetails).forEach(prisonerId => {
         const details = attendanceDetails[prisonerId];
-        if(details['incentive-level-warning'] == 'yes'){
+        if (details['incentive-level-warning'] == 'yes') {
             url = houseblock + '/check-print-incentive-level-warning'
         }
     })
 
     res.redirect('../' + url)
 });
-router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/check-print-incentive-level-warning', function(req, res) {
+router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/check-print-incentive-level-warning', function (req, res) {
     let houseblock = req.params.selectedHouseblock;
     let date = req.params.selectedDate;
     let period = req.params.selectedPeriod;
 
-    if(req.session.data['print-incentive-level-warnings'] == 'yes'){
+    if (req.session.data['print-incentive-level-warnings'] == 'yes') {
         res.redirect('confirm-print-incentive-level-warning')
     } else {
         res.redirect('../' + houseblock)
@@ -1032,7 +1036,7 @@ router.post('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock/ch
 })
 
 // attend and pay
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId/attend-and-pay', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/attend-and-pay', function (req, res) {
     let selectedPrisoners = req.session.data['selected-prisoners']
     let activityId = req.params.activityId
     let period = req.params.selectedPeriod
@@ -1056,14 +1060,14 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/attend-and-pa
 
 
 // check variable pay
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId/check-variable-pay', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/check-variable-pay', function (req, res) {
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
     res.render('unlock/' + req.version + '/check-variable-pay', {
         filteredPrisoners
     })
 });
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-variable-pay', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-variable-pay', function (req, res) {
     let selectedPrisoners = req.session.data['selected-prisoners']
     let activityId = req.params.activityId
     let period = req.params.selectedPeriod
@@ -1072,7 +1076,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-variabl
     if (req.session.data['standard-pay-all'] == 'no') {
         res.redirect('add-attendance-details')
     } else {
-    	let attendanceAction = req.session.data['attendance-action']
+        let attendanceAction = req.session.data['attendance-action']
         let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners, {
             attendance: 'attended',
             attendanceStatus: 'attended',
@@ -1089,7 +1093,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/check-variabl
 });
 
 // attendance  details
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', function (req, res) {
     let activityId = req.params.activityId;
     let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
     let date = req.params.selectedDate;
@@ -1108,12 +1112,12 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', 
     })
 })
 
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId', function (req, res) {
     res.redirect(req.params.prisonerId + '/change')
 });
 // ------------------------------------------------------------------------
 
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-attendance', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-attendance', function (req, res) {
     let activityId = req.params.activityId;
     let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
     let date = req.params.selectedDate;
@@ -1135,20 +1139,20 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/ch
     })
 })
 
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-attendance', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-attendance', function (req, res) {
     let attendance = req.session.data['attendance-action']
 
-    if(attendance == 'attended'){
+    if (attendance == 'attended') {
         res.redirect('change-pay')
-    } else if(attendance == 'not-attended'){
+    } else if (attendance == 'not-attended') {
         res.redirect('../add-attendance-details')
-    } else if(attendance == 'remove'){
+    } else if (attendance == 'remove') {
         res.redirect('confirm-remove-attendance')
     }
 })
 // ------------------------------------------------------------------------
 
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-attendance', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-attendance', function (req, res) {
     let prisonerId = req.params.prisonerId;
     let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
 
@@ -1156,7 +1160,7 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/co
         prisoner
     })
 })
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-attendance', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-attendance', function (req, res) {
     let prisonerId = req.params.prisonerId;
     let attendanceData = req.session.data.attendance
     let activityId = req.params.activityId;
@@ -1171,12 +1175,12 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/c
         }
     }
 
-    res.redirect('../../'+req.params.activityId)
+    res.redirect('../../' + req.params.activityId)
 })
 // ------------------------------------------------------------------------
 
 // confirm remove pay
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-pay', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-pay', function (req, res) {
     let prisonerId = req.params.prisonerId;
     let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
 
@@ -1184,14 +1188,14 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/co
         prisoner
     })
 })
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-pay', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-pay', function (req, res) {
     let prisonerId = req.params.prisonerId;
     let attendanceData = req.session.data.attendance
     let activityId = req.params.activityId;
     let date = req.params.selectedDate;
     let period = req.params.selectedPeriod;
-    
-    if(req.session.data['confirm-remove-pay'] == 'yes'){
+
+    if (req.session.data['confirm-remove-pay'] == 'yes') {
         let attendanceDetails = createAttendanceDetailsForMultiplePrisoners([prisonerId], {
             attendance: 'attended',
             pay: false,
@@ -1201,11 +1205,11 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/c
         updateAttendanceData(req, activityId, date, period, attendanceDetails)
     }
 
-    res.redirect('../'+prisonerId)
+    res.redirect('../' + prisonerId)
 })
 // ------------------------------------------------------------------------
 
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-attendance-details', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-attendance-details', function (req, res) {
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
     res.render('unlock/' + req.version + '/add-attendance-details', {
@@ -1213,7 +1217,7 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/ch
     })
 })
 
-router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-pay', function(req, res) {
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-pay', function (req, res) {
     let activityId = req.params.activityId;
     let activity = req.session.data['timetable-complete-1']['activities'].find(activity => activity.id.toString() === activityId)
     let date = req.params.selectedDate;
@@ -1231,7 +1235,7 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/ch
     })
 })
 
-router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-pay', function(req, res) {
+router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/change-pay', function (req, res) {
     let prisonerId = req.params.prisonerId;
     let attendanceData = req.session.data.attendance
     let activityId = req.params.activityId;
@@ -1240,7 +1244,7 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/c
     let attendanceDataForActivity = attendanceData[activityId][date][period]
 
     let pay;
-    if(req.session.data['pay-prisoner'] != 'yes'){
+    if (req.session.data['pay-prisoner'] != 'yes') {
         pay = false
     } else {
         pay = true
@@ -1257,12 +1261,12 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/c
     // set the confirmation dialog to display
     req.session.data['attendance-confirmation'] = 'true'
 
-    res.redirect('../../'+req.params.activityId+"/"+prisonerId)
+    res.redirect('../../' + req.params.activityId + "/" + prisonerId)
 })
 
 
 // CHECK ATTENDANCE DETAILS
-router.get('/check-attendance-details', function(req, res) {
+router.get('/check-attendance-details', function (req, res) {
     let attendanceDetails = req.session.data['attendance-details']
     let filteredPrisoners = getFilteredPrisoners(req.session.data['selected-prisoners'], req.session.data['timetable-complete-1']['prisoners'])
 
@@ -1270,12 +1274,12 @@ router.get('/check-attendance-details', function(req, res) {
         attendanceDetails
     })
 });
-router.post('/check-attendance-details', function(req, res) {
+router.post('/check-attendance-details', function (req, res) {
     res.redirect('attendance-confirmation')
 });
 
 // SELECT REFUSALS LOCATIONS
-router.post('/select-refusals-locations', function(req, res) {
+router.post('/select-refusals-locations', function (req, res) {
     let date = req.session.data['date']
     let period = req.session.data['period'].toUpperCase()
     let locations = getWings(req.session.data['selected-locations']);
@@ -1294,7 +1298,7 @@ router.post('/select-refusals-locations', function(req, res) {
 });
 
 // REFUSALS LIST
-router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', function(req, res) {
+router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', function (req, res) {
     let period = req.params.selectedPeriod;
     let date = req.params.selectedDate;
     let dayOfWeek = new Date(date).getDay();
@@ -1338,7 +1342,7 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', f
         const removeLanding = req.query['remove-landing'];
         if (removeLanding) {
             landings = landings.filter(landing => landing !== removeLanding);
-            if(landings.length === 0) {
+            if (landings.length === 0) {
                 delete req.session.data['filters']['landings']
             } else {
                 req.session.data['filters']['landings'] = landings;
@@ -1363,10 +1367,10 @@ router.get('/refusals-list/:selectedDate/:selectedPeriod/:selectedHouseblock', f
 });
 
 // SELECT UNLOCK LOCATIONS
-router.get('/unlock-list/select-date-and-location', function(req, res) {
+router.get('/unlock-list/select-date-and-location', function (req, res) {
     res.render('unlock/' + req.version + '/select-unlock-locations')
 });
-router.post('/unlock-list/select-date-and-location', function(req, res) {
+router.post('/unlock-list/select-date-and-location', function (req, res) {
     let date = req.session.data['date']
     let period = req.session.data['period'].toUpperCase()
     let locations = getWings(req.session.data['selected-locations']);
@@ -1385,7 +1389,7 @@ router.post('/unlock-list/select-date-and-location', function(req, res) {
 });
 
 // unlock list
-router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', function(req, res) {
+router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', function (req, res) {
     let period = req.params.selectedPeriod;
     let date = req.params.selectedDate;
     let dayOfWeek = new Date(date).getDay();
@@ -1423,7 +1427,7 @@ router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', fun
         const removeLanding = req.query['remove-landing'];
         if (removeLanding) {
             landings = landings.filter(landing => landing !== removeLanding);
-            if(landings.length === 0) {
+            if (landings.length === 0) {
                 delete req.session.data['filters']['landings']
             } else {
                 req.session.data['filters']['landings'] = landings;
@@ -1448,17 +1452,17 @@ router.get('/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock', fun
     })
 });
 
-router.get('/unlock-list/download', function(req, res) {
+router.get('/unlock-list/download', function (req, res) {
     const file = `public/downloads/Unlock list concept.pdf`;
     res.download(file);
 });
 
 
 // SELECT-ACTIVITY
-router.get('/select-activity', function(req, res) {
+router.get('/select-activity', function (req, res) {
     res.render('unlock/' + req.version + '/select-activity')
 });
-router.post('/select-activity', function(req, res) {
+router.post('/select-activity', function (req, res) {
     let date = req.session.data['date']
 
     if (date == 'other-date') {
@@ -1475,7 +1479,7 @@ router.post('/select-activity', function(req, res) {
 
 // PAGE: Activity selection page
 // TAGS: List of activities, activity list, schedule page
-router.get('/activities/:selectedDate', function(req, res) {
+router.get('/activities/:selectedDate', function (req, res) {
     let selectedDate = req.params.selectedDate
     let period = req.session.data['times'].toUpperCase()
     let date = new Date(selectedDate)
@@ -1517,7 +1521,7 @@ router.get('/activities/:selectedDate', function(req, res) {
         for (const activity of activitiesForDate[period]) {
             for (const type in activity.attendanceCount[period]) {
                 attendanceTotals[period][type] = (attendanceTotals[period][type] || 0) +
-                (activity.attendanceCount[period][type] > 0 ? activity.attendanceCount[period][type] : 0);
+                    (activity.attendanceCount[period][type] > 0 ? activity.attendanceCount[period][type] : 0);
             }
         }
     }
@@ -1533,7 +1537,7 @@ router.get('/activities/:selectedDate', function(req, res) {
 });
 
 // prisoner profile
-router.get('/prisoner/:prisonerId', function(req, res) {
+router.get('/prisoner/:prisonerId', function (req, res) {
     let prisonerId = req.params.prisonerId;
     let prisoner = req.session.data['timetable-complete-1']['prisoners'].find(prisoner => prisoner.id === prisonerId)
 
@@ -1542,13 +1546,13 @@ router.get('/prisoner/:prisonerId', function(req, res) {
     })
 })
 
-router.get('/attendance-dashboard', function(req, res) {
-    let date = new Date().toISOString().slice(0,10)
-    res.redirect('attendance-dashboard/'+date+'/daily');
+router.get('/attendance-dashboard', function (req, res) {
+    let date = new Date().toISOString().slice(0, 10)
+    res.redirect('attendance-dashboard/' + date + '/daily');
 })
 
 // PAGE: Activity dashboard
-router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function(req, res) {
+router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function (req, res) {
     let attendanceData = req.session.data['attendance-data-1']
     let date = req.params.selectedDate;
     let dateString = new Date(date);
@@ -1563,14 +1567,14 @@ router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function(req, 
     }
     activitiesForDateWithCounts.morning = addAttendanceCountsToActivities(activitiesForDate.morning, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
     activitiesForDateWithCounts.afternoon = addAttendanceCountsToActivities(activitiesForDate.afternoon, req.session.data['attendance'], date, req.session.data['timetable-complete-1']['prisoners']);
-    
+
     let attendanceTotals = {};
     for (const period in activitiesForDate) {
         attendanceTotals[period] = attendanceTotals[period] || {};
         for (const activity of activitiesForDate[period]) {
             for (const type in activity.attendanceCount[period]) {
                 attendanceTotals[period][type] = (attendanceTotals[period][type] || 0) +
-                (activity.attendanceCount[period][type] > 0 ? activity.attendanceCount[period][type] : 0);
+                    (activity.attendanceCount[period][type] > 0 ? activity.attendanceCount[period][type] : 0);
             }
         }
     }
@@ -1635,7 +1639,7 @@ router.get('/attendance-dashboard/:selectedDate/:selectedPeriod', function(req, 
                             attendanceCounts['not-recorded']++;
                         }
 
-                        if (sessionCancelled == true){
+                        if (sessionCancelled == true) {
                             attendanceCounts['sessions-cancelled']++;
                         }
                     });
