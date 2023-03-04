@@ -723,6 +723,10 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function (re
     if (req.session.data['attendance-confirmation'] == 'true') {
         delete req.session.data['attendance-confirmation']
     }
+    // remove the session uncancellation confirmation on refreshing the page
+    if ( req.session.data['uncancellation-confirmation'] == 'true') {
+        delete req.session.data['uncancellation-confirmation']
+    }
 
 
     const checkIsCancellable = (date) => {
@@ -738,8 +742,15 @@ router.get('/activities/:selectedDate/:selectedPeriod/:activityId', function (re
     };
     let showCancelButton = checkIsCancellable(date)
 
+    let attendanceLocked = false;
+    // if the current date is in the past, set the attendance to locked
+    if (dateTense === 'past') {
+        attendanceLocked = true;
+    }
+
     res.render('unlock/' + req.version + '/attendance-list', {
         activity,
+        attendanceLocked,
         day,
         date,
         dateTense,
@@ -850,6 +861,9 @@ router.post('/activities/:selectedDate/:selectedPeriod/:activityId/confirm-uncan
 
         //remove the last cancelled session from the activity schedule
         activitySchedule.cancelledSessions.pop();
+        
+        // show the uncancellation confirmation message
+        req.session.data['uncancellation-confirmation'] = 'true'
     }
 
     res.redirect('/unlock/' + req.version + '/activities/' + date + '/' + period + '/' + activityId)
