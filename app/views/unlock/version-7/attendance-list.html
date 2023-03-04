@@ -46,6 +46,41 @@
 			}) }}
 			{% endif %}
 
+			{% if data['selected-prisoners'].length == 1 %}
+			{% set prisonerName %}
+			{% for prisoner in prisonersList %}
+			{% if data['selected-prisoners'][0] == prisoner.id %}
+			{{prisoner.name.firstname}} {{prisoner.name.surname}}
+			{% endif %}
+			{% endfor %}
+			{%- endset -%}
+			{% endif %}
+			
+			{% if data['attendance-confirmation'] == 'true' %}
+			{% set html %}
+			<h3 class="govuk-notification-banner__heading">
+				Attendance recorded
+			</h3>
+			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisonerName}}.</p>
+			{% endset %}
+			{{ govukNotificationBanner({
+				html: html,
+				type: 'success'
+			}) }}
+			{% endif %}
+
+			{% if data['uncancellation-confirmation'] == 'true' %}
+			{% set html %}
+			<h3 class="govuk-notification-banner__heading">
+				Session no longer cancelled
+			</h3>
+			{% endset %}
+			{{ govukNotificationBanner({
+				html: html,
+				type: 'success'
+			}) }}
+			{% endif %}
+
 			{% if attendanceLocked == true %}
 			{% set attendanceLockedHtml %}
 			<h3 class="govuk-notification-banner__heading">
@@ -91,51 +126,7 @@
 						{% endif %}
 					</ul> -->
 				</div>
-
-				<!-- <div class="govuk-grid-column-one-quarter">
-					<p class="govuk-body" style="text-align: right;">
-						{{govukButton({
-							text: "Print attendance list",
-							classes: "govuk-button--secondary"
-						})}}
-					</p>
-				</div> -->
 			</div>
-			{% if data['selected-prisoners'].length == 1 %}
-			{% set prisonerName %}
-			{% for prisoner in prisonersList %}
-			{% if data['selected-prisoners'][0] == prisoner.id %}
-			{{prisoner.name.firstname}} {{prisoner.name.surname}}
-			{% endif %}
-			{% endfor %}
-			{%- endset -%}
-			{% endif %}
-
-			<!-- {% if data['attendance-confirmation'] == 'true' %}
-			{% set html %}
-			<h3 class="govuk-notification-banner__heading">
-				Attendance recorded
-			</h3>
-			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisonerName}}.</p>
-			{% endset %}
-			{{ govukNotificationBanner({
-				html: html,
-				type: 'success'
-			}) }}
-			{% endif %} -->
-
-			{% if data['uncancellation-confirmation'] == 'true' %}
-			{% set html %}
-			<h3 class="govuk-notification-banner__heading">
-				Session un-cancelled
-			</h3>
-			<p class="govuk-body">The session has been un-cancelled.</p>
-			{% endset %}
-			{{ govukNotificationBanner({
-				html: html,
-				type: 'success'
-			}) }}
-			{% endif %}
 
 			{% include './_includes/table-navbar.html' %}
 
