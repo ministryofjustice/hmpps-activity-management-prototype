@@ -32,8 +32,8 @@
 		{% endfor %}
 
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-			{% if cancelled == true %}
 			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+			{% if cancelled == true %}
 			{% set cancelledHtml %}
 			<h3 class="govuk-notification-banner__heading">
 				Session cancelled
@@ -42,6 +42,54 @@
 			{% endset %}
 			{{ govukNotificationBanner({
 				html: cancelledHtml,
+				type: 'error'
+			}) }}
+			{% endif %}
+
+			{% if data['selected-prisoners'].length == 1 %}
+			{% set prisonerName %}
+			{% for prisoner in prisonersList %}
+			{% if data['selected-prisoners'][0] == prisoner.id %}
+			{{prisoner.name.firstname}} {{prisoner.name.surname}}
+			{% endif %}
+			{% endfor %}
+			{%- endset -%}
+			{% endif %}
+			
+			{% if data['attendance-confirmation'] == 'true' %}
+			{% set html %}
+			<h3 class="govuk-notification-banner__heading">
+				Attendance recorded
+			</h3>
+			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisonerName}}.</p>
+			{% endset %}
+			{{ govukNotificationBanner({
+				html: html,
+				type: 'success'
+			}) }}
+			{% endif %}
+
+			{% if data['uncancellation-confirmation'] == 'true' %}
+			{% set html %}
+			<h3 class="govuk-notification-banner__heading">
+				Session no longer cancelled
+			</h3>
+			{% endset %}
+			{{ govukNotificationBanner({
+				html: html,
+				type: 'success'
+			}) }}
+			{% endif %}
+
+			{% if attendanceLocked == true %}
+			{% set attendanceLockedHtml %}
+			<h3 class="govuk-notification-banner__heading">
+				You can't record attendance for this activity because it happened more than 24 hours ago.
+			</h3>
+			<p class="govuk-body"><a href="#" class="govuk-link--no-visited-state">Contact your activity hub</a> if you need to change prisoner attendance or payments records for this session.</p>
+			{% endset %}
+			{{ govukNotificationBanner({
+				html: attendanceLockedHtml,
 				type: 'error'
 			}) }}
 			{% endif %}
@@ -78,39 +126,7 @@
 						{% endif %}
 					</ul> -->
 				</div>
-
-				<!-- <div class="govuk-grid-column-one-quarter">
-					<p class="govuk-body" style="text-align: right;">
-						{{govukButton({
-							text: "Print attendance list",
-							classes: "govuk-button--secondary"
-						})}}
-					</p>
-				</div> -->
 			</div>
-			{% if data['selected-prisoners'].length == 1 %}
-			{% set prisonerName %}
-			{% for prisoner in prisonersList %}
-			{% if data['selected-prisoners'][0] == prisoner.id %}
-			{{prisoner.name.firstname}} {{prisoner.name.surname}}
-			{% endif %}
-			{% endfor %}
-			{%- endset -%}
-			{% endif %}
-
-			<!-- {% if data['attendance-confirmation'] == 'true' %}
-			{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-			{% set html %}
-			<h3 class="govuk-notification-banner__heading">
-				Attendance recorded
-			</h3>
-			<p class="govuk-body">We've saved attendance details for {{data['selected-prisoners'].length + " prisoners" if data['selected-prisoners'].length > 1 else prisonerName}}.</p>
-			{% endset %}
-			{{ govukNotificationBanner({
-				html: html,
-				type: 'success'
-			}) }}
-			{% endif %} -->
 
 			{% include './_includes/table-navbar.html' %}
 
@@ -122,7 +138,7 @@
 				{% if showCancelButton == true and cancelled == false %}
 				<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-button govuk-button--secondary">Cancel this session</a>
 				{% elif cancelled == true %}
-				<a href="{{activity.id}}/cancel?selected-prisoners=" class="govuk-link govuk-link--no-visited-state">Un-cancel this session</a>
+				<a href="{{activity.id}}/confirm-uncancellation?selected-prisoners=" class="govuk-link govuk-link--no-visited-state">Un-cancel this session</a>
 				{% endif %}
 				
 			</div>
@@ -144,7 +160,7 @@
 		<table class="govuk-table app-whereabouts-table app-whereabouts-table--sticky-head app-whereabouts-table--font-size-normal govuk-!-margin-bottom-5" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
 			<thead class="govuk-table__head">
 				<tr>
-					{% if notRecorded > 0 %}<th class="govuk-table__header govuk-!-padding-right-2 govuk-!-padding-left-1" scope="col" id="select-all"></th>{% endif %}
+					{% if notRecorded > 0 and attendanceLocked == false %}<th class="govuk-table__header govuk-!-padding-right-2 govuk-!-padding-left-1" scope="col" id="select-all"></th>{% endif %}
 					<th class="govuk-table__header">
 						Name
 					</th>
@@ -166,7 +182,7 @@
 				{% set sortOrder = data['sort-by'] %}
 				{% for prisoner in prisonersList %}
 				<tr class="govuk-table__row">
-					{% if notRecorded > 0 %}
+					{% if notRecorded > 0 and attendanceLocked == false %}
 					<td class="govuk-table__cell">
 						{% if not prisoner.attendance.attendance %}
 						<div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-right-2 govuk-!-margin-left-1">

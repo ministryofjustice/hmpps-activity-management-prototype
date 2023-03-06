@@ -1,0 +1,101 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block main %}
+{% block beforeContent %}
+<div class="govuk-width-container">
+	<a href="/dps-home" class="govuk-back-link">Digital Prison Services</a>
+	<h1 class="govuk-heading-l govuk-!-margin-top-7">Manage activities</h1>
+</div>
+{% endblock %}
+<div class="homepage-content">
+	<div class="govuk-width-container">
+		<ul class="govuk-grid-row card-group" id="sortable">
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_003">
+				<div class="card card--clickable" data-test="incentives">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="allocate/activity-dashboard-2?dashboardCategory=All">Allocate people to and take them off activities</a>
+					</h2>
+					<p class="govuk-body card__description">See vacancies, check current allocation, and add people or take them off activities.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_002">
+				<div class="card card--clickable" data-test="check-my-diary">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="create/activity-dashboard?dashboardCategory=All&dashboardView=live">Edit activities</a>
+					</h2>
+					<p class="govuk-body card__description">Change, suspend or archive details of existing activities including pay, requirements and schedules.</p>
+				</div>
+			</li>
+
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="create/activity-type-select-with-category">Create an activity</a>
+					</h2>
+					<p class="govuk-body card__description">Set up a new activity including pay rates, requirements and schedules.</p>
+				</div>
+			</li>
+
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="admin/log-an-activity/activity-name-search">Log an application or referral for an activity</a>
+					</h2>
+					<p class="govuk-body card__description">Record details of applications or referrals for an activity so people can be allocated or added to a waitlist.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/select-activity">Record and edit attendance</a>
+					</h2>
+					<p class="govuk-body card__description">View, mark and change activity attendance.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/attendance-dashboard">View attendance daily summary</a>
+					</h2>
+					<p class="govuk-body card__description">See daily attendance figures, including prisoners not yet attended, absences, activity cancellations and suspended prisoners.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/attendance-dashboard-3-attendance?page-title=All%20missing%20data&count=47">View and update not attended prisoners</a>
+					</h2>
+					<p class="govuk-body card__description">Find today’s prisoners with no recorded attendance information.</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+{% endblock %}
+{% block pageScripts %}
+<script src="/public/javascripts/cards.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+	// $(document).ready( function() {
+	// 	var $list = "ul#sortable"
+	// 	$($list).sortable({
+	// 		update: function(event, ui) {
+	// 			var order = [];
+	// 			var data = $(this).sortable('serialize');
+
+	// 			$($list + ' li').each( function(e) {
+	// 				order.push( $(this).find('a').html() );
+	// 			});
+
+	// 			console.log( order , data );
+	// 		}
+	// 	});
+	// 	$($list).disableSelection();
+	// } );
+</script>
+{% endblock %}

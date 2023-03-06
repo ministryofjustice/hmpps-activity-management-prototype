@@ -2,7 +2,7 @@ const {
     DateTime
 } = require('luxon')
 
-module.exports = function(env) {
+module.exports = function (env) {
     /**
      * Instantiate object used to store the methods registered as a
      * 'filter' (of the same name) within nunjucks. You can override
@@ -43,11 +43,11 @@ module.exports = function(env) {
     ------------------------------------------------------------------ */
 
 
-    filters.currentDate = function(dateString, format) {
+    filters.currentDate = function (dateString, format) {
         return DateTime.local().setLocale('en-GB').toFormat(format);
     }
 
-    filters.getActivity = function(activityId) {
+    filters.getActivity = function (activityId) {
         const activities = require('./data/activities-list-1')
         let match = activities.filter(activity => activity.id == activityId);
         let activity = match[0]
@@ -55,7 +55,7 @@ module.exports = function(env) {
         return activity
     }
 
-    filters.getPrisoner = function(prisonerId) {
+    filters.getPrisoner = function (prisonerId) {
         const prisoners = require('./data/prisoners-list-1')
         let match = prisoners.filter(prisoner => prisoner._id == prisonerId);
         let prisoner = match[0]
@@ -63,7 +63,7 @@ module.exports = function(env) {
         return prisoner
     }
 
-    filters.getPrisonerDetails = function(prisonerId) {
+    filters.getPrisonerDetails = function (prisonerId) {
         const timetable = require('./data/timetable-complete-1')
         let match = timetable.prisoners.filter(prisoner => prisoner.id == prisonerId);
         let prisoner = match[0]
@@ -71,7 +71,7 @@ module.exports = function(env) {
         return prisoner
     }
 
-    filters.getHouseblock = function(houseblockId) {
+    filters.getHouseblock = function (houseblockId) {
         const locations = require('./data/residential-list-1')
         let match = locations.filter(location => location.id == houseblockId);
         let houseblock = match[0]
@@ -79,41 +79,49 @@ module.exports = function(env) {
         return houseblock
     }
 
-    filters.longDateFormat = function(inputDate) {
+    filters.longDateFormat = function (inputDate) {
         return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("DDDD")
     }
 
-    filters.shortDateFormat = function(inputDate) {
+    filters.shortDateFormat = function (inputDate) {
         return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("yyyy-MM-dd")
     }
 
-    filters.convertShortDateToMediumDate = function(inputDate) {
+    filters.convertShortDateToExampleDate = function (inputDate) {
+        return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("d M yyyy")
+    }
+
+    filters.convertShortDateToExampleDate = function (inputDate) {
+        return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("d M yyyy")
+    }
+
+    filters.convertShortDateToMediumDate = function (inputDate) {
         return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("d MMM yyyy")
     }
 
-    filters.convertShortDateToLongDate = function(inputDate) {
+    filters.convertShortDateToLongDate = function (inputDate) {
         return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("d MMMM yyyy")
     }
 
-    filters.convertShortDateToVeryLongDate = function(inputDate) {
+    filters.convertShortDateToVeryLongDate = function (inputDate) {
         return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("DDDD")
     }
 
-    filters.today = function(inputDate) {
+    filters.today = function (inputDate) {
         return DateTime.now().toFormat("yyyy-MM-dd")
     }
 
-    filters.timestamp = function(date) {
+    filters.timestamp = function (date) {
         return new Date().toLocaleTimeString('en-US', { hour12: false }).substr(0, 5);
     }
 
-    filters.dayBefore = function(inputDate) {
+    filters.dayBefore = function (inputDate) {
         return DateTime.fromFormat(inputDate, "yyyy-MM-dd").minus({
             days: 1
         }).setLocale('en-GB').toFormat("yyyy-MM-dd")
     }
 
-    filters.dayAfter = function(inputDate) {
+    filters.dayAfter = function (inputDate) {
         return DateTime.fromFormat(inputDate, "yyyy-MM-dd").plus({
             days: 1
         }).setLocale('en-GB').toFormat("yyyy-MM-dd")

@@ -12,11 +12,11 @@ Activities Management prototype
 	items: [
 	{
 		text: "Digital Prison Services",
-		href: "dps-home"
+		href: "/dps-home"
 	},
 	{
 		text: "Manage prisoner unlock and attendance",
-		href: "whereabouts"
+		href: "../whereabouts"
 	}
 	]
 }) }}
@@ -38,8 +38,7 @@ Activities Management prototype
 					}
 				},
 				hint: {
-					html: "You can get unlock lists for dates up to 2 weeks from today.<br>
-					For example, 27 3 2022"
+					html: "For example, " + dateIn60Days|convertShortDateToExampleDate
 				}
 			}) }}
 			{% endset %}
@@ -53,6 +52,9 @@ Activities Management prototype
 						isPageHeading: false,
 						classes: "govuk-fieldset__legend--m"
 					}
+				},
+				hint: {
+					text: "You can get unlock lists for dates up to 60 days from today."
 				},
 				items: [
 				{
