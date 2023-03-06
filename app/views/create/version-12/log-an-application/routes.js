@@ -4,7 +4,7 @@ const crypto = require("crypto");
 const { DateTime } = require("luxon");
 
 router.all("*", function (req, res, next) {
-  console.log(req.session.data["new-activity"]);
+  console.log(req.session.data["new-application"]);
   next();
 });
 
@@ -39,6 +39,7 @@ router.get("/select-prisoner", function (req, res) {
     );
   });
 
+  // if there is only one matching prisoner
   if (matchingPrisoners.length === 1) {
     req.session.data["selected-prisoner"] = matchingPrisoners[0].id;
     res.redirect("prisoner-existing-applications");
@@ -76,6 +77,10 @@ router.get("/prisoner-existing-applications", function (req, res) {
 // logic for prisoner existing applications page
 router.post("/prisoner-existing-applications", function (req, res) {
   if (req.session.data["log-new-application"] == "yes") {
+    // create an empty application object
+    req.session.data['new-application'] = {
+      prisoner: req.session.data["selected-prisoner"]
+    };
     res.redirect("select-activity");
   } else {
     res.redirect("prisoner-existing-applications");
@@ -99,8 +104,26 @@ router.post("/select-activity", function (req, res) {
 router.get("/application-date", function (req, res) {
   res.render(req.protoUrl + "/application-date");
 });
+
 // redirect to the applicant details page
 router.post("/application-date", function (req, res) {
+  // convert the individual date fields into a single date object
+  let day = req.session.data["application-date-day"];
+  let month = req.session.data["application-date-month"];
+  let year = req.session.data["application-date-year"];
+  let applicationDate = DateTime.fromObject({
+    day: day,
+    month: month,
+    year: year,
+  });
+
+  // shorten the date to yyyy-mm-dd
+  applicationDate = applicationDate.toFormat("yyyy-MM-dd");
+
+  // add the date to the new application object
+  req.session.data["new-application"]["date"] = applicationDate;
+
+  // redirect to the applicant details page
   res.redirect("applicant-details");
 });
 
@@ -110,8 +133,18 @@ router.get("/applicant-details", function (req, res) {
   let prisoner = prisoners.find(prisoner => prisoner.id === req.session.data["selected-prisoner"]);
   res.render(req.protoUrl + "/applicant-details", {prisoner});
 });
+
 // redirect to the decision page
 router.post("/applicant-details", function (req, res) {
+  // logic for applicant details page
+  if(req.session.data["applicant"] == "prisoner") {
+    // add the applicant to the new application object
+    req.session.data["new-application"]["applicant"] = "prisoner";
+  } else {
+    req.session.data["new-application"]["applicant"] = "other";
+  }
+
+  // redirect to the decision page
   res.redirect("decision");
 });
 
