@@ -76,6 +76,12 @@ router.get("/prisoner-existing-applications", function (req, res) {
 });
 // logic for prisoner existing applications page
 router.post("/prisoner-existing-applications", function (req, res) {
+  // check there is a selected prisoner
+  if (!req.session.data["selected-prisoner"]) {
+    req.session.data["selected-prisoner"] = req.session.data["timetable-complete-1"]["prisoners"][0].id;
+  }
+
+  // logic for the log new application radios
   if (req.session.data["log-new-application"] == "yes") {
     // create an empty application object
     req.session.data['new-application'] = {
@@ -107,6 +113,12 @@ router.get("/application-date", function (req, res) {
 
 // redirect to the applicant details page
 router.post("/application-date", function (req, res) {
+  // check the user has entered a date
+  if (!req.session.data["application-date-day"] || !req.session.data["application-date-month"] || !req.session.data["application-date-year"]) {
+    res.redirect("application-date");
+    return;
+  }
+
   // convert the individual date fields into a single date object
   let day = req.session.data["application-date-day"];
   let month = req.session.data["application-date-month"];
@@ -119,6 +131,11 @@ router.post("/application-date", function (req, res) {
 
   // shorten the date to yyyy-mm-dd
   applicationDate = applicationDate.toFormat("yyyy-MM-dd");
+
+  // make sure there is a new application object
+  if (!req.session.data["new-application"]) {
+    req.session.data["new-application"] = {};
+  }
 
   // add the date to the new application object
   req.session.data["new-application"]["date"] = applicationDate;
