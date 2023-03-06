@@ -106,7 +106,9 @@ router.post("/application-date", function (req, res) {
 
 // applicant details page
 router.get("/applicant-details", function (req, res) {
-  res.render(req.protoUrl + "/applicant-details");
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let prisoner = prisoners.find(prisoner => prisoner.id === req.session.data["selected-prisoner"]);
+  res.render(req.protoUrl + "/applicant-details", {prisoner});
 });
 // redirect to the decision page
 router.post("/applicant-details", function (req, res) {
