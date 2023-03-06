@@ -108,7 +108,55 @@ text: "Back",
         <h2 class="govuk-heading-l">
             Manage waitlist
         </h2>
-
+        <p>
+            View the status of applications which have been added to the waitlist.
+        </p>
+        <p>
+            Select someone if you need to approve or reject their application.
+        </p>
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m">Dates and amounts</caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Prisoner details</th>
+                    <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
+                    <th scope="col" class="govuk-table__header">Date allocated</th>
+                    <th scope="col" class="govuk-table__header">Other allocations</th>
+                    <th scope="col" class="govuk-table__header">Earliest release date</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                {% for application in data['applications'] %}
+                {% set prisoner = application.prisoner|getPrisonerDetails %}
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="where-do-you-live" name="where-do-you-live"
+                                    type="radio" value="england">
+                                <label class="govuk-label govuk-radios__label" for="where-do-you-live">
+                                    <b><a href="">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a></b><br>
+                                    {{prisoner.id}}<br>
+                                    {{prisoner.location.cell}}
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">None</td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">{{application.date|convertShortDateToMediumDate}}</td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">
+                        <ul class="govuk-list">
+                        {% for allocation in prisoner.activity %}
+                        {% set activity = allocation|getActivityDetails %}
+                        <li>{{activity.name}}</li>
+                        {% endfor %}
+                        </ul>
+                    </td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
     <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-month">
         <h2 class="govuk-heading-l">

@@ -180,6 +180,15 @@ router.get("/review-decision", function (req, res) {
 });
 // redirect to the confirmation page
 router.post("/review-decision", function (req, res) {
+  // if the applications session data doesn't exist, create it
+  if (!req.session.data["applications"]) {
+    req.session.data["applications"] = [];
+  }
+
+  // add the application to the applications session data
+  req.session.data["applications"].push(req.session.data["new-application"]);
+
+  // redirect to the confirmation page
   res.redirect("confirmation");
 });
 
