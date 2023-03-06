@@ -49,33 +49,11 @@ module.exports = function(router) {
 		}
 	});
 
-    // On activity-name-2 the continue creatong activity button is pressed.
-    //router.post(version +'/create/activity-name-2-create', function(req, res) {
-    //{
-    //res.redirect(version +'/create/activity-risk-assessment')
-    //}
-    //});
-
 	router.post(version + '/create/activity-risk-assessment', function(req, res) {
 		{
 			res.redirect(version + '/create/activity-payment-details')
 		}
 	});
-
-
-    //OLD
-    //router.post(version +'/create/activity-payment-details', function(req, res) {
-    //	{
-    //		res.redirect(version +'/create/activity-add-education')
-    //	}
-    //});
-
-
-    // router.post(version + '/create/activity-payment-details', function(req, res) {
-    //     {
-    //         res.redirect(version + '/create/activity-payment-details-2')
-    //     }
-    // });
 
 	router.get(version +'/create/activity-payment-details', function(req, res) {
 		let payrateId = req.session.data['id']
@@ -308,28 +286,9 @@ module.exports = function(router) {
 			});
 			req.session.data.educationLevels = educationLevels;
 		}
-
         // Redirect the user to the next page
 		res.redirect(version + '/create/activity-check-your-answers-education-new');
 	});
-
-
-
-    //SCHEDULING//
-
-	router.post(version + '/create/activity-name-2', function(req, res) {
-		{
-			res.redirect(version + '/create/schedule-name')
-		}
-	});
-
-	router.post(version + '/create/schedule-name', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-start-date')
-		}
-	});
-
-
 	router.post(version + '/create/activity-start-date', function(req, res) {
 		{
 			//Change numerical month to short month name
@@ -381,26 +340,6 @@ module.exports = function(router) {
 		}
 	});
 
-
-    //If repeat
-    //router.post(version +'/create/activity-start-time-repeat2', function(req, res) {
-    //{
-    //if (req.session.data.activityRecurSame == 'yes')
-    //	{
-    //		res.redirect(version +'/create/activity-repeat-check')
-    //	}
-    //	else {
-    //		res.redirect(version +'/create/activity-repeat-check')
-    //	}
-    //}
-    //});
-
-    //router.post(version +'/create/activity-repeat-check', function(req, res) {
-    //	{
-    //		res.redirect(version +'/create/activity-location-dropdown')
-    //	}
-    //});
-
 	router.post(version + '/create/activity-location-dropdown', function(req, res) {
 		{
 			res.redirect(version + '/create/activity-capacity')
@@ -422,10 +361,7 @@ module.exports = function(router) {
 	});
 
 
-
-
     ///////CREATE CHECK YOUR ANSWERS///////////////
-
 	router.post(version + '/create/check/activity-type-select-with-category', function(req, res) {
 		{
 			if (req.session.data.temp !== req.session.data.category) {
@@ -483,8 +419,6 @@ module.exports = function(router) {
 			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
-
-
 
     //Recurring
 	router.post(version + '/create/check/activity-which-days', function(req, res) {
