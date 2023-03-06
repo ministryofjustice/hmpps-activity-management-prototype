@@ -31,16 +31,17 @@ window.history.go(-1)" })}} {% endblock %}
                     </tr>
                 </thead>
                 <tbody class="govuk-table__body">
+                    {% for prisoner in matchingPrisoners %}
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">
                             <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
                                 <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="where-do-you-live" name="where-do-you-live"
-                                        type="radio" value="england">
-                                    <label class="govuk-label govuk-radios__label" for="where-do-you-live">
-                                        <b><a href="">FORENAME SURNAME</a></b><br>
-                                        NUMBER<br>
-                                        LOCATION
+                                    <input class="govuk-radios__input" id="selected-prisoner" name="selected-prisoner"
+                                        type="radio" value="{{prisoner.id}}">
+                                    <label class="govuk-label govuk-radios__label" for="selected-prisoner">
+                                        <b><a href="">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a></b><br>
+                                        {{prisoner.id}}<br>
+                                        {{prisoner.location.cell}}
                                     </label>
                                 </div>
                             </div>
@@ -50,6 +51,7 @@ window.history.go(-1)" })}} {% endblock %}
                         <td class="govuk-table__cell govuk-!-padding-top-4">ACTIVITY</td>
                         <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
 
