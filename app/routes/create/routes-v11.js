@@ -3,8 +3,8 @@ module.exports = function(router) {
 
 	var version = '/v11';
 
-	// app data
-	const prisoners = require('../../data/prisoners-list-3')
+	// app data, but not yet used
+	//const prisoners = require('../../data/prisoners-list-3')
 
 	router.post(version + '/setup', function(req, res) {
 
@@ -223,8 +223,6 @@ module.exports = function(router) {
 		res.redirect(version + '/create/activity-is-education-needed')
 	});
 
-
-
 	router.post(version + '/create/activity-is-education-needed', function(req, res) {
 
 		if (req.session.data.EducationNeeded == 'yes') {
@@ -304,18 +302,14 @@ module.exports = function(router) {
   return date.toLocaleString('en-US', { month: 'short' });
 }
 
-
 	router.post(version + '/create/activity-is-there-an-end-date', function(req, res) {
-
 		if (req.session.data.ScheduleEndDate == 'yes') {
-
 			res.redirect(version + '/create/activity-end-date')
 		}
 		else {
 			res.redirect(version + '/create/activity-start-time')
 		}
 	});
-
 
 	router.post(version + '/create/activity-end-date', function(req, res) {
 		{
@@ -326,7 +320,6 @@ module.exports = function(router) {
 			res.redirect(version + '/create/activity-start-time')
 		}
 	});
-
 
 	router.post(version + '/create/activity-start-time', function(req, res) {
 		{
@@ -359,7 +352,6 @@ module.exports = function(router) {
 			res.redirect(version + '/create/schedule-confirmation-created')
 		}
 	});
-
 
     ///////CREATE CHECK YOUR ANSWERS///////////////
 	router.post(version + '/create/check/activity-type-select-with-category', function(req, res) {
@@ -398,24 +390,20 @@ module.exports = function(router) {
 		}
 	});
 
-
-    //Not recurring
-		router.post(version + '/create/check/activity-start-date', function(req, res) {
-			{
-				//Change numerical month to short month name
-				req.session.data.Month = getMonthName(req.session.data.Month)
-				req.session.data.activityCreateScheduleStartDate = req.session.data.Day + " " + req.session.data.Month + " " + req.session.data.Year
-
-				res.redirect(version + '/create/schedule-check-your-answers')
-			}
-		});
+	router.post(version + '/create/check/activity-start-date', function(req, res) {
+		{
+			//Change numerical month to short month name
+			req.session.data.Month = getMonthName(req.session.data.Month)
+			req.session.data.activityCreateScheduleStartDate = req.session.data.Day + " " + req.session.data.Month + " " + req.session.data.Year
+			res.redirect(version + '/create/schedule-check-your-answers')
+		}
+	});
 
 	router.post(version + '/create/check/activity-end-date', function(req, res) {
 		{
 			//Change numerical month to short month name
 			req.session.data.endMonth = getMonthName(req.session.data.endMonth)
 			req.session.data.activityCreateScheduleEndDate = req.session.data.endDay + " " + req.session.data.endMonth + " " + req.session.data.endYear
-
 			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
@@ -491,12 +479,12 @@ module.exports = function(router) {
 			res.redirect(version + '/create/schedule-name?edit=false')
 		}
 	});
-
     ///////END CREATE///////////////
 
 
-    //////ALLOCATE////////
 
+
+    //////ALLOCATE////////
 	router.post(version + '/allocate/searchAllocationDashboard-1', function(req, res) {
 		{
 			res.redirect(version + '/allocate/activity-dashboard-3-search')
@@ -699,10 +687,6 @@ module.exports = function(router) {
 		}
 	});
 
-
-
-
-
 //Allocate payments - chan ge current payment choices
 //Get current ID
 	router.get(version +'/allocate/allocate-payment-details-change', function(req, res) {
@@ -735,9 +719,6 @@ module.exports = function(router) {
 			// render the page and include the payrateData variable so we can access it
 		res.render('../views/'+version+'/allocate/allocate-payment-details-change', {payrateData})
 	});
-
-
-
 
 //When submitted
 	router.post(version + '/allocate/allocate-payment-details-change', function(req, res) {
@@ -869,7 +850,6 @@ module.exports = function(router) {
 		if (req.session.data['show-delete-dialog']) {
 			req.session.data['show-delete-dialog'] = false;
 		}
-
 		res.render('../views/'+version+'/allocate/allocate-check-your-answers-payment')
 	});
 
@@ -946,6 +926,7 @@ module.exports = function(router) {
 router.get(version +'/allocate/waitlistFilter', function(req, res) {
 		res.redirect(version + '/allocate/activity-dashboard-4-1?pageToShow=1#waitlist')
 });
+
 //Waitlist journey
 router.get(version +'/allocate/waitlist', function(req, res) {
 		res.redirect(version + '/allocate/waitlist-decide')
@@ -954,11 +935,7 @@ router.post(version +'/allocate/waitlist-check-decide', function(req, res) {
 		res.redirect(version + '/allocate/activity-dashboard-4-1?pageToShow=1#waitlist')
 });
 
-
-
-
 router.post(version +'/allocate/waitlist-check-pending', function(req, res) {
-
 	if (req.session.data.waitlistDecideCandidate=="Approved"){
 		res.redirect(version + '/allocate/allocate-payment-details')
 	}
@@ -1029,6 +1006,5 @@ router.post(version + '/admin/log-an-activity/review-activity-application', func
 		res.redirect(version + '/admin/log-an-activity/log-confirmation')
 	}
 });
-
 
 }
