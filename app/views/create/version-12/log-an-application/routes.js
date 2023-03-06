@@ -180,13 +180,17 @@ router.get("/review-decision", function (req, res) {
 });
 // redirect to the confirmation page
 router.post("/review-decision", function (req, res) {
-  // if the applications session data doesn't exist, create it
-  if (!req.session.data["applications"]) {
-    req.session.data["applications"] = [];
+  let application = req.session.data["new-application"];
+  let activityId = application.activity;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(activity => activity.id === activityId);
+
+  // if the activity doesn't have an applications array, create one
+  if (!activity.applications) {
+    activity.applications = [];
   }
 
-  // add the application to the applications session data
-  req.session.data["applications"].push(req.session.data["new-application"]);
+  // add the application to the activity applications array
+  activity.applications.push(application);
 
   // redirect to the confirmation page
   res.redirect("confirmation");
