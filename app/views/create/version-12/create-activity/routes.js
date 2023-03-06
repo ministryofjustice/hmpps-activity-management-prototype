@@ -149,6 +149,71 @@ router.post('/payment-details-list', function (req, res) {
     res.redirect('education-level-check')
 });
 
+// remove payment details
+router.get('remove-payment-details', function (req, res) {
+    let payrateId = req.session.data['id']
+    let payrateData;
+
+    function getPayrateById(payrates, id) {
+        for (const level in payrates) {
+            const levelPayrates = payrates[level];
+            for (const payrate of levelPayrates) {
+                if (payrate.id === id) {
+                    return payrate;
+                }
+            }
+        }
+        return null;
+    }
+
+    if (req.session.data.payrates && typeof req.session.data.payrates === 'object') {
+        payrateData = getPayrateById(req.session.data.payrates, payrateId)
+    }
+
+    res.render(req.protoUrl + '/remove-payment-details', {payrateData})
+});
+
+router.post('/remove-payment-details', function(req, res) {
+    if(req.session.data['confirm-remove-payrate'] == 'yes'){
+        let payrateId = req.session.data['id']
+        let payrateLevel = req.session.data['incentive-level']
+        let payrateData;
+
+        function removePayrateById(payrates, id) {
+        // Iterate over the payrates object
+            for (const level in payrates) {
+            // Get the array of payrates for the current pay rate level
+                const levelPayrates = payrates[level];
+            // Iterate over the array of payrates
+                for (let i = 0; i < levelPayrates.length; i++) {
+                // If the payrate has the specified ID, remove it from the array
+                    if (levelPayrates[i].id === id) {
+                        levelPayrates.splice(i, 1);
+                        return true;
+                    }
+                }
+            }
+        // If no payrate with the specified ID was found, return false
+            return false;
+        }
+
+    // check the payrates object exists and is an object
+        if (req.session.data.payrates && typeof req.session.data.payrates === 'object') {
+        // update the payrateData variable
+            if (removePayrateById(req.session.data.payrates, payrateId)) {
+                payrateData = null;
+            } else {
+                payrateData = 'Payrate not found';
+            }
+        }
+
+        req.session.data['show-delete-dialog'] = true
+    }
+
+    // Redirect the user to the payment details list page
+    res.redirect('payment-details-list');
+});
+
 // education level check page
 router.get('/education-level-check', function (req, res) {
     res.render(req.protoUrl + '/education-level-check')
@@ -168,6 +233,60 @@ router.get('/select-education-level', function (req, res) {
 });
 // redirect to education level list page
 router.post('/select-education-level', function (req, res) {
+    const educationLevel = req.session.data['education-level'];
+
+    // Get the ID for the educationLevel or generate a random one
+    let educationId;
+    if (req.query.id) {
+        educationId = req.query.id;
+    } else {
+        educationId = crypto.randomBytes(4).toString("hex");
+    }
+
+    let educationLevelData = {
+        id: educationId,
+        name: educationLevel
+    };
+
+    // Check if the educationLevelData already exists in the educationLevels array
+    let educationLevels = req.session.data.educationLevels || [];
+    let existingEducation = educationLevels.find(level => level.id === educationId);
+
+    if (existingEducation) {
+        // If educationLevelData already exists, update it
+        existingEducation.name = educationLevelData.name;
+    } else {
+        // If educationLevelData doesn't exist, add it to the array
+        educationLevels.push(educationLevelData);
+    }
+
+    req.session.data.educationLevels = educationLevels;
+
+    res.redirect('education-level-list')
+});
+
+// remove education level page
+router.get('/remove-education-level', function (req, res) {
+    let educationId = req.query.id
+    let educationLevels = req.session.data.educationLevels;
+    let educationLevel = educationLevels.find(level => level.id === educationId);
+
+    res.render(req.protoUrl + '/remove-education-level', {educationLevel})
+});
+// logic for remove education level page
+router.post('/remove-education-level', function (req, res) {
+    if(req.session.data['confirm-remove-education-level'] == 'yes'){
+        const educationId = req.query.id;
+        let educationLevels = req.session.data.educationLevels;
+        
+        // remove the education level from the array
+        educationLevels = educationLevels.filter(function(obj) {
+            return obj.id !== educationId;
+        });
+        req.session.data.educationLevels = educationLevels;
+    }
+
+    // Redirect the user to the list of education levels
     res.redirect('education-level-list')
 });
 
