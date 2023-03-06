@@ -3,8 +3,8 @@ module.exports = function(router) {
 
 	var version = '/v11';
 
-	// app data
-	const prisoners = require('../../data/prisoners-list-3')
+	// app data, but not yet used
+	//const prisoners = require('../../data/prisoners-list-3')
 
 	router.post(version + '/setup', function(req, res) {
 
@@ -49,33 +49,11 @@ module.exports = function(router) {
 		}
 	});
 
-    // On activity-name-2 the continue creatong activity button is pressed.
-    //router.post(version +'/create/activity-name-2-create', function(req, res) {
-    //{
-    //res.redirect(version +'/create/activity-risk-assessment')
-    //}
-    //});
-
 	router.post(version + '/create/activity-risk-assessment', function(req, res) {
 		{
 			res.redirect(version + '/create/activity-payment-details')
 		}
 	});
-
-
-    //OLD
-    //router.post(version +'/create/activity-payment-details', function(req, res) {
-    //	{
-    //		res.redirect(version +'/create/activity-add-education')
-    //	}
-    //});
-
-
-    // router.post(version + '/create/activity-payment-details', function(req, res) {
-    //     {
-    //         res.redirect(version + '/create/activity-payment-details-2')
-    //     }
-    // });
 
 	router.get(version +'/create/activity-payment-details', function(req, res) {
 		let payrateId = req.session.data['id']
@@ -245,8 +223,6 @@ module.exports = function(router) {
 		res.redirect(version + '/create/activity-is-education-needed')
 	});
 
-
-
 	router.post(version + '/create/activity-is-education-needed', function(req, res) {
 
 		if (req.session.data.EducationNeeded == 'yes') {
@@ -308,28 +284,9 @@ module.exports = function(router) {
 			});
 			req.session.data.educationLevels = educationLevels;
 		}
-
         // Redirect the user to the next page
 		res.redirect(version + '/create/activity-check-your-answers-education-new');
 	});
-
-
-
-    //SCHEDULING//
-
-	router.post(version + '/create/activity-name-2', function(req, res) {
-		{
-			res.redirect(version + '/create/schedule-name')
-		}
-	});
-
-	router.post(version + '/create/schedule-name', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-start-date')
-		}
-	});
-
-
 	router.post(version + '/create/activity-start-date', function(req, res) {
 		{
 			//Change numerical month to short month name
@@ -345,18 +302,14 @@ module.exports = function(router) {
   return date.toLocaleString('en-US', { month: 'short' });
 }
 
-
 	router.post(version + '/create/activity-is-there-an-end-date', function(req, res) {
-
 		if (req.session.data.ScheduleEndDate == 'yes') {
-
 			res.redirect(version + '/create/activity-end-date')
 		}
 		else {
 			res.redirect(version + '/create/activity-start-time')
 		}
 	});
-
 
 	router.post(version + '/create/activity-end-date', function(req, res) {
 		{
@@ -367,7 +320,6 @@ module.exports = function(router) {
 			res.redirect(version + '/create/activity-start-time')
 		}
 	});
-
 
 	router.post(version + '/create/activity-start-time', function(req, res) {
 		{
@@ -380,26 +332,6 @@ module.exports = function(router) {
 			res.redirect(version + '/create/activity-location-dropdown')
 		}
 	});
-
-
-    //If repeat
-    //router.post(version +'/create/activity-start-time-repeat2', function(req, res) {
-    //{
-    //if (req.session.data.activityRecurSame == 'yes')
-    //	{
-    //		res.redirect(version +'/create/activity-repeat-check')
-    //	}
-    //	else {
-    //		res.redirect(version +'/create/activity-repeat-check')
-    //	}
-    //}
-    //});
-
-    //router.post(version +'/create/activity-repeat-check', function(req, res) {
-    //	{
-    //		res.redirect(version +'/create/activity-location-dropdown')
-    //	}
-    //});
 
 	router.post(version + '/create/activity-location-dropdown', function(req, res) {
 		{
@@ -421,11 +353,7 @@ module.exports = function(router) {
 		}
 	});
 
-
-
-
     ///////CREATE CHECK YOUR ANSWERS///////////////
-
 	router.post(version + '/create/check/activity-type-select-with-category', function(req, res) {
 		{
 			if (req.session.data.temp !== req.session.data.category) {
@@ -462,51 +390,25 @@ module.exports = function(router) {
 		}
 	});
 
-
-    //Not recurring
-		router.post(version + '/create/check/activity-start-date', function(req, res) {
-			{
-				//Change numerical month to short month name
-				req.session.data.Month = getMonthName(req.session.data.Month)
-				req.session.data.activityCreateScheduleStartDate = req.session.data.Day + " " + req.session.data.Month + " " + req.session.data.Year
-
-				res.redirect(version + '/create/schedule-check-your-answers')
-			}
-		});
+	router.post(version + '/create/check/activity-start-date', function(req, res) {
+		{
+			//Change numerical month to short month name
+			req.session.data.Month = getMonthName(req.session.data.Month)
+			req.session.data.activityCreateScheduleStartDate = req.session.data.Day + " " + req.session.data.Month + " " + req.session.data.Year
+			res.redirect(version + '/create/schedule-check-your-answers')
+		}
+	});
 
 	router.post(version + '/create/check/activity-end-date', function(req, res) {
 		{
 			//Change numerical month to short month name
 			req.session.data.endMonth = getMonthName(req.session.data.endMonth)
 			req.session.data.activityCreateScheduleEndDate = req.session.data.endDay + " " + req.session.data.endMonth + " " + req.session.data.endYear
-
-			res.redirect(version + '/create/schedule-check-your-answers')
-		}
-	});
-
-
-
-    //Recurring
-	router.post(version + '/create/check/activity-which-days', function(req, res) {
-		{
-			res.redirect(version + '/create/schedule-check-your-answers')
-		}
-	});
-
-
-	router.post(version + '/create/check/activity-location-dashboard-1', function(req, res) {
-		{
 			res.redirect(version + '/create/schedule-check-your-answers')
 		}
 	});
 
 	router.post(version + '/create/check/activity-location-dropdown', function(req, res) {
-		{
-			res.redirect(version + '/create/schedule-check-your-answers')
-		}
-	});
-
-	router.post(version + '/create/check/activity-incentive-level', function(req, res) {
 		{
 			res.redirect(version + '/create/schedule-check-your-answers')
 		}
@@ -530,18 +432,6 @@ module.exports = function(router) {
 		}
 	});
 
-	router.post(version + '/create/check/activity-add-alerts-one-added', function(req, res) {
-		{
-			res.redirect(version + '/create/schedule-check-your-answers')
-		}
-	});
-
-	router.post(version + '/create/check/activity-add-alerts-two-added', function(req, res) {
-		{
-			res.redirect(version + '/create/schedule-check-your-answers')
-		}
-	});
-
 	router.post(version + '/create/check/activity-add-alerts', function(req, res) {
 		{
 			res.redirect(version + '/create/schedule-check-your-answers')
@@ -558,40 +448,8 @@ module.exports = function(router) {
 			res.redirect(version + '/create/check/activity-add-education-one-added')
 		}
 	});
-	router.post(version + '/create/check/addEducation2', function(req, res) {
-		{
-			res.redirect(version + '/create/check/activity-add-education-two-added')
-		}
-	});
-	router.post(version + '/create/check/addEducation3', function(req, res) {
-		{
-			res.redirect(version + '/create/check/activity-add-education-three-added')
-		}
-	});
 
 	router.post(version + '/create/check/activity-add-education', function(req, res) {
-		{
-			res.redirect(version + '/create/schedule-check-your-answers')
-		}
-	});
-
-	router.post(version + '/create/check/activity-add-education-one-added', function(req, res) {
-		{
-			res.redirect(version + '/create/schedule-check-your-answers')
-		}
-	});
-	router.post(version + '/create/check/activity-add-education-two-added', function(req, res) {
-		{
-			res.redirect(version + '/create/schedule-check-your-answers')
-		}
-	});
-	router.post(version + '/create/check/activity-add-education-three-added', function(req, res) {
-		{
-			res.redirect(version + '/create/schedule-check-your-answers')
-		}
-	});
-
-	router.post(version + '/create/check/activity-add-education-three-added', function(req, res) {
 		{
 			res.redirect(version + '/create/schedule-check-your-answers')
 		}
@@ -607,14 +465,12 @@ module.exports = function(router) {
 		}
 	});
 
-
     //EDIT current activity
 	router.post(version + '/create/activity-check-your-answers-edit', function(req, res) {
 		{
 			res.redirect(version + '/create/activity-confirmation-edited')
 		}
 	});
-
 
 	router.post(version + '/create/activity-confirmation-created', function(req, res) {
 		if (req.session.data['edit'] == 'true') {
@@ -623,76 +479,17 @@ module.exports = function(router) {
 			res.redirect(version + '/create/schedule-name?edit=false')
 		}
 	});
-
-    ///////END CREATE CHECK YOUR ANSWERS///////////////
-
-
-
-
-
-    //OLD CREATE TIME FUNCTIONS
-
-    //TIME
-    //Start of recurring times / sessions
-	router.post(version + '/create/addTime', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-start-time-one-added')
-		}
-	});
-	router.post(version + '/create/addTime2', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-start-time-two-added')
-		}
-	});
-	router.post(version + '/create/addTime3', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-start-time-three-added')
-		}
-	});
-
-
-    //if dashboard view clicked on setup page
-
-
-	router.post(version + '/create/activity-start-time-one-added', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-location-dropdown')
-		}
-	});
-	router.post(version + '/create/activity-start-time-two-added', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-location-dropdown')
-		}
-	});
-	router.post(version + '/create/activity-start-time-three-added', function(req, res) {
-		{
-			res.redirect(version + '/create/activity-location-dropdown')
-		}
-	});
-
-    ///////END CREATE//////////
+    ///////END CREATE///////////////
 
 
 
 
     //////ALLOCATE////////
-
 	router.post(version + '/allocate/searchAllocationDashboard-1', function(req, res) {
 		{
 			res.redirect(version + '/allocate/activity-dashboard-3-search')
 		}
 	});
-
-	//router.get(version + '/allocate/activity-dashboard-3', function(req, res) {
-	//	{
-	//		if (req.session.data.currentActivityAllocateScheduleName !== data.activityAllocateScheduleName )
-	//		{
-	//			req.session.data.vacanciesCount = 10;
-	//		}
-
-	//		res.redirect(version + '/allocate/activity-dashboard-4-1')
-	//	}
-	//});
 
 	router.post(version + '/allocate/searchAllocationDashboard', function(req, res) {
 		{
@@ -890,10 +687,6 @@ module.exports = function(router) {
 		}
 	});
 
-
-
-
-
 //Allocate payments - chan ge current payment choices
 //Get current ID
 	router.get(version +'/allocate/allocate-payment-details-change', function(req, res) {
@@ -926,9 +719,6 @@ module.exports = function(router) {
 			// render the page and include the payrateData variable so we can access it
 		res.render('../views/'+version+'/allocate/allocate-payment-details-change', {payrateData})
 	});
-
-
-
 
 //When submitted
 	router.post(version + '/allocate/allocate-payment-details-change', function(req, res) {
@@ -1060,7 +850,6 @@ module.exports = function(router) {
 		if (req.session.data['show-delete-dialog']) {
 			req.session.data['show-delete-dialog'] = false;
 		}
-
 		res.render('../views/'+version+'/allocate/allocate-check-your-answers-payment')
 	});
 
@@ -1137,6 +926,7 @@ module.exports = function(router) {
 router.get(version +'/allocate/waitlistFilter', function(req, res) {
 		res.redirect(version + '/allocate/activity-dashboard-4-1?pageToShow=1#waitlist')
 });
+
 //Waitlist journey
 router.get(version +'/allocate/waitlist', function(req, res) {
 		res.redirect(version + '/allocate/waitlist-decide')
@@ -1145,11 +935,7 @@ router.post(version +'/allocate/waitlist-check-decide', function(req, res) {
 		res.redirect(version + '/allocate/activity-dashboard-4-1?pageToShow=1#waitlist')
 });
 
-
-
-
 router.post(version +'/allocate/waitlist-check-pending', function(req, res) {
-
 	if (req.session.data.waitlistDecideCandidate=="Approved"){
 		res.redirect(version + '/allocate/allocate-payment-details')
 	}
@@ -1220,6 +1006,5 @@ router.post(version + '/admin/log-an-activity/review-activity-application', func
 		res.redirect(version + '/admin/log-an-activity/log-confirmation')
 	}
 });
-
 
 }
