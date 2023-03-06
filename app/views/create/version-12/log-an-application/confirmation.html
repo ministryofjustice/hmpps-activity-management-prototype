@@ -1,0 +1,37 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {{ govukPanel({
+        titleText: "You've logged the application for PRISONER NAME",
+        classes: "govuk-!-margin-bottom-8"
+        }) }}
+
+        <h2 class="govuk-heading-l">
+            What you can do next
+        </h2>
+
+        <p class="govuk-body">
+            You can either:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li><a href="#">log another application for Henry Tatton</a></li>
+            <li><a href="#">log an application for someone else</a></li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

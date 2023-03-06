@@ -1,0 +1,38 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+      {{ govukCharacterCount({
+      label: {
+      text: "Who is the application for?",
+      classes: "govuk-label--l",
+      maxlength: 300,
+      isPageHeading: true
+      },
+      rows: 1,
+      hint: {
+      html: "Enter the name or prison number of the person who is named on the application for the activity.<br>
+      Example prison number AB1234B"
+      },
+      id: "activity-name",
+      name: "new-activity[activity-name]"
+      }) }}
+
+      <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

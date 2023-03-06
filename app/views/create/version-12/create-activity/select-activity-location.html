@@ -1,0 +1,64 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <h2 class="govuk-heading-m">
+                <span class="govuk-caption-m">
+                    {{data['new-activity']['category']}}
+                </span>
+                {{data['new-activity']['activity-name']}}
+            </h2>
+            {%- set levelsData = [
+                'Room 1',
+                'Room 2',
+                'Education wing',
+                'Wing A',
+                'Wing B'
+                ] -%}
+
+            <div class="govuk-form-group">
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--l" for="activity-location">
+                        Where does this activity take place?
+                    </label>
+                </h1>
+                <div id="subject-hint" class="govuk-hint">
+                    Start typing a location and select the one you need from the list of options.
+                </div>
+                <select class="govuk-select" id="activity-location" name="new-activity[activity-location]">
+                    {% for level in levelsData %}
+                    <option value="{{ level }}">{{ level }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#activity-location'),
+        showAllValues: false
+    })
+</script>
+{% endblock %}

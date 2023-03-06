@@ -1,0 +1,35 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <h2 class="govuk-heading-m">
+                <span class="govuk-caption-m">
+                    {{data['new-activity']['category']}}
+                </span>
+                {{data['new-activity']['activity-name']}}
+            </h2>
+
+            <h1 class="govuk-heading-l">
+                Review your decision
+            </h1>
+
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
