@@ -58,5 +58,53 @@ router.get('/select-activity', function (req, res) {
         activities,
     })
 });
+// redirect to the application date page
+router.post('/select-activity', function (req, res) {
+    res.redirect('application-date')
+});
+
+// application date page
+router.get('/application-date', function (req, res) {
+    res.render(req.protoUrl + '/application-date')
+});
+// redirect to the applicant details page
+router.post('/application-date', function (req, res) {
+    res.redirect('applicant-details')
+});
+
+// applicant details page
+router.get('/applicant-details', function (req, res) {
+    res.render(req.protoUrl + '/applicant-details')
+});
+// redirect to the decision page
+router.post('/applicant-details', function (req, res) {
+    res.redirect('decision')
+});
+
+// decision page
+router.get('/decision', function (req, res) {
+    res.render(req.protoUrl + '/decision')
+});
+// redirect to the review decision page
+router.post('/decision', function (req, res) {
+    res.redirect('review-decision')
+});
+
+// review decision page
+router.get('/review-decision', function (req, res) {
+    res.render(req.protoUrl + '/review-decision')
+});
+// redirect to the confirmation page
+router.post('/review-decision', function (req, res) {
+    res.redirect('confirmation')
+});
+
+// confirmation page
+router.get('/confirmation', function (req, res) {
+    res.render(req.protoUrl + '/confirmation')
+});
+
+
+
 
 module.exports = router

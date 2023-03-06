@@ -27,13 +27,14 @@ Activities Management prototype
             namePrefix: "new-activity[start-date]",
             fieldset: {
               legend: {
-                text: "Enter the start date for this activity",
+                text: "Enter the date shown on the application",
                 isPageHeading: true,
                 classes: "govuk-fieldset__legend--l"
               }
             },
             hint: {
-              text: "For example, 29 12 2022"
+              html: "If the application has not been dated, use today's date.<br>
+              For example, " + date|today|convertShortDateToExampleDate
             }
           }) }}
       <button class="govuk-button" data-module="govuk-button">Continue</button>
