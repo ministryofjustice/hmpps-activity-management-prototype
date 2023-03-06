@@ -1,8 +1,14 @@
 const express = require('express')
 const router = express.Router()
+const crypto = require("crypto");
 const {
     DateTime
 } = require('luxon')
+
+router.all('*', function (req, res, next) {
+    console.log(req.session.data['new-activity'])
+    next()
+})
 
 //redirect the root url to the start page
 router.get('/', function (req, res) {
@@ -37,11 +43,90 @@ router.post('/risk-assessment-levels', function (req, res) {
 
 // payment details page
 router.get('/payment-details', function (req, res) {
-    res.render(req.protoUrl + '/payment-details')
+    let payrateId = req.session.data['id']
+    let payrateData;
+
+    function getPayrateById(payrates, id) {
+        // Iterate over the payrates object
+        for (const level in payrates) {
+            // Get the array of payrates for the current pay rate level
+            const levelPayrates = payrates[level];
+            // Iterate over the array of payrates
+            for (const payrate of levelPayrates) {
+                // If the payrate has the specified ID, return it
+                if (payrate.id === id) {
+                    return payrate;
+                }
+            }
+        }
+        // If no payrate with the specified ID was found, return null
+        return null;
+    }
+
+    // check the payrates object exists and is an object
+    if (req.session.data.payrates && typeof req.session.data.payrates === 'object') {
+        // update the payrateData variable
+        payrateData = getPayrateById(req.session.data.payrates, payrateId)
+    }
+
+    // render the page and include the payrateData variable so we can access it
+    res.render(req.protoUrl + '/payment-details', {payrateData})
 });
-// redirect to payment details check page
+// payment details form post logic
 router.post('/payment-details', function (req, res) {
-    res.redirect('payment-details-list')
+    // Assign an empty object to req.session.data.payrates if it is null or undefined
+    req.session.data.payrates = req.session.data.payrates ?? {};
+
+    // Get the values of the paymentIncentiveName, paymentIncentiveAmount, and PayIncentiveLevel fields from the session data
+    const paymentIncentiveName = req.session.data['paymentIncentiveName'];
+    const paymentIncentiveAmount = req.session.data['paymentIncentiveAmount'];
+    const payIncentiveLevel = req.session.data['PayIncentiveLevel'];
+
+    // Get the ID for the payrate or generate a random one
+    let payIncentiveId;
+    if (req.session.data['id']) {
+        payIncentiveId = req.session.data['id'];
+    } else {
+        payIncentiveId = crypto.randomBytes(4).toString("hex");
+    }
+
+    // Create the payrate data object
+    const payrateData = {
+        id: payIncentiveId,
+        name: paymentIncentiveName,
+        amount: paymentIncentiveAmount,
+        'incentive-level': payIncentiveLevel
+    };
+
+    function updatePayrate(payrates, id, payrateData) {
+        // remove payrates with matching id from all levels
+        for (const level in payrates) {
+            const levelPayrates = payrates[level];
+            payrates[level] = levelPayrates.filter(payrate => payrate.id !== id);
+        }
+
+        // add payrate to the correct level
+        if (Array.isArray(payrateData['incentive-level'])) {
+            payrateData['incentive-level'].forEach(level => {
+                if (!payrates[level]) {
+                    payrates[level] = [];
+                }
+                payrates[level].push(payrateData);
+            });
+        } else {
+            if (!payrates[payrateData['incentive-level']]) {
+                payrates[payrateData['incentive-level']] = [];
+            }
+            payrates[payrateData['incentive-level']].push(payrateData);
+        }
+        return payrateData;
+    }
+
+    // Update the payrate in the payrates object
+    const updatedPayrate = updatePayrate(req.session.data.payrates, payIncentiveId, payrateData);
+
+    // Redirect the user to the next page
+    res.redirect('payment-details-list');
 });
 
 // payment details check page
@@ -50,6 +135,17 @@ router.get('/payment-details-list', function (req, res) {
 });
 // redirect to education level page
 router.post('/payment-details-list', function (req, res) {
+    // Assign an empty object to req.session.data['new-activity']
+    req.session.data['new-activity'] = req.session.data['new-activity'] ?? {};
+
+    // Assign an empty object to req.session.data['new-activity'].payrates if it is null or undefined
+    req.session.data['new-activity'].payrates = req.session.data['new-activity'].payrates ?? {};
+    
+    // if payrates data exists, assign it to req.session.data['new-activity'].payrates
+    if (req.session.data.payrates) {
+        req.session.data['new-activity'].payrates = req.session.data.payrates;
+    }
+
     res.redirect('education-level-check')
 });
 
