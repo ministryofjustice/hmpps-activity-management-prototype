@@ -1776,8 +1776,13 @@ Activities Management prototype
 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="allocate">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <p>Your candidate list has been filtered to show people who match all the requirements for this activity.
-        Use the filters to expand or reduce the list. You can also search for someone you want to allocate.</p>
+      <p>You can allocate people from this list. It shows people in the following order:</p>
+        <ol class="govuk-list govuk-list--number">
+          <li> anyone on the waitlist who has had their application approved</li>
+          <li>anyone on the waitlist whose application is pending </li>
+          <li>people who are not in work and meet the incentive level, risk and education requirements most closely</li>
+        </ol>
+        <p>Change the filters to see other people.</p>
     </div>
     <div class="govuk-grid-column-one-third">
         <h2 class="govuk-label-wrapper">
@@ -1800,9 +1805,9 @@ Activities Management prototype
           Showing people who are:<br /><br />
         </label>
         <select class="govuk-select" id="show" name="allocateEmployed">
-          <option value="Available" {% if data.allocateEmployed=="Available" %}selected{% endif %}>Available</option>
-          <option value="Unavailable" {% if data.allocateEmployed=="Unavailable" %}selected{% endif %}>Unavailable</option>
-          <option value="Both available and unavailable" {% if data.allocateEmployed=="Both available and unavailable" %}selected{% endif %}>Both available and unavailable</option>
+          <option value="Available" {% if data.allocateEmployed=="Available" %}selected{% endif %}>Not in work</option>
+          <option value="Unavailable" {% if data.allocateEmployed=="Unavailable" %}selected{% endif %}>In work</option>
+          <option value="Both available and unavailable" {% if data.allocateEmployed=="Both available and unavailable" %}selected{% endif %}>Everyone</option>
         </select>
       </div>
     </div>
