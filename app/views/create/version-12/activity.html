@@ -44,7 +44,68 @@ href: "/v10/dps-home-2"
             <li class="">
                 <a href="{{'_'|today}}" class="govuk-link--no-visited-state">Edit activities and schedules</a>
             </li>
+            <li class="">
+                <a href="../activities" class="govuk-link--no-visited-state">Select a different activity</a>
+            </li>
         </ul>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+        <table class="govuk-table govuk-!-font-size-16 govuk-!-margin-bottom-4">
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Days</th>
+                    <th scope="col" class="govuk-table__header">AM</th>
+                    <th scope="col" class="govuk-table__header">PM</th>
+                    <th scope="col" class="govuk-table__header">ED</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Monday</td>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
+                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Tuesday</th>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
+                    <td class="govuk-table__cell"><strong
+                            class="app-tag app-tag--green app-tag--grey app-tag--s">No</span></td>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Wednesday</th>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
+                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Thursday</th>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
+                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Friday</th>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
+                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Saturday</th>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
+                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Sunday</th>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
+                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
+                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -156,13 +217,14 @@ href: "/v10/dps-home-2"
                         </div>
                     </td>
                     <td class="govuk-table__cell govuk-!-padding-top-4">None</td>
-                    <td class="govuk-table__cell govuk-!-padding-top-4">{{application.date|convertShortDateToMediumDate}}</td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">
+                        {{application.date|convertShortDateToMediumDate}}</td>
                     <td class="govuk-table__cell govuk-!-padding-top-4">
                         <ul class="govuk-list">
-                        {% for allocation in prisoner.activity %}
-                        {% set activity = allocation|getActivityDetails %}
-                        <li>{{activity.name}}</li>
-                        {% endfor %}
+                            {% for allocation in prisoner.activity %}
+                            {% set activity = allocation|getActivityDetails %}
+                            <li>{{activity.name}}</li>
+                            {% endfor %}
                         </ul>
                     </td>
                     <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>

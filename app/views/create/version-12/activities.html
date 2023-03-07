@@ -52,11 +52,11 @@ href: "/v10/dps-home-2"
 {{ mojSubNavigation({
     label: 'Sub navigation',
     items: [{
-      text: 'Show all activities (' + activities.length + ')',
+      text: 'All activities (' + activities.length + ')',
       href: '#1',
       active: true
     }, {
-      text: 'Show activities with vacancies (38)',
+      text: 'Only activities with vacancies (38)',
       href: '#2'
     }]
   }) }}
@@ -65,16 +65,14 @@ href: "/v10/dps-home-2"
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header" aria-sort="ascending" width="250">Activity</th>
-            <th scope="col" class="govuk-table__header" aria-sort="none" width="150">Location</th>
-            <th scope="col" class="govuk-table__header" aria-sort="none" width="120">Time</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none" width="150">Activity location</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none" width="120">Capacity</th>
             <th scope="col" class="govuk-table__header" aria-sort="none" style="white-space: nowrap; width: 1%;">
-                Scheduled</th>
+                Allocated</th>
             <th scope="col" class="govuk-table__header govuk-hint" aria-sort="none"
-                style="white-space: nowrap; width: 1%;">Attended</th>
+                style="white-space: nowrap; width: 1%;">Percentage allocated</th>
             <th scope="col" class="govuk-table__header govuk-hint" aria-sort="none"
-                style="white-space: nowrap; width: 1%;">Not recorded</th>
-            <th scope="col" class="govuk-table__header govuk-hint" aria-sort="none"
-                style="white-space: nowrap; width: 1%;">All absences</th>
+                style="white-space: nowrap; width: 1%;">Vacancies</th>
         </tr>
     </thead>
     <tbody class="govuk-table__body">
@@ -91,24 +89,19 @@ href: "/v10/dps-home-2"
                 {{activity.location}}
             </td>
             <td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
-                {{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
+                -
             </td>
             <td class="govuk-table__cell--numeric govuk-table__cell">
-                {{activity.attendanceCount[period]['scheduled']}}
+                {{activity.currentlyAllocated}}
             </td>
             <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint"
                 data-sort-value="{{activity.attendanceCount[period]['attended']}}">
                 <span class="{{'govuk-tag govuk-tag--green' if activity.attendanceCount[period]['attended'] > 0}}">
-                    {{activity.attendanceCount[period]['attended']}}
+                    -
                 </span>
             </td>
             <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">
-                {{activity.attendanceCount[period]['not-recorded']}}
-            </td>
-            <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">
-                <span class="{{'govuk-tag govuk-tag--red' if activity.attendanceCount[period]['not-attended'] > 0}}">
-                    {{activity.attendanceCount[period]['not-attended']}}
-                </span>
+                -
             </td>
         </tr>
         {% endfor %}

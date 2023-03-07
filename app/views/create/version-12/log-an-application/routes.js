@@ -182,9 +182,11 @@ router.get("/review-decision", function (req, res) {
 router.post("/review-decision", function (req, res) {
   let application = req.session.data["new-application"];
   let activityId = application.activity;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(activity => activity.id === activityId);
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(activity => activity.id.toString() === activityId.toString());
 
-  // if the activity doesn't have an applications array, create one
+  console.log(activity)
+
+  // if activity doesn't have an applications key with an empty array, create it
   if (!activity.applications) {
     activity.applications = [];
   }

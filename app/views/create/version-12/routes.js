@@ -36,6 +36,22 @@ router.use("/log-an-application", (req, res, next) => {
 router.get("/activities", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
 
+  // count the number of prisoners allocated to each activity
+  // and add it to each activity object in the activities array
+  activities.forEach((activity) => {
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisonerCount = 0;
+    prisoners.forEach((prisoner) => {
+      const prisonerActivities = prisoner.activity ? Array.isArray(prisoner.activity) ? prisoner.activity : [prisoner.activity] : false;
+
+      if (prisonerActivities && prisonerActivities.includes(activity.id)) {
+        prisonerCount++;
+      }
+    });
+    activity.currentlyAllocated = prisonerCount;
+  });
+  
+  // render the activities page and pass the activities array to the template
   res.render("create/" + req.version + "/activities", {
     activities,
   });
