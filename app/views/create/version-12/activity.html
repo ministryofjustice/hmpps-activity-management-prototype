@@ -20,15 +20,18 @@ href: "/dps-home"
 },
 {
 text: "Manage activities",
-href: "/v10/dps-home-2"
+href: "../version-12/manage-activities"
+},
+{
+text: "Find activities with vacancies",
+href: "../activities"
 }
 ]
 }) }}
 {% endblock %}
 {% block content %}
-
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-three-quarters">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
             {{activity.name}}
         </h1>
@@ -39,7 +42,7 @@ href: "/v10/dps-home-2"
 
         <ul class="govuk-list govuk-!-margin-bottom-6">
             <li class="">
-                <a href="../create-activity" class="govuk-link--no-visited-state">Create an activity</a>
+                <a href="../create-activity" class="govuk-link--no-visited-state">Create a new activity</a>
             </li>
             <li class="">
                 <a href="{{'_'|today}}" class="govuk-link--no-visited-state">Edit activities and schedules</a>
@@ -50,7 +53,7 @@ href: "/v10/dps-home-2"
         </ul>
     </div>
 
-    <div class="govuk-grid-column-one-third">
+    <div class="govuk-grid-column-one-quarter">
         <table class="govuk-table govuk-!-font-size-16 govuk-!-margin-bottom-4">
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
@@ -61,49 +64,32 @@ href: "/v10/dps-home-2"
                 </tr>
             </thead>
             <tbody class="govuk-table__body">
+                {% for day in schedule %}
                 <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Monday</td>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
-                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
+                    <th scope="row" class="govuk-table__header">{{day.day|capitalize}}</td>
+                    <td class="govuk-table__cell">
+                        {% if day.am %}
+                        <span class="app-tag app-tag--green app-tag--s">AM</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey app-tag--s">No</span> 
+                        {% endif %}
+                    </td>
+                    <td class="govuk-table__cell">
+                        {% if day.pm %}
+                        <span class="app-tag app-tag--green app-tag--s">PM</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey app-tag--s">No</span> 
+                        {% endif %}
+                    </td>
+                    <td class="govuk-table__cell">
+                        {% if day.ed %}
+                        <span class="app-tag app-tag--green app-tag--s">ED</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey app-tag--s">No</span> 
+                        {% endif %}
+                    </td>
                 </tr>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Tuesday</th>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
-                    <td class="govuk-table__cell"><strong
-                            class="app-tag app-tag--green app-tag--grey app-tag--s">No</span></td>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Wednesday</th>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
-                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Thursday</th>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
-                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Friday</th>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
-                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Saturday</th>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
-                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Sunday</th>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">AM</span></td>
-                    <td class="govuk-table__cell"><strong class="app-tag app-tag--grey app-tag--s">No</span></td>
-                    <td class="govuk-table__cell"><span class="app-tag app-tag--green app-tag--s">ED</span></td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -116,7 +102,7 @@ href: "/v10/dps-home-2"
     <ul class="govuk-tabs__list">
         <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
             <a class="govuk-tabs__tab" href="#past-day">
-                Currently allocated
+                Currently allocated ({{currentlyAllocated.length}})
             </a>
         </li>
         <li class="govuk-tabs__list-item">
@@ -131,7 +117,7 @@ href: "/v10/dps-home-2"
         </li>
         <li class="govuk-tabs__list-item">
             <a class="govuk-tabs__tab" href="#past-year">
-                Schedule for Wing cleaning 1
+                Schedule for {{activity.name}}
             </a>
         </li>
     </ul>
@@ -159,9 +145,9 @@ href: "/v10/dps-home-2"
                     <td class="govuk-table__cell">
                         <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="where-do-you-live" name="where-do-you-live"
+                                <input class="govuk-radios__input" id="allocated-prisoner-{{prisoner.id}}" name="allocated-prisoners"
                                     type="radio" value="england">
-                                <label class="govuk-label govuk-radios__label" for="where-do-you-live">
+                                <label class="govuk-label govuk-radios__label" for="allocated-prisoner-{{prisoner.id}}">
                                     <b><a href="">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a></b><br>
                                     {{prisoner.id}}<br>
                                     {{prisoner.location.cell}}
@@ -241,9 +227,46 @@ href: "/v10/dps-home-2"
     </div>
     <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-year">
         <h2 class="govuk-heading-l">
-            Schedule for Wing cleaning 1
+            Schedule for {{activity.name}}
         </h2>
-
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Days</th>
+                    <th scope="col" class="govuk-table__header">AM</th>
+                    <th scope="col" class="govuk-table__header">PM</th>
+                    <th scope="col" class="govuk-table__header">ED</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                {% for day in schedule %}
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">{{day.day|capitalize}}</td>
+                    <td class="govuk-table__cell">
+                        {% if day.am %}
+                        <span class="app-tag app-tag--green">AM</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey">No</span> 
+                        {% endif %}
+                    </td>
+                    <td class="govuk-table__cell">
+                        {% if day.pm %}
+                        <span class="app-tag app-tag--green">PM</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey">No</span> 
+                        {% endif %}
+                    </td>
+                    <td class="govuk-table__cell">
+                        {% if day.ed %}
+                        <span class="app-tag app-tag--green">ED</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey">No</span> 
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 {% endblock %}

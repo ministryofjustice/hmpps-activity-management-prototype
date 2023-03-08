@@ -87,9 +87,32 @@ router.get("/activities/:activityId", function (req, res) {
     return prisonerActivities.includes(parseInt(activityId));
   });
 
+  // generate the activity schedule from the activity schedule data
+  // should look like this:
+  // [{day: 'monday', am: true, pm: false}, {day: 'tuesday', am: false, pm: true}]
+  // set an activitySchedule variable from the activity.schedule data
+  let activitySchedule = activity.schedule;
+
+  // for each day in the activity schedule, create a new object with the day name and am/pm values
+  let schedule = activitySchedule.map((day) => {
+    // convert each day number to the name of the weekday
+    // 1 = monday, 2 = tuesday, etc.
+    let dayNames = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    let dayName = dayNames[day.day];    
+    
+    // return the day name and am/pm values
+    return {
+      day: dayName,
+      am: day.am,
+      pm: day.pm,
+    };
+  });
+
   res.render("create/" + req.version + "/activity", {
     activity,
     currentlyAllocated,
+    schedule,
+    activitySchedule
   });
 });
 

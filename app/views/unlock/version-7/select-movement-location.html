@@ -15,11 +15,11 @@ Activities Management prototype
 {% block content %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<form method="post">
+		<form method="get" action="movement-list">
 			<div class="govuk-form-group">
 				<h1 class="govuk-label-wrapper">
 					<label class="govuk-label govuk-label--l" for="movement-location">
-						Select the movement list location
+						Select the movement location
 					</label>
 				</h1>
 
@@ -28,39 +28,9 @@ Activities Management prototype
 				</div>
 				<select class="govuk-select" id="movement-location" name="location" aria-describedby="movement-location-hint">
 					<option value="" selected=""></option>
-					<option value="Chapel">Chapel</option>
-					<option value="Farms/gardens">Farms/gardens</option>
-					<option value="Gym">Gym</option>
-					<option value="Health Care">Health Care</option>
-					<option value="Houseblock 1">Houseblock 1</option>
-					<option value="Houseblock 2">Houseblock 2</option>
-					<option value="Houseblock 3">Houseblock 3</option>
-					<option value="Houseblock 4">Houseblock 4</option>
-					<option value="Houseblock 5">Houseblock 5</option>
-					<option value="Houseblock 6">Houseblock 6</option>
-					<option value="Houseblock 7">Houseblock 7</option>
-					<option value="Interview Room">Interview Room</option>
-					<option value="Kitchen">Kitchen</option>
-					<option value="Library">Library</option>
-					<option value="Main/stores">Main/stores</option>
-					<option value="Res 1 Education">Res 1 Education</option>
-					<option value="Res 2 Education">Res 2 Education</option>
-					<option value="Sports Hall">Sports Hall</option>
-					<option value="Workshop 1">Workshop 1</option>
-					<option value="Workshop 10">Workshop 10</option>
-					<option value="Workshop 12">Workshop 12</option>
-					<option value="Workshop 13">Workshop 13</option>
-					<option value="Workshop 14">Workshop 14</option>
-					<option value="Workshop 15">Workshop 15</option>
-					<option value="Workshop 16">Workshop 16</option>
-					<option value="Workshop 17">Workshop 17</option>
-					<option value="Workshop 18">Workshop 18</option>
-					<option value="Workshop 19">Workshop 19</option>
-					<option value="Workshop 2">Workshop 2</option>
-					<option value="Workshop 3">Workshop 3</option>
-					<option value="Workshop 4">Workshop 4</option>
-					<option value="Workshop 6">Workshop 6</option>
-					<option value="Workshop 8">Workshop 8</option>
+					{% for location in locations|sort %}
+					<option value="{{location}}">{{location}}</option>
+					{% endfor %}
 				</select>
 			</div>
 

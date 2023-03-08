@@ -365,20 +365,15 @@ router.post("/days-and-times", function (req, res) {
 
   // create a 'schedule' object from days and times, e.g: {"day":0,"am":null,"pm":null, "ed":true}
   let schedule = [];
-    days.forEach(function (day) {
+  days.forEach(function (day) {
     let times = req.session.data["times-" + day];
     let dayObj = {
-        day: day,
-        am: times.includes("am"),
-        pm: times.includes("pm"),
-        ed: times.includes("ed"),
+      day: day,
+      am: times.includes("am"),
+      pm: times.includes("pm"),
+      ed: times.includes("ed"),
     };
     schedule.push(dayObj);
-    });
-
-  // use Luxon to convert each day name to a number in the range 1-7
-  schedule.forEach(function (day) {
-    day.day = DateTime.fromFormat(day.day, "cccc").weekday;
   });
 
   // if new-activity doesn't exist, create it
@@ -425,6 +420,17 @@ router.get("/check-answers", function (req, res) {
 });
 // redirect to confirmation page
 router.post("/check-answers", function (req, res) {
+  // get the schedule from the new-activity session data
+  let schedule = req.session.data["new-activity"].schedule;
+
+  // if there is a schedule, convert the day names to numbers
+  if (schedule) {
+    schedule.forEach(function (day) {
+      // use Luxon to convert each day name to a number in the range 1-7
+      day.day = DateTime.fromFormat(day.day, "cccc").weekday;
+    });
+  }
+
   res.redirect("confirmation");
 });
 

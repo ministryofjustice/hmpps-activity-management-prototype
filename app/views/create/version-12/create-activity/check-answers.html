@@ -127,7 +127,16 @@ window.history.go(-1)" })}} {% endblock %}
                     Days and times
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{data['new-activity']['schedule']|dump}}
+                    {% for day in data['new-activity']['schedule'] %}
+                        {{day.day|capitalize}}:
+                        {% if day.am %}
+                            AM
+                        {% endif %}
+                        {% if day.pm %}
+                            PM
+                        {% endif %}
+                        <br>
+                    {% endfor %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
