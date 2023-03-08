@@ -247,6 +247,9 @@ Movement list
 						<th class="govuk-table__header" aria-sort="none">
 							Activity
 						</th>
+						<th class="govuk-table__header" aria-sort="none">
+							Other scheduled events
+						</th>
 					</tr>
 				</thead>
 				<tbody class="govuk-table__body">
@@ -272,6 +275,8 @@ Movement list
                             {% for activity in prisoner.movementData %}
 							<a href="activities/{{data['date']}}/{{data['period']|upper}}/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
                             {% endfor %}
+						</td>
+						<td class="govuk-table__cell">
 						</td>
 					</tr>
 					{% endfor %}
