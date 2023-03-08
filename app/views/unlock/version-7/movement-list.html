@@ -7,37 +7,18 @@ Movement list
 {% endblock %}
 {% block beforeContent %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{{ govukBreadcrumbs({
-	classes: "govuk-!-display-none-print",
-	items: [
-	{
-		text: "Digital Prison Services",
-		href: "../../../dps-home"
-	},
-	{
-		text: "Manage prisoner unlock and attendance",
-		href: "../../../whereabouts"
-	}
-	]
-}) }}
+{{govukBackLink({
+	text: "Back to all locations",
+	"href": "javascript: window.history.go(-1)"
+})}}
 {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-			Movement list - {{location}}
+			Movement list - {{data['location']}}
 			<span class="govuk-caption-l">{{data['date']|longDateFormat(data['date'])}} &ndash; {{data['period']|upper}}</span>
 		</h1>
-		<ul class="govuk-list">
-			<li>
-				<a href="../../../select-unlock-locations" class="govuk-link--no-visited-state">Choose a different unlock list</a>
-			</li>
-			{% if activity.cancelled != true %}
-			<li>
-				<a href="../../../refusals-list/{{date}}/{{period}}/{{houseblock}}" class="govuk-link--no-visited-state">Record refusals and absences</a>
-			</li>
-			{% endif %}
-		</ul>
 	</div>
 	<div class="govuk-grid-column-one-third govuk-!-display-none-print">
 		<div class="govuk-button-group" style="text-align: right;">
@@ -248,6 +229,9 @@ Movement list
 		<div class="moj-filter-button"></div>
 
 		<div class="moj-scrollable-pane">
+			<h2 class="govuk-heading-m">
+				{{prisonersForActivities|length}} prisoners
+			</h2>
 			<table class="govuk-table app-whereabouts-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
 				<thead class="govuk-table__head">
 					<tr>
@@ -266,13 +250,13 @@ Movement list
 					</tr>
 				</thead>
 				<tbody class="govuk-table__body">
-					{% for prisoner in prisonersForActivities | sort(false, true, ('location.full')) %}
+					{% for prisoner in prisonersForActivities | sort(false, true, ('location.cell')) %}
 					<tr class="govuk-table__row">
-						<td class="govuk-table__cell" width="180" scope="col">
+						<td class="govuk-table__cell" width="180" scope="col" data-sort-value="{{prisoner.name.surname}}">
 							<a href="../../../prisoner/{{prisoner.id}}" class="govuk-link--no-visited-state"><b>{{prisoner.name.surname}}</b>, {{prisoner.name.firstname}}</a><br>
 							<span class="govuk-hint govuk-!-font-size-16">{{prisoner.id}}</span>
 						</td>
-						<td class="govuk-table__cell" data-sort-value="{{prisoner.location.houseblock}}{{prisoner.location.landing}}{{prisoner.location.cell_number}}" scope="col">
+						<td class="govuk-table__cell" data-sort-value="{{prisoner.location.cell}}">
 							{{prisoner.location.cell}}
 						</td>
 						<td class="govuk-table__cell">
@@ -284,7 +268,7 @@ Movement list
 							</ul>
 							{% endif %}
 						</td>
-						<td class="govuk-table__cell" data-sort-value="{{activityName}}" scope="col">
+						<td class="govuk-table__cell" data-sort-value="{{activity.name}}" scope="col">
                             {% for activity in prisoner.movementData %}
 							<a href="activities/{{data['date']}}/{{data['period']|upper}}/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
                             {% endfor %}

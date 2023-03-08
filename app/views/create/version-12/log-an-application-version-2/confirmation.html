@@ -15,36 +15,42 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        {{ govukPanel({
-        titleText: "You've logged the application for PRISONER NAME",
-        classes: "govuk-!-margin-bottom-8"
-        }) }}
+        <form method="post">
+            {{ govukPanel({
+            titleText: "You've logged the application for PRISONER NAME",
+            classes: "govuk-!-margin-bottom-8"
+            }) }}
 
-        {{govukRadios({
-        idPrefix: "next-steps",
-        name: "next-steps",
-        fieldset: {
-        legend: {
-        text: "Do you need to log another application?",
-        isPageHeading: true,
-        classes: "govuk-fieldset__legend--l"
-        }
-        },
-        items: [
-        {
-        value: "yes",
-        text: "Yes"
-        },
-        {
-        value: "no",
-        text: "No, I'm finished logging applications"
-        }
-        ]
-        })}}
+            {{govukRadios({
+            idPrefix: "add-application-next-step",
+            name: "add-application-next-step",
+            fieldset: {
+            legend: {
+            text: "What do you want to do next?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            items: [
+            {
+            value: "decision",
+            text: "Make a decision about this application"
+            },
+            {
+            value: "add-another",
+            text: "Add another application"
+            },
+            {
+            value: "finish",
+            text: "Finish logging applications"
+            }
+            ]
+            })}}
 
-        {{ govukButton({
-        text: "Continue"
-        }) }}
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
 
         <!--
             <h2 class="govuk-heading-l">

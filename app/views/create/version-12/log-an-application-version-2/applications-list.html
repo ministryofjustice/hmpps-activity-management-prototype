@@ -1,0 +1,71 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = data['selected-prisoner']|getPrisonerDetails %}
+        <h1 class="govuk-heading-l">
+            Check applications for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+        </h1>
+
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    ACTIVITY NAME
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    APPLICATION DATE
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item">
+                            <a class="govuk-link" href="#">
+                                Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                            </a>
+                        </li>
+
+                        <li class="govuk-summary-list__actions-list-item">
+                            <a class="govuk-link" href="#">
+                                Remove<span class="govuk-visually-hidden"> asd's pizza</span>
+                            </a>
+                        </li>
+                    </ul>
+                </dd>
+            </div>
+        </dl>
+
+        <form>
+            <div class="govuk-button-group">
+                {{ govukButton({
+                text: "Submit applications",
+                attributes: {
+                formmethod: "post"
+                }
+                }) }}
+
+                {{ govukButton({
+                text: "Add another application",
+                classes: "govuk-button--secondary",
+                attributes: {
+                formAction: "prisoner-existing-applications",
+                formMethod: "get"
+                }
+                }) }}
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

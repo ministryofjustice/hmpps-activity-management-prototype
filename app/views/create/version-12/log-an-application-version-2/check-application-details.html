@@ -1,0 +1,73 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = data['selected-prisoner']|getPrisonerDetails %}
+        <h1 class="govuk-heading-l">
+            Check application details
+        </h1>
+
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Prisoner
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    NAME
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Activity
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    APPLICATION DATE
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Application made by
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    APPLICANT
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+        </dl>
+
+        <form method="post">
+            {{ govukButton({
+            text: "Log application"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

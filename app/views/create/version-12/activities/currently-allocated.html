@@ -1,0 +1,154 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+classes: "govuk-!-display-none-print",
+items: [
+{
+text: "Digital Prison Services",
+href: "/dps-home"
+},
+{
+text: "Manage activities",
+href: "../version-12/manage-activities"
+},
+{
+text: "Find activities with vacancies",
+href: "../"
+}
+]
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+            {{activity.name}}
+        </h1>
+
+        {% set scheduleHtml %}
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Days</th>
+                    <th scope="col" class="govuk-table__header">AM</th>
+                    <th scope="col" class="govuk-table__header">PM</th>
+                    <th scope="col" class="govuk-table__header">ED</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                {% for day in schedule %}
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">{{day.day|capitalize}}</td>
+                    <td class="govuk-table__cell">
+                        {% if day.am %}
+                        <span class="app-tag app-tag--green app-tag--s">AM</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey app-tag--s">No</span>
+                        {% endif %}
+                    </td>
+                    <td class="govuk-table__cell">
+                        {% if day.pm %}
+                        <span class="app-tag app-tag--green app-tag--s">PM</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey app-tag--s">No</span>
+                        {% endif %}
+                    </td>
+                    <td class="govuk-table__cell">
+                        {% if day.ed %}
+                        <span class="app-tag app-tag--green app-tag--s">ED</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey app-tag--s">No</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endset %}
+
+        {{govukDetails({
+        summaryText: "View activity schedule",
+        html: scheduleHtml
+        })}}
+
+        <div class="govuk-inset-text">
+            <p>
+                You should <a href="#">log an application</a> before allocating a prisoner to an activity.
+            </p>
+            <p>
+                If you need to, you can <a href="#">allocate a prisoner to this activity</a> without logging an
+                application.
+            </p>
+        </div>
+        <!-- {{ govukButton({
+        text: "Log an application or allocate a prisoner",
+        href: "../../log-an-application-version-2"
+        }) }} -->
+    </div>
+</div>
+
+{% include "./_sub-navigation.html" %}
+
+<!-- govuk-row and two thirds column -->
+<div class="govuk-grid-row govuk-!-margin-bottom-6">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-l">
+            Currently allocated
+        </h2>
+        <p>
+            The list of prisoners below are currently allocated to this activity.
+        </p>
+    </div>
+</div>
+<table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--m">
+        {{currentlyAllocated|length}} prisoners
+    </caption>
+    <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Prisoner details</th>
+            <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
+            <th scope="col" class="govuk-table__header">Date allocated</th>
+            <th scope="col" class="govuk-table__header">Other allocations</th>
+            <th scope="col" class="govuk-table__header">Earliest release date</th>
+        </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+        {% for prisoner in currentlyAllocated %}
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="allocated-prisoner-{{prisoner.id}}"
+                            name="allocated-prisoners" type="radio" value="england">
+                        <label class="govuk-label govuk-radios__label" for="allocated-prisoner-{{prisoner.id}}">
+                            <b><a href="">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a></b><br>
+                            {{prisoner.id}}<br>
+                            {{prisoner.location.cell}}
+                        </label>
+                    </div>
+                </div>
+            </td>
+            <td class="govuk-table__cell govuk-!-padding-top-4">None</td>
+            <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
+            <td class="govuk-table__cell govuk-!-padding-top-4">ACTIVITY</td>
+            <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}

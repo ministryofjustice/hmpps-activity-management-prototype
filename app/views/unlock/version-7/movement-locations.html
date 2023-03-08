@@ -2,7 +2,7 @@
 {% set serviceName = "Activities Management" %}
 
 {% block pageTitle %}
-Find an activity to record or edit attendance
+Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{data['period']|upper}}
 {% endblock %}
 
 {% block primaryNavigation %}
@@ -18,8 +18,8 @@ text: "Digital Prison Services",
 href: "/dps-home"
 },
 {
-text: "Manage activities",
-href: "/v10/dps-home-2"
+text: "Manage prisoner unlock and attendance",
+href: "whereabouts"
 }
 ]
 }) }}
@@ -27,10 +27,17 @@ href: "/v10/dps-home-2"
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
-            <span class="govuk-caption-l">{{data['date']|longDateFormat(data['date'])}}</span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+			<span class="govuk-caption-l">{{data['date']|longDateFormat(data['date'])}} &ndash; {{data['period']|upper}}</span>
             Movement locations
         </h1>
+
+        <ul class="govuk-list govuk-!-margin-bottom-8">
+            <li>
+                <a href="select-movement-date" class="govuk-link--no-visited-state">Change the movement date</a>
+            </li>
+        </ul>
+
 
         <!-- <div class="moj-search govuk-!-margin-bottom-6">
             <form action="{{data['date']}}" method="get" novalidate="">
@@ -227,7 +234,7 @@ href: "/v10/dps-home-2"
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header" aria-sort="ascending">Location</th>
-                        <th scope="col" class="govuk-table__header" aria-sort="none">Prisoners</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending">Prisoners</th>
                         <th scope="col" class="govuk-table__header" aria-sort="none">Sessions</th>
                         <th scope="col" class="govuk-table__header"></th>
                     </tr>
@@ -235,13 +242,13 @@ href: "/v10/dps-home-2"
                 <tbody class="govuk-table__body">
                     {% for location in locations | sort(false, true, 'name') %}
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
+                        <td class="govuk-table__cell">
                             <h2 class="govuk-heading-m">{{location.name}}</h2>
                         </td>
-                        <td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
+                        <td class="govuk-table__cell">
                             {{location.prisoners}}
                         </td>
-                        <td class="govuk-table__cell" data-sort-value="{{activity.location}}">
+                        <td class="govuk-table__cell">
                             <ul class="govuk-list govuk-!-margin-bottom-0">
                                 {% for activity in location.activities %}
                                 <li>
