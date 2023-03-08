@@ -23,9 +23,11 @@ Activities Management prototype
             {{data['new-activity']['activity-name']}}
         </h2>
 
+        {% set prisoner = data['new-application']['prisoner']|getPrisonerDetails %}
+
         {{govukRadios({
             idPrefix: "status",
-            name: "new-application[status]",
+            name: "new-application[decision]",
             fieldset: {
                 legend: {
                     text: "Do you want to approve or reject the application?",
@@ -38,14 +40,14 @@ Activities Management prototype
                     html: "<b>Approve</b> and add to waitlist",
                     value: "approved",
                     hint: {
-                        text: "You've confirmed that PRISONER NAME is suitable for this activity"
+                        text: "You've confirmed that " + prisoner.name.firstname + " " + prisoner.name.surname + " is suitable for this activity"
                     }
                 },
                 {
                     html: "<b>Reject</b> the application",
                     value: "rejected",
                     hint: {
-                        text: "PRISONER NAME will not be added to the waitlist"
+                        text: prisoner.name.firstname + " " + prisoner.name.surname + " will not be added to the waitlist"
                     }
                 }
             ]

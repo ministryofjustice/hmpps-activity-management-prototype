@@ -12,16 +12,17 @@ window.history.go(-1)" })}} {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">
-            Select the activity
-        </h1>
-    
         <form method="post">
             <div class="govuk-form-group">
-                <label class="govuk-label govuk-label--s" for="activity">
-                    Activity
-                </label>
-                <select class="govuk-select" id="activity" name="activity">
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--xl" for="activity">
+                        Select activity
+                    </label>
+                </h1>
+                <div id="subject-hint" class="govuk-hint">
+                    Start typing to search for an activity
+                </div>
+                <select class="govuk-select" id="activity" name="new-application[activity]">
                     <option value="">Select an activity</option>
                     {% for activity in activities | sort(false, true, 'name') %}
                     <option value="{{activity.id}}">{{activity.name}}</option>
@@ -30,7 +31,7 @@ window.history.go(-1)" })}} {% endblock %}
             </div>
 
             {{govukButton({
-                text: "Select activity"
+            text: "Continue"
             })}}
         </form>
     </div>

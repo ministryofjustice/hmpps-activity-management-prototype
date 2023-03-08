@@ -23,13 +23,14 @@ Activities Management prototype
             {{data['new-activity']['activity-name']}}
         </h2>
 
-        <!-- radios to check whether to use the same prisoner or search for a different one -->
+        {% set prisoner = data['new-application']['prisoner'] | getPrisonerDetails %}
+
         {{ govukRadios({
             idPrefix: "same-prisoner",
             name: "same-prisoner",
             fieldset: {
               legend: {
-                text: "Is the application for the same prisoner (" + data['new-activity']['prisoner-name'] + ")?",
+                text: "Is the application for " + prisoner.name.firstname + " " + prisoner.name.surname + " (" + prisoner.id + ")?",
                 isPageHeading: true,
                 classes: "govuk-fieldset__legend--l"
               }

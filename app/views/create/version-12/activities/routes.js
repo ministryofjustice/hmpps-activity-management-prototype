@@ -27,8 +27,13 @@ function getAllocatedPrisoners(prisoners, activityId) {
 }
 
 // routes for pages in the activities section
-// activities page
+// activities page redirect root to /all
 router.get("/", function (req, res) {
+  res.redirect("activities/all");
+});
+
+// all activities page
+router.get("/all", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
 
   // count the number of prisoners allocated to each activity

@@ -16,8 +16,27 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
+            {% set prisoner = data['new-application']['prisoner']|getPrisonerDetails %}
+
+            {% set titleText %}
+            {% if new-application[decision] == "approve" %}
+            Application approved
+            {% else %}
+            Application rejected
+            {% endif %}
+            {% endset %}
+
+            {% set panelHtml %}
+            {% if new-application[decision] == "approve" %}
+            You approved the application for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            {% else %}
+            You rejected the application for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            {% endif %}
+            {% endset %}
+
             {{ govukPanel({
-            titleText: "You've APPROVED/REJECTED the application for PRISONER NAME",
+            titleText: titleText,
+            html: panelHtml,
             classes: "govuk-!-margin-bottom-8"
             }) }}
 

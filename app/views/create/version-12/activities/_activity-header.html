@@ -1,0 +1,69 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+            {{activity.name}}
+        </h1>
+
+        {% set scheduleHtml %}
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Days</th>
+                    <th scope="col" class="govuk-table__header">AM</th>
+                    <th scope="col" class="govuk-table__header">PM</th>
+                    <th scope="col" class="govuk-table__header">ED</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                {% for day in schedule %}
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">{{day.day|capitalize}}</td>
+                    <td class="govuk-table__cell">
+                        {% if day.am %}
+                        <span class="app-tag app-tag--green app-tag--s">AM</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey app-tag--s">No</span>
+                        {% endif %}
+                    </td>
+                    <td class="govuk-table__cell">
+                        {% if day.pm %}
+                        <span class="app-tag app-tag--green app-tag--s">PM</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey app-tag--s">No</span>
+                        {% endif %}
+                    </td>
+                    <td class="govuk-table__cell">
+                        {% if day.ed %}
+                        <span class="app-tag app-tag--green app-tag--s">ED</span>
+                        {% else %}
+                        <span class="app-tag app-tag--grey app-tag--s">No</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endset %}
+
+        {{govukDetails({
+        summaryText: "View activity schedule",
+        html: scheduleHtml
+        })}}
+
+        <div class="govuk-inset-text">
+            <p>
+                You should <a href="../../log-an-application-version-2" class="govuk-link--no-visited-state">log an application</a> before allocating a prisoner to an activity.
+            </p>
+            <p>
+                If you need to, you can <a href="#">allocate a prisoner to this activity</a> without logging an
+                application.
+            </p>
+        </div>
+        <!-- {{ govukButton({
+        text: "Log an application or allocate a prisoner",
+        href: "../../log-an-application-version-2"
+        }) }} -->
+    </div>
+</div>
+
+{% include "./_sub-navigation.html" %}

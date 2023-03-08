@@ -26,7 +26,8 @@ text: "Back",
                     Prisoner
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    NAME
+                    {% set prisoner = data['new-application']['prisoner']|getPrisonerDetails %}
+                    {{prisoner.name.firstname}} {{prisoner.name.surname}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
@@ -39,7 +40,21 @@ text: "Back",
                     Activity
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    APPLICATION DATE
+                    {% set activity = data['new-application']['activity']|getActivityDetails %}
+                    {{activity.name}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Application date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['new-application']['date']|convertShortDateToLongDate}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
@@ -52,7 +67,11 @@ text: "Back",
                     Application made by
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    APPLICANT
+                    {% if data['new-application']['applicant'] == 'prisoner' %}
+                        Prisoner
+                    {% else %}
+                        Someone else
+                    {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
@@ -64,7 +83,7 @@ text: "Back",
 
         <form method="post">
             {{ govukButton({
-            text: "Log application"
+            text: "Confirm and log application"
             }) }}
         </form>
     </div>
