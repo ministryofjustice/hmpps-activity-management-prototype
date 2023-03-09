@@ -26,6 +26,31 @@ function getAllocatedPrisoners(prisoners, activityId) {
   });
 }
 
+// generate the activity schedule from the activity schedule data
+function getActivitySchedule(activitySchedule) {
+  return activitySchedule.map((day) => {
+    // convert each day number to the name of the weekday
+    // 1 = monday, 2 = tuesday, etc.
+    let dayNames = [
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+      "sunday",
+    ];
+    let dayName = dayNames[day.day];
+
+    // return the day name and am/pm values
+    return {
+      day: dayName,
+      am: day.am,
+      pm: day.pm,
+    };
+  });
+}
+
 // routes for pages in the activities section
 // activities page redirect root to /all
 router.get("/", function (req, res) {
@@ -71,40 +96,22 @@ router.get("/:activityId", function (req, res) {
 router.get("/:activityId/applications", function (req, res) {
   let currentPage = 'applications';
 
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
   let activityId = req.params.activityId;
   let activities = req.session.data["timetable-complete-1"]["activities"];
   let activity = activities.find(
     (activity) => activity.id.toString() === activityId.toString()
   );
-
-  // set an activitySchedule variable from the activity.schedule data
-  let activitySchedule = activity.schedule;
-  
-  // for each day in the activity schedule, create a new object with the day name and am/pm values
-  let schedule = activitySchedule.map((day) => {
-    // convert each day number to the name of the weekday
-    // 1 = monday, 2 = tuesday, etc.
-    let dayNames = [
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-      "saturday",
-      "sunday",
-    ];
-    let dayName = dayNames[day.day];
-
-    // return the day name and am/pm values
-    return {
-      day: dayName,
-      am: day.am,
-      pm: day.pm,
-    };
-  });
-
+  let applications = req.session.data["applications"];
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
   const currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
+
+  let activitySchedule = activity.schedule;
+  let schedule = getActivitySchedule(activitySchedule);
+
+  // get a list of all applications for the selected activity
+  let activityApplications = applications.filter(
+    (application) => application.activity.toString() === activityId.toString()
+  );
 
   // hide the confirmation message if it's shown
   if(req.session.data["application-added-confirmation-message"] === true) {
@@ -113,7 +120,7 @@ router.get("/:activityId/applications", function (req, res) {
 
   res.render(req.protoUrl + "/applications", {
     activity,
-    activitySchedule,
+    activityApplications,
     currentlyAllocated,
     currentPage,
     schedule,
@@ -129,9 +136,15 @@ router.get("/:activityId/currently-allocated", function (req, res) {
     (activity) => activity.id.toString() === activityId.toString()
   );
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let applications = req.session.data["applications"];
 
   // get list of prisoners with allocations
   const currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
+
+  // get a list of all applications for the selected activity
+  let activityApplications = applications.filter(
+    (application) => application.activity.toString() === activityId.toString()
+  );
 
   // generate the activity schedule from the activity schedule data
   // should look like this:
@@ -140,30 +153,11 @@ router.get("/:activityId/currently-allocated", function (req, res) {
   let activitySchedule = activity.schedule;
 
   // for each day in the activity schedule, create a new object with the day name and am/pm values
-  let schedule = activitySchedule.map((day) => {
-    // convert each day number to the name of the weekday
-    // 1 = monday, 2 = tuesday, etc.
-    let dayNames = [
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-      "saturday",
-      "sunday",
-    ];
-    let dayName = dayNames[day.day];
-
-    // return the day name and am/pm values
-    return {
-      day: dayName,
-      am: day.am,
-      pm: day.pm,
-    };
-  });
+  let schedule = getActivitySchedule(activitySchedule);
 
   res.render(req.protoUrl + "/currently-allocated", {
     activity,
+    activityApplications,
     currentPage,
     currentlyAllocated,
     schedule,

@@ -176,6 +176,9 @@ router.get("/check-application-details", function (req, res) {
 });
 // redirect to the applications list page
 router.post("/check-application-details", function (req, res) {
+  // add the application to the applications session data
+  req.session.data["applications"].push(req.session.data["new-application"]);
+  
   res.redirect("confirmation");
 });
 
@@ -223,8 +226,9 @@ router.post("/confirmation", function (req, res) {
   } else if(req.session.data["add-application-next-step"] == "add-another") {
     res.redirect("check-same-prisoner");
   } else {
+    let activity = req.session.data['new-application']['activity'];
     req.session.data["application-added-confirmation-message"] = true;
-    res.redirect("../activities/2/applications");
+    res.redirect("../activities/"+activity+"/applications");
   }
 });
 

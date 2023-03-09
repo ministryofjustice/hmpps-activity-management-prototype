@@ -10,38 +10,26 @@ Find an activity to record or edit attendance
 {% endblock %}
 
 {% block beforeContent %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{{ govukBreadcrumbs({
-classes: "govuk-!-display-none-print",
-items: [
-{
-text: "Digital Prison Services",
-href: "/dps-home"
-},
-{
-text: "Manage activities",
-href: "../version-12/manage-activities"
-},
-{
-text: "Find activities with vacancies",
-href: "../activities"
-}
-]
-}) }}
+{% include "./_activity-breadcrumbs.html" %}
 {% endblock %}
 
 {% block content %}
 
 {% include "./_activity-header.html" %}
-
 <h2 class="govuk-heading-l">
     Applications
 </h2>
 <p>
     All applications shown below are pending. They have not been approved or rejected yet.
 </p>
+{{govukButton({
+    text: "Add a new application",
+    href: "../../log-an-application-version-2"
+})}}
 <table class="govuk-table">
-    <caption class="govuk-table__caption govuk-table__caption--m">12 applications</caption>
+    <caption class="govuk-table__caption govuk-table__caption--m">
+        {{activityApplications|length}} application{{'s' if activityApplications|length > 1 }}
+    </caption>
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Prisoner details</th>
@@ -52,7 +40,7 @@ href: "../activities"
         </tr>
     </thead>
     <tbody class="govuk-table__body">
-        {% for application in data['applications'] %}
+        {% for application in activityApplications %}
         {% set prisoner = application.prisoner|getPrisonerDetails %}
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
@@ -61,7 +49,7 @@ href: "../activities"
                         <input class="govuk-radios__input" id="where-do-you-live" name="where-do-you-live" type="radio"
                             value="england">
                         <label class="govuk-label govuk-radios__label" for="where-do-you-live">
-                            <b><a href="">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a></b><br>
+                            <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a></b><br>
                             {{prisoner.id}}<br>
                             {{prisoner.location.cell}}
                         </label>
@@ -75,7 +63,7 @@ href: "../activities"
                 <ul class="govuk-list">
                     {% for allocation in prisoner.activity %}
                     {% set activity = allocation|getActivityDetails %}
-                    <li>{{activity.name}}</li>
+                    <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
                     {% endfor %}
                 </ul>
             </td>
