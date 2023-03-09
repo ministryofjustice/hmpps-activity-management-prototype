@@ -51,6 +51,27 @@ function getActivitySchedule(activitySchedule) {
   });
 }
 
+// create a human-readable list of days the activity is scheduled for
+function humanReadableSchedule(schedule) {
+  let activityDays = [];
+  schedule.forEach((day) => {
+    if (day.am != null && day.pm != null) {
+      activityDays.push(day.day + " (AM and PM)");
+    } else if (day.am != null) {
+      activityDays.push(day.day + " (AM)");
+    } else if (day.pm != null) {
+      activityDays.push(day.day + " (PM)");
+    }
+  });
+  // capitalize the first letter of each day
+  activityDays = activityDays.map((day) => {
+    return day.charAt(0).toUpperCase() + day.slice(1);
+  });
+  // join the list of days with commas and 'and'
+  activityDays = activityDays.join(", ").replace(/,([^,]*)$/, " and$1");
+  return activityDays;
+}
+
 // routes for pages in the activities section
 // activities page redirect root to /all
 router.get("/", function (req, res) {
@@ -118,9 +139,41 @@ router.get("/:activityId/applications", function (req, res) {
     req.session.data["application-added-confirmation-message"] = false;
   }
 
+  // create a human-readable list of days the activity is scheduled for
+  let activityDays = humanReadableSchedule(schedule);
+
+  // create an array of objects for the days the activity is scheduled and which time period it's scheduled for
+  // e.g. [{day: 'Monday', times: '(AM)'}, {day: 'Tuesday', times: '(AM and PM)'}, {day: 'Friday', times: null}]
+  let activityDaysWithTimes = [];
+  schedule.forEach((day) => {
+    if (day.am != null && day.pm != null) {
+      activityDaysWithTimes.push({
+        day: day.day,
+        times: "AM and PM"
+      });      
+    } else if (day.am != null) {
+      activityDaysWithTimes.push({
+        day: day.day,
+        times: "AM"
+      });      
+    } else if (day.pm != null) {
+      activityDaysWithTimes.push({
+        day: day.day,
+        times: "PM"
+      });      
+    } else {
+      activityDaysWithTimes.push({
+        day: day.day,
+        times: null
+      });      
+    }
+  });
+  
   res.render(req.protoUrl + "/applications", {
     activity,
     activityApplications,
+    activityDays,
+    activityDaysWithTimes,
     currentlyAllocated,
     currentPage,
     schedule,
@@ -146,23 +199,51 @@ router.get("/:activityId/currently-allocated", function (req, res) {
     (application) => application.activity.toString() === activityId.toString()
   );
 
-  // generate the activity schedule from the activity schedule data
-  // should look like this:
-  // [{day: 'monday', am: true, pm: false}, {day: 'tuesday', am: false, pm: true}]
   // set an activitySchedule variable from the activity.schedule data
   let activitySchedule = activity.schedule;
 
   // for each day in the activity schedule, create a new object with the day name and am/pm values
   let schedule = getActivitySchedule(activitySchedule);
 
+  // create a human-readable list of days the activity is scheduled for
+  let activityDays = humanReadableSchedule(schedule);
+
   res.render(req.protoUrl + "/currently-allocated", {
     activity,
     activityApplications,
+    activityDays,
     currentPage,
     currentlyAllocated,
     schedule,
     activitySchedule,
   });
+});
+
+// application details page
+router.get("/:activityId/applications/:applicationId", function (req, res) {
+  let activityId = req.params.activityId;
+  let applicationId = req.params.applicationId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  let applications = req.session.data["applications"];
+  let application = applications.find(
+    (application) => application['selected-prisoner'].toString() === applicationId.toString()
+  );
+
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let prisoner = prisoners.find(
+    (prisoner) => prisoner.id.toString() === application['selected-prisoner'].toString()
+  );  
+
+  res.render(req.protoUrl + "/application", {
+    activity,
+    application,
+    prisoner,
+    });
 });
 
 module.exports = router;

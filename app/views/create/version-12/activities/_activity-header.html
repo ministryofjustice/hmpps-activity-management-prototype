@@ -4,6 +4,10 @@
             {{activity.name}}
         </h1>
 
+        <!-- <p>
+            This activity runs on {{activityDays}}.
+        </p> -->
+
         {% set scheduleHtml %}
         <table class="govuk-table">
             <thead class="govuk-table__head">
@@ -63,6 +67,36 @@
         text: "Log an application or allocate a prisoner",
         href: "../../log-an-application-version-2"
         }) }} -->
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+        <dl class="govuk-summary-list">
+            {% for day in activityDaysWithTimes %}
+            <div class="govuk-summary-list__row govuk-!-font-size-14">
+              <dt class="govuk-summary-list__key">
+                {% if day.times %}
+                {{day.day|capitalize}}
+                {% else %}
+                <span class="govuk-hint govuk-!-font-size-14">{{day.day|capitalize}}</span>
+                {% endif %}
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {% if day.times %}
+                {{day.times}}
+                {% else %}
+                <span class="govuk-hint govuk-!-font-size-14">Not scheduled</span>
+                {% endif %}
+              </dd>
+            </div>
+            {% endfor %}
+        </dl>
+        <!-- <ul class="govuk-list">
+            {% for day in activityDaysWithTimes %}
+            <li>
+                {{day.day|capitalize}}: {{day.times}}
+            </li>
+            {% endfor %}
+        </ul> -->
     </div>
 </div>
 

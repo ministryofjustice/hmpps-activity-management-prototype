@@ -23,8 +23,8 @@ Find an activity to record or edit attendance
     All applications shown below are pending. They have not been approved or rejected yet.
 </p>
 {{govukButton({
-    text: "Add a new application",
-    href: "../../log-an-application-version-2"
+text: "Add a new application for this activity",
+href: "../../log-an-application-version-2?new-application[use-activity]=" + activity.id
 })}}
 <table class="govuk-table">
     <caption class="govuk-table__caption govuk-table__caption--m">
@@ -32,33 +32,26 @@ Find an activity to record or edit attendance
     </caption>
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Prisoner details</th>
-            <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
-            <th scope="col" class="govuk-table__header">Date allocated</th>
+            <th scope="col" class="govuk-table__header">Prisoner</th>
+            <th scope="col" class="govuk-table__header">Application date</th>
             <th scope="col" class="govuk-table__header">Other allocations</th>
-            <th scope="col" class="govuk-table__header">Earliest release date</th>
+            <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
+            <th scope="col" class="govuk-table__header"></th>
         </tr>
     </thead>
     <tbody class="govuk-table__body">
         {% for application in activityApplications %}
-        {% set prisoner = application.prisoner|getPrisonerDetails %}
+        {% set prisoner = application["selected-prisoner"]|getPrisonerDetails %}
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
-                <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="where-do-you-live" name="where-do-you-live" type="radio"
-                            value="england">
-                        <label class="govuk-label govuk-radios__label" for="where-do-you-live">
-                            <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a></b><br>
-                            {{prisoner.id}}<br>
-                            {{prisoner.location.cell}}
-                        </label>
-                    </div>
-                </div>
+                <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
+                        {{prisoner.name.surname}}</a></b><br>
+                {{prisoner.id}}<br>
+                {{prisoner.location.cell}}
             </td>
-            <td class="govuk-table__cell govuk-!-padding-top-4">None</td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
-                {{application.date|convertShortDateToMediumDate}}</td>
+                {{application.date|convertShortDateToMediumDate}}
+            </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
                 <ul class="govuk-list">
                     {% for allocation in prisoner.activity %}
@@ -67,7 +60,12 @@ Find an activity to record or edit attendance
                     {% endfor %}
                 </ul>
             </td>
-            <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
+            <td class="govuk-table__cell govuk-!-padding-top-4">
+                None
+            </td>
+            <td class="govuk-table__cell govuk-!-padding-top-4">
+                <a href="applications/{{prisoner.id}}" class="govuk-link--no-visited-state">View application</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
