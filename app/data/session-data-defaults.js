@@ -55,6 +55,7 @@ module.exports = {
   'residential-locations': require('./residential-list-1'),
   'residential-locations-2': require('./residential-list-2'),
   'attendance-data-1': require('./attendance-data-1'),
+  'applications': require('./applications'),
   "times": "AM",
   "selected-locations": {},
   "prison-name": "HMP Leeds",
