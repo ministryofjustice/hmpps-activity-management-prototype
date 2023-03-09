@@ -275,7 +275,7 @@ router.post("/check-same-details", function (req, res) {
 
   if(req.session.data["use-details"] == "prisoner") {
     // set the prisoner id to the new application object
-    req.session.data["new-application"]["selected-prisoner"] = lastApplication.selectedPrisoner;
+    req.session.data["new-application"]["selected-prisoner"] = lastApplication["selected-prisoner"];
     res.redirect("prisoner-existing-applications");
   } else if(req.session.data["use-details"] == "activity") {
     // set the activity id to the new application object

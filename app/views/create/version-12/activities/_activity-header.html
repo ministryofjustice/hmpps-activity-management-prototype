@@ -24,23 +24,23 @@
                     <th scope="row" class="govuk-table__header">{{day.day|capitalize}}</td>
                     <td class="govuk-table__cell">
                         {% if day.am %}
-                        <span class="app-tag app-tag--green app-tag--s">AM</span>
+                        <span class="app-tag app-tag--green">AM</span>
                         {% else %}
-                        <span class="app-tag app-tag--grey app-tag--s">No</span>
+                        <span class="app-tag app-tag--grey">No</span>
                         {% endif %}
                     </td>
                     <td class="govuk-table__cell">
                         {% if day.pm %}
-                        <span class="app-tag app-tag--green app-tag--s">PM</span>
+                        <span class="app-tag app-tag--green">PM</span>
                         {% else %}
-                        <span class="app-tag app-tag--grey app-tag--s">No</span>
+                        <span class="app-tag app-tag--grey">No</span>
                         {% endif %}
                     </td>
                     <td class="govuk-table__cell">
                         {% if day.ed %}
-                        <span class="app-tag app-tag--green app-tag--s">ED</span>
+                        <span class="app-tag app-tag--green">ED</span>
                         {% else %}
-                        <span class="app-tag app-tag--grey app-tag--s">No</span>
+                        <span class="app-tag app-tag--grey">No</span>
                         {% endif %}
                     </td>
                 </tr>
@@ -54,15 +54,6 @@
         html: scheduleHtml
         })}}
 
-        <div class="govuk-inset-text">
-            <p>
-                You should <a href="../../log-an-application-version-2" class="govuk-link--no-visited-state">log an application</a> before allocating a prisoner to an activity.
-            </p>
-            <p>
-                If you need to, you can <a href="#">allocate a prisoner to this activity</a> without logging an
-                application.
-            </p>
-        </div>
         <!-- {{ govukButton({
         text: "Log an application or allocate a prisoner",
         href: "../../log-an-application-version-2"
@@ -70,7 +61,7 @@
     </div>
 
     <div class="govuk-grid-column-one-third">
-        <dl class="govuk-summary-list">
+        <!-- <dl class="govuk-summary-list">
             {% for day in activityDaysWithTimes %}
             <div class="govuk-summary-list__row govuk-!-font-size-14">
               <dt class="govuk-summary-list__key">
@@ -89,14 +80,14 @@
               </dd>
             </div>
             {% endfor %}
-        </dl>
-        <!-- <ul class="govuk-list">
+        </dl> -->
+        <!-- <ol class="govuk-list govuk-!-font-size-16">
             {% for day in activityDaysWithTimes %}
             <li>
                 {{day.day|capitalize}}: {{day.times}}
             </li>
             {% endfor %}
-        </ul> -->
+        </ol> -->
     </div>
 </div>
 

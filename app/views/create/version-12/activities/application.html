@@ -52,9 +52,9 @@ text: "Back",
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {% if data['new-application']['applicant'] == 'prisoner' %}
-                        Prisoner
+                    Prisoner
                     {% else %}
-                        Someone else
+                    Someone else
                     {% endif %}
                 </dd>
             </div>
@@ -62,29 +62,29 @@ text: "Back",
 
         <form method="post" class="govuk-!-margin-top-8">
             {{govukRadios({
-                idPrefix: "application-status",
-                name: "new-application[status]",
-                fieldset: {
-                    legend: {
-                        text: "What do you want to do with this application?",
-                        isPageHeading: true,
-                        classes: "govuk-fieldset__legend--m"
-                    }
-                },
-                items: [
-                    {
-                        value: "accept",
-                        html: "<b>Accept</b> the application"
-                    },
-                    {
-                        value: "reject",
-                        html: "<b>Reject</b> the application"
-                    },
-                    {
-                        value: "allocate",
-                        html: "<b>Allocate</b> the prisoner to " + activity.name
-                    }
-                ]
+            idPrefix: "application-status",
+            name: "new-application[status]",
+            fieldset: {
+            legend: {
+            text: "What do you want to do with this application?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            items: [
+            {
+            value: "allocate",
+            html: "<b>Allocate the prisoner</b> to " + activity.name
+            },
+            {
+                value: "accept",
+                html: "<b>Create a note</b> on the application"
+            },
+            {
+            value: "reject",
+            html: "<b>Reject</b> the application"
+            }
+            ]
             })}}
 
             {{ govukButton({
