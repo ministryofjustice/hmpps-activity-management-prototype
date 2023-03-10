@@ -17,11 +17,8 @@ text: "Back",
     <div class="govuk-grid-column-two-thirds">
         {% set prisoner = data['new-application']['selected-prisoner'] | getPrisonerDetails %}
 
-        <h1 class="govuk-heading-xl">
-            <span class="govuk-heading-xl">
-                Check eligibility for {{prisoner.name.firstname}} {{prisoner.name.surname}}
-            </span>
-            {{data['new-activity']['activity-name']}}
+        <h1 class="govuk-heading-l">
+            Check eligibility for {{prisoner.name.firstname}} {{prisoner.name.surname}}
         </h1>
 
         {{ govukSummaryList({
@@ -45,13 +42,10 @@ text: "Back",
         }
         ]
         }) }}
-    </div>
-</div>
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+    
         <table class="govuk-table">
             <caption class="govuk-table__caption">
-                Eligibility requirements for Garret Prew
+                Eligibility requirements
             </caption>
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
@@ -60,7 +54,8 @@ text: "Back",
                     <th scope="col" class="govuk-table__header">Garret Prew's details</th>
 
                     <th scope="col" class="govuk-table__header">
-                        Requirements for undefined
+                        {% set activity = data['new-application']['activity'] | getActivityDetails %}
+                        Requirements for {{activity.name}}
                     </th>
 
                     <th scope="col" class="govuk-table__header">Requirements met?</th>
@@ -74,7 +69,9 @@ text: "Back",
 
                     <td class="govuk-table__cell">Low</td>
 
-                    <td class="govuk-table__cell">Yes</td>
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
                 </tr>
                 <tr class="govuk-table__row">
                     <td class="govuk-table__cell">Incentive level</td>
@@ -83,7 +80,9 @@ text: "Back",
 
                     <td class="govuk-table__cell">Standard</td>
 
-                    <td class="govuk-table__cell">Yes</td>
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
                 </tr>
                 <tr class="govuk-table__row">
                     <td class="govuk-table__cell">Education levels</td>
@@ -92,13 +91,15 @@ text: "Back",
 
                     <td class="govuk-table__cell">English level 1</td>
 
-                    <td class="govuk-table__cell">Yes</td>
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
-        <p class="govuk-!-margin-bottom-8">
-            <a href="#">View Henry Tatton's profile</a> or consult with other departments if you need more information.
+        <p class="govuk-!-margin-bottom-8 govuk-inset-text">
+            <a href="#">View {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or consult with other departments if you need more information.
         </p>
 
         <form method="post">
