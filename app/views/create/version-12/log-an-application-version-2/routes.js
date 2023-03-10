@@ -41,7 +41,8 @@ router.get("/select-prisoner", function (req, res) {
 
   // if there is only one matching prisoner
   if (matchingPrisoners.length === 1) {
-    req.session.data["new-application"]["selected-prisoner"] = matchingPrisoners[0].id;
+    req.session.data["new-application"]["selected-prisoner"] =
+      matchingPrisoners[0].id;
     res.redirect("prisoner-existing-applications");
   } else if (matchingPrisoners.length > 1) {
     res.render(req.protoUrl + "/select-prisoner", {
@@ -64,7 +65,8 @@ router.get("/prisoner-existing-applications", function (req, res) {
   // if there is a selected prisoner
   if (req.session.data["new-application"]["selected-prisoner"]) {
     prisoner = prisoners.find(
-      (prisoner) => prisoner.id === req.session.data["new-application"]["selected-prisoner"]
+      (prisoner) =>
+        prisoner.id === req.session.data["new-application"]["selected-prisoner"]
     );
   } else {
     // if there is no selected prisoner
@@ -78,7 +80,8 @@ router.get("/prisoner-existing-applications", function (req, res) {
 router.post("/prisoner-existing-applications", function (req, res) {
   // check there is a selected prisoner
   if (!req.session.data["new-application"]["selected-prisoner"]) {
-    req.session.data["new-application"]["selected-prisoner"] = req.session.data["timetable-complete-1"]["prisoners"][0].id;
+    req.session.data["new-application"]["selected-prisoner"] =
+      req.session.data["timetable-complete-1"]["prisoners"][0].id;
   }
 
   // logic for the log new application radios
@@ -86,10 +89,10 @@ router.post("/prisoner-existing-applications", function (req, res) {
     // create an empty application object if there isn't one already
     if (!req.session.data["new-application"]) {
       req.session.data["new-application"] = {
-        prisoner: req.session.data["new-application"]["selected-prisoner"]
+        prisoner: req.session.data["new-application"]["selected-prisoner"],
       };
     }
-    
+
     res.redirect("select-activity");
   } else {
     res.redirect("prisoner-existing-applications");
@@ -100,13 +103,17 @@ router.post("/prisoner-existing-applications", function (req, res) {
 router.get("/select-activity", function (req, res) {
   // check there is a selected prisoner
   if (!req.session.data["new-application"]["selected-prisoner"]) {
-    req.session.data["new-application"]["selected-prisoner"] = req.session.data["timetable-complete-1"]["prisoners"][0].id;
+    req.session.data["new-application"]["selected-prisoner"] =
+      req.session.data["timetable-complete-1"]["prisoners"][0].id;
   }
 
   // check if there is already a selected activity in the new application object
-  if (req.session.data["new-application"] && req.session.data["new-application"]["activity"]) {
+  if (
+    req.session.data["new-application"] &&
+    req.session.data["new-application"]["activity"]
+  ) {
     res.redirect("check-activity");
-    return
+    return;
   }
 
   let activities = req.session.data["timetable-complete-1"]["activities"];
@@ -124,7 +131,7 @@ router.post("/select-activity", function (req, res) {
 router.post("/check-activity", function (req, res) {
   // check if the user has selected yes or no
   if (req.session.data["new-application"]["activity"] == "no") {
-    delete req.session.data["new-application"]["activity"]
+    delete req.session.data["new-application"]["activity"];
     res.redirect("select-activity");
   } else {
     res.redirect("application-date");
@@ -139,7 +146,11 @@ router.get("/application-date", function (req, res) {
 // redirect to the applicant details page
 router.post("/application-date", function (req, res) {
   // check the user has entered a date
-  if (!req.session.data["application-date-day"] || !req.session.data["application-date-month"] || !req.session.data["application-date-year"]) {
+  if (
+    !req.session.data["application-date-day"] ||
+    !req.session.data["application-date-month"] ||
+    !req.session.data["application-date-year"]
+  ) {
     res.redirect("application-date");
     return;
   }
@@ -172,14 +183,17 @@ router.post("/application-date", function (req, res) {
 // applicant details page
 router.get("/applicant-details", function (req, res) {
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisoner = prisoners.find(prisoner => prisoner.id === req.session.data["new-application"]["selected-prisoner"]);
-  res.render(req.protoUrl + "/applicant-details", {prisoner});
+  let prisoner = prisoners.find(
+    (prisoner) =>
+      prisoner.id === req.session.data["new-application"]["selected-prisoner"]
+  );
+  res.render(req.protoUrl + "/applicant-details", { prisoner });
 });
 
 // redirect to the decision page
 router.post("/applicant-details", function (req, res) {
   // logic for applicant details page
-  if(req.session.data["applicant"] == "prisoner") {
+  if (req.session.data["applicant"] == "prisoner") {
     // add the applicant to the new application object
     req.session.data["new-application"]["applicant"] = "prisoner";
   } else {
@@ -187,11 +201,65 @@ router.post("/applicant-details", function (req, res) {
   }
 
   // redirect to the decision page
+  res.redirect("check-eligibility");
+});
+
+// checked eligibility page logic
+router.post("/checked-eligibility", function (req, res) {
+  // logic for checked eligibility page
+  if (req.session.data["checked-eligibility"] == "yes") {
+    // set the eligibilty flag on the new application object
+    req.session.data["new-application"]["eligibility-check"] = true;
+    // and set the date of the eligibility check to today
+    req.session.data["new-application"]["eligibility-check-date"] =
+      DateTime.now().toFormat("yyyy-MM-dd");
+
+    res.redirect("check-application-details");
+  } else {
+    req.session.data["new-application"]["eligibility-check"] = false;
+    res.redirect("check-eligibility-now");
+  }
+});
+
+// check eligibility now page logic
+router.post("/check-eligibility-now", function (req, res) {
+  // logic for select check eligibility now page
+  if (req.session.data["check-eligibility-now"] == "yes") {
+    res.redirect("check-eligibility");
+  } else {
+    res.redirect("check-application-details");
+  }
+});
+
+// check eligibility page
+router.get("/check-eligibility", function (req, res) {
+  // if there is no new application object, get a placeholder one from the applications session data
+  if (!req.session.data["new-application"]) {
+    req.session.data["new-application"] = req.session.data["applications"][0];
+  }
+
+  res.render(req.protoUrl + "/check-eligibility");
+});
+
+// check eligibility page logic
+router.post("/check-eligibility", function (req, res) {
+  // if eligibility is either eligible or ineligible, set the eligibility flag on the new application object
+  if (req.session.data["new-application"]["eligible"] == "yes" || req.session.data["new-application"]["eligible"] == "no") {
+    // set the date of the eligibility check to today
+    req.session.data["new-application"]["eligibility-check-date"] =
+      DateTime.now().toFormat("yyyy-MM-dd");
+  }
+
   res.redirect("check-application-details");
 });
 
 // check application details page
 router.get("/check-application-details", function (req, res) {
+  // if there is no new application object, get a placeholder one from the applications session data
+  if (!req.session.data["new-application"]) {
+    req.session.data["new-application"] = req.session.data["applications"][0];
+  }
+
   res.render(req.protoUrl + "/check-application-details");
 });
 // redirect to the applications list page
@@ -201,13 +269,19 @@ router.post("/check-application-details", function (req, res) {
   req.session.data["new-application"]["id"] = id;
   req.session.data["last-application"] = id;
 
-  // add the application to the applications session data
-  req.session.data["applications"].push(req.session.data["new-application"]);
-
-  // delete the new application object
-  // delete req.session.data["new-application"];
-  
-  res.redirect("confirmation");
+  // logic for check application details page radios
+  if (req.session.data["new-application"]["status"] == "approve") {
+    // add the application to the applications session data
+    req.session.data["applications"].push(req.session.data["new-application"]);
+  } else if (req.session.data["new-application"]["status"] == "reject") {
+      // redirect to confirmation page
+      res.redirect("confirmation");
+      return;
+  } else {
+    // add the application to the applications session data with a status of 'pending'
+    req.session.data["new-application"]["status"] = "pending";
+    req.session.data["applications"].push(req.session.data["new-application"]);
+  }
 });
 
 // applications list page
@@ -227,9 +301,11 @@ router.get("/review-decision", function (req, res) {
 router.post("/review-decision", function (req, res) {
   let application = req.session.data["new-application"];
   let activityId = application.activity;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(activity => activity.id.toString() === activityId.toString());
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
 
-  console.log(activity)
+  console.log(activity);
 
   // if activity doesn't have an applications key with an empty array, create it
   if (!activity.applications) {
@@ -249,35 +325,40 @@ router.get("/confirmation", function (req, res) {
 });
 // redirect logic for the confirmation page
 router.post("/confirmation", function (req, res) {
-  if(req.session.data["add-application-next-step"] == "decision") {
+  if (req.session.data["add-application-next-step"] == "decision") {
     res.redirect("decision");
-  } else if(req.session.data["add-application-next-step"] == "add-another") {
+  } else if (req.session.data["add-application-next-step"] == "add-another") {
     res.redirect("check-same-details");
   } else {
-    let activity = req.session.data['new-application']['activity'];
+    let activity = req.session.data["new-application"]["activity"];
     req.session.data["application-added-confirmation-message"] = true;
-    res.redirect("../activities/"+activity+"/applications");
+    res.redirect("../activities/" + activity + "/applications");
   }
 });
 
 // check same details page
 router.get("/check-same-details", function (req, res) {
   let applications = req.session.data["applications"];
-  let lastApplication = applications.find(application => application.id === req.session.data["last-application"]);
+  let lastApplication = applications.find(
+    (application) => application.id === req.session.data["last-application"]
+  );
 
-  res.render(req.protoUrl + "/check-same-details", {lastApplication});
+  res.render(req.protoUrl + "/check-same-details", { lastApplication });
 });
 // logic for the check same details page
 router.post("/check-same-details", function (req, res) {
-  let lastApplication = req.session.data["applications"].find(application => application.id === req.session.data["last-application"]);
+  let lastApplication = req.session.data["applications"].find(
+    (application) => application.id === req.session.data["last-application"]
+  );
 
   req.session.data["new-application"] = {};
 
-  if(req.session.data["use-details"] == "prisoner") {
+  if (req.session.data["use-details"] == "prisoner") {
     // set the prisoner id to the new application object
-    req.session.data["new-application"]["selected-prisoner"] = lastApplication["selected-prisoner"];
+    req.session.data["new-application"]["selected-prisoner"] =
+      lastApplication["selected-prisoner"];
     res.redirect("prisoner-existing-applications");
-  } else if(req.session.data["use-details"] == "activity") {
+  } else if (req.session.data["use-details"] == "activity") {
     // set the activity id to the new application object
     req.session.data["new-application"]["activity"] = lastApplication.activity;
     res.redirect("prisoner-search");
@@ -288,7 +369,7 @@ router.post("/check-same-details", function (req, res) {
 
 // check same prisoner page logic
 router.post("/check-same-prisoner", function (req, res) {
-  if(req.session.data["same-prisoner"] == "yes") {
+  if (req.session.data["same-prisoner"] == "yes") {
     res.redirect("prisoner-existing-applications");
   } else {
     res.redirect("prisoner-search");
@@ -302,15 +383,12 @@ router.post("/decision", function (req, res) {
 
 // decision confirmation page logic
 router.post("/decision-confirmation", function (req, res) {
-  if(req.session.data["decision-next-step"] == "add-another") {
+  if (req.session.data["decision-next-step"] == "add-another") {
     res.redirect("check-same-prisoner");
   } else {
     req.session.data["application-added-confirmation-message"] = true;
     res.redirect("../activities/2/applications");
   }
 });
-
-
-
 
 module.exports = router;

@@ -1,0 +1,138 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = data['new-application']['selected-prisoner'] | getPrisonerDetails %}
+
+        <h1 class="govuk-heading-xl">
+            <span class="govuk-heading-xl">
+                Check eligibility for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            </span>
+            {{data['new-activity']['activity-name']}}
+        </h1>
+
+        {{ govukSummaryList({
+        classes: "govuk-!-margin-bottom-9",
+        rows: [
+        {
+        key: {
+        text: "Earliest release date"
+        },
+        value: {
+        text: "21 September 2029"
+        }
+        },
+        {
+        key: {
+        text: "Non-associations"
+        },
+        value: {
+        html: '<a href="#" class="govuk-link--no-visited-state">Junior Smith</a>'
+        }
+        }
+        ]
+        }) }}
+    </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <table class="govuk-table">
+            <caption class="govuk-table__caption">
+                Eligibility requirements for Garret Prew
+            </caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Type of detail</th>
+
+                    <th scope="col" class="govuk-table__header">Garret Prew's details</th>
+
+                    <th scope="col" class="govuk-table__header">
+                        Requirements for undefined
+                    </th>
+
+                    <th scope="col" class="govuk-table__header">Requirements met?</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">Workplace risk assessment level</td>
+
+                    <td class="govuk-table__cell"></td>
+
+                    <td class="govuk-table__cell">Low</td>
+
+                    <td class="govuk-table__cell">Yes</td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">Incentive level</td>
+
+                    <td class="govuk-table__cell"></td>
+
+                    <td class="govuk-table__cell">Standard</td>
+
+                    <td class="govuk-table__cell">Yes</td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">Education levels</td>
+
+                    <td class="govuk-table__cell"></td>
+
+                    <td class="govuk-table__cell">English level 1</td>
+
+                    <td class="govuk-table__cell">Yes</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="govuk-!-margin-bottom-8">
+            <a href="#">View Henry Tatton's profile</a> or consult with other departments if you need more information.
+        </p>
+
+        <form method="post">
+            {{ govukRadios({
+            idPrefix: "eligible",
+            name: "new-application[eligible]",
+            fieldset: {
+            legend: {
+            text: "Is " + prisoner.name.firstname + " " + prisoner.name.surname + " eligible for this activity?",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            items: [
+            {
+            value: "yes",
+            text: "Yes"
+            },
+            {
+            value: "no",
+            text: "No"
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "",
+            text: "Further checks required"
+            }
+            ]
+            }) }}
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

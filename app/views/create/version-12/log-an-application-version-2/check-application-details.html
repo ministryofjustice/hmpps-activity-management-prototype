@@ -19,7 +19,7 @@ text: "Back",
             Check application details
         </h1>
 
-        <dl class="govuk-summary-list">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Prisoner
@@ -78,6 +78,25 @@ text: "Back",
                     </a>
                 </dd>
             </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Eligibility
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if data['new-application']['eligible'] == 'yes' %}
+                    Eligible
+                    {% elif data['new-application']['eligible'] == 'no' %}
+                    Not eligible
+                    {% else %}
+                    Further checks required
+                    {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
         </dl>
 
         <form method="post">
@@ -86,9 +105,10 @@ text: "Back",
             name: "new-application[status]",
             fieldset: {
             legend: {
-            text: "Do you want to add " + prisoner.name.firstname + " " + prisoner.name.surname + " to the waitlist?",
+            text: "Do you want to add " + prisoner.name.firstname + " " +
+            prisoner.name.surname + " to the waitlist for " + activity.name + "?",
             isPageHeading: true,
-            classes: "govuk-fieldset__legend--m"
+            classes: "govuk-fieldset__legend--l"
             }
             },
             items: [
@@ -96,7 +116,7 @@ text: "Back",
             value: "approve",
             text: "Yes, add them to the waitlist",
             hint: {
-            text: "Before allocating the prisoner to an activity, you'll need to check their eligibility."
+            text: "You'll need to check and confirm the prisoner's eligibility before they are allocated to the activity."
             }
             },
             {
@@ -108,6 +128,8 @@ text: "Back",
             }
             ]
             })}}
+
+            <!-- <input type=""hidden name="new-application[status]" value="approve"> -->
 
             {{ govukButton({
             text: "Confirm and log application"

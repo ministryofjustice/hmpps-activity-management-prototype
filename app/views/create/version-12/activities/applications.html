@@ -54,6 +54,9 @@ href: "../../log-an-application-version-2?new-application[activity]=" + activity
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
                 <ul class="govuk-list">
+                    {% if prisoner.activity|length == 0 %}
+                    <span class="govuk-hint">None</span>
+                    {% endif %}
                     {% for allocation in prisoner.activity %}
                     {% set activity = allocation|getActivityDetails %}
                     <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
@@ -61,7 +64,7 @@ href: "../../log-an-application-version-2?new-application[activity]=" + activity
                 </ul>
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
-                None
+                <span class="govuk-hint">None</span>
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
                 <a href="applications/{{prisoner.id}}" class="govuk-link--no-visited-state">View application</a>
