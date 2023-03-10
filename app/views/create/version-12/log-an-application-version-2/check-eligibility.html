@@ -21,37 +21,15 @@ text: "Back",
             Check eligibility for {{prisoner.name.firstname}} {{prisoner.name.surname}}
         </h1>
 
-        {{ govukSummaryList({
-        classes: "govuk-!-margin-bottom-9",
-        rows: [
-        {
-        key: {
-        text: "Earliest release date"
-        },
-        value: {
-        text: "21 September 2029"
-        }
-        },
-        {
-        key: {
-        text: "Non-associations"
-        },
-        value: {
-        html: '<a href="#" class="govuk-link--no-visited-state">Junior Smith</a>'
-        }
-        }
-        ]
-        }) }}
-    
-        <table class="govuk-table">
+        <!-- <table class="govuk-table">
             <caption class="govuk-table__caption">
-                Eligibility requirements
+                Eligibility requirements not met
             </caption>
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header">Type of detail</th>
 
-                    <th scope="col" class="govuk-table__header">Garret Prew's details</th>
+                    <th scope="col" class="govuk-table__header">{{prisoner.name.firstname}} {{prisoner.name.surname}}'s details</th>
 
                     <th scope="col" class="govuk-table__header">
                         {% set activity = data['new-application']['activity'] | getActivityDetails %}
@@ -96,10 +74,75 @@ text: "Back",
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
+
+        <h2 class="govuk-heading-m">
+            Prisoner eligibility details
+        </h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Workplace risk assessment level
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Low
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--green">Suitable</span>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Incentive level
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Standard
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--red">Not suitable</span>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Education levels
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    English level 1
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--green">Suitable</span>
+                </dd>
+            </div>
+        </dl>
+
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Earliest release date",
+        classes: "govuk-summary-list__row--no-actions"
+        },
+        value: {
+        text: "21 September 2029",
+        classes: "govuk-summary-list__row--no-actions"
+        }
+        },
+        {
+        key: {
+        text: "Non-associations"
+        },
+        value: {
+        html: '<a href="#" class="govuk-link--no-visited-state">Junior Smith</a>'
+        }
+        }
+        ]
+        })
+        }}
+
 
         <p class="govuk-!-margin-bottom-8 govuk-inset-text">
-            <a href="#">View {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or consult with other departments if you need more information.
+            <a href="#">View {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or consult with other
+            departments if you need more information.
         </p>
 
         <form method="post">
@@ -127,7 +170,7 @@ text: "Back",
             },
             {
             value: "",
-            text: "Further checks required"
+            text: "Further checks are needed"
             }
             ]
             }) }}

@@ -248,6 +248,8 @@ router.post("/check-eligibility", function (req, res) {
     // set the date of the eligibility check to today
     req.session.data["new-application"]["eligibility-check-date"] =
       DateTime.now().toFormat("yyyy-MM-dd");
+  } else {
+    req.session.data["new-application"]["eligibility-check-date"] = ''
   }
 
   res.redirect("check-application-details");

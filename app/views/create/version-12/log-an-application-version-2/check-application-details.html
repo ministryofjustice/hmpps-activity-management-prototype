@@ -15,8 +15,8 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">
-            Check application details
+        <h1 class="govuk-heading-xl">
+            Check the application
         </h1>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-8">
@@ -84,11 +84,11 @@ text: "Back",
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {% if data['new-application']['eligible'] == 'yes' %}
-                    Eligible
+                    <span class="govuk-tag govuk-tag--green">Eligible</span>
                     {% elif data['new-application']['eligible'] == 'no' %}
-                    Not eligible
+                    <span class="govuk-tag govuk-tag--red">Not eligible</span>
                     {% else %}
-                    Further checks required
+                    <span class="govuk-tag govuk-tag--yellow">Further checks needed</span>
                     {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">

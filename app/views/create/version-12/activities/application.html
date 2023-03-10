@@ -18,14 +18,14 @@ text: "Back",
         <h1 class="govuk-heading-l">
             Application details
         </h1>
-
-        <dl class="govuk-summary-list">
+        
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Prisoner
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% set prisoner = data['new-application']['prisoner']|getPrisonerDetails %}
+                    {% set prisoner = application['selected-prisoner']|getPrisonerDetails %}
                     {{prisoner.name.firstname}} {{prisoner.name.surname}}
                 </dd>
             </div>
@@ -34,7 +34,7 @@ text: "Back",
                     Activity
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% set activity = data['new-application']['activity']|getActivityDetails %}
+                    {% set activity = application['activity']|getActivityDetails %}
                     {{activity.name}}
                 </dd>
             </div>
@@ -43,7 +43,7 @@ text: "Back",
                     Application date
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{application.date|convertShortDateToLongDate}}
+                    {{application['date']|convertShortDateToLongDate}}
                 </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -51,13 +51,37 @@ text: "Back",
                     Application made by
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% if data['new-application']['applicant'] == 'prisoner' %}
+                    {% if application['applicant'] == 'prisoner' %}
                     Prisoner
                     {% else %}
                     Someone else
                     {% endif %}
                 </dd>
             </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Eligibility
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if application.eligible == 'yes' %}
+                    <span class="govuk-tag govuk-tag--green">Eligible</span>
+                    {% elif application.eligible == 'no' %}
+                    <span class="govuk-tag govuk-tag--red">Not eligible</span>
+                    {% else %}
+                    <span class="govuk-tag govuk-tag--yellow">Further checks needed</span>
+                    {% endif %}
+                </dd>
+            </div>
+            {% if application['eligibility-check-date'] %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Eligibility checked
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{application['eligibility-check-date']|convertShortDateToLongDate}}
+                </dd>
+            </div>
+            {% endif %}
         </dl>
 
         <form method="post" class="govuk-!-margin-top-8">
@@ -77,8 +101,8 @@ text: "Back",
             html: "<b>Allocate the prisoner</b> to " + activity.name
             },
             {
-                value: "accept",
-                html: "<b>Create a note</b> on the application"
+            value: "accept",
+            html: "<b>Create a note</b> on the application"
             },
             {
             value: "reject",

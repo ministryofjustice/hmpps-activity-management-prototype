@@ -26,16 +26,16 @@ Find an activity to record or edit attendance
 text: "Add a new application for this activity",
 href: "../../log-an-application-version-2?new-application[activity]=" + activity.id
 })}}
-<table class="govuk-table">
+<table class="govuk-table moj-sortable-table" data-module="moj-sortable-table">
     <caption class="govuk-table__caption govuk-table__caption--m">
-        {{activityApplications|length}} application{{'s' if activityApplications|length > 1 }}
+        {{activityApplications|length}} application{{'s' if activityApplications|length != 1 }}
     </caption>
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Prisoner</th>
-            <th scope="col" class="govuk-table__header">Application date</th>
-            <th scope="col" class="govuk-table__header">Other allocations</th>
-            <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none">Prisoner</th>
+            <th scope="col" class="govuk-table__header" aria-sort="ascending">Application date</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none">Other allocations</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none">Eligibility checks</th>
             <th scope="col" class="govuk-table__header"></th>
         </tr>
     </thead>
@@ -49,7 +49,7 @@ href: "../../log-an-application-version-2?new-application[activity]=" + activity
                 {{prisoner.id}}<br>
                 {{prisoner.location.cell}}
             </td>
-            <td class="govuk-table__cell govuk-!-padding-top-4">
+            <td class="govuk-table__cell govuk-!-padding-top-4" data-sort-value="{{application.date}}">
                 {{application.date|convertShortDateToMediumDate}}
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
@@ -64,10 +64,16 @@ href: "../../log-an-application-version-2?new-application[activity]=" + activity
                 </ul>
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
-                <span class="govuk-hint">None</span>
+                {% if application.eligible == "yes" %}
+                <span class="govuk-tag govuk-tag--green">Complete</span>
+                {% elif application.eligible == "no" %}
+                <span class="govuk-tag govuk-tag--red">Not eligible</span>
+                {% else %}
+                <span class="govuk-tag govuk-tag--yellow">Pending</span>
+                {% endif %}
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
-                <a href="applications/{{prisoner.id}}" class="govuk-link--no-visited-state">View application</a>
+                <a href="applications/{{application.id}}" class="govuk-link--no-visited-state">View application</a>
             </td>
         </tr>
         {% endfor %}

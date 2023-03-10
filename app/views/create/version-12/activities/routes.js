@@ -81,6 +81,7 @@ router.get("/", function (req, res) {
 // all activities page
 router.get("/all", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
+  let applications = req.session.data["applications"];
 
   // count the number of prisoners allocated to each activity
   // and add it to each activity object in the activities array
@@ -99,6 +100,12 @@ router.get("/all", function (req, res) {
       }
     });
     activity.currentlyAllocated = prisonerCount;
+
+    // get a count of all applications for the activity and add it to the activity object
+    let activityApplications = applications.filter(
+      (application) => application.activity.toString() === activity.id.toString()
+    );
+    activity.applicationCount = activityApplications.length;
   });
 
   // render the activities page and pass the activities array to the template
@@ -231,7 +238,7 @@ router.get("/:activityId/applications/:applicationId", function (req, res) {
 
   let applications = req.session.data["applications"];
   let application = applications.find(
-    (application) => application['selected-prisoner'].toString() === applicationId.toString()
+    (application) => application.id.toString() === applicationId.toString()
   );
 
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];

@@ -17,6 +17,11 @@ window.history.go(-1)" })}} {% endblock %}
         </h1>
 
         <form method="post">
+            {{ govukButton({
+                text: "Select prisoner and continue",
+                classes: "govuk-!-margin-bottom-8"
+            }) }}
+
             <table class="govuk-table">
                 <caption class="govuk-table__caption govuk-table__caption--m">
                     Prisoners
@@ -54,11 +59,11 @@ window.history.go(-1)" })}} {% endblock %}
                     {% endfor %}
                 </tbody>
             </table>
-
-            <p>
-                <a href="#">Cancel and search for someone else</a>
-            </p>
-            <button class="govuk-button" data-module="govuk-button">Continue</button>
+            
+            {{ govukButton({
+                text: "Select prisoner and continue",
+                classes: "govuk-!-margin-top-6"
+            }) }}
         </form>
     </div>
 </div>
