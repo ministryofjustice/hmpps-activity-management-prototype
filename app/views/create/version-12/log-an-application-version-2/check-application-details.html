@@ -67,9 +67,9 @@ text: "Back",
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {% if data['new-application']['applicant'] == 'prisoner' %}
-                        Prisoner
+                    Prisoner
                     {% else %}
-                        Someone else
+                    Someone else
                     {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
@@ -82,26 +82,32 @@ text: "Back",
 
         <form method="post">
             {{govukRadios({
-                idPrefix: "decision",
-                name: "new-application[status]",
-                fieldset: {
-                legend: {
-                text: "Add prisoner to waitlist?",
-                isPageHeading: true,
-                classes: "govuk-fieldset__legend--m"
-                }
-                },
-                items: [
-                {
-                value: "approve",
-                text: "Yes"
-                },
-                {
-                value: "reject",
-                text: "No, reject the application"
-                }
-                ]
-                })}}
+            idPrefix: "decision",
+            name: "new-application[status]",
+            fieldset: {
+            legend: {
+            text: "Do you want to add " + prisoner.name.firstname + " " + prisoner.name.surname + " to the waitlist?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            items: [
+            {
+            value: "approve",
+            text: "Yes, add them to the waitlist",
+            hint: {
+            text: "Before allocating the prisoner to an activity, you'll need to check their eligibility."
+            }
+            },
+            {
+            value: "reject",
+            text: "No, reject the application",
+            hint: {
+            text: "The prisoner will be notified that their application has been rejected."
+            }
+            }
+            ]
+            })}}
 
             {{ govukButton({
             text: "Confirm and log application"

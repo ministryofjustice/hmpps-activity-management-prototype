@@ -16,10 +16,53 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
+            {% set prisoner = data['new-application']['selected-prisoner'] | getPrisonerDetails %}
+            {% set titleText %}
+            {% if data['new-application']['status'] == "approve" %}
+            You've logged the application for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            {% else %}
+            You've rejected the application for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            {% endif %}
+            {% endset %}
+
             {{ govukPanel({
-            titleText: "You've logged the application for PRISONER NAME",
+            titleText: titleText,
             classes: "govuk-!-margin-bottom-8"
             }) }}
+
+
+            {% set items = [
+                {
+                value: "decision",
+                text: "Allocate the prisoner"
+                },
+                {
+                value: "add-another",
+                text: "Add another application"
+                },
+                {
+                    divider: "or"
+                },
+                {
+                value: "finish",
+                text: "Finish logging applications"
+                }
+                ]
+            %}
+
+            {% if data['new-application']['status'] == "reject" %}
+            {% set items = [
+                {
+                value: "add-another",
+                text: "Add another application"
+                },
+                {
+                value: "finish",
+                text: "Finish logging applications"
+                }
+                ]
+            %}
+            {% endif %}
 
             {{govukRadios({
             idPrefix: "add-application-next-step",
@@ -31,23 +74,7 @@ text: "Back",
             classes: "govuk-fieldset__legend--l"
             }
             },
-            items: [
-            {
-            value: "decision",
-            text: "Allocate the prisoner"
-            },
-            {
-            value: "add-another",
-            text: "Add another application"
-            },
-            {
-                divider: "or"
-            },
-            {
-            value: "finish",
-            text: "Finish logging applications"
-            }
-            ]
+            items: items
             })}}
 
             {{ govukButton({
