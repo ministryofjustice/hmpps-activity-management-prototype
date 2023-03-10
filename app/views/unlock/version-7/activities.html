@@ -57,7 +57,6 @@ Find an activity to record or edit attendance
 		</div>
 	</div>
 </div>
-
 {%- from "moj/components/filter/macro.njk" import mojFilter -%}
 {%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
 <div class="moj-filter-layout">
@@ -221,6 +220,13 @@ Find an activity to record or edit attendance
 	</div>
 
 	<div class="moj-filter-layout__content">
+		{% if data['search'] %}
+		<h2 class="govuk-heading-m" role="status">
+			{% set searchResultsCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+			{{searchResultsCount}} search results for "{{data['search']}}"
+		</h2>
+		{% endif %}
+
 		<div class="moj-filter-button"></div>
 
 		<div class="moj-scrollable-pane">
@@ -243,7 +249,7 @@ Find an activity to record or edit attendance
 						<th scope="col" class="govuk-table__header" aria-sort="ascending" width="250">Activity</th>
 						<th scope="col" class="govuk-table__header" aria-sort="none" width="150">Location</th>
 						<th scope="col" class="govuk-table__header" aria-sort="none" width="120">Time</th>
-						<th scope="col" class="govuk-table__header" aria-sort="none" style="white-space: nowrap; width: 1%;">Scheduled</th>
+						<th scope="col" class="govuk-table__header" aria-sort="none" style="white-space: nowrap; width: 1%;">Allocated</th>
 						<th scope="col" class="govuk-table__header govuk-hint" aria-sort="none" style="white-space: nowrap; width: 1%;">Attended</th>
 						<th scope="col" class="govuk-table__header govuk-hint" aria-sort="none" style="white-space: nowrap; width: 1%;">Not recorded</th>
 						<th scope="col" class="govuk-table__header govuk-hint" aria-sort="none" style="white-space: nowrap; width: 1%;">All absences</th>
@@ -287,6 +293,7 @@ Find an activity to record or edit attendance
 			{% endfor %}
 		</div>
 	</div>
+</div>
 
 	{% set dayBefore = selectedDate | dayBefore %}
 	{% set dayAfter = selectedDate | dayAfter %}

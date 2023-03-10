@@ -268,9 +268,9 @@ Activities Management prototype
 						<th class="govuk-table__header" aria-sort="none">
 							Session
 						</th>
-						<!-- <th class="govuk-table__header" aria-sort="none">
-							Status
-						</th> -->
+						<th class="govuk-table__header" colspan="2" width="320">
+							Attendance
+						</th>
 					</tr>
 				</thead>
 				<tbody class="govuk-table__body">
@@ -344,13 +344,45 @@ Activities Management prototype
 							{% endif %}
 							{% endfor %}
 						</td>
-						<!-- <td class="govuk-table__cell" data-sort-value="{{'9' if prisoner.attendance == 'attended'}}{{'1' if prisoner.attendance == 'not-attended'}}{{'5' if not prisoner.attendance}}" scope="col">
-							{% for event in prisoner.events %}
-							{% if event.attendance %}
-							{{event.attendance}}
-							{% endif %}
-							{% endfor %}
-						</td> -->
+						<td class="govuk-table__cell" {%- if not prisoner.attendance.attendance %}colspan="2"{% endif -%}>
+							{% set attendance = prisoner.attendance.records[prisoner.attendance.records|length-1].attendance %}
+							<!-- {{prisoner.attendance|dump}} -->
+							<ul class="govuk-list govuk-!-margin-0">
+								{%- if prisoner.attendance.attendance == 'attended' %}
+								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--attended" style="text-transform: none;">Attended</span></li>
+
+								{%- elif prisoner.attendance.attendance == 'not-attended' %}
+								{%- if prisoner.attendance.sessionCancelled == true %}
+								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--cancelled" style="text-transform: none;">Session cancelled</span></li>
+								{% elif prisoner.attendance.attendanceStatus == 'sick' %}
+								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Sick</span></li>
+								{% elif prisoner.attendance.attendanceStatus == 'rest-day' %}
+								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Rest day</span></li>
+								{% elif prisoner.attendance.attendanceStatus == 'not-required' %}
+								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Not required</span></li>
+								{% elif prisoner.attendance.attendanceStatus == 'refused' %}
+								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Refused to attend</span></li>
+								{% elif prisoner.attendance.attendanceStatus == 'other' %}
+								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Other</span></li>
+								{% else %}
+								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--not-attended" style="text-transform: none;">Absent</span></li>
+								{% endif -%}
+								{%- else %}
+								<span class="govuk-hint">Not recorded yet</span>
+								{% endif -%}
+
+								{% if prisoner.attendance.attendance and prisoner.attendance.pay == true %}
+								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--pay" style="text-transform: none;">Pay</span></li>
+								{%- elif prisoner.attendance.attendance and prisoner.attendance.pay == false %}
+								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span class="app-tag app-tag--no-pay" style="text-transform: none;">No pay</span></li>
+								{% endif %}
+							</ul>
+						</td>
+						{%- if prisoner.attendance.attendance %}
+						<td class="govuk-table__cell">
+							<a href="{{activity.id}}/{{prisoner.id}}" class="govuk-link--no-visited-state">View or edit</a>
+						</td>
+						{% endif -%}
 					</tr>
 					{% endfor %}
 				</tbody>

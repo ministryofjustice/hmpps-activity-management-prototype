@@ -47,22 +47,19 @@ Select activity date - {{serviceName}}
 		name: "date",
 		fieldset: {
 			legend: {
-				text: "Select activity date",
+				text: "What date do you want to record attendance for?",
 				isPageHeading: true,
 				classes: "govuk-fieldset__legend--l"
 			}
 		},
-		hint: {
-			text: "The date today is " + today|convertShortDateToLongDate
-		},
 		items: [
 		{
 			value: today,
-			text: "Today"
+			text: "Today – " + today|convertShortDateToLongDate
 		},
 		{
 			value: today|dayBefore(today),
-			text: "Yesterday"
+			text: "Yesterday – " + today|dayBefore(today)|convertShortDateToLongDate
 		},
 		{
 			value: "other-date",
@@ -80,7 +77,7 @@ Select activity date - {{serviceName}}
 
 			<div class="govuk-button-group">
 				{{govukButton({
-					text: "Search activities"
+					text: "Continue"
 				})}}
 			</div>
 		</div>

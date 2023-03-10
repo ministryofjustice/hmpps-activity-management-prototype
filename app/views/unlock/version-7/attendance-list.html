@@ -97,14 +97,16 @@
 			<div class="govuk-grid-row govuk-!-margin-bottom-2">
 				<div class="govuk-grid-column-three-quarters">
 					<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+						{{ activity.name }} – record attendance
+
 						<span class="govuk-caption-l">
-							Record attendance
+							Time: {{activityTimes.startTime}} to {{activityTimes.endTime}} ({{period}})
 						</span>
-
-						{{ activity.name }}: {{activity.location}}
-
 						<span class="govuk-caption-l">
-							{{activityTimes.startTime}}&thinsp;&ndash;&thinsp;{{activityTimes.endTime}} ({{period}}) on {{date|convertShortDateToVeryLongDate}}
+							Date: {{date|convertShortDateToVeryLongDate}}
+						</span>
+						<span class="govuk-caption-l">
+							Location: {{activity.location}}
 						</span>
 					</h1>
 
@@ -329,13 +331,13 @@
 					$(this).attr("disabled", false).html($(this).data('html'))
 				})
 
-				$('.app-attendance-sticky-bar--bottom').addClass('active').find('.govuk-button-group').show()
+				$('.app-attendance-sticky-bar--bottom').addClass('active').attr("aria-disabled", false).find('.govuk-button-group').show()
 			} else {
 				$.each(btn, function(){
 					$(this).attr("disabled", true).html($(this).data('html'))
 				})
 
-				$('.app-attendance-sticky-bar--bottom').removeClass('active').find('.govuk-button-group').hide()
+				$('.app-attendance-sticky-bar--bottom').removeClass('active').attr("aria-disabled", true).find('.govuk-button-group').hide()
 				$('#app-selected-count').html($('#app-selected-count').data('html'))
 			}
 		}

@@ -48,10 +48,13 @@ Activities Management prototype
 				name: "date",
 				fieldset: {
 					legend: {
-						text: "Select unlock date",
+						text: "Unlock date",
 						isPageHeading: false,
 						classes: "govuk-fieldset__legend--m"
 					}
+				},
+				hint: {
+					text: "You can get unlock lists for dates up to 60 days from today."
 				},
 				items: [
 				{
@@ -59,8 +62,8 @@ Activities Management prototype
 					text: "Today"
 				},
 				{
-					value: today|dayAfter(today),
-					text: "Tomorrow"
+					value: today|dayBefore(today),
+					text: "Yesterday"
 				},
 				{
 					value: "other-date",
@@ -76,7 +79,7 @@ Activities Management prototype
 				name: "period",
 				fieldset: {
 					legend: {
-						text: "Select time period",
+						text: "Time period",
 						isPageHeading: false,
 						classes: "govuk-fieldset__legend--m"
 					}
@@ -100,7 +103,7 @@ Activities Management prototype
 			<div class="govuk-form-group govuk-!-margin-bottom-6">
 				<fieldset class="govuk-fieldset" aria-describedby="locations-hint">
 					<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-						Select location
+						Location
 					</legend>
 					<div class="govuk-radios" id="locations-radios" data-module="govuk-radios">
 						{% for houseblock in data['residential-locations-2'] %}
