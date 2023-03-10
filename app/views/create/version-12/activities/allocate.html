@@ -1,0 +1,124 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">
+            Check eligibility for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+        </h1>
+        
+        <h2 class="govuk-heading-m">
+            Prisoner eligibility details
+        </h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Workplace risk assessment level
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Low
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--green">Suitable</span>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Incentive level
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Standard
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--red">Not suitable</span>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Education levels
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    English level 1
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--green">Suitable</span>
+                </dd>
+            </div>
+        </dl>
+
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Earliest release date",
+        classes: "govuk-summary-list__row--no-actions"
+        },
+        value: {
+        text: "21 September 2029",
+        classes: "govuk-summary-list__row--no-actions"
+        }
+        },
+        {
+        key: {
+        text: "Non-associations"
+        },
+        value: {
+        html: '<a href="#" class="govuk-link--no-visited-state">Junior Smith</a>'
+        }
+        }
+        ]
+        })
+        }}
+
+        <p class="govuk-!-margin-bottom-8 govuk-inset-text">
+            <a href="#">View {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or consult with other
+            departments if you need more information.
+        </p>
+
+        <form method="post" class="govuk-!-margin-top-8">
+            {{govukRadios({
+            idPrefix: "application-status",
+            name: "new-application[status]",
+            fieldset: {
+            legend: {
+            text: "What do you want to do with this application?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            items: [
+            {
+            value: "allocate",
+            html: "<b>Allocate the prisoner</b> to " + activity.name
+            },
+            {
+            value: "accept",
+            html: "<b>Create a note</b> on the application"
+            },
+            {
+            value: "reject",
+            html: "<b>Reject</b> the application"
+            }
+            ]
+            })}}
+
+            {{ govukButton({
+            text: "Submit decision"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

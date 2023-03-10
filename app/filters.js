@@ -79,6 +79,61 @@ module.exports = function (env) {
         return activity
     }
 
+    filters.getActivityCategoryName = function (activityCategoryId) {
+        const timetable = require('./data/timetable-complete-1')
+        const activityCategories = timetable.categories
+        
+        let categoryMatch = activityCategories.filter(category => category.id == activityCategoryId);
+        let activityCategory = categoryMatch[0]
+
+        return activityCategory.name
+    }
+
+    filters.getCurrentlyAllocatedCount = function (activityId) {
+        const timetable = require('./data/timetable-complete-1')
+        const prisoners = timetable.prisoners
+        const activities = timetable.activities
+
+        let activityMatch = activities.filter(activity => activity.id == activityId);
+        let activity = activityMatch[0]
+
+        activities.forEach(activity => {
+            let prisonerCount = 0;
+            prisoners.forEach(prisoner => {
+                const prisonerActivities = prisoner.activity ? Array.isArray(prisoner.activity) ? prisoner.activity : [prisoner.activity] : false;
+
+                if (prisonerActivities && prisonerActivities.includes(activity.id)) {
+                    prisonerCount++
+                }
+            })
+            activity.currentlyAllocatedCount = prisonerCount
+        })
+
+        return activity.currentlyAllocatedCount
+    }
+
+    // count applications for a given activity id
+    filters.getApplicationCount = function (activityId) {
+        const applications = require('./data/applications')
+        let activityApplications = applications.filter(application => application.activity.toString() == activityId.toString());
+
+        return activityApplications.length
+    }
+
+    filters.getOtherPrisonersCount = function (activityId) {
+        const timetable = require('./data/timetable-complete-1')
+        const prisoners = timetable.prisoners
+
+        let prisonersWithoutApplication = prisoners.filter(
+            (prisoner) =>
+              !prisoner.activity ||
+              prisoner.activity.length === 0 ||
+              !prisoner.activity.includes(activityId)
+          );
+
+        return prisonersWithoutApplication.length
+    }
+
     filters.getHouseblock = function (houseblockId) {
         const locations = require('./data/residential-list-1')
         let match = locations.filter(location => location.id == houseblockId);

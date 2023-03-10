@@ -17,31 +17,30 @@ Find an activity to record or edit attendance
 
 {% include "./_activity-header.html" %}
 <h2 class="govuk-heading-l">
-    Applications
+    Other prisoners
 </h2>
 <!-- <p>
     All applications shown below are pending. They have not been approved or rejected yet.
 </p> -->
-{{govukButton({
-text: "Add a new application for this activity",
+<!-- {{govukButton({
+text: "Select prisoner",
 href: "../../log-an-application-version-2?new-application[activity]=" + activity.id
-})}}
+})}} -->
 <table class="govuk-table moj-sortable-table" data-module="moj-sortable-table">
     <caption class="govuk-table__caption govuk-table__caption--m">
-        {{activityApplications|length}} application{{'s' if activityApplications|length != 1 }}
+        {{activity.id|getOtherPrisonersCount}} prisoners
     </caption>
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header" aria-sort="none">Prisoner</th>
-            <th scope="col" class="govuk-table__header" aria-sort="ascending">Application date</th>
+            <th scope="col" class="govuk-table__header" aria-sort="ascending">Non-associations</th>
             <th scope="col" class="govuk-table__header" aria-sort="none">Other allocations</th>
-            <th scope="col" class="govuk-table__header" aria-sort="none">Eligibility checks</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none">Past applications</th>
             <th scope="col" class="govuk-table__header"></th>
         </tr>
     </thead>
     <tbody class="govuk-table__body">
-        {% for application in activityApplications %}
-        {% set prisoner = application["selected-prisoner"]|getPrisonerDetails %}
+        {% for prisoner in prisonersWithoutApplication %}
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
                 <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
@@ -50,7 +49,7 @@ href: "../../log-an-application-version-2?new-application[activity]=" + activity
                 {{prisoner.location.cell}}
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4" data-sort-value="{{application.date}}">
-                {{application.date|convertShortDateToMediumDate}}
+                None
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
                 <ul class="govuk-list">
@@ -64,16 +63,10 @@ href: "../../log-an-application-version-2?new-application[activity]=" + activity
                 </ul>
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
-                {% if application.eligible == "yes" %}
-                <span class="govuk-tag govuk-tag--green">Complete</span>
-                {% elif application.eligible == "no" %}
-                <span class="govuk-tag govuk-tag--red">Not eligible</span>
-                {% else %}
-                <span class="govuk-tag govuk-tag--yellow">Pending</span>
-                {% endif %}
+                None
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
-                <a href="applications/{{application.id}}" class="govuk-link--no-visited-state">View application</a>
+                <a href="allocate/{{prisoner.id}}" class="govuk-link--no-visited-state">Check eligibility</a>
             </td>
         </tr>
         {% endfor %}

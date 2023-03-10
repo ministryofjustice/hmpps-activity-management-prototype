@@ -3,15 +3,15 @@
         <li class="moj-sub-navigation__item">
             <a class="moj-sub-navigation__link" {% if currentPage=='currently-allocated' %}aria-current="page" {% endif
                 %} href="currently-allocated">Currently allocated
-                ({{currentlyAllocated.length}})</a>
+                ({{activity.id|getCurrentlyAllocatedCount}})</a>
         </li>
         <li class="moj-sub-navigation__item">
             <a class="moj-sub-navigation__link" {% if currentPage=='applications' %}aria-current="page" {% endif
-                %}href="applications">Applications ({{activityApplications|length}})</a>
+                %}href="applications">Applications ({{activity.id|getApplicationCount}})</a>
         </li>
         <li class="moj-sub-navigation__item">
-            <a class="moj-sub-navigation__link" {% if currentPage=='suitable' %}aria-current="page" {% endif
-                %}href="#3">Other prisoners ({{data['timetable-complete-1']['prisoners']|length - activityApplications|length - currentlyAllocated.length}})</a>
+            <a class="moj-sub-navigation__link" {% if currentPage=='other-prisoners' %}aria-current="page" {% endif
+                %}href="other-prisoners">Other prisoners ({{activity.id|getOtherPrisonersCount}})</a>
         </li>
         <!-- <li class="moj-sub-navigation__item">
             <a class="moj-sub-navigation__link" {% if currentPage=='not-suitable' %}aria-current="page" {% endif
