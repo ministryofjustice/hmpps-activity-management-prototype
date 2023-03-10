@@ -264,6 +264,11 @@ router.get("/check-application-details", function (req, res) {
 });
 // redirect to the applications list page
 router.post("/check-application-details", function (req, res) {
+  // if there is no new application object, get a placeholder one from the applications session data
+  if (!req.session.data["new-application"]) {
+    req.session.data["new-application"] = req.session.data["applications"][0];
+  }
+
   // add a random id to the new application object
   let id = Math.floor(Math.random() * 1000000000);
   req.session.data["new-application"]["id"] = id;
@@ -273,15 +278,10 @@ router.post("/check-application-details", function (req, res) {
   if (req.session.data["new-application"]["status"] == "approve") {
     // add the application to the applications session data
     req.session.data["applications"].push(req.session.data["new-application"]);
-  } else if (req.session.data["new-application"]["status"] == "reject") {
-      // redirect to confirmation page
-      res.redirect("confirmation");
-      return;
-  } else {
-    // add the application to the applications session data with a status of 'pending'
-    req.session.data["new-application"]["status"] = "pending";
-    req.session.data["applications"].push(req.session.data["new-application"]);
   }
+
+  // redirect to confirmation page
+  res.redirect("confirmation");
 });
 
 // applications list page
