@@ -185,6 +185,43 @@ router.get("/:selectedDate/:selectedPeriod",
   }
 );
 
+// PAGE: Sessions cancelled list
+router.get("/:date/:period/sessions-cancelled", (req, res) => {
+  const date = req.params.date;
+  const period = req.params.period;
+
+  //get a list of cancelled sessions for the selected date and period
+  let cancelledSessions = [];
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  activities.forEach((activity) => {
+    // for each day (0-6) check for cancelled sessions
+    // also check the date of each cancelled session to see if it matches the selected date
+    activity.schedule.forEach((schedule) => {
+      if (schedule.cancelledSessions) {
+        schedule.cancelledSessions.forEach((cancelledSession) => {   
+          // if the period is 'daily' a cancelled session for either period should be added to the list
+          // otherwise only add the cancelled session if it matches the selected period
+          // we should make sure we're including the correct period in the cancelled session object
+          if (cancelledSession.date === date && (period === 'daily' || cancelledSession.period === period)) {
+            cancelledSessions.push({
+              activity: activity.id,
+              date: cancelledSession.date,
+              period: cancelledSession.period
+            });
+          }
+        });
+      }
+    });
+  });
+
+  res.render(req.protoUrl + "/sessions-cancelled", {
+    date,
+    period,
+    cancelledSessions
+  });
+});
+
+
 module.exports = router;
 
 // =================

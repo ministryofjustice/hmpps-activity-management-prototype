@@ -280,11 +280,10 @@ Attendance dashboard
 		{% if timeOfDay == 'Daily' %}
 		{% set cancelledSessionsCount = attendanceTotals.morning['sessions-cancelled'] + attendanceTotals.afternoon['sessions-cancelled'] %}
 		{% endif %}
-
 		{{ dataCard({
 			title: "Sessions cancelled",
 			count: cancelledSessionsCount,
-			linkHref: "#"
+			linkHref: period+"/sessions-cancelled"
 		}) }}
 	</div>
 	<div class="govuk-grid-column-three-quarters">
