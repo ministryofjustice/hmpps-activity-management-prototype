@@ -28,37 +28,6 @@ text: "Back to all locations",
 <div class="moj-filter-layout">
 	<div class="moj-filter-layout__filter">
 		{% set filtersHtml %}
-		<!-- {{ govukCheckboxes({
-			fieldset: {
-				legend: {
-					text: "Session",
-					classes: "govuk-label--m"
-				}
-			},
-			classes: "govuk-checkboxes--small",
-			idPrefix: 'attendance',
-			name: 'filters[attendance]',
-			items: [
-			{
-				text: 'Morning (AM)',
-				id: 'Morning',
-				value: 'Morning',
-				checked: true
-			},
-			{
-				text: 'Afternoon (PM)',
-				id: 'Afternoon',
-				value: 'Afternoon',
-				checked: true
-			},
-			{
-				text: 'Evening (ED)',
-				id: 'Evening',
-				value: 'Evening',
-				checked: true
-			}]
-		}) }} -->
-
 		<h2 class="govuk-heading-m">Houseblock / wing</h2>
 		<p>
 			x</br>
@@ -220,9 +189,15 @@ text: "Back to all locations",
 							{{activity.times.startTime}}&thinsp;–&thinsp;{{activity.times.endTime}}</div>
 						{% endfor %}
 
+						{% if prisoner.attendance.sessionCancelled %}
+						<span class="app-tag app-tag--s app-tag--cancelled" style="text-transform: none;">Cancelled</span>
+						{% else %}
 						{% if prisoner.attendance.attendance == 'attended' %}
-						<br>
 						<span class="app-tag app-tag--s app-tag--attended" style="text-transform: none;">Attended</span>
+						{% elif prisoner.attendance.attendance == 'not-attended' %}
+						<br>
+						<span class="app-tag app-tag--s app-tag--attended" style="text-transform: none;">Not attended</span>
+						{% endif %}
 						{% endif %}
 					</td>
 					<td class="govuk-table__cell">
