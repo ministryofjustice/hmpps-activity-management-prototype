@@ -26,10 +26,10 @@ Find an activity to record or edit attendance
             Filters
         </h2>
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-full">
                 {{ govukSelect({
                 formGroup: {
-                classes: "govuk-!-display-inline-block"
+                classes: "govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4"
                 },
                 label: {
                 text: "Employment"
@@ -53,11 +53,10 @@ Find an activity to record or edit attendance
                 value: 'all'
                 }]
                 }) }}
-            </div>
-            <div class="govuk-grid-column-one-quarter">
+
                 {{ govukSelect({
                 formGroup: {
-                classes: "govuk-!-display-inline-block"
+                    classes: "govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4"
                 },
                 label: {
                 text: "Workplace assessment risk"
@@ -94,8 +93,6 @@ Find an activity to record or edit attendance
                 ]
                 }) }}
 
-            </div>
-            <div class="govuk-grid-column-one-quarter">
                 {{ govukSelect({
                 formGroup: {
                 classes: "govuk-!-display-inline-block"
@@ -140,10 +137,16 @@ Find an activity to record or edit attendance
                 }) }}
             </div>
         </div>
+        {{
+        govukButton({
+        text: "Apply filters",
+        classes: "govuk-!-margin-top-3 govuk-!-margin-bottom-0"
+        })
+        }}
     </form>
 </div>
 
-<table class="govuk-table moj-sortable-table" data-module="moj-sortable-table">
+<table class="govuk-table">
     <caption class="govuk-table__caption govuk-table__caption--m">
         {{activity.id|getOtherPrisonersCount}} prisoners
     </caption>
@@ -152,8 +155,8 @@ Find an activity to record or edit attendance
             <th scope="col" class="govuk-table__header" aria-sort="none">Prisoner</th>
             <th scope="col" class="govuk-table__header" aria-sort="ascending">Non-associations</th>
             <th scope="col" class="govuk-table__header" aria-sort="none">Current allocation</th>
-            <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
             <th scope="col" class="govuk-table__header" aria-sort="none">Education level held</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
             <th scope="col" class="govuk-table__header"></th>
         </tr>
     </thead>
@@ -181,7 +184,10 @@ Find an activity to record or edit attendance
                 </ul>
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
-                None
+                <ul class="govuk-list">
+                    <li>BICS level 1</li>
+                    <li>English level 1</li>
+                </ul>
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4" data-sort-value="{{prisoner.releaseDate}}">
                 {{prisoner.releaseDate|convertShortDateToMediumDate}}

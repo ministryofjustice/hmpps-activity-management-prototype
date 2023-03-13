@@ -1,0 +1,19 @@
+<div class="app-attendance-sticky-bar--bottom" aria-live="polite" aria-disabled="true" role="toolbar" aria-label="Movement list actions">
+	<div class="govuk-width-container">
+		<p class="govuk-!-margin-bottom-0" id="app-selected-count">
+			No locations selected. Select one or more locations to view a movement list.
+		</p>
+		<div class="govuk-button-group govuk-!-margin-bottom-0">
+			{{ govukButton({
+				text: "View movement list",
+				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
+				value: "attended",
+				name: "attendance-action",
+				attributes: {
+					formAction: activityId+"/attend-and-pay",
+					formMethod: "post"
+				}
+			}) }}
+		</div>
+	</div>
+</div>

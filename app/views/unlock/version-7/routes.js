@@ -2088,142 +2088,14 @@ router.use("/attendance-dashboard", (req, res, next) => {
   require("./attendance-dashboard/routes")(req, res, next);
 });
 
-// PAGE: Select movement location
-router.get("/select-movement-location", function (req, res) {
-  // get a list of the activities happening on the selected date
-  let date = req.query.date;
-  let dateString = new Date(date);
-  let period = req.query.period;
-  let activitiesForDate = activitiesByDate(
-    req.session.data["timetable-complete-1"]["activities"],
-    dateString
-  );
+// movement-list journey routes
+router.use("/create-movement-list", (req, res, next) => {
+  let serviceName = req.originalUrl.split("/")[1];
+  let version = req.originalUrl.split("/")[2];
+  let journey = req.originalUrl.split("/")[3];
 
-  // filter the activities to only include those that are happening for the selected period
-  // first, we need to convert the period from am/pm to either morning or afternoon
-  if (period.toLowerCase() == "am") {
-    period = "morning";
-  } else if (period.toLowerCase() == "pm") {
-    period = "afternoon";
-  }
-  let activitiesForPeriod = activitiesForDate[period.toLowerCase()];
-
-  // get a list of the locations that are used in the activities for the selected period
-  let locations = [];
-  for (const activity of activitiesForPeriod) {
-    if (!locations.includes(activity.location)) {
-      locations.push(activity.location);
-    }
-  }
-
-  res.render("unlock/" + req.version + "/select-movement-location", {
-    locations,
-    date,
-  });
-});
-
-// PAGE: Movement locations
-router.get("/movement-locations", function (req, res) {
-  // get a list of the activities happening on the selected date
-  let date = req.query.date;
-  let dateString = new Date(date);
-  let period = req.query.period;
-  let activities = req.session.data["timetable-complete-1"]["activities"];
-  let activitiesForDate = activitiesByDate(activities, dateString);
-
-  // filter the activities to only include those that are happening for the selected period
-  // first, we need to convert the period from am/pm to either morning or afternoon
-  if (period.toLowerCase() == "am") {
-    period = "morning";
-  } else if (period.toLowerCase() == "pm") {
-    period = "afternoon";
-  }
-  let activitiesForPeriod = activitiesForDate[period.toLowerCase()];
-
-  // get a list of the locations that are used in the activities for the selected period
-  let locations = [];
-  for (const activity of activitiesForPeriod) {
-    // create a location object structured like:
-    // { name: "location name", activities: [2, 32] } where the activities array contains the activity IDs
-    let location = locations.find((l) => l.name == activity.location);
-    if (!location) {
-      // if the location doesn't exist, create it
-      location = {
-        name: activity.location,
-        activities: [],
-        prisoners: 0,
-      };
-      locations.push(location);
-    }
-
-    // add the activity name and id to the location's activities array as an object
-    location.activities.push({
-      name: activity.name,
-      id: activity.id,
-    });
-    location.activityIds = location.activities.map((a) => a.id);
-}
-// for each location return the number of prisoners who have the activity id in their activity array
-let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-for (const location of locations) {
-    for (const prisoner of prisoners) {
-        for (const activity of location.activities) {
-            // check prisoner.activity exists and if it does but only contains one item, convert it to an array
-            if (prisoner.activity && !Array.isArray(prisoner.activity)) {
-                prisoner.activity = [prisoner.activity];
-            }
-            if (prisoner.activity && prisoner.activity.includes(activity.id)) {
-                location.prisoners++;
-            }
-        }
-    }
-}
-
-  res.render("unlock/" + req.version + "/movement-locations", {
-    locations,
-    date,
-  });
-});
-
-// PAGE: Movement list
-router.get("/movement-list", function (req, res) {
-  // get a list of prisoners attending the activities listed in the activities query param
-  let activities = req.query.activities.split(",");
-  // convert the activities array to numbers
-  activities = activities.map((a) => parseInt(a));
-
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisonersForActivities = [];
-  for (const prisoner of prisoners) {
-    // check prisoner.activity exists and if it does but only contains one item, convert it to an array
-    if (prisoner.activity && !Array.isArray(prisoner.activity)) {
-      prisoner.activity = [prisoner.activity];
-    }
-    if (prisoner.activity && prisoner.activity.some((a) => activities.includes(a))) {
-      prisonersForActivities.push(prisoner);
-    }
-  }
-
-  // update the prisonersForActivities array to include the activity name
-  // it should only include the activity name if the activity.id is in the activities array
-  for (const prisoner of prisonersForActivities) {
-    // for each activity in the activities array, get the activity details from the main activities data in timetable-complete-1
-    let prisonerActivities = [];
-    for (const activity of activities) {
-      let activityData = req.session.data["timetable-complete-1"]["activities"].find(
-        (a) => a.id == activity
-      );
-      // only add the activity data if the prisoner has the activity id in their activity array
-      if (prisoner.activity && prisoner.activity.includes(activity)) {
-        prisonerActivities.push(activityData);
-      }
-    }
-    prisoner.movementData = prisonerActivities;
-  }
-
-  res.render("unlock/" + req.version + "/movement-list", {
-    prisonersForActivities
-  });
+  req.protoUrl = serviceName + "/" + version + "/" + journey;
+  require("./create-movement-list/routes")(req, res, next);
 });
 
 module.exports = router;
