@@ -25,7 +25,7 @@ Attendance dashboard
 			<form novalidate="">
 				<div class="govuk-form-group">
 					<label class="govuk-label app-search__label" for="keywords">
-						Search by session name
+						Search by prisoner name
 					</label>
 					<input class="govuk-input app-search__input" id="keywords" name="search" type="search" value="{{data['search']}}">
 				</div>
@@ -38,40 +38,40 @@ Attendance dashboard
 </div>
 
 <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-	{{data['count']}} {{"session" if cancelledSessions.length == 1 else "sessions"}}
+	{{data['count']}} prisoners
 </h2>
 <table class="govuk-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
 	<thead class="govuk-table__head">
 		<tr class="govuk-table__row">
-			<th scope="col" class="govuk-table__header" aria-sort="none">Activity</th>
-			<th scope="col" class="govuk-table__header" aria-sort="none">Time</th>
-			<th scope="col" class="govuk-table__header" aria-sort="none">Location</th>
-			<th scope="col" class="govuk-table__header" aria-sort="none">Allocated</th>
-			<th scope="col" class="govuk-table__header govuk-hint" aria-sort="none">Reason</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none">Attendee</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none">Session</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none">Time recorded</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none">Payment</th>
+            <th scope="col" class="govuk-table__header"></th>
 		</tr>
 	</thead>
 	<tbody class="govuk-table__body">
-		{% for session in cancelledSessions %}
+		{% for attendee in attendanceList %}
         {% set activity = session.activity|getActivityDetails %}
 		<tr class="govuk-table__row">
 			<td class="govuk-table__cell">
-				<a href="../../../activities/{{date}}/{{session.period}}/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
+                {% set prisoner = attendee.prisonerId|getPrisonerDetails %}
+				<a href="prisoner/{{prisoner.id}}" class="govuk-link--no-visited-state">
+				{{prisoner.name.firstname}} {{prisoner.name.surname}}</a>
 			</td>
 			<td class="govuk-table__cell">
-				{{activity.name}}
+                {% set activity = attendee.activityId|getActivityDetails %}
+				<a href="activities/{{date|today}}/AM/{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a>
 			</td>
 			<td class="govuk-table__cell">
-				Workshop
+				{{attendee.date|convertShortDateToMediumDate}} at 
+                {{attendee.time}}
 			</td>
 			<td class="govuk-table__cell">
-				8
+				{{ "Pay" if attendee.pay == "true" else "No pay" }}
 			</td>
-			<td class="govuk-table__cell">
-				{% if data['page-title'] == 'Not recorded' %}
-				<span class="govuk-hint">Not recorded yet</span>
-				{% else %}
-				<a href="#">{{attendance}}</a>
-				{% endif %}
+            <td class="govuk-table__cell">
+				<a href="#">View</a>
 			</td>
 		</tr>
 		{% endfor %}

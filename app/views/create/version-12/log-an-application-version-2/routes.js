@@ -19,11 +19,7 @@ router.get("/prisoner-search", function (req, res) {
 });
 // prisoner search page post logic
 router.post("/prisoner-search", function (req, res) {
-  if (req.session.data["prisoner-search"] != "match") {
-    res.redirect("select-prisoner");
-  } else {
-    res.redirect("prisoner-existing-applications");
-  }
+  res.redirect("select-prisoner");
 });
 
 // select prisoner page
@@ -39,6 +35,8 @@ router.get("/select-prisoner", function (req, res) {
     );
   });
 
+  req.session.data["new-application"] = {}
+
   // if there is only one matching prisoner
   if (matchingPrisoners.length === 1) {
     req.session.data["new-application"]["selected-prisoner"] =
@@ -48,6 +46,7 @@ router.get("/select-prisoner", function (req, res) {
     res.render(req.protoUrl + "/select-prisoner", {
       matchingPrisoners,
     });
+    return;
   } else {
     res.redirect("prisoner-search");
   }
@@ -63,7 +62,7 @@ router.get("/prisoner-existing-applications", function (req, res) {
   let prisoner;
 
   // if there is a selected prisoner
-  if (req.session.data["new-application"]["selected-prisoner"]) {
+  if (req.session.data["new-application"] && req.session.data["new-application"]["selected-prisoner"]) {
     prisoner = prisoners.find(
       (prisoner) =>
         prisoner.id === req.session.data["new-application"]["selected-prisoner"]
@@ -93,7 +92,7 @@ router.post("/prisoner-existing-applications", function (req, res) {
       };
     }
 
-    res.redirect("select-activity");
+    res.redirect("application-date");
   } else {
     res.redirect("prisoner-existing-applications");
   }
@@ -124,7 +123,7 @@ router.get("/select-activity", function (req, res) {
 });
 // redirect to the application date page
 router.post("/select-activity", function (req, res) {
-  res.redirect("application-date");
+  res.redirect("applicant-details");
 });
 
 // check activity page logic
@@ -177,7 +176,7 @@ router.post("/application-date", function (req, res) {
   req.session.data["new-application"]["date"] = applicationDate;
 
   // redirect to the applicant details page
-  res.redirect("applicant-details");
+  res.redirect("select-activity");
 });
 
 // applicant details page
@@ -244,12 +243,15 @@ router.get("/check-eligibility", function (req, res) {
 // check eligibility page logic
 router.post("/check-eligibility", function (req, res) {
   // if eligibility is either eligible or ineligible, set the eligibility flag on the new application object
-  if (req.session.data["new-application"]["eligible"] == "yes" || req.session.data["new-application"]["eligible"] == "no") {
+  if (
+    req.session.data["new-application"]["eligible"] == "yes" ||
+    req.session.data["new-application"]["eligible"] == "no"
+  ) {
     // set the date of the eligibility check to today
     req.session.data["new-application"]["eligibility-check-date"] =
       DateTime.now().toFormat("yyyy-MM-dd");
   } else {
-    req.session.data["new-application"]["eligibility-check-date"] = ''
+    req.session.data["new-application"]["eligibility-check-date"] = "";
   }
 
   res.redirect("check-application-details");
