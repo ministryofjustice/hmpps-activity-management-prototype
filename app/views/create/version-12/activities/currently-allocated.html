@@ -23,9 +23,9 @@ Find an activity to record or edit attendance
             Currently allocated
         </h2>
         {{govukButton({
-            text: "Allocate someone to this activity",
-            href: "../../log-an-application-version-2?new-application[activity]=" + activity.id
-            })}}
+        text: "Allocate someone to this activity",
+        href: "../../log-an-application-version-2?new-application[activity]=" + activity.id
+        })}}
         <!-- <div class="govuk-inset-text">
             <p>
                 You should <a href="../../log-an-application-version-2" class="govuk-link--no-visited-state">log an application</a> before allocating a prisoner to an activity.
@@ -59,7 +59,8 @@ Find an activity to record or edit attendance
                         <input class="govuk-radios__input" id="allocated-prisoner-{{prisoner.id}}"
                             name="allocated-prisoners" type="radio" value="england">
                         <label class="govuk-label govuk-radios__label" for="allocated-prisoner-{{prisoner.id}}">
-                            <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a></b><br>
+                            <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
+                                    {{prisoner.name.surname}}</a></b><br>
                             {{prisoner.id}}<br>
                             {{prisoner.location.cell}}
                         </label>
@@ -68,7 +69,21 @@ Find an activity to record or edit attendance
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">None</td>
             <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
-            <td class="govuk-table__cell govuk-!-padding-top-4">ACTIVITY</td>
+            <td class="govuk-table__cell govuk-!-padding-top-4">
+                {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
+                <span class="govuk-hint">None</span>
+                {% else %}
+                <ul class="govuk-list">
+                {% for allocation in prisoner.activity %}
+                <!-- don't show the allocation if it's the same as the current activity -->
+                {% if allocation != activity.id %}
+                {% set activity = allocation|getActivityDetails %}
+                <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                {% endif %}
+                {% endfor %}
+                </ul>
+                {% endif %}
+            </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
         </tr>
         {% endfor %}

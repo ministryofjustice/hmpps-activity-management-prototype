@@ -80,27 +80,21 @@ window.history.go(-1)" })}} {% endblock %}
                     {{ govukRadios({
                     idPrefix: "log-new-application",
                     name: "log-new-application",
-                    hint: {
-                    text: "Even if this person is unsuitable for the activity, it is important to log the application so
-                    there's
-                    a
-                    record of what they've applied for or been referred to."
-                    },
                     fieldset: {
                     legend: {
-                    text: "Do you need to log a new application?",
+                    text: "Is the request valid?",
                     isPageHeading: false,
-                    classes: "govuk-fieldset__legend--m"
+                    classes: "govuk-fieldset__legend--l"
                     }
                     },
                     items: [
                     {
                     value: "yes",
-                    text: "Yes"
+                    text: "Yes, I want to record the details"
                     },
                     {
                     value: "no",
-                    text: "No"
+                    text: "No, I want to reject the request and inform the requestor"
                     }
                     ]
                     }) }}

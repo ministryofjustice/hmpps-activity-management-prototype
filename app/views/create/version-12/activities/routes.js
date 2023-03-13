@@ -141,11 +141,30 @@ router.get("/:activityId/other-prisoners", function (req, res) {
   let schedule = getActivitySchedule(activitySchedule);
   let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
 
+  // simple code for paginating prisoners to 5 per page
+  // should show like:
+  // Previous 1 ⋯ 6 7 8 ⋯ 42 Next
+  let page = req.query.page || 1;
+  let limit = 5;
+  let offset = (page - 1) * limit;
+  let prisonersWithoutApplicationPaginated = prisonersWithoutApplication.slice(
+    offset,
+    offset + limit
+  );
+  let totalPages = Math.ceil(prisonersWithoutApplication.length / limit);
+
+  
+
+
+  
+
   res.render(req.protoUrl + "/other-prisoners", {
     activity,
     activityDaysWithTimes,
     currentPage,
     prisonersWithoutApplication,
+    prisonersWithoutApplicationPaginated,
+    totalPages,
   });
 });
 
@@ -194,7 +213,7 @@ router.get("/:activityId/allocate/:prisonerId", function (req, res) {
     activity,
     prisoner,
     prisonerId,
-    });
+  });
 });
 
 module.exports = router;

@@ -19,13 +19,130 @@ Find an activity to record or edit attendance
 <h2 class="govuk-heading-l">
     Other prisoners
 </h2>
-<!-- <p>
-    All applications shown below are pending. They have not been approved or rejected yet.
-</p> -->
-<!-- {{govukButton({
-text: "Select prisoner",
-href: "../../log-an-application-version-2?new-application[activity]=" + activity.id
-})}} -->
+
+<div class="app-filter-area govuk-!-display-none-print" id="filters" tabindex=0>
+    <form>
+        <h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+            Filters
+        </h2>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-quarter">
+                {{ govukSelect({
+                formGroup: {
+                classes: "govuk-!-display-inline-block"
+                },
+                label: {
+                text: "Employment"
+                },
+                idPrefix: 'attendance',
+                name: 'filters[attendance]',
+                items: [
+                {
+                text: 'Not in work',
+                id: 'not-in-work',
+                value: 'not-in-work'
+                },
+                {
+                text: 'In work',
+                id: 'in-work',
+                value: 'in-work'
+                },
+                {
+                text: 'Everyone',
+                id: 'all',
+                value: 'all'
+                }]
+                }) }}
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+                {{ govukSelect({
+                formGroup: {
+                classes: "govuk-!-display-inline-block"
+                },
+                label: {
+                text: "Workplace assessment risk"
+                },
+                idPrefix: 'attendance',
+                name: 'filters[attendance]',
+                items: [
+                {
+                text: 'Low',
+                id: 'low',
+                value: 'low'
+                },
+                {
+                text: 'Low or Medium',
+                id: 'low-medium',
+                value: 'low-medium'
+                },
+                {
+                text: 'Low, Medium or High',
+                id: 'all',
+                value: 'all',
+                selected: true
+                },
+                {
+                text: 'Medium or High',
+                id: 'medium-high',
+                value: 'medium-high'
+                },
+                {
+                text: 'High',
+                id: 'high',
+                value: 'high'
+                }
+                ]
+                }) }}
+
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+                {{ govukSelect({
+                formGroup: {
+                classes: "govuk-!-display-inline-block"
+                },
+                label: {
+                text: "Incentive level"
+                },
+                idPrefix: 'attendance',
+                name: 'filters[attendance]',
+                items: [{
+                text: 'Basic',
+                value: 'basic',
+                id: 'basic'
+                },
+                {
+                text: 'Standard',
+                value: 'standard',
+                id: 'standard'
+                },
+                {
+                text: 'Enhanced',
+                value: 'enhanced',
+                id: 'enhanced'
+                },
+                {
+                text: 'Basic or Standard',
+                value: 'basic-standard',
+                id: 'basic-standard'
+                },
+                {
+                text: 'All incentive levels',
+                value: 'all',
+                id: 'all',
+                selected: true
+                },
+                {
+                text: 'Standard or Enhanced',
+                value: 'standard-enhanced',
+                id: 'standard-enhanced'
+                }
+                ]
+                }) }}
+            </div>
+        </div>
+    </form>
+</div>
+
 <table class="govuk-table moj-sortable-table" data-module="moj-sortable-table">
     <caption class="govuk-table__caption govuk-table__caption--m">
         {{activity.id|getOtherPrisonersCount}} prisoners
@@ -34,13 +151,14 @@ href: "../../log-an-application-version-2?new-application[activity]=" + activity
         <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header" aria-sort="none">Prisoner</th>
             <th scope="col" class="govuk-table__header" aria-sort="ascending">Non-associations</th>
-            <th scope="col" class="govuk-table__header" aria-sort="none">Other allocations</th>
-            <th scope="col" class="govuk-table__header" aria-sort="none">Past applications</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none">Current allocation</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none">Education level held</th>
             <th scope="col" class="govuk-table__header"></th>
         </tr>
     </thead>
     <tbody class="govuk-table__body">
-        {% for prisoner in prisonersWithoutApplication %}
+        {% for prisoner in prisonersWithoutApplicationPaginated %}
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
                 <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
@@ -65,6 +183,9 @@ href: "../../log-an-application-version-2?new-application[activity]=" + activity
             <td class="govuk-table__cell govuk-!-padding-top-4">
                 None
             </td>
+            <td class="govuk-table__cell govuk-!-padding-top-4" data-sort-value="{{prisoner.releaseDate}}">
+                {{prisoner.releaseDate|convertShortDateToMediumDate}}
+            </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
                 <a href="allocate/{{prisoner.id}}" class="govuk-link--no-visited-state">Check eligibility</a>
             </td>
@@ -72,6 +193,46 @@ href: "../../log-an-application-version-2?new-application[activity]=" + activity
         {% endfor %}
     </tbody>
 </table>
+<!-- PAGINATION -->
+<nav class="govuk-pagination" role="navigation" aria-label="results">
+    <!-- only show the previous link if we are not on the first page -->
+    {% if data.page > 1 %}
+    <div class="govuk-pagination__prev">
+        <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="?page={{data.page|int - 1|int}}"
+            rel="prev">
+            <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg"
+                height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                <path
+                    d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z">
+                </path>
+            </svg>
+            <span class="govuk-pagination__link-title">Previous 5 prisoners</span></a>
+    </div>
+    {% endif %}
+    <ul class="govuk-pagination__list">
+        {% for page in range(1, 6) %}
+        <li class="govuk-pagination__item  {% if page == data.page %}govuk-pagination__item--current{% endif %}">
+            <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="?page={{page}}"
+                aria-label="Page 1" {% if page==data.page %}aria-current="page" {% endif %}>
+                {{page}}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    <!-- only show the next link if we are not on the last page -->
+    {% if data.page < 5 %} <div class="govuk-pagination__next">
+        <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="?page={{data.page|int + 1|int}}"
+            rel="next"> <span class="govuk-pagination__link-title">Next 5
+                prisoners</span> <svg class="govuk-pagination__icon govuk-pagination__icon--next"
+                xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false"
+                viewBox="0 0 15 13">
+                <path
+                    d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z">
+                </path>
+            </svg></a>
+        </div>
+        {% endif %}
+</nav>
 {% endblock %}
 
 {% block pageScripts %}

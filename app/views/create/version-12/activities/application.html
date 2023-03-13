@@ -16,11 +16,10 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">
-            Application details
+            Application for PRISONER NAME / ACTIVITY
         </h1>
-        
         <dl class="govuk-summary-list govuk-!-margin-bottom-8">
-            <div class="govuk-summary-list__row">
+            <!-- <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Prisoner
                 </dt>
@@ -37,7 +36,7 @@ text: "Back",
                     {% set activity = application['activity']|getActivityDetails %}
                     {{activity.name}}
                 </dd>
-            </div>
+            </div> -->
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Application date
@@ -71,6 +70,9 @@ text: "Back",
                     <span class="govuk-tag govuk-tag--yellow">Further checks needed</span>
                     {% endif %}
                 </dd>
+                <!-- <dd class="govuk-summary-list__value">
+                    <a href="#">Change</a>
+                </dd> -->
             </div>
             {% if application['eligibility-check-date'] %}
             <div class="govuk-summary-list__row">
@@ -83,6 +85,74 @@ text: "Back",
             </div>
             {% endif %}
         </dl>
+
+        <h2 class="govuk-heading-m">
+            Prisoner eligibility details
+        </h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Workplace risk assessment level
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Low
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--green">Suitable</span>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Incentive level
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Standard
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--red">Not suitable</span>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Education levels
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    English level 1
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--green">Suitable</span>
+                </dd>
+            </div>
+        </dl>
+
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Earliest release date",
+        classes: "govuk-summary-list__row--no-actions"
+        },
+        value: {
+        text: "21 September 2029",
+        classes: "govuk-summary-list__row--no-actions"
+        }
+        },
+        {
+        key: {
+        text: "Non-associations"
+        },
+        value: {
+        html: '<a href="#" class="govuk-link--no-visited-state">Junior Smith</a>'
+        }
+        }
+        ]
+        })
+        }}
+
+        <p class="govuk-!-margin-bottom-8 govuk-inset-text">
+            <a href="#">View {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or consult with other
+            departments if you need more information.
+        </p>
 
         <form method="post" class="govuk-!-margin-top-8">
             {{govukRadios({

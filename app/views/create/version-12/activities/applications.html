@@ -36,6 +36,7 @@ href: "../../log-an-application-version-2?new-application[activity]=" + activity
             <th scope="col" class="govuk-table__header" aria-sort="ascending">Application date</th>
             <th scope="col" class="govuk-table__header" aria-sort="none">Other allocations</th>
             <th scope="col" class="govuk-table__header" aria-sort="none">Eligibility checks</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none">Application source</th>
             <th scope="col" class="govuk-table__header"></th>
         </tr>
     </thead>
@@ -71,6 +72,9 @@ href: "../../log-an-application-version-2?new-application[activity]=" + activity
                 {% else %}
                 <span class="govuk-tag govuk-tag--yellow">Pending</span>
                 {% endif %}
+            </td>
+            <td class="govuk-table__cell govuk-!-padding-top-4">
+                {{application.applicant|capitalize}}
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
                 <a href="applications/{{application.id}}" class="govuk-link--no-visited-state">View application</a>
