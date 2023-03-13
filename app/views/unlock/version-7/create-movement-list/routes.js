@@ -982,7 +982,17 @@ router.get("/:date/:period/:activities", function (req, res) {
       ].find((a) => a.id == activity);
       // only add the activity data if the prisoner has the activity id in their activity array
       if (prisoner.activity && prisoner.activity.includes(activity)) {
-        prisonerActivities.push(activityData);
+        // only include the activity.schedule data for the selected weekday number and period (AM/PM)
+        let day = new Date(date).getDay();
+        let activitySchedule = activityData.schedule.filter(
+          (schedule) => schedule.day.toString() === day.toString()
+        );
+        let activityTimes = activitySchedule[0][period.toLowerCase()][0];
+        prisonerActivities.push({
+          name: activityData.name,
+          times: activityTimes,
+          id: activity,
+        });
       }
     }
     prisoner.movementData = prisonerActivities;
@@ -994,7 +1004,7 @@ router.get("/:date/:period/:activities", function (req, res) {
     // check each activity id in the activities array
     for (const activity of activities) {
       // make sure attendance data exists
-    // and that it also exists for the activityId, date, period and prisoner
+      // and that it also exists for the activityId, date, period and prisoner
       if (
         attendanceData &&
         attendanceData[activity] &&

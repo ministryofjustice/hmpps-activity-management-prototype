@@ -22,7 +22,7 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
         },
         {
         text: "Manage prisoner unlock and attendance",
-        href: "whereabouts"
+        href: "../../whereabouts"
         }
         ]
         }) }}
@@ -32,9 +32,9 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
                     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-                        <span class="govuk-caption-l">{{data['date']|longDateFormat(data['date'])}} &ndash;
-                            {{data['period']|upper}}</span>
                         Movement locations
+                        <span class="govuk-caption-l">{{data['date']|longDateFormat(data['date'])}} &ndash;
+                            {{period|upper}} session</span>
                     </h1>
 
                     <ul class="govuk-list govuk-!-margin-bottom-8">
@@ -44,7 +44,10 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
                         </li>
                     </ul>
 
-
+                    <div class="govuk-inset-text">
+                        You'll only see locations for the date and time period you choose...
+                    </div>
+                    
                     <!-- <div class="moj-search govuk-!-margin-bottom-6">
             <form action="{{data['date']}}" method="get" novalidate="">
                 <div class="govuk-form-group">
@@ -251,8 +254,8 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
                                     <th class="govuk-table__header govuk-!-padding-right-2 govuk-!-padding-left-1"
                                         scope="col" id="select-all"></th>
                                     <th scope="col" class="govuk-table__header" aria-sort="ascending">Location</th>
-                                    <th scope="col" class="govuk-table__header" aria-sort="ascending">Prisoners</th>
-                                    <th scope="col" class="govuk-table__header" aria-sort="none">Sessions</th>
+                                    <th scope="col" class="govuk-table__header" aria-sort="ascending">Allocated</th>
+                                    <th scope="col" class="govuk-table__header" aria-sort="none">Activity</th>
                                     <th scope="col" class="govuk-table__header"></th>
                                 </tr>
                             </thead>
