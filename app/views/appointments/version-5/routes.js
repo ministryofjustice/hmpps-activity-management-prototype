@@ -36,7 +36,7 @@ const router = express.Router()
 		if (appRepeat === 'Yes') {
 			res.redirect(`appointment-frequency`);
 		} else {
-			res.redirect(`upload-or-per-person`);
+			res.redirect(`clashes`);
 		}
 	  });
 
@@ -65,7 +65,7 @@ const router = express.Router()
 		if (appointRepeat === 'Yes') {
 			res.redirect(`appointment-frequency`);
 		} else {
-			res.redirect(`check-answers`);
+			res.redirect(`prisoner-comments`);
 		}
 	  });
 
@@ -120,7 +120,7 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	if (peoleRepeat === 'No') {
 		res.redirect(`search-person`);
 	} else {
-		res.redirect(`prisoner-comments`);
+		res.redirect(`appointment-type`);
 	}
   });
   
