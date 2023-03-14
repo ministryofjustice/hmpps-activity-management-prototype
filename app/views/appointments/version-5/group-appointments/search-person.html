@@ -52,7 +52,18 @@ Appointments prototype
 
               {% endcall %}
 
+             {{ govukRadios({
+              idPrefix: "person-1-check",
+              name: "person-1-check",
              
+              items: [
+                {
+                  value: "True",
+                  text: "True",
+                  checked: true
+                }
+              ]
+             }) }}
               
               <div class="moj-button-action">
                 {{ govukButton({

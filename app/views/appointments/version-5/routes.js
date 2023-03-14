@@ -99,10 +99,10 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 
   router.post(`/group-appointments/add-more-people`, function (req, res) {
 	const peoleRepeat = req.session.data['add-another-person-question'];
-	if (peoleRepeat === 'Yes') {
-		res.redirect(`upload-or-per-person`);
-	} else {
+	if (peoleRepeat === 'No') {
 		res.redirect(`non-associations`);
+	} else {
+		res.redirect(`upload-or-per-person`);
 	}
   });
 

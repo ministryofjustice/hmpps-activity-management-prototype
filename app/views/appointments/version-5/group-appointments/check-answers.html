@@ -83,7 +83,7 @@ Appointments prototype
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Repeats
+                  Occurrences
                 </dt>
                 <dd class="govuk-summary-list__value">
                   {{ data['number-of-appointments']}} 
@@ -129,6 +129,37 @@ Appointments prototype
 
             <h2 class="govuk-heading-m">Prisoner details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+
+
+              {% if data['person-1-check'] ==='True' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoners 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  6 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> prisoners</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Manuel, Bod<br>{{ data['person-1']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% else %}
+
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Prisoners 
@@ -142,6 +173,7 @@ Appointments prototype
                   </a>
                 </dd>
               </div>
+              {% endif %}
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Prisoner 
