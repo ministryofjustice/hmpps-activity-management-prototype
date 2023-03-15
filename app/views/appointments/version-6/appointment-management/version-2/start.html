@@ -1,0 +1,178 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="appointment-view-options">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+	
+ 
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+		<span class="govuk-caption-l">Appointment management</span>
+		Find and edit an appointment
+       </h1>
+	   <p class="govuk-body">
+		Search by appointment date, category, group or individual
+	   </p>
+<div class="govuk-grid-row">
+	
+<div class="govuk-grid-column-full">
+	
+	<div class="govuk-grid-row">
+		
+		<div class="govuk-grid-column-one-half">
+
+				{% set dateHtml %}
+					{{ govukDateInput({
+						id: "passport-issued",
+						namePrefix: "passport-issued",
+						fieldset: {
+						legend: {
+							text: "Enter date",
+							isPageHeading: true,
+							classes: "govuk-fieldset__legend--s"
+						}
+						},
+						hint: {
+						text: "For example, 27 3 2007"
+						}
+					}) }}
+				{% endset -%}
+			{{ govukRadios({
+				idPrefix: "date",
+				name: "date",
+				fieldset: {
+					legend: {
+						text: "When is the appointment?",
+						isPageHeading: true,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				
+				items: [
+					{
+						value: "Value",
+						text: "This week"
+					},
+					{
+						value: "Value",
+						text: "Next week"
+					},
+					{
+						value: "Value",
+						text: "A different date",
+						conditional: {
+						  html: dateHtml
+						}
+					}
+				]
+			}) }}
+			
+		</div>
+		
+	</div>
+	{{ govukRadios({
+		id: "appointment-type",
+		name: "appointment-type",
+		
+		fieldset: {
+			legend: {
+				text: "What is the appointment category?",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		items: [
+		 
+		  {
+			value: "Education",
+			text: "Education"
+		  },
+		  {
+			value: "Faith",
+			text: "Faith"
+		  },
+		  {
+			value: "Gym",
+			text: "Gym"
+		  },
+		  {
+			value: "Medical",
+			text: "Medical"
+		  },
+		  {
+			value: "Programmes and interventions",
+			text: "Programmes and interventions"
+		  },
+		  {
+			value: "Prisoner case meetings",
+			text: "Prisoner case meetings"
+		  },
+		  {
+			value: "Release",
+			text: "Release"
+		  },
+		  {
+			divider: "or"
+		  },
+		  {
+			value: "abroad",
+			text: "All appointment categories"
+		  }
+		]
+	   }) }}
+
+	   {% set individualHtml %}
+			{{ govukInput({
+			id: "prison-id",
+			name: "prison-id",
+			classes: "govuk-!-width-one-third",
+			label: {
+				text: "Enter prison number"
+			}
+			}) }}
+		{% endset -%}
+	{{ govukRadios({
+		idPrefix: "group",
+		name: "group",
+		fieldset: {
+			legend: {
+				text: "Is the appointment for an individual person?",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--m"
+			}
+		},
+		
+		items: [
+			{
+				value: "Yes",
+				text: "Yes",
+				conditional: {
+				  html: individualHtml
+				}
+			},
+			{
+				value: "No",
+				text: "No, it's for a group of people either at the same time or different times"
+			}
+		]
+	}) }}
+
+	{{ govukButton({
+		text: "View results"
+	}) }}
+
+	</div>
+</div>
+</div>
+   
+  </div>
+</div>
+</form>
+{% endblock %}

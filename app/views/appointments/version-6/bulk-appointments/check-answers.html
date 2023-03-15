@@ -1,0 +1,827 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+
+    <div class="govuk-width-container">
+      
+      <main class="govuk-main-wrapper " id="main-content" role="main">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds-from-desktop">
+            <h1 class="govuk-heading-l">Check your appointment details before you accept and save</h1>
+            <h2 class="govuk-heading-m">Appointment details</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+             
+             
+              
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['date-of-appointment-bulk-day']}} {{ data['date-of-appointment-bulk-month']}}  {{ data['date-of-appointment-bulk-year']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Date</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Appointments created 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  10 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+            </dl>
+
+            <h2 class="govuk-heading-m">
+              Prisoner appointment details
+            </h2>
+
+            <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  View individual prisoner appointment details
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <!--appointment details start-->
+
+            <span class="govuk-caption-l">Appointment 1</span>
+            
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner
+                </dt>
+                <dd class="govuk-summary-list__value">
+                 <a href="#" class="govuk-link">Rudge, Neil</a>
+                <br>
+                G2044E
+                <br>
+                1−1−2 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Remove<span class="govuk-visually-hidden"> prisoner</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Category
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{data.categoryChoice1 or data.categoryChoice or 'Doctors - other'}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> category</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{data.locationbulk1 or data.locationbulk or 'HB1 Doctors'}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Start time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-1-bulk']}}:{{ data['start-minutes-1-bulk']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  End time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['end-hours-1-bulk']}}:{{ data['end-minutes-1-bulk']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              </dl>
+
+              <span class="govuk-caption-l">Appointment 2</span>
+            
+              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+               
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Prisoner
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                   <a href="#" class="govuk-link">Hungerford, Bert</a>
+                  <br>
+                  C2598E
+                  <br>
+                  1-5-111
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                      Remove<span class="govuk-visually-hidden"> prisoner</span>
+                    </a>
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Category
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{data.categoryChoice2 or data.categoryChoice or 'Doctors - other'}}
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                      Change<span class="govuk-visually-hidden"> category</span>
+                    </a>
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Location
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{data.locationbulk2 or data.locationbulk or 'HB1 Doctors'}}
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                      Change<span class="govuk-visually-hidden"> Time</span>
+                    </a>
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Start time
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data['start-hours-2-bulk']}}:{{ data['start-minutes-2-bulk']}}
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                      Change<span class="govuk-visually-hidden"> Time</span>
+                    </a>
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    End time
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data['end-hours-2-bulk']}}:{{ data['end-minutes-2-bulk']}}
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                      Change<span class="govuk-visually-hidden"> Time</span>
+                    </a>
+                  </dd>
+                </div>
+                </dl>
+
+                <span class="govuk-caption-l">Appointment 3</span>
+            
+                <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                 
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Prisoner
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                     <a href="#" class="govuk-link">Doyle, Matthew</a>
+                    <br>
+                    E4911C
+                    <br>
+                    1−8−333
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a class="govuk-link" href="#">
+                        Remove<span class="govuk-visually-hidden"> prisoner</span>
+                      </a>
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Category
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      {{data.categoryChoice3 or data.categoryChoice or 'Doctors - other'}}
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> category</span>
+                      </a>
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Location
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      {{data.locationbulk3 or data.locationbulk or 'HB1 Doctors'}}
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> Time</span>
+                      </a>
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Start time
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ data['start-hours-3-bulk']}}:{{ data['start-minutes-3-bulk']}}
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> Time</span>
+                      </a>
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      End time
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ data['end-hours-3-bulk']}}:{{ data['end-minutes-3-bulk']}}
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> Time</span>
+                      </a>
+                    </dd>
+                  </div>
+                  </dl>
+
+                  <span class="govuk-caption-l">Appointment 4</span>
+            
+                  <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                   
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Prisoner
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                       <a href="#" class="govuk-link">Gee, Ryan</a>
+                      <br>
+                      F5132C
+                      <br>
+                      1−1−204
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="#">
+                          Remove<span class="govuk-visually-hidden"> prisoner</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Category
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        {{data.categoryChoice4 or data.categoryChoice or 'Doctors - other'}}
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="#">
+                          Change<span class="govuk-visually-hidden"> category</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Location
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        {{data.locationbulk4 or data.locationbulk or 'HB1 Doctors'}}
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="#">
+                          Change<span class="govuk-visually-hidden"> Time</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Start time
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        {{ data['start-hours-4-bulk']}}:{{ data['start-minutes-4-bulk']}}
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="#">
+                          Change<span class="govuk-visually-hidden"> Time</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        End time
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        {{ data['end-hours-4-bulk']}}:{{ data['end-minutes-4-bulk']}}
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="#">
+                          Change<span class="govuk-visually-hidden"> Time</span>
+                        </a>
+                      </dd>
+                    </div>
+                    </dl>
+
+                    <span class="govuk-caption-l">Appointment 5</span>
+            
+                    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                     
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Prisoner
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                         <a href="#" class="govuk-link">Bab, Robin</a>
+                        <br>
+                        F4933A
+                        <br>
+                        11−2−57
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                          <a class="govuk-link" href="#">
+                            Remove<span class="govuk-visually-hidden"> prisoner</span>
+                          </a>
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Category
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{data.categoryChoice5 or data.categoryChoice or 'Doctors - other'}}
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                          <a class="govuk-link" href="#">
+                            Change<span class="govuk-visually-hidden"> category</span>
+                          </a>
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Location
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{data.locationbulk5 or data.locationbulk or 'HB1 Doctors'}}
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                          <a class="govuk-link" href="#">
+                            Change<span class="govuk-visually-hidden"> Time</span>
+                          </a>
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Start time
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ data['start-hours-5-bulk']}}:{{ data['start-minutes-5-bulk']}}
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                          <a class="govuk-link" href="#">
+                            Change<span class="govuk-visually-hidden"> Time</span>
+                          </a>
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          End time
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ data['end-hours-5-bulk']}}:{{ data['end-minutes-5-bulk']}}
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                          <a class="govuk-link" href="#">
+                            Change<span class="govuk-visually-hidden"> Time</span>
+                          </a>
+                        </dd>
+                      </div>
+                      </dl>
+
+                      <span class="govuk-caption-l">Appointment 6</span>
+            
+                      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                       
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Prisoner
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                           <a href="#" class="govuk-link">Knox, Tommy-Lee</a>
+                          <br>
+                          C8361E
+                          <br>
+                          2−5−115
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="#">
+                              Remove<span class="govuk-visually-hidden"> prisoner</span>
+                            </a>
+                          </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Category
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{data.categoryChoice6 or data.categoryChoice or 'Doctors - other'}}
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="#">
+                              Change<span class="govuk-visually-hidden"> category</span>
+                            </a>
+                          </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Location
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{data.locationbulk6 or data.locationbulk or 'HB1 Doctors'}}
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="#">
+                              Change<span class="govuk-visually-hidden"> Time</span>
+                            </a>
+                          </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Start time
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ data['start-hours-6-bulk']}}:{{ data['start-minutes-6-bulk']}}
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="#">
+                              Change<span class="govuk-visually-hidden"> Time</span>
+                            </a>
+                          </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            End time
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ data['end-hours-6-bulk']}}:{{ data['end-minutes-6-bulk']}}
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="#">
+                              Change<span class="govuk-visually-hidden"> Time</span>
+                            </a>
+                          </dd>
+                        </div>
+                        </dl>
+
+                        <span class="govuk-caption-l">Appointment 7</span>
+            
+                        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                         
+                          <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                              Prisoner
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                             <a href="#" class="govuk-link">Rasmussen, Fuentes</a>
+                            <br>
+                            E2405E
+                            <br>
+                            6−7−581
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                              <a class="govuk-link" href="#">
+                                Remove<span class="govuk-visually-hidden"> prisoner</span>
+                              </a>
+                            </dd>
+                          </div>
+                          <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                              Category
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                              {{data.categoryChoice7 or data.categoryChoice or 'Doctors - other'}}
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                              <a class="govuk-link" href="#">
+                                Change<span class="govuk-visually-hidden"> category</span>
+                              </a>
+                            </dd>
+                          </div>
+                          <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                              Location
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                              {{data.locationbulk7 or data.locationbulk or 'HB1 Doctors'}}
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                              <a class="govuk-link" href="#">
+                                Change<span class="govuk-visually-hidden"> Time</span>
+                              </a>
+                            </dd>
+                          </div>
+                          <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                              Start time
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                              {{ data['start-hours-7-bulk']}}:{{ data['start-minutes-7-bulk']}}
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                              <a class="govuk-link" href="#">
+                                Change<span class="govuk-visually-hidden"> Time</span>
+                              </a>
+                            </dd>
+                          </div>
+                          <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                              End time
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                              {{ data['end-hours-7-bulk']}}:{{ data['end-minutes-7-bulk']}}
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                              <a class="govuk-link" href="#">
+                                Change<span class="govuk-visually-hidden"> Time</span>
+                              </a>
+                            </dd>
+                          </div>
+                          </dl>
+
+                          <span class="govuk-caption-l">Appointment 8</span>
+            
+                          <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                           
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                Prisoner
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                               <a href="#" class="govuk-link">Drove, Luther</a>
+                              <br>
+                              C7950C
+                              <br>
+                              1−1−211
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="#">
+                                  Remove<span class="govuk-visually-hidden"> prisoner</span>
+                                </a>
+                              </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                Category
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                                {{data.categoryChoice8 or data.categoryChoice or 'Doctors - other'}}
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="#">
+                                  Change<span class="govuk-visually-hidden"> category</span>
+                                </a>
+                              </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                Location
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                                {{data.locationbulk8 or 'HB1 Doctors'}}
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="#">
+                                  Change<span class="govuk-visually-hidden"> Time</span>
+                                </a>
+                              </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                Start time
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                                {{ data['start-hours-8-bulk']}}:{{ data['start-minutes-8-bulk']}}
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="#">
+                                  Change<span class="govuk-visually-hidden"> Time</span>
+                                </a>
+                              </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                End time
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                                {{ data['end-hours-8-bulk']}}:{{ data['end-minutes-8-bulk']}}
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="#">
+                                  Change<span class="govuk-visually-hidden"> Time</span>
+                                </a>
+                              </dd>
+                            </div>
+                            </dl>
+
+                            <span class="govuk-caption-l">Appointment 9</span>
+            
+                            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                             
+                              <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                  Prisoner
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                 <a href="#" class="govuk-link">Looker, Logan</a>
+                                <br>
+                                B9295C
+                                <br>
+                                2−2−876
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                  <a class="govuk-link" href="#">
+                                    Remove<span class="govuk-visually-hidden"> prisoner</span>
+                                  </a>
+                                </dd>
+                              </div>
+                              <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                  Category
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                  {{data.categoryChoice9 or data.categoryChoice or 'Doctors - other'}}
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                  <a class="govuk-link" href="#">
+                                    Change<span class="govuk-visually-hidden"> category</span>
+                                  </a>
+                                </dd>
+                              </div>
+                              <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                  Location
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                  {{data.locationbulk9 or 'HB1 Doctors'}}
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                  <a class="govuk-link" href="#">
+                                    Change<span class="govuk-visually-hidden"> Time</span>
+                                  </a>
+                                </dd>
+                              </div>
+                              <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                  Start time
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                  {{ data['start-hours-9-bulk']}}:{{ data['start-minutes-9-bulk']}}
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                  <a class="govuk-link" href="#">
+                                    Change<span class="govuk-visually-hidden"> Time</span>
+                                  </a>
+                                </dd>
+                              </div>
+                              <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                  End time
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                  {{ data['end-hours-9-bulk']}}:{{ data['end-minutes-9-bulk']}}
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                  <a class="govuk-link" href="#">
+                                    Change<span class="govuk-visually-hidden"> Time</span>
+                                  </a>
+                                </dd>
+                              </div>
+                              </dl>
+
+                              <span class="govuk-caption-l">Appointment 10</span>
+            
+                              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                               
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    Prisoner
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                   <a href="#" class="govuk-link">Sykes, Eric</a>
+                                  <br>
+                                  F6726E
+                                  <br>
+                                  1−8−122
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="#">
+                                      Remove<span class="govuk-visually-hidden"> prisoner</span>
+                                    </a>
+                                  </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    Category
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                    {{data.categoryChoice10 or data.categoryChoice or 'Doctors - other'}}
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="#">
+                                      Change<span class="govuk-visually-hidden"> category</span>
+                                    </a>
+                                  </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    Location
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                    {{data.locationbulk10 or 'HB1 Doctors'}}
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="#">
+                                      Change<span class="govuk-visually-hidden"> Time</span>
+                                    </a>
+                                  </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    Start time
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                    {{ data['start-hours-10-bulk']}}:{{ data['start-minutes-10-bulk']}}
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="#">
+                                      Change<span class="govuk-visually-hidden"> Time</span>
+                                    </a>
+                                  </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    End time
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                    {{ data['end-hours-10-bulk']}}:{{ data['end-minutes-10-bulk']}}
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="#">
+                                      Change<span class="govuk-visually-hidden"> Time</span>
+                                    </a>
+                                  </dd>
+                                </div>
+                                </dl>
+
+              
+<!--appointment details end-->
+            </div>
+          </details>
+            
+            <form action="confirmation" method="post" novalidate>
+              <input type="hidden" name="answers-checked" value="true">
+              <button class="govuk-button" data-module="govuk-button">
+                Accept and save
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  
+{% endblock %}

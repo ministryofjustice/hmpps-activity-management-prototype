@@ -1,0 +1,130 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block main %}
+{% block beforeContent %}
+<div class="govuk-width-container">
+	<h1 class="govuk-heading-l govuk-!-margin-top-7">Digital Prison Services</h1>
+</div>
+{% endblock %}
+<div class="homepage-search">
+	<div class="govuk-width-container">
+		<h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search for a prisoner</h2>
+		<p class="govuk-body govuk-hint">Leave blank to view all results for selected residential location</p>
+		<form action="/prisoner-search" class="horizontal-form" data-test="homepage-search-form">
+			<div class="govuk-form-group">
+				<label class="govuk-label" for="keywords">
+					Name or prison number
+				</label>
+				<input class="govuk-input" id="keywords" name="keywords" type="text" data-test="homepage-search-keywords">
+			</div>
+			<div class="govuk-form-group">
+				<label class="govuk-label" for="location">
+					Residential location
+				</label>
+				<select class="govuk-select" id="location" name="location" data-test="homepage-search-location">
+					<option value="MDI">{{data['prison-name']}}</option>
+					{% for houseblock in data['residential-locations'] %}
+					<option value="MDI-1">{{houseblock.name}}</option>
+					{% endfor %}
+					<option value="MDI-RECEP">Reception</option>
+				</select>
+			</div>
+			<button type="submit" class="govuk-button" data-module="govuk-button">
+				Search
+			</button>
+		</form>
+	</div>
+</div>
+<div class="homepage-content">
+	<div class="govuk-width-container">
+		<ul class="govuk-grid-row card-group" id="sortable">
+			{% for tile in data['config']['navigation-tiles'] %}
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_{{loop.index}}">
+				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{tile.linkURL}}">{{tile.linkText}}</a>
+					</h2>
+					<p class="govuk-body card__description">{{tile.descriptionText}}</p>
+				</div>
+			</li>
+			{% endfor %}
+			
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="#">Change someone’s cell</a>
+					</h2>
+					<p class="govuk-body card__description">Complete a cell move and view the 7 day history of all cell moves completed in your establishment.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_002">
+				<div class="card card--clickable" data-test="check-my-diary">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="#">Check My Diary</a>
+					</h2>
+					<p class="govuk-body card__description">View your prison staff detail (staff rota) from home.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_003">
+				<div class="card card--clickable" data-test="incentives">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="#">Manage incentives</a>
+					</h2>
+					<p class="govuk-body card__description">See prisoner incentive information by residential location and view incentive data visualisations.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_004">
+				<div class="card card--clickable" data-test="use-of-force">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="#">Use of force incidents</a>
+					</h2>
+					<p class="govuk-body card__description">Manage and view incident reports and statements.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_005">
+				<div class="card card--clickable" data-test="establishment-roll">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="#">Establishment roll check</a>
+					</h2>
+					<p class="govuk-body card__description">View the roll broken down by residential unit and see who is arriving and leaving.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_006">
+				<div class="card card--clickable" data-test="manage-adjudications">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="#">Place a prisoner on report</a>
+					</h2>
+					<p class="govuk-body card__description">Place a prisoner on report after an incident and view all of your completed reports.</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+{% endblock %}
+{% block pageScripts %}
+<script src="/public/javascripts/cards.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+	$(document).ready( function() {
+		var $list = "ul#sortable"
+		$($list).sortable({
+			update: function(event, ui) {
+				var order = [];
+				var data = $(this).sortable('serialize');
+
+				$($list + ' li').each( function(e) {
+					order.push( $(this).find('a').html() );
+				});
+
+				console.log( order , data );
+			}
+		});
+		$($list).disableSelection();
+	} );
+</script>
+{% endblock %}
