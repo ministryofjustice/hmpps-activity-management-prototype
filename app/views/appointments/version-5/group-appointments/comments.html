@@ -46,13 +46,31 @@ Appointments prototype
         <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
           </tr>
         </tr>
+
+
+        {% if data['person-1-check'] ==='True' %}
+       
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell "> <a href="#" class="govuk-link--no-visited-state"><b>Manuel, </b> Bod</a><br>
+            <span class="govuk-hint govuk-!-font-size-16">{{ data['person-1']}}</span>
+          </td>
+          <td class="govuk-table__cell "> <span class="govuk-tag">No comment</span></td>
+          <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
+            
+          </tr>
+        {% else %}
+      {% endif %}
+
+
+
         <tr class="govuk-table__row">
           <td class="govuk-table__cell "><a href="#" class="govuk-link--no-visited-state"><b>Rudge, </b> Neil</a><br>
             <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
           </td>
           <td class="govuk-table__cell "> <span class="govuk-tag">No comment</span></td>
           <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
-            </tr>
+            
           </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell ">

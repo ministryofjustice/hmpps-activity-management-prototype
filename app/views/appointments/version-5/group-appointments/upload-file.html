@@ -26,7 +26,21 @@ Appointments prototype
               id: "file-upload-1",
               name: "file-upload-1"
             }) }}
-
+            <span class="govuk-visually-hidden">
+            <!--this is purely for the prototype logic and must not be coded-->
+            {{ govukRadios({
+              idPrefix: "person-upload-check",
+              name: "person-upload-check",
+              items: [
+                {
+                  value: "True",
+                  text: "True",
+                  checked: true
+                }
+              ]
+             }) }}
+            <!--prototype only-->
+             </span>
     <div class="govuk-button-group">
     
     {{ govukButton({
@@ -36,4 +50,5 @@ Appointments prototype
   </div>
 </div>
 </div>
+</form>
 {% endblock %}
