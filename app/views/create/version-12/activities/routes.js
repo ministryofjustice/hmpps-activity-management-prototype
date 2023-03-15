@@ -162,6 +162,8 @@ router.get("/:activityId/other-prisoners", function (req, res) {
     activity,
     activityDaysWithTimes,
     currentPage,
+    limit,
+    offset,
     prisonersWithoutApplication,
     prisonersWithoutApplicationPaginated,
     totalPages,

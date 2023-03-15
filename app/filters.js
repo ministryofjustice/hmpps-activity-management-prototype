@@ -1,17 +1,15 @@
-const {
-    DateTime
-} = require('luxon')
+const { DateTime } = require("luxon");
 
 module.exports = function (env) {
-    /**
-     * Instantiate object used to store the methods registered as a
-     * 'filter' (of the same name) within nunjucks. You can override
-     * gov.uk core filters by creating filter methods of the same name.
-     * @type {Object}
-     */
-    var filters = {}
+  /**
+   * Instantiate object used to store the methods registered as a
+   * 'filter' (of the same name) within nunjucks. You can override
+   * gov.uk core filters by creating filter methods of the same name.
+   * @type {Object}
+   */
+  var filters = {};
 
-    /* ------------------------------------------------------------------
+  /* ------------------------------------------------------------------
       add your methods to the filters obj below this comment block:
       @example:
 
@@ -42,183 +40,224 @@ module.exports = function (env) {
 
     ------------------------------------------------------------------ */
 
+  filters.currentDate = function (dateString, format) {
+    return DateTime.local().setLocale("en-GB").toFormat(format);
+  };
 
-    filters.currentDate = function (dateString, format) {
-        return DateTime.local().setLocale('en-GB').toFormat(format);
-    }
+  filters.getActivity = function (activityId) {
+    const activities = require("./data/activities-list-1");
+    let match = activities.filter((activity) => activity.id == activityId);
+    let activity = match[0];
 
-    filters.getActivity = function (activityId) {
-        const activities = require('./data/activities-list-1')
-        let match = activities.filter(activity => activity.id == activityId);
-        let activity = match[0]
+    return activity;
+  };
 
-        return activity
-    }
+  filters.getPrisoner = function (prisonerId) {
+    const prisoners = require("./data/prisoners-list-1");
+    let match = prisoners.filter((prisoner) => prisoner._id == prisonerId);
+    let prisoner = match[0];
 
-    filters.getPrisoner = function (prisonerId) {
-        const prisoners = require('./data/prisoners-list-1')
-        let match = prisoners.filter(prisoner => prisoner._id == prisonerId);
-        let prisoner = match[0]
+    return prisoner;
+  };
 
-        return prisoner
-    }
+  filters.getPrisonerDetails = function (prisonerId) {
+    const timetable = require("./data/timetable-complete-1");
+    let match = timetable.prisoners.filter(
+      (prisoner) => prisoner.id == prisonerId
+    );
+    let prisoner = match[0];
 
-    filters.getPrisonerDetails = function (prisonerId) {
-        const timetable = require('./data/timetable-complete-1')
-        let match = timetable.prisoners.filter(prisoner => prisoner.id == prisonerId);
-        let prisoner = match[0]
+    return prisoner;
+  };
 
-        return prisoner
-    }
+  filters.getActivityDetails = function (activityId) {
+    const timetable = require("./data/timetable-complete-1");
+    let match = timetable.activities.filter(
+      (activity) => activity.id == activityId
+    );
+    let activity = match[0];
 
-    filters.getActivityDetails = function (activityId) {
-        const timetable = require('./data/timetable-complete-1')
-        let match = timetable.activities.filter(activity => activity.id == activityId);
-        let activity = match[0]
+    return activity;
+  };
 
-        return activity
-    }
+  filters.getActivityCategoryName = function (activityCategoryId) {
+    const timetable = require("./data/timetable-complete-1");
+    const activityCategories = timetable.categories;
 
-    filters.getActivityCategoryName = function (activityCategoryId) {
-        const timetable = require('./data/timetable-complete-1')
-        const activityCategories = timetable.categories
-        
-        let categoryMatch = activityCategories.filter(category => category.id == activityCategoryId);
-        let activityCategory = categoryMatch[0]
+    let categoryMatch = activityCategories.filter(
+      (category) => category.id.toString() == activityCategoryId.toString()
+    );
+    let activityCategory = categoryMatch[0];
 
-        return activityCategory.name
-    }
+    return activityCategory.name;
+  };
 
-    filters.getCurrentlyAllocatedCount = function (activityId) {
-        const timetable = require('./data/timetable-complete-1')
-        const prisoners = timetable.prisoners
-        const activities = timetable.activities
+  filters.getCurrentlyAllocatedCount = function (prisonersData, activityId) {
+    const timetable = require("./data/timetable-complete-1");
+    const prisoners = prisonersData;
+    const activities = timetable.activities;
 
-        let activityMatch = activities.filter(activity => activity.id == activityId);
-        let activity = activityMatch[0]
+    let activityMatch = activities.filter(
+      (activity) => activity.id == activityId
+    );
+    let activity = activityMatch[0];
 
-        activities.forEach(activity => {
-            let prisonerCount = 0;
-            prisoners.forEach(prisoner => {
-                const prisonerActivities = prisoner.activity ? Array.isArray(prisoner.activity) ? prisoner.activity : [prisoner.activity] : false;
+    activities.forEach((activity) => {
+      let prisonerCount = 0;
+      prisoners.forEach((prisoner) => {
+        const prisonerActivities = prisoner.activity
+          ? Array.isArray(prisoner.activity)
+            ? prisoner.activity
+            : [prisoner.activity]
+          : false;
 
-                if (prisonerActivities && prisonerActivities.includes(activity.id)) {
-                    prisonerCount++
-                }
-            })
-            activity.currentlyAllocatedCount = prisonerCount
-        })
-
-        return activity.currentlyAllocatedCount
-    }
-
-    // count applications for a given activity id
-    filters.getApplicationCount = function (activityId) {
-        const applications = require('./data/applications')
-        let activityApplications = applications.filter(application => application.activity.toString() == activityId.toString());
-
-        return activityApplications.length
-    }
-
-    filters.getOtherPrisonersCount = function (activityId) {
-        const timetable = require('./data/timetable-complete-1')
-        const prisoners = timetable.prisoners
-
-        let prisonersWithoutApplication = prisoners.filter(
-            (prisoner) =>
-              !prisoner.activity ||
-              prisoner.activity.length === 0 ||
-              !prisoner.activity.includes(activityId)
-          );
-
-        return prisonersWithoutApplication.length
-    }
-
-    filters.getHouseblock = function (houseblockId) {
-        const locations = require('./data/residential-list-1')
-        let match = locations.filter(location => location.id == houseblockId);
-        let houseblock = match[0]
-
-        return houseblock
-    }
-
-    filters.longDateFormat = function (inputDate) {
-        return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("DDDD")
-    }
-
-    filters.shortDateFormat = function (inputDate) {
-        return DateTime.fromFormat(inputDate, "yyyy-M-d").setLocale('en-GB').toFormat("yyyy-MM-dd")
-    }
-
-    filters.convertShortDateToExampleDate = function (inputDate) {
-        return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("d M yyyy")
-    }
-
-    filters.convertShortDateToExampleDate = function (inputDate) {
-        return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("d M yyyy")
-    }
-
-    filters.convertShortDateToMediumDate = function (inputDate) {
-        return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("d MMM yyyy")
-    }
-
-    filters.convertShortDateToLongDate = function (inputDate) {
-        return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("d MMMM yyyy")
-    }
-
-    filters.convertShortDateToVeryLongDate = function (inputDate) {
-        return DateTime.fromFormat(inputDate, "yyyy-MM-dd").setLocale('en-GB').toFormat("DDDD")
-    }
-
-    filters.today = function (inputDate) {
-        return DateTime.now().toFormat("yyyy-MM-dd")
-    }
-
-    filters.timestamp = function (date) {
-        return new Date().toLocaleTimeString('en-US', { hour12: false }).substr(0, 5);
-    }
-
-    filters.dayBefore = function (inputDate) {
-        return DateTime.fromFormat(inputDate, "yyyy-MM-dd").minus({
-            days: 1
-        }).setLocale('en-GB').toFormat("yyyy-MM-dd")
-    }
-
-    filters.dayAfter = function (inputDate) {
-        return DateTime.fromFormat(inputDate, "yyyy-MM-dd").plus({
-            days: 1
-        }).setLocale('en-GB').toFormat("yyyy-MM-dd")
-    }
-
-    filters.formatDate = object => {
-        if (object) {
-            const month = object.month.padStart(2, '0')
-            const day = object.day.padStart(2, '0')
-            const date = `${object.year}-${month}-${day}`
-
-            return filters.date(date, 'd MMMM yyyy')
+        if (prisonerActivities && prisonerActivities.includes(activity.id)) {
+          prisonerCount++;
         }
+      });
+      activity.currentlyAllocatedCount = prisonerCount;
+    });
+
+    return activity.currentlyAllocatedCount;
+  };
+
+  // count applications for a given activity id
+  filters.getApplicationCount = function (activityId) {
+    const applications = require("./data/applications");
+    let activityApplications = applications.filter(
+      (application) => application.activity.toString() == activityId.toString()
+    );
+
+    return activityApplications.length;
+  };
+
+  // count applications for a given activity id and applications data
+  filters.countApplications = function (applications, activityId) {
+    let activityApplications = applications.filter(
+      (application) => application.activity.toString() == activityId.toString()
+    );
+
+    return activityApplications.length;
+  };
+
+  filters.getOtherPrisonersCount = function (prisonersData, activityId) {
+    let prisonersWithoutApplication = prisonersData.filter(
+      (prisoner) =>
+        !prisoner.activity ||
+        prisoner.activity.length === 0 ||
+        !prisoner.activity.includes(activityId)
+    );
+
+    return prisonersWithoutApplication.length;
+  };
+
+  filters.getHouseblock = function (houseblockId) {
+    const locations = require("./data/residential-list-1");
+    let match = locations.filter((location) => location.id == houseblockId);
+    let houseblock = match[0];
+
+    return houseblock;
+  };
+
+  filters.longDateFormat = function (inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-M-d")
+      .setLocale("en-GB")
+      .toFormat("DDDD");
+  };
+
+  filters.shortDateFormat = function (inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-M-d")
+      .setLocale("en-GB")
+      .toFormat("yyyy-MM-dd");
+  };
+
+  filters.convertShortDateToExampleDate = function (inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-MM-dd")
+      .setLocale("en-GB")
+      .toFormat("d M yyyy");
+  };
+
+  filters.convertShortDateToExampleDate = function (inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-MM-dd")
+      .setLocale("en-GB")
+      .toFormat("d M yyyy");
+  };
+
+  filters.convertShortDateToMediumDate = function (inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-MM-dd")
+      .setLocale("en-GB")
+      .toFormat("d MMM yyyy");
+  };
+
+  filters.convertShortDateToLongDate = function (inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-MM-dd")
+      .setLocale("en-GB")
+      .toFormat("d MMMM yyyy");
+  };
+
+  filters.convertShortDateToVeryLongDate = function (inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-MM-dd")
+      .setLocale("en-GB")
+      .toFormat("DDDD");
+  };
+
+  filters.today = function (inputDate) {
+    return DateTime.now().toFormat("yyyy-MM-dd");
+  };
+
+  filters.timestamp = function (date) {
+    return new Date()
+      .toLocaleTimeString("en-US", { hour12: false })
+      .substr(0, 5);
+  };
+
+  filters.dayBefore = function (inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-MM-dd")
+      .minus({
+        days: 1,
+      })
+      .setLocale("en-GB")
+      .toFormat("yyyy-MM-dd");
+  };
+
+  filters.dayAfter = function (inputDate) {
+    return DateTime.fromFormat(inputDate, "yyyy-MM-dd")
+      .plus({
+        days: 1,
+      })
+      .setLocale("en-GB")
+      .toFormat("yyyy-MM-dd");
+  };
+
+  filters.formatDate = (object) => {
+    if (object) {
+      const month = object.month.padStart(2, "0");
+      const day = object.day.padStart(2, "0");
+      const date = `${object.year}-${month}-${day}`;
+
+      return filters.date(date, "d MMMM yyyy");
     }
+  };
 
-    filters.date = (str, format = 'yyyy-LL-dd') => {
-        if (str) {
-            const date = (str === 'now') ? DateTime.local() : str
+  filters.date = (str, format = "yyyy-LL-dd") => {
+    if (str) {
+      const date = str === "now" ? DateTime.local() : str;
 
-            const datetime = DateTime.fromISO(date, {
-                locale: 'en-GB'
-            }).toFormat(format)
+      const datetime = DateTime.fromISO(date, {
+        locale: "en-GB",
+      }).toFormat(format);
 
-            return datetime
-        }
+      return datetime;
     }
+  };
 
-    filters.push = (array, item) => {
-        array.push(item)
-        return array
-    }
+  filters.push = (array, item) => {
+    array.push(item);
+    return array;
+  };
 
-    /* ------------------------------------------------------------------
+  /* ------------------------------------------------------------------
       keep the following line to return your filters to the app
     ------------------------------------------------------------------ */
-    return filters
-}
+  return filters;
+};

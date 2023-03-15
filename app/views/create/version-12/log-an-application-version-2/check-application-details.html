@@ -15,17 +15,17 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = data['new-application']['selected-prisoner']|getPrisonerDetails %}
         <h1 class="govuk-heading-xl">
-            Check the application
+            Review {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request
         </h1>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-8">
-            <div class="govuk-summary-list__row">
+            <!-- <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Prisoner
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% set prisoner = data['new-application']['selected-prisoner']|getPrisonerDetails %}
                     {{prisoner.name.firstname}} {{prisoner.name.surname}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
@@ -33,10 +33,10 @@ text: "Back",
                         Change<span class="govuk-visually-hidden"> asd's pizza</span>
                     </a>
                 </dd>
-            </div>
+            </div> -->
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Activity
+                    Activity requested
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {% set activity = data['new-application']['activity']|getActivityDetails %}
@@ -50,7 +50,7 @@ text: "Back",
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Application date
+                    Date of request
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {{data['new-application']['date']|convertShortDateToLongDate}}
@@ -63,13 +63,13 @@ text: "Back",
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Application made by
+                    Requestor
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {% if data['new-application']['applicant'] == 'prisoner' %}
                     Prisoner
                     {% else %}
-                    Someone else
+                    {{data['new-application']['applicant']}}
                     {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
@@ -80,7 +80,7 @@ text: "Back",
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Eligibility
+                    Suitability
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {% if data['new-application']['eligible'] == 'yes' %}
@@ -100,43 +100,67 @@ text: "Back",
         </dl>
 
         <form method="post">
-            <!-- {{govukRadios({
-            idPrefix: "decision",
-            name: "new-application[status]",
+            <!-- if suitability is 'yes' -->
+            {% if data['new-application']['eligible'] == 'no' %}
+            <div class="govuk-inset-text">
+                <p class="govuk-body">
+                    When you reject an activity request, you should inform the person who made the request the reason
+                    for your decision.
+                </p>
+            </div>
+            
+            <input type="" hidden name="allocate-now" value="no">
+            <input type="" hidden name="new-application[status]" value="rejected">
+
+            {{ govukButton({
+            text: "Reject this request"
+            }) }}
+
+            {% elif data['new-application']['eligible'] == '' %}
+
+            <p>
+                Confirm that you want to add John Smith to the waitlist without checking their suitability.
+            </p>
+            
+            <input type="" hidden name="allocate-now" value="no">
+            <input type="" hidden name="new-application[status]" value="pending">
+
+            {{ govukButton({
+            text: "Confirm and add to waitlist"
+            }) }}
+
+            {% else %}
+
+            {{govukRadios({
+            idPrefix: "allocate-now",
+            name: "allocate-now",
             fieldset: {
             legend: {
-            text: "Add " + prisoner.name.firstname + " " +
-            prisoner.name.surname + " to the waitlist for " + activity.name + "?",
-            isPageHeading: true,
+            text: "There is 1 vacancy for " + activity.name + ". Do you want to allocate " + prisoner.name.firstname + "
+            " +
+            prisoner.name.surname + " now?",
+            isPageHeading: false,
             classes: "govuk-fieldset__legend--l"
             }
             },
             items: [
             {
-            value: "approve",
-            text: "Yes, add them to the waitlist",
-            hint: {
-            text: "You'll need to check and confirm the prisoner's eligibility before they are allocated to the activity."
-            }
+            value: "yes",
+            text: "Yes"
             },
             {
-            value: "reject",
-            text: "No, reject the application",
-            hint: {
-            text: "The prisoner will be notified that their application has been rejected."
-            }
+            value: "no",
+            text: "Not now, just add them to the waitlist"
             }
             ]
-            })}} -->
+            })}}
 
-            <h2 class="govuk-heading-l">
-                Now log the application
-            </h2>
-            <input type=""hidden name="new-application[status]" value="approve">
+            <input type="" hidden name="new-application[status]" value="approved">
 
             {{ govukButton({
-            text: "Confirm and log application"
+            text: "Continue"
             }) }}
+            {% endif %}
         </form>
     </div>
 </div>

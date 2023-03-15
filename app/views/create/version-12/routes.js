@@ -2,8 +2,12 @@ const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
 
-//redirect the root url to the start page
+//redirect the root url to the DPS home page
 router.get("/", function (req, res) {
+  res.redirect("/create/" + req.version + "/dps-home");
+});
+
+router.get("/dps-home", function (req, res) {
   res.render("create/" + req.version + "/dps-home");
 });
 

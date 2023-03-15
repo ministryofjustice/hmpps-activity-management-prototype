@@ -17,11 +17,14 @@ text: "Back",
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
             {% set prisoner = data['new-application']['selected-prisoner'] | getPrisonerDetails %}
+            {% set activity = data['new-application']['activity'] | getActivityDetails %}
+
             {% set titleText %}
-            {% if data['new-application']['status'] == "approve" %}
-            You've logged the application for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            {% if data['allocate-now'] == "yes" %}
+            You've allocated {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}
+            {% elif data['new-application']['status'] != "rejected" %}
             {% else %}
-            You've rejected the application for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            You've rejected {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request to be allocated to {{activity.name}}
             {% endif %}
             {% endset %}
 

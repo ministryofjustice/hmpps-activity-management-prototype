@@ -231,6 +231,52 @@ router.get("/:date/:period/attendances", (req, res) => {
     });
 });
 
+// PAGE: Attendances list
+// DESCRIPTION: This page shows a list of prisoners who have attended any activity on the selected date and period
+router.get("/:date/:period/absences", (req, res) => {
+  const date = req.params.date;
+  const period = req.params.period;
+
+  // get a list of prisoners who have attended any activity on the selected date and period 
+  let attendanceData = req.session.data['attendance'];
+  let attendanceList = [];
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  
+  // for each activity
+  activities.forEach((activity) => {
+    let activityId = activity.id;
+    // if there is attendance data for the activity on the selected date and period
+    // if the period is daily, we need to check both morning and afternoon periods
+    if (attendanceData && attendanceData[activityId] && attendanceData[activityId][date] && (period === "daily" ? (attendanceData[activityId][date].AM || attendanceData[activityId][date].PM) : attendanceData[activityId][date][period])){
+      // get the attendance data for the selected period
+      let attendancePeriod = period === "daily" ? (attendanceData[activityId][date].AM ? attendanceData[activityId][date].AM : attendanceData[activityId][date].PM) : attendanceData[activityId][date][period];
+      // for each prisoner in the attendance data
+      Object.keys(attendancePeriod).forEach((prisonerId) => {
+        // get the last attendance record for the prisoner
+        let attendanceRecord = attendancePeriod[prisonerId][attendancePeriod[prisonerId].length - 1];
+        // if the attendance type is 'attended'
+        if (attendanceRecord.attendance === "not-attended") {
+          attendanceList.push({
+            prisonerId,
+            activityId: activity.id,
+            date: date,
+            time: attendanceRecord.timestamp.time.slice(0, 5),
+            period: attendanceRecord.period,
+            pay: attendanceRecord.pay,
+          });
+        }
+      });
+    }
+  });
+
+  
+  res.render(req.protoUrl + "/prisoners-list", {
+    date,
+    period,
+    attendanceList,
+    });
+});
+
 // PAGE: Sessions cancelled list
 router.get("/:date/:period/sessions-cancelled", (req, res) => {
   const date = req.params.date;

@@ -45,6 +45,7 @@ Attendance dashboard
 }) }}
 
 {% macro dataCard(params) %}
+<div class="govuk-!-margin-bottom-4">
 <h3 class="govuk-body govuk-hint govuk-!-margin-bottom-0 {{params.titleClasses}}">{{ params.title }}</h3>
 <span class="govuk-heading-xl govuk-!-margin-0 govuk-!-padding-0 {{params.countClasses}}">
 	{{ params.count }}<span class="govuk-visually-hidden"> prisoners</span>
@@ -56,6 +57,7 @@ Attendance dashboard
 	<a href="{{params.linkHref}}?page-title={{params.nextPageTitle or ('All '+(params.title | lower))}}&count={{params.count}}" class="govuk-!-font-weight-bold govuk-link--no-visited-state govuk-!-font-size-16">{{ params.linkText or "All " + (params.title | lower) }}</a>
 </p>
 {% endif %}
+</div>
 {% endmacro %}
 
 {% set filterHtml %}
@@ -189,7 +191,7 @@ Attendance dashboard
 		{{ dataCard({
 			title: "Absences",
 			count: counts['not-attended'],
-			linkHref: "attendance-dashboard-3-list",
+			linkHref: period|upper + "/attendances",
 			showPercentage: true,
 			tagClasses: "govuk-tag--grey"
 		}) }}

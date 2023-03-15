@@ -18,7 +18,7 @@ text: "Back",
         {% set prisoner = data['new-application']['selected-prisoner'] | getPrisonerDetails %}
 
         <h1 class="govuk-heading-l">
-            Check eligibility for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            Check {{prisoner.name.firstname}} {{prisoner.name.surname}}'s suitability
         </h1>
 
         <!-- <table class="govuk-table">
@@ -76,10 +76,10 @@ text: "Back",
             </tbody>
         </table> -->
 
-        <h2 class="govuk-heading-m">
+        <!-- <h2 class="govuk-heading-m">
             Prisoner eligibility details
-        </h2>
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        </h2> -->
+        <!-- <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
                 <dt class="govuk-summary-list__key">
                     Workplace risk assessment level
@@ -88,7 +88,7 @@ text: "Back",
                     Low
                 </dd>
                 <dd class="govuk-summary-list__value">
-                    <span class="govuk-tag govuk-tag--green">Suitable</span>
+                    <span class="govuk-tag govuk-tag--green">Meets activity requirements</span>
                 </dd>
             </div>
             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
@@ -99,59 +99,103 @@ text: "Back",
                     Standard
                 </dd>
                 <dd class="govuk-summary-list__value">
-                    <span class="govuk-tag govuk-tag--red">Not suitable</span>
+                    <span class="govuk-tag govuk-tag--red">Does not meet activity requirements</span>
                 </dd>
             </div>
             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
                 <dt class="govuk-summary-list__key">
-                    Education levels
+                    Required education levels
                 </dt>
                 <dd class="govuk-summary-list__value">
                     English level 1
                 </dd>
                 <dd class="govuk-summary-list__value">
-                    <span class="govuk-tag govuk-tag--green">Suitable</span>
+                    <span class="govuk-tag govuk-tag--green">Meets activity requirements</span>
                 </dd>
             </div>
-        </dl>
+        </dl> -->
 
-        {{ govukSummaryList({
-        rows: [
-        {
-        key: {
-        text: "Earliest release date",
-        classes: "govuk-summary-list__row--no-actions"
-        },
-        value: {
-        text: "21 September 2029",
-        classes: "govuk-summary-list__row--no-actions"
-        }
-        },
-        {
-        key: {
-        text: "Non-associations"
-        },
-        value: {
-        html: '<a href="#" class="govuk-link--no-visited-state">Junior Smith</a>'
-        }
-        }
-        ]
-        })
-        }}
+        <p>
+            This page shows if John Smith meets the requirements set for this activity at your prison.
+        </p>
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-visually-hidden">
+                Prisoner eligibility details
+            </caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Type of requirement</th>
+                    <th scope="col" class="govuk-table__header">{{prisoner.name.firstname}} {{prisoner.name.surname}}'s
+                        details</th>
+                    <th scope="col" class="govuk-table__header">Meets requirement</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Workplace risk assessment level</th>
 
+                    <td class="govuk-table__cell">{{prisoner.riskAssessment|capitalize}}</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Incentive level</th>
+
+                    <td class="govuk-table__cell">{{prisoner.incentiveLevel|capitalize}}</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Education levels</th>
+
+                    <td class="govuk-table__cell">English level 1</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Earliest release date</th>
+
+                    <td class="govuk-table__cell">{{prisoner.releaseDate|convertShortDateToMediumDate}}</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--grey">Not applicable</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Non-associations</th>
+
+                    <td class="govuk-table__cell">
+                        <a href="#" class="govuk-link--no-visited-state">Junior Smith</a>
+                    </td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--red">No</span>
+                    </td>
+            </tbody>
+        </table>
 
         <p class="govuk-!-margin-bottom-8 govuk-inset-text">
-            <a href="#">View {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or consult with other
-            departments if you need more information.
+            You may need to <a href="#">view {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or
+            consult with other departments before making your decision.
         </p>
+    </div>
+</div>
 
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
         <form method="post">
             {{ govukRadios({
             idPrefix: "eligible",
             name: "new-application[eligible]",
             fieldset: {
             legend: {
-            text: "Is " + prisoner.name.firstname + " " + prisoner.name.surname + " eligible for this activity?",
+            text: "Is " + prisoner.name.firstname + " " + prisoner.name.surname + " suitable for the activity?",
             isPageHeading: false,
             classes: "govuk-fieldset__legend--l"
             }
@@ -159,24 +203,18 @@ text: "Back",
             items: [
             {
             value: "yes",
-            text: "Yes, add them to the waitlist",
-            hint: {
-            text: prisoner.name.firstname + " " + prisoner.name.surname + " will be added to the waitlist for this activity. If there are vacancies, you can allocate them after logging the application."
-            }
+            text: "Yes - they're suitable, I want to allocate them or add them to the waitist"
             },
             {
             value: "no",
-            text: "No, reject the application",
-            hint: {
-            text: "This application will be rejected."
-            }
+            text: "No - they're not suitable, I want to reject the request and inform the person who made it"
             },
             {
             divider: "or"
             },
             {
             value: "",
-            text: "Skip eligibility checks for now"
+            text: "Decision postponed - I want to add them to the waitlist now. Suitability checks will be carried out later"
             }
             ]
             }) }}

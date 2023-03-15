@@ -11,11 +11,18 @@ window.history.go(-1)" })}} {% endblock %}
 
 {% block content %}
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">
-            Check existing applications for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            Activity request history for {{prisoner.name.firstname}} {{prisoner.name.surname}}
         </h1>
 
+        <p>
+            Use the history to decide if the request should be reviewed in full.
+            </p>
+        <p>
+            It might not be valid if, for example, the person has already requested allocation to this activity, or has reached the maximum number of requests.
+        </p>
+    
         <form method="post">
             <input type="hidden" name="new-application['selected-prisoner']" value="{{prisoner.id}}">
 
@@ -23,11 +30,11 @@ window.history.go(-1)" })}} {% endblock %}
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header" aria-sort="none" style="width:33%"><button
-                                type="button" data-index="0">Activity applied for</button></th>
+                                type="button" data-index="0">Activity requested</button></th>
                         <th scope="col" class="govuk-table__header" aria-sort="descending" style="width:33%"><button
-                                type="button" data-index="1">Application date</button></th>
+                                type="button" data-index="1">Date of request</button></th>
                         <th scope="col" class="govuk-table__header" aria-sort="none" style="width:33%"><button
-                                type="button" data-index="2">Application status</button></th>
+                                type="button" data-index="2">Decision</button></th>
                         <th scope="col" class="govuk-table__header" style="width:28%"></th>
                     </tr>
                 </thead>
@@ -58,7 +65,7 @@ window.history.go(-1)" })}} {% endblock %}
                         </td>
                         <td class="govuk-table__cell" data-sort-value="20230201">1 February 2023</td>
                         <td class="govuk-table__cell" data-sort-value="Pending">
-                            <span class="govuk-tag govuk-tag--red">Accepted</span>
+                            <span class="govuk-tag govuk-tag--green">Accepted</span>
                         </td>
                     </tr>
                     <tr class="govuk-table__row">
@@ -77,6 +84,19 @@ window.history.go(-1)" })}} {% endblock %}
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
+                    {% set reasonHtml %}
+                    {{ govukTextarea({
+                    id: "reject-new-application-reason",
+                    name: "reject-new-application-reason",
+                    label: {
+                    text: "Reason for rejection"
+                    },
+                    hint: {
+                    text: "This will be sent to the requestor"
+                    }
+                    }) }}
+                    {% endset %}
+
                     {{ govukRadios({
                     idPrefix: "log-new-application",
                     name: "log-new-application",
@@ -90,11 +110,14 @@ window.history.go(-1)" })}} {% endblock %}
                     items: [
                     {
                     value: "yes",
-                    text: "Yes, I want to record the details"
+                    text: "Yes, it's a valid request and I want to review it"
                     },
                     {
                     value: "no",
-                    text: "No, I want to reject the request and inform the requestor"
+                    text: "No, it's not a valid request. I will inform the person who made the request that it won't be reviewed and why.",
+                    conditional: {
+                    html: reasonHtml
+                    }
                     }
                     ]
                     }) }}

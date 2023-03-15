@@ -11,28 +11,31 @@ window.history.go(-1)" })}} {% endblock %}
 
 {% block content %}
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">
-            Select who the application is for
+            Select the correct person
         </h1>
 
+        <p>
+            There is more than one person with the name you searched for. Select the correct person from the list.
+        </p>
+
         <form method="post">
-            {{ govukButton({
+            <!-- {{ govukButton({
                 text: "Select prisoner and continue",
                 classes: "govuk-!-margin-bottom-8"
-            }) }}
+            }) }} -->
 
             <table class="govuk-table">
-                <caption class="govuk-table__caption govuk-table__caption--m">
+                <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
                     Prisoners
                 </caption>
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
-                        <th scope="col" class="govuk-table__header">Prisoner details</th>
-                        <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
-                        <th scope="col" class="govuk-table__header">Date allocated</th>
-                        <th scope="col" class="govuk-table__header">Other allocations</th>
-                        <th scope="col" class="govuk-table__header">Earliest release date</th>
+                        <th scope="col" class="govuk-table__header">Prisoner name</th>
+                        <th scope="col" class="govuk-table__header">Prison number</th>
+                        <th scope="col" class="govuk-table__header">Cell location</th>
+                        <th scope="col" class="govuk-table__header"></th>
                     </tr>
                 </thead>
                 <tbody class="govuk-table__body">
@@ -44,17 +47,14 @@ window.history.go(-1)" })}} {% endblock %}
                                     <input class="govuk-radios__input" id="selected-prisoner-{{prisoner.id}}" name="new-application[selected-prisoner]"
                                         type="radio" value="{{prisoner.id}}">
                                     <label class="govuk-label govuk-radios__label" for="selected-prisoner-{{prisoner.id}}">
-                                        <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a></b><br>
-                                        {{prisoner.id}}<br>
-                                        {{prisoner.location.cell}}
+                                        <b>{{prisoner.name.firstname}} {{prisoner.name.surname}}</b>
                                     </label>
                                 </div>
                             </div>
                         </td>
-                        <td class="govuk-table__cell govuk-!-padding-top-4">None</td>
-                        <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
-                        <td class="govuk-table__cell govuk-!-padding-top-4">ACTIVITY</td>
-                        <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
+                        <td class="govuk-table__cell govuk-!-padding-top-4">{{prisoner.id}}</td>
+                        <td class="govuk-table__cell govuk-!-padding-top-4">{{prisoner.location.cell}}</td>
+                        <td class="govuk-table__cell govuk-!-padding-top-4"><a href="#">View prisoner profile</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

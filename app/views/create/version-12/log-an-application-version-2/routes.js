@@ -84,7 +84,9 @@ router.post("/prisoner-existing-applications", function (req, res) {
   }
 
   // logic for the log new application radios
-  if (req.session.data["log-new-application"] == "yes") {
+  if (req.session.data["log-new-application"] == "no") {
+    res.redirect("confirmation");
+  } else {
     // create an empty application object if there isn't one already
     if (!req.session.data["new-application"]) {
       req.session.data["new-application"] = {
@@ -93,8 +95,6 @@ router.post("/prisoner-existing-applications", function (req, res) {
     }
 
     res.redirect("application-date");
-  } else {
-    res.redirect("prisoner-existing-applications");
   }
 });
 
@@ -196,7 +196,12 @@ router.post("/applicant-details", function (req, res) {
     // add the applicant to the new application object
     req.session.data["new-application"]["applicant"] = "prisoner";
   } else {
-    req.session.data["new-application"]["applicant"] = "other";
+    let applicant = req.session.data["other-applicant"];
+    if(applicant) {
+      req.session.data["new-application"]["applicant"] = applicant;
+    } else {
+      res.redirect("applicant-details");
+    }
   }
 
   // redirect to the decision page
@@ -278,11 +283,27 @@ router.post("/check-application-details", function (req, res) {
   req.session.data["new-application"]["id"] = id;
   req.session.data["last-application"] = id;
 
-  // logic for check application details page radios
-  if (req.session.data["new-application"]["status"] == "approve") {
-    // add the application to the applications session data
+  // if the application status is approved and allocate-now is yes then allocate the prisoner to the activity
+  // do this by adding the activity id to the prisoner's activity array
+  if (req.session.data["allocate-now"] == "yes" && req.session.data["new-application"]["status"] == "approved") {
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisoner = prisoners.find(
+      (prisoner) =>
+        prisoner.id === req.session.data["new-application"]["selected-prisoner"]
+    );
+    console.log(prisoner)
+    if (prisoner) {
+      // if the prisoner doesn't have an activity array, or the activity array is null, create one
+      if (!prisoner.activity || prisoner.activity == null) {
+        prisoner.activity = [];
+      }
+      // add the activity id to the prisoner's activity array
+      prisoner.activity.push(parseInt(req.session.data["new-application"]["activity"]));
+    }
+  } else if (req.session.data["new-application"]["status"] == "approved" || req.session.data["new-application"]["status"] == "pending") {
     req.session.data["applications"].push(req.session.data["new-application"]);
   }
+
 
   // redirect to confirmation page
   res.redirect("confirmation");
@@ -294,32 +315,6 @@ router.get("/applications-list", function (req, res) {
 });
 // redirect to the confirmation page
 router.post("/applications-list", function (req, res) {
-  res.redirect("confirmation");
-});
-
-// review decision page
-router.get("/review-decision", function (req, res) {
-  res.render(req.protoUrl + "/review-decision");
-});
-// redirect to the confirmation page
-router.post("/review-decision", function (req, res) {
-  let application = req.session.data["new-application"];
-  let activityId = application.activity;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
-
-  console.log(activity);
-
-  // if activity doesn't have an applications key with an empty array, create it
-  if (!activity.applications) {
-    activity.applications = [];
-  }
-
-  // add the application to the activity applications array
-  activity.applications.push(application);
-
-  // redirect to the confirmation page
   res.redirect("confirmation");
 });
 

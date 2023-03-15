@@ -3,19 +3,15 @@
         <li class="moj-sub-navigation__item">
             <a class="moj-sub-navigation__link" {% if currentPage=='currently-allocated' %}aria-current="page" {% endif
                 %} href="currently-allocated">Currently allocated
-                ({{activity.id|getCurrentlyAllocatedCount}})</a>
+                ({{data['timetable-complete-1']['prisoners']|getCurrentlyAllocatedCount(activity.id)}})</a>
         </li>
         <li class="moj-sub-navigation__item">
             <a class="moj-sub-navigation__link" {% if currentPage=='applications' %}aria-current="page" {% endif
-                %}href="applications">Applications ({{activity.id|getApplicationCount}})</a>
+                %}href="applications">Waitlist ({{data['applications']|countApplications(activity.id)}})</a>
         </li>
         <li class="moj-sub-navigation__item">
-            <a class="moj-sub-navigation__link" {% if currentPage=='other-prisoners?page=1' %}aria-current="page" {% endif
-                %}href="other-prisoners">Other prisoners ({{activity.id|getOtherPrisonersCount}})</a>
+            <a class="moj-sub-navigation__link" {% if currentPage=='other-prisoners' %}aria-current="page" {% endif
+                %}href="other-prisoners?page=1">Not allocated to this activity ({{data['timetable-complete-1']['prisoners']|getOtherPrisonersCount(activity.id)}})</a>
         </li>
-        <!-- <li class="moj-sub-navigation__item">
-            <a class="moj-sub-navigation__link" {% if currentPage=='not-suitable' %}aria-current="page" {% endif
-                %}href="#4">Unsuitable for allocation (362)</a>
-        </li> -->
     </ul>
 </nav>
