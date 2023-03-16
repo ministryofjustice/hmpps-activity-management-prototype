@@ -10,7 +10,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="../check-answers">
+<form id="form" method="post" action="confirmation">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div class="back">
@@ -58,7 +58,7 @@ Appointments prototype
       <div class="govuk-grid-row" id="time">
         <div class="govuk-grid-column-one-third">
           <div class="govuk-button-group">
-            <h3 class="govuk-heading-m">
+            <h3 class="govuk-heading-m" id="start-time">
               Start time
             </h3>
             <ul class="time-input">
@@ -103,7 +103,7 @@ Appointments prototype
             <h3 class="govuk-heading-m">
               End time
             </h3>
-            <ul class="time-input">
+            <ul class="time-input" id="end-time">
               <li>
                 <select class="govuk-select" id="end-hours-single" name="end-hours-single">
                   <option selected>{{ data['end-hours-single']}}</option>

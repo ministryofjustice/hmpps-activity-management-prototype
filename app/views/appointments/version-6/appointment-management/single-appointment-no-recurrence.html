@@ -30,7 +30,7 @@ Appointments prototype
                   Category
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{data.categoryChoicesingle or 'Doctors - other'}} 
+                  {{data.categoryChoicesingle or 'Medical - Other'}} 
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="change-answers/appointment-type">
@@ -43,10 +43,10 @@ Appointments prototype
                   Location
                 </dt>
                 <dd class="govuk-summary-list__value">
-                Example appointment location
+                  {{data.locationChoicesingle or 'HB1 Doctors'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
+                  <a class="govuk-link" href="change-answers/location">
                     Change<span class="govuk-visually-hidden">  location</span>
                   </a>
                 </dd>
@@ -56,10 +56,10 @@ Appointments prototype
                   Date
                 </dt>
                 <dd class="govuk-summary-list__value">
-                13 Feb 2023
+                  {{ data['date-of-appointment-day'] or '13'}} {{ data['date-of-appointment-month']  or '2'}}  {{ data['date-of-appointment-year'] or '2023'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
+                  <a class="govuk-link" href="change-answers/date-of-appointment">
                     Change<span class="govuk-visually-hidden"> date</span>
                   </a>
                 </dd>
@@ -72,7 +72,7 @@ Appointments prototype
                 11:00 
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
+                  <a class="govuk-link" href="change-answers/date-of-appointment#start-time">
                     Change<span class="govuk-visually-hidden"> start time</span>
                   </a>
                 </dd>
@@ -85,7 +85,7 @@ Appointments prototype
                 16:00 
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
+                  <a class="govuk-link" href="change-answers/date-of-appointment#end-time">
                     Change<span class="govuk-visually-hidden"> end ime</span>
                   </a>
                 </dd>
@@ -98,7 +98,7 @@ Appointments prototype
                 No 
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
+                  <a class="govuk-link" href="change-answers/appointment-repeat">
                     Change<span class="govuk-visually-hidden"> Repeat</span>
                   </a>
                 </dd>
@@ -106,7 +106,24 @@ Appointments prototype
              </dl>
              
              
-             
+             <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-!-margin-top-9">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Created by
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  J. Smith
+                </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Edited by
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    B. Jones
+                  </dd>
+                  </div>
+            </dl>
 
            
 
