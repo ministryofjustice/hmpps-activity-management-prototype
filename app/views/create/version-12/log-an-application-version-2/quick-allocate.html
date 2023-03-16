@@ -15,15 +15,10 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        {% set prisoner = data['new-application']['selected-prisoner']|getPrisonerDetails %}
+        {% set prisoner = application['selected-prisoner']|getPrisonerDetails %}
+        {% set activity = application['activity']|getActivityDetails %}
         <h1 class="govuk-heading-xl">
-            {% if data['new-application']['eligible'] == 'no' %}
-            Confirm you want to reject {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request
-            {% elif data['new-application']['eligible'] == '' %}
-            Confirm you want to add {{prisoner.name.firstname}} {{prisoner.name.surname}} to the waitlist
-            {% else %}
-            Confirm you want to accept {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request
-            {% endif %}
+            Confirm you want to allocate {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}
         </h1>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-">

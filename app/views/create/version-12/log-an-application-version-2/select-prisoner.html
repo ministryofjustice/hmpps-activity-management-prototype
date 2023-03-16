@@ -21,10 +21,12 @@ window.history.go(-1)" })}} {% endblock %}
         </p>
 
         <form method="post">
-            <!-- {{ govukButton({
+            {% if matchingPrisoners | length > 10 %}
+            {{ govukButton({
                 text: "Select prisoner and continue",
                 classes: "govuk-!-margin-bottom-8"
-            }) }} -->
+            }) }}
+            {% endif %}
 
             <table class="govuk-table">
                 <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">

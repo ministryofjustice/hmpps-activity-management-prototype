@@ -1,0 +1,275 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = data['new-application']['selected-prisoner']|getPrisonerDetails %}
+        <h1 class="govuk-heading-xl">
+            Update {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request
+        </h1>
+
+        <h2 class="govuk-heading-m">
+            Request details
+        </h2>
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+            <!-- <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Prisoner
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div> -->
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Activity requested
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% set activity = application['activity']|getActivityDetails %}
+                    {{activity.name}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Date of request
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{application['date']|convertShortDateToLongDate}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Requestor
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if application['applicant'] == 'prisoner' %}
+                    Prisoner
+                    {% else %}
+                    {{application['applicant']|capitalize}}
+                    {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Suitability
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if application['eligible'] == 'yes' %}
+                    <span class="govuk-tag govuk-tag--green">Eligible</span>
+                    {% elif application['eligible'] == 'no' %}
+                    <span class="govuk-tag govuk-tag--red">Not eligible</span>
+                    {% else %}
+                    <span class="govuk-tag govuk-tag--yellow">Further checks needed</span>
+                    {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+        </dl>
+
+        {% set detailsHtml %}
+        <table class="govuk-table govuk-!-margin-bottom-8">
+            <caption class="govuk-table__caption govuk-table__caption--m">
+                {{prisoner.name.firstname}} {{prisoner.name.surname}}'s suitability details
+            </caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Type of requirement</th>
+                    <th scope="col" class="govuk-table__header">{{prisoner.name.firstname}} {{prisoner.name.surname}}'s
+                        details</th>
+                    <th scope="col" class="govuk-table__header">Meets requirement</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Workplace risk assessment level</th>
+
+                    <td class="govuk-table__cell">{{prisoner.riskAssessment|capitalize}}</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Incentive level</th>
+
+                    <td class="govuk-table__cell">{{prisoner.incentiveLevel|capitalize}}</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Education levels</th>
+
+                    <td class="govuk-table__cell">English level 1</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Earliest release date</th>
+
+                    <td class="govuk-table__cell">{{prisoner.releaseDate|convertShortDateToMediumDate}}</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--grey">Not applicable</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Non-associations</th>
+
+                    <td class="govuk-table__cell">
+                        <a href="#" class="govuk-link--no-visited-state">Junior Smith</a>
+                    </td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--red">No</span>
+                    </td>
+            </tbody>
+        </table>
+
+        <table class="govuk-table govuk-!-margin-bottom-">
+            <caption class="govuk-table__caption govuk-table__caption--m">
+                {{prisoner.name.firstname}} {{prisoner.name.surname}}'s previous requests
+            </caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header" aria-sort="none" style="width:33%"><button
+                            type="button" data-index="0">Activity requested</button></th>
+                    <th scope="col" class="govuk-table__header" aria-sort="descending" style="width:33%"><button
+                            type="button" data-index="1">Date of request</button></th>
+                    <th scope="col" class="govuk-table__header" aria-sort="none" style="width:33%"><button
+                            type="button" data-index="2">Decision</button></th>
+                    <th scope="col" class="govuk-table__header" style="width:28%"></th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <td data-sort-value="Kitchens" class="govuk-table__cell">
+                        <strong><a href="# target=" _blank"="">Kitchens</a></strong><br>
+                    </td>
+                    <td class="govuk-table__cell" data-sort-value="20230205">5 February 2023</td>
+                    <td class="govuk-table__cell" data-sort-value="Approved">
+                        <span class="govuk-tag govuk-tag--red">Rejected</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <td data-sort-value="Servery" class="govuk-table__cell">
+                        <strong><a href="/unlock/version-5/prisoner-profile"
+                                target="_blank">Servery</a></strong><br>
+                    </td>
+                    <td class="govuk-table__cell" data-sort-value="20221209">9 December 2022</td>
+                    <td class="govuk-table__cell" data-sort-value="On waitlist">
+                        <span class="govuk-tag govuk-tag--red">Rejected</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <td data-sort-value="Electronics" class="govuk-table__cell">
+                        <strong><a href="/unlock/version-5/prisoner-profile"
+                                target="_blank">Electronics</a></strong><br>
+                    </td>
+                    <td class="govuk-table__cell" data-sort-value="20230201">1 February 2023</td>
+                    <td class="govuk-table__cell" data-sort-value="Pending">
+                        <span class="govuk-tag govuk-tag--green">Accepted</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <td data-sort-value="Gardens" class="govuk-table__cell">
+                        <strong><a href="/unlock/version-5/prisoner-profile"
+                                target="_blank">Gardens</a></strong><br>
+                    </td>
+                    <td class="govuk-table__cell" data-sort-value="20230121">21 January 2023</td>
+                    <td class="govuk-table__cell" data-sort-value="Rejected">
+                        <span class="govuk-tag govuk-tag--green">Accepted</span>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        
+        <p class="govuk-inset-text">
+            You may need to <a href="#">view {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or
+            consult with other departments before making your decision.
+        </p>
+        {% endset %}
+
+        <!-- {{ govukDetails({
+        summaryText: "View prisoner eligibility details",
+        html: detailsHtml
+        }) }} -->
+
+        {{detailsHtml|safe}}
+
+        <form method="post" class="govuk-!-margin-top-8">
+            {{ govukRadios({
+            idPrefix: "eligible",
+            name: "new-application[eligible]",
+            fieldset: {
+            legend: {
+            text: "What do you want to update " + prisoner.name.firstname + " " + prisoner.name.surname + "'s request to?",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            items: [
+            {
+            value: "yes",
+            text: "Suitable - they're suitable, I want to allocate them or add them to the waitist"
+            },
+            {
+            value: "no",
+            text: "Not suitable - I want to reject the request and inform the person who made it"
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "",
+            text: "I don't need to update their suitability"
+            }
+            ]
+            }) }}
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

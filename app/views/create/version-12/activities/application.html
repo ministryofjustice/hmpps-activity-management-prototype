@@ -39,7 +39,7 @@ text: "Back",
                     Activity requested
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% set activity = data['new-application']['activity']|getActivityDetails %}
+                    {% set activity = application['activity']|getActivityDetails %}
                     {{activity.name}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
@@ -53,7 +53,7 @@ text: "Back",
                     Date of request
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{data['new-application']['date']|convertShortDateToLongDate}}
+                    {{application['date']|convertShortDateToLongDate}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
@@ -66,10 +66,10 @@ text: "Back",
                     Requestor
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% if data['new-application']['applicant'] == 'prisoner' %}
+                    {% if application['applicant'] == 'prisoner' %}
                     Prisoner
                     {% else %}
-                    {{data['new-application']['applicant']}}
+                    {{application['applicant']|capitalize}}
                     {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
@@ -83,9 +83,9 @@ text: "Back",
                     Suitability
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% if data['new-application']['eligible'] == 'yes' %}
+                    {% if application['eligible'] == 'yes' %}
                     <span class="govuk-tag govuk-tag--green">Eligible</span>
-                    {% elif data['new-application']['eligible'] == 'no' %}
+                    {% elif application['eligible'] == 'no' %}
                     <span class="govuk-tag govuk-tag--red">Not eligible</span>
                     {% else %}
                     <span class="govuk-tag govuk-tag--yellow">Further checks needed</span>
@@ -101,7 +101,7 @@ text: "Back",
 
         <form method="post">
             <!-- if suitability is 'yes' -->
-            {% if data['new-application']['eligible'] == 'no' %}
+            {% if application['eligible'] == 'no' %}
             <div class="govuk-inset-text">
                 <p class="govuk-body">
                     When you reject an activity request, you should inform the person who made the request the reason
@@ -116,7 +116,7 @@ text: "Back",
             text: "Reject this request"
             }) }}
 
-            {% elif data['new-application']['eligible'] == '' %}
+            {% elif application['eligible'] == '' %}
 
             <p>
                 Confirm that you want to add John Smith to the waitlist without checking their suitability.

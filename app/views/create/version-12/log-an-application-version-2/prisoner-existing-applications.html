@@ -16,13 +16,9 @@ window.history.go(-1)" })}} {% endblock %}
             Activity request history for {{prisoner.name.firstname}} {{prisoner.name.surname}}
         </h1>
 
-        <p>
+        <!-- <p>
             Use the history to decide if the request should be reviewed in full.
-            </p>
-        <p>
-            It might not be valid if, for example, the person has already requested allocation to this activity, or has reached the maximum number of requests.
-        </p>
-    
+        </p> -->
         <form method="post">
             <input type="hidden" name="new-application['selected-prisoner']" value="{{prisoner.id}}">
 
@@ -82,22 +78,20 @@ window.history.go(-1)" })}} {% endblock %}
                 </tbody>
             </table>
 
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
-                    {% set reasonHtml %}
-                    {{ govukTextarea({
-                    id: "reject-new-application-reason",
-                    name: "reject-new-application-reason",
-                    label: {
-                    text: "Reason for rejection"
-                    },
-                    hint: {
-                    text: "This will be sent to the requestor"
-                    }
-                    }) }}
-                    {% endset %}
+            {% set reasonHtml %}
+            {{ govukTextarea({
+            id: "reject-new-application-reason",
+            name: "reject-new-application-reason",
+            label: {
+            text: "Reason for rejection"
+            },
+            hint: {
+            text: "This will be sent to the requestor"
+            }
+            }) }}
+            {% endset %}
 
-                    {{ govukRadios({
+            <!-- {{ govukRadios({
                     idPrefix: "log-new-application",
                     name: "log-new-application",
                     fieldset: {
@@ -120,14 +114,20 @@ window.history.go(-1)" })}} {% endblock %}
                     }
                     }
                     ]
-                    }) }}
-                    {{govukButton({
-                    text: "Continue"
-                    })}}
-                </div>
-            </div>
-        </form>
+                    }) }} -->
+            <p>
+                If you don't want to record the activity request because, for example, it's a duplicate, inform the
+                person who submitted it.
+            </p>
+            {{govukButton({
+            text: "Continue",
+            name: "log-new-application",
+            value: "yes"
+            })}}
     </div>
+</div>
+</form>
+</div>
 </div>
 
 {% endblock %}

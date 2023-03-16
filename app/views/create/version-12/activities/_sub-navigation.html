@@ -1,17 +1,17 @@
-<nav class="moj-sub-navigation" aria-label="Sub navigation">
+<nav class="moj-sub-navigation" aria-label="Sub navigation" id="subnav">
     <ul class="moj-sub-navigation__list">
         <li class="moj-sub-navigation__item">
             <a class="moj-sub-navigation__link" {% if currentPage=='currently-allocated' %}aria-current="page" {% endif
-                %} href="currently-allocated">Currently allocated
+                %} href="currently-allocated#subnav">Currently allocated
                 ({{data['timetable-complete-1']['prisoners']|getCurrentlyAllocatedCount(activity.id)}})</a>
         </li>
         <li class="moj-sub-navigation__item">
             <a class="moj-sub-navigation__link" {% if currentPage=='applications' %}aria-current="page" {% endif
-                %}href="applications">Waitlist ({{data['applications']|countApplications(activity.id)}})</a>
+                %}href="applications#subnav">Waitlist ({{data['applications']|countApplications(activity.id)}})</a>
         </li>
         <li class="moj-sub-navigation__item">
             <a class="moj-sub-navigation__link" {% if currentPage=='other-prisoners' %}aria-current="page" {% endif
-                %}href="other-prisoners?page=1">Not allocated to this activity ({{data['timetable-complete-1']['prisoners']|getOtherPrisonersCount(activity.id)}})</a>
+                %}href="other-prisoners?page=1#subnav">Not allocated to this activity ({{data['timetable-complete-1']['prisoners']|getOtherPrisonersCount(activity.id)}})</a>
         </li>
     </ul>
 </nav>

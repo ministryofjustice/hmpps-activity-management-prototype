@@ -15,9 +15,70 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">
-            Check eligibility for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+        {% if application and application.status == 'pending' %}
+
+        {% endif %}
+        
+        {% set activity = application['activity'] | getActivityDetails %}
+        {% set prisoner = data['new-activity']['prisoner'] %}
+        <h1 class="govuk-heading-xl">
+            Check before you allocate {{prisoner.name.firstname}} {{prisoner.name.surname}}
         </h1>
+
+        {% if application and application.status != 'rejected' %}
+        <h2 class="govuk-heading-m">
+            {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request for {{activity.name}}
+        </h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+            <!-- <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Prisoner
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div> -->
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Date of request
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{application['date']|convertShortDateToLongDate}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Requestor
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if application['applicant'] == 'prisoner' %}
+                    Prisoner
+                    {% else %}
+                    {{application['applicant']|capitalize}}
+                    {% endif %}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+                <dt class="govuk-summary-list__key">
+                    Suitability
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if application['eligible'] == 'yes' %}
+                    <span class="govuk-tag govuk-tag--green">Eligible</span>
+                    {% elif application['eligible'] == 'no' %}
+                    <span class="govuk-tag govuk-tag--red">Not eligible</span>
+                    {% else %}
+                    <span class="govuk-tag govuk-tag--yellow">Further checks needed</span>
+                    {% endif %}
+                </dd>
+            </div>
+        </dl>
+        {% endif %}
         
         <h2 class="govuk-heading-m">
             Prisoner eligibility details
@@ -90,32 +151,28 @@ text: "Back",
         <form method="post" class="govuk-!-margin-top-8">
             {{govukRadios({
             idPrefix: "application-status",
-            name: "new-application[status]",
+            name: "allocate",
             fieldset: {
             legend: {
-            text: "What do you want to do with this application?",
+            text: "Confirm you want to allocate this prisoner to this activity",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--m"
             }
             },
             items: [
             {
-            value: "allocate",
-            html: "<b>Allocate the prisoner</b> to " + activity.name
+            value: "yes",
+            html: "Yes, continue to select payrate for " + prisoner.name.firstname + " " + prisoner.name.surname
             },
             {
-            value: "accept",
-            html: "<b>Create a note</b> on the application"
-            },
-            {
-            value: "reject",
-            html: "<b>Reject</b> the application"
+            value: "no",
+            html: "No, return to activity details"
             }
             ]
             })}}
 
             {{ govukButton({
-            text: "Submit decision"
+            text: "Continue"
             }) }}
         </form>
     </div>

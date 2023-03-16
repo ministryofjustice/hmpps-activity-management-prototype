@@ -151,12 +151,7 @@ router.get("/:activityId/other-prisoners", function (req, res) {
     offset,
     offset + limit
   );
-  let totalPages = Math.ceil(prisonersWithoutApplication.length / limit);
-
-  
-
-
-  
+  let totalPages = Math.ceil(prisonersWithoutApplication.length / limit);  
 
   res.render(req.protoUrl + "/other-prisoners", {
     activity,
@@ -198,6 +193,34 @@ router.get("/:activityId/applications/:applicationId", function (req, res) {
   });
 });
 
+// update application page
+router.get("/:activityId/applications/:applicationId/update", function (req, res) {
+  let activityId = req.params.activityId;
+  let applicationId = req.params.applicationId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  let applications = req.session.data["applications"];
+  let application = applications.find(
+    (application) => application.id.toString() === applicationId.toString()
+  );
+
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let prisoner = prisoners.find(
+    (prisoner) => prisoner.id.toString() === application["selected-prisoner"].toString()
+  );
+
+  res.render(req.protoUrl + "/update-application", {
+    activity,
+    application,
+    prisoner,
+  });
+});
+
+
 // activity allocate page
 router.get("/:activityId/allocate/:prisonerId", function (req, res) {
   let activityId = req.params.activityId;
@@ -210,13 +233,95 @@ router.get("/:activityId/allocate/:prisonerId", function (req, res) {
     (activity) => activity.id.toString() === activityId.toString()
   );
 
+  // if there is an application from this prisoner for this activity, find it and pass it to the template
+  let applications = req.session.data["applications"];
+  let application = applications.find(
+    (application) =>
+      application["selected-prisoner"].toString() === prisonerId.toString() &&
+      application["activity"].toString() === activityId.toString()
+  );
+  
   res.render(req.protoUrl + "/allocate", {
+    activityId,
+    activity,
+    application,
+    prisoner,
+    prisonerId,
+  });
+});
+
+// allocate page post logic
+router.post("/:activityId/allocate/:prisonerId", function (req, res) {
+  let activityId = req.params.activityId;
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  // if the user chooses yes, continue to the payrate page for the allocate journey for this prisoner
+  if (req.body["allocate"] === "yes") {
+    res.redirect(req.params.prisonerId + '/payrate')
+  } else {
+    // if the user chooses no, redirect to the activity page
+    res.redirect(req.protoUrl + "/../" + activityId);
+  }
+});
+
+// select payrate page, after the allocate page
+router.get("/:activityId/allocate/:prisonerId/payrate", function (req, res) {
+  let activityId = req.params.activityId;
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  res.render(req.protoUrl + "/payrate", {
     activityId,
     activity,
     prisoner,
     prisonerId,
   });
 });
+
+// payrate page post logic
+router.post("/:activityId/allocate/:prisonerId/payrate", function (req, res) {
+  let activityId = req.params.activityId;
+  let prisonerId = req.params.prisonerId;
+
+  // redirect to the check your answers page
+  res.redirect("check-allocation-details");
+});
+
+// check allocation details page
+router.get("/:activityId/allocate/:prisonerId/check-allocation-details", function (req, res) {
+  let activityId = req.params.activityId;
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  // render the check your answers page
+  res.render(req.protoUrl + "/check-allocation-details", {
+    activityId,
+    activity,
+    prisoner,
+    prisonerId,
+    });
+});
+
+
 
 module.exports = router;
 

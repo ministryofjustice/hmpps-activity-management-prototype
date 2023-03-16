@@ -22,10 +22,6 @@ Find an activity to record or edit attendance
         <h2 class="govuk-heading-l">
             Currently allocated
         </h2>
-        {{govukButton({
-        text: "Allocate someone to this activity",
-        href: "../../log-an-application-version-2?new-application[activity]=" + activity.id
-        })}}
         <!-- <div class="govuk-inset-text">
             <p>
                 You should <a href="../../log-an-application-version-2" class="govuk-link--no-visited-state">log an application</a> before allocating a prisoner to an activity.
@@ -74,13 +70,13 @@ Find an activity to record or edit attendance
                 <span class="govuk-hint">None</span>
                 {% else %}
                 <ul class="govuk-list">
-                {% for allocation in prisoner.activity %}
-                <!-- don't show the allocation if it's the same as the current activity -->
-                {% if allocation != activity.id %}
-                {% set activity = allocation|getActivityDetails %}
-                <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
-                {% endif %}
-                {% endfor %}
+                    {% for allocation in prisoner.activity %}
+                    <!-- don't show the allocation if it's the same as the current activity -->
+                    {% if allocation != activity.id %}
+                    {% set activity = allocation|getActivityDetails %}
+                    <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                    {% endif %}
+                    {% endfor %}
                 </ul>
                 {% endif %}
             </td>
@@ -89,6 +85,12 @@ Find an activity to record or edit attendance
         {% endfor %}
     </tbody>
 </table>
+
+{{govukButton({
+text: "Remove from activity",
+href: "../../log-an-application-version-2?new-application[activity]=" + activity.id,
+classes: "govuk-button--warning"
+})}}
 {% endblock %}
 
 {% block pageScripts %}

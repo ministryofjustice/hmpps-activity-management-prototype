@@ -304,9 +304,8 @@ router.post("/check-application-details", function (req, res) {
     req.session.data["applications"].push(req.session.data["new-application"]);
   }
 
-
   // redirect to confirmation page
-  res.redirect("confirmation");
+  res.redirect("confirmation?application=" + id);
 });
 
 // applications list page
@@ -320,6 +319,8 @@ router.post("/applications-list", function (req, res) {
 
 // confirmation page
 router.get("/confirmation", function (req, res) {
+  let application = req.session.data["new-application"];
+
   res.render(req.protoUrl + "/confirmation");
 });
 // redirect logic for the confirmation page
@@ -389,5 +390,17 @@ router.post("/decision-confirmation", function (req, res) {
     res.redirect("../activities/2/applications");
   }
 });
+
+// quick allocate page
+router.get("/quick-allocate/:applicationId", function (req, res) {
+  let applications = req.session.data["applications"];
+  let application = applications.find(
+    (application) => application.id === parseInt(req.params.applicationId)
+  );
+
+  res.render(req.protoUrl + "/quick-allocate", { application });
+});
+
+
 
 module.exports = router;

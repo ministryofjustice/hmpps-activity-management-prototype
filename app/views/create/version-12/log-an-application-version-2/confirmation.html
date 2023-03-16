@@ -23,8 +23,10 @@ text: "Back",
             {% if data['allocate-now'] == "yes" %}
             You've allocated {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}
             {% elif data['new-application']['status'] != "rejected" %}
+            You've added {{prisoner.name.firstname}} {{prisoner.name.surname}} to the waitlist for {{activity.name}}
             {% else %}
-            You've rejected {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request to be allocated to {{activity.name}}
+            You've rejected {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request to be allocated to
+            {{activity.name}}
             {% endif %}
             {% endset %}
 
@@ -33,41 +35,52 @@ text: "Back",
             classes: "govuk-!-margin-bottom-8"
             }) }}
 
+            <!-- Summary list showing Currently allocated, vacancies, capacity -->
+            <div class="govuk-summary-list">
+                <div class=""></div>
+            </div>
 
             {% set items = [
-                {
-                value: "decision",
-                text: "Allocate the prisoner"
-                },
-                {
-                value: "add-another",
-                text: "Add another application"
-                },
-                {
-                    divider: "or"
-                },
-                {
-                value: "finish",
-                text: "Finish logging applications"
-                }
-                ]
+            {
+            value: "decision",
+            text: "Allocate the prisoner"
+            },
+            {
+            value: "add-another",
+            text: "Add another application"
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "finish",
+            text: "Finish logging applications"
+            }
+            ]
             %}
 
-            {% if data['new-application']['status'] == "reject" %}
+            {% if data['new-application']['status'] == "rejected" %}
             {% set items = [
-                {
-                value: "add-another",
-                text: "Add another application"
-                },
-                {
-                value: "finish",
-                text: "Finish logging applications"
-                }
-                ]
+            {
+            value: "add-another",
+            text: "Add another application"
+            },
+            {
+            value: "add-another",
+            text: "Add another application for " + prisoner.name.firstname + " " + prisoner.name.surname
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "finish",
+            text: "Finish logging applications"
+            }
+            ]
             %}
             {% endif %}
 
-            {{govukRadios({
+            <!-- {{govukRadios({
             idPrefix: "add-application-next-step",
             name: "add-application-next-step",
             fieldset: {
@@ -82,22 +95,32 @@ text: "Back",
 
             {{ govukButton({
             text: "Continue"
-            }) }}
+            }) }} -->
         </form>
 
-        <!--
-            <h2 class="govuk-heading-l">
+
+        <h2 class="govuk-heading-l">
             What you can do next
         </h2>
-            <p class="govuk-body">
+        <p class="govuk-body">
             You can either:
         </p>
         <ul class="govuk-list govuk-list--bullet">
-            <li><a href="select-activity" class="govuk-link--no-visited-state">log another application for PRISONER NAME</a></li>
-            <li><a href="select-activity" class="govuk-link--no-visited-state">log another application for ACTIVITY NAME</a></li>
-            <li><a href="prisoner-search" class="govuk-link--no-visited-state">log an application for someone else</a></li>
-            <li><a href="../activities/{{data['new-application'].activity}}" class="govuk-link--no-visited-state">view all applications for ACTIVITY</a></li>
-        </ul> -->
+            {% if data['new-application']['status'] == "approved" %}
+            <li><a href="quick-allocate/{{data['application']}}"
+                    class="govuk-link--no-visited-state">allocate {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                    to {{activity.name}}</a></li>
+            {% endif %}
+            <li><a href="select-activity" class="govuk-link--no-visited-state">log another application for
+                    {{prisoner.name.firstname}} {{prisoner.name.surname}}</a></li>
+            <li><a href="prisoner-search" class="govuk-link--no-visited-state">log an application for someone else</a>
+            </li>
+        </ul>
+
+        <p>
+            Or you can <a href="../activities/{{data['new-application'].activity}}/applications"
+                class="govuk-link--no-visited-state">view all requests for {{activity.name}}</a>.
+        </p>
     </div>
 </div>
 
