@@ -1,0 +1,65 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="../comments">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Group appointments</span>
+        Add comments for {{ data['prisoner-name']}}, AB76394YT
+       </h1>
+
+  </div>
+   </div>
+
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    
+    {{ govukTextarea({
+      id: "comments",
+      name: "comments",
+      label: {
+        html: "<b class='govuk-fieldset__legend--m'>Comments (optional)</b>"
+      },
+      hint: {
+        text: "These will be included on the movement slip"
+      }
+    }) }}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+         
+          
+            {{ govukButton({
+              text: 'Continue'
+            }) }}
+           
+          </div>
+      </div>
+      </div>
+      </div>
+    </form>
+
+
+      
+       
+
+   
+
+
+
+
+  </div>
+</div>
+{% endblock %}

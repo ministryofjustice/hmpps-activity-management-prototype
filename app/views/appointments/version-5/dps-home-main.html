@@ -43,22 +43,36 @@ Activities Management prototype
 <div class="homepage-content">
 	<div class="govuk-width-container">
 		<ul class="govuk-grid-row card-group" id="sortable">
-			{% for tile in data['config']['navigation-tiles'] %}
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_{{loop.index}}">
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_unlock">
 				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
 					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{tile.linkURL or 'whereabouts'}}">{{tile.linkText}}</a>
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="#">
+							Manage unlock and movement
+						</a>
 					</h2>
-					<p class="govuk-body card__description">{{tile.descriptionText}}</p>
+					<p class="govuk-body card__description">
+						Create unlock and movement lists. Record unlock sickness, refusals and absences.
+					</p>
 				</div>
 			</li>
-			{% endfor %}
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_create">
+				<div class="card card--clickable" data-test="manage-prisoner-whereabouts">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="#">
+							Manage activities
+						</a>
+					</h2>
+					<p class="govuk-body card__description">
+						Create and manage activities. Log applications and allocate people to activities. Check and record attendance.
+					</p>
+				</div>
+			</li>
 			<li class="govuk-grid-column-one-third card-group__item" id="tile_007">
 				<div class="card card--clickable" data-test="manage-appointments">
 					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="appointments-home">Create and manage appointments</a>
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="{{data['prototype-versions']['appointments']['url']}}">Create and manage appointments</a>
 					</h2>
-					<p class="govuk-body card__description">Add and edit appointments for individuals or groups of people</p>
+					<p class="govuk-body card__description">Add and edit appointments for individuals and groups of people.</p>
 				</div>
 			</li>
 			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
@@ -109,7 +123,6 @@ Activities Management prototype
 					<p class="govuk-body card__description">Place a prisoner on report after an incident and view all of your completed reports.</p>
 				</div>
 			</li>
-			
 		</ul>
 	</div>
 </div>
@@ -118,21 +131,21 @@ Activities Management prototype
 <script src="/public/javascripts/cards.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
-	$(document).ready( function() {
-		var $list = "ul#sortable"
-		$($list).sortable({
-			update: function(event, ui) {
-				var order = [];
-				var data = $(this).sortable('serialize');
+	// $(document).ready( function() {
+	// 	var $list = "ul#sortable"
+	// 	$($list).sortable({
+	// 		update: function(event, ui) {
+	// 			var order = [];
+	// 			var data = $(this).sortable('serialize');
 
-				$($list + ' li').each( function(e) {
-					order.push( $(this).find('a').html() );
-				});
+	// 			$($list + ' li').each( function(e) {
+	// 				order.push( $(this).find('a').html() );
+	// 			});
 
-				console.log( order , data );
-			}
-		});
-		$($list).disableSelection();
-	} );
+	// 			console.log( order , data );
+	// 		}
+	// 	});
+	// 	$($list).disableSelection();
+	// } );
 </script>
 {% endblock %}
