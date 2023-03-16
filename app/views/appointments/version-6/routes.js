@@ -124,6 +124,22 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
   
+  router.post(`/appointment-management/change-answers/repeat-question`, function (req, res) {
+	const appRepeat = req.session.data['appointment-repeat'];
+	if (appRepeat === 'Yes') {
+		res.redirect(`appointment-frequency`);
+	} else {
+		res.redirect(`confirmation`);
+	}
+  });
 
+  router.post(`/appointment-management/cancel/cancel-question`, function (req, res) {
+	const appRepeat = req.session.data['appointment-cancel'];
+	if (appRepeat === 'Yes') {
+		res.redirect(`cancel-reason`);
+	} else {
+		res.redirect(`../single-appointment-no-recurrence`);
+	}
+  });
 	  
 module.exports = router
