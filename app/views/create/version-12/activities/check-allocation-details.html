@@ -17,10 +17,44 @@ text: "Back",
     <div class="govuk-grid-column-two-thirds">
         {% set prisoner = data['new-application']['selected-prisoner']|getPrisonerDetails %}
         <h1 class="govuk-heading-xl">
-            Check and confirm allocation details
+            Check and confirm your allocation
         </h1>
 
-        
+        <!-- GOVUK summary list component with fields: name, prison number, cell location and selected pay rate -->
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Prison number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisoner.id}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Cell location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisoner.location.cell}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Pay rate
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    £{{data['allocation']['pay-rate']}}
+                </dd>
+            </div>
+        </dl>
 
         <form method="post">
             <!-- if suitability is 'yes' -->
@@ -51,7 +85,7 @@ text: "Back",
                 Now confirm the allocation
             </h2>
             <p>
-                {{prisoner.name.firstname}} {{prisoner.name.surname}} will be allocated to {{activity.name}}.
+                {{prisoner.name.firstname}} {{prisoner.name.surname}} will be allocated to {{activity.name}} from the next session.
             </p>
 
             {% if data['new-application']['eligible'] != 'no' %}

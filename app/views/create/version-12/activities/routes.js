@@ -395,16 +395,68 @@ router.get("/:activityId/allocate/:prisonerId/check-allocation-details", functio
 // post logic for check allocation details page
 // go to the confirmation page
 router.post("/:activityId/allocate/:prisonerId/check-allocation-details", function (req, res) {
-  res.redirect("allocation-confirmation");
+  // allocate the prisoner to the activity
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === req.params.prisonerId.toString()
+  );
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === req.params.activityId.toString()
+  );
+
+  // if the prisoner already has an activity, add the new activity to the array
+  if (prisoner.activity) {
+    if (Array.isArray(prisoner.activity)) {
+      prisoner.activity.push(activity.id);
+    } else {
+      prisoner.activity = [prisoner.activity, activity.id];
+    }
+  } else {
+    // if the prisoner doesn't have an activity, add the new activity
+    prisoner.activity = activity.id;
+  }
+  
+  // create a date in the format yyyy-mm-dd
+  let date = new Date();
+  date = date.toISOString().split("T")[0];
+
+  // create an allocation object
+  // and session data for the allocation
+  // payrate, prisoner, activity, date, id
+  req.session.data["allocation"] = {
+    payrate: req.session.data["allocation"]["payrate"],
+    prisoner: prisoner.id,
+    activity: activity.id,
+    date: date,
+    id: Math.floor(Math.random() * 1000000000),
+  };
+
+  // add details of the allocation to the prisoner object
+  if (prisoner.allocations && Array.isArray(prisoner.allocations)) {
+    prisoner.allocations.push(req.session.data["allocation"]);
+  } else {
+    prisoner.allocations = [req.session.data["allocation"]];
+  }
+  // add the allocation to the allocations session data
+  if (req.session.data["allocations"] && Array.isArray(req.session.data["allocations"])) {
+    req.session.data["allocations"].push(req.session.data["allocation"]);
+  } else {
+    req.session.data["allocations"] = [req.session.data["allocation"]];
+  }
+
+  // redirect to the confirmation page
+  res.redirect("allocation-confirmation?allocation=" + req.session.data["allocation"]["id"]);
 });
 
 // allocation confirmation page
 router.get("/:activityId/allocate/:prisonerId/allocation-confirmation", function (req, res) {
-  res.render(req.protoUrl + "/allocation-confirmation");
+  let allocation = req.session.data["allocations"].find(
+    (allocation) => allocation.id.toString() === req.query.allocation.toString()
+  );
+
+  res.render(req.protoUrl + "/allocation-confirmation", {
+    allocation
+  });
 });
-
-
-
 
 module.exports = router;
 

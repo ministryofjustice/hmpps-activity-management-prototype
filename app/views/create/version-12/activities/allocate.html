@@ -13,7 +13,7 @@ text: "Back",
 {% endblock %}
 
 {% block content %}
-{% if (not application) or (application and application.eligible != 'yes') %}
+{% if (application and application.eligible != 'yes') %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% set bannerHtml %}
 <h2 class="govuk-notification-banner__heading">
@@ -227,6 +227,7 @@ html: bannerHtml
         </p>
 
         <form method="post" class="govuk-!-margin-top-8">
+            {% if application %}
             {{govukRadios({
             idPrefix: "application-status",
             name: "allocate",
@@ -248,6 +249,10 @@ html: bannerHtml
             }
             ]
             })}}
+            {% else %}
+            <h2 class="govuk-heading-l">Confirm you want to continue to set pay rate for {{prisoner.name.firstname}} {{prisoner.name.surname}}</h2>
+            <input type="hidden" name="allocate" value="yes">
+            {% endif %}
 
             {{ govukButton({
             text: "Continue"

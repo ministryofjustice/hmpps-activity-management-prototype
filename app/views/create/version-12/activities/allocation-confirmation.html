@@ -11,82 +11,22 @@ Activities Management prototype
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form method="post">
-            {% set prisoner = data['new-application']['selected-prisoner'] | getPrisonerDetails %}
-            {% set activity = data['new-application']['activity'] | getActivityDetails %}
+        {% set prisoner = allocation['prisoner'] | getPrisonerDetails %}
+        {% set activity = allocation['activity'] | getActivityDetails %}
 
-            {% set titleText %}
-            You've allocated {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}
-            {% endset %}
+        {% set titleText %}
+        Allocation complete
+        {% endset %}
 
-            {{ govukPanel({
-            titleText: titleText,
-            classes: "govuk-!-margin-bottom-8"
-            }) }}
+        {% set panelHtml %}
+        {{prisoner.name.firstname}} {{prisoner.name.surname}} {{prisoner.id}} is now allocated to {{activity.name}}
+        {% endset %}
 
-            <!-- Summary list showing Currently allocated, vacancies, capacity -->
-            <div class="govuk-summary-list">
-                <div class=""></div>
-            </div>
-
-            {% set items = [
-            {
-            value: "decision",
-            text: "Allocate the prisoner"
-            },
-            {
-            value: "add-another",
-            text: "Add another application"
-            },
-            {
-            divider: "or"
-            },
-            {
-            value: "finish",
-            text: "Finish logging applications"
-            }
-            ]
-            %}
-
-            {% if data['new-application']['status'] == "rejected" %}
-            {% set items = [
-            {
-            value: "add-another",
-            text: "Add another application"
-            },
-            {
-            value: "add-another",
-            text: "Add another application for " + prisoner.name.firstname + " " + prisoner.name.surname
-            },
-            {
-            divider: "or"
-            },
-            {
-            value: "finish",
-            text: "Finish logging applications"
-            }
-            ]
-            %}
-            {% endif %}
-
-            <!-- {{govukRadios({
-            idPrefix: "add-application-next-step",
-            name: "add-application-next-step",
-            fieldset: {
-            legend: {
-            text: "What do you want to do next?",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--l"
-            }
-            },
-            items: items
-            })}}
-
-            {{ govukButton({
-            text: "Continue"
-            }) }} -->
-        </form>
-
+        {{ govukPanel({
+        titleText: titleText,
+        html: panelHtml,
+        classes: "govuk-!-margin-bottom-8"
+        }) }}
 
         <h2 class="govuk-heading-l">
             What you can do next
@@ -95,16 +35,11 @@ Activities Management prototype
             You can either:
         </p>
         <ul class="govuk-list govuk-list--bullet">
-            <li><a href="select-activity" class="govuk-link--no-visited-state">log another application for
-                    {{prisoner.name.firstname}} {{prisoner.name.surname}}</a></li>
-            <li><a href="prisoner-search" class="govuk-link--no-visited-state">log an application for someone else</a>
-            </li>
+            <li><a href="../../../{{activity.id}}" class="govuk-link--no-visited-state">review the allocations for
+                    {{activity.name}}</a> and continue allocating</li>
+            <li>you can also <a href="../../../all" class="govuk-link--no-visited-state">find other activities with
+                    vacancies</a></li>
         </ul>
-
-        <p>
-            Or you can <a href="../activities/{{data['new-application'].activity}}/applications"
-                class="govuk-link--no-visited-state">view all requests for {{activity.name}}</a>.
-        </p>
     </div>
 </div>
 
