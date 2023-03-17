@@ -2,16 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
 
-// update application pages
-router.use("/update", (req, res, next) => {
-  let serviceName = req.originalUrl.split("/")[1];
-  let version = req.originalUrl.split("/")[2];
-  let journey = req.originalUrl.split("/")[3];
-
-  req.protoUrl = serviceName + "/" + version + "/" + journey;
-  require("./update/routes")(req, res, next);
-});
-
 // routes for pages in the activities section
 // activities page redirect root to /all
 router.get("/", function (req, res) {
@@ -63,8 +53,8 @@ router.get("/:activityId/applications", function (req, res) {
   );
 
   // hide the confirmation message if it's shown
-  if (req.session.data["application-added-confirmation-message"] === true) {
-    req.session.data["application-added-confirmation-message"] = false;
+  if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
+    delete req.session.data["confirmation-dialog"]
   }
 
   // create a human-readable list of days the activity is scheduled for
@@ -164,7 +154,7 @@ router.get("/:activityId/other-prisoners", function (req, res) {
     offset,
     offset + limit
   );
-  let totalPages = Math.ceil(prisonersWithoutApplication.length / limit);  
+  let totalPages = Math.ceil(prisonersWithoutApplication.length / limit);
 
   res.render(req.protoUrl + "/other-prisoners", {
     activity,
@@ -207,90 +197,113 @@ router.get("/:activityId/applications/:applicationId", function (req, res) {
 });
 
 // update application page
-router.get("/:activityId/applications/:applicationId/update", function (req, res) {
-  let activityId = req.params.activityId;
-  let applicationId = req.params.applicationId;
-  let activities = req.session.data["timetable-complete-1"]["activities"];
-  
-  let activity = activities.find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
+router.get(
+  "/:activityId/applications/:applicationId/update",
+  function (req, res) {
+    let activityId = req.params.activityId;
+    let applicationId = req.params.applicationId;
+    let activities = req.session.data["timetable-complete-1"]["activities"];
 
-  let applications = req.session.data["applications"];
-  let application = applications.find(
-    (application) => application.id.toString() === applicationId.toString()
-  );
+    let activity = activities.find(
+      (activity) => activity.id.toString() === activityId.toString()
+    );
 
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisoner = prisoners.find(
-    (prisoner) => prisoner.id.toString() === application["selected-prisoner"].toString()
-  );
+    let applications = req.session.data["applications"];
+    let application = applications.find(
+      (application) => application.id.toString() === applicationId.toString()
+    );
 
-  res.render(req.protoUrl + "/update-application", {
-    activity,
-    application,
-    prisoner,
-  });
-});
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisoner = prisoners.find(
+      (prisoner) =>
+        prisoner.id.toString() === application["selected-prisoner"].toString()
+    );
+
+    res.render(req.protoUrl + "/update-application", {
+      activity,
+      application,
+      prisoner,
+    });
+  }
+);
 
 // update application page - POST request to confirm changes
-router.post("/:activityId/applications/:applicationId/update", function (req, res) {
-  let activityId = req.params.activityId;
-  let applicationId = req.params.applicationId;
-  let activities = req.session.data["timetable-complete-1"]["activities"];
-  
-  let activity = activities.find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
+router.post(
+  "/:activityId/applications/:applicationId/update",
+  function (req, res) {
+    let activityId = req.params.activityId;
+    let applicationId = req.params.applicationId;
+    let activities = req.session.data["timetable-complete-1"]["activities"];
 
-  let applications = req.session.data["applications"];
-  let application = applications.find(
-    (application) => application.id.toString() === applicationId.toString()
-  );
+    let activity = activities.find(
+      (activity) => activity.id.toString() === activityId.toString()
+    );
 
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisoner = prisoners.find(
-    (prisoner) => prisoner.id.toString() === application["selected-prisoner"].toString()
-  );
+    let applications = req.session.data["applications"];
+    let application = applications.find(
+      (application) => application.id.toString() === applicationId.toString()
+    );
 
-  // get the update application from the radio buttons
-  let updateApplication = req.session.data["update-application"];
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisoner = prisoners.find(
+      (prisoner) =>
+        prisoner.id.toString() === application["selected-prisoner"].toString()
+    );
 
-  // logic for radios
-  // if user rejects the application, set the application status to rejected
-  // and redirect to the activity waitlist page
-  // set the rejected dialog to show
-  if (req.session.data["update-application"] === "reject") {
-    // update the application status
-    application["status"] = "rejected";
-    application["eligible"] = "no";
-    req.session.data["rejected-dialog"] = true;
-    res.redirect("../../applications");
+    // get the update application from the radio buttons
+    let updateApplication = req.session.data["update-application"];
+
+    // logic for radios
+    // if user rejects the application, set the application status to rejected
+    // and redirect to the activity waitlist page
+    // set the rejected dialog to show
+    if (req.session.data["update-application"] === "reject") {
+      // redirect to the confirm remove application page with the prisoner id
+      // e.g. allocate/SH7137Q/confirm-remove as the url
+      res.redirect('../../allocate/' + prisoner.id + "/confirm-remove");
+    }
+    // if user accepts the application, set the application eligible to yes
+    // and redirect to the activity waitlist page
+    // set the accepted dialog to show
+    else if (req.session.data["update-application"] === "eligible") {
+      // update the application status
+      application["eligible"] = "yes";
+      
+      req.session.data["confirmation-dialog"] = {
+        type: "eligible",
+        display: true,
+        prisoner: prisoner.id,
+        activity: activityId
+      }
+
+      res.redirect("../../applications");
+    }
+    // if user marks the application as pending, set the application eligible to pending
+    // and redirect to the activity waitlist page
+    // set the pending dialog to show
+    else if (req.session.data["update-application"] === "pending") {
+      // update the application status
+      application["eligible"] = null;
+      
+      req.session.data["confirmation-dialog"] = {
+        type: "pending",
+        display: true,
+        prisoner: prisoner.id,
+        activity: activityId
+      }
+
+      res.redirect("../../applications");
+    }
   }
-  // if user accepts the application, set the application eligible to yes
-  // and redirect to the activity waitlist page
-  // set the accepted dialog to show
-  else if (req.session.data["update-application"] === "eligible") {
-    // update the application status
-    application["eligible"] = "yes";
-    req.session.data["accepted-dialog"] = true;
-    res.redirect("../../applications");
-  }
-  // if user marks the application as pending, set the application eligible to pending
-  // and redirect to the activity waitlist page
-  // set the pending dialog to show
-  else if (req.session.data["update-application"] === "pending") {
-    // update the application status
-    application["eligible"] = null;
-    req.session.data["pending-dialog"] = true;
-    res.redirect("../../applications");
-  }
-});
+);
 
 // update application confirmation page
-router.get("/:activityId/applications/:applicationId/update-confirmation", function (req, res) {
-  res.render(req.protoUrl + "/update-confirmation");
-});
+router.get(
+  "/:activityId/applications/:applicationId/update-confirmation",
+  function (req, res) {
+    res.render(req.protoUrl + "/update-confirmation");
+  }
+);
 
 // activity allocate page
 router.get("/:activityId/allocate/:prisonerId", function (req, res) {
@@ -311,7 +324,7 @@ router.get("/:activityId/allocate/:prisonerId", function (req, res) {
       application["selected-prisoner"].toString() === prisonerId.toString() &&
       application["activity"].toString() === activityId.toString()
   );
-  
+
   res.render(req.protoUrl + "/allocate", {
     activityId,
     activity,
@@ -333,14 +346,98 @@ router.post("/:activityId/allocate/:prisonerId", function (req, res) {
     (activity) => activity.id.toString() === activityId.toString()
   );
 
-  // if the user chooses yes, continue to the payrate page for the allocate journey for this prisoner
-  if (req.body["allocate"] === "yes") {
-    res.redirect(req.params.prisonerId + '/payrate')
+  if (req.body["allocate"] === "no") {
+    // if the user chooses no, go to the confirm remove prisoner page
+    res.redirect(req.params.prisonerId + "/confirm-remove");
   } else {
-    // if the user chooses no, redirect to the activity page
-    res.redirect('../applications');
+    // otherwise, continue to the payrate page for the allocate journey for this prisoner
+    res.redirect(req.params.prisonerId + "/payrate");
   }
 });
+
+// confirm remove prisoner page
+router.get(
+  "/:activityId/allocate/:prisonerId/confirm-remove",
+  function (req, res) {
+    let activityId = req.params.activityId;
+    let prisonerId = req.params.prisonerId;
+    let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+      (prisoner) => prisoner.id.toString() === prisonerId.toString()
+    );
+    let activities = req.session.data["timetable-complete-1"]["activities"];
+    let activity = activities.find(
+      (activity) => activity.id.toString() === activityId.toString()
+    );
+
+    // render the confirm remove prisoner page
+    res.render(req.protoUrl + "/confirm-remove", {
+      activityId,
+      activity,
+      prisoner,
+      prisonerId,
+    });
+  }
+);
+// post logic for confirm remove prisoner page
+router.post(
+  "/:activityId/allocate/:prisonerId/confirm-remove",
+  function (req, res) {
+    let activityId = req.params.activityId;
+    let prisonerId = req.params.prisonerId;
+
+    if (req.body["confirm-remove"] === "yes") {
+      // find the prisoner's application for this activity, if it exists
+      let applications = req.session.data["applications"];
+      let application = applications.find(
+        (application) =>
+          application["selected-prisoner"].toString() ===
+            prisonerId.toString() &&
+          application["activity"].toString() === activityId.toString()
+      );
+      // if the application exists, set the application status to rejected
+      if (application) {
+        application["status"] = "rejected";
+      }
+
+      // redirect to the activity waitlist page
+      // and show the removed dialog
+      req.session.data["confirmation-dialog"] = {
+        type: "removed",
+        display: true,
+        prisoner: prisonerId,
+        activity: activityId
+      }
+      res.redirect("../../applications");
+    } else {
+      // redirect to the allocate page
+      res.redirect("../" + req.params.prisonerId);
+    }
+  }
+);
+
+// remove prisoner confirmation page
+router.get(
+  "/:activityId/allocate/:prisonerId/remove-confirmation",
+  function (req, res) {
+    let activityId = req.params.activityId;
+    let prisonerId = req.params.prisonerId;
+    let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+      (prisoner) => prisoner.id.toString() === prisonerId.toString()
+    );
+    let activities = req.session.data["timetable-complete-1"]["activities"];
+    let activity = activities.find(
+      (activity) => activity.id.toString() === activityId.toString()
+    );
+
+    // render the remove prisoner confirmation page
+    res.render(req.protoUrl + "/remove-confirmation", {
+      activityId,
+      activity,
+      prisoner,
+      prisonerId,
+    });
+  }
+);
 
 // select payrate page, after the allocate page
 router.get("/:activityId/allocate/:prisonerId/payrate", function (req, res) {
@@ -372,91 +469,107 @@ router.post("/:activityId/allocate/:prisonerId/payrate", function (req, res) {
 });
 
 // check allocation details page
-router.get("/:activityId/allocate/:prisonerId/check-allocation-details", function (req, res) {
-  let activityId = req.params.activityId;
-  let prisonerId = req.params.prisonerId;
-  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
-    (prisoner) => prisoner.id.toString() === prisonerId.toString()
-  );
-  let activities = req.session.data["timetable-complete-1"]["activities"];
-  let activity = activities.find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
+router.get(
+  "/:activityId/allocate/:prisonerId/check-allocation-details",
+  function (req, res) {
+    let activityId = req.params.activityId;
+    let prisonerId = req.params.prisonerId;
+    let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+      (prisoner) => prisoner.id.toString() === prisonerId.toString()
+    );
+    let activities = req.session.data["timetable-complete-1"]["activities"];
+    let activity = activities.find(
+      (activity) => activity.id.toString() === activityId.toString()
+    );
 
-  // render the check your answers page
-  res.render(req.protoUrl + "/check-allocation-details", {
-    activityId,
-    activity,
-    prisoner,
-    prisonerId,
+    // render the check your answers page
+    res.render(req.protoUrl + "/check-allocation-details", {
+      activityId,
+      activity,
+      prisoner,
+      prisonerId,
     });
-});
+  }
+);
 
 // post logic for check allocation details page
 // go to the confirmation page
-router.post("/:activityId/allocate/:prisonerId/check-allocation-details", function (req, res) {
-  // allocate the prisoner to the activity
-  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
-    (prisoner) => prisoner.id.toString() === req.params.prisonerId.toString()
-  );
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() === req.params.activityId.toString()
-  );
+router.post(
+  "/:activityId/allocate/:prisonerId/check-allocation-details",
+  function (req, res) {
+    // allocate the prisoner to the activity
+    let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+      (prisoner) => prisoner.id.toString() === req.params.prisonerId.toString()
+    );
+    let activity = req.session.data["timetable-complete-1"]["activities"].find(
+      (activity) => activity.id.toString() === req.params.activityId.toString()
+    );
 
-  // if the prisoner already has an activity, add the new activity to the array
-  if (prisoner.activity) {
-    if (Array.isArray(prisoner.activity)) {
-      prisoner.activity.push(activity.id);
+    // if the prisoner already has an activity, add the new activity to the array
+    if (prisoner.activity) {
+      if (Array.isArray(prisoner.activity)) {
+        prisoner.activity.push(activity.id);
+      } else {
+        prisoner.activity = [prisoner.activity, activity.id];
+      }
     } else {
-      prisoner.activity = [prisoner.activity, activity.id];
+      // if the prisoner doesn't have an activity, add the new activity
+      prisoner.activity = activity.id;
     }
-  } else {
-    // if the prisoner doesn't have an activity, add the new activity
-    prisoner.activity = activity.id;
-  }
-  
-  // create a date in the format yyyy-mm-dd
-  let date = new Date();
-  date = date.toISOString().split("T")[0];
 
-  // create an allocation object
-  // and session data for the allocation
-  // payrate, prisoner, activity, date, id
-  req.session.data["allocation"] = {
-    payrate: req.session.data["allocation"]["payrate"],
-    prisoner: prisoner.id,
-    activity: activity.id,
-    date: date,
-    id: Math.floor(Math.random() * 1000000000),
-  };
+    // create a date in the format yyyy-mm-dd
+    let date = new Date();
+    date = date.toISOString().split("T")[0];
 
-  // add details of the allocation to the prisoner object
-  if (prisoner.allocations && Array.isArray(prisoner.allocations)) {
-    prisoner.allocations.push(req.session.data["allocation"]);
-  } else {
-    prisoner.allocations = [req.session.data["allocation"]];
-  }
-  // add the allocation to the allocations session data
-  if (req.session.data["allocations"] && Array.isArray(req.session.data["allocations"])) {
-    req.session.data["allocations"].push(req.session.data["allocation"]);
-  } else {
-    req.session.data["allocations"] = [req.session.data["allocation"]];
-  }
+    // create an allocation object
+    // and session data for the allocation
+    // payrate, prisoner, activity, date, id
+    req.session.data["allocation"] = {
+      payrate: req.session.data["allocation"]["payrate"],
+      prisoner: prisoner.id,
+      activity: activity.id,
+      date: date,
+      id: Math.floor(Math.random() * 1000000000),
+    };
 
-  // redirect to the confirmation page
-  res.redirect("allocation-confirmation?allocation=" + req.session.data["allocation"]["id"]);
-});
+    // add details of the allocation to the prisoner object
+    if (prisoner.allocations && Array.isArray(prisoner.allocations)) {
+      prisoner.allocations.push(req.session.data["allocation"]);
+    } else {
+      prisoner.allocations = [req.session.data["allocation"]];
+    }
+    // add the allocation to the allocations session data
+    if (
+      req.session.data["allocations"] &&
+      Array.isArray(req.session.data["allocations"])
+    ) {
+      req.session.data["allocations"].push(req.session.data["allocation"]);
+    } else {
+      req.session.data["allocations"] = [req.session.data["allocation"]];
+    }
+
+    // redirect to the confirmation page
+    res.redirect(
+      "allocation-confirmation?allocation=" +
+        req.session.data["allocation"]["id"]
+    );
+  }
+);
 
 // allocation confirmation page
-router.get("/:activityId/allocate/:prisonerId/allocation-confirmation", function (req, res) {
-  let allocation = req.session.data["allocations"].find(
-    (allocation) => allocation.id.toString() === req.query.allocation.toString()
-  );
+router.get(
+  "/:activityId/allocate/:prisonerId/allocation-confirmation",
+  function (req, res) {
+    let allocation = req.session.data["allocations"].find(
+      (allocation) =>
+        allocation.id.toString() === req.query.allocation.toString()
+    );
 
-  res.render(req.protoUrl + "/allocation-confirmation", {
-    allocation
-  });
-});
+    res.render(req.protoUrl + "/allocation-confirmation", {
+      allocation,
+    });
+  }
+);
 
 module.exports = router;
 

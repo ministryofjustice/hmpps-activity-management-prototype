@@ -17,10 +17,13 @@ Find an activity to record or edit attendance
 
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
-{% if data['pending-dialog'] %}
+{% if data['confirmation-dialog'].display == true %}
+{% set prisoner = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
+{% if data['confirmation-dialog'].type == 'removed' %}
 {% set bannerHtml %}
 <h2 class="govuk-notification-banner__heading">
-    We've updated NAME's suitability for this activity.
+    We've removed {{prisoner.name.firstname}} {{prisoner.name.surname}} from the waitlist for
+    {{activity.name}}.
 </h2>
 {% endset %}
 {{ govukNotificationBanner({
@@ -28,10 +31,12 @@ html: bannerHtml,
 titleText: "Success",
 type: "success"
 }) }}
-{% elif data['accepted-dialog'] %}
+{% endif %}
+
+{% if data['confirmation-dialog'].type == 'eligible' %}
 {% set bannerHtml %}
 <h2 class="govuk-notification-banner__heading">
-    We've updated the prisoner's suitability for this activity.
+    We've changed {{prisoner.name.firstname}} {{prisoner.name.surname}}'s suitability to 'checks passed'.
 </h2>
 {% endset %}
 {{ govukNotificationBanner({
@@ -39,10 +44,12 @@ html: bannerHtml,
 titleText: "Success",
 type: "success"
 }) }}
-{% elif data['rejected-dialog'] %}
+{% endif %}
+
+{% if data['confirmation-dialog'].type == 'pending' %}
 {% set bannerHtml %}
 <h2 class="govuk-notification-banner__heading">
-    We've updated the prisoner's suitability for this activity.
+    We've changed {{prisoner.name.firstname}} {{prisoner.name.surname}}'s suitability to 'checks needed'.
 </h2>
 {% endset %}
 {{ govukNotificationBanner({
@@ -50,6 +57,7 @@ html: bannerHtml,
 titleText: "Success",
 type: "success"
 }) }}
+{% endif %}
 {% endif %}
 
 {% include "./_activity-header.html" %}
