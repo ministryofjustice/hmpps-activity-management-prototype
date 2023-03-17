@@ -32,6 +32,15 @@ text: "Back",
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
+                    Activity
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% set activity = data['allocation']['activity']|getActivityDetails %}
+                    {{activity.name}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
                     Prison number
                 </dt>
                 <dd class="govuk-summary-list__value">
@@ -52,6 +61,10 @@ text: "Back",
                 </dt>
                 <dd class="govuk-summary-list__value">
                     £{{data['allocation']['pay-rate']}}
+                </dd>
+                <!-- Change link -->
+                <dd class="govuk-summary-list__actions">
+                    <a href="select-pay-rate" class="govuk-link--no-visited-state">Change</a>
                 </dd>
             </div>
         </dl>
@@ -85,7 +98,7 @@ text: "Back",
                 Now confirm the allocation
             </h2>
             <p>
-                {{prisoner.name.firstname}} {{prisoner.name.surname}} will be allocated to {{activity.name}} from the next session.
+                {{prisoner.name.firstname}} {{prisoner.name.surname}} will be allocated to {{activity.name}} for the next session.
             </p>
 
             {% if data['new-application']['eligible'] != 'no' %}

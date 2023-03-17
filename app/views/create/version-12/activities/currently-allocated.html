@@ -63,9 +63,17 @@ Find an activity to record or edit attendance
                     </div>
                 </div>
             </td>
-            <td class="govuk-table__cell govuk-!-padding-top-4">None</td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
-               DATE
+                {% if loop.index == 3 %}
+                <ul class="govuk-list">
+                    <li><a href="#" class="govuk-link--no-visited-state">Jordan Johnson-Jones</a></li>
+                </ul>
+                {% else %}
+                None
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell govuk-!-padding-top-4">
+                DATE
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
                 {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}

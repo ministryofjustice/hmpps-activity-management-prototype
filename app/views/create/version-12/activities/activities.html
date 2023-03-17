@@ -30,7 +30,7 @@ href: "../manage-activities"
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-            Prison activities
+            Find activities with vacancies 
         </h1>
 
         <p>
@@ -99,10 +99,14 @@ href: "../manage-activities"
             </td>
             <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint"
                 data-sort-value="{{activity.attendanceCount[period]['attended']}}">
-                {{ (100 - ((activity.capacity - activity.currentlyAllocated) / activity.capacity * 100)) | round(1)}}
+                {{ (100 - ((activity.capacity - activity.currentlyAllocated) / activity.capacity * 100)) | round(0)}}
             </td>
-            <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">
-                <span class="govuk-tag govuk-tag--red">{{ activity.capacity - activity.currentlyAllocated }}</span>
+            <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint" data-sort-value="{{ activity.capacity - activity.currentlyAllocated }}">
+                {% set vacanciesCount = activity.capacity - activity.currentlyAllocated %}
+                {% if vacanciesCount < 0 %}
+                {% set vacanciesCount = 0 %}
+                {% endif %}
+                <span class="govuk-tag {{'govuk-tag--red' if vacanciesCount > 0 else 'govuk-tag--green'}}">{{ vacanciesCount }}</span>
             </td>
         </tr>
         {% endfor %}

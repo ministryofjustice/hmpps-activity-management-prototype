@@ -605,9 +605,11 @@ function addAllocationsCountToActivities(activities, req, applications) {
     activity.currentlyAllocated = prisonerCount;
 
     // get a count of all applications for the activity and add it to the activity object
+    // but exclude ones that have been rejected
     let activityApplications = applications.filter(
       (application) =>
-        application.activity.toString() === activity.id.toString()
+        application["activity"].toString() === activity.id.toString() &&
+        application["status"] !== "rejected"
     );
     activity.applicationCount = activityApplications.length;
   });

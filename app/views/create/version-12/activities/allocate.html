@@ -17,7 +17,7 @@ text: "Back",
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% set bannerHtml %}
 <h2 class="govuk-notification-banner__heading">
-    Suitability checks have not been completed for this prisoner.
+    Suitability checks have not been carried out for this prisoner.
 </h2>
 {% endset %}
 {{ govukNotificationBanner({
@@ -101,7 +101,7 @@ html: bannerHtml
 
         <table class="govuk-table">
             <caption class="govuk-table__caption govuk-table__caption--m">
-                Prisoner eligibility details
+                Prisoner suitability details
             </caption>
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
@@ -187,6 +187,13 @@ html: bannerHtml
             {
             value: "yes",
             html: "Yes, continue to select pay rate"
+            },
+            {
+            value: "return",
+            html: "No, return to the waitlist"
+            },
+            {
+                divider: "or"
             },
             {
             value: "no",

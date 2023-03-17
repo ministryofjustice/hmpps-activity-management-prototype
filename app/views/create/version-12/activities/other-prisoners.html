@@ -23,8 +23,26 @@ Find an activity to record or edit attendance
     You can also <a href="../../log-an-application-version-2">add a new activity request</a>.
 </p>
 
-
 {% include './_filters.html' %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="moj-search govuk-!-margin-bottom-6">
+            <form action="other-prisoners" method="get" novalidate="">
+                <div class="govuk-form-group">
+                    <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="name">
+                        Search by name or prison number
+                    </label>
+                    <input class="govuk-input moj-search__input " id="name" name="search" type="search"
+                        value="{{data['search']}}">
+                </div>
+                <button class="govuk-button moj-search__button" data-module="govuk-button">
+                    Search
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <table class="govuk-table" id="list">
     <caption class="govuk-table__caption govuk-table__caption--m">
@@ -43,7 +61,7 @@ Find an activity to record or edit attendance
         </tr>
     </thead>
     <tbody class="govuk-table__body">
-        {% for prisoner in prisonersWithoutApplicationPaginated | sort(false, true, 'releaseDate') %}
+        {% for prisoner in prisonersWithoutApplicationPaginated | sort(false, false, 'activity') %}
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
                 <a href="../../../prisoner/{{prisoner.id}}"
@@ -68,13 +86,14 @@ Find an activity to record or edit attendance
             </td>
             <td class="govuk-table__cell">
                 <ul class="govuk-list">
-                    {% if prisoner.activity|length == 0 %}
+                    <!-- {% if prisoner.activity|length == 0 %}
                     <span class="govuk-hint">None</span>
                     {% endif %}
                     {% for allocation in prisoner.activity %}
                     {% set activity = allocation|getActivityDetails %}
                     <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
-                    {% endfor %}
+                    {% endfor %} -->
+                    <li><span class="govuk-hint">None</span></li>
                 </ul>
             </td>
             <td class="govuk-table__cell">
