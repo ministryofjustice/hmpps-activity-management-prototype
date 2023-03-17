@@ -514,7 +514,21 @@ router.post(
       }
     } else {
       // if the prisoner doesn't have an activity, add the new activity
-      prisoner.activity = activity.id;
+      prisoner.activity = [activity.id];
+    }
+
+    // if the prisoner had an application for this activity, delete it
+    let applications = req.session.data["applications"];
+    let application = applications.find(
+      (application) =>
+        application["selected-prisoner"].toString() ===
+          req.params.prisonerId.toString() &&
+        application["activity"].toString() === req.params.activityId.toString() &&
+        application["status"] === "pending"
+    );
+    if (application) {
+      let index = applications.indexOf(application);
+      applications.splice(index, 1);
     }
 
     // create a date in the format yyyy-mm-dd
