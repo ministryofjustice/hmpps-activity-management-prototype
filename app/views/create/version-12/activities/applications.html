@@ -71,7 +71,7 @@ type: "success"
 </p>
 
 <p>
-    You can also <a href="../../log-an-application-version-2">add a new request</a>.
+    You can also <a href="../../log-an-application-version-2">add a new activity request</a>.
 </p>
 
 {% include './_filters.html' %}
@@ -105,7 +105,11 @@ type: "success"
                 {{application.date|convertShortDateToMediumDate}}
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
+                {% if application.applicant == "prisoner" %}
+                Self-requested
+                {% else %}
                 {{application.applicant|capitalize}}
+                {% endif %}
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
                 <ul class="govuk-list">

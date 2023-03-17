@@ -41,7 +41,7 @@
         {% endset %}
 
         {{govukDetails({
-        summaryText: "Activity suitability details",
+        summaryText: "Activity requirements",
         html: activityInfoHtml
         })}}
 
@@ -97,13 +97,13 @@
         {% set currentlyAllocatedCount = data['timetable-complete-1']['prisoners']|getCurrentlyAllocatedCount(activity.id) %}
         <ul class="govuk-list">
             <li>
-                Capacity: {{activity.capacity}}
+                Vacancies: {{activity.capacity - currentlyAllocatedCount}}
             </li>
             <li>
                 Currently allocated: {{currentlyAllocatedCount}}
             </li>
             <li>
-                Vacancies: {{activity.capacity - currentlyAllocatedCount}}
+                Capacity: {{activity.capacity}}
             </li>
         </ul>
     </div>

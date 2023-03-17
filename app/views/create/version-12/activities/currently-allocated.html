@@ -19,9 +19,9 @@ Find an activity to record or edit attendance
 
 <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-l">
-            Currently allocated
-        </h2>
+        <p>
+            Select people if you want to remove them from this activity.
+        </p>
         <!-- <div class="govuk-inset-text">
             <p>
                 You should <a href="../../log-an-application-version-2" class="govuk-link--no-visited-state">log an application</a> before allocating a prisoner to an activity.
@@ -64,7 +64,9 @@ Find an activity to record or edit attendance
                 </div>
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">None</td>
-            <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
+            <td class="govuk-table__cell govuk-!-padding-top-4">
+               DATE
+            </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
                 {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
                 <span class="govuk-hint">None</span>
@@ -80,7 +82,9 @@ Find an activity to record or edit attendance
                 </ul>
                 {% endif %}
             </td>
-            <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
+            <td class="govuk-table__cell govuk-!-padding-top-4">
+                {{prisoner.releaseDate|convertShortDateToMediumDate}}
+            </td>
         </tr>
         {% endfor %}
     </tbody>
