@@ -15,13 +15,55 @@ Find an activity to record or edit attendance
 
 {% block content %}
 
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% if data['pending-dialog'] %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    We've updated NAME's suitability for this activity.
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Success",
+type: "success"
+}) }}
+{% elif data['accepted-dialog'] %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    We've updated the prisoner's suitability for this activity.
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Success",
+type: "success"
+}) }}
+{% elif data['rejected-dialog'] %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    We've updated the prisoner's suitability for this activity.
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Success",
+type: "success"
+}) }}
+{% endif %}
+
 {% include "./_activity-header.html" %}
+
 <h2 class="govuk-heading-l govuk-visually-hidden">
     Waitlist
 </h2>
 
 <p>
     Select the person you want to allocate or update suitability for.
+</p>
+
+<p>
+    You can also <a href="../../log-an-application-version-2">add a new request</a>.
 </p>
 
 {% include './_filters.html' %}
@@ -92,6 +134,9 @@ Find an activity to record or edit attendance
                                 {{prisoner.name.surname}}</span></a>
                     </li>
                 </ul>
+                <!-- <a class="govuk-link govuk-link--no-visited-state" href="applications/{{application.id}}/update">
+                    Update or allocate<span class="govuk-visually-hidden"> {{prisoner.name.firstname}}
+                        {{prisoner.name.surname}}</span></a> -->
             </td>
         </tr>
         {% endfor %}

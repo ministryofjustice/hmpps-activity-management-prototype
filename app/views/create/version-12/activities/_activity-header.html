@@ -1,41 +1,23 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Category: {{activity.category|getActivityCategoryName}}
+        </span>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
             {{activity.name}}
         </h1>
-
-        <!-- <span class="govuk-caption-l">
-            Category: Education
-        </span>
-        <span class="govuk-caption-l">
-            Suitable for workplace risk assessment: Low, Medium or High
-        </span>
-        <span class="govuk-caption-l">
-            Suitable for incentive level:Standard or Enhanced
-        </span>
-        <span class="govuk-caption-l">
-            Education level:BICS level 1, English level 1: Education
-        </span> -->
-        <!-- as summary list -->
+        
+        {% set activityInfoHtml %}
         {{ govukSummaryList({
-            classes: "govuk-summary-list--no-border",
+            classes: "govuk-summary-list--no-borderr",
             rows: [
-                {
-                    classes: "govuk-summary-list__row--no-actions",
-                    key: {
-                        text: "Category"
-                    },
-                    value: {
-                        text: activity.category|getActivityCategoryName
-                    }
-                },
                 {
                     classes: "govuk-summary-list__row--no-actions",
                     key: {
                         text: "Suitable for workplace risk assessment"
                     },
                     value: {
-                        text: activity.riskAssessment
+                        text: "Medium"
                     }
                 },
                 {
@@ -43,7 +25,7 @@
                         text: "Suitable for incentive level"
                     },
                     value: {
-                        text: activity.incentiveLevel
+                        text: "Basic, Standard or Enhanced"
                     }
                 },
                 {
@@ -51,14 +33,23 @@
                         text: "Education level"
                     },
                     value: {
-                        text: activity.educationLevel
+                        text: "English level 1"
                     }
                 }
             ]
         }) }}
+        {% endset %}
+
+        {{govukDetails({
+        summaryText: "Activity suitability details",
+        html: activityInfoHtml
+        })}}
 
         {% set scheduleHtml %}
         <table class="govuk-table">
+            <caption class="govuk-table__caption">
+                Schedule
+            </caption>
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header">Days</th>
@@ -102,10 +93,26 @@
         summaryText: "View activity schedule",
         html: scheduleHtml
         })}} -->
+
+        {% set currentlyAllocatedCount = data['timetable-complete-1']['prisoners']|getCurrentlyAllocatedCount(activity.id) %}
+        <ul class="govuk-list">
+            <li>
+                Capacity: {{activity.capacity}}
+            </li>
+            <li>
+                Currently allocated: {{currentlyAllocatedCount}}
+            </li>
+            <li>
+                Vacancies: {{activity.capacity - currentlyAllocatedCount}}
+            </li>
+        </ul>
     </div>
 
     <div class="govuk-grid-column-one-third">
         <div class="govuk-!-padding-3" style="border: 1px solid #c7c7c7; box-shadow: 4px 4px 0 rgba(0,0,0,0.1)">
+            <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
+                Schedule
+            </h2>
             <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-0">
                 {% for day in activityDaysWithTimes %}
                 <div class="govuk-summary-list__row govuk-!-font-size-14">

@@ -2,6 +2,16 @@ const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
 
+// update application pages
+router.use("/update", (req, res, next) => {
+  let serviceName = req.originalUrl.split("/")[1];
+  let version = req.originalUrl.split("/")[2];
+  let journey = req.originalUrl.split("/")[3];
+
+  req.protoUrl = serviceName + "/" + version + "/" + journey;
+  require("./update/routes")(req, res, next);
+});
+
 // routes for pages in the activities section
 // activities page redirect root to /all
 router.get("/", function (req, res) {
@@ -45,8 +55,11 @@ router.get("/:activityId/applications", function (req, res) {
   let schedule = getActivitySchedule(activitySchedule);
 
   // get a list of all applications for the selected activity
+  // exclude those with a status of 'rejected'
   let activityApplications = applications.filter(
-    (application) => application.activity.toString() === activityId.toString()
+    (application) =>
+      application.activity.toString() === activityId.toString() &&
+      application.status !== "rejected"
   );
 
   // hide the confirmation message if it's shown
@@ -220,6 +233,64 @@ router.get("/:activityId/applications/:applicationId/update", function (req, res
   });
 });
 
+// update application page - POST request to confirm changes
+router.post("/:activityId/applications/:applicationId/update", function (req, res) {
+  let activityId = req.params.activityId;
+  let applicationId = req.params.applicationId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  let applications = req.session.data["applications"];
+  let application = applications.find(
+    (application) => application.id.toString() === applicationId.toString()
+  );
+
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let prisoner = prisoners.find(
+    (prisoner) => prisoner.id.toString() === application["selected-prisoner"].toString()
+  );
+
+  // get the update application from the radio buttons
+  let updateApplication = req.session.data["update-application"];
+
+  // logic for radios
+  // if user rejects the application, set the application status to rejected
+  // and redirect to the activity waitlist page
+  // set the rejected dialog to show
+  if (req.session.data["update-application"] === "reject") {
+    // update the application status
+    application["status"] = "rejected";
+    application["eligible"] = "no";
+    req.session.data["rejected-dialog"] = true;
+    res.redirect("../../applications");
+  }
+  // if user accepts the application, set the application eligible to yes
+  // and redirect to the activity waitlist page
+  // set the accepted dialog to show
+  else if (req.session.data["update-application"] === "eligible") {
+    // update the application status
+    application["eligible"] = "yes";
+    req.session.data["accepted-dialog"] = true;
+    res.redirect("../../applications");
+  }
+  // if user marks the application as pending, set the application eligible to pending
+  // and redirect to the activity waitlist page
+  // set the pending dialog to show
+  else if (req.session.data["update-application"] === "pending") {
+    // update the application status
+    application["eligible"] = null;
+    req.session.data["pending-dialog"] = true;
+    res.redirect("../../applications");
+  }
+});
+
+// update application confirmation page
+router.get("/:activityId/applications/:applicationId/update-confirmation", function (req, res) {
+  res.render(req.protoUrl + "/update-confirmation");
+});
 
 // activity allocate page
 router.get("/:activityId/allocate/:prisonerId", function (req, res) {
@@ -267,7 +338,7 @@ router.post("/:activityId/allocate/:prisonerId", function (req, res) {
     res.redirect(req.params.prisonerId + '/payrate')
   } else {
     // if the user chooses no, redirect to the activity page
-    res.redirect(req.protoUrl + "/../" + activityId);
+    res.redirect('../applications');
   }
 });
 
@@ -320,6 +391,18 @@ router.get("/:activityId/allocate/:prisonerId/check-allocation-details", functio
     prisonerId,
     });
 });
+
+// post logic for check allocation details page
+// go to the confirmation page
+router.post("/:activityId/allocate/:prisonerId/check-allocation-details", function (req, res) {
+  res.redirect("allocation-confirmation");
+});
+
+// allocation confirmation page
+router.get("/:activityId/allocate/:prisonerId/allocation-confirmation", function (req, res) {
+  res.render(req.protoUrl + "/allocation-confirmation");
+});
+
 
 
 

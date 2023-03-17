@@ -16,14 +16,7 @@ Activities Management prototype
             {% set activity = data['new-application']['activity'] | getActivityDetails %}
 
             {% set titleText %}
-            {% if data['allocate-now'] == "yes" %}
             You've allocated {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}
-            {% elif data['new-application']['status'] != "rejected" %}
-            You've added {{prisoner.name.firstname}} {{prisoner.name.surname}} to the waitlist for {{activity.name}}
-            {% else %}
-            You've rejected {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request to be allocated to
-            {{activity.name}}
-            {% endif %}
             {% endset %}
 
             {{ govukPanel({
@@ -102,11 +95,6 @@ Activities Management prototype
             You can either:
         </p>
         <ul class="govuk-list govuk-list--bullet">
-            {% if data['new-application']['status'] == "approved" %}
-            <li><a href="quick-allocate/{{data['application']}}"
-                    class="govuk-link--no-visited-state">allocate {{prisoner.name.firstname}} {{prisoner.name.surname}}
-                    to {{activity.name}}</a></li>
-            {% endif %}
             <li><a href="select-activity" class="govuk-link--no-visited-state">log another application for
                     {{prisoner.name.firstname}} {{prisoner.name.surname}}</a></li>
             <li><a href="prisoner-search" class="govuk-link--no-visited-state">log an application for someone else</a>

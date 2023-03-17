@@ -134,7 +134,10 @@ module.exports = function (env) {
   // count applications for a given activity id and applications data
   filters.countApplications = function (applications, activityId) {
     let activityApplications = applications.filter(
-      (application) => application.activity.toString() == activityId.toString()
+      // exclude applications that have status rejected
+      (application) =>
+        application.activity.toString() == activityId.toString() &&
+        application.status != "rejected"
     );
 
     return activityApplications.length;

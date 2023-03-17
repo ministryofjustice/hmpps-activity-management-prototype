@@ -20,7 +20,7 @@ text: "Back",
             {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request
         </h1>
 
-        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-">
             <!-- <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Prisoner
@@ -39,7 +39,7 @@ text: "Back",
                     Activity requested
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% set activity = application['activity']|getActivityDetails %}
+                    {% set activity = data['new-application']['activity']|getActivityDetails %}
                     {{activity.name}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
@@ -53,7 +53,7 @@ text: "Back",
                     Date of request
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{application['date']|convertShortDateToLongDate}}
+                    {{data['new-application']['date']|convertShortDateToLongDate}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
@@ -66,10 +66,10 @@ text: "Back",
                     Requestor
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% if application['applicant'] == 'prisoner' %}
+                    {% if data['new-application']['applicant'] == 'prisoner' %}
                     Prisoner
                     {% else %}
-                    {{application['applicant']|capitalize}}
+                    {{data['new-application']['applicant']}}
                     {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
@@ -83,12 +83,12 @@ text: "Back",
                     Suitability
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% if application['eligible'] == 'yes' %}
-                    <span class="govuk-tag govuk-tag--green">Eligible</span>
-                    {% elif application['eligible'] == 'no' %}
-                    <span class="govuk-tag govuk-tag--red">Not eligible</span>
+                    {% if data['new-application']['eligible'] == 'yes' %}
+                    <span class="govuk-tag govuk-tag--green">Checks passed</span>
+                    {% elif data['new-application']['eligible'] == 'no' %}
+                    <span class="govuk-tag govuk-tag--red">Rejected</span>
                     {% else %}
-                    <span class="govuk-tag govuk-tag--yellow">Further checks needed</span>
+                    <span class="govuk-tag govuk-tag--yellow">Checks needed</span>
                     {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
