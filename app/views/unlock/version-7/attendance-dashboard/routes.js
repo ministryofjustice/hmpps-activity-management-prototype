@@ -324,7 +324,7 @@ const createHistoricAttendanceData = (
   let dates = [];
   for (let i = 0; i < numberOfDays; i++) {
     let date = new Date();
-    date.setDate(date.getDate() - i);
+    date.setDate(date.getDate() - i - 1);
     dates.push(date);
   }
 
@@ -352,19 +352,72 @@ const createHistoricAttendanceData = (
 
           attendanceRecord.attendance =
             Math.random() < 0.96 ? "attended" : "not-attended"; //shorthand to decide if prisoner attended
-          attendanceRecord.pay = Math.random() < 0.5 ? true : false; //shorthand to decide if prisoner paid
+
+            // if the prisoner attended, decide if they got paid
+            if (attendanceRecord.attendance === "attended") {
+              attendanceRecord.pay = Math.random() < 0.9 ? true : false;
+
+              // if they attended but weren't paid, add a case note
+              if (attendanceRecord.pay === false) {
+                attendanceRecord.caseNote = "The prisoner was misbehaving";
+              }
+            }
+
           // if the prisoner did not attend, decide if they refused
           if (attendanceRecord.attendance === "not-attended") {
-            attendanceRecord.attendanceStatus =
-              Math.random() < 0.5 ? "refused" : "";
+            function assignRandomStatus() {
+              let statusesAndProbabilities = [
+                ["refused", 0.5],
+                ["sick", 0.4],
+                ["rest-day", 0.2],
+                ["other", 0.1],
+                ["not-required", 0.1],
+                ["clash", 0.05]
+              ];
+              
+              const total = statusesAndProbabilities.reduce((acc, cur) => acc + cur[1], 0);
+              let random = Math.random() * total;
+              let status = statusesAndProbabilities.find(([, probability]) => {
+                random -= probability;
+                return random <= 0;
+              }
+              );
+              return status[0];
+            }
+
+            attendanceRecord.attendanceStatus = assignRandomStatus();
+            
+            switch (attendanceRecord.attendanceStatus) {
+              // If the prisoner is sick, on a rest day, or for some other reason and pay is required, set pay to true, otherwise false
+              case "sick":
+              case "rest-day":
+              case "other":
+                // set pay to true
+                attendanceRecord.pay = true;
+                break;
+        
+              // If the prisoner refused to work or the work is not required, set pay to false
+              case "refused":
+              case "not-required":
+                attendanceRecord.pay = false;
+                break;
+        
+              // If there's a clash or payment is required, set pay to true
+              case "clash":
+                attendanceRecord.pay = true;
+                break;
+            }
           }
+
           // if the prisoner refused, decide if they have an incentive level warning
           if (attendanceRecord.attendanceStatus === "refused") {
             attendanceRecord.incentiveLevelWarning =
-              Math.random() < 0.8 ? true : false;
+              Math.random() < 0.8 ? 'yes' : 'no';
           }
           // if the prisoner refused add a case note
           if (attendanceRecord.attendanceStatus === "refused") {
+            // don't pay prisoners who refused
+            attendanceRecord.pay = false;
             attendanceRecord.caseNote = "Refused to attend for no good reason";
           }
 
