@@ -7,6 +7,26 @@ router.get("/", function (req, res) {
   res.redirect("attendance-dashboard/" + date + "/daily");
 });
 
+// generate data success page
+router.get("/generate-data-success", function (req, res) {
+  // sum all records in attendance data
+  let attendanceData = req.session.data["attendance"];
+  let attendanceDataCount = 0;
+  for (const activity in attendanceData) {
+    for (const date in attendanceData[activity]) {
+      for (const period in attendanceData[activity][date]) {
+        for (const prisoner in attendanceData[activity][date][period]) {
+          attendanceDataCount++;
+        }
+      }
+    }
+  }
+  res.render("unlock/version-7/attendance-dashboard/generate-data-success", {
+    attendanceDataCount: attendanceDataCount,
+  });
+});
+
+
 // PAGE: Activity dashboard
 router.get("/:selectedDate/:selectedPeriod", function (req, res) {
   let attendanceData = req.session.data["attendance-data-1"];
