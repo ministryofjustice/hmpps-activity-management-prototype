@@ -1,0 +1,24 @@
+{% set homepageUrl = '/' %}
+
+{{ govukHeader({
+    homepageUrl: homepageUrl,
+    serviceName: serviceName,
+    serviceUrl: homepageUrl,
+    containerClasses: "govuk-width-container",
+    navigation: [
+    {
+      text: "Create and allocate",
+      href: "/create?prototype=create",
+      active: true if page == "create"
+    },
+    {
+      text: "Unlock and attend",
+      href: "/unlock?prototype=unlock",
+      active: true if page == "unlock"
+    },
+    {
+      text: "Appointments",
+      href: "/appointments/?prototype=appointments",
+      active: true if page == "appointments"
+    }]
+  }) }}

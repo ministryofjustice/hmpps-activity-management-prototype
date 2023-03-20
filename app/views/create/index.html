@@ -6,45 +6,19 @@ Activities Management prototype
 {% endblock %}
 
 {% block header %}
-{% set homepageUrl %}
-{% if data['prototype'] == 'create' %}
-/?prototype=create
-{% elseif data['prototype'] == 'unlock' %}
-/unlock?prototype=unklock
-{% elseif data['prototype'] == 'appointments' %}
-/appointments?prototype=appointments
-{% endif %}
-{% endset %}
+{% set page = 'create' %}
 
-{{ govukHeader({
-  homepageUrl: homepageUrl,
-  serviceName: serviceName,
-  serviceUrl: homepageUrl,
-  containerClasses: "govuk-width-container",
-  navigation: [
-  {
-    text: "Create and allocate",
-    href: "/?prototype=create"
-  },
-  {
-    text: "Unlock and attend",
-    href: "/unlock?prototype=unlock",
-    active: true
-  },
-  {
-    text: "appointments",
-    href: "/appointments/?prototype=appointments"
-  }]
-}) }}
+{% include '../includes/proto-header.html' %}
 
 <div class="app-masthead">
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h1 class="app-masthead__title govuk-heading-xl govuk-!-margin-bottom-3">
-          Unlock and attend
+        <h1 class="app-masthead__title govuk-heading-l govuk-!-margin-bottom-3">
+          Create and allocate
         </h1>
-        <h3 class="app-masthead__subtitle govuk-heading-l">Prototype</h3>
+        <h3 class="app-masthead__subtitle govuk-heading-m">A collection of services for prison staff to create and allocate activities to prisoners.
+        </h3>
       </div>
       <div class="govuk-grid-column-one-third">
       </div>
@@ -59,253 +33,373 @@ Activities Management prototype
     <details class="govuk-details" data-module="govuk-details">
       <summary class="govuk-details__summary">
         <span class="govuk-details__summary-text">
-          User research, content docs and flow diagrams
+          User research, content docs and flow diagrams.
         </span>
       </summary>
       <div class="govuk-details__text">
-
+        <p class="govuk-body govuk-!-margin-bottom-2">All links open in a new browser window or tab.</p>
         <p class="govuk-body govuk-!-margin-bottom-2">User research:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li><a href="https://miro.com/app/board/uXjVPQEiC2s=/?moveToWidget=3458764536474157615&cot=14" target="_blank" class="govuk-link govuk-link--no-visited-state">UR</a></li>
+          <li><a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">UR</a></li>
+
         </ul>
 
+        <p class="govuk-body govuk-!-margin-bottom-2">Copydecks:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a
+              href="https://docs.google.com/spreadsheets/d/1zrVbAQ6E5Pae9wjB4_rOt-aJs5Xe3kXQP4tV8ZpGgAM/edit#gid=206032704"
+              target="_blank" class="govuk-link govuk-link--no-visited-state">View the first content document </a> </li>
+          <li><a
+              href="https://docs.google.com/spreadsheets/d/1FlLYdrceeCtI4rnabRoJgzxAUqSOGzLpCtJTcLC5vnE/edit#gid=1971658364"
+              target="_blank" class="govuk-link govuk-link--no-visited-state">View the second content document </a>
+          </li>
+        </ul>
+
+        <p class="govuk-body govuk-!-margin-bottom-2">Flow diagrams:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="https://miro.com/app/board/uXjVPeHahD4=/?moveToWidget=3458764536702384454&cot=14"
+              target="_blank">View the flow diagrams</a></li>
+        </ul>
       </div>
     </details>
 
-    <h2 class="govuk-heading-l govuk-!-margin-bottom-4">
-      Prototype versions
-    </h2>
-
     <table class="govuk-table">
-      <thead class="govuk-table__head" >
+      <caption class="govuk-table__caption govuk-caption-xl">Prototype versions</caption>
+      <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header" width="20%">Version</th>
+          <th scope="col" class="govuk-table__header" width="15%">Version</th>
           <th scope="col" class="govuk-table__header" width="15%">Status</th>
-          <th scope="col" class="govuk-table__header">Description</th>
+          <th scope="col" class="govuk-table__header">What changed</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell" >
-            <h2 class="govuk-heading-s">Version 7</h2>
-            <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
-              <li><a href="/dps-home" class="govuk-link govuk-link--no-visited-state">DPS home page</a></li>
-              <li><a href="/unlock/version-7/config" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-16">Config</a></li>
-            </ul>
+          <td class="govuk-table__cell">
+            <a href="/dps-home?prototype-versions[create-and-allocate][url]=/v11/dps-home-2"
+              class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 11</a>
           </td>
-
-          <td class="govuk-table__cell" >
-            <strong class="govuk-tag">
-              In design
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--blue">
+              I<span style="text-transform:lowercase;">n design </span>
             </strong>
           </td>
-
-          <td class="govuk-table__cell" >
-            Filters changed.
-          </td>
-        </tr>
-         <tr class="govuk-table__row">
-          <td class="govuk-table__cell" >
-            <h2 class="govuk-heading-s">Version 6</h2>
-            <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
-              <li><a href="/dps-home" class="govuk-link govuk-link--no-visited-state">DPS home page</a></li>
-              <li><a href="/unlock/version-6/config" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-16">Config</a></li>
+          <td class="govuk-table__cell">
+            <ul class="govuk-list govuk-list--bullet">
+              <li>Deallocate</li>
             </ul>
-          </td>
-
-          <td class="govuk-table__cell" >
-            <strong class="govuk-tag govuk-tag--orange">
-              Paused
-            </strong>
-          </td>
-
-          <td class="govuk-table__cell" >
-            Updates to version 5 based on last round of User research.
           </td>
         </tr>
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell" >
-            <h2 class="govuk-heading-s"><a href="/unlock/version-5/config" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 5</a></h2>
-            <p class="govuk-hint govuk-!-font-size-16">(Use this link to configure the prototype)</p>
+          <td class="govuk-table__cell">
+            <a href="/dps-home?prototype-versions[create-and-allocate][url]=/v10/dps-home-2"
+              class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 10</a>
           </td>
-
-          <td class="govuk-table__cell" >
-            <strong class="govuk-tag govuk-tag--grey">
-              Closed
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--green">
+              R<span style="text-transform:lowercase;">eady for </span>UR
             </strong>
           </td>
-
-          <td class="govuk-table__cell" >
-            Description to follow.
+          <td class="govuk-table__cell">
+            <ul class="govuk-list govuk-list--bullet">
+              <li>Waitlists - initial creation journey</li>
+              <li>Creation of statuses</li>
+              <li>Dynamic filter on activities list</li>
+              <li>Waitlist: Dynamic date of entry</li>
+              <li>Iterated content following UR and changes in structure/additional journeys</li>
+              <li>Waitlist: Single application not ‘review and add another’ for simplicity and precision</li>
+              <li>Waitlist: No ‘straight to allocate’ path because interrupts application processing</li>
+              <li>Waitlist: Screening with 3 outcomes: add to waitlist pending, add to waitlist approved, rejected</li>
+              <li>Trello <a href="https://trello.com/c/61gZrJNF/363-waitlist-high-level-design">363</a>, <a
+                  href="https://trello.com/c/HOlLGBrZ/369-waitlist-designs-and-2nd-iteration">369</a>, <a
+                  href="https://trello.com/c/auFPuE7o/367-content-for-dps-tiles">367</a></li>
+            </ul>
           </td>
         </tr>
-
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell" >
-            <h2 class="govuk-heading-s"><a href="/unlock/version-4/config" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 4</a></h2>
-            <p class="govuk-hint govuk-!-font-size-16">(Use this link to configure the prototype)</p>
+          <td class="govuk-table__cell">
+            <a href="/v9/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 9</a>
           </td>
-
-          <td class="govuk-table__cell" >
+          <td class="govuk-table__cell">
             <strong class="govuk-tag govuk-tag--grey">
-              Closed
+              C<span style="text-transform:lowercase;">losed </span>
             </strong>
           </td>
-
-          <td class="govuk-table__cell" >
-            Description to follow.
+          <td class="govuk-table__cell">
+            <ul class="govuk-list govuk-list--bullet">
+              <li>DPS tiles - shared (same view) across the 3 areas (C&A, U&A, appointments)</li>
+              <li>Iteration of allocation - choose candidates dashboard</li>
+              <ul>
+                <li><a href="/v9/allocate/activity-dashboard-new#allocate">Link to new select candidate dashbaord</a>
+                </li>
+                <li>Added reusable routing to work with new radio selects, easily scalable to multiple prisoners</li>
+                <li>Removed mismatch page after allocation selection</li>
+                <li>Rework of allocation 4 dashboard</li>
+                <li>Removal of accordians</li>
+                <li>Bypass for education selection</li>
+                <li>Removal of risk question</li>
+                <li>Rework of payment selection</li>
+                <li>New content through all pages on all journeys</li>
+                <li>New prisoner lists for allocation</li>
+                <li>Paginatin on candidate allocation</li>
+                <li>More dynamic elements on whole journey</li>
+                <li>Removal of deallocation</li>
+                <li>Link to prisoner profile from allocation db4</li>
+                <li>Grouping of prisoner name, ID an location</li>
+                <li>UR trello tickets containing 92 sets of changes, <a
+                    href="https://trello.com/c/EwSTh0Zo/361-v9-pre-ur-iteration">361</a>, <a
+                    href="https://trello.com/c/439Eex67/360-v9-ur-changes-pls-do-not-add-any-more-items-to-this-ticket-instead-add-to-361">360</a>
+                </li>
+              </ul>
+            </ul>
           </td>
         </tr>
-
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell" >
-            <h2 class="govuk-heading-s"><a href="/unlock/version-3/config" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 3</a></h2>
-            <p class="govuk-hint govuk-!-font-size-16">(Use this link to configure the prototype)</p>
+          <td class="govuk-table__cell">
+            <a href="/v8/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 8</a>
           </td>
-
-          <td class="govuk-table__cell" >
+          <td class="govuk-table__cell">
             <strong class="govuk-tag govuk-tag--grey">
-              Closed
+              C<span style="text-transform:lowercase;">losed </span>
             </strong>
           </td>
-
-          <td class="govuk-table__cell" >
-            Attendance journey.
+          <td class="govuk-table__cell">
+            <ul class="govuk-list govuk-list--bullet">
+              <li>Delete and suspend on activity dashboard</li>
+              <li>Sort functionality on dashboards</li>
+              <li>3 versions of activity dashboard
+                <ul>
+                  <li> <a href="/v8/create/activity-dashboard">Single-select activity choice</a></li>
+                  <li> <a href="/v8/create/activity-dashboard-multi-select">Multi-select activity choice</a></li>
+                  <li><a href="/v8/create/activity-dashboard-tabs">Integrated, tabbed view</a></li>
+                </ul>
+              </li>
+              <li>Completion of activity dashboard</li>
+              <li>Archive an activity and or a schedule</li>
+              <li>Suspend an activity and or a schedule</li>
+              <li>Unsuspend an activity and or a schedule</li>
+              <li>Dropdown dynamic filters on activity dashboard</li>
+              <li>2nd level to show 0, 1 or many schdules for each activity</li>
+              <li>Added 'add a schedule name' to schedule creation</li>
+              <li>New payment journey based on 1 page per incentive level</li>
+              <li>Removed incentive level question and incentive level from breadcrumb header</li>
+              <li>Adding payment change option into allocate journey</li>
+              <li>Remove tag, piece work and pay bands from payment allocate</li>
+              <li>Change to make category dynamic in headers and CYAs</li>
+              <li>Removal of 'unsuitable / alrts/risks' big list page</li>
+              <li>Removal of activity repeat</li>
+              <li>Added yes/no option for schedule start date</li>
+              <li>Separated start and end date screens</li>
+              <li>Separated start and end date on CYA pages</li>
+              <li>Changed persistent header to show if end date has been set</li>
+              <li>Trellos:
+                <a
+                  href="https://trello.com/c/87aoTcgr/338-remove-select-minimum-incentive-level-page-in-create-journey">338</a>,
+                <a
+                  href="https://trello.com/c/H1dAYbtL/302-create-common-entry-point-to-add-a-schedule-with-selecting-activity-creation-also-linked-to-from-schedule-and-activity-confirmat">302</a>,
+                <a
+                  href="https://trello.com/c/j0APXWI6/337-create-activity-schedule-name-page-as-part-of-building-a-schedule-journey">337</a>,
+                <a
+                  href="https://trello.com/c/gvbus2Mh/214-iterate-the-prototype-to-allow-activity-admins-to-edit-existing-activities">214</a>,
+                <a
+                  href="https://trello.com/c/lJhfpDeH/282-refine-questions-requiring-the-user-to-add-pay-rates-during-the-create-journey-to-allocate-to-a-pay-rate-in-allocate">282</a>,
+                <a
+                  href="https://trello.com/c/ngE4TfqK/322-part-2-design-and-content-iterations-based-on-alpha-ur">322</a>
+                <a href="https://trello.com/c/1JWM0Wvn/344-pay-clear-up-on-other-parts-of-service">344</a>
+              </li>
           </td>
         </tr>
-
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell" >
-            <h2 class="govuk-heading-s"><a href="/unlock/version-2" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a></h2>
-            <p class="govuk-hint govuk-!-font-size-16">(Use this link to configure the prototype)</p>
+          <td class="govuk-table__cell">
+            <a href="/v7/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 7</a>
           </td>
-
-          <td class="govuk-table__cell" >
+          <td class="govuk-table__cell">
             <strong class="govuk-tag govuk-tag--grey">
-              Closed
+              C<span style="text-transform:lowercase;">losed </span>
             </strong>
           </td>
-
-          <td class="govuk-table__cell" >
-            <h3 class="govuk-heading-s">
-              Selecting attendance lists
-            </h3>
-            <p>
-              Looked at 2 different patterns for users to generate attendance lists:
-            </p>
+          <td class="govuk-table__cell">
             <ul class="govuk-list govuk-list--bullet">
-              <li>
-                <a href="/unlock/version-2/select-activity?config[select-activity-pattern]=typeahead" class="govuk-link--no-visited-state">Search for an activity or location using an autocomplete</a>
-              </li>
-              <li>
-                <a href="/unlock/version-2/select-activity?config[select-activity-pattern]=table" class="govuk-link--no-visited-state">View all activities on a selected date</a>
-              </li>
-            </ul>
-
-            <h3 class="govuk-heading-s">
-              Recording attendance
-            </h3>
-            <p>
-              Explored different ways of recording attendance:
-            </p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>
-                <a href="/unlock/version-2/select-activity?config[attend-pattern]=modals" class="govuk-link--no-visited-state">Modal dialogs</a>
-              </li>
-              <li>
-                <a href="/unlock/version-2/select-activity?config[attend-pattern]=separate" class="govuk-link--no-visited-state">Separate page</a>
-              </li>
-            </ul>
-            <p>
-              Additionally, looked at different call-to-action patterns for users to record attendance:
-            </p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>
-                <a href="/unlock/version-2/select-activity?config[record-attendance-pattern]=dropdown-button&config[attend-pattern]=separate" class="govuk-link--no-visited-state">Dropdown button with 'attend' and 'not attend' statuses</a>
-              </li>
-              <li>
-                <a href="/unlock/version-2/select-activity?config[record-attendance-pattern]=single-button&config[attend-pattern]=separate" class="govuk-link--no-visited-state">A single 'record attendance' button</a>
-              </li>
-            </ul>
-
-            <h3 class="govuk-heading-s">
-              Whereabouts tiles
-            </h3>
-            <p>
-              Navigation tiles on the <a href="/unlock/version-2/whereabouts" class="govuk-link--no-visited-state">main Whereabouts page</a> have been updated:
-            </p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li><a href="/unlock/version-2/select-unlock-locations" class="govuk-link--no-visited-state">Get unlock list</a></li>
-              <li><a href="/unlock/version-2/view-daily-schedules" class="govuk-link--no-visited-state">View daily schedules</a></li>
-              <li><a href="/unlock/version-2/select-activity" class="govuk-link--no-visited-state">Attend an activity</a></li>
-              <li><a href="/unlock/version-2/select-refusals-locations" class="govuk-link--no-visited-state">Mark refusals and sickness</a></li>
-              <li>Attendance data</li>
-              <li>Add bulk appointments</li>
-            </ul>
-
-            <p>
-              Some tiles link to revised 'selection' pages where users can choose the parameters for the subsequent 'list' pages.
-            </p>
-            <p>
-              List pages all follow a similar design, but with small differences to cater for different user needs.
-            </p>
+              <li><a href="https://trello.com/c/JvlkMGUz/309-design-and-content-iterations-based-on-alpha-ur">Trello
+                  318</a> - Design and content iterations - based on Alpha UR</li>
+              <li><a href="https://trello.com/c/ccAZKCWn/309-create-v7-refinements">Trello 309</a> - Create v7
+                refinements </li>
+              <li>Activity dashboard</li>
+              <li>New filters for activity dashboard</li>
+              <li>New conditional view for check answers</li>
+              <li>Add schedule uses dynamic data (activity name etc.) through from create</li>
+              <li>Dynamic persistent header in schedule to match create and allocate</li>
+              <li>Schedule - using dynamic entered values for days / sessions in scheulde journey</li>
           </td>
         </tr>
-
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell" >
-            <h2 class="govuk-heading-s">Version 1</h2>
+          <td class="govuk-table__cell">
+            <a href="/v6/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 6</a>
           </td>
-
-          <td class="govuk-table__cell" >
+          <td class="govuk-table__cell">
             <strong class="govuk-tag govuk-tag--grey">
-              Closed
+              C<span style="text-transform:lowercase;">losed </span>
             </strong>
           </td>
-
-          <td class="govuk-table__cell" >
-            <h3 class="govuk-heading-s">
-              Filtering lists:
-            </h3>
-            <p>
-              A few concepts showing how filters could be iterated upon, including more filter parameters and left-aligned filter components.
-            </p>
+          <td class="govuk-table__cell">
             <ul class="govuk-list govuk-list--bullet">
-              <li><a href="/unlock/version-1/unlock-list--left-filters-1" class="govuk-link--no-visited-state">Left-aligned vertical filters – concept 1</a></li>
-              <li><a href="/unlock/version-1/unlock-list--left-filters-2" class="govuk-link--no-visited-state">Left-aligned vertical filters – concept 2</a></li>
-              <li><a href="/unlock/version-1/unlock-list--horizontal-filters" class="govuk-link--no-visited-state">Horizontal filters (with toggle)</a></li>
+              <li><a href="v6/create/activity-start-date">Shortcut to add a schedule</a></li>
+              <li><a href="v6/create/activity-check-your-answers">Shortcut to CYA for Create</a></li>
+              <li>Creation journey iterations: Trello <a
+                  href="https://trello.com/c/duQ0q3Tt/279-split-the-create-journey-into-create-activity-and-create-activity-schedule">279</a>,
+                <a href="https://trello.com/c/SZJqsXzd/249-add-persistent-header-in-allocate">249</a>, <a
+                  href="https://trello.com/c/PpE2bIaN/278-content-changes-allocate-v6"> 278</a>.</li>
+              <li>Changed flow of creation journey, activity requirments then alerts</li>
+              <li>Separating into create, schedule and allocate</li>
+              <li>Listing out all 'alerts' for activity into a headed list</li>
+              <li>Added 'decide later' to category list</li>
+              <li>Created an 'existing activity' search to show any 'matches' after name input</li>
+              <li>Added persistent header</li>
+              <li>Multiple content changes</li>
+              <li>Changed back to radios for incentive level</li>
+              <li>In dropdowns more info, change none to none set</li>
+              <li>Changed 'available spaces' to 'available vacancies' on dashboards</li>
+              <li>Standardised H1 to be Maths level 3 and 4 throughout</li>
+              <li>Marked end date as optional on schedule</li>
+              <li>Allocated column added to Activities dashboard: series view</li>
+              <li>Added schedule radio link on set up page</li>
+              <li>Added back link througout</li>
+              <li>Edited linked pages on schedule and create CYA pages to reflect new content and interactions</li>
+              <li>Created dynamic journey</li>
             </ul>
-            
-            <h3 class="govuk-heading-s">
-              Whereabouts navigation tiles:
-            </h3>
-            <p>
-              How could we present Whereabouts functionality?
-            </p>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="/v5/setup"" class=" govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 5</a>
+          </td>
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--grey">
+              C<span style="text-transform:lowercase;">losed </span>
+            </strong>
+          </td>
+          <td class="govuk-table__cell">
             <ul class="govuk-list govuk-list--bullet">
-              <li><a href="/unlock/version-1/whereabouts-as-is" class="govuk-link--no-visited-state">Whereabouts as-is</a></li>
-              <li><a href="/unlock/version-1/whereabouts-concept-1" class="govuk-link--no-visited-state">Whereabouts tiles concept 1</a></li>
-              <li><a href="/unlock/version-1/whereabouts-concept-2" class="govuk-link--no-visited-state">Whereabouts tiles concept 2</a></li>
-            </ul>
+              <li><a href="https://trello.com/c/AQx4q0C1/245-content-design-changes-allocate-v5-wip">Trello 245</a></li>
+              <li><a href="https://trello.com/c/SyIQxQ2w/253-allocate-journey-completion">Trello 253</a></li>
+              <li>Made dashboard 4 to confirmation dynamic, carrying through selected persona and activity</li>
+              <li>Adding coloured tags on activity schedule tab on dashboard 4</li>
+              <li>Iterated dashboard 4 tabbed view to allow only single selection for allocation</li>
+              <li>Created remove offender journeyfor de-allocation (already allocated) journey</li>
+              <li><a href="https://trello.com/c/NCQpk8s7/236-confirm-who-you-want-to-allocate">Trello 236 </a>
+                containing the below items</li>
+              <li>Created dashboard 5 compare selected person against criteria screen highlighting differences</li>
+              <li>Created confirmation page</li>
+              <li>Created remove offender journeyfor allocation journey</li>
+              <li>Iterated allocation compare screen just to highlight differences not CYA style and link text to cancel
+              </li>
+              <li>Created allocate payment choose screen with day rate and piece rate</li>
 
-            <h3 class="govuk-heading-s">
-              Printed lists:
-            </h3>
-            <p>
-              Exploring how we could improve the usability of printed lists.
-            </p>
-            <p>
-              Make sure to use your browser's print functionality to see the print version rather than the web one.
-            </p>
+
+            </ul>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="/v4/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 4</a>
+          </td>
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--grey">
+              C<span style="text-transform:lowercase;">losed </span>
+            </strong>
+          </td>
+          <td class="govuk-table__cell">
             <ul class="govuk-list govuk-list--bullet">
-              <li><a href="/unlock/version-1/print-table-concept-1" class="govuk-link--no-visited-state">Printable table concept</a></li>
+
+              <li>Iteration of allocation journey, Trello 221, 232</li>
+              <li>Restored 'allocated amount' back into L1 and L2 dashboard</li>
+              <li>Descriptive signpost text in 'session' tabs</li>
+              <li>CTA on allocate tab changed to 'Review selected candidates'</li>
+              <li>Renaming of categories to 'Industries' and 'Services' for allocate and create journeys</li>
+              <li>Added filter/search to allocate tab</li>
+              <li>Amended data shown in activity tab</li>
+              <li>Amended allocate prisoner listing to show accordian under name</li>
+              <li>Amended currently allocated prisoner listing to show accordian under name</li>
+              <li>Amended all the tab names and orders</li>
+              <li>Added confirm allocation screen after person allocate selection</li>
+              <li>Added confirmation screen after person confirm allocation </li>
+            </ul>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="/v3/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 3</a>
+          </td>
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--grey">
+              C<span style="text-transform:lowercase;">losed </span>
+            </strong>
+          </td>
+          <td class="govuk-table__cell">
+            <li>Iteration of create journey from UR w/c 12/9/22. Trello <a target="_blank"
+                href="https://trello.com/c/nQajhg89/211-iteration-of-activity-creation-prototype-joe-writing-this-ticket-in-progress">211</a>
+            </li>
+            <li>Added CTA link on confirmation page - back to category selection (start of create journey)</li>
+            <li>Allocation journey
+              <ul>
+                <li>Rework of dashbords</li>
+                <li>Creation of muli-tier dashboards, category down to session</li>
+                <li>Search function - searches and returns a flat 1 tier result</li>
+                <li>Addition of advanced search under 'search'</li>
+                <li>Tab design for session/instance of activity</li>
+                <li>Removal of 'Create activity' CTA button in filter navbar</li>
+                <li>Addition of text on L1 dashboard linking to craete journey</li>
+                <li>Addition of alternate journey (2 tier) for Services > Gardening
+              </ul>
+            </li>
+
+            <li>Link to alternative '<a href="/v3/allocate/allocate-offender-dashboard-search-view">search view</a> -
+              search criteria on left nav' for UR</li>
+            </ul>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="/v2/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a>
+            <!--  <a href="/2-0/setup?r=t" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a>-->
+          </td>
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--grey">
+              C<span style="text-transform:lowercase;">losed </span>
+            </strong>
+          </td>
+          <td class="govuk-table__cell">
+            <ul class="govuk-list govuk-list--bullet">
+              <li>First design and iteration of allocation and dashboard for both. Trello: <a
+                  href="https://trello.com/c/ys57BPOO/189-create-prototype-for-key-areas-of-event-allocation-for-work-and-education"
+                  target="_blank">189</a>, <a target="_blank"
+                  href="https://trello.com/c/uZ3VmUEW/206-iteration-of-allocation-and-create-dashboard-prototype">206</a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="/v1/setup" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 1</a>
+            <!--  <a href="/2-0/setup?r=t" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a>-->
+          </td>
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--grey">
+              C<span style="text-transform:lowercase;">losed </span>
+            </strong>
+
+          </td>
+          <td class="govuk-table__cell">
+            <ul class="govuk-list govuk-list--bullet">
+              <li>Activity creation. Trello <a target="_blank"
+                  href="https://trello.com/c/QfozP8Zm/142-create-low-fi-prototype-for-event-creation-of-education-and-work">142</a>,
+                <a target="_blank"
+                  href="https://trello.com/c/sHGPYgDm/161-create-moj-cloud-hi-fi-prototype-for-event-creation-of-education-and-work">161</a>
+              </li>
             </ul>
           </td>
         </tr>
       </tbody>
     </table>
-
-
   </div>
 </div>
 
