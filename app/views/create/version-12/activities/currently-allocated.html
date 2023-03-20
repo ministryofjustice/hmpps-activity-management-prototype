@@ -47,7 +47,7 @@ Find an activity to record or edit attendance
         </tr>
     </thead>
     <tbody class="govuk-table__body">
-        {% for prisoner in currentlyAllocated %}
+        {% for prisoner in currentlyAllocated | sort(false,true,'name.surname') %}
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
                 <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -73,7 +73,7 @@ Find an activity to record or edit attendance
                 {% endif %}
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
-                DATE
+                {{'2023-03-02'|convertShortDateToMediumDate}}
             </td>
             <td class="govuk-table__cell govuk-!-padding-top-4">
                 {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}

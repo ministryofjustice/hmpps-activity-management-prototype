@@ -119,9 +119,13 @@
                 {% endif %}
             </div>
         </div>
+        {% set filterBtnText = "Apply filters" %}
+        {% if currentPage=='applications' %}
+        {% set filterBtnText = "Apply filter" %}
+        {% endif %}
         {{
         govukButton({
-        text: "Apply filters",
+        text: "Apply filter" if currentPage=='applications' else "Apply filters",
         classes: "govuk-!-margin-top-3 govuk-!-margin-bottom-0"
         })
         }}

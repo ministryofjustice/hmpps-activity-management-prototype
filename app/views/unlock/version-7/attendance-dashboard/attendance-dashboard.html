@@ -8,320 +8,363 @@ Attendance dashboard
 {% block beforeContent %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {{ govukBreadcrumbs({
-	classes: "govuk-!-display-none-print",
-	items: [
-	{
-		text: "Digital Prison Services",
-		href: "../../../../dps-home"
-	},
-	{
-		text: "Manage activities",
-		href: "/v10/dps-home-2"
-	}
-	]
+classes: "govuk-!-display-none-print",
+items: [
+{
+text: "Digital Prison Services",
+href: "../../../../dps-home"
+},
+{
+text: "Manage activities",
+href: "/v10/dps-home-2"
+}
+]
 }) }}
 {% endblock %}
 
 {% block content %}
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {{ mojSubNavigation({
-	label: 'Sub navigation',
-	items: [{
-		text: 'Daily summary',
-		href: 'daily',
-		active: true if timeOfDay == 'Daily'
-	}, {
-		text: 'Morning',
-		href: 'AM',
-		active: true if period == 'AM'
-	}, {
-		text: 'Afternoon',
-		href: 'PM',
-		active: true if period == 'PM'
-	}, {
-		text: 'Evening',
-		href: '#'
-	}]
+label: 'Sub navigation',
+items: [{
+text: 'Daily summary',
+href: 'daily',
+active: true if timeOfDay == 'Daily'
+}, {
+text: 'Morning',
+href: 'AM',
+active: true if period == 'AM'
+}, {
+text: 'Afternoon',
+href: 'PM',
+active: true if period == 'PM'
+}, {
+text: 'Evening',
+href: '#'
+}]
 }) }}
 
 {% macro dataCard(params) %}
 <div class="govuk-!-margin-bottom-4">
-<h3 class="govuk-body govuk-hint govuk-!-margin-bottom-0 {{params.titleClasses}}">{{ params.title }}</h3>
-<span class="govuk-heading-xl govuk-!-margin-0 govuk-!-padding-0 {{params.countClasses}}">
-	{{ params.count }}<span class="govuk-visually-hidden"> prisoners</span>
-	{% if params.showPercentage == true %}<span class="govuk-visually-hidden">, which is </span> <span class="govuk-tag {{params.tagClasses}} govuk-!-display-inline-block" style="vertical-align: middle;">{{(params.count / counts.allocated * 100) | round(1)}}%</span>
-</span>
-{% endif %}
-{% if params.linkHref %}
-<p class="govuk-!-margin-bottom-0">
-	<a href="{{params.linkHref}}?page-title={{params.nextPageTitle or ('All '+(params.title | lower))}}&count={{params.count}}" class="govuk-!-font-weight-bold govuk-link--no-visited-state govuk-!-font-size-16">{{ params.linkText or "All " + (params.title | lower) }}</a>
-</p>
-{% endif %}
+	<h3 class="govuk-body govuk-hint govuk-!-margin-bottom-0 {{params.titleClasses}}">{{ params.title }}</h3>
+	<span class="govuk-heading-xl govuk-!-margin-0 govuk-!-padding-0 {{params.countClasses}}">
+		{{ params.count }}<span class="govuk-visually-hidden"> prisoners</span>
+		{% if params.showPercentage == true %}<span class="govuk-visually-hidden">, which is </span> <span
+			class="govuk-tag {{params.tagClasses}} govuk-!-display-inline-block"
+			style="vertical-align: middle;">{{(params.count / counts.allocated * 100) | round(1)}}%</span>
+	</span>
+	{% endif %}
+	{% if params.linkHref %}
+	<p class="govuk-!-margin-bottom-0">
+		<a href="{{params.linkHref}}?page-title={{params.nextPageTitle or ('All '+(params.title | lower))}}&count={{params.count}}"
+			class="govuk-!-font-weight-bold govuk-link--no-visited-state govuk-!-font-size-16">{{ params.linkText or
+			"All " + (params.title | lower) }}</a>
+	</p>
+	{% endif %}
 </div>
 {% endmacro %}
 
-{% set filterHtml %}
-{{ govukSelect({
-	label: {
-		text: "Category",
-		classes: "govuk-label--s"
-	},
-	idPrefix: 'attendance',
-	name: 'filters[attendance]',
-	items: [{
-		text: 'All categories',
-		id: 'all',
-		value: 'all'
-	},
-	{
-		text: 'Education',
-		id: 'all',
-		value: 'all'
-	},
-	{
-		text: 'Industries',
-		id: 'all',
-		value: 'all'
-	},
-	{
-		text: 'Prison jobs',
-		id: 'all',
-		value: 'all'
-	},
-	{
-		text: 'Gym, sport and fitness',
-		id: 'all',
-		value: 'all'
-	},
-	{
-		text: 'Induction',
-		id: 'all',
-		value: 'all'
-	},
-	{
-		text: 'Intervention programmes',
-		id: 'all',
-		value: 'all'
-	},
-	{
-		text: 'Faith',
-		id: 'all',
-		value: 'all'
-	},
-	{
-		text: 'Other',
-		id: 'all',
-		value: 'all'
-	}]
-}) }}
-{{govukButton({
-	text: "Update"
-})}}
-{% endset %}
+{%- from "moj/components/filter/macro.njk" import mojFilter -%}
+{%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
+<div class="moj-filter-layout">
+	<div class="moj-filter-layout__filter">
+		<div class="moj-filter">
+			<div class="moj-filter__header">
+				<div class="moj-filter__header-title">
+					<h2 class="govuk-heading-m">Filter</h2>
+				</div>
+				<div class="moj-filter__header-action">
+				</div>
+			</div>
+			<div class="moj-filter__content">
+				{% if selectedFilters.length %}
+				<div class="moj-filter__selected">
+					<div class="moj-filter__selected-heading">
+						<div class="moj-filter__heading-title">
+							<h2 class="govuk-heading-m">Selected filters</h2>
+						</div>
+						<div class="moj-filter__heading-action">
+							<p><a class="govuk-link govuk-link--no-visited-state" href="">Clear filters</a></p>
+						</div>
+					</div>
+					{% for filter in selectedFilters %}
+					<h3 class="govuk-heading-s govuk-!-margin-bottom-0">Colour</h3>
+					<ul class="moj-filter-tags">
+						<li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove this
+									filter</span> Blue</a></li>
+						<li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove this
+									filter</span> Yellow</a></li>
+					</ul>
+					{% endfor %}
+				</div>
+				{% endif %}
 
-<div class="govuk-grid-row">
-	<div class="govuk-grid-column-two-thirds">
-		<h2 class="govuk-heading-l govuk-!-margin-bottom-6">
-			<span class="govuk-caption-l">
-				{{date|convertShortDateToVeryLongDate}}
-			</span>
-			{{timeOfDay}} summary for all activities
-		</h2>
+				<div class="moj-filter__options">
+					<button class="govuk-button" data-module="govuk-button">
+						Apply filters
+					</button>
+
+					<!-- Category select GOVUK checkboxes component - HTML -->
+					<div class="govuk-form-group">
+						<fieldset class="govuk-fieldset" aria-describedby="category-hint">
+							<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+								<h1 class="govuk-fieldset__heading">
+									Category
+								</h1>
+							</legend>
+							<span id="category-hint" class="govuk-hint">
+								Select all that apply
+							</span>
+							<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+								{% for category in data['timetable-complete-1'].categories %}
+								<div class="govuk-checkboxes__item">
+									<input class="govuk-checkboxes__input" id="category-{{loop.index}}" name="category"
+										type="checkbox" value="{{category.id}}" checked>
+									<label class="govuk-label govuk-checkboxes__label" for="category-{{loop.index}}">
+										{{category.name}}
+									</label>
+								</div>
+								{% endfor %}
+							</div>
+						</fieldset>
+						<p>
+							<a class="govuk-link govuk-link--no-visited-state" href="">Select all <span
+									class="govuk-visually-hidden"> categories</span></a>
+						</p>
+					</div>
+
+					<button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+						data-module="govuk-button">
+						Apply filters
+					</button>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="govuk-grid-column-one-third">
-		<p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-bottom-0" style="text-align: right;">
-			Updated at {{time|timestamp}} on {{date|today|convertShortDateToLongDate}}
+
+	<div class="moj-filter-layout__content">
+		<div class="moj-filter-button"></div>
+
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-two-thirds">
+				<h2 class="govuk-heading-xl govuk-!-margin-bottom-6">
+					<span class="govuk-caption-l">
+						{{date|convertShortDateToVeryLongDate}}
+					</span>
+					{{timeOfDay}} summary for all activities
+				</h2>
+			</div>
+			<div class="govuk-grid-column-one-third">
+				<p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-bottom-0" style="text-align: right;">
+					Updated at {{time|timestamp}} on {{date|today|convertShortDateToLongDate}}
+				</p>
+			</div>
+		</div>
+
+		<p class="govuk-body-l govuk-!-margin-bottom-4">
+			{{counts.allocated}} total allocations for <a href="../../activities/{{date}}"
+				class="govuk-link--no-visited-state">{{activityCount}} activities</a>
 		</p>
-	</div>
-</div>
 
-{% set dateHtml %}
-{{ govukDateInput({
-	id: "passport-issued",
-	namePrefix: "passport-issued",
-	fieldset: {
+		<div class="govuk-grid-row govuk-!-margin-bottom-6">
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+				title: "Attended",
+				count: counts.attended,
+				linkHref: period + "/attendances",
+				showPercentage: true,
+				tagClasses: "govuk-tag--grey"
+				}) }}
+			</div>
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+				title: "Not yet attended",
+				count: counts['not-recorded'],
+				linkHref: "attendance-dashboard-3-attendance",
+				showPercentage: true,
+				nextPageTitle: "Find and update not attended prisoners",
+				tagClasses: "govuk-tag--grey"
+				}) }}
+			</div>
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+				title: "Absences",
+				count: counts['not-attended'],
+				linkHref: period + "/absences",
+				showPercentage: true,
+				tagClasses: "govuk-tag--grey"
+				}) }}
+			</div>
+		</div>
+
+		{% set dateHtml %}
+		{{ govukDateInput({
+		id: "passport-issued",
+		namePrefix: "passport-issued",
+		fieldset: {
 		legend: {
-			text: "Date",
-			isPageHeading: false,
-			classes: "govuk-fieldset__legend--s"
+		text: "Date",
+		isPageHeading: false,
+		classes: "govuk-fieldset__legend--s"
 		}
-	},
-	hint: {
+		},
+		hint: {
 		html: "For example, 27 1 2023.<br>The earliest date you can view is 27 January 2023."
-	}
-}) }}
-{{govukButton({
-	text: "Update"
-})}}
-{% endset %}
-
-{% if period == 'AM' %}
-{% set activityCount = activitiesForDate.morning|length %}
-{% elif period == 'PM' %}
-{% set activityCount = activitiesForDate.afternoon|length %}
-{% elif period == 'daily' %}
-{% set activityCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
-{% endif %}
-
-<p class="govuk-body-l govuk-!-margin-bottom-4">
-	<b>{{counts.allocated}} allocations</b> for <a href="../../activities/{{date}}" class="govuk-link--no-visited-state">{{activityCount}} activities</a> on {{date|convertShortDateToVeryLongDate}}:
-</p>
-
-<div class="govuk-grid-row govuk-!-margin-bottom-6">
-	<div class="govuk-grid-column-one-quarter">
-		{{ dataCard({
-			title: "Attended",
-			count: counts.attended,
-			linkHref: period|upper + "/attendances",
-			showPercentage: true,
-			tagClasses: "govuk-tag--grey"
+		}
 		}) }}
-	</div>
-	<div class="govuk-grid-column-one-quarter">
-		{{ dataCard({
-			title: "Not yet attended",
-			count: counts['not-recorded'],
-			linkHref: "attendance-dashboard-3-attendance",
-			showPercentage: true,
-			nextPageTitle: "Find and update not attended prisoners",
-			tagClasses: "govuk-tag--grey"
+		{{govukButton({
+		text: "Update"
+		})}}
+		{% endset %}
+		{{ govukDetails({
+		summaryText: "Choose a different date",
+		html: dateHtml,
+		classes: "govuk-!-margin-bottom-2"
 		}) }}
-	</div>
-	<div class="govuk-grid-column-one-quarter">
-		{{ dataCard({
-			title: "Absences",
-			count: counts['not-attended'],
-			linkHref: period|upper + "/attendances",
-			showPercentage: true,
-			tagClasses: "govuk-tag--grey"
-		}) }}
-	</div>
-</div>
-{{ govukDetails({
-	summaryText: "Choose a different date",
-	html: dateHtml,
-	classes: "govuk-!-margin-bottom-2"
-}) }}
-{{ govukDetails({
-	summaryText: "Filter data by activity category",
-	html: filterHtml
-}) }}
 
-{% if counts.absences['with-pay'].total > 0 or counts.absences['without-pay'].total > 0 %}
-<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-<h2 class="govuk-heading-m">
-	Absences
-</h2>
-{% if counts.absences['with-pay'].total > 0 %}
-<div class="govuk-grid-row govuk-!-margin-bottom-5">
-	<div class="govuk-grid-column-one-quarter">
-		{{ dataCard({
-			title: "Paid",
-			count: counts.absences['with-pay'].total
-		}) }}
-	</div>
-	<div class="govuk-grid-column-three-quarters">
-		<div class="govuk-grid-row">
-			{% for type,count in counts.absences['with-pay'] %}
-			{% if type != 'total' %}
+		{% if counts.absences['with-pay'].total > 0 or counts.absences['without-pay'].total > 0 %}
+		<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+		<h2 class="govuk-heading-m">
+			Absences
+		</h2>
+		{% if counts.absences['with-pay'].total > 0 %}
+		<div class="govuk-grid-row govuk-!-margin-bottom-5">
 			<div class="govuk-grid-column-one-quarter">
 				{{ dataCard({
-					title: type|capitalize|replace('-',' '),
-					count: count,
-					titleClasses: "govuk-!-font-size-16",
-					countClasses: "govuk-!-font-size-36",
-					linkHref: "attendance-dashboard-3-list"
+				title: "Paid",
+				count: counts.absences['with-pay'].total
 				}) }}
 			</div>
-			{% endif %}
-			{% endfor %}
+			<div class="govuk-grid-column-three-quarters">
+				<div class="govuk-grid-row">
+					{% for type,count in counts.absences['with-pay'] %}
+					{% if type != 'total' %}
+					<div class="govuk-grid-column-one-quarter">
+						{{ dataCard({
+						title: type|capitalize|replace('-',' '),
+						count: count,
+						titleClasses: "govuk-!-font-size-16",
+						countClasses: "govuk-!-font-size-36",
+						linkHref: "attendance-dashboard-3-list"
+						}) }}
+					</div>
+					{% endif %}
+					{% endfor %}
+				</div>
+				{% if counts.absences['without-pay'].total > 0 %}
+				<hr
+					class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-bottom-2">
+				{% endif %}
+			</div>
 		</div>
+		{% endif %}
 		{% if counts.absences['without-pay'].total > 0 %}
-		<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-bottom-2">
-		{% endif %}
-	</div>
-</div>
-{% endif %}
-{% if counts.absences['without-pay'].total > 0 %}
-<div class="govuk-grid-row govuk-!-margin-bottom-5">
-	<div class="govuk-grid-column-one-quarter">
-		{{ dataCard({
-			title: "Not paid",
-			count: counts.absences['without-pay'].total
-		}) }}
-	</div>
-	<div class="govuk-grid-column-three-quarters">
-		<div class="govuk-grid-row">
-			{% for type,count in counts.absences['without-pay'] %}
-			{% if type != 'total' %}
+		<div class="govuk-grid-row govuk-!-margin-bottom-5">
 			<div class="govuk-grid-column-one-quarter">
 				{{ dataCard({
-					title: type|capitalize|replace('-',' '),
-					count: count,
-					titleClasses: "govuk-!-font-size-16",
-					countClasses: "govuk-!-font-size-36",
-					linkHref: "attendance-dashboard-3-list"
+				title: "Not paid",
+				count: counts.absences['without-pay'].total
 				}) }}
 			</div>
-			{% endif %}
-			{% endfor %}
+			<div class="govuk-grid-column-three-quarters">
+				<div class="govuk-grid-row">
+					{% for type,count in counts.absences['without-pay'] %}
+					{% if type != 'total' %}
+					<div class="govuk-grid-column-one-quarter">
+						{{ dataCard({
+						title: type|capitalize|replace('-',' '),
+						count: count,
+						titleClasses: "govuk-!-font-size-16",
+						countClasses: "govuk-!-font-size-36",
+						linkHref: "attendance-dashboard-3-list"
+						}) }}
+					</div>
+					{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		{% endif %}
+
+		{% if counts['sessions-cancelled'] > 0 %}
+		<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+		<h2 class="govuk-heading-m">
+			Cancellations
+		</h2>
+		<div class="govuk-grid-row govuk-!-margin-bottom-5">
+			<div class="govuk-grid-column-one-quarter">
+				{% set cancelledSessionsCount = attendanceTotals[period|lower]['sessions-cancelled'] %}
+				{% if timeOfDay == 'Daily' %}
+				{% set cancelledSessionsCount = attendanceTotals.morning['sessions-cancelled'] +
+				attendanceTotals.afternoon['sessions-cancelled'] %}
+				{% endif %}
+				{{ dataCard({
+				title: "Sessions cancelled",
+				count: cancelledSessionsCount,
+				linkHref: period+"/sessions-cancelled"
+				}) }}
+			</div>
+			<div class="govuk-grid-column-three-quarters">
+				<div class="govuk-grid-row">
+					<div class="govuk-grid-column-one-quarter">
+						{{ dataCard({
+						title: "Staff unavailable",
+						titleClasses: "govuk-!-font-size-16",
+						count: 1,
+						countClasses: "govuk-!-font-size-36"
+						}) }}
+					</div>
+					<div class="govuk-grid-column-one-quarter">
+						{{ dataCard({
+						title: "Location unavailable",
+						titleClasses: "govuk-!-font-size-16",
+						count: 1,
+						countClasses: "govuk-!-font-size-36"
+						}) }}
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+
+		<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+		<h2 class="govuk-heading-m">
+			Prisoners suspended
+		</h2>
+		<div class="govuk-grid-row govuk-!-margin-bottom-8">
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+				title: "Prisoners suspended",
+				count: 11,
+				linkHref: "#"
+				}) }}
+			</div>
 		</div>
 	</div>
 </div>
-{% endif %}
-{% endif %}
+{% endblock %}
 
-{% if counts['sessions-cancelled'] > 0 %}
-<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-<h2 class="govuk-heading-m">
-	Cancellations
-</h2>
-<div class="govuk-grid-row govuk-!-margin-bottom-5">
-	<div class="govuk-grid-column-one-quarter">
-		{% set cancelledSessionsCount = attendanceTotals[period|lower]['sessions-cancelled'] %}
-		{% if timeOfDay == 'Daily' %}
-		{% set cancelledSessionsCount = attendanceTotals.morning['sessions-cancelled'] + attendanceTotals.afternoon['sessions-cancelled'] %}
-		{% endif %}
-		{{ dataCard({
-			title: "Sessions cancelled",
-			count: cancelledSessionsCount,
-			linkHref: period+"/sessions-cancelled"
-		}) }}
-	</div>
-	<div class="govuk-grid-column-three-quarters">
-		<div class="govuk-grid-row">
-			<div class="govuk-grid-column-one-quarter">
-				{{ dataCard({
-					title: "Staff unavailable",
-					titleClasses: "govuk-!-font-size-16",
-					count: 1,
-					countClasses: "govuk-!-font-size-36"
-				}) }}
-			</div>
-			<div class="govuk-grid-column-one-quarter">
-				{{ dataCard({
-					title: "Location unavailable",
-					titleClasses: "govuk-!-font-size-16",
-					count: 1,
-					countClasses: "govuk-!-font-size-36"
-				}) }}
-			</div>
-		</div>
-	</div>
-</div>
-{% endif %}
-
-<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-<h2 class="govuk-heading-m">
-	Prisoners suspended
-</h2>
-<div class="govuk-grid-row govuk-!-margin-bottom-8">
-	<div class="govuk-grid-column-one-quarter">
-		{{ dataCard({
-			title: "Prisoners suspended",
-			count: 11,
-			linkHref: "#"
-		}) }}
-	</div>
-</div>
+{% block pageScripts %}
+<script type="text/javascript">
+	$(document).ready(function () {
+		new MOJFrontend.FilterToggleButton({
+			bigModeMediaQuery: "(min-width: 48.063em)",
+			startHidden: true,
+			toggleButton: {
+				container: $(".moj-filter-button"),
+				showText: "Show filter",
+				hideText: "Hide filter",
+				classes: "govuk-button--secondary",
+			},
+			closeButton: {
+				container: $(".moj-filter__header-action"),
+				text: "Close",
+			},
+			filter: {
+				container: $(".moj-filter"),
+			},
+		});
+	})
+</script>
 {% endblock %}

@@ -34,7 +34,7 @@ Find an activity to record or edit attendance
                         Search by name or prison number
                     </label>
                     <input class="govuk-input moj-search__input " id="name" name="search" type="search"
-                        value="{{data['search']}}">
+                        value="{{data['person-search']}}">
                 </div>
                 <button class="govuk-button moj-search__button" data-module="govuk-button">
                     Search
@@ -56,7 +56,7 @@ Find an activity to record or edit attendance
             <th scope="col" class="govuk-table__header" aria-sort="none">Current allocation</th>
             <th scope="col" class="govuk-table__header" aria-sort="none">Education level held</th>
             <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
-            <th scope="col" class="govuk-table__header" aria-sort="none">Active requests</th>
+            <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none">Other waitlists</th>
             <th scope="col" class="govuk-table__header"></th>
         </tr>
     </thead>
@@ -108,7 +108,7 @@ Find an activity to record or edit attendance
             <td class="govuk-table__cell" data-sort-value="{{prisoner.releaseDate}}">
                 {{prisoner.releaseDate|convertShortDateToMediumDate}}
             </td>
-            <td class="govuk-table__cell" data-sort-value="{{prisoner.releaseDate}}">
+            <td class="govuk-table__cell" data-sort-value="{{prisoner.releaseDate}}" style="text-align: center;">
                 <ul class="govuk-list">
                     {% if (loop.index == 1 and data['page'] == 1) or (loop.index == 2 and data['page'] == 1) %}
                     <li>0</li>
