@@ -18,24 +18,28 @@ Appointments prototype
       </div>
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-l">Individual appointment</span>
-        Will the appointment repeat?
+        Which appointment do you wish to change?
        </h1>
    
-      {{ govukRadios({
-        idPrefix: "appointment-repeat",
-        name: "appointment-repeat",
-        value: data['appointment-repeat'],
+       {{ govukRadios({
+        idPrefix: "which-occurrence",
+        name: "which-occurrence",
         items: [
           {
-            value: "Yes",
-            text: "Yes"
+            value: "This occurrence",
+            text: "This occurrence"
           },
           {
-            value: "No",
-            text: "No"
+            value: "This and the following occurrences",
+            text: "This and the following occurrences"
+          },
+          {
+            value: "All occurrences",
+            text: "All occurrences"
           }
         ]
-      }) }}
+       }) }}
+     
       
     
     {{ govukButton({

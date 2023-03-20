@@ -129,7 +129,7 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	if (appRepeat === 'Yes') {
 		res.redirect(`appointment-frequency`);
 	} else {
-		res.redirect(`confirmation`);
+		res.redirect(`../single-appointment-no-recurrence-edited`);
 	}
   });
 
