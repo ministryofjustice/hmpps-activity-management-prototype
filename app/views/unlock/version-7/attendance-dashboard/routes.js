@@ -356,6 +356,9 @@ const createHistoricAttendanceData = (
       periods.forEach((period) => {
         // for each prisoner, create a random attendance record for each activity
         prisoners.forEach((prisoner) => {
+          // get the current time in the format "20:46:04"
+          let time = new Date().toTimeString().slice(0, 8);
+
           // create an attendance record object
           let attendanceRecord = {
             attendance: "", // "attended" or "not-attended"
@@ -366,7 +369,7 @@ const createHistoricAttendanceData = (
             caseNote: "", // true or false
             timestamp: {
               date: date.toISOString().slice(0, 10), // "2020-01-01"
-              time: "20:46:04", // "20:46:04"
+              time: time, // "20:46:04"
             },
           };
 
@@ -523,24 +526,6 @@ const createHistoricAttendanceData = (
       });
     });
   });
-
-  // // do a final sweep of attendanceData to remove any empty arrays and objects
-  // // this is to make the data not break the prototype
-  // for (const activity in attendanceData) {
-  //   for (const date in attendanceData[activity]) {
-  //     for (const period in attendanceData[activity][date]) {
-  //       if (attendanceData[activity][date][period].length === 0) {
-  //         delete attendanceData[activity][date][period];
-  //       }
-  //     }
-  //     if (Object.keys(attendanceData[activity][date]).length === 0) {
-  //       delete attendanceData[activity][date];
-  //     }
-  //   }
-  //   if (Object.keys(attendanceData[activity]).length === 0) {
-  //     delete attendanceData[activity];
-  //   }
-  // }
 
   return attendanceData;
 };
