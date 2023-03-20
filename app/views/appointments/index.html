@@ -6,45 +6,19 @@ Activities Management prototype
 {% endblock %}
 
 {% block header %}
-{% set homepageUrl %}
-{% if data['prototype'] == 'create' %}
-/?prototype=create
-{% elseif data['prototype'] == 'unlock' %}
-/unlock?prototype=unklock
-{% elseif data['prototype'] == 'appointments' %}
-/appointments?prototype=appointments
-{% endif %}
-{% endset %}
+{% set page = "appointments" %}
 
-{{ govukHeader({
-  homepageUrl: homepageUrl,
-  serviceName: serviceName,
-  serviceUrl: homepageUrl,
-  containerClasses: "govuk-width-container",
-  navigation: [
-  {
-    text: "Create and allocate",
-    href: "/?prototype=create"
-  },
-  {
-    text: "Unlock and attend",
-    href: "/unlock/?prototype=unlock"
-  },
-  {
-    text: "Appointments",
-    href: "/appointments/?prototype=appointments",
-    active: true
-  }]
-}) }}
+{% include "../includes/proto-header.html" %}
 
 <div class="app-masthead">
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h1 class="app-masthead__title govuk-heading-xl govuk-!-margin-bottom-3">
+        <h1 class="app-masthead__title govuk-heading-l govuk-!-margin-bottom-3">
           Appointments
         </h1>
-        <h3 class="app-masthead__subtitle govuk-heading-l">Prototype</h3>
+        <h3 class="app-masthead__subtitle govuk-heading-m">A service within Digital Prison Services for prison staff to manage appointments.
+        </h3>
       </div>
       <div class="govuk-grid-column-one-third">
       </div>
@@ -101,6 +75,7 @@ Activities Management prototype
       </div>
     </details>
     <table class="govuk-table">
+      <!-- <caption class="govuk-table__caption govuk-caption-l">Prototype versions</caption> -->
       <thead class="govuk-table__head" >
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header" width="15%">Version</th>
