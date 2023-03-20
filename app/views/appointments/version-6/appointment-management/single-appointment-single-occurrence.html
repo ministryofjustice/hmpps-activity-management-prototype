@@ -11,21 +11,14 @@ Appointments prototype
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds-from-desktop">
-            {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-
-            {% set html %}
-              <h3 class="govuk-notification-banner__heading">
-                Appointment cancelled successfully
-              </h3>
-              
-            {% endset %}
-
-            {{ govukNotificationBanner({
-              html: html,
-              type: 'success'
-            }) }}
-            <h1 class="govuk-heading-l">View and edit appointment details</h1>
-            <h2 class="govuk-heading-m">Appointment details</h2>
+            <div class="back">
+              <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+              </div>
+            <h1 class="govuk-heading-l">
+              <span class="govuk-caption-l">View and edit appointment occurence</span>
+              Medical - Other appointment for John Taylor - 2 March 2023
+             </h1>
+            <h2 class="govuk-heading-m">Appointment occurence details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -46,7 +39,9 @@ Appointments prototype
                   {{data.categoryChoicesingle or 'Medical - Other'}} 
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                 
+                  <a class="govuk-link" href="change-answers-multiple/appointment-type">
+                    Change <span class="govuk-visually-hidden">  type</span>
+                  </a>
                 </dd>
               </div>
               <div class="govuk-summary-list__row">
@@ -57,7 +52,9 @@ Appointments prototype
                   {{data.locationChoicesingle or 'HB1 Doctors'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                 
+                  <a class="govuk-link" href="change-answers-multiple/location">
+                    Change <span class="govuk-visually-hidden">  location</span>
+                  </a>
                 </dd>
               </div>
               <div class="govuk-summary-list__row">
@@ -65,10 +62,12 @@ Appointments prototype
                   Date
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['date-of-appointment-day'] or '13'}} {{ data['date-of-appointment-month']  or '2'}}  {{ data['date-of-appointment-year'] or '2023'}}
+                  {{ data['date-of-appointment-day'] or '13'}} {{ data['date-of-appointment-month']  or ''}}  {{ data['date-of-appointment-year'] or '2023'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                 
+                  <a class="govuk-link" href="change-answers-multiple/date-of-appointment">
+                    Change <span class="govuk-visually-hidden"> date</span>
+                  </a>
                 </dd>
               </div>
               <div class="govuk-summary-list__row">
@@ -79,7 +78,9 @@ Appointments prototype
                   {{ data['start-hours'] or '11'}}:{{ data['start-minutes'] or '00'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  
+                  <a class="govuk-link" href="change-answers-multiple/date-of-appointment#start-time">
+                    Change <span class="govuk-visually-hidden"> start time</span>
+                  </a>
                 </dd>
               </div>
               <div class="govuk-summary-list__row">
@@ -90,30 +91,36 @@ Appointments prototype
                   {{ data['end-hours'] or '16'}}:{{ data['end-minutes'] or '00'}} 
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  
+                <a class="govuk-link" href="change-answers-multiple/date-of-appointment#end-time">
+                    Change <span class="govuk-visually-hidden"> end ime</span>
+                  </a>
                 </dd>
               </div>
-              <div class="govuk-summary-list__row">
+             <!--<div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Repeat
                 </dt>
                 <dd class="govuk-summary-list__value">
-                   {{ data['appointment-repeat'] or 'No'}}
+                   {{ data['appointment-repeat'] or 'Yes'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  
+                  <a class="govuk-link" href="change-answers/appointment-repeat">
+                    Change<span class="govuk-visually-hidden"> Repeat</span>
+                  </a>
                 </dd>
-              </div>
-              {% if data['appointment-repeat'] === 'Yes' %}
+              </div>-->
+             
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Frequency
                 </dt>
                 <dd class="govuk-summary-list__value">
-                   {{ data['appointment-frequency']}}
+                   {{ data['appointment-frequency'] or 'Weekly'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                 
+                  <a class="govuk-link" href="change-answers-multiple/appointment-frequency">
+                    Change <span class="govuk-visually-hidden"> Repeat</span>
+                  </a>
                 </dd>
               </div>
               <div class="govuk-summary-list__row">
@@ -121,51 +128,39 @@ Appointments prototype
                   Occurences
                 </dt>
                 <dd class="govuk-summary-list__value">
-                   {{ data['number-of-appointments']}}
+                   {{ data['number-of-appointments'] or '10'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  
+                  <a class="govuk-link" href="change-answers-multiple/appointment-frequency">
+                    Change<span class="govuk-visually-hidden"> Repeat</span>
+                  </a>
                 </dd>
               </div>
-              {% endif %}
+              
              </dl>
-             <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-!-margin-top-9">
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Created by
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  J. Smith
-                </dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                  <dt class="govuk-summary-list__key">
-                    Last edited by
-                  </dt>
-                  <dd class="govuk-summary-list__value">
-                    B. Jones
-                  </dd>
-                  </div>
-                  <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                      Cancelled by
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                      B. Jones
-                    </dd>
-                    </div>
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                        Cancelation reason
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        {{ data['cancel-reason']}}
-                      </dd>
-                      </div>
-                   </dl>
+
+            
+
+            
+           
+
+              
+             
+            
+            <form action="confirmation" method="post" novalidate>
+              <div class="govuk-button-group">
+                <button class="govuk-button " data-module="govuk-button">
+                  Print movement slip
+                </button>
+                <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                  Cancel this appointment
+                </button>
+               
+            </div>
              <p class="govuk-body">
-              <a href="appointment-view#Bulk" class="govuk-link">Back to list of appointments</a>
+              <a href="edit-appointment-option-4" class="govuk-link">Back to group details</a>
              </p>
+            </form>
           </div>
         </div>
       </main>
