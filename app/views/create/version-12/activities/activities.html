@@ -1,6 +1,5 @@
 {% extends "layout_hmpps.html" %}
 {% set serviceName = "Activities Management" %}
-{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
 
 {% block pageTitle %}
 Find an activity to record or edit attendance
@@ -52,11 +51,11 @@ href: "../manage-activities"
 {{ mojSubNavigation({
     label: 'Sub navigation',
     items: [{
-      text: 'All activities (' + activities.length + ')',
+      text: 'All activities (' + activitiesCount + ')',
       href: 'all',
       active: true if list == 'all'
     }, {
-      text: 'Only activities with vacancies (38)',
+      text: 'Only activities with vacancies (' + vacanciesCount + ')',
       href: 'vacancies',
       active: true if list == 'vacancies'
     }]

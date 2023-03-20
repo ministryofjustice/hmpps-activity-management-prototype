@@ -12,15 +12,23 @@ router.get("/", function (req, res) {
 router.get("/all", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
   let applications = req.session.data["applications"];
-
+  
   // count the number of prisoners allocated to each activity
   // and add it to each activity object in the activities array
   addAllocationsCountToActivities(activities, req, applications);
+  let activitiesCount = activities.length;
+
+  let activitiesWithVacancies = activities.filter(
+    (activity) => activity.capacity - activity.currentlyAllocated > 0
+  );
+  let vacanciesCount = activitiesWithVacancies.length;
 
   // render the activities page and pass the activities array to the template
   res.render(req.protoUrl + "/activities", {
     activities,
-    list: 'all'
+    activitiesCount,
+    list: 'all',
+    vacanciesCount
   });
 });
 
@@ -28,23 +36,23 @@ router.get("/all", function (req, res) {
 router.get("/vacancies", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
   let applications = req.session.data["applications"];
+  let activitiesCount = activities.length;
 
   // count the number of prisoners allocated to each activity
   // and add it to each activity object in the activities array
   addAllocationsCountToActivities(activities, req, applications);
 
-  // create a new activities array which only include activities with vacancies
   let activitiesWithVacancies = activities.filter(
-    // calculate the number of vacancies for each activity
-    // subtract number of prisoners allocated from the activity's capacity
-    // check if it's greater than 0
     (activity) => activity.capacity - activity.currentlyAllocated > 0
   );
-  
+  let vacanciesCount = activitiesWithVacancies.length;
+
   // render the activities page and pass the new activities array to the template
   res.render(req.protoUrl + "/activities", {
     activities: activitiesWithVacancies,
-    list: 'vacancies'
+    activitiesCount,
+    vacanciesCount,
+    list: 'vacancies',
     });
 });
 
@@ -636,6 +644,11 @@ function addAllocationsCountToActivities(activities, req, applications) {
         application["activity"].toString() === activity.id.toString() &&
         application["status"] !== "rejected"
     );
+
+    // add the count of vacancies to the activity object
+    // we work this out by subtracting the number of prisoners allocated to the activity from the activity capacity
+    activity.vacancies = activity.capacity - prisonerCount;
+    
     activity.applicationCount = activityApplications.length;
   });
 }
