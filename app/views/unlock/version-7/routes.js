@@ -133,7 +133,7 @@ function updateAttendanceData(
       // If the prisoner refused to work or the work is not required, set pay to false
       case "refused":
       case "not-required":
-        details.pay = false;
+        details.pay = true;
         break;
 
       // If there's a clash or payment is required, set pay to true
@@ -1173,11 +1173,17 @@ router.get(
       // Return true if input date is in the future
       return isFutureDate;
     };
+
+    // only show the search bar if the date is not in the future
+    const showSearchBar = !checkIsFutureDate(date);
+
     let isFutureDate = checkIsFutureDate(date);
+
     res.render("unlock/" + req.version + "/add-attendance-details", {
       filteredPrisoners,
       dateTense,
       isFutureDate,
+      showSearchBar
     });
   }
 );

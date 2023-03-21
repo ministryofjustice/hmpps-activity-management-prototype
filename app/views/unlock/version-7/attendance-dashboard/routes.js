@@ -242,6 +242,38 @@ router.get("/:date/:period/attendances", (req, res) => {
 
   res.render(req.protoUrl + "/prisoners-list", {
     date,
+    pageTitle: "All attended",
+    period,
+    attendanceList,
+  });
+});
+
+// PAGE: Sick list
+// DESCRIPTION: This page shows a list of prisoners who have been marked as sick on the selected date and period
+router.get("/:date/:period/sick", (req, res) => {
+  const date = req.params.date;
+  const period = req.params.period;
+
+  // get a list of prisoners who have attended any activity on the selected date and period
+  let attendanceData = req.session.data["attendance"];
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+
+  let attendanceList = getPrisonerList(
+    activities,
+    attendanceData,
+    date,
+    period,
+    (attendanceStatus = "not-attended")
+  );
+
+  // filter the attendanceList to only include prisoners who have been marked as sick
+  attendanceList = attendanceList.filter((prisoner) => {
+    return prisoner.attendanceRecord.attendanceStatus === "sick";
+  });
+
+  res.render(req.protoUrl + "/prisoners-list", {
+    date,
+    pageTitle: "All sick",
     period,
     attendanceList,
   });
@@ -268,8 +300,73 @@ router.get("/:date/:period/absences", (req, res) => {
   res.render(req.protoUrl + "/prisoners-list", {
     date,
     period,
+    pageTitle: "All absences",
     attendanceList,
   });
+});
+
+// PAGE: Not yet attended list
+// DESCRIPTION: This page shows a list of prisoners who have not yet attended any activity on the selected date and period
+router.get("/:date/:period/not-attended-yet", (req, res) => {
+  const date = req.params.date;
+  const period = req.params.period;
+  const prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+
+  // get a list of prisoners who have attended any activity on the selected date and period
+  let attendanceData = req.session.data["attendance"];
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+
+  // set attendanceList to any prisoners with the activity id in their activity array
+  // but who have not yet been marked as attended or not attended for that activity on the selected date and period
+  let attendanceList;
+
+  // if the period is daily, we need to check both morning and afternoon
+  // or run the filter function twice for each period and combine the results
+  if (period === "daily") {
+    attendanceList = notAttendedList("AM", date).concat(
+      notAttendedList("PM", date)
+    );
+  } else {
+    attendanceList = notAttendedList(period, date);
+  }
+
+  res.render(req.protoUrl + "/prisoners-list", {
+    date,
+    period,
+    pageTitle: "All absences",
+    attendanceList,
+  });
+
+  function notAttendedList(period, date) {
+    let list = [];
+    // check attendanceData is not empty or undefined
+    if (attendanceData) {
+      // loop through each prisoner
+      prisoners.forEach((prisoner) => {
+        // check if the prisoner has any activities
+        if (prisoner.activity && prisoner.activity.length > 0) {
+          // loop through each activity
+          prisoner.activity.forEach((activity) => {
+            // if there is already attendanceData for this activity on the selected date and period for this prisoner
+            // do nothing
+            if (
+              attendanceData[activity.id] &&
+              attendanceData[activity.id][date] &&
+              attendanceData[activity.id][date][period] &&
+              !attendanceData[activity.id][date][period][prisoner.id]
+            ) {
+              // if there is no attendanceData for this activity on the selected date and period for this prisoner
+              // add the prisoner to the list
+              list.push({
+                prisoner,
+                activity,
+              });
+            }
+          });
+        }
+      });
+    }
+  }
 });
 
 // PAGE: Sessions cancelled list
@@ -306,6 +403,7 @@ router.get("/:date/:period/sessions-cancelled", (req, res) => {
 
   res.render(req.protoUrl + "/sessions-cancelled", {
     date,
+    pageTitle: "All sessions cancelled",
     period,
     cancelledSessions,
   });
@@ -526,20 +624,23 @@ const createHistoricAttendanceData = (
     }
   }
 
-  console.log(attendanceRecordsByPrisoner)
-
+  // loop through the attendance records for each prisoner for each day/period combination
+  // if there is more than one record, randomly choose one to keep and mark the others as 'not-attended', 'clash', with pay
   for (const [prisonerId, dates] of Object.entries(
     attendanceRecordsByPrisoner
   )) {
     for (const [date, periods] of Object.entries(dates)) {
       for (const [period, attendance] of Object.entries(periods)) {
         if (attendance.length > 1) {
-          const attendanceToKeep = attendance[Math.floor(Math.random() * attendance.length)];
+          const attendanceToKeep =
+            attendance[Math.floor(Math.random() * attendance.length)];
           attendance.forEach((attendanceRecord) => {
             if (attendanceRecord !== attendanceToKeep) {
-              attendanceRecord.attendance = "not-attended";
-              attendanceRecord.attendanceStatus = "clash";
-              attendanceRecord.pay = true;
+              attendanceRecord[0].attendance = "not-attended";
+              attendanceRecord[0].attendanceStatus = "clash";
+              attendanceRecord[0].pay = true;
+
+              console.log(attendanceRecord[0]);
             }
           });
         }

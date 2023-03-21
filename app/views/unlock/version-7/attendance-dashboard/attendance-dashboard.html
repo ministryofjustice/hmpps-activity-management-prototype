@@ -56,7 +56,7 @@ href: '#'
 	{% endif %}
 	{% if params.linkHref %}
 	<p class="govuk-!-margin-bottom-0">
-		<a href="{{params.linkHref}}?page-title={{params.nextPageTitle or ('All '+(params.title | lower))}}&count={{params.count}}"
+		<a href="{{params.linkHref}}"
 			class="govuk-!-font-weight-bold govuk-link--no-visited-state govuk-!-font-size-16">{{ params.linkText or
 			"All " + (params.title | lower) }}</a>
 	</p>
@@ -180,7 +180,7 @@ href: '#'
 				{{ dataCard({
 				title: "Not yet attended",
 				count: counts['not-recorded'],
-				linkHref: "attendance-dashboard-3-attendance",
+				linkHref: period + "/not-attended-yet",
 				showPercentage: true,
 				nextPageTitle: "Find and update not attended prisoners",
 				tagClasses: "govuk-tag--grey"
