@@ -26,7 +26,6 @@ router.get("/generate-data-success", function (req, res) {
   });
 });
 
-
 // PAGE: Activity dashboard
 router.get("/:selectedDate/:selectedPeriod", function (req, res) {
   let attendanceData = req.session.data["attendance-data-1"];
@@ -325,7 +324,7 @@ router.get("/generate-data-now", (req, res) => {
     req.session.data["timetable-complete-1"]["prisoners"]
   );
   req.session.data["attendance"] = attendanceData;
-  res.redirect("generate-data-success")
+  res.redirect("generate-data-success");
 });
 
 module.exports = router;
@@ -377,12 +376,30 @@ const createHistoricAttendanceData = (
             },
           };
 
-          attendanceRecord.attendance =
-            Math.random() < 0.96 ? "attended" : "not-attended"; //shorthand to decide if prisoner attended
+          generateRecord();
+
+          // add the attendance record object to attendanceData but only if the prisoner has an activity array and the array contains the activity id
+          const isoDate = date.toISOString().slice(0, 10);
+          const activityId = parseInt(activity.id);
+
+          if (prisoner.activity?.includes(activityId)) {
+            attendanceData[activityId] ??= {};
+            attendanceData[activityId][isoDate] ??= {};
+            attendanceData[activityId][isoDate][period] ??= {};
+            attendanceData[activityId][isoDate][period][prisoner.id] ??= [];
+            attendanceData[activityId][isoDate][period][prisoner.id].push(
+              attendanceRecord
+            );
+          }
+
+          function generateRecord() {
+            // decide if the prisoner attended
+            attendanceRecord.attendance =
+              Math.random() < 0.86 ? "attended" : "not-attended";
 
             // if the prisoner attended, decide if they got paid
             if (attendanceRecord.attendance === "attended") {
-              attendanceRecord.pay = Math.random() < 0.9 ? true : false;
+              attendanceRecord.pay = Math.random() < 0.95 ? true : false;
 
               // if they attended but weren't paid, add a case note
               if (attendanceRecord.pay === false) {
@@ -390,102 +407,62 @@ const createHistoricAttendanceData = (
               }
             }
 
-          // if the prisoner did not attend, decide if they refused
-          if (attendanceRecord.attendance === "not-attended") {
-            function assignRandomStatus() {
-              let statusesAndProbabilities = [
-                ["refused", 0.5],
-                ["sick", 0.4],
-                ["rest-day", 0.2],
-                ["other", 0.1],
-                ["not-required", 0.1],
-                ["clash", 0.05]
-              ];
-              
-              const total = statusesAndProbabilities.reduce((acc, cur) => acc + cur[1], 0);
-              let random = Math.random() * total;
-              let status = statusesAndProbabilities.find(([, probability]) => {
-                random -= probability;
-                return random <= 0;
+            // if the prisoner did not attend, decide if they refused
+            if (attendanceRecord.attendance === "not-attended") {
+              function assignRandomStatus() {
+                let statusesAndProbabilities = [
+                  ["refused", 0.5],
+                  ["sick", 0.4],
+                  ["rest-day", 0.2],
+                  ["other", 0.1],
+                  ["not-required", 0.1],
+                ];
+
+                const total = statusesAndProbabilities.reduce(
+                  (acc, cur) => acc + cur[1],
+                  0
+                );
+                let random = Math.random() * total;
+                let status = statusesAndProbabilities.find(
+                  ([, probability]) => {
+                    random -= probability;
+                    return random <= 0;
+                  }
+                );
+                return status[0];
               }
-              );
-              return status[0];
+
+              attendanceRecord.attendanceStatus = assignRandomStatus();
+
+              switch (attendanceRecord.attendanceStatus) {
+                // If the prisoner is sick, on a rest day, or for some other reason and pay is required, set pay to true, otherwise false
+                case "sick":
+                case "rest-day":
+                case "other":
+                  // set pay to true
+                  attendanceRecord.pay = true;
+                  break;
+
+                // If the prisoner refused to work or the work is not required, set pay to false
+                case "refused":
+                case "not-required":
+                  attendanceRecord.pay = false;
+                  break;
+              }
             }
 
-            attendanceRecord.attendanceStatus = assignRandomStatus();
-            
-            switch (attendanceRecord.attendanceStatus) {
-              // If the prisoner is sick, on a rest day, or for some other reason and pay is required, set pay to true, otherwise false
-              case "sick":
-              case "rest-day":
-              case "other":
-                // set pay to true
-                attendanceRecord.pay = true;
-                break;
-        
-              // If the prisoner refused to work or the work is not required, set pay to false
-              case "refused":
-              case "not-required":
-                attendanceRecord.pay = false;
-                break;
-        
-              // If there's a clash or payment is required, set pay to true
-              case "clash":
-                attendanceRecord.pay = true;
-                break;
+            // if the prisoner refused, decide if they have an incentive level warning
+            if (attendanceRecord.attendanceStatus === "refused") {
+              attendanceRecord.incentiveLevelWarning =
+                Math.random() < 0.8 ? "yes" : "no";
             }
-          }
-
-          // if the prisoner refused, decide if they have an incentive level warning
-          if (attendanceRecord.attendanceStatus === "refused") {
-            attendanceRecord.incentiveLevelWarning =
-              Math.random() < 0.8 ? 'yes' : 'no';
-          }
-          // if the prisoner refused add a case note
-          if (attendanceRecord.attendanceStatus === "refused") {
-            // don't pay prisoners who refused
-            attendanceRecord.pay = false;
-            attendanceRecord.caseNote = "Refused to attend for no good reason";
-          }
-
-          // add the attendance record object to attendanceData but only if the prisoner has an activity array and the array contains the activity id
-          if (
-            prisoner.activity &&
-            prisoner.activity.includes(parseInt(activity.id))
-          ) {
-            if (!attendanceData[parseInt(activity.id)]) {
-              attendanceData[parseInt(activity.id)] = {};
+            // if the prisoner refused add a case note
+            if (attendanceRecord.attendanceStatus === "refused") {
+              // don't pay prisoners who refused
+              attendanceRecord.pay = false;
+              attendanceRecord.caseNote =
+                "Refused to attend for no good reason";
             }
-            if (
-              !attendanceData[parseInt(activity.id)][
-                date.toISOString().slice(0, 10)
-              ]
-            ) {
-              attendanceData[parseInt(activity.id)][
-                date.toISOString().slice(0, 10)
-              ] = {};
-            }
-            if (
-              !attendanceData[parseInt(activity.id)][
-                date.toISOString().slice(0, 10)
-              ][period]
-            ) {
-              attendanceData[parseInt(activity.id)][
-                date.toISOString().slice(0, 10)
-              ][period] = {};
-            }
-            if (
-              !attendanceData[parseInt(activity.id)][
-                date.toISOString().slice(0, 10)
-              ][period][prisoner.id]
-            ) {
-              attendanceData[parseInt(activity.id)][
-                date.toISOString().slice(0, 10)
-              ][period][prisoner.id] = [];
-            }
-            attendanceData[parseInt(activity.id)][
-              date.toISOString().slice(0, 10)
-            ][period][prisoner.id].push(attendanceRecord);
           }
         });
       });
@@ -526,9 +503,57 @@ const createHistoricAttendanceData = (
     });
   });
 
+  // if any prisoner has multiple attendance records across different activities for the same day/period combination in the attendance data
+  // randomly choose one of the records to mark as 'not-attended', 'clash', with pay
+  // we'll need to create an object of records for each prisoner for each day/period combination and then loop through them:
+  const attendanceRecordsByPrisoner = {};
+
+  for (const { [0]: activityId, [1]: dates } of Object.entries(
+    attendanceData
+  )) {
+    for (const [date, periods] of Object.entries(dates)) {
+      for (const [period, prisoners] of Object.entries(periods)) {
+        for (const [prisonerId, attendance] of Object.entries(prisoners)) {
+          const prisonerAttendance =
+            attendanceRecordsByPrisoner[prisonerId]?.[date]?.[period] ?? [];
+          prisonerAttendance.push(attendance);
+          attendanceRecordsByPrisoner[prisonerId] ??= {};
+          attendanceRecordsByPrisoner[prisonerId][date] ??= {};
+          attendanceRecordsByPrisoner[prisonerId][date][period] =
+            prisonerAttendance;
+        }
+      }
+    }
+  }
+
+  console.log(attendanceRecordsByPrisoner)
+
+  for (const [prisonerId, dates] of Object.entries(
+    attendanceRecordsByPrisoner
+  )) {
+    for (const [date, periods] of Object.entries(dates)) {
+      for (const [period, attendance] of Object.entries(periods)) {
+        if (attendance.length > 1) {
+          const attendanceToKeep = attendance[Math.floor(Math.random() * attendance.length)];
+          attendance.forEach((attendanceRecord) => {
+            if (attendanceRecord !== attendanceToKeep) {
+              attendanceRecord.attendance = "not-attended";
+              attendanceRecord.attendanceStatus = "clash";
+              attendanceRecord.pay = true;
+            }
+          });
+        }
+      }
+    }
+  }
+
   return attendanceData;
 };
+// ------------------ END OF ATTENDANCE DATA GENERATOR ------------------
 
+// ------------------------------------------------------------------------
+// ------------------ START OF CASE NOTES DATA GENERATOR ------------------
+// ------------------------------------------------------------------------
 // get activities for a given date
 const activitiesByDate = (activities, date) => {
   const dayOfWeek = date.getDay();
