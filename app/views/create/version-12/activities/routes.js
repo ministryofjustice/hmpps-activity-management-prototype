@@ -153,6 +153,34 @@ router.get("/:activityId/currently-allocated", function (req, res) {
   });
 });
 
+//post handler for the currently allocated page
+router.post("/:activityId/currently-allocated", function (req, res) {
+  res.redirect("deallocate/" + req.body.prisonerId);
+});
+
+// activity deallocate page
+router.get("/:activityId/deallocate/:prisonerId", function (req, res) {
+  let currentPage = "deallocate";
+  let activityId = req.params.activityId;
+  let prisonerId = req.params.prisonerId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let prisoner = prisoners.find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+
+  // render the deallocate page
+  res.render(req.protoUrl + "/deallocate", {
+    activity,
+    currentPage,
+    prisoner,
+    });
+});
+
+
 // other prisoners page
 router.get("/:activityId/other-prisoners", function (req, res) {
   let currentPage = "other-prisoners";

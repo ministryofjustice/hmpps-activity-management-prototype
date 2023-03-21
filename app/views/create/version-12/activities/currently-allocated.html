@@ -33,76 +33,78 @@ Find an activity to record or edit attendance
         </div> -->
     </div>
 </div>
-<table class="govuk-table">
-    <caption class="govuk-table__caption govuk-table__caption--m">
-        {{currentlyAllocated|length}} {{'people' if currentlyAllocated|length != 1 else 'person' }} currently allocated
-    </caption>
-    <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Prisoner details</th>
-            <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
-            <th scope="col" class="govuk-table__header">Date allocated</th>
-            <th scope="col" class="govuk-table__header">Other allocations</th>
-            <th scope="col" class="govuk-table__header">Earliest release date</th>
-        </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-        {% for prisoner in currentlyAllocated | sort(false,true,'name.surname') %}
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-                <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="allocated-prisoner-{{prisoner.id}}"
-                            name="allocated-prisoners" type="radio" value="england">
-                        <label class="govuk-label govuk-radios__label" for="allocated-prisoner-{{prisoner.id}}">
-                            <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
-                                    {{prisoner.name.surname}}</a></b><br>
-                            {{prisoner.id}}<br>
-                            {{prisoner.location.cell}}
-                        </label>
+<form method="post">
+    <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+            {{currentlyAllocated|length}} {{'people' if currentlyAllocated|length != 1 else 'person' }} currently
+            allocated
+        </caption>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Prisoner details</th>
+                <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
+                <th scope="col" class="govuk-table__header">Date allocated</th>
+                <th scope="col" class="govuk-table__header">Other allocations</th>
+                <th scope="col" class="govuk-table__header">Earliest release date</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            {% for prisoner in currentlyAllocated | sort(false,true,'name.surname') %}
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="allocated-prisoner-{{prisoner.id}}"
+                                name="prisonerId" type="radio" value="{{prisoner.id}}">
+                            <label class="govuk-label govuk-radios__label" for="allocated-prisoner-{{prisoner.id}}">
+                                <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
+                                        {{prisoner.name.surname}}</a></b><br>
+                                {{prisoner.id}}<br>
+                                {{prisoner.location.cell}}
+                            </label>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td class="govuk-table__cell govuk-!-padding-top-4">
-                {% if loop.index == 3 %}
-                <ul class="govuk-list">
-                    <li><a href="#" class="govuk-link--no-visited-state">Jordan Johnson-Jones</a></li>
-                </ul>
-                {% else %}
-                None
-                {% endif %}
-            </td>
-            <td class="govuk-table__cell govuk-!-padding-top-4">
-                {{'2023-03-02'|convertShortDateToMediumDate}}
-            </td>
-            <td class="govuk-table__cell govuk-!-padding-top-4">
-                {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
-                <span class="govuk-hint">None</span>
-                {% else %}
-                <ul class="govuk-list">
-                    {% for allocation in prisoner.activity %}
-                    <!-- don't show the allocation if it's the same as the current activity -->
-                    {% if allocation != activity.id %}
-                    {% set activity = allocation|getActivityDetails %}
-                    <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {% if loop.index == 3 %}
+                    <ul class="govuk-list">
+                        <li><a href="#" class="govuk-link--no-visited-state">Jordan Johnson-Jones</a></li>
+                    </ul>
+                    {% else %}
+                    None
                     {% endif %}
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </td>
-            <td class="govuk-table__cell govuk-!-padding-top-4">
-                {{prisoner.releaseDate|convertShortDateToMediumDate}}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {{'2023-03-02'|convertShortDateToMediumDate}}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
+                    <span class="govuk-hint">None</span>
+                    {% else %}
+                    <ul class="govuk-list">
+                        {% for allocation in prisoner.activity %}
+                        <!-- don't show the allocation if it's the same as the current activity -->
+                        {% if allocation != activity.id %}
+                        {% set activity = allocation|getActivityDetails %}
+                        <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {{prisoner.releaseDate|convertShortDateToMediumDate}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-{{govukButton({
-text: "Remove from activity",
-href: "../../log-an-application-version-2?new-application[activity]=" + activity.id,
-classes: "govuk-button--warning"
-})}}
+    {{govukButton({
+    text: "Remove from activity",
+    classes: "govuk-button--warning"
+    })}}
+</form>
 {% endblock %}
 
 {% block pageScripts %}
