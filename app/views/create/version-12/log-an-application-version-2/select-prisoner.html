@@ -41,7 +41,7 @@ window.history.go(-1)" })}} {% endblock %}
                     </tr>
                 </thead>
                 <tbody class="govuk-table__body">
-                    {% for prisoner in matchingPrisoners %}
+                    {% for prisoner in matchingPrisoners | sort(false, true, 'name.surname') %}
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">
                             <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
