@@ -504,11 +504,6 @@ const createHistoricAttendanceData = (
             schedule.day === date.getDay() &&
             schedule[period.toLowerCase()] != null
           ) {
-            console.log(
-              schedule.day,
-              date.getDay(),
-              schedule[period.toLowerCase()]
-            );
             scheduled = true;
           }
         });
@@ -754,7 +749,6 @@ function getPrisonerList(
             attendanceRecord,
           });
         }
-        console.log(prisonerId, attendanceRecord);
       });
     }
   });
