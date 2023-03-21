@@ -315,13 +315,17 @@ router.get("/:date/:period/sessions-cancelled", (req, res) => {
 // generate random attendance data for the last 14 days
 // using a get request to /generate-data will overwrite the existing attendance data
 router.get("/generate-data", (req, res) => {
+  res.render(req.protoUrl + "/generate-data");
+});
+
+router.get("/generate-data-now", (req, res) => {
   let attendanceData = createHistoricAttendanceData(
     req.session.data["timetable-complete-1"]["activities"],
     7,
     req.session.data["timetable-complete-1"]["prisoners"]
   );
   req.session.data["attendance"] = attendanceData;
-  res.redirect("generate-data-success");
+  res.redirect("generate-data-success")
 });
 
 module.exports = router;
