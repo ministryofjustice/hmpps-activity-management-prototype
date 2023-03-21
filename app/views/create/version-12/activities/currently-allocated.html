@@ -14,6 +14,24 @@ Find an activity to record or edit attendance
 {% endblock %}
 
 {% block content %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% if data['confirmation-dialog'].display == true %}
+
+{% set prisoner = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
+
+{% if data['confirmation-dialog'].type == 'deallocate' %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    {{prisoner.name.firstname}} {{prisoner.name.surname}} is no longer allocated to {{activity.name}}.
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Success",
+type: "success"
+}) }}
+{% endif %}
+{% endif %}
 
 {% include "./_activity-header.html" %}
 
@@ -54,8 +72,8 @@ Find an activity to record or edit attendance
                 <td class="govuk-table__cell">
                     <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="allocated-prisoner-{{prisoner.id}}"
-                                name="prisonerId" type="radio" value="{{prisoner.id}}">
+                            <input class="govuk-radios__input" id="allocated-prisoner-{{prisoner.id}}" name="prisonerId"
+                                type="radio" value="{{prisoner.id}}">
                             <label class="govuk-label govuk-radios__label" for="allocated-prisoner-{{prisoner.id}}">
                                 <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
                                         {{prisoner.name.surname}}</a></b><br>

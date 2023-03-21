@@ -141,6 +141,11 @@ router.get("/:activityId/currently-allocated", function (req, res) {
     "categories"
   ].find((category) => category.id.toString() === activity.category.toString());
 
+  // hide the confirmation message if it's shown
+  if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
+    delete req.session.data["confirmation-dialog"]
+  }
+
   res.render(req.protoUrl + "/currently-allocated", {
     activity,
     activityCategory,
@@ -179,6 +184,32 @@ router.get("/:activityId/deallocate/:prisonerId", function (req, res) {
     prisoner,
     });
 });
+
+// post handler for the deallocate page
+router.post("/:activityId/deallocate/:prisonerId", function (req, res) {
+  if(req.session.data['confirm-deallocate'] === "yes") {
+    // get the prisoner id from the url
+    let prisonerId = req.params.prisonerId;
+    // remove the activity id from the prisoner's activity array
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisoner = prisoners.find(
+      (prisoner) => prisoner.id.toString() === prisonerId.toString()
+    );
+    prisoner.activity = prisoner.activity.filter(
+      (activity) => activity.toString() !== req.params.activityId.toString()
+    );
+
+    // set the confirmation dialog data
+    req.session.data["confirmation-dialog"] = {
+      display: true,
+      type: "deallocate",
+      prisoner: prisonerId,
+    }
+  }
+
+  res.redirect("../../" + req.params.activityId + "/currently-allocated");
+});
+
 
 
 // other prisoners page
