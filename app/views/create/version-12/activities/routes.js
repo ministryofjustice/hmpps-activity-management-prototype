@@ -160,7 +160,12 @@ router.get("/:activityId/currently-allocated", function (req, res) {
 
 //post handler for the currently allocated page
 router.post("/:activityId/currently-allocated", function (req, res) {
-  res.redirect("deallocate/" + req.body.prisonerId);
+  // if no prisoner is selected, redirect back to the currently allocated page
+  if (!req.body.prisonerId) {
+    res.redirect("currently-allocated");
+  } else {
+    res.redirect("deallocate/" + req.body.prisonerId);
+  }
 });
 
 // activity deallocate page
