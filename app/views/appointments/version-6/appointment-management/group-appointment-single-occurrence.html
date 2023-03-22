@@ -35,7 +35,7 @@ Appointments prototype
               {% endif %}
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">View and edit appointment occurence</span>
-              Medical - Other appointment - 2 March 2023
+              Medical - Other appointment - 16 March 2023
              </h1>
             <h2 class="govuk-heading-m">Appointment occurence details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
@@ -58,7 +58,7 @@ Appointments prototype
                   {{data.locationChoicesingle or 'HB1 Doctors'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="change-answers-multiple/location">
+                  <a class="govuk-link" href="change-answers-group-appointments/location">
                     Change <span class="govuk-visually-hidden">  location</span>
                   </a>
                 </dd>
@@ -71,7 +71,7 @@ Appointments prototype
                   {{ data['date-of-appointment-day'] or '2'}} {{ data['date-of-appointment-month']  or 'Mar'}}  {{ data['date-of-appointment-year'] or '2023'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="change-answers-multiple/prisoner-schedule">
+                  <a class="govuk-link" href="change-answers-group-appointments/date-of-appointment">
                     Change <span class="govuk-visually-hidden"> date</span>
                   </a>
                 </dd>
@@ -84,7 +84,7 @@ Appointments prototype
                   {{ data['start-hours'] or '11'}}:{{ data['start-minutes'] or '00'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="change-answers-multiple/prisoner-schedule">
+                  <a class="govuk-link" href="change-answers-group-appointments/date-of-appointment">
                     Change <span class="govuk-visually-hidden"> start time</span>
                   </a>
                 </dd>
@@ -97,7 +97,7 @@ Appointments prototype
                   {{ data['end-hours'] or '16'}}:{{ data['end-minutes'] or '00'}} 
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="change-answers-multiple/prisoner-schedule">
+                <a class="govuk-link" href="change-answers-group-appointments/date-of-appointment">
                     Change <span class="govuk-visually-hidden"> end ime</span>
                   </a>
                 </dd>
@@ -263,25 +263,21 @@ Appointments prototype
                 </dd>
               </div>
               </dl>
-
-            
-           
-
-              
-             
-            
-            <form action="confirmation" method="post" novalidate>
+            <form  method="post" novalidate>
               <div class="govuk-button-group">
-                <button class="govuk-button " data-module="govuk-button">
-                  Print movement slip
-                </button>
-                <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
-                  Cancel this appointment
-                </button>
+                {{ govukButton({
+                  text: "Print movement slip"
+                }) }}
+              
+               {{ govukButton({
+                text: "Cancel this appointment",
+                classes: "govuk-button--secondary",
+                href: "cancel-group/cancel-question"
+               }) }}
                
             </div>
              <p class="govuk-body">
-              <a href="single-appointment-multiple-occurrences" class="govuk-link">Back to group details</a>
+              <a href="#" class="govuk-link">Back to group details</a>
              </p>
             </form>
           </div>

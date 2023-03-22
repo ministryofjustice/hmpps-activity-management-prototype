@@ -154,6 +154,18 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
+  router.post(`/appointment-management/change-answers-group-appointments/multi-occurrence-question`, function (req, res) {
+	const appRepeat = req.session.data['which-occurrence'];
+	if (appRepeat === 'This occurrence') {
+		res.redirect(`../group-appointment-single-occurrence`);
+	} else if (appRepeat === 'This and the following occurrences') {
+		res.redirect(`../group-appointment-multiple-occurrences`);
+	}
+	else if (appRepeat === 'All occurrences') {
+		res.redirect(`../group-appointment-multiple-occurrences`);
+	}
+  });
+
   
 
 module.exports = router
