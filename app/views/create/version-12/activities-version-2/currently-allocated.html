@@ -1,0 +1,137 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% include "./_activity-breadcrumbs.html" %}
+{% endblock %}
+
+{% block content %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% if data['confirmation-dialog'].display == true %}
+
+{% set prisoner = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
+
+{% if data['confirmation-dialog'].type == 'deallocate' %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    {{prisoner.name.firstname}} {{prisoner.name.surname}} is no longer allocated to {{activity.name}}.
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Success",
+type: "success"
+}) }}
+{% endif %}
+{% endif %}
+
+{% include "./_activity-header.html" %}
+
+<div class="govuk-grid-row govuk-!-margin-bottom-6">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-l">
+            Current allocations
+        </h2>
+
+        {{ govukButton({
+        text: "Allocate someone to this activity"
+        }) }}
+
+        <p>
+            Select people if you want to remove them from this activity.
+        </p>
+        <!-- <div class="govuk-inset-text">
+            <p>
+                You should <a href="../../log-an-application-version-2" class="govuk-link--no-visited-state">log an application</a> before allocating a prisoner to an activity.
+            </p>
+            <p>
+                If you need to, you can <a href="#">allocate a prisoner to this activity</a> without logging an
+                application.
+            </p>
+        </div> -->
+    </div>
+</div>
+<form method="post">
+    <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+            {{currentlyAllocated|length}} {{'people' if currentlyAllocated|length != 1 else 'person' }} currently
+            allocated
+        </caption>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Prisoner details</th>
+                <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
+                <th scope="col" class="govuk-table__header">Date allocated</th>
+                <th scope="col" class="govuk-table__header">Other allocations</th>
+                <th scope="col" class="govuk-table__header">Earliest release date</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            {% for prisoner in currentlyAllocated | sort(false,true,'name.surname') %}
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="allocated-prisoner-{{prisoner.id}}" name="prisonerId"
+                                type="radio" value="{{prisoner.id}}">
+                            <label class="govuk-label govuk-radios__label" for="allocated-prisoner-{{prisoner.id}}">
+                                <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
+                                        {{prisoner.name.surname}}</a></b><br>
+                                {{prisoner.id}}<br>
+                                {{prisoner.location.cell}}
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {% if loop.index == 3 %}
+                    <ul class="govuk-list">
+                        <li><a href="#" class="govuk-link--no-visited-state">Jordan Johnson-Jones</a></li>
+                    </ul>
+                    {% else %}
+                    None
+                    {% endif %}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {{'2023-03-02'|convertShortDateToMediumDate}}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
+                    <span class="govuk-hint">None</span>
+                    {% else %}
+                    <ul class="govuk-list">
+                        {% for allocation in prisoner.activity %}
+                        <!-- don't show the allocation if it's the same as the current activity -->
+                        {% if allocation != activity.id %}
+                        {% set activity = allocation|getActivityDetails %}
+                        <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {{prisoner.releaseDate|convertShortDateToMediumDate}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{govukButton({
+    text: "Remove from activity",
+    classes: "govuk-button--warning"
+    })}}
+</form>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}

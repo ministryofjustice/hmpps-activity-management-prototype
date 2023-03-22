@@ -1,0 +1,113 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = data['new-application']['selected-prisoner']|getPrisonerDetails %}
+        <h1 class="govuk-heading-xl">
+            Check and confirm your allocation
+        </h1>
+
+        <!-- GOVUK summary list component with fields: name, prison number, cell location and selected pay rate -->
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Activity
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% set activity = data['allocation']['activity']|getActivityDetails %}
+                    {{activity.name}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Prison number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisoner.id}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Cell location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisoner.location.cell}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Pay rate
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['allocation']['pay-rate']}}
+                </dd>
+                <!-- Change link -->
+                <dd class="govuk-summary-list__actions">
+                    <a href="select-pay-rate" class="govuk-link--no-visited-state">Change</a>
+                </dd>
+            </div>
+        </dl>
+
+        <form method="post">
+            <!-- if suitability is 'yes' -->
+            {% if data['new-application']['eligible'] == 'no' %}
+            <div class="govuk-inset-text">
+                <p class="govuk-body">
+                    When you reject an activity request, you should inform the person who made the request the reason
+                    for your decision.
+                </p>
+            </div>
+            
+            <input type="" hidden name="allocate-now" value="no">
+            <input type="" hidden name="new-application[status]" value="rejected">
+
+            {{ govukButton({
+            text: "Reject this request"
+            }) }}
+
+            {% elif data['new-application']['eligible'] == '' %}
+            <input type="" hidden name="new-application[status]" value="pending">
+
+            {% else %}
+            <input type="" hidden name="allocate-now" value="no">
+            <input type="" hidden name="new-application[status]" value="approved">
+            {% endif %}
+
+            <h2 class="govuk-heading-m">
+                Now confirm the allocation
+            </h2>
+            <p>
+                {{prisoner.name.firstname}} {{prisoner.name.surname}} will be allocated to {{activity.name}} for the next session.
+            </p>
+
+            {% if data['new-application']['eligible'] != 'no' %}
+            {{ govukButton({
+            text: "Confirm and allocate"
+            }) }}
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

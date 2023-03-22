@@ -20,7 +20,7 @@ window.history.go(-1)" })}} {% endblock %}
             name: "payrate",
             fieldset: {
             legend: {
-            text: "Which incentive levels are eligible for this pay rate?",
+            text: "Select incentive levels and enter pay amounts for the " + data['new-activity']['payrates']['payrate-name'] + " payrate",
             classes: "govuk-fieldset__legend--l"
             }
             },
@@ -32,7 +32,7 @@ window.history.go(-1)" })}} {% endblock %}
             html: govukInput({
                 classes: "govuk-input--width-5",
             label: {
-            text: "Enter the amount for worker payrate"
+            text: "Enter the pay amount for basic prisoners"
             },
             id: "worker-payrate",
             name: "worker-payrate",
@@ -49,7 +49,7 @@ window.history.go(-1)" })}} {% endblock %}
             html: govukInput({
                 classes: "govuk-input--width-5",
             label: {
-            text: "Enter the amount for general payrate"
+            text: "Enter the pay amount for standard prisoners"
             },
             id: "general-payrate",
             name: "general-payrate",
@@ -66,7 +66,7 @@ window.history.go(-1)" })}} {% endblock %}
             html: govukInput({
                 classes: "govuk-input--width-5",
             label: {
-            text: "Enter the amount for other payrate"
+            text: "Enter the pay amount for enhanced prisoners"
             },
             id: "other-payrate",
             name: "other-payrate",
@@ -75,13 +75,33 @@ window.history.go(-1)" })}} {% endblock %}
             }
             })
             }
+            },
+            {
+                divider: "or"
+            },
+            {
+            value: "flat-rate",
+            text: "Flat rate (all incentive levels)",
+            conditional: {
+            html: govukInput({
+                classes: "govuk-input--width-5",
+            label: {
+            text: "Enter the pay amount for all incentive levels"
+            },
+            id: "flat-rate-payrate",
+            name: "flat-rate-payrate",
+            prefix: {
+            text: "£"
+            }
+            })
+            },
+            behaviour: "exclusive"
             }
             ]
             }) }}
 
             {{ govukButton({
-            text: "Continue",
-            href: "payrate-list"
+            text: "Continue"
             }) }}
         </form>
     </div>

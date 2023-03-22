@@ -5,7 +5,7 @@ const { DateTime } = require("luxon");
 // routes for pages in the activities section
 // activities page redirect root to /all
 router.get("/", function (req, res) {
-  res.redirect("activities/all");
+  res.redirect("activities-version-2/all");
 });
 
 // all activities page
@@ -59,7 +59,7 @@ router.get("/vacancies", function (req, res) {
 // specific activity page
 router.get("/:activityId", function (req, res) {
   // redirect to the currently allocated page for the activity
-  res.redirect(req.params.activityId + "/currently-allocated");
+  res.redirect(req.params.activityId + "/information");
 });
 
 // activity applications page
@@ -114,6 +114,51 @@ router.get("/:activityId/applications", function (req, res) {
 });
 
 // activity currently allocated page
+router.get("/:activityId/information", function (req, res) {
+  let currentPage = "information";
+  let activityId = req.params.activityId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+
+  // get list of prisoners with allocations
+  const currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
+
+  // set an activitySchedule variable from the activity.schedule data
+  let activitySchedule = activity.schedule;
+
+  // for each day in the activity schedule, create a new object with the day name and am/pm values
+  let schedule = getActivitySchedule(activitySchedule);
+
+  // create a human-readable list of days the activity is scheduled for
+  let activityDays = humanReadableSchedule(schedule);
+  let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
+
+  // get the category name for the activity
+  let activityCategory = req.session.data["timetable-complete-1"][
+    "categories"
+  ].find((category) => category.id.toString() === activity.category.toString());
+
+  // hide the confirmation message if it's shown
+  if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
+    delete req.session.data["confirmation-dialog"]
+  }
+
+  res.render(req.protoUrl + "/information", {
+    activity,
+    activityCategory,
+    activityDays,
+    activityDaysWithTimes,
+    currentPage,
+    currentlyAllocated,
+    schedule,
+    activitySchedule,
+  });
+});
+
+// activity currently allocated page
 router.get("/:activityId/currently-allocated", function (req, res) {
   let currentPage = "currently-allocated";
   let activityId = req.params.activityId;
@@ -147,51 +192,6 @@ router.get("/:activityId/currently-allocated", function (req, res) {
   }
 
   res.render(req.protoUrl + "/currently-allocated", {
-    activity,
-    activityCategory,
-    activityDays,
-    activityDaysWithTimes,
-    currentPage,
-    currentlyAllocated,
-    schedule,
-    activitySchedule,
-  });
-});
-
-// activity currently allocated page
-router.get("/:activityId/currently-allocated-v2", function (req, res) {
-  let currentPage = "currently-allocated";
-  let activityId = req.params.activityId;
-  let activities = req.session.data["timetable-complete-1"]["activities"];
-  let activity = activities.find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-
-  // get list of prisoners with allocations
-  const currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
-
-  // set an activitySchedule variable from the activity.schedule data
-  let activitySchedule = activity.schedule;
-
-  // for each day in the activity schedule, create a new object with the day name and am/pm values
-  let schedule = getActivitySchedule(activitySchedule);
-
-  // create a human-readable list of days the activity is scheduled for
-  let activityDays = humanReadableSchedule(schedule);
-  let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
-
-  // get the category name for the activity
-  let activityCategory = req.session.data["timetable-complete-1"][
-    "categories"
-  ].find((category) => category.id.toString() === activity.category.toString());
-
-  // hide the confirmation message if it's shown
-  if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
-    delete req.session.data["confirmation-dialog"]
-  }
-
-  res.render(req.protoUrl + "/currently-allocated-v2", {
     activity,
     activityCategory,
     activityDays,

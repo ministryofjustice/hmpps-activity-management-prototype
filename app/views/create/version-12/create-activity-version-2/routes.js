@@ -39,6 +39,40 @@ router.post("/risk-assessment-levels", function (req, res) {
   res.redirect("payrate-list");
 });
 
+// select payrate page
+router.get("/payrate-name", function (req, res) {
+  res.render(req.protoUrl + "/payrate-name");
+});
+// post logic for payrate name page
+router.post("/payrate-name", function (req, res) {
+  // redirect to payment details page
+  res.redirect("payrate-amounts");
+});
+
+// payrate amounts page
+router.get("/payrate-amounts", function (req, res) {
+  res.render(req.protoUrl + "/payrate-amounts");
+});
+// post logic for payrate amounts page
+router.post("/payrate-amounts", function (req, res) {
+  // redirect to payrate list page
+  res.redirect("payrate-list");
+});
+
+// payment details post logic
+router.post("/payment-details", function (req, res) {
+  // redirect to payment details list page
+  res.redirect("payrate-list");
+});
+
+// payrate list page
+router.get("/payrate-list", function (req, res) {
+  res.render(req.protoUrl + "/payrate-list");
+});
+
+
+
+
 // payment details page
 router.get("/payment-details", function (req, res) {
   let payrateId = req.session.data["id"];

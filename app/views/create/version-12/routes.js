@@ -66,4 +66,14 @@ router.use("/activities", (req, res, next) => {
   require("./activities/routes")(req, res, next);
 });
 
+// activities version 2 page
+router.use("/activities-version-2", (req, res, next) => {
+  let serviceName = req.originalUrl.split("/")[1];
+  let version = req.originalUrl.split("/")[2];
+  let journey = req.originalUrl.split("/")[3];
+  
+  req.protoUrl = serviceName + "/" + version + "/" + journey;
+  require("./activities-version-2/routes")(req, res, next);
+});
+
 module.exports = router;

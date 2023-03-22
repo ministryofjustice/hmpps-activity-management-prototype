@@ -1,0 +1,258 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% include "./_activity-breadcrumbs.html" %}
+{% endblock %}
+
+{% block content %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% if data['confirmation-dialog'].display == true %}
+
+{% set prisoner = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
+
+{% if data['confirmation-dialog'].type == 'deallocate' %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    {{prisoner.name.firstname}} {{prisoner.name.surname}} is no longer allocated to {{activity.name}}.
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Success",
+type: "success"
+}) }}
+{% endif %}
+{% endif %}
+
+{% include "./_activity-header.html" %}
+
+<h2 class="govuk-heading-l">Details</h2>
+
+<div class="govuk-grid-row govuk-!-margin-top-7">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Activity details</h2>
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Name"
+        },
+        value: {
+        text: activity.name
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        }
+        },
+        {
+        key: {
+        text: "Description"
+        },
+        value: {
+        text: "A description of the activity, which might be useful for various reasons, like helping the prisoner to decide whether to sign up for the activity."
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        }
+        },
+        {
+        key: {
+        text: "Suitable for workplace risk assessment"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: "Medium"
+        }
+        },
+        {
+        key: {
+        text: "Suitable for incentive level"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: "Basic, Standard or Enhanced"
+        }
+        },
+        {
+        key: {
+        text: "Education level"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: "English level 1"
+        }
+        }
+        ]
+        }) }}
+    </div>
+</div>
+
+<!-- <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">Activity schedule</h2>
+        <p class="govuk-body">This activity is scheduled to run on the following days:</p>
+        <ul class="govuk-list govuk-list--spaced">
+            {% for day in activityDaysWithTimes %}
+            <li>
+                {% if day.times %}
+                <b>{{day.day|capitalize}}: {{day.times}}</b>
+                {% else %}
+                <span class="govuk-hint">{{day.day|capitalize}}: Not scheduled</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div> -->
+
+<div class="govuk-grid-row govuk-!-margin-top-7">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m ">
+            Schedule
+        </h2>
+        <p class="govuk-body">
+            <a href="#" class="govuk-link">Edit schedule<span class="govuk-visually-hidden"> for
+                    {{activity.name}}</span></a>
+        </p>
+        <dl class="govuk-summary-list govuk-!-margin-0">
+            {% for day in activityDaysWithTimes %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    {% if day.times %}
+                    {{day.day|capitalize}}
+                    {% else %}
+                    <span class="govuk-hint">{{day.day|capitalize}}</span>
+                    {% endif %}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if day.times %}
+                    {{day.times}}
+                    {% else %}
+                    <span class="govuk-hint">Not scheduled</span>
+                    {% endif %}
+                </dd>
+            </div>
+            {% endfor %}
+        </dl>
+    </div>
+
+    <!-- <form method="post">
+    <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+            {{currentlyAllocated|length}} {{'people' if currentlyAllocated|length != 1 else 'person' }} currently
+            allocated
+        </caption>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Prisoner details</th>
+                <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
+                <th scope="col" class="govuk-table__header">Date allocated</th>
+                <th scope="col" class="govuk-table__header">Other allocations</th>
+                <th scope="col" class="govuk-table__header">Earliest release date</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            {% for prisoner in currentlyAllocated | sort(false,true,'name.surname') %}
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="allocated-prisoner-{{prisoner.id}}" name="prisonerId"
+                                type="radio" value="{{prisoner.id}}">
+                            <label class="govuk-label govuk-radios__label" for="allocated-prisoner-{{prisoner.id}}">
+                                <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
+                                        {{prisoner.name.surname}}</a></b><br>
+                                {{prisoner.id}}<br>
+                                {{prisoner.location.cell}}
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {% if loop.index == 3 %}
+                    <ul class="govuk-list">
+                        <li><a href="#" class="govuk-link--no-visited-state">Jordan Johnson-Jones</a></li>
+                    </ul>
+                    {% else %}
+                    None
+                    {% endif %}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {{'2023-03-02'|convertShortDateToMediumDate}}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
+                    <span class="govuk-hint">None</span>
+                    {% else %}
+                    <ul class="govuk-list">
+                        {% for allocation in prisoner.activity %}
+                        {% if allocation != activity.id %}
+                        {% set activity = allocation|getActivityDetails %}
+                        <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {{prisoner.releaseDate|convertShortDateToMediumDate}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{govukButton({
+    text: "Remove from activity",
+    classes: "govuk-button--warning"
+    })}}
+</form> -->
+    {% endblock %}
+
+    {% block pageScripts %}
+    {% endblock %}
