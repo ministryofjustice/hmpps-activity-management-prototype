@@ -116,21 +116,19 @@ text: "Back to all locations",
 
 	<div class="moj-filter-layout__content">
 		<div class="moj-action-bar">
-
 			<div class="moj-action-bar__filter"></div>
 
 			<div class="moj-button-menu">
 				<div class="moj-button-menu__wrapper">
 					{{govukButton({
-						text: "Print this page",
-						classes: "govuk-button--blue moj-button-menu__item",
-						attributes: {
-							"data-module": "govuk-button"
-						}
-						})}}
+					text: "Print this page",
+					classes: "govuk-button--blue moj-button-menu__item",
+					attributes: {
+					"data-module": "govuk-button"
+					}
+					})}}
 				</div>
 			</div>
-
 		</div>
 	</div>
 
@@ -190,13 +188,15 @@ text: "Back to all locations",
 						{% endfor %}
 
 						{% if prisoner.attendance.sessionCancelled %}
-						<span class="app-tag app-tag--s app-tag--cancelled" style="text-transform: none;">Cancelled</span>
+						<span class="app-tag app-tag--s app-tag--cancelled"
+							style="text-transform: none;">Cancelled</span>
 						{% else %}
 						{% if prisoner.attendance.attendance == 'attended' %}
 						<span class="app-tag app-tag--s app-tag--attended" style="text-transform: none;">Attended</span>
 						{% elif prisoner.attendance.attendance == 'not-attended' %}
 						<br>
-						<span class="app-tag app-tag--s app-tag--attended" style="text-transform: none;">Not attended</span>
+						<span class="app-tag app-tag--s app-tag--attended" style="text-transform: none;">Not
+							attended</span>
 						{% endif %}
 						{% endif %}
 					</td>
