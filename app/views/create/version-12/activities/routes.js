@@ -561,6 +561,20 @@ router.post("/:activityId/allocate/:prisonerId/payrate", function (req, res) {
   let activityId = req.params.activityId;
   let prisonerId = req.params.prisonerId;
 
+  let payRate = {
+    "payAmount": 1.3,
+    "incentiveLevels": {
+        "basic": true,
+        "standard": true,
+        "enhanced": true
+    },
+    "payBands": {
+        "unskilled": true,
+        "skilled": true,
+        "experienced": true
+    }
+  }
+
   // redirect to the check your answers page
   res.redirect("check-allocation-details");
 });

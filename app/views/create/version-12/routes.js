@@ -26,6 +26,16 @@ router.use("/create-activity", (req, res, next) => {
   require("./create-activity/routes")(req, res, next);
 });
 
+// create activity journey version 2
+router.use("/create-activity-version-2", (req, res, next) => {
+  let serviceName = req.originalUrl.split("/")[1];
+  let version = req.originalUrl.split("/")[2];
+  let journey = req.originalUrl.split("/")[3];
+  
+  req.protoUrl = serviceName + "/" + version + "/" + journey;
+  require("./create-activity-version-2/routes")(req, res, next);
+});
+
 // log an application journey
 router.use("/log-an-application", (req, res, next) => {
   let serviceName = req.originalUrl.split("/")[1];
