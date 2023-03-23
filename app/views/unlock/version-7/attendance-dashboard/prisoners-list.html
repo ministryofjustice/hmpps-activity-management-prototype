@@ -46,6 +46,7 @@ text: "Back to attendance daily summary",
 	<thead class="govuk-table__head">
 		<tr class="govuk-table__row">
 			<th scope="col" class="govuk-table__header" aria-sort="none">Attendee</th>
+			<th scope="col" class="govuk-table__header" aria-sort="none">Cell location</th>
 			<th scope="col" class="govuk-table__header" aria-sort="none">Session</th>
 			<th scope="col" class="govuk-table__header" aria-sort="none">Time recorded</th>
 			<th scope="col" class="govuk-table__header" aria-sort="none">Attendance details</th>
@@ -61,6 +62,9 @@ text: "Back to attendance daily summary",
 				<a href="#" class="govuk-link--no-visited-state">
 					<b>{{prisonerData.name.surname}}</b>, {{prisonerData.name.firstname}}</a><br>
 					<span class="govuk-hint govuk-!-margin-0 govuk-!-font-size-16">{{prisonerData.id}}</span>
+			</td>
+			<td class="govuk-table__cell">
+				{{prisonerData.location.cell}}
 			</td>
 			<td class="govuk-table__cell">
 				{% set activity = prisoner.activityId|getActivityDetails %}
