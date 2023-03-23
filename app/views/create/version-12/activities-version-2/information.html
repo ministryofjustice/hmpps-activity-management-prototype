@@ -64,7 +64,8 @@ type: "success"
         text: "Description"
         },
         value: {
-        text: "A description of the activity, which might be useful for various reasons, like helping the prisoner to decide whether to sign up for the activity."
+        text: "A description of the activity, which might be useful for various reasons, like helping the prisoner to
+        decide whether to sign up for the activity."
         },
         actions: {
         items: [
@@ -74,6 +75,23 @@ type: "success"
         visuallyHiddenText: "activity name"
         }
         ]
+        }
+        },
+        {
+        key: {
+        text: "Category"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.category | getActivityCategoryName
         }
         },
         {
@@ -126,6 +144,23 @@ type: "success"
         value: {
         text: "English level 1"
         }
+        },
+        {
+        key: {
+        text: "Maximum allocation"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.capacity
+        }
         }
         ]
         }) }}
@@ -155,10 +190,16 @@ type: "success"
         <h2 class="govuk-heading-m ">
             Schedule
         </h2>
-        <p class="govuk-body">
-            <a href="#" class="govuk-link">Edit schedule<span class="govuk-visually-hidden"> for
-                    {{activity.name}}</span></a>
-        </p>
+        <ul class="govuk-list govuk-button-group">
+            <li>
+                <a href="#" class="govuk-link">Edit schedule<span class="govuk-visually-hidden"> for
+                        {{activity.name}}</span></a>
+            </li>
+            <li>
+                <a href="#" class="govuk-link">Suspend activity<span class="govuk-visually-hidden"> for
+                        {{activity.name}}</span></a>
+            </li>
+        </ul>
         <dl class="govuk-summary-list govuk-!-margin-0">
             {% for day in activityDaysWithTimes %}
             <div class="govuk-summary-list__row">
@@ -171,7 +212,12 @@ type: "success"
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {% if day.times %}
-                    {{day.times}}
+                    {% if day.times.am %}
+                    <span class="govuk-tag govuk-tag--green govuk-!-margin-right-1">AM</span>
+                    {% endif %}
+                    {% if day.times.pm %}
+                    <span class="govuk-tag govuk-tag--green">PM</span>
+                    {% endif %}
                     {% else %}
                     <span class="govuk-hint">Not scheduled</span>
                     {% endif %}
@@ -180,8 +226,11 @@ type: "success"
             {% endfor %}
         </dl>
     </div>
+</div>
 
-    <!-- <form method="post">
+
+
+<!-- <form method="post">
     <table class="govuk-table">
         <caption class="govuk-table__caption govuk-table__caption--m">
             {{currentlyAllocated|length}} {{'people' if currentlyAllocated|length != 1 else 'person' }} currently
@@ -252,7 +301,7 @@ type: "success"
     classes: "govuk-button--warning"
     })}}
 </form> -->
-    {% endblock %}
+{% endblock %}
 
-    {% block pageScripts %}
-    {% endblock %}
+{% block pageScripts %}
+{% endblock %}

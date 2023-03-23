@@ -41,13 +41,15 @@ type: "success"
             Current allocations
         </h2>
 
-        {{ govukButton({
-        text: "Allocate someone to this activity"
-        }) }}
-
         <p>
-            Select people if you want to remove them from this activity.
+            You can <a class="govuk-link--no-visited-state" href="applications">allocate from the waitlist</a> for {{activity.name}}, or you can <a class="govuk-link--no-visited-state" href="#">allocate from the entire prison population</a>.
         </p>
+
+        <!-- {{ govukButton({
+        text: "Allocate someone to this activity",
+        href: "allocate/select-prisoner"
+        }) }} -->
+
         <!-- <div class="govuk-inset-text">
             <p>
                 You should <a href="../../log-an-application-version-2" class="govuk-link--no-visited-state">log an application</a> before allocating a prisoner to an activity.
@@ -72,24 +74,17 @@ type: "success"
                 <th scope="col" class="govuk-table__header">Date allocated</th>
                 <th scope="col" class="govuk-table__header">Other allocations</th>
                 <th scope="col" class="govuk-table__header">Earliest release date</th>
+                <th scope="col" class="govuk-table__header"></th>
             </tr>
         </thead>
         <tbody class="govuk-table__body">
             {% for prisoner in currentlyAllocated | sort(false,true,'name.surname') %}
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="allocated-prisoner-{{prisoner.id}}" name="prisonerId"
-                                type="radio" value="{{prisoner.id}}">
-                            <label class="govuk-label govuk-radios__label" for="allocated-prisoner-{{prisoner.id}}">
                                 <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
                                         {{prisoner.name.surname}}</a></b><br>
                                 {{prisoner.id}}<br>
                                 {{prisoner.location.cell}}
-                            </label>
-                        </div>
-                    </div>
                 </td>
                 <td class="govuk-table__cell govuk-!-padding-top-4">
                     {% if loop.index == 3 %}
@@ -121,15 +116,18 @@ type: "success"
                 <td class="govuk-table__cell govuk-!-padding-top-4">
                     {{prisoner.releaseDate|convertShortDateToMediumDate}}
                 </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    <a href="deallocate/{{prisoner.id}}" class="govuk-link--no-visited-state">Remove</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    {{govukButton({
+    <!-- {{govukButton({
     text: "Remove from activity",
     classes: "govuk-button--warning"
-    })}}
+    })}} -->
 </form>
 {% endblock %}
 

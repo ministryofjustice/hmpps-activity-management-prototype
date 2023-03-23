@@ -1,14 +1,26 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-            <span class="govuk-caption-xl">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+            <!-- <span class="govuk-caption-xl">
                 View activity
-            </span>
+            </span> -->
             {{activity.name}}
         </h1>
-        <p class="govuk-body-l">
-            This is where we could show a description of the activity.
-        </p>
+        <ul class="govuk-body-l govuk-list govuk-list--spaced">
+            {% set vacanciesCount = activity.capacity - currentlyAllocated|length %}
+            <li>
+                {% if vacanciesCount > 0 %}
+                <span class="govuk-tag govuk-tag--red govuk-!-font-size-19">
+                    {{vacanciesCount}} vacanc{{'y' if vacanciesCount == 1 else 'ies'}}
+                </span>
+                {% else %}
+                <span class="govuk-tag govuk-tag--green govuk-!-font-size-19">
+                    No vacancies
+                </span>
+                {% endif %}
+            </li>
+            <li>{{currentlyAllocated|length}} people allocated<br></li>
+        </ul>
     </div>
 </div>
 

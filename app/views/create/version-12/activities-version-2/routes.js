@@ -59,7 +59,7 @@ router.get("/vacancies", function (req, res) {
 // specific activity page
 router.get("/:activityId", function (req, res) {
   // redirect to the currently allocated page for the activity
-  res.redirect(req.params.activityId + "/information");
+  res.redirect(req.params.activityId + "/currently-allocated");
 });
 
 // activity applications page
@@ -438,6 +438,12 @@ router.post(
     }
   }
 );
+
+// allocate select prisoner page
+router.get("/:activityId/allocate/select-prisoner", function (req, res) {
+  //render the page
+  res.render(req.protoUrl + "/allocate-select-prisoner");
+});
 
 // update application confirmation page
 router.get(
@@ -851,22 +857,28 @@ function scheduleDaysWithTimes(schedule) {
     if (day.am != null && day.pm != null) {
       activityDaysWithTimes.push({
         day: day.day,
-        times: "AM and PM",
+        times: {
+          am: "AM",
+          pm: "PM",
+        }
       });
     } else if (day.am != null) {
       activityDaysWithTimes.push({
         day: day.day,
-        times: "AM",
+        times: {
+          am: "AM",
+        }
       });
     } else if (day.pm != null) {
       activityDaysWithTimes.push({
         day: day.day,
-        times: "PM",
+        times: {
+          pm: "PM",
+        }
       });
     } else {
       activityDaysWithTimes.push({
-        day: day.day,
-        times: null,
+        day: day.day
       });
     }
   });
