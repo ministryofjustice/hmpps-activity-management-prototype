@@ -1019,9 +1019,22 @@ router.get("/:date/:period/:activities", function (req, res) {
     }
   }
 
+  // create a list of unique sub-locations based on the location properties of each prisoner in prisonersWithEvents
+  // residentialLocations should be an array of unique landing numbers, e.g. [1,2,3]
+  let houseblocks = [];
+  prisonersForActivities.forEach((prisoner) => {
+    if (
+      !houseblocks.includes(prisoner.location.houseblock) &&
+      prisoner.location.houseblock !== undefined
+    ) {
+      houseblocks.push(prisoner.location.houseblock);
+    }
+  });
+
   res.render(req.protoUrl + "/movement-list", {
     prisonersForActivities,
     date,
+    houseblocks,
     period,
   });
 });

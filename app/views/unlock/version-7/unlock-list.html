@@ -25,9 +25,11 @@ href: "../../../whereabouts"
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-			Unlock list - Houseblock {{houseblock}}
-			<span class="govuk-caption-l">{{relativeDate|capitalize or date|longDateFormat(date)}} &ndash;
-				{{period|upper}} session</span>
+			Houseblock {{houseblock}} &ndash; unlock list
+			<span class="govuk-caption-l">
+				{{period|upper}} session<br>
+				{{date|longDateFormat(date)}} 
+			</span>
 		</h1>
 		<ul class="govuk-list">
 			<li>
@@ -64,7 +66,7 @@ href: "../../../whereabouts"
 	<div class="moj-filter-layout__filter">
 		{% set filtersHtml %}
 		<!-- GOVUK checkboxes HTML for filtering by landing in residentialLocations data -->
-		<div class="govuk-form-group">
+		<div class="govuk-form-group govuk-!-margin-bottom-1">
 			<div class="govuk-checkboxes govuk-checkboxes--small">
 				<fieldset class="govuk-fieldset">
 					<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
@@ -72,21 +74,28 @@ href: "../../../whereabouts"
 							Landing
 						</h2>
 					</legend>
-				</fieldset>			
+				</fieldset>
 				{% for residentialLocation in residentialLocations %}
 				<div class="govuk-checkboxes__item">
 					<input class="govuk-checkboxes__input" id="residentialLocation-{{loop.index}}"
 						name="residentialLocation" type="checkbox" value="{{residentialLocation}}" checked>
-					<label class="govuk-label govuk-checkboxes__label"
-						for="residentialLocation-{{loop.index}}">
+					<label class="govuk-label govuk-checkboxes__label" for="residentialLocation-{{loop.index}}">
 						Landing {{residentialLocation}}
 					</label>
 				</div>
 				{% endfor %}
 			</div>
 		</div>
+		<p class="govuk-!-margin-bottom-7">
+			<a class="govuk-link" href="#" data-target="residentialLocation" data-select-all="true">
+				Select all
+			</a>
+		</p>
 
 		{{ govukCheckboxes({
+			formGroup: {
+				classes: "govuk-!-margin-bottom-1"
+			},
 		fieldset: {
 		legend: {
 		text: "Category",
@@ -146,6 +155,11 @@ href: "../../../whereabouts"
 		checked: true
 		}]
 		}) }}
+		<p class="govuk-!-margin-bottom-7">
+			<a class="govuk-link" href="#" data-target="filters[attendance]" data-select-all="true">
+				Select all
+			</a>
+		</p>
 
 		{{ govukRadios({
 		fieldset: {
@@ -360,6 +374,18 @@ href: "../../../whereabouts"
 			filter: {
 				container: $(".moj-filter"),
 			},
+		});
+
+		// function that allows the user to select/check all checkboxes
+		// when the select all link/button is clicked
+		// specify the target checkboxes using the 'data-target' attribute
+		// and the select all link/button using the 'data-select-all' attribute
+		// e.g. <a href="#" data-select-all="true" data-target="checkboxes">Select all</a>
+		// e.g. <button data-select-all="true" data-target="checkboxes">Select all</button>
+		$('[data-select-all="true"]').on('click', function (e) {
+			e.preventDefault();
+			var target = $(this).data('target');
+			$('input[type="checkbox"][name="' + target + '"]').prop('checked', true);
 		});
 	})
 </script>

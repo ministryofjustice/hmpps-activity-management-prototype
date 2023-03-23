@@ -13,13 +13,17 @@ text: "Back to all locations",
 })}}
 {% endblock %}
 {% block content %}
-<div class="govuk-grid-row">
+<div class="govuk-grid-row govuk-!-margin-bottom-5">
 	<div class="govuk-grid-column-two-thirds">
-		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-			Movement list - {{data['location']}}
-			<span class="govuk-caption-l">{{data['date']|longDateFormat(data['date'])}} &ndash;
-				{{period|upper}} session</span>
+		<h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+			{{data['location']}} &ndash; movement list
 		</h1>
+		<span class="govuk-caption-l">
+			{{period|upper}} session
+		</span>
+		<span class="govuk-caption-l">
+			{{data['date']|longDateFormat(data['date'])}}
+		</span>
 	</div>
 </div>
 
@@ -28,12 +32,28 @@ text: "Back to all locations",
 <div class="moj-filter-layout">
 	<div class="moj-filter-layout__filter">
 		{% set filtersHtml %}
-		<h2 class="govuk-heading-m">Houseblock / wing</h2>
+		<div class="govuk-form-group govuk-!-margin-bottom-2">
+			<fieldset class="govuk-fieldset">
+				<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+					<h2 class="govuk-fieldset__heading">
+						Houseblock
+					</h2>
+				</legend>
+			</fieldset>
+			<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+				{% for houseblock in houseblocks %}
+				<div class="govuk-checkboxes__item">
+					<input class="govuk-checkboxes__input" id="{{houseblock}}" name="houseblock" type="checkbox"
+						value="{{houseblock}}" checked>
+					<label class="govuk-label govuk-checkboxes__label" for="{{houseblock}}">
+						Houseblock {{houseblock}}
+					</label>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
 		<p>
-			x</br>
-			x</br>
-			x</br>
-			x</br>
+			<a href="#" class="govuk-link" data-select-all="true" data-target="houseblock">Select all</a>
 		</p>
 
 		<!-- {{ govukRadios({
@@ -245,6 +265,13 @@ text: "Back to all locations",
 			filter: {
 				container: $(".moj-filter"),
 			},
+		});
+
+		// function that allows the user to select/check all checkboxes
+		$('[data-select-all="true"]').on('click', function (e) {
+			e.preventDefault();
+			var target = $(this).data('target');
+			$('input[type="checkbox"][name="' + target + '"]').prop('checked', true);
 		});
 	})
 </script>

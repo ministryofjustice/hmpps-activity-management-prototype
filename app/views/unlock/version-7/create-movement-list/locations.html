@@ -12,42 +12,52 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
 <form>
     <div class="govuk-width-container">
         {% block beforeContent %}
-        {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-        {{ govukBreadcrumbs({
-        classes: "govuk-!-display-none-print",
-        items: [
-        {
-        text: "Digital Prison Services",
-        href: "/dps-home"
-        },
-        {
-        text: "Manage prisoner unlock and attendance",
-        href: "../../whereabouts"
-        }
-        ]
-        }) }}
+        {{govukBackLink({
+        text: "Back",
+        "href": "javascript: window.history.go(-1)"
+        })}}
         {% endblock %}
 
         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
-                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
                         Movement locations
-                        <span class="govuk-caption-l">{{data['date']|longDateFormat(data['date'])}} &ndash;
-                            {{period|upper}} session</span>
                     </h1>
+                    <span class="govuk-caption-l">
+                        {{period|upper}} session
+                    </span>
+                    <span class="govuk-caption-l">
+                        {{data['date']|longDateFormat(data['date'])}}
+                    </span>
 
-                    <ul class="govuk-list govuk-!-margin-bottom-8">
+                    <!-- <ul class="govuk-list govuk-!-margin-bottom-6 govuk-!-margin-top-3">
                         <li>
                             <a href="select-movement-date" class="govuk-link--no-visited-state">Change the movement
                                 date</a>
                         </li>
-                    </ul>
+                    </ul> -->
 
                     <div class="govuk-inset-text">
-                        You'll only see locations for the date and time period you choose...
+                        You'll only see locations where there are activities running on the date and in the time period
+                        you choose.
                     </div>
-                    
+
+                    <div class="moj-search govuk-!-margin-bottom-6 govuk-!-margin-top-4">
+                        <form action="{{date}}" method="get" novalidate="">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
+                                    Search
+                                </label>
+                                <input class="govuk-input moj-search__input " id="keywords" name="search" type="search"
+                                    value="{{data['search']}}">
+                            </div>
+                            <button class="govuk-button moj-search__button" data-module="govuk-button">
+                                Search
+                            </button>
+                        </form>
+                    </div>
+
                     <!-- <div class="moj-search govuk-!-margin-bottom-6">
             <form action="{{data['date']}}" method="get" novalidate="">
                 <div class="govuk-form-group">
@@ -275,7 +285,7 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
                                         </div>
                                     </td>
                                     <td class="govuk-table__cell">
-                                        <h2 class="govuk-heading-m">{{location.name}}</h2>
+                                        <h2 class="govuk-heading-m govuk-!-margin-0 govuk-!-padding-0">{{location.name}}</h2>
                                     </td>
                                     <td class="govuk-table__cell">
                                         {{location.prisoners}}
