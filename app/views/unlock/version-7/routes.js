@@ -1880,7 +1880,6 @@ router.get(
     let activities = req.session.data["timetable-complete-1"]["activities"];
     let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
     let houseblock = req.params.selectedHouseblock;
-    let locations = getWings(req.session.data["selected-locations"]);
 
     let attendanceData = req.session.data["attendance"];
 
@@ -1948,8 +1947,20 @@ router.get(
       }
     }
 
+    // create a list of unique sub-locations based on the location properties of each prisoner in prisonersWithEvents
+    // residentialLocations should be an array of unique landing numbers, e.g. [1,2,3]
+    let residentialLocations = [];
+    prisonersWithEvents.forEach((prisoner) => {
+      if (
+        !residentialLocations.includes(prisoner.location.landing) &&
+        prisoner.location.landing !== undefined
+      ) {
+        residentialLocations.push(prisoner.location.landing);
+      }
+    });
+
     res.render("unlock/" + req.version + "/unlock-list", {
-      locations,
+      residentialLocations,
       prisonersWithEvents,
       date,
       relativeDate,

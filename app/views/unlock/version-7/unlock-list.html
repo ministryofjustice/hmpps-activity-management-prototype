@@ -63,60 +63,28 @@ href: "../../../whereabouts"
 <div class="moj-filter-layout">
 	<div class="moj-filter-layout__filter">
 		{% set filtersHtml %}
-		<!-- {{ govukCheckboxes({
-			fieldset: {
-				legend: {
-					text: "Session",
-					classes: "govuk-label--m"
-				}
-			},
-			classes: "govuk-checkboxes--small",
-			idPrefix: 'attendance',
-			name: 'filters[attendance]',
-			items: [
-			{
-				text: 'Morning (AM)',
-				id: 'Morning',
-				value: 'Morning',
-				checked: true
-			},
-			{
-				text: 'Afternoon (PM)',
-				id: 'Afternoon',
-				value: 'Afternoon',
-				checked: true
-			},
-			{
-				text: 'Evening (ED)',
-				id: 'Evening',
-				value: 'Evening',
-				checked: true
-			}]
-		}) }} -->
-
-		<fieldset class="govuk-fieldset govuk-!-margin-bottom-7">
-			<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-				Sub-locations
-			</legend>
-			<div class="dropdown" data-control="checkbox-dropdown">
-				<label class="dropdown-label">All locations</label>
-				<div class="dropdown-list">
-					<div class="govuk-form-group">
-						<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-							{% for location in locations %}
-							<div class="govuk-checkboxes__item">
-								<input class="govuk-checkboxes__input" id="location-{{loop.index}}"
-									name="filters[locations]" type="checkbox" value="1">
-								<label class="govuk-label govuk-checkboxes__label" for="location-{{loop.index}}">
-									{{location}}
-								</label>
-							</div>
-							{% endfor %}
-						</div>
-					</div>
+		<!-- GOVUK checkboxes HTML for filtering by landing in residentialLocations data -->
+		<div class="govuk-form-group">
+			<div class="govuk-checkboxes govuk-checkboxes--small">
+				<fieldset class="govuk-fieldset">
+					<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+						<h2 class="govuk-fieldset__heading">
+							Landing
+						</h2>
+					</legend>
+				</fieldset>			
+				{% for residentialLocation in residentialLocations %}
+				<div class="govuk-checkboxes__item">
+					<input class="govuk-checkboxes__input" id="residentialLocation-{{loop.index}}"
+						name="residentialLocation" type="checkbox" value="{{residentialLocation}}" checked>
+					<label class="govuk-label govuk-checkboxes__label"
+						for="residentialLocation-{{loop.index}}">
+						Landing {{residentialLocation}}
+					</label>
 				</div>
+				{% endfor %}
 			</div>
-		</fieldset>
+		</div>
 
 		{{ govukCheckboxes({
 		fieldset: {
