@@ -10,7 +10,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="change-occurence-question">
+<form id="form" method="post" action="clashes">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div class="back">
@@ -64,7 +64,7 @@ Appointments prototype
             <ul class="time-input">
               <li>
                 <select class="govuk-select" id="start-hours" name="start-hours-single">
-                  <option selected>{{ data['start-hours-single'] or '11'}}</option>
+                  <option selected>{{ data['start-hours'] or '11'}}</option>
                   <option value="08">08</option>
                   <option value="09">09</option>
                   <option value="10">10</option>
@@ -86,7 +86,7 @@ Appointments prototype
               </li>
               <li>
                 <select class="govuk-select minutes" id="start-minutes" name="start-minutes">
-                  <option selected>{{ data['start-minutes-single'] or '00'}}</option>
+                  <option selected>{{ data['start-minutes'] or '00'}}</option>
                   <option value="00">00</option>
                   <option value="15">15</option>
                   <option value="30">30</option>
@@ -106,7 +106,7 @@ Appointments prototype
             <ul class="time-input" id="end-time">
               <li>
                 <select class="govuk-select" id="end-hours" name="end-hours">
-                  <option selected>{{ data['end-hours-single'] or '16'}}</option>
+                  <option selected>{{ data['end-hours'] or '16'}}</option>
                   <option value="08">08</option>
                   <option value="09">09</option>
                   <option value="10">10</option>
@@ -128,7 +128,7 @@ Appointments prototype
               </li>
               <li>
                 <select class="govuk-select minutes" id="end-minutes" name="end-minutes">
-                  <option selected>{{ data['end-minutes-single'] or '00'}}</option>
+                  <option selected>{{ data['end-minutes'] or '00'}}</option>
                   <option value="00">00</option>
                   <option value="15">15</option>
                   <option value="30">30</option>

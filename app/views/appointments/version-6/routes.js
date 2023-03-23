@@ -166,6 +166,15 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
+  router.post(`/appointment-management/change-answers-group-appointments/add-more-people`, function (req, res) {
+	const peoleRepeat = req.session.data['add-another-person-question'];
+	if (peoleRepeat === 'No') {
+		res.redirect(`non-associations`);
+	} else {
+		res.redirect(`upload-or-per-person`);
+	}
+  });
+
   
 
 module.exports = router
