@@ -12,11 +12,11 @@ Activities Management prototype
 	items: [
 	{
 		text: "Digital Prison Services",
-		href: "dps-home"
+		href: "../dps-home"
 	},
 	{
 		text: "Manage prisoner unlock and attendance",
-		href: "whereabouts"
+		href: "../whereabouts"
 	}
 	]
 }) }}
@@ -36,10 +36,6 @@ Activities Management prototype
 					legend: {
 						text: "Date"
 					}
-				},
-				hint: {
-					html: "You can get unlock lists for dates up to 2 weeks from today.<br>
-					For example, 27 3 2022"
 				}
 			}) }}
 			{% endset %}
@@ -57,11 +53,11 @@ Activities Management prototype
 				items: [
 				{
 					value: today,
-					text: "Today"
+					html: "Today &ndash; " + today|convertShortDateToLongDate
 				},
 				{
 					value: today|dayAfter,
-					text: "Tomorrow"
+					html: "Tomorrow &ndash; " + today|dayAfter|convertShortDateToLongDate
 				},
 				{
 					value: "other-date",
