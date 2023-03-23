@@ -1,0 +1,63 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <!-- GOVUK radios component HTML for selecting the reason for deallocation -->
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="deallocation-reason-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                            Why are you removing {{ prisoner.name.firstname }} {{ prisoner.name.surname }} from {{ activity['name'] }}?
+                        
+                        </h1>
+                    </legend>
+                    <div id="deallocation-reason-hint" class="govuk-hint">
+                        Select the reason for removing this prisoner from the activity
+                    </div>
+                    <div class="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="deallocation-reason-1" name="deallocation-reason"
+                                type="radio" value="1">
+                            <label class="govuk-label govuk-radios__label" for="deallocation-reason-1">
+                                Prisoner has been moved to another establishment
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="deallocation-reason-2" name="deallocation-reason"
+                                type="radio" value="2">
+                            <label class="govuk-label govuk-radios__label" for="deallocation-reason-2">
+                                Prisoner has been released
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="deallocation-reason-3" name="deallocation-reason"
+                                type="radio" value="3">
+                            <label class="govuk-label govuk-radios__label" for="deallocation-reason-3">
+                                Prisoner has been transferred to another activity
+                            </label>
+                        </div>
+                </fieldset>
+            </div>
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

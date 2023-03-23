@@ -1,0 +1,91 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {% set dateHtml %}
+            {{govukDateInput({
+            idPrefix: "deallocation-date",
+            namePrefix: "deallocation-date",
+            fieldset: {
+            legend: {
+            text: "Date",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--s"
+            }
+            },
+            hint: {
+            text: "For example, 31 3 1980"
+            },
+            items: [
+            {
+            name: "day",
+            classes: "govuk-input--width-2"
+            },
+            {
+            name: "month",
+            classes: "govuk-input--width-2"
+            },
+            {
+            name: "year",
+            classes: "govuk-input--width-4"
+            }
+            ]
+            })}}
+            {% endset %}
+
+            <!-- GOVUK radios component to select the date when the prisoner should be removed from the activity: as soon as possible, or on a specific date -->
+            {{govukRadios({
+            idPrefix: "deallocation-date",
+            name: "deallocation-date",
+            fieldset: {
+            legend: {
+            text: "When should " + prisoner.name.firstname + " " + prisoner.name.surname + " be taken off " +
+            activity['name'] + "?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            items: [
+            {
+            value: "asap",
+            html: "As soon as possible &ndash; " + "_"|today|dayAfter|convertShortDateToVeryLongDate,
+            hint: {
+            text: "Details about why this is the earliest possible date for removal."
+            }
+            },
+            {
+            value: "specific-date",
+            text: "On a specific date",
+            conditional: {
+            html: dateHtml
+            }
+            }
+            ]
+            })}}
+
+            {{ govukInsetText({
+            text: prisoner.name.firstname + " " + prisoner.name.surname + " will be expected to attend any sessions scheduled to take place between now and the date they are removed from the activity."
+            }) }}
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
