@@ -41,9 +41,16 @@ type: "success"
             Current allocations
         </h2>
 
-        <p>
+        <div class="govuk-button-group">
+            <a class="govuk-button govuk-button--secondary" href="#">Take people off this activity</a>
+            <a class="govuk-button govuk-button--secondary" href="allocate/allocation-source">Allocate to this activity</a>
+        </div>
+
+        <!-- <p>
             You can <a class="govuk-link--no-visited-state" href="applications">allocate from the waitlist</a> for {{activity.name}}, or you can <a class="govuk-link--no-visited-state" href="#">allocate from the entire prison population</a>.
-        </p>
+        </p> -->
+
+       
 
         <!-- {{ govukButton({
         text: "Allocate someone to this activity",
@@ -117,7 +124,7 @@ type: "success"
                     {{prisoner.releaseDate|convertShortDateToMediumDate}}
                 </td>
                 <td class="govuk-table__cell govuk-!-padding-top-4">
-                    <a href="deallocate/{{prisoner.id}}" class="govuk-link--no-visited-state">Remove</a>
+                    <a href="deallocate/{{prisoner.id}}" class="govuk-link--no-visited-state">Allocation details</a>
                 </td>
             </tr>
             {% endfor %}

@@ -440,6 +440,12 @@ router.post(
 );
 
 // allocate select prisoner page
+router.get("/:activityId/allocate/allocation-source", function (req, res) {
+  //render the page
+  res.render(req.protoUrl + "/allocate-from");
+});
+
+// allocate from page
 router.get("/:activityId/allocate/select-prisoner", function (req, res) {
   //render the page
   res.render(req.protoUrl + "/allocate-select-prisoner");

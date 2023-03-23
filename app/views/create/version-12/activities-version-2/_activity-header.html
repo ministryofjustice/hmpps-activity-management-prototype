@@ -7,7 +7,7 @@
             {{activity.name}}
         </h1>
         <ul class="govuk-body-l govuk-list govuk-list--spaced">
-            {% set vacanciesCount = activity.capacity - currentlyAllocated|length %}
+            {% set vacanciesCount = activity.capacity - activity.currentlyAllocated %}
             <li>
                 {% if vacanciesCount > 0 %}
                 <span class="govuk-tag govuk-tag--red govuk-!-font-size-19">
@@ -19,7 +19,8 @@
                 </span>
                 {% endif %}
             </li>
-            <li>{{currentlyAllocated|length}} people allocated<br></li>
+            <li>{{activity.currentlyAllocated}} people allocated<br></li>
+            <li>{{activity.applicationCount}} {{'people' if activity.applicationCount != 1 else 'person' }} on the waitlist</li>
         </ul>
     </div>
 </div>
