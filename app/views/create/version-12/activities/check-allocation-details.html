@@ -32,19 +32,19 @@ text: "Back",
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
+                    Prison number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisoner.id}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
                     Activity
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {% set activity = data['allocation']['activity']|getActivityDetails %}
                     {{activity.name}}
-                </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Prison number
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    {{prisoner.id}}
                 </dd>
             </div>
             <div class="govuk-summary-list__row">
