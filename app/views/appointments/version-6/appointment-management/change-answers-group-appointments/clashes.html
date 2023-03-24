@@ -18,7 +18,7 @@ Appointments prototype
       Check for appointment clashes
     </h1>
     <p class="govuk-body">
-      Select and remove prisoners with conflicting events.
+      You can select and remove prisoners with conflicting events if you need to.
     </p>
   </div>
 </div>
@@ -39,8 +39,13 @@ Appointments prototype
             <div class="govuk-checkboxes__item">
               <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
               <label class="govuk-label govuk-checkboxes__label" for="waste">
-                <a href="#" class="govuk-link"><b>Hungerford</b>, Bert</a><br>
-                C2598E
+                {% if data['person-1-check'] ==='True' %}
+                <a href="#" class="govuk-link"><b>Bod</b>, Manuel</a><br>
+                {{ data['person-1']}} 
+                {% else %}
+                <a href="#" class="govuk-link"><b>Neil</b>, Rudge</a><br>
+                G2044E
+                {% endif %}
               </label>
             </div>
           </div>
@@ -100,61 +105,13 @@ Appointments prototype
           <a href="#" class="govuk-link" >View schedule (opens in a new tab)</a>
         </td>
       </tr>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell" >
-          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
-              <label class="govuk-label govuk-checkboxes__label" for="waste">
-                <a href="#" class="govuk-link"><b>Gee</b>, Ryan</a><br>
-                F5132C
-              </label>
-            </div>
-          </div>
-          <br>
-          <!--details component-->
-          <details class="govuk-details" data-module="govuk-details">
-            <summary class="govuk-details__summary">
-              <span class="govuk-details__summary-text">
-                Clash details
-              </span>
-            </summary>
-            <div class="govuk-details__text">
-              <ul class="appointment-event">
-                <li>
-                  <b>Kitchen</b>
-                  <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
-                    <li class="nobox">
-                      <b>Time:</b> 13:00 to 16:30
-                    </li>
-                    <li class="nobox">
-                      <b>Clashes with:</b> 10 occurrences
-                    </li>
-                    <li class="nobox">
-                      <b>Created by:</b> Bill Jones
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </details>
-         <!--details component-->
-       </td>
-        <td class="govuk-table__cell" data-sort-value="0">
-          {{ govukTag({
-            text: "Clash",
-            classes: "govuk-!-margin-right-3"
-          }) }}
-          <a href="#" class="govuk-link" >View schedule (opens in a new tab)</a>
-        </td>
-      </tr>
-      
     </tbody>
   </table>
-<br/>
+<br>
 <button class="govuk-button govuk-button--warning" data-module="govuk-button" name="editDashboard" value="archive">
 Remove selected prisoners
 </button>
+<br>
 {{ govukButton({
   text: "Continue",
   href: "../change-answers-group-appointments/change-occurence-question"
