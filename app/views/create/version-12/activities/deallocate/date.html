@@ -16,10 +16,11 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
+            {% for prisoner in prisonerData %}
             {% set dateHtml %}
             {{govukDateInput({
-            idPrefix: "deallocation-date",
-            namePrefix: "deallocation-date",
+            idPrefix: "deallocation-date-" + prisoner.id,
+            namePrefix: "deallocation-date[" + prisoner.id + "]",
             fieldset: {
             legend: {
             text: "Date",
@@ -47,16 +48,16 @@ text: "Back",
             })}}
             {% endset %}
 
-            <!-- GOVUK radios component to select the date when the prisoner should be removed from the activity: as soon as possible, or on a specific date -->
             {{govukRadios({
-            idPrefix: "deallocation-date",
-            name: "deallocation-date",
+            idPrefix: "deallocation-date-" + prisoner.id,
+            name: "deallocation-date[" + prisoner.id + "]",
             fieldset: {
             legend: {
-            text: "When should " + prisoner.name.firstname + " " + prisoner.name.surname + " be taken off " +
+            text: "When should " + prisoner.name.firstname + " " + prisoner.name.surname + " be taken off
+            " +
             activity['name'] + "?",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--xl"
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--xl" if prisonerData | length == 1 else "govuk-fieldset__legend--l"
             }
             },
             items: [
@@ -76,9 +77,16 @@ text: "Back",
             }
             ]
             })}}
+            {% endfor %}
+
+            {% if prisonerData | length == 1 %}
+            {% set insetTextText = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " will be expected to attend any sessions scheduled to take place between now and the date they are removed from the activity." %}
+            {% else %}
+            {% set insetTextText = "The " + prisonerData | length + " selected prisoners will be expected to attend any sessions scheduled to take place between now and the date they are removed from the activity." %}
+            {% endif %}
 
             {{ govukInsetText({
-            text: prisoner.name.firstname + " " + prisoner.name.surname + " will be expected to attend any sessions scheduled to take place between now and the date they are removed from the activity."
+            text: insetTextText
             }) }}
 
             {{ govukButton({

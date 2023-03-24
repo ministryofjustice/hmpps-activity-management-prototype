@@ -1,0 +1,181 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">
+            Check removal details
+        </h1>
+
+        {% if prisonerData | length > 1 %}
+        {% for prisoner in prisonerData %}
+        <div class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title">{{prisoner.name.firstname}} {{prisoner.name.surname}}</h2>
+            </div>
+            <div class="govuk-summary-card__content">
+                <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Name
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Prison number
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{prisoner.id}}
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Activity
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{activity.name}}
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Removal date
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{data['deallocation'][prisoner.id]['date']|convertShortDateToLongDate}}
+                        </dd>
+                        <!-- Change link -->
+                        <dd class="govuk-summary-list__actions">
+                            <a href="select-pay-rate" class="govuk-link--no-visited-state">Change</a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Reason for removal
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{data['deallocation'][prisoner.id]['reason']}}
+                        </dd>
+                        <!-- Change link -->
+                        <dd class="govuk-summary-list__actions">
+                            <a href="select-pay-rate" class="govuk-link--no-visited-state">Change</a>
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Prison number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisonerData[0].id}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Activity
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{activity.name}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Removal date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['deallocation'][prisonerData[0].id]['date']|convertShortDateToLongDate}}
+                </dd>
+                <!-- Change link -->
+                <dd class="govuk-summary-list__actions">
+                    <a href="select-pay-rate" class="govuk-link--no-visited-state">Change</a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Reason for removal
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['deallocation'][prisonerData[0].id]['reason']}}
+                </dd>
+                <!-- Change link -->
+                <dd class="govuk-summary-list__actions">
+                    <a href="select-pay-rate" class="govuk-link--no-visited-state">Change</a>
+                </dd>
+            </div>
+        </dl>
+        {% endif %}
+
+        <form method="post">
+            <!-- if suitability is 'yes' -->
+            {% if data['new-application']['eligible'] == 'no' %}
+            <div class="govuk-inset-text">
+                <p class="govuk-body">
+                    When you reject an activity request, you should inform the person who made the request the reason
+                    for your decision.
+                </p>
+            </div>
+
+            <input type="" hidden name="allocate-now" value="no">
+            <input type="" hidden name="new-application[status]" value="rejected">
+
+            {{ govukButton({
+            text: "Reject this request"
+            }) }}
+
+            {% elif data['new-application']['eligible'] == '' %}
+            <input type="" hidden name="new-application[status]" value="pending">
+
+            {% else %}
+            <input type="" hidden name="allocate-now" value="no">
+            <input type="" hidden name="new-application[status]" value="approved">
+            {% endif %}
+
+            <h2 class="govuk-heading-m">
+                Now confirm the removal
+            </h2>
+            <p>
+                {{prisoner.name.firstname}} {{prisoner.name.surname}} will be removed from {{activity.name}} on
+                {{data['deallocation']['date']}}.
+            </p>
+
+            <div class="govuk-button-group">
+                {{ govukButton({
+                text: "Confirm and remove"
+                }) }}
+                <a href="/create/version-12/activities" class="govuk-link govuk-link--no-visited-state">
+                    Cancel and return to prisoner profile
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

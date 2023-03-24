@@ -14,6 +14,7 @@
 	}
 }
 
+.app-actions-toolbar,
 .app-attendance-sticky-bar--bottom {
 	width: 100%;
 	z-index: 999;
@@ -61,5 +62,26 @@
 		p {
 			color: white;
 		}
+	}
+}
+
+.app-actions-toolbar.active {
+	display: flex;
+	background: govuk-colour('dark-blue');
+	position: sticky;
+	bottom: -1px;
+	box-shadow: 0 -4px 0 rgba(0,0,0,0.15);
+	
+	.is-pinned {
+		border-top-color: govuk-colour('blue');
+	}
+
+	p#app-selected-count {
+		@include govuk-font($size: 19, $weight: bold);
+	}
+
+	p,
+	a {
+		color: govuk-colour('white');
 	}
 }

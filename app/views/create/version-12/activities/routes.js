@@ -2,6 +2,19 @@ const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
 
+// router for deallocate prisoner journey
+router.use("/:activityId/deallocate", (req, res, next) => {
+  let serviceName = req.originalUrl.split("/")[1];
+  let version = req.originalUrl.split("/")[2];
+  let journey = req.originalUrl.split("/")[3];
+  let subJourney = req.originalUrl.split("/")[5];
+
+  req.activityId = req.params.activityId;
+
+  req.protoUrl = serviceName + "/" + version + "/" + journey + "/" + subJourney;
+  require("./deallocate/routes")(req, res, next);
+});
+
 // routes for pages in the activities section
 // activities page redirect root to /all
 router.get("/", function (req, res) {
@@ -203,149 +216,96 @@ router.get("/:activityId/currently-allocated-v2", function (req, res) {
   });
 });
 
-//post handler for the currently allocated page
+// post handler for the currently allocated page
 router.post("/:activityId/currently-allocated", function (req, res) {
-  // if no prisoner is selected, redirect back to the currently allocated page
-  if (!req.body.prisonerId) {
-    res.redirect("currently-allocated");
+  let selectedPrisoners = req.session.data["selected-prisoners"];
+
+  res.redirect("deallocate/" + selectedPrisoners);
+});
+
+// dealocate date check page
+router.get("/:activityId/deallocate/:prisonerIds/date-check", function (req, res) {
+  // if there is only one selected prisoner, redirect to the deallocate date page
+  let selectedPrisoners = req.params.prisonerIds.split(",");
+  if (selectedPrisoners.length === 1) {
+    res.redirect("date");
   } else {
-    res.redirect("deallocate/" + req.body.prisonerId + "/date");
-  }
-});
-
-// deallocate date page
-router.get("/:activityId/deallocate/:prisonerId/date", function (req, res) {
-  let prisonerId = req.params.prisonerId;
-  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
-    (prisoner) => prisoner.id.toString() === prisonerId.toString()
-  );
-  let activityId = req.params.activityId;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
-
-  // render the deallocate date page
-  res.render(req.protoUrl + "/deallocation-date", {
-    activity,
-    prisoner,
-  });
-});
-
-// deallocate date page POST handler
-router.post("/:activityId/deallocate/:prisonerId/date", function (req, res) {
-  res.redirect("reason");
-});
-
-// deallocate reason page
-router.get("/:activityId/deallocate/:prisonerId/reason", function (req, res) {
-  let prisonerId = req.params.prisonerId;
-  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
-    (prisoner) => prisoner.id.toString() === prisonerId.toString()
-  );
-  let activityId = req.params.activityId;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
-
-  // render the deallocate reason page
-  res.render(req.protoUrl + "/deallocation-reason", {
-    activity,
-    prisoner,
-    });
-});
-
-// deallocate reason page POST handler
-router.post("/:activityId/deallocate/:prisonerId/reason", function (req, res) {
-  res.redirect("check-deallocation");
-});
-
-// deallocate check page
-router.get("/:activityId/deallocate/:prisonerId/check-deallocation", function (req, res) {
-  let prisonerId = req.params.prisonerId;
-  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
-    (prisoner) => prisoner.id.toString() === prisonerId.toString()
-  );
-  let activityId = req.params.activityId;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
-    
-  // render the deallocate check page
-  res.render(req.protoUrl + "/check-deallocation", {
-    activity,
-    prisoner,
-    });
-});
-
-// deallocate check page POST handler
-router.post("/:activityId/deallocate/:prisonerId/check-deallocation", function (req, res) {
-  res.redirect("deallocation-confirmation");
-});
-
-// deallocate confirmation page
-router.get("/:activityId/deallocate/:prisonerId/deallocation-confirmation", function (req, res) {
-  let prisonerId = req.params.prisonerId;
-  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
-    (prisoner) => prisoner.id.toString() === prisonerId.toString()
-  );
-  let activityId = req.params.activityId;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
-
-  // render the deallocate confirmation page
-  res.render(req.protoUrl + "/deallocation-confirmation", {
-    activity,
-    prisoner,
-    });
-});
-
-// activity deallocate page
-router.get("/:activityId/deallocate/:prisonerId", function (req, res) {
-  let currentPage = "deallocate";
-  let activityId = req.params.activityId;
-  let prisonerId = req.params.prisonerId;
-  let activities = req.session.data["timetable-complete-1"]["activities"];
-  let activity = activities.find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisoner = prisoners.find(
-    (prisoner) => prisoner.id.toString() === prisonerId.toString()
-  );
-
-  // render the deallocate page
-  res.render(req.protoUrl + "/deallocate", {
-    activity,
-    currentPage,
-    prisoner,
-    });
-});
-
-// post handler for the deallocate page
-router.post("/:activityId/deallocate/:prisonerId", function (req, res) {
-  if(req.session.data['confirm-deallocate'] === "yes") {
-    // get the prisoner id from the url
-    let prisonerId = req.params.prisonerId;
-    // remove the activity id from the prisoner's activity array
+    // make an object of prisoner data from each prisoner ID in the selectedPrisoners array
     let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-    let prisoner = prisoners.find(
-      (prisoner) => prisoner.id.toString() === prisonerId.toString()
-    );
-    prisoner.activity = prisoner.activity.filter(
-      (activity) => activity.toString() !== req.params.activityId.toString()
+    let prisonerData = prisoners.filter((prisoner) =>
+      selectedPrisoners.includes(prisoner.id.toString())
     );
 
-    // set the confirmation dialog data
-    req.session.data["confirmation-dialog"] = {
-      display: true,
-      type: "deallocate",
-      prisoner: prisonerId,
-    }
+    let activityId = req.params.activityId;
+    let activity = req.session.data["timetable-complete-1"]["activities"].find(
+      (activity) => activity.id.toString() === activityId.toString()
+    );
+
+    // render the deallocate date check page
+    res.render(req.protoUrl + "/deallocate-date-check", {
+      activity,
+      prisonerData,
+      });
   }
-
-  res.redirect("../../" + req.params.activityId + "/currently-allocated");
 });
+
+// deallocate date check page POST handler
+router.post("/:activityId/deallocate/:prisonerIds/date-check", function (req, res) {
+  // if the radio is set to "yes", redirect to the deallocate date page
+  if (req.session.data["deallocate-same-date"] === "yes") {
+    res.redirect("date");
+  } else {
+    // redirect to the multiple deallocation date page
+    res.redirect("multiple-date");
+  }
+});
+
+// // activity deallocate page
+// router.get("/:activityId/deallocate/:prisonerId", function (req, res) {
+//   let currentPage = "deallocate";
+//   let activityId = req.params.activityId;
+//   let prisonerId = req.params.prisonerId;
+//   let activities = req.session.data["timetable-complete-1"]["activities"];
+//   let activity = activities.find(
+//     (activity) => activity.id.toString() === activityId.toString()
+//   );
+//   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+//   let prisoner = prisoners.find(
+//     (prisoner) => prisoner.id.toString() === prisonerId.toString()
+//   );
+
+//   // render the deallocate page
+//   res.render(req.protoUrl + "/deallocate", {
+//     activity,
+//     currentPage,
+//     prisoner,
+//     });
+// });
+
+// // post handler for the deallocate page
+// router.post("/:activityId/deallocate/:prisonerId", function (req, res) {
+//   if(req.session.data['confirm-deallocate'] === "yes") {
+//     // get the prisoner id from the url
+//     let prisonerId = req.params.prisonerId;
+//     // remove the activity id from the prisoner's activity array
+//     let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+//     let prisoner = prisoners.find(
+//       (prisoner) => prisoner.id.toString() === prisonerId.toString()
+//     );
+//     prisoner.activity = prisoner.activity.filter(
+//       (activity) => activity.toString() !== req.params.activityId.toString()
+//     );
+
+//     // set the confirmation dialog data
+//     req.session.data["confirmation-dialog"] = {
+//       display: true,
+//       type: "deallocate",
+//       prisoner: prisonerId,
+//     }
+//   }
+
+//   res.redirect("../../" + req.params.activityId + "/currently-allocated");
+// });
 
 
 
