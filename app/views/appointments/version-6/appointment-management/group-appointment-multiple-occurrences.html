@@ -67,7 +67,7 @@ Appointments prototype
                   Location
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{data.locationChoicesingle or 'HB1 Doctors'}}
+                  HB1 Doctors
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <!--<a class="govuk-link" href="change-answers/location">
@@ -80,7 +80,7 @@ Appointments prototype
                   Date
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['date-of-appointment-day'] or '9'}} {{ data['date-of-appointment-month']  or 'Mar'}}  {{ data['date-of-appointment-year'] or '2023'}}
+                 9 Mar 2023
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <!--<a class="govuk-link" href="change-answers/date-of-appointment">
@@ -93,7 +93,7 @@ Appointments prototype
                   Start time
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['start-hours'] or '11'}}:{{ data['start-minutes'] or '00'}}
+                  11:00
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <!--<a class="govuk-link" href="change-answers/date-of-appointment#start-time">
@@ -106,7 +106,7 @@ Appointments prototype
                   End time
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['end-hours'] or '16'}}:{{ data['end-minutes'] or '00'}} 
+                  12:00 
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <!--<a class="govuk-link" href="change-answers/date-of-appointment#end-time">
@@ -133,7 +133,7 @@ Appointments prototype
                   Frequency
                 </dt>
                 <dd class="govuk-summary-list__value">
-                   {{ data['appointment-frequency'] or 'Weekly'}}
+                   Weekly
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <!--<a class="govuk-link" href="change-answers/appointment-frequency">
@@ -146,7 +146,7 @@ Appointments prototype
                   Occurences
                 </dt>
                 <dd class="govuk-summary-list__value">
-                   {{ data['number-of-appointments'] or '10'}}
+                   10
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <!--<a class="govuk-link" href="change-answers/appointment-frequency">
@@ -159,7 +159,7 @@ Appointments prototype
                   Prisoners
                 </dt>
                 <dd class="govuk-summary-list__value">
-                   {{ data['number-of-appointments'] or '10'}}
+                   9
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <!--<a class="govuk-link" href="change-answers/appointment-frequency">
@@ -167,15 +167,7 @@ Appointments prototype
                   </a>-->
                 </dd>
               </div>
-              
              </dl>
-
-
-
-
-
-             
-
              <table class="govuk-table">
               <caption class="govuk-table__caption govuk-table__caption--m">Appointment occurrences</caption>
               <thead class="govuk-table__head">
@@ -189,13 +181,41 @@ Appointments prototype
               <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">3</td>
-                  <td class="govuk-table__cell">23 Mar 2023</td>
-                  <td class="govuk-table__cell"></td>
+                  <td class="govuk-table__cell">30 Mar 2023</td>
+                  <td class="govuk-table__cell">
+                    {% if data['which-occurrence'] === 'All occurrences'%}
+                    <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                    
+                    
+                    <ul class="govuk-list govuk-list--bullet">
+                      {% if data['person-1-check'] ==='True' %}
+                      <li>
+                        <b>Prisoners:</b>  10
+                      </li>
+                      {% endif %}
+                      {% if data['locationChoicesingle']%}
+                      <li>
+                        <b>Location:</b>  {{data.locationChoicesingle }}
+                      </li>
+                      {% endif %}
+                     
+                      {% if data['start-hours']%}
+                      <li>
+                        <b>Start time:</b>  {{ data['start-hours'] }}:{{ data['start-minutes']}}
+                      </li>
+                      <li>
+                        <b>End time:</b>  {{ data['end-hours'] }}:{{ data['end-minutes']}}
+                      </li>
+                      {% endif %}
+                      </ul>
+                    {% endif %}
+                    
+                  </td>
                   <td class="govuk-table__cell"><a href="group-appointment-single-occurrence" class="govuk-link">View and edit</a></td>
                 </tr>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">4</td>
-                  <td class="govuk-table__cell">9 Mar 2023 </td>
+                  <td class="govuk-table__cell">6 Apr 2023 </td>
                   <td class="govuk-table__cell">
                    <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
                     <ul class="govuk-list govuk-list--bullet">
@@ -205,65 +225,202 @@ Appointments prototype
                       <li>
                         <b>Appointment location:</b> HB2 Classroom 1
                       </li>
+                      
+                      
+                        {% if data['person-1-check'] ==='True' and data['which-occurrence'] === 'All occurrences'  %}
+                        <li>
+                          <b>Prisoners:</b>  9
+                        </li>
+                       
+                        {% else %}
                       <li>
                         <b>Prisoners:</b> 8
                       </li>
+                      {% endif %}
+                      {% if data['locationChoicesingle']%}
+                      <li>
+                        <b>Location:</b>  {{data.locationChoicesingle }}
+                      </li>
+                      {% endif %}
+                     
+                      {% if data['start-hours']%}
+                      <li>
+                        <b>Start time:</b>  {{ data['start-hours'] }}:{{ data['start-minutes']}}
+                      </li>
+                      <li>
+                        <b>End time:</b>  {{ data['end-hours'] }}:{{ data['end-minutes']}}
+                      </li>
+                      {% endif %}
                     </ul>
                   </td>
-                  <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
+                  <td class="govuk-table__cell"><a href="" class="govuk-link">View and edit</a></td>
                 </tr>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">5</td>
-                  <td class="govuk-table__cell">30 Mar 2023</td>
+                  <td class="govuk-table__cell">{{ data['date-of-appointment-day'] or '13'}} {{ data['date-of-appointment-month']  or 'Apr'}}  {{ data['date-of-appointment-year'] or '2023'}}</td>
                   <td class="govuk-table__cell"> 
-                    {% if data['which-occurrence'] === 'This and the following occurrences' %}
+                    {% if data['which-occurrence'] === 'This and the following occurrences' or data['which-occurrence'] === 'All occurrences'%}
                     <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                    {% endif %}
+                    {% if  data['which-occurrence'] === 'This and the following occurrences' or data['which-occurrence'] === 'All occurrences' %}
+                    <ul class="govuk-list govuk-list--bullet">
+                      {% if data['person-1-check'] ==='True' %}
+                      <li>
+                        <b>Prisoners:</b>  10
+                      </li>
+                      {% endif %}
+                      {% if data['locationChoicesingle']%}
+                      <li>
+                        <b>Location:</b>  {{data.locationChoicesingle }}
+                      </li>
+                      {% endif %}
+                      {% if data['start-hours']%}
+                      <li>
+                        <b>Start time:</b>  {{ data['start-hours'] }}:{{ data['start-minutes']}}
+                      </li>
+                      <li>
+                        <b>End time:</b>  {{ data['end-hours'] }}:{{ data['end-minutes']}}
+                      </li>
+                      {% endif %}
+                      </ul>
                     {% endif %}
                   </td>
                   <td class="govuk-table__cell"><a href="group-appointment-single-occurrence" class="govuk-link">View and edit</a></td>
                 </tr>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">6</td>
-                  <td class="govuk-table__cell">6 Apr 2023</td>
+                  <td class="govuk-table__cell">20 Apr 2023</td>
                   <td class="govuk-table__cell">
-                    {% if data['which-occurrence'] === 'This and the following occurrences' %}
+                    {% if data['which-occurrence'] === 'This and the following occurrences' or data['which-occurrence'] === 'All occurrences'%}
                     <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                    {% endif %}
+                    {% if data['which-occurrence'] === 'This and the following occurrences' or data['which-occurrence'] === 'All occurrences' %}
+                    <ul class="govuk-list govuk-list--bullet">
+                      {% if data['person-1-check'] ==='True' %}
+                      <li>
+                        <b>Prisoners:</b>  10
+                      </li>
+                      {% endif %}
+                      {% if data['locationChoicesingle']%}
+                      <li>
+                        <b>Location:</b>  {{data.locationChoicesingle }}
+                      </li>
+                      {% endif %}
+                     
+                      {% if data['start-hours']%}
+                      <li>
+                        <b>Start time:</b>  {{ data['start-hours'] }}:{{ data['start-minutes']}}
+                      </li>
+                      <li>
+                        <b>End time:</b>  {{ data['end-hours'] }}:{{ data['end-minutes']}}
+                      </li>
+                      {% endif %}
+                      </ul>
                     {% endif %}
                   </td>
                   <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
                 </tr>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">7</td>
-                  <td class="govuk-table__cell">13 Apr 2023</td>
+                  <td class="govuk-table__cell">27 Apr 2023</td>
                   <td class="govuk-table__cell">
-                    {% if data['which-occurrence'] === 'This and the following occurrences' %}
+                    {% if data['which-occurrence'] === 'This and the following occurrences' or data['which-occurrence'] === 'All occurrences'%}
                     <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                    {% endif %}
+                    {% if  data['which-occurrence'] === 'This and the following occurrences' or data['which-occurrence'] === 'All occurrences' %}
+                    <ul class="govuk-list govuk-list--bullet">
+                      {% if data['person-1-check'] ==='True' %}
+                      <li>
+                        <b>Prisoners:</b>  10
+                      </li>
+                      {% endif %}
+                      {% if data['locationChoicesingle']%}
+                      <li>
+                        <b>Location:</b>  {{data.locationChoicesingle }}
+                      </li>
+                      {% endif %}
+                     
+                      {% if data['start-hours']%}
+                      <li>
+                        <b>Start time:</b>  {{ data['start-hours'] }}:{{ data['start-minutes']}}
+                      </li>
+                      <li>
+                        <b>End time:</b>  {{ data['end-hours'] }}:{{ data['end-minutes']}}
+                      </li>
+                      {% endif %}
+                      </ul>
                     {% endif %}
                   </td>
                   <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
                 </tr>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">8</td>
-                  <td class="govuk-table__cell">6 Apr 2023</td>
+                  <td class="govuk-table__cell">04 May 2023</td>
                   <td class="govuk-table__cell"><span class="govuk-tag govuk-tag--red">Cancelled</span></td>
                   <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
                 </tr>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">9</td>
-                  <td class="govuk-table__cell">20 Apr 2023</td>
+                  <td class="govuk-table__cell">11 May 2023</td>
                   <td class="govuk-table__cell">
-                    {% if data['which-occurrence'] === 'This and the following occurrences' %}
+                    {% if data['which-occurrence'] === 'This and the following occurrences' or data['which-occurrence'] === 'All occurrences'%}
                     <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                    {% endif %}
+                    {% if data['which-occurrence'] === 'This and the following occurrences' or data['which-occurrence'] === 'All occurrences' %}
+                    <ul class="govuk-list govuk-list--bullet">
+                      {% if data['person-1-check'] ==='True' %}
+                      <li>
+                        <b>Prisoners:</b>  10
+                      </li>
+                      {% endif %}
+                      {% if data['locationChoicesingle']%}
+                      <li>
+                        <b>Location:</b>  {{data.locationChoicesingle }}
+                      </li>
+                      {% endif %}
+                     
+                      {% if data['start-hours']%}
+                      <li>
+                        <b>Start time:</b>  {{ data['start-hours'] }}:{{ data['start-minutes']}}
+                      </li>
+                      <li>
+                        <b>End time:</b>  {{ data['end-hours'] }}:{{ data['end-minutes']}}
+                      </li>
+                      {% endif %}
+                      </ul>
                     {% endif %}
                   </td>
                   <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
                 </tr>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">10</td>
-                  <td class="govuk-table__cell">27 Apr 2023</td>
+                  <td class="govuk-table__cell">18 May 2023</td>
                   <td class="govuk-table__cell">
-                    {% if data['which-occurrence'] === 'This and the following occurrences' %}
+                    {% if data['which-occurrence'] === 'This and the following occurrences' or data['which-occurrence'] === 'All occurrences'%}
                     <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                    {% endif %}
+                    {% if  data['which-occurrence'] === 'This and the following occurrences' or data['which-occurrence'] === 'All occurrences' %}
+                    <ul class="govuk-list govuk-list--bullet">
+                      {% if data['person-1-check'] ==='True' %}
+                      <li>
+                        <b>Prisoners:</b>  10
+                      </li>
+                      {% endif %}
+                      {% if data['locationChoicesingle']%}
+                      <li>
+                        <b>Location:</b>  {{data.locationChoicesingle }}
+                      </li>
+                      {% endif %}
+                   
+                      {% if data['start-hours']%}
+                      <li>
+                        <b>Start time:</b>  {{ data['start-hours'] }}:{{ data['start-minutes']}}
+                      </li>
+                      <li>
+                        <b>End time:</b>  {{ data['end-hours'] }}:{{ data['end-minutes']}}
+                      </li>
+                      {% endif %}
+                      </ul>
                     {% endif %}
                   </td>
                   <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
@@ -281,7 +438,7 @@ Appointments prototype
                 </dd>
                 </div>
 
-                {% if data['which-occurrence'] === 'This and the following occurrences' %}
+                {% if data['which-occurrence'] === 'This and the following occurrences' or data['which-occurrence'] === 'All occurrences' %}
                 <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">
                     Last edited by

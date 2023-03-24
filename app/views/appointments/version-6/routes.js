@@ -175,6 +175,16 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
+
+  router.post(`/appointment-management/change-answers-group-appointments/add-people-route`, function (req, res) {
+	const peopleRoute = req.session.data['add-people-method'];
+	if (peopleRoute === 'upload-file') {
+		res.redirect(`upload-file-info`);
+	} else {
+		res.redirect(`search-person`);
+	}
+  });
+
   
 
 module.exports = router
