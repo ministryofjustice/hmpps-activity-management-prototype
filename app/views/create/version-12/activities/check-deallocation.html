@@ -105,11 +105,14 @@ text: "Back",
                 {{prisoner.name.firstname}} {{prisoner.name.surname}} will be removed from {{activity.name}} on {{data['deallocation']['date']}}.
             </p>
 
-            {% if data['new-application']['eligible'] != 'no' %}
+            <div class="govuk-button-group">
             {{ govukButton({
             text: "Confirm and remove"
             }) }}
-            {% endif %}
+            <a href="/create/version-12/activities" class="govuk-link govuk-link--no-visited-state">
+                Cancel and return to prisoner profile
+            </a>
+        </div>
         </form>
     </div>
 </div>
