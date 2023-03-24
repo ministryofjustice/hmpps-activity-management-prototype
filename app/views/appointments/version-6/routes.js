@@ -133,10 +133,10 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
-  router.post(`/appointment-management/cancel/cancel-question`, function (req, res) {
+  router.post(`/appointment-management/cancel-group/cancel-question`, function (req, res) {
 	const appRepeat = req.session.data['appointment-cancel'];
 	if (appRepeat === 'Yes') {
-		res.redirect(`cancel-reason`);
+		res.redirect(`cancel-occurence-question`);
 	} else {
 		res.redirect(`../single-appointment-no-recurrence-cl`);
 	}
