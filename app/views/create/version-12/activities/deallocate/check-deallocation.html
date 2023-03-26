@@ -23,7 +23,7 @@ text: "Back",
         {% for prisoner in prisonerData %}
         <div class="govuk-summary-card">
             <div class="govuk-summary-card__title-wrapper">
-                <h2 class="govuk-summary-card__title">{{prisoner.name.firstname}} {{prisoner.name.surname}}</h2>
+                <h2 class="govuk-summary-card__title">{{prisoner.name.firstname}} {{prisoner.name.surname}} &ndash; {{prisoner.id}}</h2>
             </div>
             <div class="govuk-summary-card__content">
                 <dl class="govuk-summary-list govuk-!-margin-bottom-8">
@@ -161,10 +161,15 @@ text: "Back",
             <h2 class="govuk-heading-m">
                 Now confirm the removal
             </h2>
-            <p>
-                {{prisoner.name.firstname}} {{prisoner.name.surname}} will be removed from {{activity.name}} on
-                {{data['deallocation']['date']}}.
+            {% if prisonerData | length > 1 %}
+            <p class="govuk-body">
+                {{prisonerData | length}} prisoners will be removed from {{activity.name}}.
             </p>
+            {% else %}
+            <p>
+                {{prisoner.name.firstname}} {{prisoner.name.surname}} will be removed from {{activity.name}}.
+            </p>
+            {% endif %}
 
             <div class="govuk-button-group">
                 {{ govukButton({

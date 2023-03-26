@@ -16,7 +16,11 @@ Activities Management prototype
         {% endset %}
 
         {% set panelHtml %}
-        {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
+        {% if prisonerData | length > 1 %}
+        {{prisonerData | length}} prisoners
+        {% else %}
+        {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}} ({{prisonerData[0].id}})
+        {% endif %}
         {% endset %}
 
         {{ govukPanel({
@@ -24,11 +28,15 @@ Activities Management prototype
         html: panelHtml
         }) }}
 
+        {% set noun = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname %}
+        {%- if prisonerData | length > 1 %}
+        {% set noun = prisonerData | length + " prisoners" %}
+        {% endif -%}
         <p>
-            {{prisoner.name.firstname}} {{prisoner.name.surname}} will be removed from {{activity.name}} on DATE.
+            {{ noun }} will be removed from {{activity.name}}.
         </p>
         <p>
-            After DATE, they will no longer be able to attend this activity.
+            After they have been removed, they will not be able to attend this activity unless they are re-added.
         </p>
 
         <a href="/create/version-12/activities" class="govuk-button">Finish and return to activities</a>

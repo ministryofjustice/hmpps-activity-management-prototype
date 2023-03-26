@@ -16,11 +16,10 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
-            {% for prisoner in prisonerData %}
             {% set dateHtml %}
             {{govukDateInput({
-            idPrefix: "deallocation-date-" + prisoner.id,
-            namePrefix: "deallocation-date[" + prisoner.id + "]",
+            idPrefix: "deallocation-date",
+            namePrefix: "deallocation-date",
             fieldset: {
             legend: {
             text: "Date",
@@ -48,16 +47,26 @@ text: "Back",
             })}}
             {% endset %}
 
+            {% if multiple == false and prisonerData | length > 1 %}
+            {% set noun = "the " + prisonerData | length + " selected prisoners" %}
+            {% else %}
+            {% set noun = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname %}            
+            {% endif %}
+
+            {% if multiple == true and selectedPrisoners | length > 1 %}
+            <span class="govuk-caption-l">Prisoner {{prisonerIndex}} of {{selectedPrisoners | length}}</span>
+            {% endif %}
+            
             {{govukRadios({
-            idPrefix: "deallocation-date-" + prisoner.id,
-            name: "deallocation-date[" + prisoner.id + "]",
+            idPrefix: "deallocation-date",
+            name: "deallocation-date",
             fieldset: {
             legend: {
-            text: "When should " + prisoner.name.firstname + " " + prisoner.name.surname + " be taken off
+            html: "When should " + noun + " be taken off
             " +
             activity['name'] + "?",
             isPageHeading: false,
-            classes: "govuk-fieldset__legend--xl" if prisonerData | length == 1 else "govuk-fieldset__legend--l"
+            classes: "govuk-fieldset__legend--xl"
             }
             },
             items: [
@@ -77,7 +86,6 @@ text: "Back",
             }
             ]
             })}}
-            {% endfor %}
 
             {% if prisonerData | length == 1 %}
             {% set insetTextText = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " will be expected to attend any sessions scheduled to take place between now and the date they are removed from the activity." %}

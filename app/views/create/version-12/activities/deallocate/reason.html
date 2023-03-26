@@ -27,12 +27,16 @@ text: "Back",
             "Other"
             ] %}
 
+            {% if multiple == true and selectedPrisoners | length > 1 %}
+            <span class="govuk-caption-l">Prisoner {{prisonerIndex}} of {{selectedPrisoners | length}}</span>
+            {% endif %}
+            
             <!-- GOVUK radios component HTML for selecting the reason for deallocation -->
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset" aria-describedby="deallocation-reason-hint">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
                         <h1 class="govuk-fieldset__heading">
-                            Why are you removing {{ prisoner.name.firstname }} {{ prisoner.name.surname }} from {{
+                            Why are you removing {{ prisonerData[0].name.firstname }} {{ prisonerData[0].name.surname }} from {{
                             activity['name'] }}?
 
                         </h1>

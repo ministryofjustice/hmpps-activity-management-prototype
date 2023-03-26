@@ -45,15 +45,78 @@ router.get("/:prisonerIds/date-check", function (req, res) {
     res.render(req.protoUrl + "/date-check", {
       activity,
       prisonerData,
-      });
+    });
   }
 });
 
 // deallocate date check page POST handler
 router.post("/:prisonerIds/date-check", function (req, res) {
-  res.redirect("date");
+  // if the dates are the same, redirect to the date page
+  if (req.session.data["deallocate-same-date"] === "no") {
+    let selectedPrisoners = req.params.prisonerIds.split(",");
+    res.redirect("date" + "/" + selectedPrisoners[0]);
+  } else {
+    // if the dates are different, redirect to the ate entry page for the first prisoner
+    res.redirect("date");
+  }
 });
 
+// date entry page for multiple prisoners with different dates
+router.get("/:prisonerIds/date/:prisonerId", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let prisonerData = prisoners.filter((prisoner) => {
+    return prisoner.id.toString() === prisonerId.toString();
+  });
+
+  let selectedPrisoners = req.params.prisonerIds.split(",");
+  let prisonerIndex = selectedPrisoners.indexOf(prisonerId) + 1;
+
+  let activityId = req.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  let multiple = true;
+
+  // render the date entry page
+  res.render(req.protoUrl + "/date", {
+    activity,
+    prisonerData,
+    multiple,
+    selectedPrisoners,
+    prisonerIndex,
+  });
+});
+
+// date entry page POST handler
+router.post("/:prisonerIds/date/:prisonerId", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let prisoners = req.params.prisonerIds.split(",");
+  let prisonerIndex = prisoners.indexOf(prisonerId);
+
+  let date = DateTime.now().toISODate();
+
+  // if the radio is set to "specific-date", set the date to the date entered instead of today's date
+  if (req.session.data["deallocation-date"] === "specific-date") {
+    // get separate date parts from the deallocation date and format them as YYYY-MM-DD
+    date = DateTime.fromObject({
+      year: req.session.data["deallocation-date-year"],
+      month: req.session.data["deallocation-date-month"],
+      day: req.session.data["deallocation-date-day"],
+    }).toISODate();
+  }
+
+  req.session.data["deallocation"][prisonerId]["date"] = date;
+
+  // redirect to the date entry page for the next prisoner
+  if (prisonerIndex < prisoners.length - 1) {
+    res.redirect(prisoners[prisonerIndex + 1]);
+  } else {
+    // if there are no more prisoners, redirect to the reason page
+    res.redirect("../reason-check");
+  }
+});
 
 // deallocate date page
 router.get("/:prisonerIds/date", function (req, res) {
@@ -70,9 +133,12 @@ router.get("/:prisonerIds/date", function (req, res) {
     (activity) => activity.id.toString() === activityId.toString()
   );
 
+  let multiple = false;
+
   // render the deallocate date page
   res.render(req.protoUrl + "/date", {
     activity,
+    multiple,
     prisonerData,
   });
 });
@@ -82,8 +148,8 @@ router.post("/:prisonerIds/date", function (req, res) {
   let date = DateTime.now().toISODate();
 
   // if the radio is set to "specific-date", set the date to the date entered instead of today's date
-  if(req.session.data["deallocation-date"] === 'specific-date') {
-    // get separate date parts from the deallocation date and format them as YYYY-MM-DD    
+  if (req.session.data["deallocation-date"] === "specific-date") {
+    // get separate date parts from the deallocation date and format them as YYYY-MM-DD
     date = DateTime.fromObject({
       year: req.session.data["deallocation-date-year"],
       month: req.session.data["deallocation-date-month"],
@@ -96,7 +162,93 @@ router.post("/:prisonerIds/date", function (req, res) {
     req.session.data["deallocation"][prisonerId]["date"] = date;
   });
 
-  res.redirect("reason");
+  // if there are multiple prisoners, redirect to the reason check page
+  if (selectedPrisoners.length > 1) {
+    res.redirect("reason-check");
+  } else {
+    res.redirect("reason");
+  }
+});
+
+// deallocate reason check page
+router.get("/:prisonerIds/reason-check", function (req, res) {
+  let selectedPrisoners = req.params.prisonerIds.split(",");
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let prisonerData = prisoners.filter((prisoner) =>
+    selectedPrisoners.includes(prisoner.id.toString())
+  );
+
+  let activityId = req.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  
+  // render the deallocate reason check page
+  res.render(req.protoUrl + "/reason-check", {
+    activity,
+    prisonerData,
+    });
+});
+
+// deallocate reason check page POST handler
+router.post("/:prisonerIds/reason-check", function (req, res) {
+  // if the user clicks "Yes", redirect to the reason page
+  if (req.session.data["deallocate-same-reason"] === "yes") {
+    res.redirect("reason");
+  } else {
+    // if the user selects "No", redirect to the reason page for each prisoner
+    let selectedPrisoners = req.params.prisonerIds.split(",");
+    res.redirect('reason/' + selectedPrisoners[0]);
+  }
+});
+
+// deallocate reason page for each prisoner
+router.get("/:prisonerIds/reason/:prisonerId", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  // prisoners timetable data
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let prisonerData = prisoners.filter((prisoner) =>
+    prisoner.id.toString() === prisonerId.toString()
+  );
+
+  let activityId = req.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  let selectedPrisoners = req.params.prisonerIds.split(",");
+  let prisonerIndex = selectedPrisoners.indexOf(prisonerId) + 1;
+
+  let multiple = true;
+
+  // render the deallocate reason page
+  res.render(req.protoUrl + "/reason", {
+    activity,
+    multiple,
+    prisonerId,
+    prisonerData,
+    selectedPrisoners,
+    prisonerIndex,
+    });
+});
+
+// deallocate reason page for each prisoner POST handler
+router.post("/:prisonerIds/reason/:prisonerId", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let reason = req.session.data["deallocation-reason"];
+
+  // set the reason in the deallocation session data for each prisoner
+  req.session.data["deallocation"][prisonerId]["reason"] = reason;
+
+  // redirect to the date entry page for the next prisoner
+  let selectedPrisoners = req.params.prisonerIds.split(",");
+  let prisonerIndex = selectedPrisoners.indexOf(prisonerId);
+  if (prisonerIndex < selectedPrisoners.length - 1) {
+    res.redirect(selectedPrisoners[prisonerIndex + 1]);
+  } else {
+    // if there are no more prisoners, redirect to the confirmation page
+    res.redirect("../check-deallocation");
+  }
 });
 
 // deallocate reason page
@@ -108,17 +260,20 @@ router.get("/:prisonerIds/reason", function (req, res) {
   let prisonerData = prisoners.filter((prisoner) =>
     selectedPrisoners.includes(prisoner.id.toString())
   );
-  
+
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
   );
 
+  let multiple = false;
+
   // render the deallocate reason page
   res.render(req.protoUrl + "/reason", {
     activity,
+    multiple,
     prisonerData,
-    });
+  });
 });
 
 // deallocate reason page POST handler
@@ -138,7 +293,7 @@ router.post("/:prisonerIds/reason", function (req, res) {
 router.get("/:prisonerIds/check-same-reason", function (req, res) {
   let selectedPrisoners = req.params.prisonerIds.split(",");
 
-  if(selectedPrisoners.length === 1) {
+  if (selectedPrisoners.length === 1) {
     res.redirect("reason");
   }
 });
@@ -157,12 +312,12 @@ router.get("/:prisonerIds/check-deallocation", function (req, res) {
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
   );
-    
+
   // render the deallocate check page
   res.render(req.protoUrl + "/check-deallocation", {
     activity,
     prisonerData,
-    });
+  });
 });
 
 // deallocate check page POST handler
@@ -199,7 +354,7 @@ router.get("/:prisonerIds/deallocation-confirmation", function (req, res) {
   let prisonerData = prisoners.filter((prisoner) =>
     selectedPrisoners.includes(prisoner.id.toString())
   );
-  
+
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
@@ -209,7 +364,7 @@ router.get("/:prisonerIds/deallocation-confirmation", function (req, res) {
   res.render(req.protoUrl + "/confirmation", {
     activity,
     prisonerData,
-    });
+  });
 });
 
 // activity deallocate page
@@ -231,12 +386,12 @@ router.get("/:activityId/deallocate/:prisonerId", function (req, res) {
     activity,
     currentPage,
     prisoner,
-    });
+  });
 });
 
 // post handler for the deallocate page
 router.post("/:activityId/deallocate/:prisonerId", function (req, res) {
-  if(req.session.data['confirm-deallocate'] === "yes") {
+  if (req.session.data["confirm-deallocate"] === "yes") {
     // get the prisoner id from the url
     let prisonerId = req.params.prisonerId;
     // remove the activity id from the prisoner's activity array
@@ -253,7 +408,7 @@ router.post("/:activityId/deallocate/:prisonerId", function (req, res) {
       display: true,
       type: "deallocate",
       prisoner: prisonerId,
-    }
+    };
   }
 
   res.redirect("../../" + req.params.activityId + "/currently-allocated");
@@ -289,7 +444,7 @@ function addAllocationsCountToActivities(activities, req, applications) {
     // add the count of vacancies to the activity object
     // we work this out by subtracting the number of prisoners allocated to the activity from the activity capacity
     activity.vacancies = activity.capacity - prisonerCount;
-    
+
     activity.applicationCount = activityApplications.length;
   });
 }
