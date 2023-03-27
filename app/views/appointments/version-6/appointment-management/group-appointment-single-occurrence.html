@@ -14,7 +14,7 @@ Appointments prototype
           <div class="govuk-grid-column-two-thirds-from-desktop">
             
             <div class="back">
-              <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+              <a href="group-appointment-multiple-occurrences"  class="govuk-back-link">Back</a>
               </div>
               {% if data['which-occurrence'] === 'This occurrence' %}
 
@@ -35,7 +35,7 @@ Appointments prototype
               {% endif %}
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">View and edit appointment occurrence</span>
-              Medical - Other appointment - {{ data['date-of-appointment-day'] or '13'}} {{ data['date-of-appointment-month']  or 'Apr'}}  {{ data['date-of-appointment-year'] or '2023'}}
+              Medical - Other appointment - 20 Apr 2023
              </h1>
             <h2 class="govuk-heading-m">Appointment occurrence details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
@@ -55,7 +55,7 @@ Appointments prototype
                   Location
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{data.locationChoicesingle or 'HB1 Doctors'}}
+                  {{data.locationChoicesingle or 'HB1 Classroom 1'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="change-answers-group-appointments/location">
@@ -68,7 +68,7 @@ Appointments prototype
                   Date
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['date-of-appointment-day'] or '13'}} {{ data['date-of-appointment-month']  or 'Apr'}}  {{ data['date-of-appointment-year'] or '2023'}}
+                  20 Apr 2023
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="change-answers-group-appointments/date-of-appointment">
@@ -281,7 +281,7 @@ Appointments prototype
                 </dd>
               </div>
               
-              <div class="govuk-summary-list__row">
+              <!--<div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Prisoner 
                 </dt>
@@ -293,7 +293,7 @@ Appointments prototype
                     View and edit<span class="govuk-visually-hidden"> Sykes, Eric</span>
                   </a>
                 </dd>
-              </div>
+              </div>-->
               </dl>
             <form  method="post" novalidate>
               <div class="govuk-button-group">

@@ -113,7 +113,7 @@ Appointments prototype
                   Location
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  HB1 Doctors
+                  HB1 Classroom 1
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="change-answers-group-alt/location">
@@ -165,7 +165,7 @@ Appointments prototype
                   Prisoners
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  10
+                  9
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="change-answers-group-alt/person-add-another">
@@ -194,7 +194,7 @@ Appointments prototype
                   </thead>
                   <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">7</td>
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">6</td>
                       <td class="govuk-table__cell">13 Apr 2023</td>
                       <td class="govuk-table__cell">
                        
@@ -202,7 +202,7 @@ Appointments prototype
                       <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
                     </tr>
                     <tr class="govuk-table__row">
-                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">8</td>
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">7</td>
                       <td class="govuk-table__cell">20 Apr 2023</td>
                       <td class="govuk-table__cell">
                         {% if data['which-occurrence-alt'] === 'This and the following occurrences' or data['which-occurrence-alt'] === 'This occurrence' %}
@@ -223,7 +223,7 @@ Appointments prototype
                           {% endif %}
                           {% if data['person-1-alt'] %}
                           <li>
-                            <b>Prisoners:</b>  11
+                            <b>Prisoners:</b>  10
                           </li>
                           {% endif %}
                         </ul>
@@ -232,13 +232,13 @@ Appointments prototype
                       <td class="govuk-table__cell"><a href="group-appointment-single-occurrence-alt" class="govuk-link">View and edit</a></td>
                     </tr>
                     <tr class="govuk-table__row">
-                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">9</td>
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">8</td>
                       <td class="govuk-table__cell">27 Apr 2023</td>
                       <td class="govuk-table__cell"><span class="govuk-tag govuk-tag--red">Cancelled</span></td>
                       <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
                     </tr>
                     <tr class="govuk-table__row">
-                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">10</td>
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">9</td>
                       <td class="govuk-table__cell">4
                          May 2023</td>
                       <td class="govuk-table__cell">
@@ -256,7 +256,7 @@ Appointments prototype
                           {% endif %}
                           {% if data['person-1-alt']%}
                           <li>
-                            <b>Prisoners:</b>  11
+                            <b>Prisoners:</b>  10
                           </li>
                           {% endif %}
                           
@@ -265,16 +265,34 @@ Appointments prototype
                       </td>
                       <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
                     </tr>
-                    <!--<tr class="govuk-table__row">
+                    <tr class="govuk-table__row">
                       <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">10</td>
-                      <td class="govuk-table__cell">27 Apr 2023</td>
+                      <td class="govuk-table__cell">11  May 2023</td>
                       <td class="govuk-table__cell">
-                        {% if data['which-occurrence'] === 'This and the following occurrences' %}
+                        {% if data['start-hours-alt'] or data['person-1-alt']  %}
                         <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                        <ul class="govuk-list govuk-list--bullet">
+                         
+                          {% if data['start-hours-alt']%}
+                          <li>
+                            <b>Start time:</b>  {{ data['start-hours-alt'] }}:{{ data['start-minutes-alt']}}
+                          </li>
+                          <li>
+                            <b>End time:</b>  {{ data['end-hours-alt'] }}:{{ data['end-minutes-alt']}}
+                          </li>
+                          {% endif %}
+                          {% if data['person-1-alt']%}
+                          <li>
+                            <b>Prisoners:</b>  10
+                          </li>
+                          {% endif %}
+                          
+                        </ul>
                         {% endif %}
                       </td>
                       <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
-                    </tr>-->
+                    </tr>
+                   
                   </tbody>
                 </table>
               <div class="govuk-button-group">
@@ -288,7 +306,7 @@ Appointments prototype
                 }) }}
             </div>
              <p class="govuk-body">
-              <a href="appointment-view#Bulk" class="govuk-link">Back to list of appointments</a>
+              <a href="#" class="govuk-link">Back to list of appointments</a>
              </p>
             </form>
           </div>
