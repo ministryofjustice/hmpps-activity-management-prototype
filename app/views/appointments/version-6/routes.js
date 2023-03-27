@@ -141,8 +141,29 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 		res.redirect(`../single-appointment-no-recurrence-cl`);
 	}
   });
+
+  router.post(`/appointment-management/cancel-group-alt/cancel-question`, function (req, res) {
+	const appRepeat = req.session.data['appointment-cancel'];
+	if (appRepeat === 'Yes') {
+		res.redirect(`cancel-occurence-question`);
+	} else {
+		res.redirect(`../group-appointment-multiple-occurrences`);
+	}
+  });
 	  
   router.post(`/appointment-management/change-answers-multiple/multi-occurrence-question`, function (req, res) {
+	const appRepeat = req.session.data['which-occurrence'];
+	if (appRepeat === 'This occurrence') {
+		res.redirect(`../single-appointment-single-occurrence`);
+	} else if (appRepeat === 'This and the following occurrences') {
+		res.redirect(`../single-appointment-multiple-occurrences`);
+	}
+	else if (appRepeat === 'All occurrences') {
+		res.redirect(`../single-appointment-multiple-occurrences`);
+	}
+  });
+
+  router.post(`/appointment-management/change-answers-group-alt/multi-occurrence-question-alt`, function (req, res) {
 	const appRepeat = req.session.data['which-occurrence'];
 	if (appRepeat === 'This occurrence') {
 		res.redirect(`../single-appointment-single-occurrence`);
@@ -194,6 +215,16 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
 	else if (appRepeat === 'All occurrences') {
 		res.redirect(`../single-appointment-multiple-occurrences`);
+	}
+  });
+
+
+  router.post(`/appointment-management/change-answers-group-alt/add-more-people`, function (req, res) {
+	const peoleRepeat = req.session.data['add-another-person-question'];
+	if (peoleRepeat === 'No') {
+		res.redirect(`non-associations`);
+	} else {
+		res.redirect(`upload-or-per-person`);
 	}
   });
 

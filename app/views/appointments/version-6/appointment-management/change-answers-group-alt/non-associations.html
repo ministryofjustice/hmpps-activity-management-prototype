@@ -1,0 +1,89 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<form method="post" >
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      <span class="govuk-caption-l">Group appointment</span>
+      Check for non-associations
+    </h1>
+    <p class="govuk-body">
+      You can select and remove prisoners with non-associations if you need to.
+    </p>
+<div class="govuk-form-group">
+
+<table class="govuk-table" data-module="moj-sortable-table" style="margin:30px 0 0 10px;">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" style="width:30%;"  aria-sort="ascending" >Prisoner name and number</th>
+      <th scope="col" class="govuk-table__header" style="width:23%;" aria-sort="none">Non-associations</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    {% if data.personMatthew=='Matthew' and data.rem-prisoner=="Yes" %}
+
+    {% else %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="person" name="personMatthew" type="checkbox" value="Matthew">
+            <label class="govuk-label govuk-checkboxes__label" for="waste">
+              <a href="#" class="govuk-link"><b>Bod</b>, Manual</a><br>{{ data['person-1-alt']}} 
+            </label>
+          </div>
+        </div>
+       </td>
+      <td class="govuk-table__cell" >
+        <strong class="govuk-tag govuk-tag--red ">
+          <b>Doyle</b>, Matthew
+        </strong>
+      </td>
+    </tr>
+    {% endif %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" data-sort-value="Maths level 1">
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="person" name="person" type="checkbox" value="Neil">
+          <label class="govuk-label govuk-checkboxes__label" for="waste">
+            <a href="#" class="govuk-link"><b>Doyle</b>, Matthew</a><br>E4911C
+          </label>
+        </div>
+      </div>
+      </td>
+      <td class="govuk-table__cell" >
+        <strong class="govuk-tag govuk-tag--red ">
+          <b>Bod</b>, Manuel
+        </strong>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+{{ govukButton({
+  text: "Remove selected prisoners",
+  classes: "govuk-button--warning"
+}) }}
+<br><br>
+</form>
+{{ govukButton({
+  text: "Continue",
+  href: "clashes"
+}) }}
+
+
+
+  
+
+</div>
+{% endblock %}
