@@ -13,9 +13,9 @@ Activities Management prototype
     <div class="govuk-grid-column-two-thirds">
         {% set titleText %}
         {% if prisonerData | length == 1 %}
-        You've taken Todd Andrat, AB7867J off Addiction Support Group
+        You've scheduled {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}}, {{prisonerData[0].id}} to be taken off {{activity.name}}
         {% else %}
-        You've taken {{prisonerData | length}} people off {{activity.name}}
+        You've scheduled {{prisonerData | length}} people to be taken off {{activity.name}}
         {% endif %}
         {% endset %}
 

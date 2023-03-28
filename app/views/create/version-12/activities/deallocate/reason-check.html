@@ -1,123 +1,65 @@
 {% extends "layout_hmpps.html" %}
 {% block pageTitle %}
-Activities Management prototype
+    Activities Management prototype
 {% endblock %}
-
-{% block primaryNavigation %} {% endblock %}
-
+{% block primaryNavigation %}{% endblock %}
 {% block beforeContent %}
-{{govukBackLink({
+    {{ govukBackLink({
 text: "Back",
 "href": "javascript: window.history.go(-1)"
-})}}
+}) }}
 {% endblock %}
-
 {% block content %}
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <form method="post">
-            <!-- <h1 class="govuk-heading-xl">
-                Reason for taking people off {{activity['name']}}
-            </h1> -->
-
-            {% if prisonerData | length > 1 %}
-            <h2 class="govuk-heading-m">
-                You've selected {{prisonerData | length}} people
-            </h2>
-
-            <div class="govuk-summary-list govuk-!-margin-bottom-8">
-                {% for prisoner in prisonerData %}
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        <a href="#">
-                            {{prisoner.name.surname}}, {{prisoner.name.firstname}}
-                        </a>
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        {{prisoner.id}}
-                    </dd>
-                    <dd class="govuk-summary-list__value">
-                        {{prisoner.location.cell}}
-                    </dd>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="post">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                            <h1 class="govuk-fieldset__heading">
+                                Are you taking these {{ prisonerData | length }} people off
+                                {{ activity['name'] }} for the same reason?
+                            </h1>
+                        </legend>
+                        <div class="govuk-summary-list govuk-!-margin-bottom-">
+                            {% for prisoner in prisonerData %}
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        <a href="#">
+                                            {{ prisoner.name.surname }}, {{ prisoner.name.firstname }}
+                                        </a>
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">{{ prisoner.id }}</dd>
+                                    <dd class="govuk-summary-list__value">{{ prisoner.location.cell }}</dd>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input
+                                    class="govuk-radios__input"
+                                    id="deallocate-same-reason"
+                                    name="deallocate-same-reason"
+                                    type="radio"
+                                    value="yes"
+                                    checked=""/>
+                                <label class="govuk-label govuk-radios__label" for="deallocate-same-reason">
+                                    Yes
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="deallocate-same-reason-2" name="deallocate-same-reason" type="radio" value="no"/>
+                                <label class="govuk-label govuk-radios__label" for="deallocate-same-reason-2">
+                                    No - it's for different reasons
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
-                {% endfor %}
-            </div>
-
-            {{govukRadios({
-            idPrefix: "deallocate-same-reason",
-            name: "deallocate-same-reason",
-            fieldset: {
-            legend: {
-            text: "Are you taking them off " + activity['name'] + "
-            for the same reason?",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--l"
-            }
-            },
-            items: [
-            {
-            value: "yes",
-            html: "Yes",
-            checked: true if data['deallocate-same-reason'] == "yes"
-            },
-            {
-            value: "no",
-            text: "No - it's for different reasons",
-            checked: true if data['deallocate-same-reason'] == "no"
-            }
-            ]
-            })}}
-
-            <!-- {{ govukInsetText({
-            text: "Selected prisoners will be expected to attend any
-            sessions scheduled to take place between now and the date they are removed from the activity."
-            }) }} -->
-
-
-            {% else %}
-
-
-            {{govukRadios({
-            idPrefix: "deallocation-date",
-            name: "deallocation-date",
-            fieldset: {
-            legend: {
-            text: "When should " + prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " be taken off
-            " +
-            activity['name'] + "?",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--xl"
-            }
-            },
-            items: [
-            {
-            value: "asap",
-            html: "As soon as possible &ndash; " + "_"|today|dayAfter|convertShortDateToVeryLongDate,
-            hint: {
-            text: "Details about why this is the earliest possible date for removal."
-            }
-            },
-            {
-            value: "specific-date",
-            text: "On a specific date",
-            conditional: {
-            html: dateHtml
-            }
-            }
-            ]
-            })}}
-
-            <!-- {{ govukInsetText({
-            text: prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " will be expected to attend any
-            sessions scheduled to take place between now and the date they are removed from the activity."
-            }) }} -->
-            {% endif %}
-
-            {{ govukButton({
+                {{ govukButton({
             text: "Continue"
             }) }}
-        </form>
+            </form>
+        </div>
     </div>
-</div>
-
 {% endblock %}

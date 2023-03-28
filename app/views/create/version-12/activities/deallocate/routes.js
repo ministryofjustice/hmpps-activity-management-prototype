@@ -10,6 +10,8 @@ router.get("/:prisonerIds", function (req, res) {
 
   // if there is no deallocation session data, create it
   if (!req.session.data["deallocation"]) {
+    delete req.session.data["deallocate-same-reason"]
+    delete req.session.data["deallocate-same-date"]
     req.session.data["deallocation"] = {};
   }
 
@@ -353,11 +355,18 @@ router.post("/:prisonerIds/check-deallocation", function (req, res) {
     (activity) => activity.id.toString() === activityId.toString()
   );
 
-  // remove the activity from the prisoner's activity list
+  // add the deallocation data to the prisoner data
+  // date, reason, activity
   prisonerData.forEach((prisoner) => {
-    prisoner.activity = prisoner.activity.filter(
-      (activity) => activity.toString() !== activityId.toString()
-    );
+    let deallocation = req.session.data["deallocation"][prisoner.id];
+
+    // if the prisoner already has a deallocations array, add to it
+    if (prisoner.deallocation) {
+      prisoner.deallocations.push(deallocation);
+    } else {
+      // otherwise create a new deallocations array with the deallocation data
+      prisoner.deallocations = [deallocation];
+    }
   });
 
   res.redirect("deallocation-confirmation");
