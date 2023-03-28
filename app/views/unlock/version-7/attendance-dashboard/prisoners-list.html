@@ -17,6 +17,7 @@ text: "Back to attendance daily summary",
         {{ date|today|convertShortDateToVeryLongDate }}
     </span>
 </h1>
+
 <div class="app-search govuk-!-margin-bottom-6">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -71,88 +72,71 @@ text: "Back to attendance daily summary",
                                     </h2>
                                 </legend>
                             </fieldset>
-                            {% for residentialLocation in residentialLocations %}
+                            {% for location in locations | sort(false,false) %}
                             <div class="govuk-checkboxes__item">
-                                <input class="govuk-checkboxes__input" id="residentialLocation-{{loop.index}}"
-                                    name="residentialLocation" type="checkbox" value="{{residentialLocation}}" checked>
-                                <label class="govuk-label govuk-checkboxes__label" for="residentialLocation-{{loop.index}}">
-                                    Landing {{residentialLocation}}
+                                <input class="govuk-checkboxes__input" id="location-{{loop.index}}" name="location"
+                                    type="checkbox" value="{{location}}" checked>
+                                <label class="govuk-label govuk-checkboxes__label" for="location-{{loop.index}}">
+                                    Landing {{location}}
                                 </label>
                             </div>
                             {% endfor %}
                         </div>
                     </div>
                     <p class="govuk-!-margin-bottom-7">
-                        <a class="govuk-link" href="#" data-target="residentialLocation" data-select-all="true">
+                        <a class="govuk-link" href="#" data-target="location" data-select-all="true">
                             Select all
                         </a>
                     </p>
-            
-                    {{ govukCheckboxes({
-                        formGroup: {
-                            classes: "govuk-!-margin-bottom-1"
-                        },
-                    fieldset: {
-                    legend: {
-                    text: "Category",
-                    classes: "govuk-label--m"
-                    }
-                    },
-                    classes: "govuk-checkboxes--small",
-                    idPrefix: 'attendance',
-                    name: 'filters[attendance]',
-                    items: [
-                    {
-                    text: 'Education',
-                    id: 'education',
-                    value: 'Education',
-                    checked: true
-                    },
-                    {
-                    text: 'Industries',
-                    id: 'industries',
-                    value: 'Industries',
-                    checked: true
-                    },
-                    {
-                    text: 'Prison jobs',
-                    id: 'prison',
-                    value: 'Prison jobs',
-                    checked: true
-                    },
-                    {
-                    text: 'Gym, sport and fitness',
-                    id: 'gym',
-                    value: 'Gym, sport and fitness',
-                    checked: true
-                    },
-                    {
-                    text: 'Induction',
-                    id: 'induction',
-                    value: 'Induction',
-                    checked: true
-                    },
-                    {
-                    text: 'Intervention programmes',
-                    id: 'intervention',
-                    value: 'Intervention programmes',
-                    checked: true
-                    },
-                    {
-                    text: 'Faith',
-                    id: 'faith',
-                    value: 'Faith',
-                    checked: true
-                    },
-                    {
-                    text: 'Other',
-                    id: 'other',
-                    value: 'Other',
-                    checked: true
-                    }]
-                    }) }}
+
+                    <div class="govuk-form-group govuk-!-margin-bottom-1">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-label--m">
+                                Category
+                            </legend>
+                            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                                {% for category in categoriesList | sort(false,false) %}
+                                {% set category = category | getActivityCategoryName %}
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="{{category|lower}}" name="filters[category]"
+                                        type="checkbox" value="{{category}}" checked="checked">
+                                    <label class="govuk-label govuk-checkboxes__label" for="{{category|lower}}">
+                                        {{category}}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </fieldset>
+                    </div>
                     <p class="govuk-!-margin-bottom-7">
-                        <a class="govuk-link" href="#" data-target="filters[attendance]" data-select-all="true">
+                        <a class="govuk-link" href="#" data-target="filters[category]" data-select-all="true">
+                            Select all
+                        </a>
+                    </p>
+
+                    <div class="govuk-form-group govuk-!-margin-bottom-1">
+                        <div class="govuk-checkboxes govuk-checkboxes--small">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h2 class="govuk-fieldset__heading">
+                                        Activity
+                                    </h2>
+                                </legend>
+                            </fieldset>
+                            {% for activity in activitiesList | sort(false,false) %}
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="activity-{{loop.index}}" name="activity"
+                                    type="checkbox" value="{{activity}}" checked>
+                                <label class="govuk-label govuk-checkboxes__label" for="activity-{{loop.index}}">
+                                    {% set activity = activity|getActivityDetails %}
+                                    {{activity.name}}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p class="govuk-!-margin-bottom-7">
+                        <a class="govuk-link" href="#" data-target="activity" data-select-all="true">
                             Select all
                         </a>
                     </p>
@@ -162,19 +146,7 @@ text: "Back to attendance daily summary",
     </div>
     <div class="moj-filter-layout__content">
         <div class="moj-action-bar">
-            <div class="moj-action-bar__filter"></div>
-            <div class="moj-button-menu">
-                <div class="moj-button-menu__wrapper">
-                    <button class="govuk-button moj-button-menu__item govuk-button--secondary "
-                        data-module="govuk-button">
-                        Action 1
-                    </button>
-                    <button class="govuk-button moj-button-menu__item govuk-button--secondary "
-                        data-module="govuk-button">
-                        Action 2
-                    </button>
-                </div>
-            </div>
+            <div class="moj-filter-button"></div>
         </div>
         <div class="moj-scrollable-pane">
             <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
@@ -278,7 +250,8 @@ text: "Back to attendance daily summary",
                             </ul>
                         </td>
                         <td class="govuk-table__cell">
-                            <a href="../../../activities/{{date}}/{{period}}/{{activity.id}}/{{prisoner.prisonerId}}" class="govuk-link--no-visited-state">View or edit</a>
+                            <a href="../../../activities/{{date}}/{{period}}/{{activity.id}}/{{prisoner.prisonerId}}"
+                                class="govuk-link--no-visited-state">View or edit</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -295,7 +268,7 @@ text: "Back to attendance daily summary",
             bigModeMediaQuery: "(min-width: 48.063em)",
             startHidden: true,
             toggleButton: {
-                container: $(".moj-action-bar__filter"),
+                container: $(".moj-filter-button"),
                 showText: "Show filter",
                 hideText: "Hide filter",
                 classes: "govuk-button--secondary"

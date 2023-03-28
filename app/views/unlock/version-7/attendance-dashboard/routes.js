@@ -320,11 +320,53 @@ router.get("/:date/:period/absences", (req, res) => {
     (attendanceStatus = [])
   );
 
+  // get unique prisoner locations from the attendanceList
+  // for each prisoner, get their cell location and if it is not already in the locations array, add it
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let locations = [];
+  attendanceList.forEach((prisoner) => {
+    let prisonerData = prisoners.find((p) => p.id === prisoner.prisonerId);
+    if (
+      !locations.includes(prisonerData.location.houseblock) &&
+      prisonerData.location.houseblock !== undefined
+    ) {
+      locations.push(prisonerData.location.houseblock);
+    }
+  });
+
+  // get unique prisoner activities from the attendanceList
+  // for each prisoner, get their activity and if it is not already in the activities array, add it
+  let activitiesList = [];
+  attendanceList.forEach((prisoner) => {
+    if (
+      !activitiesList.includes(prisoner.activityId) &&
+      prisoner.activityId !== undefined
+    ) {
+      activitiesList.push(prisoner.activityId);
+    }
+  });
+
+  // get unique activity categories from the activitiesList
+  // for each activity, get its category from the activities data and if it is not already in the categories array, add it
+  let categoriesList = [];
+  activitiesList.forEach((activityId) => {
+    let activityData = activities.find((a) => a.id === activityId);
+    if (
+      !categoriesList.includes(activityData.category) &&
+      activityData.category !== undefined
+    ) {
+      categoriesList.push(activityData.category);
+    }
+  });
+
   res.render(req.protoUrl + "/prisoners-list", {
     date,
     period,
     pageTitle: "All absences",
     attendanceList,
+    locations,
+    activitiesList,
+    categoriesList,
   });
 });
 
