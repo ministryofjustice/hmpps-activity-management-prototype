@@ -4,7 +4,22 @@ const { DateTime } = require("luxon");
 
 router.get("/", function (req, res) {
   let date = new Date().toISOString().slice(0, 10);
-  res.redirect("attendance-dashboard/" + date + "/daily");
+  res.redirect("attendance-dashboard/select-date");
+});
+
+// select date page
+router.get("/select-date", function (req, res) {
+  let dateIn30Days = DateTime.now().plus({ days: 30 }).toISODate();
+
+  res.render("unlock/version-7/attendance-dashboard/select-date", {
+    dateIn30Days,
+  });
+});
+
+// select date page - post
+router.post("/select-date", function (req, res) {
+  let date = req.session.data["date"];
+  res.redirect(`${date}/daily`);
 });
 
 // generate data success page
@@ -237,7 +252,8 @@ router.get("/:date/:period/attendances", (req, res) => {
     attendanceData,
     date,
     period,
-    (attendanceStatus = "attended")
+    (attended = "attended"),
+    (attendanceStatus = [])
   );
 
   res.render(req.protoUrl + "/prisoners-list", {
@@ -248,11 +264,11 @@ router.get("/:date/:period/attendances", (req, res) => {
   });
 });
 
-// PAGE: Sick list
-// DESCRIPTION: This page shows a list of prisoners who have been marked as sick on the selected date and period
-router.get("/:date/:period/sick", (req, res) => {
-  const date = req.params.date;
-  const period = req.params.period;
+// create dynamic routes for each unique attendanceStatus in the attendance data
+router.all("/:date/:period/absences/:attendanceStatus", (req, res) => {
+  let date = req.params.date;
+  let period = req.params.period;
+  let attendanceStatus = req.params.attendanceStatus;
 
   // get a list of prisoners who have attended any activity on the selected date and period
   let attendanceData = req.session.data["attendance"];
@@ -263,18 +279,24 @@ router.get("/:date/:period/sick", (req, res) => {
     attendanceData,
     date,
     period,
-    (attendanceStatus = "not-attended")
+    (attended = "not-attended"),
+    (attendanceStatus = [attendanceStatus])
   );
 
-  // filter the attendanceList to only include prisoners who have been marked as sick
-  attendanceList = attendanceList.filter((prisoner) => {
-    return prisoner.attendanceRecord.attendanceStatus === "sick";
-  });
-
+  // get the title for the page using the attendanceStatus
+  // replace "-"" with a space
+  // prepend "Absences: " to the title
+  let pageTitle = attendanceStatus
+    .join(" ")
+    .replace(/-/g, " ")
+    .replace(/^/, "Absences: ");
+    
+  // render the page dynamically, passing in the attendanceStatus as a parameter
   res.render(req.protoUrl + "/prisoners-list", {
     date,
-    pageTitle: "All sick",
+    pageTitle,
     period,
+    attendanceStatus,
     attendanceList,
   });
 });
@@ -294,8 +316,41 @@ router.get("/:date/:period/absences", (req, res) => {
     attendanceData,
     date,
     period,
-    (attendanceStatus = "not-attended")
+    (attended = "not-attended"),
+    (attendanceStatus = [])
   );
+
+  res.render(req.protoUrl + "/prisoners-list", {
+    date,
+    period,
+    pageTitle: "All absences",
+    attendanceList,
+  });
+});
+
+// PAGE: Sick list
+// DESCRIPTION: This page shows a list of prisoners who have been marked as sick on the selected date and period
+router.get("/:date/:period/sick", (req, res) => {
+  const date = req.params.date;
+  const period = req.params.period;
+
+  // get a list of prisoners who have attended any activity on the selected date and period
+  let attendanceData = req.session.data["attendance"];
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+
+  let attendanceList = getPrisonerList(
+    activities,
+    attendanceData,
+    date,
+    period,
+    (attended = "not-attended"),
+    (attendanceStatus = [])
+  );
+
+  // filter the attendanceList to only include prisoners who have been marked as sick
+  attendanceList = attendanceList.filter((prisoner) => {
+    return prisoner.attendanceRecord.attendanceStatus === "sick";
+  });
 
   res.render(req.protoUrl + "/prisoners-list", {
     date,
@@ -457,8 +512,27 @@ const createHistoricAttendanceData = (
       periods.forEach((period) => {
         // for each prisoner, create a random attendance record for each activity
         prisoners.forEach((prisoner) => {
-          // get the current time in the format "20:46:04"
-          let time = new Date().toTimeString().slice(0, 8);
+          // generate random times for the attendance record
+          // if the period is AM, the time should be between 8am and 12pm
+          // if the period is PM, the time should be between 1pm and 5pm
+          let time;
+          if (period === "AM") {
+            time = randomTime(8, 12);
+          } else {
+            time = randomTime(13, 17);
+          }
+
+          // use luxon to generate a random time
+          function randomTime(start, end) {
+            let hour = Math.floor(Math.random() * (end - start + 1)) + start;
+            let minute = Math.floor(Math.random() * 60);
+            let second = Math.floor(Math.random() * 60);
+            return DateTime.fromObject({
+              hour,
+              minute,
+              second,
+            }).toFormat("HH:mm");
+          }
 
           // create an attendance record object
           let attendanceRecord = {
@@ -830,6 +904,7 @@ function getPrisonerList(
   attendanceData,
   date,
   period,
+  attended,
   attendanceStatus
 ) {
   // create an empty array to store the prisoner list
@@ -864,7 +939,7 @@ function getPrisonerList(
         // if the attendance type is 'attended'
         // add the prisoner, activity id, date, time, period and pay to the prisoner list
         // and also the attendance data for the prisoner
-        if (attendanceRecord.attendance === attendanceStatus) {
+        if (attendanceRecord.attendance === attended) {
           prisonerList.push({
             prisonerId: prisonerId,
             activityId: activityId,
@@ -878,6 +953,21 @@ function getPrisonerList(
       });
     }
   });
+
+  // filter the prisoner list by attendanceStatus
+  // if it is defined and is an array with at least one element
+  if (
+    attendanceStatus &&
+    Array.isArray(attendanceStatus) &&
+    attendanceStatus.length > 0
+  ) {
+    // filter the prisoner list by attendanceStatus
+    prisonerList = prisonerList.filter((prisoner) => {
+      return attendanceStatus.includes(
+        prisoner.attendanceRecord.attendanceStatus
+      );
+    });
+  }
 
   // return the prisoner list
   return prisonerList;

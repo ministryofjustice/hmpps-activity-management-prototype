@@ -197,31 +197,6 @@ href: '#'
 			</div>
 		</div>
 
-		{% set dateHtml %}
-		{{ govukDateInput({
-		id: "passport-issued",
-		namePrefix: "passport-issued",
-		fieldset: {
-		legend: {
-		text: "Date",
-		isPageHeading: false,
-		classes: "govuk-fieldset__legend--s"
-		}
-		},
-		hint: {
-		html: "For example, 27 1 2023.<br>The earliest date you can view is 27 January 2023."
-		}
-		}) }}
-		{{govukButton({
-		text: "Update"
-		})}}
-		{% endset %}
-		{{ govukDetails({
-		summaryText: "Choose a different date",
-		html: dateHtml,
-		classes: "govuk-!-margin-bottom-2"
-		}) }}
-
 		{% if counts.absences['with-pay'].total > 0 or counts.absences['without-pay'].total > 0 %}
 		<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 		<h2 class="govuk-heading-m">
@@ -245,7 +220,7 @@ href: '#'
 						count: count,
 						titleClasses: "govuk-!-font-size-16",
 						countClasses: "govuk-!-font-size-36",
-						linkHref: "attendance-dashboard-3-list"
+						linkHref: period + "/absences/" + type
 						}) }}
 					</div>
 					{% endif %}
@@ -276,7 +251,7 @@ href: '#'
 						count: count,
 						titleClasses: "govuk-!-font-size-16",
 						countClasses: "govuk-!-font-size-36",
-						linkHref: "attendance-dashboard-3-list"
+						linkHref: period + "/absences/" + type
 						}) }}
 					</div>
 					{% endif %}
