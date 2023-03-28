@@ -16,15 +16,24 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
-            {% set dateHtml %}
+            {% if multiple == false and prisonerData | length > 1 %}
+            {% set noun = prisonerData|length + " people" %}
+            {% else %}
+            {% set noun = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname %}            
+            {% endif %}
+
+            {% if multiple == true and selectedPrisoners | length > 1 %}
+            <span class="govuk-caption-xl">Person {{prisonerIndex}} of {{selectedPrisoners | length}} – {{noun}}</span>
+            {% endif %}
+            
             {{govukDateInput({
             idPrefix: "deallocation-date",
             namePrefix: "deallocation-date",
             fieldset: {
             legend: {
-            text: "Date",
-            isPageHeading: false,
-            classes: "govuk-fieldset__legend--s"
+            text: "When do you want " + noun + " to attend their last session of " + activity['name'] + "?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
             }
             },
             hint: {
@@ -33,38 +42,30 @@ text: "Back",
             items: [
             {
             name: "day",
-            classes: "govuk-input--width-2"
+            classes: "govuk-input--width-2",
+            value: data['deallocation'][prisonerData[prisonerIndex]]['date']['day'] or ''
             },
             {
             name: "month",
-            classes: "govuk-input--width-2"
+            classes: "govuk-input--width-2",
+            value: data['deallocation'][prisonerData[prisonerIndex]]['date']['month'] or ''
             },
             {
             name: "year",
-            classes: "govuk-input--width-4"
+            classes: "govuk-input--width-4",
+            value: data['deallocation'][prisonerData[prisonerIndex]]['date']['year'] or ''
             }
             ]
-            })}}
-            {% endset %}
+            })}}            
 
-            {% if multiple == false and prisonerData | length > 1 %}
-            {% set noun = "the " + prisonerData | length + " selected prisoners" %}
-            {% else %}
-            {% set noun = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname %}            
-            {% endif %}
-
-            {% if multiple == true and selectedPrisoners | length > 1 %}
-            <span class="govuk-caption-l">Prisoner {{prisonerIndex}} of {{selectedPrisoners | length}}</span>
-            {% endif %}
             
-            {{govukRadios({
+            
+            <!-- {{govukRadios({
             idPrefix: "deallocation-date",
             name: "deallocation-date",
             fieldset: {
             legend: {
-            html: "When should " + noun + " be taken off
-            " +
-            activity['name'] + "?",
+            html: "When do you want " + noun + " to attend their last session of " + activity['name'] + "?",
             isPageHeading: false,
             classes: "govuk-fieldset__legend--xl"
             }
@@ -85,7 +86,7 @@ text: "Back",
             }
             }
             ]
-            })}}
+            })}} -->
 
             {% if prisonerData | length == 1 %}
             {% set insetTextText = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " will be expected to attend any sessions scheduled to take place between now and the date they are removed from the activity." %}
@@ -93,9 +94,9 @@ text: "Back",
             {% set insetTextText = "The " + prisonerData | length + " selected prisoners will be expected to attend any sessions scheduled to take place between now and the date they are removed from the activity." %}
             {% endif %}
 
-            {{ govukInsetText({
+            <!-- {{ govukInsetText({
             text: insetTextText
-            }) }}
+            }) }} -->
 
             {{ govukButton({
             text: "Continue"

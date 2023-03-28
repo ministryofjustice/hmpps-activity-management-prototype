@@ -67,24 +67,47 @@ Find an activity to record or edit attendance
                             </div>
                         </td>
                         <td class="govuk-table__cell">
-                            <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
-                                    {{prisoner.name.surname}}</a></b><br>
-                            {{prisoner.id}}<br>
+                            <b>
+                                <a href="#" class="govuk-link--no-visited-state">
+                                    {{prisoner.name.surname}}, {{prisoner.name.firstname}}
+                                </a>
+                            </b>
+                            <br>
+                            {{prisoner.id}}
+                            <br>
                             {{prisoner.location.cell}}
                         </td>
-                        <td class="govuk-table__cell govuk-!-padding-top-4">
+                        <td class="govuk-table__cell">
                             {% if loop.index == 3 %}
                             <ul class="govuk-list">
-                                <li><a href="#" class="govuk-link--no-visited-state">Jordan Johnson-Jones</a></li>
+                                <li><a href="#" class="govuk-link--no-visited-state">Jordan Johnson-Jones</a>
+                                </li>
                             </ul>
+                            <!-- <details class="govuk-details" data-module="govuk-details">
+                                <summary class="govuk-details__summary">
+                                    <span class="govuk-details__summary-text">
+                                        3 non associations
+                                    </span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                    <ul class="govuk-list">
+                                        <li><a href="#" class="govuk-link--no-visited-state">Jordan Johnson-Jones</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </details> -->
                             {% else %}
                             None
                             {% endif %}
                         </td>
-                        <td class="govuk-table__cell govuk-!-padding-top-4">
+                        <td class="govuk-table__cell">
                             {{'2023-03-02'|convertShortDateToMediumDate}}
+                            {% if loop.index == 2 %}
+                            <br>to {{'2023-05-02'|convertShortDateToMediumDate}}
+                            <br><a class="govuk-link--no-visited-state" href="#">Change</a>
+                            {% endif %}
                         </td>
-                        <td class="govuk-table__cell govuk-!-padding-top-4">
+                        <td class="govuk-table__cell">
                             {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
                             <span class="govuk-hint">None</span>
                             {% else %}
@@ -100,7 +123,7 @@ Find an activity to record or edit attendance
                             </ul>
                             {% endif %}
                         </td>
-                        <td class="govuk-table__cell govuk-!-padding-top-4">
+                        <td class="govuk-table__cell">
                             {{prisoner.releaseDate|convertShortDateToMediumDate}}
                         </td>
                     </tr>
@@ -108,10 +131,10 @@ Find an activity to record or edit attendance
                 </tbody>
             </table>
 
-            {{govukButton({
+            <!-- {{govukButton({
             text: "Remove from activity",
             classes: "govuk-button--warning"
-            })}}
+            })}} -->
 
             {% endblock %}
         </main>
@@ -127,7 +150,7 @@ Find an activity to record or edit attendance
     // toggle .app-attendance-sticky-bar--bottom toolbar to display when any table checkboxes are checked
     // ... and hide when no checkboxes are checked
     const toolbar = $('#allocation-toolbar');
-    const checkbox = $('table input[type="checkbox"]');
+    const checkbox = $('table').find('input[type="checkbox"]');
     const selectedCount = $('#app-selected-count');
     const clearButton = $('#clear-selection');
 
@@ -140,11 +163,9 @@ Find an activity to record or edit attendance
 
     function updateToolbar() {
         if (checkbox.is(':checked')) {
-            console.log(toolbar);
             toolbar.addClass('active').attr("aria-disabled", false);
             selectedCount.html(generateCountString(checkbox.filter(':checked').length));
         } else {
-            console.log('unchecked')
             toolbar.removeClass('active').attr("aria-disabled", true);
             selectedCount.html(selectedCount.attr('data-html'));
         }

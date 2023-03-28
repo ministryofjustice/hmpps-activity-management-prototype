@@ -28,7 +28,9 @@ router.get("/:prisonerIds/date-check", function (req, res) {
   // if there is only one selected prisoner, redirect to the deallocate date page
   let selectedPrisoners = req.params.prisonerIds.split(",");
   if (selectedPrisoners.length === 1) {
-    res.redirect("date");
+    // if there is a redirect query string in the URL, redirect to the correct page
+    let redirect = req.query.redirect;
+    res.redirect("date?redirect=" + redirect);
   } else {
     // make an object of prisoner data from each prisoner ID in the selectedPrisoners array
     let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
@@ -56,7 +58,7 @@ router.post("/:prisonerIds/date-check", function (req, res) {
     let selectedPrisoners = req.params.prisonerIds.split(",");
     res.redirect("date" + "/" + selectedPrisoners[0]);
   } else {
-    // if the dates are different, redirect to the ate entry page for the first prisoner
+    // if the dates are different, redirect to the date entry page for the first prisoner
     res.redirect("date");
   }
 });
@@ -109,12 +111,17 @@ router.post("/:prisonerIds/date/:prisonerId", function (req, res) {
 
   req.session.data["deallocation"][prisonerId]["date"] = date;
 
-  // redirect to the date entry page for the next prisoner
-  if (prisonerIndex < prisoners.length - 1) {
-    res.redirect(prisoners[prisonerIndex + 1]);
+  // redirect to the check page if there is a query string in the URL
+  if (req.query.redirect === "check-deallocation") {
+    res.redirect("check-deallocation");
   } else {
-    // if there are no more prisoners, redirect to the reason page
-    res.redirect("../reason-check");
+    // redirect to the date entry page for the next prisoner
+    if (prisonerIndex < prisoners.length - 1) {
+      res.redirect(prisoners[prisonerIndex + 1]);
+    } else {
+      // if there are no more prisoners, redirect to the reason page
+      res.redirect("../reason-check");
+    }
   }
 });
 
@@ -145,49 +152,56 @@ router.get("/:prisonerIds/date", function (req, res) {
 
 // deallocate date page POST handler
 router.post("/:prisonerIds/date", function (req, res) {
-  let date = DateTime.now().toISODate();
+  let date = DateTime.fromObject({
+    year: req.session.data["deallocation-date-year"],
+    month: req.session.data["deallocation-date-month"],
+    day: req.session.data["deallocation-date-day"],
+  }).toISODate();
 
-  // if the radio is set to "specific-date", set the date to the date entered instead of today's date
-  if (req.session.data["deallocation-date"] === "specific-date") {
-    // get separate date parts from the deallocation date and format them as YYYY-MM-DD
-    date = DateTime.fromObject({
-      year: req.session.data["deallocation-date-year"],
-      month: req.session.data["deallocation-date-month"],
-      day: req.session.data["deallocation-date-day"],
-    }).toISODate();
-  }
   // set the date in the deallocation session data for each prisoner
   let selectedPrisoners = req.params.prisonerIds.split(",");
   selectedPrisoners.forEach((prisonerId) => {
     req.session.data["deallocation"][prisonerId]["date"] = date;
   });
 
-  // if there are multiple prisoners, redirect to the reason check page
-  if (selectedPrisoners.length > 1) {
-    res.redirect("reason-check");
+  // redirect to the check page if there is a query string in the URL
+  if (req.query.redirect === "check-deallocation") {
+    res.redirect("check-deallocation");
   } else {
-    res.redirect("reason");
+    // if there are multiple prisoners, redirect to the reason check page
+    if (selectedPrisoners.length > 1) {
+      res.redirect("reason-check");
+    } else {
+      res.redirect("reason");
+    }
   }
 });
 
 // deallocate reason check page
 router.get("/:prisonerIds/reason-check", function (req, res) {
   let selectedPrisoners = req.params.prisonerIds.split(",");
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisonerData = prisoners.filter((prisoner) =>
-    selectedPrisoners.includes(prisoner.id.toString())
-  );
 
-  let activityId = req.activityId;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
-  
-  // render the deallocate reason check page
-  res.render(req.protoUrl + "/reason-check", {
-    activity,
-    prisonerData,
+  if (selectedPrisoners.length === 1) {
+    // if there is a redirect query string in the URL, redirect to the correct page
+    let redirect = req.query.redirect;
+    res.redirect("reason?redirect=" + redirect);
+  } else {
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisonerData = prisoners.filter((prisoner) =>
+      selectedPrisoners.includes(prisoner.id.toString())
+    );
+
+    let activityId = req.activityId;
+    let activity = req.session.data["timetable-complete-1"]["activities"].find(
+      (activity) => activity.id.toString() === activityId.toString()
+    );
+
+    // render the deallocate reason check page
+    res.render(req.protoUrl + "/reason-check", {
+      activity,
+      prisonerData,
     });
+  }
 });
 
 // deallocate reason check page POST handler
@@ -198,7 +212,7 @@ router.post("/:prisonerIds/reason-check", function (req, res) {
   } else {
     // if the user selects "No", redirect to the reason page for each prisoner
     let selectedPrisoners = req.params.prisonerIds.split(",");
-    res.redirect('reason/' + selectedPrisoners[0]);
+    res.redirect("reason/" + selectedPrisoners[0]);
   }
 });
 
@@ -207,8 +221,8 @@ router.get("/:prisonerIds/reason/:prisonerId", function (req, res) {
   let prisonerId = req.params.prisonerId;
   // prisoners timetable data
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisonerData = prisoners.filter((prisoner) =>
-    prisoner.id.toString() === prisonerId.toString()
+  let prisonerData = prisoners.filter(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
   );
 
   let activityId = req.activityId;
@@ -229,7 +243,7 @@ router.get("/:prisonerIds/reason/:prisonerId", function (req, res) {
     prisonerData,
     selectedPrisoners,
     prisonerIndex,
-    });
+  });
 });
 
 // deallocate reason page for each prisoner POST handler
@@ -268,11 +282,15 @@ router.get("/:prisonerIds/reason", function (req, res) {
 
   let multiple = false;
 
+  let selectedReason =
+    req.session.data["deallocation"][selectedPrisoners[0]]["reason"];
+
   // render the deallocate reason page
   res.render(req.protoUrl + "/reason", {
     activity,
     multiple,
     prisonerData,
+    selectedReason,
   });
 });
 

@@ -16,17 +16,21 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
+            <!-- <h1 class="govuk-heading-xl">
+                Reason for taking people off {{activity['name']}}
+            </h1> -->
+
             {% if prisonerData | length > 1 %}
-            <!-- <h1 class="govuk-heading-l">
-                {{prisonerData | length}} prisoners selected for removal
-            </h1>
+            <h2 class="govuk-heading-m">
+                You've selected {{prisonerData | length}} people
+            </h2>
 
             <div class="govuk-summary-list govuk-!-margin-bottom-8">
                 {% for prisoner in prisonerData %}
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                         <a href="#">
-                            {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                            {{prisoner.name.surname}}, {{prisoner.name.firstname}}
                         </a>
                     </dt>
                     <dd class="govuk-summary-list__value">
@@ -37,35 +41,37 @@ text: "Back",
                     </dd>
                 </div>
                 {% endfor %}
-            </div> -->
+            </div>
 
             {{govukRadios({
             idPrefix: "deallocate-same-reason",
             name: "deallocate-same-reason",
             fieldset: {
             legend: {
-            text: "Are you removing these " + prisonerData | length + " prisoners from " + activity['name'] + "
+            text: "Are you taking them off " + activity['name'] + "
             for the same reason?",
             isPageHeading: true,
-            classes: "govuk-fieldset__legend--xl"
+            classes: "govuk-fieldset__legend--l"
             }
             },
             items: [
             {
             value: "yes",
-            html: "Yes"
+            html: "Yes",
+            checked: true if data['deallocate-same-reason'] == "yes"
             },
             {
             value: "no",
-            text: "No - I want to take them off for different reasons"
+            text: "No - it's for different reasons",
+            checked: true if data['deallocate-same-reason'] == "no"
             }
             ]
             })}}
 
-            {{ govukInsetText({
+            <!-- {{ govukInsetText({
             text: "Selected prisoners will be expected to attend any
             sessions scheduled to take place between now and the date they are removed from the activity."
-            }) }}
+            }) }} -->
 
 
             {% else %}
@@ -101,10 +107,10 @@ text: "Back",
             ]
             })}}
 
-            {{ govukInsetText({
+            <!-- {{ govukInsetText({
             text: prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " will be expected to attend any
             sessions scheduled to take place between now and the date they are removed from the activity."
-            }) }}
+            }) }} -->
             {% endif %}
 
             {{ govukButton({

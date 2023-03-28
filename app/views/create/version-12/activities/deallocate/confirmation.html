@@ -12,7 +12,11 @@ Activities Management prototype
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         {% set titleText %}
-        Removal confirmed
+        {% if prisonerData | length == 1 %}
+        You've taken Todd Andrat, AB7867J off Addiction Support Group
+        {% else %}
+        You've taken {{prisonerData | length}} people off {{activity.name}}
+        {% endif %}
         {% endset %}
 
         {% set panelHtml %}
@@ -24,22 +28,36 @@ Activities Management prototype
         {% endset %}
 
         {{ govukPanel({
-        titleText: titleText,
-        html: panelHtml
+        titleText: titleText
         }) }}
+
+        {%- if prisonerData | length > 1 %}
+        <p>
+            {{prisonerData | length}} people will be taken off {{activity.name}}:
+        </p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            {% for prisoner in prisonerData %}
+            <li>
+                {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif -%}
 
         {% set noun = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname %}
         {%- if prisonerData | length > 1 %}
         {% set noun = prisonerData | length + " prisoners" %}
         {% endif -%}
-        <p>
+
+        <!-- <p>
             {{ noun }} will be removed from {{activity.name}}.
         </p>
         <p>
             After they have been removed, they will not be able to attend this activity unless they are re-added.
-        </p>
+        </p> -->
 
-        <a href="/create/version-12/activities" class="govuk-button">Finish and return to activities</a>
+        <a href="/create/version-12/activities/{{activity.id}}" class="govuk-button">Finish and return to {{activity.name}}</a>
     </div>
 </div>
 

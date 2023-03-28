@@ -16,17 +16,21 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
+            <!-- <h1 class="govuk-heading-xl">
+                Date to take people off {{activity['name']}}
+            </h1> -->
+
             {% if prisonerData | length > 1 %}
-            <h1 class="govuk-heading-l">
-                {{prisonerData | length}} prisoners selected for removal
-            </h1>
+            <h2 class="govuk-heading-m">
+                You've selected {{prisonerData | length}} people
+            </h2>
 
             <div class="govuk-summary-list govuk-!-margin-bottom-8">
                 {% for prisoner in prisonerData %}
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                         <a href="#">
-                            {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                            {{prisoner.name.surname}}, {{prisoner.name.firstname}}
                         </a>
                     </dt>
                     <dd class="govuk-summary-list__value">
@@ -44,9 +48,9 @@ text: "Back",
             name: "deallocate-same-date",
             fieldset: {
             legend: {
-            text: "Do you want these " + prisonerData | length + " prisoners to stop attending " + activity['name'] + "
+            text: "Do you want them to stop attending " + activity['name'] + "
             on the same date?",
-            isPageHeading: false,
+            isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
             }
             },
@@ -62,10 +66,10 @@ text: "Back",
             ]
             })}}
 
-            {{ govukInsetText({
+            <!-- {{ govukInsetText({
             text: "Selected prisoners will be expected to attend any
             sessions scheduled to take place between now and the date they are removed from the activity."
-            }) }}
+            }) }} -->
 
 
             {% else %}
