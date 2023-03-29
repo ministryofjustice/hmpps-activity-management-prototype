@@ -6,20 +6,10 @@ Attendance dashboard
 {% block primaryNavigation %}
 {% endblock %}
 {% block beforeContent %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{{ govukBreadcrumbs({
-classes: "govuk-!-display-none-print",
-items: [
-{
-text: "Digital Prison Services",
-href: "../../../../dps-home"
-},
-{
-text: "Manage activities",
-href: "/v10/dps-home-2"
-}
-]
-}) }}
+{{govukBackLink({
+text: "Back to choose a date",
+href: "/unlock/version-7/attendance-dashboard/select-date"
+})}}
 {% endblock %}
 
 {% block content %}
