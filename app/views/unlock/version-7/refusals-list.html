@@ -359,7 +359,6 @@ Activities Management prototype
 										{%- endif -%}
 									</td>
 
-
 									{% for event in prisoner.events %}
 									{% if loop.index > 1 %}
 								</tr>
@@ -382,20 +381,6 @@ Activities Management prototype
 													event.name }}</a>
 												{% endif %}
 											</div>
-											{% if event.cancelled != true %}
-											{% if event.attendance == 'attended' %}
-											<span
-												class="moj-badge moj-badge--green govuk-!-margin-bottom-1 govuk-!-margin-top-1">Attended</span>
-											{% elif event.attendance == 'not-attended' %}
-											<span
-												class="moj-badge moj-badge--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Not
-												attended</span>
-											{% endif %}
-											{% else %}
-											<span
-												class="moj-badge moj-badge--red govuk-!-margin-bottom-1 govuk-!-margin-top-1">Session
-												cancelled</span>
-											{% endif %}
 
 											<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
 												{% if event.type == 'activity' %}
@@ -408,45 +393,41 @@ Activities Management prototype
 												event.location }}</div>
 										</div>
 									</td>
-									<td class="govuk-table__cell" {%- if not prisoner.attendance.attendance
-										%}colspan="2" {% endif -%}>
-										{% set attendance =
-										prisoner.attendance.records[prisoner.attendance.records|length-1].attendance
-										%}
+									<td class="govuk-table__cell" {%- if not prisoner.attendance %}colspan="2"{% endif -%}>
 										<ul class="govuk-list govuk-!-margin-0">
-											{%- if prisoner.attendance.attendance == 'attended' %}
+											{%- if prisoner.attendance[loop.index0].attendance == 'attended' %}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 													class="app-tag app-tag--attended"
 													style="text-transform: none;">Attended</span>
 											</li>
 
-											{%- elif prisoner.attendance.attendance == 'not-attended' %}
-											{%- if prisoner.attendance.sessionCancelled == true %}
+											{%- elif prisoner.attendance[loop.index0].attendance == 'not-attended' %}
+											{%- if prisoner.attendance[loop.index0].sessionCancelled == true %}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 													class="app-tag app-tag--cancelled"
 													style="text-transform: none;">Session
 													cancelled</span></li>
-											{% elif prisoner.attendance.attendanceStatus == 'sick' %}
+											{% elif prisoner.attendance[loop.index0].attendanceStatus == 'sick' %}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 													class="app-tag app-tag--not-attended"
 													style="text-transform: none;">Sick</span>
 											</li>
-											{% elif prisoner.attendance.attendanceStatus == 'rest-day' %}
+											{% elif prisoner.attendance[loop.index0].attendanceStatus == 'rest-day' %}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 													class="app-tag app-tag--not-attended"
 													style="text-transform: none;">Rest
 													day</span></li>
-											{% elif prisoner.attendance.attendanceStatus == 'not-required' %}
+											{% elif prisoner.attendance[loop.index0].attendanceStatus == 'not-required' %}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 													class="app-tag app-tag--not-attended"
 													style="text-transform: none;">Not
 													required</span></li>
-											{% elif prisoner.attendance.attendanceStatus == 'refused' %}
+											{% elif prisoner.attendance[loop.index0].attendanceStatus == 'refused' %}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 													class="app-tag app-tag--not-attended"
 													style="text-transform: none;">Refused to
 													attend</span></li>
-											{% elif prisoner.attendance.attendanceStatus == 'other' %}
+											{% elif prisoner.attendance[loop.index0].attendanceStatus == 'other' %}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 													class="app-tag app-tag--not-attended"
 													style="text-transform: none;">Other</span>
@@ -460,13 +441,13 @@ Activities Management prototype
 											<span class="govuk-hint">Not recorded yet</span>
 											{% endif -%}
 
-											{% if prisoner.attendance.attendance and prisoner.attendance.pay == true
+											{% if prisoner.attendance[loop.index0].attendance and prisoner.attendance[loop.index0].pay == true
 											%}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 													class="app-tag app-tag--pay"
 													style="text-transform: none;">Pay</span>
 											</li>
-											{%- elif prisoner.attendance.attendance and prisoner.attendance.pay ==
+											{%- elif prisoner.attendance[loop.index0].attendance and prisoner.attendance[loop.index0].pay ==
 											false
 											%}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
@@ -475,6 +456,11 @@ Activities Management prototype
 											{% endif %}
 										</ul>
 									</td>
+									{%- if prisoner.attendance %}
+									<td class="govuk-table__cell" >
+										<a href="#">View or change</a>
+									</td>
+									{% endif -%}
 									{% if loop.index > 1 %}
 								</tr>
 								{% endif %}

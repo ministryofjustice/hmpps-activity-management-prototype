@@ -1759,32 +1759,23 @@ router.get(
       attendanceData
     );
 
-    prisonersWithEvents.forEach((prisoner) => {
-      // remove other attendance data
-      if (prisoner.attendance) {
-        let records = prisoner.attendance.records;
-        let record;
-        if (
-          prisoner.attendance.activityId === activityId &&
-          prisoner.attendance.date === date &&
-          prisoner.attendance.period === period
-        ) {
-          record = records.reduce((mostRecentRecord, currentRecord) => {
-            return new Date(
-              currentRecord.timestamp.date + " " + currentRecord.timestamp.time
-            ) >
-              new Date(
-                mostRecentRecord.timestamp.date +
-                  " " +
-                  mostRecentRecord.timestamp.time
-              )
-              ? currentRecord
-              : mostRecentRecord;
-          });
-        } else {
-          record = [];
-        }
-        prisoner.attendance = record;
+    // add attendance data to prisoners from attendanceData
+    activities.forEach((activity) => {
+        // then check if there is attendance data for this activity
+        if (attendanceData && attendanceData[activity.id]) {
+          // then loop through prisoners in prisonersWithEvents
+          prisonersWithEvents.forEach((prisoner) => {
+          // add attendance data for this activity to the prisoner, if it exists
+          if (attendanceData[activity.id][date] && attendanceData[activity.id][date][period] && attendanceData[activity.id][date][period][prisoner.id] && attendanceData[activity.id][date][period][prisoner.id].length) {
+            // check if we've already added attendance data for this prisoner, if not, create an empty array
+            if (!prisoner.attendance) {
+              prisoner.attendance = [];
+            }
+            // get the last record for this prisoner
+            let lastRecord = attendanceData[activity.id][date][period][prisoner.id][attendanceData[activity.id][date][period][prisoner.id].length - 1];
+            prisoner.attendance.push(lastRecord);
+          }
+        });
       }
     });
 
