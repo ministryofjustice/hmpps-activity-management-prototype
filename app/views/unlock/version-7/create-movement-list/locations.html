@@ -33,7 +33,8 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
 
                     <ul class="govuk-list govuk-!-margin-bottom-6 govuk-!-margin-top-4">
                         <li>
-                            <a href="select-movement-date" class="govuk-link--no-visited-state">Change movement list date</a>
+                            <a href="select-movement-date" class="govuk-link--no-visited-state">Change movement list
+                                date</a>
                         </li>
                     </ul>
 
@@ -83,8 +84,6 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
                 data-module="moj-sortable-table">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
-                        <!-- <th class="govuk-table__header govuk-!-padding-right-2 govuk-!-padding-left-1"
-                                        scope="col" id="select-all"></th> -->
                         <th scope="col" class="govuk-table__header" aria-sort="ascending">Location</th>
                         <th scope="col" class="govuk-table__header" aria-sort="ascending">Allocated</th>
                         <th scope="col" class="govuk-table__header" aria-sort="none">Activity</th>
@@ -94,18 +93,6 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
                 <tbody class="govuk-table__body">
                     {% for location in locations | sort(false, true, 'name') %}
                     <tr class="govuk-table__row">
-                        <!-- <td class="govuk-table__cell">
-                                        <div
-                                            class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-right-2 govuk-!-margin-left-1">
-                                            <input type="checkbox" class="govuk-checkboxes__input"
-                                                id="prisoner-{{loop.index}}" name="selected-prisoners"
-                                                value="{{prisoner.id}}">
-                                            <label class="govuk-label govuk-checkboxes__label"
-                                                for="prisoner-{{loop.index}}">
-                                                <span class="govuk-visually-hidden">Select {{location.name}}</span>
-                                            </label>
-                                        </div>
-                                    </td> -->
                         <td class="govuk-table__cell">
                             <h2 class="govuk-heading-m govuk-!-margin-0 govuk-!-padding-0">{{location.name}}</h2>
                         </td>
@@ -130,11 +117,7 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
                     {% endfor %}
                 </tbody>
             </table>
-    </div>
-    </div>
-    </div>
-
-    </main>
+        </main>
     </div>
     {% include './_locations-toolbar.html' %}
 </form>
