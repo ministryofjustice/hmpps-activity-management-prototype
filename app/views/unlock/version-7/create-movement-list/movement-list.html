@@ -55,37 +55,6 @@ text: "Back to all locations",
 		<p>
 			<a href="#" class="govuk-link" data-select-all="true" data-target="houseblock">Select all</a>
 		</p>
-
-		<!-- {{ govukRadios({
-		fieldset: {
-		legend: {
-		text: "Staying or leaving wing",
-		classes: "govuk-label--m"
-		}
-		},
-		hint: {
-		text: "⚠️ CHECK THIS"
-		},
-		idPrefix: 'attendance',
-		classes: "govuk-radios--small",
-		name: 'filters[attendance]',
-		items: [{
-		text: 'All',
-		id: 'all',
-		value: 'all',
-		checked: true
-		},
-		{
-		text: 'Staying on wing',
-		id: 'Staying',
-		value: 'Staying'
-		},
-		{
-		text: 'Leaving wing',
-		id: 'Leaving',
-		value: 'Leaving'
-		}]
-		}) }} -->
 		{% endset %}
 
 		<div class="moj-filter">
@@ -203,6 +172,9 @@ text: "Back to all locations",
 						{% for activity in prisoner.movementData %}
 						<a href="../../../activities/{{date}}/{{period|upper}}/{{activity.id}}"
 							class="govuk-link--no-visited-state">{{activity.name}}</a>
+							{% if activity.appointment == true %}
+							<br><span class="govuk-tag govuk-!-margin-bottom-1 govuk-!-margin-top-1">Appointment</span>
+							{% endif %}
 						<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
 							{{activity.times.startTime}}&thinsp;–&thinsp;{{activity.times.endTime}}</div>
 						{% endfor %}

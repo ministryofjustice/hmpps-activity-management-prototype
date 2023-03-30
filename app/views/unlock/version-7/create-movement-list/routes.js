@@ -939,6 +939,29 @@ router.get("/:date/:period", function (req, res) {
     }
   }
 
+  // add 3 locations to the end of the list for testing appointments e.g. counselling room, therapy room etc.
+  // prisoners should be random
+  for (let i = 0; i < 3; i++) {    
+    let activitiesCount = Math.floor(Math.random() * 3) + 1;
+    let activities = [];
+
+    for (let j = 0; j < activitiesCount; j++) {
+      let appointmentCategory = req.session.data['appointment-categories-1'][Math.floor(Math.random() * req.session.data['appointment-categories-1'].length)];
+
+      activities.push({
+        name: appointmentCategory,
+        id: 9999 + i,
+      });
+    }
+
+    let location = {
+      name: "Appointment room " + (i + 1),
+      activities,
+      prisoners: activitiesCount,
+    };
+    locations.push(location);
+  }
+
   res.render(req.protoUrl + "/locations", {
     locations,
     date,
@@ -1030,6 +1053,27 @@ router.get("/:date/:period/:activities", function (req, res) {
       houseblocks.push(prisoner.location.houseblock);
     }
   });
+
+  // randomly select 3 prisoners from the timetable data
+  // add them to the end of the prisonersForActivities array with some random appointment times
+  let randomPrisoners = [];
+  for (let i = 0; i < 3; i++) {
+    let randomPrisoner =
+      prisoners[Math.floor(Math.random() * prisoners.length)];
+    randomPrisoner.movementData = [
+      {
+        name: "Counselling",
+        times: {
+          startTime: "10:00",
+          endTime: "11:00",
+        },
+        appointment: true,
+        id: 999,
+      },
+    ];
+    randomPrisoners.push(randomPrisoner);
+  }
+  prisonersForActivities = prisonersForActivities.concat(randomPrisoners);
 
   res.render(req.protoUrl + "/movement-list", {
     prisonersForActivities,

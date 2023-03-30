@@ -61,6 +61,7 @@ module.exports = {
   "prison-name": "HMP Leeds",
   "chosen-date": "today",
   "date": "2023-01-02",
+  "appointment-categories-1": require('./appointment-categories-1'),
   "prototype-versions": {
     'create-and-allocate': {
       'latest-version': 'v10',
