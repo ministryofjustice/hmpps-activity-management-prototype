@@ -42,16 +42,16 @@ Activities Management prototype
 					</p>
 
 					<div class="moj-search govuk-!-margin-bottom-6">
-							<div class="govuk-form-group">
-								<label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
-									Search by prisoner name
-								</label>
-								<input class="govuk-input moj-search__input" id="keywords" name="search" type="search"
-									value="{{data['search']}}">
-							</div>
-							<button class="govuk-button moj-search__button" data-module="govuk-button">
-								Search
-							</button>
+						<div class="govuk-form-group">
+							<label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
+								Search by prisoner name
+							</label>
+							<input class="govuk-input moj-search__input" id="keywords" name="search" type="search"
+								value="{{data['search']}}">
+						</div>
+						<button class="govuk-button moj-search__button" data-module="govuk-button">
+							Search
+						</button>
 					</div>
 				</div>
 			</div>
@@ -315,7 +315,7 @@ Activities Management prototype
 							<tbody class="govuk-table__body">
 								{% for prisoner in prisonersWithEvents | sort(false, true, ('location.full')) %}
 								{% set events = [] %}
-								
+
 								{% for event in prisoner.events | sort(false, true, 'times.startTime') %}
 								{% set events = (events.push(event.id), events) %}
 								{% endfor %}
@@ -324,7 +324,9 @@ Activities Management prototype
 									value="{{events}}">
 
 								<tr class="govuk-table__row">
+									{% if not prisoner.attendance %}
 									<td class="govuk-table__cell" rowspan="{{prisoner.events|length}}">
+
 										<div
 											class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-right-2 govuk-!-margin-left-1">
 											<input type="checkbox" class="govuk-checkboxes__input"
@@ -336,8 +338,10 @@ Activities Management prototype
 											</label>
 										</div>
 									</td>
+									{% endif %}
 									<td class="govuk-table__cell" width="180" scope="col"
-										rowspan="{{prisoner.events|length}}">
+										rowspan="{{prisoner.events|length}}" {% if prisoner.attendance %}colspan="2" {%
+										endif %}>
 										<a href="../../../prisoner/{{prisoner.id}}"
 											class="govuk-link--no-visited-state"><b>{{prisoner.name.surname}}</b>,
 											{{prisoner.name.firstname}}</a><br>
@@ -366,34 +370,30 @@ Activities Management prototype
 								<tr class="govuk-table__row">
 									{% endif %}
 									<td class="govuk-table__cell" data-sort-value="{{activityName}}" scope="col">
-										<div {% if not loop.last %}class="govuk-!-margin-bottom-4" {% endif %}>
-											<div>
-												{% if event.type != 'activity' %}
-												<a href="#"
-													class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{
-													event.name }}</a>
-												<br>
-												<span
-													class="govuk-tag govuk-!-margin-bottom-1 govuk-!-margin-top-1">Appointment</span>
-												{% else %}
-												<a href="../../../activities/{{date}}/{{period}}/{{event.id}}"
-													class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{
-													event.name }}</a>
-												{% endif %}
-											</div>
+										{% if event.type != 'activity' %}
+										<a href="#" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{
+											event.name }}</a>
+										<br>
+										<span
+											class="govuk-tag govuk-!-margin-bottom-1 govuk-!-margin-top-1">Appointment</span>
+										{% else %}
+										<a href="../../../activities/{{date}}/{{period}}/{{event.id}}"
+											class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{
+											event.name }}</a>
+										{% endif %}
 
-											<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
-												{% if event.type == 'activity' %}
-												{{event.times.startTime}}&thinsp;–&thinsp;{{event.times.endTime}}
-												{% else %}
-												{{event.time}}
-												{% endif %}
-											</div>
-											<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{
-												event.location }}</div>
+										<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+											{% if event.type == 'activity' %}
+											{{event.times.startTime}}&thinsp;–&thinsp;{{event.times.endTime}}
+											{% else %}
+											{{event.time}}
+											{% endif %}
 										</div>
+										<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{
+											event.location }}</div>
 									</td>
-									<td class="govuk-table__cell" {%- if not prisoner.attendance %}colspan="2"{% endif -%}>
+									<td class="govuk-table__cell" {%- if not prisoner.attendance %}colspan="2" {% endif
+										-%}>
 										<ul class="govuk-list govuk-!-margin-0">
 											{%- if prisoner.attendance[loop.index0].attendance == 'attended' %}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
@@ -417,7 +417,8 @@ Activities Management prototype
 													class="app-tag app-tag--not-attended"
 													style="text-transform: none;">Rest
 													day</span></li>
-											{% elif prisoner.attendance[loop.index0].attendanceStatus == 'not-required' %}
+											{% elif prisoner.attendance[loop.index0].attendanceStatus == 'not-required'
+											%}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 													class="app-tag app-tag--not-attended"
 													style="text-transform: none;">Not
@@ -441,13 +442,15 @@ Activities Management prototype
 											<span class="govuk-hint">Not recorded yet</span>
 											{% endif -%}
 
-											{% if prisoner.attendance[loop.index0].attendance and prisoner.attendance[loop.index0].pay == true
+											{% if prisoner.attendance[loop.index0].attendance and
+											prisoner.attendance[loop.index0].pay == true
 											%}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 													class="app-tag app-tag--pay"
 													style="text-transform: none;">Pay</span>
 											</li>
-											{%- elif prisoner.attendance[loop.index0].attendance and prisoner.attendance[loop.index0].pay ==
+											{%- elif prisoner.attendance[loop.index0].attendance and
+											prisoner.attendance[loop.index0].pay ==
 											false
 											%}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
@@ -457,7 +460,7 @@ Activities Management prototype
 										</ul>
 									</td>
 									{%- if prisoner.attendance %}
-									<td class="govuk-table__cell" >
+									<td class="govuk-table__cell">
 										<a href="#">View or change</a>
 									</td>
 									{% endif -%}
