@@ -21,8 +21,8 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
-                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
-                        Movement locations
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+                        Locations with activities or appointments in this session
                     </h1>
                     <span class="govuk-caption-l">
                         {{period|upper}} session
@@ -31,17 +31,17 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
                         {{data['date']|longDateFormat(data['date'])}}
                     </span>
 
-                    <ul class="govuk-list govuk-!-margin-bottom-6 govuk-!-margin-top-4">
+                    <!-- <ul class="govuk-list govuk-!-margin-bottom-6 govuk-!-margin-top-4">
                         <li>
                             <a href="../select-date" class="govuk-link--no-visited-state">Change movement list
                                 date</a>
                         </li>
-                    </ul>
+                    </ul> -->
 
-                    <div class="govuk-inset-text">
+                    <!-- <div class="govuk-inset-text">
                         You'll only see locations where there are activities running on the date and in the time period
                         you choose.
-                    </div>
+                    </div> -->
 
                     <div class="moj-search govuk-!-margin-bottom-6 govuk-!-margin-top-4">
                         <form action="{{date}}" method="get" novalidate="">
@@ -62,7 +62,7 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
                         <form action="{{data['date']}}" method="get" novalidate="">
                             <div class="govuk-form-group">
                                 <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
-                                    Search
+                                    Search by location, activity or appointment
                                 </label>
                                 <input class="govuk-input moj-search__input " id="keywords" name="search" type="search"
                                     value="{{data['search']}}">
