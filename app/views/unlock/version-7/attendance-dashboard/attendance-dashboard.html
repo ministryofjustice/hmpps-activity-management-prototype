@@ -186,13 +186,13 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 				}) }}
 			</div>
 
-			<!-- <div class="govuk-grid-column-one-quarter">
+			<div class="govuk-grid-column-one-quarter">
 				{{ dataCard({
-				title: "Prisoners suspended",
+				title: "Suspended",
 				count: 11,
 				linkHref: "#"
 				}) }}
-			</div> -->
+			</div>
 		</div>
 
 		{% if counts.absences['with-pay'].total > 0 or counts.absences['without-pay'].total > 0 %}
@@ -213,7 +213,8 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 				count: count,
 				titleClasses: "govuk-!-font-size-16",
 				countClasses: "govuk-!-font-size-36",
-				linkHref: period + "/absences/" + type
+				linkHref: period + "/absences/" + type,
+				linkText: type|capitalize|replace('-',' ') + " (paid)"
 				}) }}
 			</div>
 			{% endif %}
@@ -236,7 +237,8 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 				count: count,
 				titleClasses: "govuk-!-font-size-16",
 				countClasses: "govuk-!-font-size-36",
-				linkHref: period + "/absences/" + type
+				linkHref: period + "/absences/" + type,
+				linkText: type|capitalize|replace('-',' ') + " (unpaid)"
 				}) }}
 			</div>
 			{% endif %}

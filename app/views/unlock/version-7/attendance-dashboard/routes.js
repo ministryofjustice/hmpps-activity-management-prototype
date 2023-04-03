@@ -653,13 +653,13 @@ const createHistoricAttendanceData = (
                 case "sick":
                 case "rest-day":
                 case "other":
+                case "not-required":
                   // set pay to true
                   attendanceRecord.pay = true;
                   break;
 
-                // If the prisoner refused to work or the work is not required, set pay to false
+                // If the prisoner refused to work, set pay to false
                 case "refused":
-                case "not-required":
                   attendanceRecord.pay = false;
                   break;
               }
