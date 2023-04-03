@@ -123,7 +123,7 @@ function updateAttendanceData(
     let reason = details["absence-reason"];
 
     switch (reason) {
-      // If the prisoner is sick, on a rest day, or for some other reason and pay is required, set pay to true, otherwise false
+      // If the prisoner is sick, on a rest day, or for some other reason and pay is required, set pay to the value of the pay-prisoner radio button
       case "sick":
       case "rest-day":
       case "other":
@@ -132,12 +132,12 @@ function updateAttendanceData(
 
       // If the prisoner refused to work or the work is not required, set pay to false
       case "refused":
-      case "not-required":
-        details.pay = true;
+        details.pay = false;
         break;
 
-      // If there's a clash or payment is required, set pay to true
+      // If there's a clash or not required, set pay to true
       case "clash":
+      case "not-required":
         details.pay = true;
         break;
     }
@@ -2096,7 +2096,7 @@ router.use("/attendance-dashboard", (req, res, next) => {
   require("./attendance-dashboard/routes")(req, res, next);
 });
 
-// movement-list journey routes
+// create-movement-list journey routes
 router.use("/create-movement-list", (req, res, next) => {
   let serviceName = req.originalUrl.split("/")[1];
   let version = req.originalUrl.split("/")[2];
@@ -2104,6 +2104,16 @@ router.use("/create-movement-list", (req, res, next) => {
 
   req.protoUrl = serviceName + "/" + version + "/" + journey;
   require("./create-movement-list/routes")(req, res, next);
+});
+
+// create-unlock-list journey routes
+router.use("/create-unlock-list", (req, res, next) => {
+  let serviceName = req.originalUrl.split("/")[1];
+  let version = req.originalUrl.split("/")[2];
+  let journey = req.originalUrl.split("/")[3];
+
+  req.protoUrl = serviceName + "/" + version + "/" + journey;
+  require("./create-unlock-list/routes")(req, res, next);
 });
 
 module.exports = router;
