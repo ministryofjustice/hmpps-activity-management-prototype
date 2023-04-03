@@ -13,27 +13,6 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 {% endblock %}
 
 {% block content %}
-{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
-{{ mojSubNavigation({
-label: 'Sub navigation',
-items: [{
-text: 'Daily summary',
-href: 'daily',
-active: true if timeOfDay == 'Daily'
-}, {
-text: 'Morning',
-href: 'AM',
-active: true if period == 'AM'
-}, {
-text: 'Afternoon',
-href: 'PM',
-active: true if period == 'PM'
-}, {
-text: 'Evening',
-href: '#'
-}]
-}) }}
-
 {% macro dataCard(params) %}
 <div class="govuk-!-margin-bottom-4">
 	<h3 class="govuk-body govuk-hint govuk-!-margin-bottom-0 {{params.titleClasses}}">{{ params.title }}</h3>
@@ -135,13 +114,34 @@ href: '#'
 	<div class="moj-filter-layout__content">
 		<div class="moj-filter-button"></div>
 
+		{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+		{{ mojSubNavigation({
+		label: 'Sub navigation',
+		items: [{
+		text: 'Daily summary',
+		href: 'daily',
+		active: true if timeOfDay == 'Daily'
+		}, {
+		text: 'AM session',
+		href: 'AM',
+		active: true if period == 'AM'
+		}, {
+		text: 'PM session',
+		href: 'PM',
+		active: true if period == 'PM'
+		}, {
+		text: 'ED session',
+		href: '#'
+		}]
+		}) }}
+
 		<div class="govuk-grid-row">
 			<div class="govuk-grid-column-two-thirds">
 				<h2 class="govuk-heading-xl govuk-!-margin-bottom-6">
 					<span class="govuk-caption-l">
 						{{date|convertShortDateToVeryLongDate}}
 					</span>
-					{{timeOfDay}} summary for all activities
+					{{timeOfDay}} attendance summary
 				</h2>
 			</div>
 			<div class="govuk-grid-column-one-third">
@@ -157,15 +157,6 @@ href: '#'
 		</p>
 
 		<div class="govuk-grid-row govuk-!-margin-bottom-6">
-			<div class="govuk-grid-column-one-quarter">
-				{{ dataCard({
-				title: "Attended",
-				count: counts.attended,
-				linkHref: period + "/attendances",
-				showPercentage: true,
-				tagClasses: "govuk-tag--grey"
-				}) }}
-			</div>
 			<div class="govuk-grid-column-one-quarter">
 				{{ dataCard({
 				title: "Not yet attended",
@@ -185,69 +176,71 @@ href: '#'
 				tagClasses: "govuk-tag--grey"
 				}) }}
 			</div>
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+				title: "Attended",
+				count: counts.attended,
+				linkHref: period + "/attendances",
+				showPercentage: true,
+				tagClasses: "govuk-tag--grey"
+				}) }}
+			</div>
+
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+				title: "Prisoners suspended",
+				count: 11,
+				linkHref: "#"
+				}) }}
+			</div>
 		</div>
 
 		{% if counts.absences['with-pay'].total > 0 or counts.absences['without-pay'].total > 0 %}
 		<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-		<h2 class="govuk-heading-m">
+		<h2 class="govuk-heading-l">
 			Absences
 		</h2>
 		{% if counts.absences['with-pay'].total > 0 %}
-		<div class="govuk-grid-row govuk-!-margin-bottom-5">
+		<h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+			{{counts.absences['with-pay'].total}} paid absences
+		</h3>
+		<div class="govuk-grid-row">
+			{% for type,count in counts.absences['with-pay'] %}
+			{% if type != 'total' %}
 			<div class="govuk-grid-column-one-quarter">
 				{{ dataCard({
-				title: "Paid",
-				count: counts.absences['with-pay'].total
+				title: type|capitalize|replace('-',' '),
+				count: count,
+				titleClasses: "govuk-!-font-size-16",
+				countClasses: "govuk-!-font-size-36",
+				linkHref: period + "/absences/" + type
 				}) }}
 			</div>
-			<div class="govuk-grid-column-three-quarters">
-				<div class="govuk-grid-row">
-					{% for type,count in counts.absences['with-pay'] %}
-					{% if type != 'total' %}
-					<div class="govuk-grid-column-one-quarter">
-						{{ dataCard({
-						title: type|capitalize|replace('-',' '),
-						count: count,
-						titleClasses: "govuk-!-font-size-16",
-						countClasses: "govuk-!-font-size-36",
-						linkHref: period + "/absences/" + type
-						}) }}
-					</div>
-					{% endif %}
-					{% endfor %}
-				</div>
-				{% if counts.absences['without-pay'].total > 0 %}
-				<hr
-					class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-bottom-2">
-				{% endif %}
-			</div>
+			{% endif %}
+			{% endfor %}
 		</div>
+
 		{% endif %}
+
+
 		{% if counts.absences['without-pay'].total > 0 %}
+		<h3 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">
+			{{counts.absences['without-pay'].total}} unpaid absences
+		</h3>
 		<div class="govuk-grid-row govuk-!-margin-bottom-5">
+			{% for type,count in counts.absences['without-pay'] %}
+			{% if type != 'total' %}
 			<div class="govuk-grid-column-one-quarter">
 				{{ dataCard({
-				title: "Not paid",
-				count: counts.absences['without-pay'].total
+				title: type|capitalize|replace('-',' '),
+				count: count,
+				titleClasses: "govuk-!-font-size-16",
+				countClasses: "govuk-!-font-size-36",
+				linkHref: period + "/absences/" + type
 				}) }}
 			</div>
-			<div class="govuk-grid-column-three-quarters">
-				<div class="govuk-grid-row">
-					{% for type,count in counts.absences['without-pay'] %}
-					{% if type != 'total' %}
-					<div class="govuk-grid-column-one-quarter">
-						{{ dataCard({
-						title: type|capitalize|replace('-',' '),
-						count: count,
-						titleClasses: "govuk-!-font-size-16",
-						countClasses: "govuk-!-font-size-36",
-						linkHref: period + "/absences/" + type
-						}) }}
-					</div>
-					{% endif %}
-					{% endfor %}
-				</div>
-			</div>
+			{% endif %}
+			{% endfor %}
 		</div>
 		{% endif %}
 		{% endif %}
@@ -274,15 +267,7 @@ href: '#'
 				<div class="govuk-grid-row">
 					<div class="govuk-grid-column-one-quarter">
 						{{ dataCard({
-						title: "Staff unavailable",
-						titleClasses: "govuk-!-font-size-16",
-						count: 1,
-						countClasses: "govuk-!-font-size-36"
-						}) }}
-					</div>
-					<div class="govuk-grid-column-one-quarter">
-						{{ dataCard({
-						title: "Location unavailable",
+						title: "REASON",
 						titleClasses: "govuk-!-font-size-16",
 						count: 1,
 						countClasses: "govuk-!-font-size-36"
@@ -292,20 +277,6 @@ href: '#'
 			</div>
 		</div>
 		{% endif %}
-
-		<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-		<h2 class="govuk-heading-m">
-			Prisoners suspended
-		</h2>
-		<div class="govuk-grid-row govuk-!-margin-bottom-8">
-			<div class="govuk-grid-column-one-quarter">
-				{{ dataCard({
-				title: "Prisoners suspended",
-				count: 11,
-				linkHref: "#"
-				}) }}
-			</div>
-		</div>
 	</div>
 </div>
 {% endblock %}
