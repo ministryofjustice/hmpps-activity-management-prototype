@@ -453,6 +453,18 @@ router.get("/:date/:period/sessions-cancelled", (req, res) => {
   let activities = req.session.data["timetable-complete-1"]["activities"];
   let cancelledSessions = getCancelledSessions(activities, date, period);
 
+  // add the count of allocated prisoners to each cancelled session in the cancelledSessions array
+  cancelledSessions.forEach((session) => {
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisonerCount = 0;
+    prisoners.forEach((prisoner) => {
+      if (prisoner.activity && prisoner.activity.includes(session.activity)) {
+        prisonerCount++;
+      }
+    });
+    session.prisonerCount = prisonerCount;
+  });
+
   res.render(req.protoUrl + "/sessions-cancelled", {
     date,
     pageTitle: "All sessions cancelled",
