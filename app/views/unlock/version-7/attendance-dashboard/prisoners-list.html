@@ -98,8 +98,8 @@ text: "Back to attendance daily summary",
                                 {% for category in categoriesList | sort(false,false) %}
                                 {% set category = category | getActivityCategoryName %}
                                 <div class="govuk-checkboxes__item">
-                                    <input class="govuk-checkboxes__input" id="{{category|lower}}" name="filters[category]"
-                                        type="checkbox" value="{{category}}" checked="checked">
+                                    <input class="govuk-checkboxes__input" id="{{category|lower}}"
+                                        name="filters[category]" type="checkbox" value="{{category}}" checked="checked">
                                     <label class="govuk-label govuk-checkboxes__label" for="{{category|lower}}">
                                         {{category}}
                                     </label>
@@ -160,13 +160,19 @@ text: "Back to attendance daily summary",
                         <th scope="col" class="govuk-table__header" aria-sort="none">Attendee</th>
                         <th scope="col" class="govuk-table__header" aria-sort="none">Cell location</th>
                         <th scope="col" class="govuk-table__header" aria-sort="none">Session</th>
-                        <th scope="col" class="govuk-table__header" aria-sort="none">Time recorded</th>
+                        {% if attendanceStatus == 'clash' %}
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Other activity</th>
+                        {% else %}
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Time</th>
+                        {% endif %}
                         <th scope="col" class="govuk-table__header" aria-sort="none">Attendance details</th>
                         <th scope="col" class="govuk-table__header"></th>
                     </tr>
                 </thead>
                 <tbody class="govuk-table__body">
                     {% for prisoner in attendanceList %}
+                    {% set prisonerData = prisoner.prisonerId|getPrisonerDetails %}
+
                     {% set activity = session.activity|getActivityDetails %}
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">
@@ -184,8 +190,12 @@ text: "Back to attendance daily summary",
                             <a href="#" class="govuk-link--no-visited-state">{{ activity.name }}</a>
                         </td>
                         <td class="govuk-table__cell">
-                            {{ prisoner.attendanceRecord.timestamp.time }} on
-                            {{ prisoner.attendanceRecord.timestamp.date | convertShortDateToMediumDate }}
+                            {% for activityId in prisonerData.activity %}
+                            {% if activityId != prisoner.activityId %}
+                            {% set activityData = activityId|getActivityDetails %}
+                            {{activityData.name}}
+                            {% endif %}
+                            {% endfor %}
                         </td>
                         <td class="govuk-table__cell">
                             {% set attendance = prisoner.attendanceRecord.attendance %}
