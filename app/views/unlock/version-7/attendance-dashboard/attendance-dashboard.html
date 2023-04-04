@@ -112,7 +112,18 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 	</div>
 
 	<div class="moj-filter-layout__content">
-		<div class="moj-filter-button"></div>
+		<div class="moj-action-bar">
+			<div class="moj-action-bar__filter"></div>
+
+			<div class="moj-button-menu">
+				<div class="moj-button-menu__wrapper">
+					<a class="govuk-button moj-button-menu__item govuk-button--blue" href="#"
+						data-module="govuk-button">
+						Download (CSV)
+					</a>
+				</div>
+			</div>
+		</div>
 
 		{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 		{{ mojSubNavigation({
@@ -247,37 +258,28 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 		{% endif %}
 		{% endif %}
 
-		{% if counts['sessions-cancelled'] > 0 %}
+		{% if counts['sessions-cancelled']|length > 0 %}
 		<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-		<h2 class="govuk-heading-m">
-			Cancellations
+		<h2 class="govuk-heading-l govuk-!-margin-bottom-">
+			{{cancelledSessions|length}} {{"session" if cancelledSessions|length == 1 else "sessions"}} cancelled
 		</h2>
-		<div class="govuk-grid-row govuk-!-margin-bottom-5">
+		
+		<div class="govuk-grid-row govuk-!-margin-bottom-">
+			{% for reason, count in counts['sessions-cancelled'] %}
 			<div class="govuk-grid-column-one-quarter">
-				{% set cancelledSessionsCount = attendanceTotals[period|lower]['sessions-cancelled'] %}
-				{% if timeOfDay == 'Daily' %}
-				{% set cancelledSessionsCount = attendanceTotals.morning['sessions-cancelled'] +
-				attendanceTotals.afternoon['sessions-cancelled'] %}
-				{% endif %}
 				{{ dataCard({
-				title: "Sessions cancelled",
-				count: cancelledSessionsCount,
-				linkHref: period+"/sessions-cancelled"
+				title: reason,
+				titleClasses: "govuk-!-font-size-16",
+				count: count,
+				countClasses: "govuk-!-font-size-36"
 				}) }}
 			</div>
-			<div class="govuk-grid-column-three-quarters">
-				<div class="govuk-grid-row">
-					<div class="govuk-grid-column-one-quarter">
-						{{ dataCard({
-						title: "REASON",
-						titleClasses: "govuk-!-font-size-16",
-						count: 1,
-						countClasses: "govuk-!-font-size-36"
-						}) }}
-					</div>
-				</div>
-			</div>
+			{% endfor %}
 		</div>
+
+		<p class="govuk-!-margin-bottom-5">
+			<a href="{{period}}/sessions-cancelled" class="govuk-link">View cancelled sessions</a>
+		</p>
 		{% endif %}
 	</div>
 </div>
@@ -290,7 +292,7 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 			bigModeMediaQuery: "(min-width: 48.063em)",
 			startHidden: true,
 			toggleButton: {
-				container: $(".moj-filter-button"),
+				container: $(".moj-action-bar__filter"),
 				showText: "Show filter",
 				hideText: "Hide filter",
 				classes: "govuk-button--secondary",

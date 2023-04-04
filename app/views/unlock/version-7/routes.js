@@ -166,6 +166,7 @@ function updateAttendanceData(
       attendanceStatus: reason,
       pay: details.pay,
       sessionCancelled: sessionCancelled,
+      cancellationReason: details.cancellationReason,
       // unacceptableAbsence: details.unacceptableAbsence,
       incentiveLevelWarning: details["incentive-level-warning"],
       caseNote: details["case-note"],
@@ -1080,6 +1081,7 @@ router.post(
       Object.keys(attendanceDetails).forEach((prisonerId) => {
         const details = attendanceDetails[prisonerId];
         details.sessionCancelled = true;
+        details.cancellationReason = reason;
         details["absence-reason"] = "session-cancelled";
       });
       updateAttendanceData(req, activityId, date, period, attendanceDetails);

@@ -50,10 +50,9 @@ router.get("/:selectedDate/:selectedPeriod", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
   let period = req.params.selectedPeriod;
 
-  let activitiesForDate = activitiesByDate(
-    req.session.data["timetable-complete-1"]["activities"],
-    dateString
-  );
+  let cancelledSessions = getCancelledSessions(activities, date, period);
+
+  let activitiesForDate = activitiesByDate(req.session.data["timetable-complete-1"]["activities"], dateString);
 
   let activitiesForDateWithCounts = {
     morning: [],
@@ -79,9 +78,7 @@ router.get("/:selectedDate/:selectedPeriod", function (req, res) {
       for (const type in activity.attendanceCount[period]) {
         attendanceTotals[period][type] =
           (attendanceTotals[period][type] || 0) +
-          (activity.attendanceCount[period][type] > 0
-            ? activity.attendanceCount[period][type]
-            : 0);
+          (activity.attendanceCount[period][type] > 0 ? activity.attendanceCount[period][type] : 0);
       }
     }
   }
@@ -92,17 +89,11 @@ router.get("/:selectedDate/:selectedPeriod", function (req, res) {
     if (period == "AM" || period == "Morning" || period == "morning") {
       totalAllocated = attendanceTotals.morning["scheduled"];
       period = "AM";
-    } else if (
-      period == "PM" ||
-      period == "Afternoon" ||
-      period == "afternoon"
-    ) {
+    } else if (period == "PM" || period == "Afternoon" || period == "afternoon") {
       totalAllocated = attendanceTotals.afternoon["scheduled"];
       period = "PM";
     } else if (period == "daily" || period == "Daily") {
-      totalAllocated =
-        attendanceTotals.morning["scheduled"] +
-        attendanceTotals.afternoon["scheduled"];
+      totalAllocated = attendanceTotals.morning["scheduled"] + attendanceTotals.afternoon["scheduled"];
       period = "daily";
     } else {
       throw new Error("Invalid period input");
@@ -121,18 +112,17 @@ router.get("/:selectedDate/:selectedPeriod", function (req, res) {
           total: 0,
         },
       },
-      "sessions-cancelled": 0,
+      "sessions-cancelled": {},
     };
 
     if (data) {
+      let activitiesCheckedCancellations = [];
+      
       Object.values(data).forEach((activity) => {
         if (activity[date]) {
           const periodData =
             period === "daily"
-              ? (activity[date].AM
-                  ? Object.values(activity[date].AM)
-                  : []
-                ).concat(
+              ? (activity[date].AM ? Object.values(activity[date].AM) : []).concat(
                   activity[date].PM ? Object.values(activity[date].PM) : []
                 )
               : activity[date][period]
@@ -153,13 +143,11 @@ router.get("/:selectedDate/:selectedPeriod", function (req, res) {
               if (payStatus == true) {
                 attendanceCounts.absences["with-pay"].total++;
                 attendanceCounts.absences["with-pay"][attendanceStatus] =
-                  (attendanceCounts.absences["with-pay"][attendanceStatus] ||
-                    0) + 1;
+                  (attendanceCounts.absences["with-pay"][attendanceStatus] || 0) + 1;
               } else {
                 attendanceCounts.absences["without-pay"].total++;
                 attendanceCounts.absences["without-pay"][attendanceStatus] =
-                  (attendanceCounts.absences["without-pay"][attendanceStatus] ||
-                    0) + 1;
+                  (attendanceCounts.absences["without-pay"][attendanceStatus] || 0) + 1;
               }
               attendanceCounts["not-recorded"]--;
             } else {
@@ -167,7 +155,17 @@ router.get("/:selectedDate/:selectedPeriod", function (req, res) {
             }
 
             if (sessionCancelled == true) {
-              attendanceCounts["sessions-cancelled"]++;
+              // for each activity, check if any prisoner's attendance record has a sessionCancelled property set to true
+              // if the reason for the cancellation is not already in the attendanceCounts["sessions-cancelled"] object add it as a property and set it to 1
+              // otherwise increment the value of the property by 1, but only once for each activity!
+              if (activitiesCheckedCancellations.indexOf(activity) === -1) {
+                if (attendanceCounts["sessions-cancelled"][record.cancellationReason]) {
+                  attendanceCounts["sessions-cancelled"][record.cancellationReason]++;
+                } else {
+                  attendanceCounts["sessions-cancelled"][record.cancellationReason] = 1;
+                }
+                activitiesCheckedCancellations.push(activity);
+              }
             }
           });
         }
@@ -177,13 +175,8 @@ router.get("/:selectedDate/:selectedPeriod", function (req, res) {
     return attendanceCounts;
   }
 
-  let counts = calculateAttendanceFigures(
-    req.session.data["attendance"],
-    period,
-    date
-  );
-  let timeOfDay =
-    period === "AM" ? "Morning" : period === "PM" ? "Afternoon" : "Daily";
+  let counts = calculateAttendanceFigures(req.session.data["attendance"], period, date);
+  let timeOfDay = period === "AM" ? "Morning" : period === "PM" ? "Afternoon" : "Daily";
 
   // count the number of cancelledSessions for each activity in each period on the selected date
   for (const period in activitiesForDate) {
@@ -217,8 +210,7 @@ router.get("/:selectedDate/:selectedPeriod", function (req, res) {
       activityCount = activitiesForDate.afternoon.length;
       break;
     case "daily":
-      activityCount =
-        activitiesForDate.morning.length + activitiesForDate.afternoon.length;
+      activityCount = activitiesForDate.morning.length + activitiesForDate.afternoon.length;
       break;
     default:
       throw new Error("Invalid period input");
@@ -231,6 +223,7 @@ router.get("/:selectedDate/:selectedPeriod", function (req, res) {
     attendanceTotals,
     activitiesForDate,
     activitiesForDateWithCounts,
+    cancelledSessions,
     counts,
     period,
     timeOfDay,
@@ -286,11 +279,8 @@ router.all("/:date/:period/absences/:attendanceStatus", (req, res) => {
   // get the title for the page using the attendanceStatus
   // replace "-"" with a space
   // prepend "Absences: " to the title
-  let pageTitle = attendanceStatus
-    .join(" ")
-    .replace(/-/g, " ")
-    .replace(/^/, "Absences: ");
-    
+  let pageTitle = attendanceStatus.join(" ").replace(/-/g, " ").replace(/^/, "Absences: ");
+
   // render the page dynamically, passing in the attendanceStatus as a parameter
   res.render(req.protoUrl + "/prisoners-list", {
     date,
@@ -326,10 +316,7 @@ router.get("/:date/:period/absences", (req, res) => {
   let locations = [];
   attendanceList.forEach((prisoner) => {
     let prisonerData = prisoners.find((p) => p.id === prisoner.prisonerId);
-    if (
-      !locations.includes(prisonerData.location.houseblock) &&
-      prisonerData.location.houseblock !== undefined
-    ) {
+    if (!locations.includes(prisonerData.location.houseblock) && prisonerData.location.houseblock !== undefined) {
       locations.push(prisonerData.location.houseblock);
     }
   });
@@ -338,10 +325,7 @@ router.get("/:date/:period/absences", (req, res) => {
   // for each prisoner, get their activity and if it is not already in the activities array, add it
   let activitiesList = [];
   attendanceList.forEach((prisoner) => {
-    if (
-      !activitiesList.includes(prisoner.activityId) &&
-      prisoner.activityId !== undefined
-    ) {
+    if (!activitiesList.includes(prisoner.activityId) && prisoner.activityId !== undefined) {
       activitiesList.push(prisoner.activityId);
     }
   });
@@ -351,10 +335,7 @@ router.get("/:date/:period/absences", (req, res) => {
   let categoriesList = [];
   activitiesList.forEach((activityId) => {
     let activityData = activities.find((a) => a.id === activityId);
-    if (
-      !categoriesList.includes(activityData.category) &&
-      activityData.category !== undefined
-    ) {
+    if (!categoriesList.includes(activityData.category) && activityData.category !== undefined) {
       categoriesList.push(activityData.category);
     }
   });
@@ -420,9 +401,7 @@ router.get("/:date/:period/not-attended-yet", (req, res) => {
   // if the period is daily, we need to check both morning and afternoon
   // or run the filter function twice for each period and combine the results
   if (period === "daily") {
-    attendanceList = notAttendedList("AM", date).concat(
-      notAttendedList("PM", date)
-    );
+    attendanceList = notAttendedList("AM", date).concat(notAttendedList("PM", date));
   } else {
     attendanceList = notAttendedList(period, date);
   }
@@ -471,32 +450,8 @@ router.get("/:date/:period/sessions-cancelled", (req, res) => {
   const date = req.params.date;
   const period = req.params.period;
 
-  //get a list of cancelled sessions for the selected date and period
-  let cancelledSessions = [];
   let activities = req.session.data["timetable-complete-1"]["activities"];
-  activities.forEach((activity) => {
-    // for each day (0-6) check for cancelled sessions
-    // also check the date of each cancelled session to see if it matches the selected date
-    activity.schedule.forEach((schedule) => {
-      if (schedule.cancelledSessions) {
-        schedule.cancelledSessions.forEach((cancelledSession) => {
-          // if the period is 'daily' a cancelled session for either period should be added to the list
-          // otherwise only add the cancelled session if it matches the selected period
-          // we should make sure we're including the correct period in the cancelled session object
-          if (
-            cancelledSession.date === date &&
-            (period === "daily" || cancelledSession.period === period)
-          ) {
-            cancelledSessions.push({
-              activity: activity.id,
-              date: cancelledSession.date,
-              period: cancelledSession.period,
-            });
-          }
-        });
-      }
-    });
-  });
+  let cancelledSessions = getCancelledSessions(activities, date, period);
 
   res.render(req.protoUrl + "/sessions-cancelled", {
     date,
@@ -529,11 +484,7 @@ module.exports = router;
 // =================
 
 // a function to create a load of random attendance data
-const createHistoricAttendanceData = (
-  activities,
-  numberOfDays,
-  prisonersData
-) => {
+const createHistoricAttendanceData = (activities, numberOfDays, prisonersData) => {
   let attendanceData = {};
   let prisoners = prisonersData;
   let periods = ["AM", "PM"];
@@ -601,15 +552,12 @@ const createHistoricAttendanceData = (
             attendanceData[activityId][isoDate] ??= {};
             attendanceData[activityId][isoDate][period] ??= {};
             attendanceData[activityId][isoDate][period][prisoner.id] ??= [];
-            attendanceData[activityId][isoDate][period][prisoner.id].push(
-              attendanceRecord
-            );
+            attendanceData[activityId][isoDate][period][prisoner.id].push(attendanceRecord);
           }
 
           function generateRecord() {
             // decide if the prisoner attended
-            attendanceRecord.attendance =
-              Math.random() < 0.86 ? "attended" : "not-attended";
+            attendanceRecord.attendance = Math.random() < 0.86 ? "attended" : "not-attended";
 
             // if the prisoner attended, decide if they got paid
             if (attendanceRecord.attendance === "attended") {
@@ -632,17 +580,12 @@ const createHistoricAttendanceData = (
                   ["not-required", 0.1],
                 ];
 
-                const total = statusesAndProbabilities.reduce(
-                  (acc, cur) => acc + cur[1],
-                  0
-                );
+                const total = statusesAndProbabilities.reduce((acc, cur) => acc + cur[1], 0);
                 let random = Math.random() * total;
-                let status = statusesAndProbabilities.find(
-                  ([, probability]) => {
-                    random -= probability;
-                    return random <= 0;
-                  }
-                );
+                let status = statusesAndProbabilities.find(([, probability]) => {
+                  random -= probability;
+                  return random <= 0;
+                });
                 return status[0];
               }
 
@@ -667,15 +610,13 @@ const createHistoricAttendanceData = (
 
             // if the prisoner refused, decide if they have an incentive level warning
             if (attendanceRecord.attendanceStatus === "refused") {
-              attendanceRecord.incentiveLevelWarning =
-                Math.random() < 0.8 ? "yes" : "no";
+              attendanceRecord.incentiveLevelWarning = Math.random() < 0.8 ? "yes" : "no";
             }
             // if the prisoner refused add a case note
             if (attendanceRecord.attendanceStatus === "refused") {
               // don't pay prisoners who refused
               attendanceRecord.pay = false;
-              attendanceRecord.caseNote =
-                "Refused to attend for no good reason";
+              attendanceRecord.caseNote = "Refused to attend for no good reason";
             }
           }
         });
@@ -691,26 +632,17 @@ const createHistoricAttendanceData = (
       periods.forEach((period) => {
         let scheduled = false;
         activity.schedule.forEach((schedule) => {
-          if (
-            schedule.day === date.getDay() &&
-            schedule[period.toLowerCase()] != null
-          ) {
+          if (schedule.day === date.getDay() && schedule[period.toLowerCase()] != null) {
             scheduled = true;
           }
         });
         if (!scheduled) {
           if (
             attendanceData[parseInt(activity.id)] &&
-            attendanceData[parseInt(activity.id)][
-              date.toISOString().slice(0, 10)
-            ] &&
-            attendanceData[parseInt(activity.id)][
-              date.toISOString().slice(0, 10)
-            ][period]
+            attendanceData[parseInt(activity.id)][date.toISOString().slice(0, 10)] &&
+            attendanceData[parseInt(activity.id)][date.toISOString().slice(0, 10)][period]
           ) {
-            delete attendanceData[parseInt(activity.id)][
-              date.toISOString().slice(0, 10)
-            ][period];
+            delete attendanceData[parseInt(activity.id)][date.toISOString().slice(0, 10)][period];
           }
         }
       });
@@ -722,19 +654,15 @@ const createHistoricAttendanceData = (
   // we'll need to create an object of records for each prisoner for each day/period combination and then loop through them:
   const attendanceRecordsByPrisoner = {};
 
-  for (const { [0]: activityId, [1]: dates } of Object.entries(
-    attendanceData
-  )) {
+  for (const { [0]: activityId, [1]: dates } of Object.entries(attendanceData)) {
     for (const [date, periods] of Object.entries(dates)) {
       for (const [period, prisoners] of Object.entries(periods)) {
         for (const [prisonerId, attendance] of Object.entries(prisoners)) {
-          const prisonerAttendance =
-            attendanceRecordsByPrisoner[prisonerId]?.[date]?.[period] ?? [];
+          const prisonerAttendance = attendanceRecordsByPrisoner[prisonerId]?.[date]?.[period] ?? [];
           prisonerAttendance.push(attendance);
           attendanceRecordsByPrisoner[prisonerId] ??= {};
           attendanceRecordsByPrisoner[prisonerId][date] ??= {};
-          attendanceRecordsByPrisoner[prisonerId][date][period] =
-            prisonerAttendance;
+          attendanceRecordsByPrisoner[prisonerId][date][period] = prisonerAttendance;
         }
       }
     }
@@ -742,14 +670,11 @@ const createHistoricAttendanceData = (
 
   // loop through the attendance records for each prisoner for each day/period combination
   // if there is more than one record, randomly choose one to keep and mark the others as 'not-attended', 'clash', with pay
-  for (const [prisonerId, dates] of Object.entries(
-    attendanceRecordsByPrisoner
-  )) {
+  for (const [prisonerId, dates] of Object.entries(attendanceRecordsByPrisoner)) {
     for (const [date, periods] of Object.entries(dates)) {
       for (const [period, attendance] of Object.entries(periods)) {
         if (attendance.length > 1) {
-          const attendanceToKeep =
-            attendance[Math.floor(Math.random() * attendance.length)];
+          const attendanceToKeep = attendance[Math.floor(Math.random() * attendance.length)];
           attendance.forEach((attendanceRecord) => {
             if (attendanceRecord !== attendanceToKeep) {
               attendanceRecord[0].attendance = "not-attended";
@@ -788,8 +713,7 @@ const activitiesByDate = (activities, date) => {
             if (schedule.cancelledSessions) {
               cancelledSessionsAM = schedule.cancelledSessions.filter(
                 (cancellation) =>
-                  cancellation.date === date.toISOString().slice(0, 10) &&
-                  cancellation.period.toLowerCase() === "am"
+                  cancellation.date === date.toISOString().slice(0, 10) && cancellation.period.toLowerCase() === "am"
               );
             }
             filteredActivities.morning.push({
@@ -805,8 +729,7 @@ const activitiesByDate = (activities, date) => {
             if (schedule.cancelledSessions) {
               cancelledSessionsPM = schedule.cancelledSessions.filter(
                 (cancellation) =>
-                  cancellation.date === date.toISOString().slice(0, 10) &&
-                  cancellation.period.toLowerCase() === "pm"
+                  cancellation.date === date.toISOString().slice(0, 10) && cancellation.period.toLowerCase() === "pm"
               );
             }
             filteredActivities.afternoon.push({
@@ -825,12 +748,7 @@ const activitiesByDate = (activities, date) => {
 };
 
 // add attendance counts to activities
-const addAttendanceCountsToActivities = (
-  activities,
-  attendanceData,
-  selectedDate,
-  prisonersList
-) => {
+const addAttendanceCountsToActivities = (activities, attendanceData, selectedDate, prisonersList) => {
   const scheduledKey = "scheduled";
   const notRecordedKey = "not-recorded";
   const attendedKey = "attended";
@@ -854,9 +772,7 @@ const addAttendanceCountsToActivities = (
       morning: "",
       afternoon: "",
     };
-    let prisonerList = prisonersList.filter(
-      (prisoner) => prisoner.activity && prisoner.activity.includes(activity.id)
-    );
+    let prisonerList = prisonersList.filter((prisoner) => prisoner.activity && prisoner.activity.includes(activity.id));
     for (let i = 0; i < prisonerList.length; i++) {
       let prisoner = prisonerList[i];
       let date = new Date(selectedDate).toISOString().slice(0, 10);
@@ -884,15 +800,9 @@ const addAttendanceCountsToActivities = (
         for (let prisonerId in amAttendance) {
           if (prisonerId === prisoner.id.toString()) {
             let prisonerAMAttendance = amAttendance[prisonerId];
-            if (
-              prisonerAMAttendance[prisonerAMAttendance.length - 1]
-                .attendance === "attended"
-            ) {
+            if (prisonerAMAttendance[prisonerAMAttendance.length - 1].attendance === "attended") {
               attendanceCountAM[attendedKey]++;
-            } else if (
-              prisonerAMAttendance[prisonerAMAttendance.length - 1]
-                .attendance === "not-attended"
-            ) {
+            } else if (prisonerAMAttendance[prisonerAMAttendance.length - 1].attendance === "not-attended") {
               attendanceCountAM[notAttendedKey]++;
             }
           }
@@ -920,15 +830,9 @@ const addAttendanceCountsToActivities = (
         for (let prisonerId in pmAttendance) {
           if (prisonerId === prisoner.id.toString()) {
             let prisonerPMAttendance = pmAttendance[prisonerId];
-            if (
-              prisonerPMAttendance[prisonerPMAttendance.length - 1]
-                .attendance === "attended"
-            ) {
+            if (prisonerPMAttendance[prisonerPMAttendance.length - 1].attendance === "attended") {
               attendanceCountPM[attendedKey]++;
-            } else if (
-              prisonerPMAttendance[prisonerPMAttendance.length - 1]
-                .attendance === "not-attended"
-            ) {
+            } else if (prisonerPMAttendance[prisonerPMAttendance.length - 1].attendance === "not-attended") {
               attendanceCountPM[notAttendedKey]++;
             }
           }
@@ -941,14 +845,32 @@ const addAttendanceCountsToActivities = (
     }
   }
 };
-function getPrisonerList(
-  activities,
-  attendanceData,
-  date,
-  period,
-  attended,
-  attendanceStatus
-) {
+function getCancelledSessions(activities, date, period) {
+  let cancelledSessions = [];
+  activities.forEach((activity) => {
+    // for each day (0-6) check for cancelled sessions
+    // also check the date of each cancelled session to see if it matches the selected date
+    activity.schedule.forEach((schedule) => {
+      if (schedule.cancelledSessions) {
+        schedule.cancelledSessions.forEach((cancelledSession) => {
+          // if the period is 'daily' a cancelled session for either period should be added to the list
+          // otherwise only add the cancelled session if it matches the selected period
+          // we should make sure we're including the correct period in the cancelled session object
+          if (cancelledSession.date === date && (period === "daily" || cancelledSession.period === period)) {
+            cancelledSessions.push({
+              activity: activity.id,
+              date: cancelledSession.date,
+              period: cancelledSession.period,
+            });
+          }
+        });
+      }
+    });
+  });
+  return cancelledSessions;
+}
+
+function getPrisonerList(activities, attendanceData, date, period, attended, attendanceStatus) {
   // create an empty array to store the prisoner list
   let prisonerList = [];
 
@@ -962,8 +884,7 @@ function getPrisonerList(
       attendanceData[activityId] &&
       attendanceData[activityId][date] &&
       (period === "daily"
-        ? attendanceData[activityId][date].AM ||
-          attendanceData[activityId][date].PM
+        ? attendanceData[activityId][date].AM || attendanceData[activityId][date].PM
         : attendanceData[activityId][date][period])
     ) {
       // get the attendance data for the selected period
@@ -976,8 +897,7 @@ function getPrisonerList(
       // for each prisoner in the attendance data
       Object.keys(attendancePeriod).forEach((prisonerId) => {
         // get the last attendance record for the prisoner
-        let attendanceRecord =
-          attendancePeriod[prisonerId][attendancePeriod[prisonerId].length - 1];
+        let attendanceRecord = attendancePeriod[prisonerId][attendancePeriod[prisonerId].length - 1];
         // if the attendance type is 'attended'
         // add the prisoner, activity id, date, time, period and pay to the prisoner list
         // and also the attendance data for the prisoner
@@ -998,16 +918,10 @@ function getPrisonerList(
 
   // filter the prisoner list by attendanceStatus
   // if it is defined and is an array with at least one element
-  if (
-    attendanceStatus &&
-    Array.isArray(attendanceStatus) &&
-    attendanceStatus.length > 0
-  ) {
+  if (attendanceStatus && Array.isArray(attendanceStatus) && attendanceStatus.length > 0) {
     // filter the prisoner list by attendanceStatus
     prisonerList = prisonerList.filter((prisoner) => {
-      return attendanceStatus.includes(
-        prisoner.attendanceRecord.attendanceStatus
-      );
+      return attendanceStatus.includes(prisoner.attendanceRecord.attendanceStatus);
     });
   }
 
