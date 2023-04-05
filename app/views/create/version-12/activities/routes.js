@@ -15,6 +15,19 @@ router.use("/:activityId/deallocate", (req, res, next) => {
   require("./deallocate/routes")(req, res, next);
 });
 
+// router for edit activity journey (from activity details page)
+router.use("/:activityId/edit", (req, res, next) => {
+  let serviceName = req.originalUrl.split("/")[1];
+  let version = req.originalUrl.split("/")[2];
+  let journey = req.originalUrl.split("/")[3];
+  let subJourney = req.originalUrl.split("/")[5];
+
+  req.activityId = req.params.activityId;
+
+  req.protoUrl = serviceName + "/" + version + "/" + journey + "/" + subJourney;
+  require("./edit/routes")(req, res, next);
+});
+
 // routes for pages in the activities section
 // activities page redirect root to /all
 router.get("/", function (req, res) {
@@ -125,6 +138,30 @@ router.get("/:activityId/applications", function (req, res) {
     schedule,
   });
 });
+
+// activity details page
+router.get("/:activityId/details", function (req, res) {
+  let currentPage = "details";
+  let activityId = req.params.activityId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  
+  // set an activitySchedule variable from the activity.schedule data
+  let activitySchedule = activity.schedule;
+
+  // for each day in the activity schedule, create a new object with the day name and am/pm values
+  let schedule = getActivitySchedule(activitySchedule);
+
+  // render the activity details page and pass the activity object to the template
+  res.render(req.protoUrl + "/details", {
+    activity,
+    currentPage,
+    schedule,
+    });
+});
+  
 
 // activity currently allocated page
 router.get("/:activityId/currently-allocated", function (req, res) {
