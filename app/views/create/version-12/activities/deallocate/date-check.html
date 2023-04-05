@@ -43,13 +43,19 @@ text: "Back",
                 {% endfor %}
             </div>
 
+            {% if data['redirect'] %}
+            {% set text = "Do you still want them to stop attending " + activity['name'] + " on the same date?" %}
+            {% else %}
+            {% set text = "Do you want them to stop attending " + activity['name'] + " on the same date?" %}
+            {% endif %}
+
+
             {{govukRadios({
             idPrefix: "deallocate-same-date",
             name: "deallocate-same-date",
             fieldset: {
             legend: {
-            text: "Do you want them to stop attending " + activity['name'] + "
-            on the same date?",
+            text: text,
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
             }

@@ -117,7 +117,7 @@ text: "Back",
                             <a href="date-check?redirect=check-deallocation"
                                 class="govuk-link--no-visited-state">Change</a>
                             {% else %}
-                            <a href="date/{{prisoner.id}}?redirect=check-deallocation"
+                            <a href="date/{{prisoner.id}}?redirect=check-deallocation&change-multiple=false"
                                 class="govuk-link--no-visited-state">Change</a>
                             {% endif %}
                         </dd>
@@ -135,7 +135,7 @@ text: "Back",
                             <a href="reason-check?redirect=check-deallocation"
                                 class="govuk-link--no-visited-state">Change</a>
                             {% else %}
-                            <a href="reason/{{prisoner.id}}?redirect=check-deallocation"
+                            <a href="reason/{{prisoner.id}}?redirect=check-deallocation&change-multiple=false"
                                 class="govuk-link--no-visited-state">Change</a>
                             {% endif %}
                         </dd>
@@ -152,7 +152,7 @@ text: "Back",
         <form method="post">
             {% if prisonerData | length > 1 %}
             <h2 class="govuk-heading-m govuk-!-margin-top-8">
-                Confirm you're taking {{prisonerData | length}} people off {{activity.name}}.
+                Confirm you're taking {{prisonerData | length}} people off {{activity.name}}
             </h2>
             <!-- <p class="govuk-body">
                 {{prisonerData | length}} prisoners will be removed from {{activity.name}}.

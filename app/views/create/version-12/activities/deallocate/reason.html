@@ -33,7 +33,7 @@ text: "Back",
             {% set noun = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname %}            
             {% endif %}
 
-            {% if multiple == true and selectedPrisoners | length > 1 %}
+            {% if (multiple == true and selectedPrisoners | length > 1 and data.redirect|length == 0) or data['change-multiple'] == 'true' %}
             <span class="govuk-caption-xl">Person {{prisonerIndex}} of {{selectedPrisoners | length}} – {{noun}}</span>
             {% endif %}
             
