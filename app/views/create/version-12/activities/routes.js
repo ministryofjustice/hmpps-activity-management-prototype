@@ -162,6 +162,7 @@ router.get("/:activityId/details", function (req, res) {
   // render the activity details page and pass the activity object to the template
   res.render(req.protoUrl + "/details", {
     activity,
+    activitySchedule,
     currentPage,
     schedule,
     });
