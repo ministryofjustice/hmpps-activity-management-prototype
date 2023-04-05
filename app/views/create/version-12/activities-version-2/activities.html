@@ -9,23 +9,49 @@ Find an activity to record or edit attendance
 {% endblock %}
 
 {% block beforeContent %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{{ govukBreadcrumbs({
-classes: "govuk-!-display-none-print",
-items: [
-{
-text: "Digital Prison Services",
-href: "/dps-home"
-},
-{
-text: "Manage activities",
-href: "../manage-activities"
-}
-]
-}) }}
-{% endblock %}
-{% block content %}
 
+{% endblock %}
+
+{% block main %}
+<div class="govuk-width-container govuk-!-margin-bottom-">
+    {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+    {{ govukBreadcrumbs({
+    classes: "govuk-!-display-none-print",
+    items: [
+    {
+    text: "Digital Prison Services",
+    href: "/dps-home"
+    },
+    {
+    text: "Activities",
+    href: "../manage-activities"
+    }
+    ]
+    }) }}
+</div>
+
+<!-- <div class="moj-primary-navigation govuk-!-margin-bottom-0" style="top: -1px; position: relative;">
+    <div class="moj-primary-navigation__container">
+        <div class="moj-primary-navigation__nav">
+            <nav class="moj-primary-navigation" aria-label="Primary navigation">
+                <ul class="moj-primary-navigation__list">
+                    <li class="moj-primary-navigation__item">
+                        <a class="moj-primary-navigation__link" aria-current="page" href="#1">Activities</a>
+                    </li>
+                    <li class="moj-primary-navigation__item">
+                        <a class="moj-primary-navigation__link" href="#2">Daily attendance figures</a>
+                    </li>
+                    <li class="moj-primary-navigation__item">
+                        <a class="moj-primary-navigation__link" href="#3">Appointments</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div> -->
+{{ super() }}
+
+{% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
@@ -33,7 +59,8 @@ href: "../manage-activities"
         </h1>
 
         <p class="govuk-body-l">
-            Select an activity to view or change activity details, see who is currently allocated, manage the waitlist, and allocate people.
+            Select an activity to view or edit activity details, see who is currently allocated, manage the waitlist,
+            and allocate people.
         </p>
 
         {{ govukButton({
@@ -114,6 +141,7 @@ href: "../manage-activities"
         {% endfor %}
     </tbody>
 </table>
+{% endblock %}
 {% endblock %}
 
 {% block pageScripts %}

@@ -158,6 +158,51 @@ router.get("/:activityId/information", function (req, res) {
   });
 });
 
+// activity schedule page
+router.get("/:activityId/schedule", function (req, res) {
+  let currentPage = "schedule";
+  let activityId = req.params.activityId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+
+  // get list of prisoners with allocations
+  const currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
+
+  // set an activitySchedule variable from the activity.schedule data
+  let activitySchedule = activity.schedule;
+
+  // for each day in the activity schedule, create a new object with the day name and am/pm values
+  let schedule = getActivitySchedule(activitySchedule);
+
+  // create a human-readable list of days the activity is scheduled for
+  let activityDays = humanReadableSchedule(schedule);
+  let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
+
+  // get the category name for the activity
+  let activityCategory = req.session.data["timetable-complete-1"][
+    "categories"
+  ].find((category) => category.id.toString() === activity.category.toString());
+
+  // hide the confirmation message if it's shown
+  if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
+    delete req.session.data["confirmation-dialog"]
+  }
+
+  res.render(req.protoUrl + "/schedule", {
+    activity,
+    activityCategory,
+    activityDays,
+    activityDaysWithTimes,
+    currentPage,
+    currentlyAllocated,
+    schedule,
+    activitySchedule,
+  });
+});
+
 // activity currently allocated page
 router.get("/:activityId/currently-allocated", function (req, res) {
   let currentPage = "currently-allocated";
@@ -439,10 +484,112 @@ router.post(
   }
 );
 
-// allocate select prisoner page
+router.get("/:activityId/allocate", function (req, res) {
+  // if there are no prisoners in the activity waitlist, redirect to allocate from general
+  let applications = req.session.data["applications"];
+  let activityId = req.params.activityId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityWaitlist = getApplicationsForActivity(applications, activityId);
+
+  function getApplicationsForActivity(applications, activityId) {
+    return applications.filter(
+      (application) =>
+        application["activity"].toString() === activityId.toString()
+    );
+  }
+
+  if (activityWaitlist.length === 0) {
+    res.redirect("allocate/allocate-from-general");
+  } else {
+    res.redirect("allocate/allocate-check-waitlist");
+  }
+});
+
+// allocate allocation source page
 router.get("/:activityId/allocate/allocation-source", function (req, res) {
   //render the page
   res.render(req.protoUrl + "/allocate-from");
+});
+
+// allocate from page - POST request depending on the radio button selected
+router.post("/:activityId/allocate/allocation-source", function (req, res) {
+  // if user selects to allocate from the waitlist, redirect to the waitlist page
+  if (req.session.data["allocate-from"] === "waitlist") {
+    res.redirect("allocate-from-waitlist");
+  } else {
+    // if user selects to allocate from the prisoner list, redirect to the prisoner list page
+    res.redirect("allocate-from-general");
+  }
+});
+
+// find suitable prisoners page
+router.get("/:activityId/find-suitable-prisoners", function (req, res) {
+  let activityId = req.params.activityId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+
+  // get a list of all prisoners who are not already allocated to this activity
+  // prisoner.activity is undefined, or does not contain the activity id
+  let suitablePrisoners = prisoners.filter(
+    (prisoner) =>
+    // we need to make sure the prisoner has an activity property before we can check if it contains the activity id
+    // if the prisoner does not have an activity property, we can assume they are not allocated to any activities
+    // if the prisoner does have an activity property, we can check if it contains the activity id
+      !prisoner.activity || !prisoner.activity.includes(activityId)
+  );
+
+  // simple code for paginating prisoners
+  let page = req.query.page || 1;
+  let limit = 5;
+  let offset = (page - 1) * limit;
+  let suitablePrisonersPaginated = suitablePrisoners.slice(
+    offset,
+    offset + limit
+  );
+  let totalPages = Math.ceil(suitablePrisoners.length / limit);
+
+  // render the page
+  res.render(req.protoUrl + "/find-suitable-prisoners", {
+    activity,
+    suitablePrisoners,
+    suitablePrisonersPaginated,
+    page,
+    totalPages,
+    });
+});    
+
+
+// allocate from waitlist page
+router.get("/:activityId/allocate/allocate-from-waitlist", function (req, res) {
+  let activityId = req.params.activityId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let applications = req.session.data["applications"];
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+
+  // get a list of all applications for the selected activity
+  // exclude those with a status of 'rejected'
+  let activityApplications = applications.filter(
+    (application) =>
+      application.activity.toString() === activityId.toString() &&
+      application.status !== "rejected"
+  );
+
+  // get the category name for the activity
+  let activityCategory = req.session.data["timetable-complete-1"][
+    "categories"
+  ].find((category) => category.id.toString() === activity.category.toString());
+
+  res.render(req.protoUrl + "/allocate-from-waitlist", {
+    activity,
+    activityApplications,
+    activityCategory,
+  });
 });
 
 // allocate from page
@@ -450,6 +597,7 @@ router.get("/:activityId/allocate/select-prisoner", function (req, res) {
   //render the page
   res.render(req.protoUrl + "/allocate-select-prisoner");
 });
+
 
 // update application confirmation page
 router.get(

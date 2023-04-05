@@ -16,10 +16,13 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
+            {% set prisoner = allocation['prisoner'] | getPrisonerDetails %}
+            {% set activity = allocation['activity'] | getActivityDetails %}
+
             <!-- GOVUK radios component to confirm removal of prisoner from activity -->
             {{govukRadios({
-            idPrefix: "allocate-from",
-            name: "allocate-from",
+            idPrefix: "confirm-remove",
+            name: "confirm-remove",
             fieldset: {
             legend: {
             text: "Are you allocating from the waitlist or from general population?",
@@ -29,11 +32,11 @@ text: "Back",
             },
             items: [
             {
-            value: "waitlist",
+            value: "yes",
             text: "Waitlist"
             },
             {
-            value: "general-population",
+            value: "no",
             text: "General population"
             }
             ]

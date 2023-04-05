@@ -1,0 +1,88 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">Allocate from waitlist</h1>
+<form method="post">
+    <table class="govuk-table moj-sortable-table" data-module="moj-sortable-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+            {{activityApplications|length}} {{'people' if activityApplications|length != 1 else 'person' }} on
+            the waitlist for {{activity.name}}
+        </caption>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header" aria-sort="none">Prisoner</th>
+                <th scope="col" class="govuk-table__header" aria-sort="ascending">Request date</th>
+                <th scope="col" class="govuk-table__header" aria-sort="none">Requester</th>
+                <th scope="col" class="govuk-table__header" aria-sort="none">Current allocations</th>
+                <th scope="col" class="govuk-table__header" aria-sort="none">Suitability</th>
+                <th scope="col" class="govuk-table__header"></th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            {% for application in activityApplications | sort(false, true, 'date') %}
+            {% set prisoner = application["selected-prisoner"]|getPrisonerDetails %}
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
+                            {{prisoner.name.surname}}</a></b><br>
+                    {{prisoner.id}}<br>
+                    {{prisoner.location.cell}}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4" data-sort-value="{{application.date}}">
+                    {{application.date|convertShortDateToMediumDate}}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {% if application.applicant == "prisoner" %}
+                    Self-requested
+                    {% else %}
+                    {{application.applicant|capitalize}}
+                    {% endif %}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    <ul class="govuk-list">
+                        {% if prisoner.activity|length == 0 %}
+                        <span class="govuk-hint">None</span>
+                        {% endif %}
+                        {% for allocation in prisoner.activity %}
+                        {% set activity = allocation|getActivityDetails %}
+                        <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {% if application.eligible == "yes" %}
+                    <span class="govuk-tag govuk-tag--green">Checks passed</span>
+                    {% elif application.eligible == "no" %}
+                    <span class="govuk-tag govuk-tag--red">Not eligible</span>
+                    {% else %}
+                    <span class="govuk-tag govuk-tag--yellow">Checks needed</span>
+                    {% endif %}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    <a class="govuk-link govuk-link--no-visited-state" href="applications/{{application.id}}">
+                        View <span class="govuk-visually-hidden">{{prisoner.name.firstname}}
+                            {{prisoner.name.surname}}'s </span>request</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ govukButton({
+    text: "Continue"
+    }) }}
+</form>
+
+{% endblock %}
