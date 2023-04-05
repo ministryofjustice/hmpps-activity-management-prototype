@@ -58,13 +58,20 @@ router.get("/:prisonerIds/date-check", function (req, res) {
 
 // deallocate date check page POST handler
 router.post("/:prisonerIds/date-check", function (req, res) {
+  // set redirect variable string to either the redirect query string or empty string
+  let redirect = req.query.redirect ? req.query.redirect : "";
+
+  // set changeMultiple variable string to either the change-multiple query string or empty string
+  let changeMultiple = req.query["change-multiple"] ? req.query["change-multiple"] : "";
+
   // if the dates are the same, redirect to the date page
   if (req.session.data["deallocate-same-date"] === "no") {
     let selectedPrisoners = req.params.prisonerIds.split(",");
-    res.redirect("date" + "/" + selectedPrisoners[0]);
+    changeMultiple = "true";
+    res.redirect("date" + "/" + selectedPrisoners[0] + "?redirect=" + redirect + "&change-multiple=" + changeMultiple);
   } else {
     // if the dates are different, redirect to the date entry page for the first prisoner
-    res.redirect("date");
+    res.redirect("date" + "?redirect=" + redirect + "&change-multiple=" + changeMultiple);
   }
 });
 
@@ -124,16 +131,22 @@ router.post("/:prisonerIds/date/:prisonerId", function (req, res) {
 
   req.session.data["deallocation"][prisonerId]["date"] = date;
 
-  // redirect to the check page if there is a query string in the URL
+  // redirect logic
+  let queryString = createQueryString(req.query);
+
+  // if redirect query string is set, redirect to the correct page
   if (req.query.redirect === "check-deallocation") {
-    res.redirect("../check-deallocation");
-  } else {
-    // redirect to the date entry page for the next prisoner
-    if (prisonerIndex < prisoners.length - 1) {
-      res.redirect(prisoners[prisonerIndex + 1]);
+    if (req.query["change-multiple"] === "true" && prisonerIndex < prisoners.length - 1) {
+      res.redirect(prisoners[prisonerIndex + 1] + "?" + queryString);
     } else {
-      // if there are no more prisoners, redirect to the reason page
-      res.redirect("../reason-check");
+      res.redirect("../check-deallocation");
+    }
+  } else {
+    // if we're on the last prisoner, redirect to the check deallocation page
+    if (prisonerIndex < prisoners.length - 1) {
+      res.redirect(prisoners[prisonerIndex + 1] + "?" + queryString);
+    } else {
+      res.redirect("../reason-check" + "?" + queryString);
     }
   }
 });
@@ -229,14 +242,30 @@ router.get("/:prisonerIds/reason-check", function (req, res) {
 
 // deallocate reason check page POST handler
 router.post("/:prisonerIds/reason-check", function (req, res) {
-  // if the user clicks "Yes", redirect to the reason page
-  if (req.session.data["deallocate-same-reason"] === "yes") {
-    res.redirect("reason");
-  } else {
-    // if the user selects "No", redirect to the reason page for each prisoner
+  // set redirect variable string to either the redirect query string or empty string
+  let redirect = req.query.redirect ? req.query.redirect : "";
+
+  // set changeMultiple variable string to either the change-multiple query string or empty string
+  let changeMultiple = req.query["change-multiple"] ? req.query["change-multiple"] : "";
+
+  // if the reasons are the same, redirect to the reason page
+  if (req.session.data["deallocate-same-reason"] === "no") {
     let selectedPrisoners = req.params.prisonerIds.split(",");
-    res.redirect("reason/" + selectedPrisoners[0]);
+    changeMultiple = "true";
+    res.redirect("reason" + "/" + selectedPrisoners[0] + "?redirect=" + redirect + "&change-multiple=" + changeMultiple);
+  } else {
+    // if the reasons are different, redirect to the reason entry page for the first prisoner
+    res.redirect("reason" + "?redirect=" + redirect + "&change-multiple=" + changeMultiple);
   }
+
+  // // if the user clicks "Yes", redirect to the reason page
+  // if (req.session.data["deallocate-same-reason"] === "yes") {
+  //   res.redirect("reason");
+  // } else {
+  //   // if the user selects "No", redirect to the reason page for each prisoner
+  //   let selectedPrisoners = req.params.prisonerIds.split(",");
+  //   res.redirect("reason/" + selectedPrisoners[0]);
+  // }
 });
 
 // deallocate reason page for each prisoner
@@ -282,12 +311,23 @@ router.post("/:prisonerIds/reason/:prisonerId", function (req, res) {
   let prisoners = req.params.prisonerIds.split(",");
   let prisonerIndex = prisoners.indexOf(prisonerId);
 
-  // Simplified and refactored code:
-  if (req.query.redirect === "check-deallocation" || prisonerIndex === prisoners.length - 1) {
-    res.redirect("../check-deallocation");
+  // redirect logic
+  let queryString = createQueryString(req.query);
+
+  // if redirect query string is set, redirect to the correct page
+  if (req.query.redirect === "check-deallocation") {
+    if (req.query["change-multiple"] === "true" && prisonerIndex < prisoners.length - 1) {
+      res.redirect(prisoners[prisonerIndex + 1] + "?" + queryString);
+    } else {
+      res.redirect("../check-deallocation");
+    }
   } else {
-    // redirect to the date entry page for the next prisoner
-    res.redirect(prisoners[prisonerIndex + 1]);
+    // if we're on the last prisoner, redirect to the check deallocation page
+    if (prisonerIndex < prisoners.length - 1) {
+      res.redirect(prisoners[prisonerIndex + 1] + "?" + queryString);
+    } else {
+      res.redirect("../check-deallocation");
+    }
   }
 });
 
@@ -451,6 +491,12 @@ router.post("/:activityId/deallocate/:prisonerId", function (req, res) {
 });
 
 module.exports = router;
+
+function createQueryString(queryObject) {
+  return Object.keys(queryObject)
+    .map((key) => key + "=" + queryObject[key])
+    .join("&");
+}
 
 function addAllocationsCountToActivities(activities, req, applications) {
   activities.forEach((activity) => {
