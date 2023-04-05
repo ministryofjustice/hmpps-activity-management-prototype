@@ -214,7 +214,7 @@ router.get("/select-date-and-location", function (req, res) {
     .toFormat("yyyy-MM-dd");
   dateIn60Days = dateIn60Days.slice(0, 8) + "27";
 
-  res.render("unlock/" + req.version + "/select-unlock-locations", {
+  res.render(req.protoUrl + "/select-unlock-locations", {
     dateIn60Days,
   });
 });
@@ -332,7 +332,7 @@ router.get(
       }
     });
 
-    res.render("unlock/" + req.version + "/unlock-list", {
+    res.render(req.protoUrl + "/unlock-list", {
       residentialLocations,
       prisonersWithEvents,
       date,
