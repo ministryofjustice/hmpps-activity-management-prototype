@@ -297,5 +297,101 @@ router.post("/end-date", function (req, res) {
   res.redirect("../../" + activityId + "/details");
 });
 
+// edit activity capacity page
+router.get("/capacity", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // calculate the number of allocations for the activity
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let currentlyAllocatedCount = 0;
+  prisoners.forEach((prisoner) => {
+    if(prisoner.activity) {
+      for(let i = 0; i < prisoner.activity.length; i++) {
+        if(prisoner.activity[i].toString() == activityId.toString()) {
+          currentlyAllocatedCount++;
+        }
+      }
+    }
+  });    
+
+  // render the page
+  res.render(req.protoUrl + "/capacity", {
+    activity,
+    activityId,
+    currentlyAllocatedCount,
+  });
+});
+
+// edit activity capacity POST route
+router.post("/capacity", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // calculate the number of allocations for the activity
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let currentlyAllocatedCount = 0;
+  prisoners.forEach((prisoner) => {
+    if(prisoner.activity) {
+      for(let i = 0; i < prisoner.activity.length; i++) {
+        if(prisoner.activity[i].toString() == activityId.toString()) {
+          currentlyAllocatedCount++;
+        }
+      }
+    }
+  });
+
+  // check if the new capacity is less than the current number of allocations
+  if (currentlyAllocatedCount > req.body["capacity"]) {
+    // redirect to the activity capacity warning page
+    res.redirect("capacity-warning");
+
+    return;
+  } else {
+    // update the activity capacity
+    activity.capacity = req.body["capacity"];
+
+    // set the confirmation message to be displayed on the activity page
+    req.session.data["confirmation-dialog"] = {
+      display: true,
+      change: "capacity",
+    };
+
+    // redirect to the activity page
+    res.redirect("../../" + activityId + "/details");
+
+    return;
+  }
+});
+
+// edit activity capacity warning page
+router.get("/capacity-warning", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // calculate the number of allocations for the activity
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let currentlyAllocatedCount = 0;
+  prisoners.forEach((prisoner) => {
+    if(prisoner.activity) {
+      for(let i = 0; i < prisoner.activity.length; i++) {
+        if(prisoner.activity[i].toString() == activityId.toString()) {
+          currentlyAllocatedCount++;
+        }
+      }
+    }
+  });
+
+  // render the page
+  res.render(req.protoUrl + "/capacity-warning", {
+    activity,
+    activityId,
+    currentlyAllocatedCount,
+    });
+});
+
 
 module.exports = router;
