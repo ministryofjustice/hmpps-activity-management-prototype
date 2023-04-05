@@ -76,4 +76,16 @@ router.use("/activities-version-2", (req, res, next) => {
   require("./activities-version-2/routes")(req, res, next);
 });
 
+// edit activity journey
+router.use("/activities/:activityId/edit", (req, res, next) => {
+  let serviceName = req.originalUrl.split("/")[1];
+  let version = req.originalUrl.split("/")[2];
+  let journey = req.originalUrl.split("/")[3];
+
+  let activityId = req.params.activityId;
+  
+  req.protoUrl = serviceName + "/" + version + "/" + journey;
+  require("./edit-activity/routes")(req, res, next);
+});
+
 module.exports = router;
