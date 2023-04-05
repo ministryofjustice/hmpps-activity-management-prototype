@@ -36,13 +36,13 @@ Activities Management prototype
 							{{date|longDateFormat(date)}}
 						</span>
 					</h1>
-					<p>
+					<!-- <p>
 						<a href="../../../select-refusals-locations" class="govuk-link--no-visited-state">Choose a
 							different refusals list</a>
-					</p>
-
+					</p> -->
+					
 					<div class="moj-search govuk-!-margin-bottom-6">
-						<div class="govuk-form-group">
+						<div class="govuk-form-group" style="width: 74%;">
 							<label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
 								Search by prisoner name
 							</label>
@@ -97,65 +97,102 @@ Activities Management prototype
 								<button class="govuk-button" data-module="govuk-button">
 									Apply filters
 								</button>
-								<fieldset class="govuk-fieldset">
-									<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-										Sub-locations
-									</legend>
-									<div class="dropdown" data-control="checkbox-dropdown">
-										<label class="dropdown-label">All sub-locations</label>
-										<div class="dropdown-list">
-											<div class="govuk-form-group">
-												<div class="govuk-checkboxes govuk-checkboxes--small"
-													data-module="govuk-checkboxes">
-													{% for location in data['residential-locations-2'] %}
-													{% if location.id == houseblock %}
-													{% for spur in location.spurs.slice(0, 3) %}
-													<div class="govuk-checkboxes__item">
-														<input class="govuk-checkboxes__input" id="landings-{{spur.id}}"
-															name="filters[landings]" type="checkbox" value="{{spur.id}}"
-															{{ 'checked' if data['filters']['landings'] and
-															loop.index|string in data['filters']['landings'] }}>
-														<label class="govuk-label govuk-checkboxes__label"
-															for="landings-{{spur.id}}">
-															Landing {{spur.id}}
-														</label>
-													</div>
-													{% endfor %}
-													{% endif %}
-													{% endfor %}
-												</div>
-											</div>
+			
+								<div class="govuk-form-group govuk-!-margin-bottom-1">
+									<div class="govuk-checkboxes govuk-checkboxes--small">
+										<fieldset class="govuk-fieldset">
+											<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+												<h2 class="govuk-fieldset__heading">
+													Landing
+												</h2>
+											</legend>
+										</fieldset>
+										{% for residentialLocation in residentialLocations %}
+										<div class="govuk-checkboxes__item">
+											<input class="govuk-checkboxes__input" id="residentialLocation-{{loop.index}}"
+												name="residentialLocation" type="checkbox" value="{{residentialLocation}}" checked>
+											<label class="govuk-label govuk-checkboxes__label" for="residentialLocation-{{loop.index}}">
+												Landing {{residentialLocation}}
+											</label>
 										</div>
+										{% endfor %}
 									</div>
-								</fieldset>
-
-								<fieldset class="govuk-fieldset">
-									<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-										Activities
-									</legend>
-									<div class="dropdown" data-control="checkbox-dropdown">
-										<label class="dropdown-label">All activities</label>
-										<div class="dropdown-list">
-											<div class="govuk-form-group govuk-!-margin-0">
-												<div class="govuk-checkboxes govuk-checkboxes--small"
-													data-module="govuk-checkboxes">
-													{% for activity in filteredActivities %}
-													<div class="govuk-checkboxes__item">
-														<input class="govuk-checkboxes__input"
-															id="activity-{{activity.id}}" name="activities"
-															type="checkbox" value="1">
-														<label class="govuk-label govuk-checkboxes__label"
-															for="activity-{{activity.id}}">
-															{{activity.name}}
-														</label>
-													</div>
-													{% endfor %}
-												</div>
-											</div>
-										</div>
-									</div>
-								</fieldset>
-
+								</div>
+								<p class="govuk-!-margin-bottom-7">
+									<a class="govuk-link" href="#" data-target="residentialLocation" data-select-all="true">
+										Select all
+									</a>
+								</p>
+						
+								{{ govukCheckboxes({
+									formGroup: {
+										classes: "govuk-!-margin-bottom-1"
+									},
+								fieldset: {
+								legend: {
+								text: "Category",
+								classes: "govuk-label--m"
+								}
+								},
+								classes: "govuk-checkboxes--small",
+								idPrefix: 'attendance',
+								name: 'filters[attendance]',
+								items: [
+								{
+								text: 'Education',
+								id: 'education',
+								value: 'Education',
+								checked: true
+								},
+								{
+								text: 'Industries',
+								id: 'industries',
+								value: 'Industries',
+								checked: true
+								},
+								{
+								text: 'Prison jobs',
+								id: 'prison',
+								value: 'Prison jobs',
+								checked: true
+								},
+								{
+								text: 'Gym, sport and fitness',
+								id: 'gym',
+								value: 'Gym, sport and fitness',
+								checked: true
+								},
+								{
+								text: 'Induction',
+								id: 'induction',
+								value: 'Induction',
+								checked: true
+								},
+								{
+								text: 'Intervention programmes',
+								id: 'intervention',
+								value: 'Intervention programmes',
+								checked: true
+								},
+								{
+								text: 'Faith',
+								id: 'faith',
+								value: 'Faith',
+								checked: true
+								},
+								{
+								text: 'Other',
+								id: 'other',
+								value: 'Other',
+								checked: true
+								}]
+								}) }}
+								<p class="govuk-!-margin-bottom-7">
+									<a class="govuk-link" href="#" data-target="filters[attendance]" data-select-all="true">
+										Select all
+									</a>
+								</p>
+						
 								{{ govukRadios({
 								fieldset: {
 								legend: {
@@ -183,40 +220,11 @@ Activities Management prototype
 								value: 'Leaving'
 								}]
 								}) }}
-
-								{{ govukSelect({
-								label: {
-								text: "Attendance status",
-								classes: "govuk-label--s"
-								},
-								idPrefix: 'attendance',
-								name: 'filters[attendance]',
-								items: [{
-								text: 'All',
-								id: 'all',
-								value: 'all'
-								},
-								{
-								text: 'Attended',
-								id: 'attended',
-								value: 'attended'
-								},
-								{
-								text: 'Not attended',
-								id: 'not-attended',
-								value: 'not-attended'
-								},
-								{
-								text: 'Not recorded',
-								id: 'not-recorded',
-								value: 'not-recorded'
-								}]
-								}) }}
-
-								{{govukButton({
-								text: "Apply filters",
-								classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-6"
-								})}}
+			
+								<button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+									data-module="govuk-button">
+									Apply filters
+								</button>
 							</div>
 						</div>
 					</div>
