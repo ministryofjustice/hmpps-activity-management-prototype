@@ -14,13 +14,9 @@ Find an activity to record or edit attendance
 
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% if data['confirmation-dialog'].display == true %}
-
-{% set prisoner = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
-
-{% if data['confirmation-dialog'].type == 'deallocate' %}
 {% set bannerHtml %}
 <h2 class="govuk-notification-banner__heading">
-    {{prisoner.name.firstname}} {{prisoner.name.surname}} is no longer allocated to {{activity.name}}.
+    {{data['confirmation-dialog'].change | capitalize}} updated
 </h2>
 {% endset %}
 {{ govukNotificationBanner({
@@ -28,7 +24,6 @@ html: bannerHtml,
 titleText: "Success",
 type: "success"
 }) }}
-{% endif %}
 {% endif %}
 
 <!-- <h2 class="govuk-heading-l">Details</h2> -->
@@ -73,6 +68,23 @@ type: "success"
         value: {
         text: activity.category | getActivityCategoryName
         }
+        },
+        {
+        key: {
+        text: "Location"
+        },
+        actions: {
+        items: [
+        {
+        href: "edit/location",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.location
+        }
         }
         ]
         }) }}
@@ -89,7 +101,7 @@ type: "success"
         actions: {
         items: [
         {
-        href: "#",
+        href: "edit/risk-assessment-level",
         text: "Edit",
         visuallyHiddenText: "activity name"
         }

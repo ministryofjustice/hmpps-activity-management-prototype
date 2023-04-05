@@ -16,89 +16,40 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
-            {% set radioItems = [
-                {
-                    value: "education",
-                    text: "Education",
-                    hint: {
-                        text: "Such as classes in English, maths, construction or barbering"
-                    },
-                    checked: true if activityCategoryName == "Education"
-                },
-                {
-                    value: "industries",
-                    text: "Industries",
-                    hint: {
-                        text: "Such as work like recycling, packing or assembly operated by the prison, external firms or charities"
-                    },
-                    checked: true if activityCategoryName == "Industries"
-                },
-                {
-                    value: "prison-jobs",
-                    text: "Prison jobs",
-                    hint: {
-                        text: "Such as work in the kitchen, cleaning, gardens or other maintenance and services to keep the prison
-                        running"
-                    },
-                    checked: true if activityCategoryName == "Prison jobs"
-                },
-                {
-                    value: "gym-sport-fitness",
-                    text: "Gym, sport and fitness",
-                    hint: {
-                        text: "Such as sport clubs, like football or recreational gym sessions"
-                    },
-                    checked: true if activityCategoryName == "Gym, sport and fitness"
-                },
-                {
-                    value: "induction",
-                    text: "Induction",
-                    hint: {
-                        text: "Such as gym induction, education assessments, health and safety workshops"
-                    },
-                    checked: true if activityCategoryName == "Induction"
-                },
-                {
-                    value: "faith-spirituality",
-                    text: "Faith and spirituality",
-                    hint: {
-                        text: "Such as chapel, prayer meetings or meditation"
-                    },
-                    checked: true if activityCategoryName == "Faith and spirituality"
-                },
-                {
-                    value: "not-in-work",
-                    text: "Not in work",
-                    hint: {
-                        text: "Such as unemployed, retired, long-term sick, or on remand"
-                    },
-                    checked: true if activityCategoryName == "Not in work"
-                },
-                {
-                    value: "other",
-                    text: "Other",
-                    hint: {
-                        text: "Select if the activity you're creating doesn't fit any other category"
-                    },
-                    checked: true if activityCategoryName == "Other"
-                }]
-                %}
-                
-                {{ govukRadios({
-                    name: "new-activity[category]",
-                    fieldset: {
-                        legend: {
-                            text: "Activity category",
-                            isPageHeading: true,
-                            classes: "govuk-fieldset__legend--l"
-                        }
-                    },
-                    items: radioItems
-                }) }}
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <span class="govuk-caption-l">
+                            {{activity.name}}
+                        </span>
+                        <h1 class="govuk-fieldset__heading">
+                            Activity category
+                        </h1>
+                    </legend>
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        {% for category in data['timetable-complete-1']['categories'] %}
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="activity-category-{{loop.index}}" name="activity-category"
+                                type="radio" value="{{category.id}}" aria-describedby="activity-category-item-hint"
+                                {{"checked" if activityCategoryName == category.name}}>
+                            <label class="govuk-label govuk-radios__label" for="activity-category-{{loop.index}}">
+                                {{category.name}}
+                            </label>
+                            <div id="activity-category-item-hint" class="govuk-hint govuk-radios__hint">
+                                {{category.description}}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
 
             {{ govukButton({
-            text: "Update activity name"
+            text: "Update activity category"
             }) }}
+            <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
         </form>
     </div>
 </div>

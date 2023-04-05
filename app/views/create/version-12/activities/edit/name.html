@@ -16,13 +16,19 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
             {{govukInput({
             id: "name",
             name: "name",
             label: {
-            text: "Activity name",
+            text: "What should the activity be called?",
             classes: "govuk-label--l",
             isPageHeading: true
+            },
+            hint: {
+            text: "Say what the activity is in plain English."
             },
             value: activity.name
             })}}
@@ -30,6 +36,9 @@ text: "Back",
             {{ govukButton({
             text: "Update activity name"
             }) }}
+            <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
         </form>
     </div>
 </div>

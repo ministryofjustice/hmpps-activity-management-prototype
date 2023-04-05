@@ -154,6 +154,11 @@ router.get("/:activityId/details", function (req, res) {
   // for each day in the activity schedule, create a new object with the day name and am/pm values
   let schedule = getActivitySchedule(activitySchedule);
 
+  // remove the confirmation message if it's shown
+  if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
+    delete req.session.data["confirmation-dialog"]
+  }
+
   // render the activity details page and pass the activity object to the template
   res.render(req.protoUrl + "/details", {
     activity,
