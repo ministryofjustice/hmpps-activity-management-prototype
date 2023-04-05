@@ -196,14 +196,6 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 				tagClasses: "govuk-tag--grey"
 				}) }}
 			</div>
-
-			<div class="govuk-grid-column-one-quarter">
-				{{ dataCard({
-				title: "Suspended",
-				count: 11,
-				linkHref: "#"
-				}) }}
-			</div>
 		</div>
 
 		{% if counts.absences['with-pay'].total > 0 or counts.absences['without-pay'].total > 0 %}
@@ -217,7 +209,7 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 		</h3>
 		<div class="govuk-grid-row">
 			{% for type,count in counts.absences['with-pay'] %}
-			{% if type != 'total' %}
+			{% if type != 'total' and type != 'session-cancelled' %}
 			<div class="govuk-grid-column-one-quarter">
 				{{ dataCard({
 				title: type|capitalize|replace('-',' '),
@@ -226,6 +218,18 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 				countClasses: "govuk-!-font-size-36",
 				linkHref: period + "/absences/" + type,
 				linkText: type|capitalize|replace('-',' ') + " (paid)"
+				}) }}
+			</div>
+			{% endif %}
+			{% if type == 'session-cancelled' %}
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+				title: "People with cancelled sessions",
+				count: count,
+				titleClasses: "govuk-!-font-size-16",
+				countClasses: "govuk-!-font-size-36",
+				linkHref: period + "/absences/" + type,
+				linkText: "People with cancelled sessions (paid)"
 				}) }}
 			</div>
 			{% endif %}
@@ -263,7 +267,7 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 		<h2 class="govuk-heading-l govuk-!-margin-bottom-">
 			{{cancelledSessions|length}} {{"session" if cancelledSessions|length == 1 else "sessions"}} cancelled
 		</h2>
-		
+
 		<div class="govuk-grid-row govuk-!-margin-bottom-">
 			{% for reason, count in counts['sessions-cancelled'] %}
 			<div class="govuk-grid-column-one-quarter">
@@ -280,7 +284,21 @@ href: "/unlock/version-7/attendance-dashboard/select-date"
 		<p class="govuk-!-margin-bottom-5">
 			<a href="{{period}}/sessions-cancelled" class="govuk-link">View cancelled sessions</a>
 		</p>
+		<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 		{% endif %}
+		
+		<h2 class="govuk-heading-l govuk-!-margin-bottom-">
+			Suspended prisoners
+		</h2>
+		<div class="govuk-grid-row govuk-!-margin-bottom-">
+			<div class="govuk-grid-column-one-quarter">
+				{{ dataCard({
+				title: "Suspended",
+				count: 11,
+				linkHref: "#"
+				}) }}
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock %}
