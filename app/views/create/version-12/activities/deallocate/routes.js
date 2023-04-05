@@ -2,18 +2,20 @@ const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
 
+// LOG to console for all get requests
+router.get("/*", function (req, res, next) {
+  console.log(req.session.data["deallocation"]);
+  next();
+});
+
 // routes for pages in the activities section
 // activities page redirect root to /all
 router.get("/:prisonerIds", function (req, res) {
   let prisonerIds = req.params.prisonerIds;
   let selectedPrisoners = prisonerIds.split(",");
 
-  // if there is no deallocation session data, create it
-  if (!req.session.data["deallocation"]) {
-    delete req.session.data["deallocate-same-reason"]
-    delete req.session.data["deallocate-same-date"]
-    req.session.data["deallocation"] = {};
-  }
+  // create a deallocation object in the session data
+  req.session.data["deallocation"] = {};
 
   // for each prisoner in selectedPrisoners, add a deallocation object to the session data
   selectedPrisoners.forEach((prisonerId) => {
@@ -21,6 +23,9 @@ router.get("/:prisonerIds", function (req, res) {
       req.session.data["deallocation"][prisonerId] = {};
     }
   });
+
+  delete req.session.data["deallocate-same-reason"];
+  delete req.session.data["deallocate-same-date"];
 
   res.redirect(prisonerIds + "/date-check");
 });
@@ -36,9 +41,7 @@ router.get("/:prisonerIds/date-check", function (req, res) {
   } else {
     // make an object of prisoner data from each prisoner ID in the selectedPrisoners array
     let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-    let prisonerData = prisoners.filter((prisoner) =>
-      selectedPrisoners.includes(prisoner.id.toString())
-    );
+    let prisonerData = prisoners.filter((prisoner) => selectedPrisoners.includes(prisoner.id.toString()));
 
     let activityId = req.activityId;
     let activity = req.session.data["timetable-complete-1"]["activities"].find(
@@ -83,13 +86,27 @@ router.get("/:prisonerIds/date/:prisonerId", function (req, res) {
 
   let multiple = true;
 
+  // if the prisoner deallocation date is already in the session data, split it into year, month and day
+  // and send it to the date entry page
+  let existingDate = req.session.data["deallocation"][prisonerId]["date"];
+  if (existingDate) {
+    let date = DateTime.fromISO(existingDate);
+    existingDate = {
+      year: date.year,
+      month: date.month,
+      day: date.day,
+    };
+  }
+
   // render the date entry page
   res.render(req.protoUrl + "/date", {
     activity,
     prisonerData,
+    existingDate,
     multiple,
     selectedPrisoners,
     prisonerIndex,
+    prisonerId,
   });
 });
 
@@ -99,23 +116,17 @@ router.post("/:prisonerIds/date/:prisonerId", function (req, res) {
   let prisoners = req.params.prisonerIds.split(",");
   let prisonerIndex = prisoners.indexOf(prisonerId);
 
-  let date = DateTime.now().toISODate();
-
-  // if the radio is set to "specific-date", set the date to the date entered instead of today's date
-  if (req.session.data["deallocation-date"] === "specific-date") {
-    // get separate date parts from the deallocation date and format them as YYYY-MM-DD
-    date = DateTime.fromObject({
-      year: req.session.data["deallocation-date-year"],
-      month: req.session.data["deallocation-date-month"],
-      day: req.session.data["deallocation-date-day"],
-    }).toISODate();
-  }
+  let date = DateTime.fromObject({
+    year: req.session.data["deallocation-date-year"],
+    month: req.session.data["deallocation-date-month"],
+    day: req.session.data["deallocation-date-day"],
+  }).toISODate();
 
   req.session.data["deallocation"][prisonerId]["date"] = date;
 
   // redirect to the check page if there is a query string in the URL
   if (req.query.redirect === "check-deallocation") {
-    res.redirect("check-deallocation");
+    res.redirect("../check-deallocation");
   } else {
     // redirect to the date entry page for the next prisoner
     if (prisonerIndex < prisoners.length - 1) {
@@ -133,9 +144,8 @@ router.get("/:prisonerIds/date", function (req, res) {
 
   // make an object of prisoner data from each prisoner ID in the selectedPrisoners array
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisonerData = prisoners.filter((prisoner) =>
-    selectedPrisoners.includes(prisoner.id.toString())
-  );
+  let prisonerData = prisoners.filter((prisoner) => selectedPrisoners.includes(prisoner.id.toString()));
+  let prisonerId = prisonerData[0].id;
 
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
@@ -144,11 +154,24 @@ router.get("/:prisonerIds/date", function (req, res) {
 
   let multiple = false;
 
+  // if the prisoner deallocation date is already in the session data, split it into year, month and day
+  // and send it to the date entry page
+  let existingDate = req.session.data["deallocation"][prisonerId]["date"];
+  if (existingDate) {
+    let date = DateTime.fromISO(existingDate);
+    existingDate = {
+      year: date.year,
+      month: date.month,
+      day: date.day,
+    };
+  }
+
   // render the deallocate date page
   res.render(req.protoUrl + "/date", {
     activity,
     multiple,
     prisonerData,
+    existingDate,
   });
 });
 
@@ -189,9 +212,7 @@ router.get("/:prisonerIds/reason-check", function (req, res) {
     res.redirect("reason?redirect=" + redirect);
   } else {
     let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-    let prisonerData = prisoners.filter((prisoner) =>
-      selectedPrisoners.includes(prisoner.id.toString())
-    );
+    let prisonerData = prisoners.filter((prisoner) => selectedPrisoners.includes(prisoner.id.toString()));
 
     let activityId = req.activityId;
     let activity = req.session.data["timetable-complete-1"]["activities"].find(
@@ -223,9 +244,7 @@ router.get("/:prisonerIds/reason/:prisonerId", function (req, res) {
   let prisonerId = req.params.prisonerId;
   // prisoners timetable data
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisonerData = prisoners.filter(
-    (prisoner) => prisoner.id.toString() === prisonerId.toString()
-  );
+  let prisonerData = prisoners.filter((prisoner) => prisoner.id.toString() === prisonerId.toString());
 
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
@@ -237,6 +256,9 @@ router.get("/:prisonerIds/reason/:prisonerId", function (req, res) {
 
   let multiple = true;
 
+  // get the selected reason from the session data for the current prisoner
+  let selectedReason = req.session.data["deallocation"][prisonerId]["reason"];
+
   // render the deallocate reason page
   res.render(req.protoUrl + "/reason", {
     activity,
@@ -245,6 +267,7 @@ router.get("/:prisonerIds/reason/:prisonerId", function (req, res) {
     prisonerData,
     selectedPrisoners,
     prisonerIndex,
+    selectedReason,
   });
 });
 
@@ -256,14 +279,15 @@ router.post("/:prisonerIds/reason/:prisonerId", function (req, res) {
   // set the reason in the deallocation session data for each prisoner
   req.session.data["deallocation"][prisonerId]["reason"] = reason;
 
-  // redirect to the date entry page for the next prisoner
-  let selectedPrisoners = req.params.prisonerIds.split(",");
-  let prisonerIndex = selectedPrisoners.indexOf(prisonerId);
-  if (prisonerIndex < selectedPrisoners.length - 1) {
-    res.redirect(selectedPrisoners[prisonerIndex + 1]);
-  } else {
-    // if there are no more prisoners, redirect to the confirmation page
+  let prisoners = req.params.prisonerIds.split(",");
+  let prisonerIndex = prisoners.indexOf(prisonerId);
+
+  // Simplified and refactored code:
+  if (req.query.redirect === "check-deallocation" || prisonerIndex === prisoners.length - 1) {
     res.redirect("../check-deallocation");
+  } else {
+    // redirect to the date entry page for the next prisoner
+    res.redirect(prisoners[prisonerIndex + 1]);
   }
 });
 
@@ -273,9 +297,7 @@ router.get("/:prisonerIds/reason", function (req, res) {
 
   // make an object of prisoner data from each prisoner ID in the selectedPrisoners array
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisonerData = prisoners.filter((prisoner) =>
-    selectedPrisoners.includes(prisoner.id.toString())
-  );
+  let prisonerData = prisoners.filter((prisoner) => selectedPrisoners.includes(prisoner.id.toString()));
 
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
@@ -284,8 +306,7 @@ router.get("/:prisonerIds/reason", function (req, res) {
 
   let multiple = false;
 
-  let selectedReason =
-    req.session.data["deallocation"][selectedPrisoners[0]]["reason"];
+  let selectedReason = req.session.data["deallocation"][selectedPrisoners[0]]["reason"];
 
   // render the deallocate reason page
   res.render(req.protoUrl + "/reason", {
@@ -324,9 +345,7 @@ router.get("/:prisonerIds/check-deallocation", function (req, res) {
 
   // make an object of prisoner data from each prisoner ID in the selectedPrisoners array
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisonerData = prisoners.filter((prisoner) =>
-    selectedPrisoners.includes(prisoner.id.toString())
-  );
+  let prisonerData = prisoners.filter((prisoner) => selectedPrisoners.includes(prisoner.id.toString()));
 
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
@@ -346,9 +365,7 @@ router.post("/:prisonerIds/check-deallocation", function (req, res) {
 
   // make an object of prisoner data from each prisoner ID in the selectedPrisoners array
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisonerData = prisoners.filter((prisoner) =>
-    selectedPrisoners.includes(prisoner.id.toString())
-  );
+  let prisonerData = prisoners.filter((prisoner) => selectedPrisoners.includes(prisoner.id.toString()));
 
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
@@ -378,9 +395,7 @@ router.get("/:prisonerIds/deallocation-confirmation", function (req, res) {
 
   // make an object of prisoner data from each prisoner ID in the selectedPrisoners array
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisonerData = prisoners.filter((prisoner) =>
-    selectedPrisoners.includes(prisoner.id.toString())
-  );
+  let prisonerData = prisoners.filter((prisoner) => selectedPrisoners.includes(prisoner.id.toString()));
 
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
@@ -400,13 +415,9 @@ router.get("/:activityId/deallocate/:prisonerId", function (req, res) {
   let activityId = req.activityId;
   let prisonerId = req.params.prisonerId;
   let activities = req.session.data["timetable-complete-1"]["activities"];
-  let activity = activities.find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
+  let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisoner = prisoners.find(
-    (prisoner) => prisoner.id.toString() === prisonerId.toString()
-  );
+  let prisoner = prisoners.find((prisoner) => prisoner.id.toString() === prisonerId.toString());
 
   // render the deallocate page
   res.render(req.protoUrl + "/deallocate", {
@@ -423,9 +434,7 @@ router.post("/:activityId/deallocate/:prisonerId", function (req, res) {
     let prisonerId = req.params.prisonerId;
     // remove the activity id from the prisoner's activity array
     let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-    let prisoner = prisoners.find(
-      (prisoner) => prisoner.id.toString() === prisonerId.toString()
-    );
+    let prisoner = prisoners.find((prisoner) => prisoner.id.toString() === prisonerId.toString());
     prisoner.activity = prisoner.activity.filter(
       (activity) => activity.toString() !== req.params.activityId.toString()
     );
@@ -464,8 +473,7 @@ function addAllocationsCountToActivities(activities, req, applications) {
     // but exclude ones that have been rejected
     let activityApplications = applications.filter(
       (application) =>
-        application["activity"].toString() === activity.id.toString() &&
-        application["status"] !== "rejected"
+        application["activity"].toString() === activity.id.toString() && application["status"] !== "rejected"
     );
 
     // add the count of vacancies to the activity object
@@ -504,15 +512,7 @@ function getActivitySchedule(activitySchedule) {
   return activitySchedule.map((day) => {
     // convert each day number to the name of the weekday
     // 1 = monday, 2 = tuesday, etc.
-    let dayNames = [
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-      "saturday",
-      "sunday",
-    ];
+    let dayNames = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
     let dayName = dayNames[day.day];
 
     // return the day name and am/pm values

@@ -68,7 +68,7 @@ text: "Back",
         </dl>
         {% endif %} -->
 
-        {% for prisoner in prisonerData %}
+        {% for prisoner in prisonerData | reverse %}
         {% if prisonerData | length > 1 %}
         <div class="govuk-summary-card">
             <div class="govuk-summary-card__title-wrapper">
@@ -78,6 +78,7 @@ text: "Back",
             <div class="govuk-summary-card__content">
                 {% endif %}
                 <dl class="govuk-summary-list">
+                    {% if prisonerData | length == 1 %}
                     <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key">
                             Name
@@ -94,14 +95,15 @@ text: "Back",
                             {{prisoner.id}}
                         </dd>
                     </div>
-                    <div class="govuk-summary-list__row">
+                    {% endif %}
+                    <!-- <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key">
                             Activity
                         </dt>
                         <dd class="govuk-summary-list__value">
                             {{activity.name}}
                         </dd>
-                    </div>
+                    </div> -->
                     <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key">
                             Date of last session
@@ -111,8 +113,13 @@ text: "Back",
                         </dd>
                         <!-- Change link -->
                         <dd class="govuk-summary-list__actions">
-                            <a href="date-check?redirect=check-deallocation"
+                            {% if data['deallocate-same-date'] == 'yes' %}
+                            <a href="date?redirect=check-deallocation"
                                 class="govuk-link--no-visited-state">Change</a>
+                            {% else %}
+                            <a href="date/{{prisoner.id}}?redirect=check-deallocation"
+                                class="govuk-link--no-visited-state">Change</a>
+                            {% endif %}
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row">
@@ -124,8 +131,13 @@ text: "Back",
                         </dd>
                         <!-- Change link -->
                         <dd class="govuk-summary-list__actions">
-                            <a href="reason-check?redirect=check-deallocation"
+                            {% if data['deallocate-same-reason'] == 'yes' %}
+                            <a href="reason?redirect=check-deallocation"
                                 class="govuk-link--no-visited-state">Change</a>
+                            {% else %}
+                            <a href="reason/{{prisoner.id}}?redirect=check-deallocation"
+                                class="govuk-link--no-visited-state">Change</a>
+                            {% endif %}
                         </dd>
                     </div>
                 </dl>
