@@ -459,4 +459,102 @@ router.get("/capacity-warning", function (req, res) {
   });
 });
 
+// edit activity education level list page
+router.get("/education-levels", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // if the delete dialog has been set to true, delete it
+  if (req.session.data["show-delete-dialog"] && req.session.data["show-delete-dialog"] == true) {
+    delete req.session.data["show-delete-dialog"];
+  }
+
+  // render the page
+  res.render(req.protoUrl + "/education-level-list", {
+    activity,
+    activityId,
+    });
+});
+
+// edit activity education level list post route
+router.post("/education-levels", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // update the activity education levels
+  activity.educationLevels = req.session.data["education-levels"];
+
+  // set the confirmation message to be displayed on the activity page
+  req.session.data["confirmation-dialog"] = {
+    display: true,
+    change: "education levels",
+  };
+
+  // redirect to the activity page
+  res.redirect("../details");
+});
+
+
+// remove activity education level get route
+// this just removes the education level from the education levels session data and redirects back to the education levels list page with a confirmation message
+router.get("/remove-education-level/:educationLevelId", function (req, res) {
+  let educationLevels = req.session.data["education-levels"];
+  let educationLevelId = req.params.educationLevelId;
+  let educationLevel = educationLevels.find(
+    (educationLevel) => educationLevel.id == educationLevelId
+  );
+
+  // remove the education level from the education levels session data
+  educationLevels.splice(educationLevels.indexOf(educationLevel), 1);
+
+  // set the confirmation message to be displayed on the education levels list page
+  req.session.data["show-delete-dialog"] = true;
+
+  // redirect to the education levels list page
+  res.redirect("../education-levels");
+});
+
+// edit activity education level page
+router.get("/add-education-level", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+  
+  // render the page
+  res.render(req.protoUrl + "/education-level", {
+    activity,
+    activityId,
+    });
+});
+
+// edit activity education level POST route
+router.post("/add-education-level", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // if there is no session data for education levels, create it
+  if (!req.session.data["education-levels"]) {
+    req.session.data["education-levels"] = [];
+  }
+
+  // add the new education level to the session data
+  req.session.data["education-levels"].push({
+    id: req.session.data["education-levels"].length + 1,
+    name: req.body["education-level"],
+  });
+
+  // set the confirmation message to be displayed on the activity page
+  req.session.data["confirmation-dialog"] = {
+    display: true,
+    change: "education level",
+  };
+
+  // redirect to the education level list page
+  res.redirect("education-levels");
+});
+
+
 module.exports = router;

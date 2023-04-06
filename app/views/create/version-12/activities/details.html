@@ -88,10 +88,23 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         }
         ]
         }) }}
-
+        
         <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-8">
             Requirements and suitability
         </h2>
+        {% if activity.educationLevels.length > 0 %}
+        {% set educationLevels %}
+        <ul class="govuk-list govuk-list--spaced">
+            {% for educationLevel in activity.educationLevels %}
+            <li>{{ educationLevel.name }}</li>
+            {% endfor %}
+        </ul>
+        {% endset %}
+
+        {% else %}
+        {% set educationLevels = "None" %}
+        {% endif %}
+
         {{ govukSummaryList({
         rows: [
         {
@@ -135,14 +148,14 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         actions: {
         items: [
         {
-        href: "#",
+        href: "edit/education-levels",
         text: "Change",
         visuallyHiddenText: "activity name"
         }
         ]
         },
         value: {
-        text: "English level 1"
+        html: educationLevels
         }
         },
         {
