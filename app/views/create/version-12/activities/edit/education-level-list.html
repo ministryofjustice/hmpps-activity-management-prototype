@@ -64,22 +64,25 @@ Activities Management prototype
                 }
                 })}}
             </div>
-
-            {{govukButton({
-            text: "Update education levels"
-            })}}
             {% else %}
             <p class="govuk-body">
                 There are no education levels or qualifications added.
             </p>
             {{govukButton({
             text: "Add a qualification",
+            classes: "govuk-button--secondary",
             attributes: {
             formmethod: "get",
             formaction: "add-education-level"
             }
             })}}
             {% endif %}
+
+            <p>
+            {{govukButton({
+            text: "Update education levels"
+            })}}
+            </p>
 
             <p class="govuk-body">
                 <a class="govuk-link govuk-link--no-visited-state" href="../details">

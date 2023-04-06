@@ -470,10 +470,26 @@ router.get("/education-levels", function (req, res) {
     delete req.session.data["show-delete-dialog"];
   }
 
+  let educationLevels = [];
+
+  // if the activity has education levels already, we need to pass them to the page
+  if (activity.educationLevels) {
+    educationLevels = activity.educationLevels;
+  } else {
+    // but if the activity doesn't have education levels, we need to set the session data to an empty array
+    // unless the session data already exists, in which case we don't want to overwrite it
+    if (!req.session.data["education-levels"]) {
+      req.session.data["education-levels"] = [];
+    } else {
+      educationLevels = req.session.data["education-levels"];
+    }
+  }
+
   // render the page
   res.render(req.protoUrl + "/education-level-list", {
     activity,
     activityId,
+    educationLevels,
     });
 });
 
