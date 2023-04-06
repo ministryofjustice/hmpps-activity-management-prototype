@@ -255,7 +255,7 @@ router.post("/bank-holidays", function (req, res) {
   let activity = activities.find((activity) => activity.id == activityId);
 
   // update the activity bank holidays
-  activity.schedule.bankHolidays = req.body["activity-bank-holidays"];
+  activity.bankHolidays = req.body["bank-holidays"];
 
   // set the confirmation message to be displayed on the activity page
   req.session.data["confirmation-dialog"] = {
