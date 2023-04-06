@@ -28,8 +28,8 @@ window.history.go(-1)" })}} {% endblock %}
             {% set noun = "person" %}
             {% endif %}
 
-            <p class="govuk-body">
-                You are about to reduce the capacity of this activity. The activity will be {{difference}} {{noun}} over capacity.
+            <p>
+                You can reduce the number of people currently allocated to this activity before you change the capacity of the activity.
             </p>
 
             <div class="govuk-summary-list">
@@ -54,7 +54,10 @@ window.history.go(-1)" })}} {% endblock %}
                         New capacity
                     </dt>
                     <dd class="govuk-summary-list__value">
-                        {{data['capacity']}}
+                        {{data['capacity']}}<br>
+                        <strong class="govuk-hint govuk-!-font-size-16">
+                            There will be {{difference}} {{noun}} more than the capacity of this activity.
+                        </strong>
                     </dd>
                     <dd class="govuk-summary-list__actions">
                         <a href="capacity" class="govuk-link">Change</a>
@@ -62,12 +65,8 @@ window.history.go(-1)" })}} {% endblock %}
                 </div>
             </div>
 
-            <p>
-                You can reduce the number of people currently allocated to this activity before you change the capacity of the activity.
-            </p>
-
             {{ govukWarningText({
-            text: "The activity will be over capacity if you continue."
+            html: "You are about to reduce the capacity of this activity. The activity will be over capacity."
             }) }}            
             
             {{ govukButton({
