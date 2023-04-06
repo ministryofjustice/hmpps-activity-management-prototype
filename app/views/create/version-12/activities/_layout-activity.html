@@ -25,9 +25,7 @@ Find an activity to record or edit attendance
 {% block content %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% if data['confirmation-dialog'].display == true %}
-
 {% set prisoner = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
-
 {% if data['confirmation-dialog'].type == 'deallocate' %}
 {% set bannerHtml %}
 <h2 class="govuk-notification-banner__heading">

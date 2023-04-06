@@ -10,8 +10,7 @@ Find an activity to record or edit attendance
 {% block primaryNavigation %}
 {% endblock %}
 
-{% block tableArea %}
-
+{% block beforeContent %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% if data['confirmation-dialog'].display == true %}
 {% set bannerHtml %}
@@ -22,10 +21,13 @@ Find an activity to record or edit attendance
 {{ govukNotificationBanner({
 html: bannerHtml,
 titleText: "Success",
-type: "success"
+type: "success",
+classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
 }) }}
 {% endif %}
+{% endblock %}
 
+{% block tableArea %}
 <div class="govuk-grid-row govuk-!-margin-top-7">
     <div class="govuk-grid-column-two-thirds">
         <h2 class="govuk-heading-m govuk-!-margin-bottom-3">
