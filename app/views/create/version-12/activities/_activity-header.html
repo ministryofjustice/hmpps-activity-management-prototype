@@ -89,16 +89,12 @@
         </table>
         {% endset %}
 
-        <!-- {{govukDetails({
-        summaryText: "View activity schedule",
-        html: scheduleHtml
-        })}} -->
-
-        {% set currentlyAllocatedCount =
-        data['timetable-complete-1']['prisoners']|getCurrentlyAllocatedCount(activity.id) %}
+        {% set currentlyAllocatedCount = data['timetable-complete-1']['prisoners']|getCurrentlyAllocatedCount(activity.id) %}
+        {% set vacanciesCount = activity.capacity - currentlyAllocatedCount %}
+        {% if vacanciesCount < 0 %} {% set vacanciesCount=0 %} {% endif %}
+        
         <ul class="govuk-list">
-            {% set vacanciesCount = activity.capacity - currentlyAllocatedCount %}
-            {% if vacanciesCount < 0 %} {% set vacanciesCount=0 %} {% endif %} <li>
+             <li>
                 Vacancies: {{vacanciesCount}}
                 </li>
                 <li>
