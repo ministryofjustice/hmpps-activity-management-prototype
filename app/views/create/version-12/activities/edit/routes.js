@@ -167,6 +167,72 @@ router.get("/schedule", function (req, res) {
   });
 });
 
+// edit activity schedule POST route
+router.post("/schedule", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  let schedule = [];
+  let periods = ["am", "pm", "ed"];
+  let days = [0, 1, 2, 3, 4, 5, 6];
+
+  // set the daysData variable to the days array, but remove _unchecked values so that the daysData array only contains the days that have been selected
+  let daysData = req.body.days.filter((day) => day != "_unchecked");
+
+  // create the structure for the schedule object
+  for (let day of days) {
+    let scheduleDay = {
+      day: day,
+      am: null,
+      pm: null,
+      ed: null,
+    };
+    schedule.push(scheduleDay);
+  }
+
+  // update the schedule object with the periods that have been selected for each day
+  for (let day of daysData) {
+    let selectedPeriods = req.body["times-" + day];
+    for (let period of periods) {
+      if (selectedPeriods.includes(period)) {
+        let periodTimes = getPeriodTimes(period);
+        let scheduleDay = schedule.find((scheduleDay) => scheduleDay.day == day);
+        scheduleDay[period] = [periodTimes];
+      }
+    }
+  }
+
+  // update the activity schedule with the new schedule object
+  activity.schedule = schedule;
+
+  // set the confirmation message to be displayed on the activity page
+  req.session.data["confirmation-dialog"] = {
+    display: true,
+    change: "schedule",
+  };
+
+  // redirect to the activity page
+  res.redirect("../../" + activityId + "/details");
+
+  // function to set generic start and end times for a given period
+  function getPeriodTimes(period) {
+    let periodTimes = [];
+    switch (period) {
+      case "am":
+        periodTimes = { startTime: "9:00", endTime: "12:00" };
+        break;
+      case "pm":
+        periodTimes = { startTime: "13:00", endTime: "16:00" };
+        break;
+      case "ed":
+        periodTimes = { startTime: "16:00", endTime: "18:00" };
+        break;
+    }
+    return periodTimes;
+  }
+});
+
 // edit activity bank holidays page
 router.get("/bank-holidays", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
@@ -307,14 +373,14 @@ router.get("/capacity", function (req, res) {
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
   let currentlyAllocatedCount = 0;
   prisoners.forEach((prisoner) => {
-    if(prisoner.activity) {
-      for(let i = 0; i < prisoner.activity.length; i++) {
-        if(prisoner.activity[i].toString() == activityId.toString()) {
+    if (prisoner.activity) {
+      for (let i = 0; i < prisoner.activity.length; i++) {
+        if (prisoner.activity[i].toString() == activityId.toString()) {
           currentlyAllocatedCount++;
         }
       }
     }
-  });    
+  });
 
   // render the page
   res.render(req.protoUrl + "/capacity", {
@@ -334,9 +400,9 @@ router.post("/capacity", function (req, res) {
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
   let currentlyAllocatedCount = 0;
   prisoners.forEach((prisoner) => {
-    if(prisoner.activity) {
-      for(let i = 0; i < prisoner.activity.length; i++) {
-        if(prisoner.activity[i].toString() == activityId.toString()) {
+    if (prisoner.activity) {
+      for (let i = 0; i < prisoner.activity.length; i++) {
+        if (prisoner.activity[i].toString() == activityId.toString()) {
           currentlyAllocatedCount++;
         }
       }
@@ -376,9 +442,9 @@ router.get("/capacity-warning", function (req, res) {
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
   let currentlyAllocatedCount = 0;
   prisoners.forEach((prisoner) => {
-    if(prisoner.activity) {
-      for(let i = 0; i < prisoner.activity.length; i++) {
-        if(prisoner.activity[i].toString() == activityId.toString()) {
+    if (prisoner.activity) {
+      for (let i = 0; i < prisoner.activity.length; i++) {
+        if (prisoner.activity[i].toString() == activityId.toString()) {
           currentlyAllocatedCount++;
         }
       }
@@ -390,8 +456,7 @@ router.get("/capacity-warning", function (req, res) {
     activity,
     activityId,
     currentlyAllocatedCount,
-    });
+  });
 });
-
 
 module.exports = router;
