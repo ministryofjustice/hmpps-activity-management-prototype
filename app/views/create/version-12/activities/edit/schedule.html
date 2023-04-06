@@ -29,6 +29,10 @@ text: "Back",
 
             {% endset %}
 
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset" aria-describedby="days-hint">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -84,9 +88,13 @@ text: "Back",
                 </fieldset>
             </div>
 
-            <button class="govuk-button" data-module="govuk-button">
-                Confirm times and days
-            </button>
+            {{ govukButton({
+                text: "Update schedule"
+            }) }}
+
+            <p class="govuk-body">
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
         </form>
     </div>
 </div>
