@@ -32,6 +32,61 @@ Appointments prototype
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
+                  Category
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{data.categoryChoice1 or data.categoryChoice}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> category</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Show on unlock list
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['manual-category-entry']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-type">
+                    Change<span class="govuk-visually-hidden"> type</span>
+                  </a>
+                </dd>
+              </div>
+              {% if data['manual-category-entry'] ==='No' %}
+              
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Manual category
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['manual-category']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-type">
+                    Change<span class="govuk-visually-hidden"> type</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{data.locationbulk1 or data.locationbulk}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
                   Appointments created 
                 </dt>
                 <dd class="govuk-summary-list__value">
@@ -79,32 +134,7 @@ Appointments prototype
                   </a>
                 </dd>
               </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Category
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  {{data.categoryChoice1 or data.categoryChoice or 'Doctors - other'}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> category</span>
-                  </a>
-                </dd>
-              </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Location
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  {{data.locationbulk1 or data.locationbulk or 'HB1 Doctors'}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Time</span>
-                  </a>
-                </dd>
-              </div>
+             
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Start time
@@ -154,32 +184,7 @@ Appointments prototype
                     </a>
                   </dd>
                 </div>
-                <div class="govuk-summary-list__row">
-                  <dt class="govuk-summary-list__key">
-                    Category
-                  </dt>
-                  <dd class="govuk-summary-list__value">
-                    {{data.categoryChoice2 or data.categoryChoice or 'Doctors - other'}}
-                  </dd>
-                  <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="#">
-                      Change<span class="govuk-visually-hidden"> category</span>
-                    </a>
-                  </dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                  <dt class="govuk-summary-list__key">
-                    Location
-                  </dt>
-                  <dd class="govuk-summary-list__value">
-                    {{data.locationbulk2 or data.locationbulk or 'HB1 Doctors'}}
-                  </dd>
-                  <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="#">
-                      Change<span class="govuk-visually-hidden"> Time</span>
-                    </a>
-                  </dd>
-                </div>
+                
                 <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">
                     Start time
@@ -229,32 +234,7 @@ Appointments prototype
                       </a>
                     </dd>
                   </div>
-                  <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                      Category
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                      {{data.categoryChoice3 or data.categoryChoice or 'Doctors - other'}}
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> category</span>
-                      </a>
-                    </dd>
-                  </div>
-                  <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                      Location
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                      {{data.locationbulk3 or data.locationbulk or 'HB1 Doctors'}}
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
-                  </div>
+                  
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       Start time
@@ -304,32 +284,7 @@ Appointments prototype
                         </a>
                       </dd>
                     </div>
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                        Category
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        {{data.categoryChoice4 or data.categoryChoice or 'Doctors - other'}}
-                      </dd>
-                      <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="#">
-                          Change<span class="govuk-visually-hidden"> category</span>
-                        </a>
-                      </dd>
-                    </div>
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                        Location
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        {{data.locationbulk4 or data.locationbulk or 'HB1 Doctors'}}
-                      </dd>
-                      <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="#">
-                          Change<span class="govuk-visually-hidden"> Time</span>
-                        </a>
-                      </dd>
-                    </div>
+                   
                     <div class="govuk-summary-list__row">
                       <dt class="govuk-summary-list__key">
                         Start time
@@ -379,32 +334,7 @@ Appointments prototype
                           </a>
                         </dd>
                       </div>
-                      <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key">
-                          Category
-                        </dt>
-                        <dd class="govuk-summary-list__value">
-                          {{data.categoryChoice5 or data.categoryChoice or 'Doctors - other'}}
-                        </dd>
-                        <dd class="govuk-summary-list__actions">
-                          <a class="govuk-link" href="#">
-                            Change<span class="govuk-visually-hidden"> category</span>
-                          </a>
-                        </dd>
-                      </div>
-                      <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key">
-                          Location
-                        </dt>
-                        <dd class="govuk-summary-list__value">
-                          {{data.locationbulk5 or data.locationbulk or 'HB1 Doctors'}}
-                        </dd>
-                        <dd class="govuk-summary-list__actions">
-                          <a class="govuk-link" href="#">
-                            Change<span class="govuk-visually-hidden"> Time</span>
-                          </a>
-                        </dd>
-                      </div>
+                     
                       <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key">
                           Start time
@@ -454,32 +384,7 @@ Appointments prototype
                             </a>
                           </dd>
                         </div>
-                        <div class="govuk-summary-list__row">
-                          <dt class="govuk-summary-list__key">
-                            Category
-                          </dt>
-                          <dd class="govuk-summary-list__value">
-                            {{data.categoryChoice6 or data.categoryChoice or 'Doctors - other'}}
-                          </dd>
-                          <dd class="govuk-summary-list__actions">
-                            <a class="govuk-link" href="#">
-                              Change<span class="govuk-visually-hidden"> category</span>
-                            </a>
-                          </dd>
-                        </div>
-                        <div class="govuk-summary-list__row">
-                          <dt class="govuk-summary-list__key">
-                            Location
-                          </dt>
-                          <dd class="govuk-summary-list__value">
-                            {{data.locationbulk6 or data.locationbulk or 'HB1 Doctors'}}
-                          </dd>
-                          <dd class="govuk-summary-list__actions">
-                            <a class="govuk-link" href="#">
-                              Change<span class="govuk-visually-hidden"> Time</span>
-                            </a>
-                          </dd>
-                        </div>
+                       
                         <div class="govuk-summary-list__row">
                           <dt class="govuk-summary-list__key">
                             Start time
@@ -529,32 +434,7 @@ Appointments prototype
                               </a>
                             </dd>
                           </div>
-                          <div class="govuk-summary-list__row">
-                            <dt class="govuk-summary-list__key">
-                              Category
-                            </dt>
-                            <dd class="govuk-summary-list__value">
-                              {{data.categoryChoice7 or data.categoryChoice or 'Doctors - other'}}
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                              <a class="govuk-link" href="#">
-                                Change<span class="govuk-visually-hidden"> category</span>
-                              </a>
-                            </dd>
-                          </div>
-                          <div class="govuk-summary-list__row">
-                            <dt class="govuk-summary-list__key">
-                              Location
-                            </dt>
-                            <dd class="govuk-summary-list__value">
-                              {{data.locationbulk7 or data.locationbulk or 'HB1 Doctors'}}
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                              <a class="govuk-link" href="#">
-                                Change<span class="govuk-visually-hidden"> Time</span>
-                              </a>
-                            </dd>
-                          </div>
+                          
                           <div class="govuk-summary-list__row">
                             <dt class="govuk-summary-list__key">
                               Start time
@@ -604,32 +484,7 @@ Appointments prototype
                                 </a>
                               </dd>
                             </div>
-                            <div class="govuk-summary-list__row">
-                              <dt class="govuk-summary-list__key">
-                                Category
-                              </dt>
-                              <dd class="govuk-summary-list__value">
-                                {{data.categoryChoice8 or data.categoryChoice or 'Doctors - other'}}
-                              </dd>
-                              <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link" href="#">
-                                  Change<span class="govuk-visually-hidden"> category</span>
-                                </a>
-                              </dd>
-                            </div>
-                            <div class="govuk-summary-list__row">
-                              <dt class="govuk-summary-list__key">
-                                Location
-                              </dt>
-                              <dd class="govuk-summary-list__value">
-                                {{data.locationbulk8 or 'HB1 Doctors'}}
-                              </dd>
-                              <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link" href="#">
-                                  Change<span class="govuk-visually-hidden"> Time</span>
-                                </a>
-                              </dd>
-                            </div>
+                            
                             <div class="govuk-summary-list__row">
                               <dt class="govuk-summary-list__key">
                                 Start time
@@ -679,32 +534,7 @@ Appointments prototype
                                   </a>
                                 </dd>
                               </div>
-                              <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">
-                                  Category
-                                </dt>
-                                <dd class="govuk-summary-list__value">
-                                  {{data.categoryChoice9 or data.categoryChoice or 'Doctors - other'}}
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                  <a class="govuk-link" href="#">
-                                    Change<span class="govuk-visually-hidden"> category</span>
-                                  </a>
-                                </dd>
-                              </div>
-                              <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">
-                                  Location
-                                </dt>
-                                <dd class="govuk-summary-list__value">
-                                  {{data.locationbulk9 or 'HB1 Doctors'}}
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                  <a class="govuk-link" href="#">
-                                    Change<span class="govuk-visually-hidden"> Time</span>
-                                  </a>
-                                </dd>
-                              </div>
+                              
                               <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">
                                   Start time
@@ -754,32 +584,7 @@ Appointments prototype
                                     </a>
                                   </dd>
                                 </div>
-                                <div class="govuk-summary-list__row">
-                                  <dt class="govuk-summary-list__key">
-                                    Category
-                                  </dt>
-                                  <dd class="govuk-summary-list__value">
-                                    {{data.categoryChoice10 or data.categoryChoice or 'Doctors - other'}}
-                                  </dd>
-                                  <dd class="govuk-summary-list__actions">
-                                    <a class="govuk-link" href="#">
-                                      Change<span class="govuk-visually-hidden"> category</span>
-                                    </a>
-                                  </dd>
-                                </div>
-                                <div class="govuk-summary-list__row">
-                                  <dt class="govuk-summary-list__key">
-                                    Location
-                                  </dt>
-                                  <dd class="govuk-summary-list__value">
-                                    {{data.locationbulk10 or 'HB1 Doctors'}}
-                                  </dd>
-                                  <dd class="govuk-summary-list__actions">
-                                    <a class="govuk-link" href="#">
-                                      Change<span class="govuk-visually-hidden"> Time</span>
-                                    </a>
-                                  </dd>
-                                </div>
+                               
                                 <div class="govuk-summary-list__row">
                                   <dt class="govuk-summary-list__key">
                                     Start time
