@@ -1,0 +1,206 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+
+    <div class="govuk-width-container">
+      
+      <main class="govuk-main-wrapper " id="main-content" role="main">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds-from-desktop">
+            <h1 class="govuk-heading-l">Check your appointment details before you accept and save</h1>
+            <h2 class="govuk-heading-m">Appointment details</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link"><b>Rudge</b>, Neil</a> <br>{{ data['prisoner-name-single']}}<br>1−1−2
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/search-person">
+                    Change<span class="govuk-visually-hidden"> Prisoner list</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Category
+                </dt>
+                <dd class="govuk-summary-list__value">
+                   {{ data['categoryChoicesingle']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-type">
+                    Change<span class="govuk-visually-hidden"> type</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Show on unlock list
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['manual-category']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-type">
+                    Change<span class="govuk-visually-hidden"> type</span>
+                  </a>
+                </dd>
+              </div>
+
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Manual category
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['manual-category-entry']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-type">
+                    Change<span class="govuk-visually-hidden"> type</span>
+                  </a>
+                </dd>
+              </div>
+
+              <!--<div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Manual category
+                </dt>
+                <dd class="govuk-summary-list__value">
+                   Choir in location A
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-type">
+                    Change<span class="govuk-visually-hidden"> type</span>
+                  </a>
+                </dd>
+              </div>-->
+             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['locationChoicesingle']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/location">
+                    Change<span class="govuk-visually-hidden"> location</span>
+                  </a>
+                </dd>
+              </div>
+              
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/date-of-appointment">
+                    Change <span class="govuk-visually-hidden"> date</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Start time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['start-hours-single']}}:{{ data['start-minutes-single']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/date-of-appointment#time">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  End time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['end-hours-single']}}:{{ data['end-minutes-single']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/date-of-appointment#time">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Repeat
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['appointment-repeat-single']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-repeat">
+                    Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>
+              {% if data['appointment-repeat-single'] === 'Yes' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Frequency
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['appointment-frequency-single']}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-frequency#appointment-frequency">
+                    Change<span class="govuk-visually-hidden"> Frequency</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Occurences
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['number-of-appointments-single']}}   
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-frequency">
+                    Change<span class="govuk-visually-hidden"> Occurences left</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+              {% if data['comments-single'] !='' %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Comments
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['comments-single']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/search-person">
+                    Change<span class="govuk-visually-hidden"> Prisoner list</span>
+                  </a>
+                </dd>
+              </div>
+              {% endif %}
+            </dl>
+            <form action="confirmation" method="post" novalidate>
+              <input type="hidden" name="answers-checked" value="true">
+              <button class="govuk-button" data-module="govuk-button">
+                Accept and save
+              </button>
+            </form>          
+          </div>
+        </div>
+      </main>
+    </div>
+  
+{% endblock %}

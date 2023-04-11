@@ -1,0 +1,341 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<form action="confirmation" method="post" >
+    <div class="govuk-width-container">
+      
+      <main class="govuk-main-wrapper " id="main-content" role="main">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds-from-desktop">
+            {% if data['which-occurrence-alt']  %}
+
+            {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+            {% set html %}
+              <h3 class="govuk-notification-banner__heading">
+                Appointment changed successfully 
+              </h3>
+              
+            {% endset %}
+
+            {{ govukNotificationBanner({
+              html: html,
+              type: 'success'
+            }) }}
+  
+            {% endif %}
+
+            {% if data['which-occurrence'] === 'All occurrences' %}
+
+            {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+            {% set html %}
+              <h3 class="govuk-notification-banner__heading">
+                Appointment [detail here] for all occurrences changed successfully 
+              </h3>
+              
+            {% endset %}
+
+            {{ govukNotificationBanner({
+              html: html,
+              type: 'success'
+            }) }}
+  
+            {% endif %}
+            <h1 class="govuk-heading-l">View and edit appointment details</h1>
+            <h2 class="govuk-heading-m">Group appointment details</h2>
+
+            
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Created by
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  J. Smith
+                </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Date created
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    13 Feb 2023
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <!--<a class="govuk-link" href="change-answers/date-of-appointment">
+                      Change <span class="govuk-visually-hidden"> date</span>
+                    </a>-->
+                  </dd>
+                </div>
+                {% if data['which-occurrence-alt'] === 'This and the following occurrences' or data['which-occurrence-alt'] === 'All occurrences' or data['which-occurrence-alt'] === 'This occurrence' %}
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Last edited by
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    B. Milman
+                  </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Last edited date
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      30 Mar 2023
+                    </dd>
+                    </div>
+                {% endif %}
+             </dl>
+            
+             <h2 class="govuk-heading-m">Next occurrence</h2>
+             <dl class="govuk-summary-list govuk-!-margin-bottom-3">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Category
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{data.categoryChoicesinglealt or 'Medical - Other'}} 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <!--<a class="govuk-link" href="change-answers/appointment-type">
+                    Change <span class="govuk-visually-hidden">  type</span>
+                  </a>-->
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  HB1 Classroom 1
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="change-answers-group-alt/location">
+                    Change <span class="govuk-visually-hidden">  location</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  6 Apr 2023
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="change-answers-group-alt/date-of-appointment">
+                    Change <span class="govuk-visually-hidden"> date</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Start time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  11:00
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="change-answers-group-alt/date-of-appointment#start-time">
+                    Change <span class="govuk-visually-hidden"> start time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  End time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  12:00
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="change-answers-group-alt/date-of-appointment#end-time">
+                    Change <span class="govuk-visually-hidden"> end ime</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoners
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {% if data['which-occurrence-alt-prisoners'] and data['check-all'] %}
+                  10
+                  {% else %}
+                  9
+                  {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="change-answers-group-alt/person-add-another-all">
+                    Change<span class="govuk-visually-hidden"> Repeat</span>
+                  </a>
+                </dd>
+              </div>
+             </dl>
+             {{ govukButton({
+              text: "Print movement slip"
+             }) }}
+             {{ govukButton({
+              text: "Cancel occurrence",
+              href: "cancel-group-alt/cancel-question",
+              classes: "govuk-button--secondary"
+            }) }}
+                <table class="govuk-table govuk-!-margin-top-9">
+                  <caption class="govuk-table__caption govuk-table__caption--m">Remaining occurrences</caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th scope="col" class="govuk-table__header govuk-table__header--numeric width-one-eighth">Occurrence</th>
+                      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Date</th>
+                      <th scope="col" class="govuk-table__header"></th>
+                      <th scope="col" class="govuk-table__header width-one-eighth"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">6</td>
+                      <td class="govuk-table__cell">13 Apr 2023</td>
+                      <td class="govuk-table__cell">
+
+                        {% if data['which-occurrence-alt-prisoners'] and data['check-all'] %}
+                        <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                        <li>
+                          <b>Prisoners:</b>  10
+                        </li>
+                        {% elseif data['which-occurrence'] === 'All occurrences' %}
+                        <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                        <li>
+                          <b>Prisoners:</b>  10
+                        </li>
+                        {% endif %}
+                      </td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">7</td>
+                      <td class="govuk-table__cell">20 Apr 2023</td>
+                      <td class="govuk-table__cell">
+                        {% if data['locationChoicealt'] or data['start-hours-alt'] or data['person-1-alt'] or data['check-all']  %}
+                        <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                        {% endif %}
+                        
+                        
+                        
+                        {%if data['locationChoicealt'] or data['start-hours-alt'] or data['person-1-alt'] or data['check-all']  %}
+                        <ul class="govuk-list govuk-list--bullet">
+                    
+                          {% if data['locationChoicealt'] %}
+                          <li>
+                            <b>Location:</b>  {{data.locationChoicealt}}
+                          </li>
+                          {% endif %}
+                          {% if data['start-hours-alt'] %}
+                          <li>
+                            <b>Start time:</b>  {{ data['start-hours-alt'] }}:{{ data['start-minutes-alt']}}
+                          </li>
+                          <li>
+                            <b>End time:</b>  {{ data['end-hours-alt'] }}:{{ data['end-minutes-alt']}}
+                          </li>
+                          {% endif %}
+                          
+                      
+                        {% endif %}
+                        {% if data['person-1-alt'] or data['check-all']  %}
+                        
+                        <li>
+                        <b>Prisoners:</b>  10
+                        </li>
+                        </ul>
+                        {% endif %}
+                      </td>
+                      <td class="govuk-table__cell"><a href="group-appointment-single-occurrence-alt" class="govuk-link">View and edit</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">8</td>
+                      <td class="govuk-table__cell">27 Apr 2023</td>
+                      <td class="govuk-table__cell"><span class="govuk-tag govuk-tag--red">Cancelled</span></td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">9</td>
+                      <td class="govuk-table__cell">4
+                         May 2023</td>
+                      <td class="govuk-table__cell">
+                        {% if data['start-hours-alt'] or data['person-1-alt'] or data['check-all']  %}
+                        <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                        <ul class="govuk-list govuk-list--bullet">
+                         
+                          {% if data['start-hours-alt']%}
+                          <li>
+                            <b>Start time:</b>  {{ data['start-hours-alt'] }}:{{ data['start-minutes-alt']}}
+                          </li>
+                          <li>
+                            <b>End time:</b>  {{ data['end-hours-alt'] }}:{{ data['end-minutes-alt']}}
+                          </li>
+                          {% endif %}
+                          {% if data['person-1-alt'] or data['check-all']  %}
+                          <li>
+                            <b>Prisoners:</b>  10
+                          </li>
+                          {% endif %}
+                          
+                        </ul>
+                        {% endif %}
+                      </td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">10</td>
+                      <td class="govuk-table__cell">11  May 2023</td>
+                      <td class="govuk-table__cell">
+                        {% if data['start-hours-alt'] or data['person-1-alt'] or data['check-all']  %}
+                        <span class="govuk-tag govuk-!-margin-bottom-3">Edited</span>
+                        <ul class="govuk-list govuk-list--bullet">
+                         
+                          {% if data['start-hours-alt']%}
+                          <li>
+                            <b>Start time:</b>  {{ data['start-hours-alt'] }}:{{ data['start-minutes-alt']}}
+                          </li>
+                          <li>
+                            <b>End time:</b>  {{ data['end-hours-alt'] }}:{{ data['end-minutes-alt']}}
+                          </li>
+                          {% endif %}
+                          {% if data['person-1-alt'] or data['check-all'] %}
+                          <li>
+                            <b>Prisoners:</b>  10
+                          </li>
+                          {% endif %}
+                          
+                        </ul>
+                        {% endif %}
+                      </td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">View and edit</a></td>
+                    </tr>
+                   
+                  </tbody>
+                </table>
+              <div class="govuk-button-group">
+             {{ govukButton({
+              text: "Print all movement slips"
+             }) }}
+                {{ govukButton({
+                  text: "Cancel all appointments",
+                  href: "cancel/cancel-question",
+                  classes: "govuk-button--secondary"
+                }) }}
+            </div>
+             <p class="govuk-body">
+              <a href="#" class="govuk-link">Back to list of appointments</a>
+             </p>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  
+{% endblock %}

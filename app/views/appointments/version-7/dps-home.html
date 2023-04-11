@@ -1,0 +1,82 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block main %}
+{% block beforeContent %}
+<div class="govuk-width-container">
+	<h1 class="govuk-heading-l govuk-!-margin-top-7">Digital Prison Services</h1>
+</div>
+{% endblock %}
+
+<div class="homepage-content">
+	<div class="govuk-width-container">
+		<ul class="govuk-grid-row card-group">
+			
+		
+			
+			
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="individual-appointment/search-person">Create an appointment</a>
+					</h2>
+					<p class="govuk-body card__description">Add an appointment for an individual.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="bulk-appointments/date-of-appointment">Create a number of individual appointments</a>
+					</h2>
+					<p class="govuk-body card__description">Add individual appointments for a group of people.</p>
+				</div>
+			</li>
+			
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="group-appointments/upload-or-per-person">Create a group appointment</a>
+					</h2>
+					<p class="govuk-body card__description">Add a one-off or repeat appointment for a group of people.</p>
+				</div>
+			</li>
+			
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="appointment-management/version-2/start">Edit an appointment</a>
+					</h2>
+					<p class="govuk-body card__description">Find and edit an existing appointment.</p>
+				</div>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+{% endblock %}
+{% block pageScripts %}
+<script src="/public/javascripts/cards.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+	$(document).ready( function() {
+		var $list = "ul#sortable"
+		$($list).sortable({
+			update: function(event, ui) {
+				var order = [];
+				var data = $(this).sortable('serialize');
+
+				$($list + ' li').each( function(e) {
+					order.push( $(this).find('a').html() );
+				});
+
+				console.log( order , data );
+			}
+		});
+		$($list).disableSelection();
+	} );
+</script>
+{% endblock %}
