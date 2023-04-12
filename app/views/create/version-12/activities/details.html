@@ -85,10 +85,27 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         value: {
         text: activity.location
         }
+        },
+        {
+        key: {
+        text: "Capacity"
+        },
+        actions: {
+        items: [
+        {
+        href: "edit/capacity",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.capacity
+        }
         }
         ]
         }) }}
-        
+
         <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-8">
             Requirements and suitability
         </h2>
@@ -121,24 +138,7 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         ]
         },
         value: {
-        text: "Medium"
-        }
-        },
-        {
-        key: {
-        text: "Suitable for incentive level"
-        },
-        actions: {
-        items: [
-        {
-        href: "#",
-        text: "Change",
-        visuallyHiddenText: "activity name"
-        }
-        ]
-        },
-        value: {
-        text: "Basic, Standard or Enhanced"
+        text: "Either low or medium workplace risk assessment is suitable"
         }
         },
         {
@@ -156,23 +156,6 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         },
         value: {
         html: educationLevels
-        }
-        },
-        {
-        key: {
-        text: "Maximum allocation"
-        },
-        actions: {
-        items: [
-        {
-        href: "edit/capacity",
-        text: "Change",
-        visuallyHiddenText: "activity name"
-        }
-        ]
-        },
-        value: {
-        text: activity.capacity
         }
         }
         ]
@@ -332,10 +315,10 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
                             <dd class="govuk-summary-list__value">
                                 {% if day.am or day.pm %}
                                 {% if day.am %}
-                                AM {{"only" if day.pm == null else "and "}}
+                                AM {{"" if day.pm == null else "and "}}
                                 {% endif %}
                                 {% if day.pm %}
-                                PM {{"only" if day.am == null}}
+                                PM {{"" if day.am == null}}
                                 {% endif %}
                                 {% else %}
                                 <span class="govuk-hint">Not scheduled</span>
