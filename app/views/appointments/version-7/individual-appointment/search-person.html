@@ -1,0 +1,68 @@
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="prisoner-confirmation">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Individual appointment</span>
+        What is the prisoner's name or number?
+       </h1>
+         
+
+          <div data-module="moj-add-another">
+
+              {% call govukFieldset({
+                classes: 'moj-add-another__item',
+                legend: {
+                  text: '',
+                  classes: 'moj-add-another__title govuk-fieldset__legend--m',
+                  isPageHeading: false
+                }
+              }) %}
+          <br>
+              {{ govukInput({
+                id: 'prisoner-name-single',
+                name: 'prisoner-name-single',
+                classes: "govuk-input--width-20",
+                label: {
+                  html: 'Search by name or prison number'
+                },
+                attributes: {
+                  'data-name': 'person[%index%][first_name]',
+                  'data-id': 'person[%index%][first_name]'
+                }
+              }) }}
+
+
+              {% endcall %}
+
+             
+              
+              <div class="moj-button-action">
+                {{ govukButton({
+                  text: 'Continue'
+                }) }}
+              </div>
+
+          </div>
+        </form>
+      
+      </div>
+    
+    
+  </div>
+</div>
+</form>
+{% endblock %}
