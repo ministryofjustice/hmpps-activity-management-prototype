@@ -54,7 +54,7 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         },
         {
         key: {
-        text: "Category"
+        text: "Activity category"
         },
         actions: {
         items: [
@@ -119,8 +119,16 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         {% endset %}
 
         {% else %}
-        {% set educationLevels = "None" %}
+        {% set educationLevels = "None set" %}
         {% endif %}
+
+        {% set riskLevels %}
+        <ul class="govuk-list">
+            <li>Low</li>
+            <li>Medium</li>
+            <li>High</li>
+        </ul>
+        {% endset %}
 
         {{ govukSummaryList({
         rows: [
@@ -138,7 +146,7 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         ]
         },
         value: {
-        text: "Either low or medium workplace risk assessment is suitable"
+        html: riskLevels
         }
         },
         {

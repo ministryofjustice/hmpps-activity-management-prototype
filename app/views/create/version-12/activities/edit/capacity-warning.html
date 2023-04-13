@@ -18,7 +18,7 @@ window.history.go(-1)" })}} {% endblock %}
             </span>
 
             <h1 class="govuk-heading-xl">
-                Check the capacity of this activity before you update it
+                This activity will be overallocated
             </h1>
 
             {% set difference = currentlyAllocatedCount - data['capacity'] %}
@@ -66,7 +66,7 @@ window.history.go(-1)" })}} {% endblock %}
             </div>
 
             <!-- {{ govukWarningText({
-            html: "You are about to reduce the capacity of this activity. The activity will be over capacity."
+            html: "There will be "+ difference + " " + noun + " more than the capacity of this activity."
             }) }} -->
             
             {{ govukButton({

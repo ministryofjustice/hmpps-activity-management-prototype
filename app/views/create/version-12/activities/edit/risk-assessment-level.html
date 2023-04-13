@@ -20,35 +20,33 @@ text: "Back",
                 {{activity.name}}
             </span>
             {{govukRadios({
-            idPrefix: "risk-assessment-levels",
-            name: "new-activity[risk-assessment-level]",
+            idPrefix: "risk-assessment-level",
+            name: "risk-assessment-level",
             fieldset: {
             legend: {
-            text: "Workplace risk assessment levels: which ones are suitable for this activity?",
+            text: "Change workplace risk assessment levels",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
             }
             },
             hint: {
-            text: "The risk assessment levels you set on this page will be used to filter the list of people you'll see
-            when
-            allocating to this activity."
+            text: "If you change the risk assessment level, people who are currently allocated to this activity may no longer meet the requirements."
             },
             items: [
             {
-            value: "Only low workplace risk assessment is suitable",
             text: "Only low workplace risk assessment is suitable",
-            checked: true if activity.riskAssessmentLevel == "low"
+            value: "low-only",
+            checked: true if activity.riskAssessmentLevel == "low-only"
             },
             {
-            value: "Either low or medium workplace risk assessment is suitable",
             text: "Either low or medium workplace risk assessment is suitable",
-            checked: true if activity.riskAssessmentLevel == "medium"
+            value: "low-or-medium",
+            checked: true if activity.riskAssessmentLevel == "low-or-medium"
             },
             {
-            value: "hAny of low, medium or high workplace risk assessment is suitableigh",
             text: "Any of low, medium or high workplace risk assessment is suitable",
-            checked: true if activity.riskAssessmentLevel == "high"
+            value: "any",
+            checked: true if activity.riskAssessmentLevel == "any"
             }
             ]
             })}}

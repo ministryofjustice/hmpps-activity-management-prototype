@@ -37,11 +37,12 @@ text: "Back",
 
         <form method="post">
             {% if data['education-levels'].length > 0 %}
-            <!-- <h2 class="govuk-heading-m">
-                Levels and qualifications you have added
-            </h2> -->
+            
+            {% set questionText %}
+            Do you need to add another education or qualification requirement?
+            {% endset %}
 
-            <dl class="govuk-summary-list govuk-!-margin-bottom-5">
+            <dl class="govuk-summary-list govuk-!-margin-bottom-">
                 {% for level in data['education-levels'] %}
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key govuk-!-font-weight-regular" style="width: 60%;">
@@ -59,41 +60,55 @@ text: "Back",
                 {% endfor %}
             </dl>
 
-            <div class="govuk-form-group">
-                {{govukButton({
-                text: "Add another qualification",
-                classes: "govuk-button--secondary",
-                attributes: {
-                formmethod: "get",
-                formaction: "add-education-level"
-                }
-                })}}
-            </div>
             {% else %}
-            <p class="govuk-body">
+
+            {% set questionText %}
+            Do you need to add an education or qualification requirement?
+            {% endset %}
+
+            <p class="govuk-body govuk-!-margin-top-6">
                 This activity does not have any education or qualification requirements.
             </p>
-            <div class="govuk-form-group">
-                {{govukButton({
-                text: "Add a qualification",
-                classes: "govuk-button--secondary",
-                attributes: {
-                formmethod: "get",
-                formaction: "add-education-level"
-                }
-                })}}
-            </div>
+
             {% endif %}
+
+            {{govukRadios({
+            formGroup: {
+            classes: "govuk-!-margin-top-8"
+            },
+            idPrefix: "add-another-education-level",
+            name: "add-another-education-level",
+            classes: "govuk-radios--inline",
+            fieldset: {
+            legend: {
+            text: questionText,
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            items: [
+            {
+            value: "yes",
+            text: "Yes",
+            checked: data['show-add-education-level'] == true
+            },
+            {
+            value: "no",
+            text: "No",
+            checked: data['show-add-education-level'] == false
+            }
+            ]
+            })}}
 
             <p class="govuk-!-margin-bottom-0">
                 {{govukButton({
-                text: "Update education levels"
+                text: "Continue"
                 })}}
             </p>
 
             <p class="govuk-body">
                 <a class="govuk-link govuk-link--no-visited-state" href="../details">
-                    Cancel
+                    Cancel and discard your changes
                 </a>
             </p>
         </form>

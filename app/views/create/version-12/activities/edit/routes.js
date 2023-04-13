@@ -100,8 +100,47 @@ router.post("/risk-assessment-level", function (req, res) {
   let activityId = req.activityId;
   let activity = activities.find((activity) => activity.id == activityId);
 
+  // redirect to the risk assessment warning page if the risk assessment is set to high
+  if (req.body["risk-assessment-level"] == "low-low-low-only") {
+    res.redirect("risk-assessment-level-warning");
+  } else {
+    // update the activity risk assessment
+    activity.riskAssessment = req.body["risk-assessment-level"];
+
+    // set the confirmation message to be displayed on the activity page
+    req.session.data["confirmation-dialog"] = {
+      display: true,
+      change: "risk assessment",
+    };
+
+    // redirect to the activity page
+    res.redirect("../../" + activityId + "/details");
+  }
+});
+
+// risk assessment warning page
+router.get("/risk-assessment-level-warning", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+  let activityRiskAssessment = activity.riskAssessment;
+
+  // render the page
+  res.render(req.protoUrl + "/risk-assessment-level-warning", {
+    activity,
+    activityId,
+    activityRiskAssessment,
+    });
+});
+
+// risk assessment warning POST route
+router.post("/risk-assessment-level-warning", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+  
   // update the activity risk assessment
-  activity.riskAssessment = req.body["activity-risk-assessment-level"];
+  activity.riskAssessment = req.body["risk-assessment-level"];
 
   // set the confirmation message to be displayed on the activity page
   req.session.data["confirmation-dialog"] = {
@@ -112,6 +151,7 @@ router.post("/risk-assessment-level", function (req, res) {
   // redirect to the activity page
   res.redirect("../../" + activityId + "/details");
 });
+
 
 // edit activity location page
 router.get("/location", function (req, res) {
@@ -499,17 +539,24 @@ router.post("/education-levels", function (req, res) {
   let activityId = req.activityId;
   let activity = activities.find((activity) => activity.id == activityId);
 
-  // update the activity education levels
-  activity.educationLevels = req.session.data["education-levels"];
+  // if the user wants to add another education level, redirect to the add education level page
+  if (req.body["add-another-education-level"] == "yes") {
+    res.redirect("add-education-level");
+    return;
+  } else {
+    // otherwise, update the activity education levels
+    activity.educationLevels = req.session.data["education-levels"];
 
-  // set the confirmation message to be displayed on the activity page
-  req.session.data["confirmation-dialog"] = {
-    display: true,
-    change: "education levels",
-  };
+    // set the confirmation message to be displayed on the activity page
+    req.session.data["confirmation-dialog"] = {
+      display: true,
+      change: "education levels",
+    };
 
-  // redirect to the activity page
-  res.redirect("../details");
+    // redirect to the activity page
+    res.redirect("../details");
+    return;
+  }
 });
 
 
