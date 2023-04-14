@@ -19,7 +19,6 @@ text: "Back",
             {% set dateHtml %}
             {{govukDateInput({
             idPrefix: "deallocation-date",
-            namePrefix: "specific-start-date",
             fieldset: {
             legend: {
             text: "Date",
@@ -32,19 +31,22 @@ text: "Back",
             },
             items: [
             {
-            name: "day",
+            name: "allocation[specific-start-date][day]",
+            label: "Day",
             classes: "govuk-input--width-2",
-            value: data['specific-start-date-day'] or ''
+            value: data['allocation']['specific-start-date']['day'] or ''
             },
             {
-            name: "month",
+            name: "allocation[specific-start-date][month]",
+            label: "Month",
             classes: "govuk-input--width-2",
-            value: data['specific-start-date-month'] or ''
+            value: data['allocation']['specific-start-date']['month'] or ''
             },
             {
-            name: "year",
+            name: "allocation[specific-start-date][year]",
+            label: "Year",
             classes: "govuk-input--width-4",
-            value: data['specific-start-date-year'] or ''
+            value: data['allocation']['specific-start-date']['year'] or ''
             }
             ]
             })}}
@@ -53,7 +55,7 @@ text: "Back",
             <span class="govuk-caption-xl">Allocate to {{activity.name}}</span>
             {{govukRadios({
             idPrefix: "allocation-start-date",
-            name: "start-date",
+            name: "allocation[start-date-type]",
             fieldset: {
             legend: {
             html: "When do you want " + prisoner.name.firstname + " " + prisoner.name.surname + " to start attending this activity?",
@@ -65,7 +67,7 @@ text: "Back",
             {
             value: "asap",
             html: "As soon as possible &ndash; " + "_"|today|dayAfter|convertShortDateToVeryLongDate,
-            checked: true if data['start-date'] == 'asap',
+            checked: true if data['allocation']['start-date-type'] == 'asap',
             hint: {
             text: "Details about why this is the earliest possible date for removal."
             }
@@ -73,7 +75,7 @@ text: "Back",
             {
             value: "specific-date",
             text: "On a specific date",
-            checked: true if data['start-date'] == 'specific-date',
+            checked: true if data['allocation']['start-date-type'] == 'specific-date',
             conditional: {
             html: dateHtml
             }

@@ -53,7 +53,7 @@ text: "Back",
             <span class="govuk-caption-xl">Allocate to {{activity.name}}</span>
             {{govukRadios({
             idPrefix: "end-date-check",
-            name: "end-date-check",
+            name: "allocation[end-date-check]",
             fieldset: {
             legend: {
             html: "Do you want to set an end date for this allocation?",
@@ -65,12 +65,12 @@ text: "Back",
             {
             value: "yes",
             text: "Yes",
-            checked: true if data['end-date-check'] == "yes"
+            checked: true if data['allocation']['end-date-check'] == "yes"
             },
             {
             value: "no",
             text: "No",
-            checked: true if data['end-date-check'] == "no"
+            checked: true if data['allocation']['end-date-check'] == "no"
             }
             ]
             })}}

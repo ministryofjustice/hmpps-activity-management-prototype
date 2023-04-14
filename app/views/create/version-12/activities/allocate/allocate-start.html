@@ -134,7 +134,8 @@ html: bannerHtml
             name: "allocate",
             fieldset: {
             legend: {
-            text: "Do you want to allocate " + prisoner.name.firstname + " " + prisoner.name.surname + " to " + activity.name + "?",
+            text: "Do you want to allocate " + prisoner.name.firstname + " " + prisoner.name.surname + " to " +
+            activity.name + "?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
             }
@@ -157,16 +158,25 @@ html: bannerHtml
             }
             ]
             })}}
-            {% else %}
-            <h2 class="govuk-heading-m">
-                Confirm you want to set pay rate for {{prisoner.name.firstname}} {{prisoner.name.surname}}
-            </h2>
-            <input type="hidden" name="allocate" value="yes">
-            {% endif %}
 
             {{ govukButton({
             text: "Continue"
             }) }}
+            {% else %}
+            <!-- <h2 class="govuk-heading-m">
+                Start allocating {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            </h2> -->
+            <input type="hidden" name="allocate" value="allocate">
+            {{ govukButton({
+            text: "Start allocating",
+            classes: "govuk-button--start",
+            href: prisoner.id + "/start-date?allocation="
+            }) }}
+            <p>
+                <a href="../../{{activity.id}}/other-prisoners" class="govuk-link govuk-link--no-visited-state">Return to
+                    other people</a>
+            </p>
+            {% endif %}
         </form>
     </div>
 </div>

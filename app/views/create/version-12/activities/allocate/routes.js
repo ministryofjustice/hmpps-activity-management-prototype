@@ -44,6 +44,7 @@ router.post("/:prisonerId", function (req, res) {
     res.redirect("confirm-remove");
   } else if (req.body["allocate"] === "allocate") {
     // if the user chooses yes, go to the confirm allocate prisoner page
+    delete req.session.data["allocation"];
     res.redirect(prisonerId + "/start-date");
   } else {
     // if the user chooses no, go to the confirm remove prisoner page
@@ -84,19 +85,19 @@ router.post("/:prisonerId/start-date", function (req, res) {
   );
 
   // if there is no allocation object in the session, create one
-  if (!req.session.data["allocation"]) {
+  if (!req.session.data["allocation"] || req.session.data["allocation"] === undefined || req.session.data["allocation"] === '') {
     req.session.data["allocation"] = {};
   }
 
   // set the start date in the session
-  if(req.body["start-date"] === "asap") {
+  if(req.body["allocation"]["start-date-type"] === "asap") {
     // set to tomorrow if the user chooses asap
     req.session.data["allocation"]["start-date"] = DateTime.now().plus({ days: 1 }).toISODate().slice(0, 10);
   } else {
     let specificStartDate = new Date();
-    specificStartDate.setFullYear(req.body["specific-start-date-year"]);
-    specificStartDate.setMonth(req.body["specific-start-date-month"] - 1);
-    specificStartDate.setDate(req.body["specific-start-date-day"]);
+    specificStartDate.setFullYear(req.body["allocation"]["specific-start-date"]["year"]);
+    specificStartDate.setMonth(req.body["allocation"]["specific-start-date"]["month"] - 1);
+    specificStartDate.setDate(req.body["allocation"]["specific-start-date"]["day"]);
 
     req.session.data["allocation"]["start-date"] = specificStartDate.toISOString().slice(0, 10);
   }
@@ -143,7 +144,7 @@ router.post("/:prisonerId/end-date-check", function (req, res) {
     (activity) => activity.id.toString() === activityId.toString()
   );
 
-  const endDateCheck = req.body["end-date-check"];
+  const endDateCheck = req.body["allocation"]["end-date-check"];
   const redirectParam = req.query.redirect ? `?redirect=${req.query.redirect}` : "";
 
   if (endDateCheck === "yes") {
