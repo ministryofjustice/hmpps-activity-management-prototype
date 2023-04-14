@@ -550,56 +550,6 @@ router.get(
   }
 );
 
-// // activity allocate page
-// router.get("/:activityId/allocate/:prisonerId", function (req, res) {
-//   let activityId = req.params.activityId;
-//   let prisonerId = req.params.prisonerId;
-//   let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
-//     (prisoner) => prisoner.id.toString() === prisonerId.toString()
-//   );
-//   let activities = req.session.data["timetable-complete-1"]["activities"];
-//   let activity = activities.find(
-//     (activity) => activity.id.toString() === activityId.toString()
-//   );
-
-//   // if there is an application from this prisoner for this activity, find it and pass it to the template
-//   let applications = req.session.data["applications"];
-//   let application = applications.find(
-//     (application) =>
-//       application["selected-prisoner"].toString() === prisonerId.toString() &&
-//       application["activity"].toString() === activityId.toString()
-//   );
-
-//   res.render(req.protoUrl + "/allocate", {
-//     activityId,
-//     activity,
-//     application,
-//     prisoner,
-//     prisonerId,
-//   });
-// });
-
-// // allocate page post logic
-// router.post("/:activityId/allocate/:prisonerId", function (req, res) {
-//   let activityId = req.params.activityId;
-//   let prisonerId = req.params.prisonerId;
-//   let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
-//     (prisoner) => prisoner.id.toString() === prisonerId.toString()
-//   );
-//   let activities = req.session.data["timetable-complete-1"]["activities"];
-//   let activity = activities.find(
-//     (activity) => activity.id.toString() === activityId.toString()
-//   );
-
-//   if (req.body["allocate"] === "no") {
-//     // if the user chooses no, go to the confirm remove prisoner page
-//     res.redirect(req.params.prisonerId + "/confirm-remove");
-//   } else {
-//     // otherwise, continue to the payrate page for the allocate journey for this prisoner
-//     res.redirect(req.params.prisonerId + "/payrate");
-//   }
-// });
-
 // confirm remove prisoner page
 router.get(
   "/:activityId/allocate/:prisonerId/confirm-remove",
@@ -683,49 +633,6 @@ router.get(
     });
   }
 );
-
-// // select payrate page, after the allocate page
-// router.get("/:activityId/allocate/:prisonerId/payrate", function (req, res) {
-//   let activityId = req.params.activityId;
-//   let prisonerId = req.params.prisonerId;
-//   let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
-//     (prisoner) => prisoner.id.toString() === prisonerId.toString()
-//   );
-//   let activities = req.session.data["timetable-complete-1"]["activities"];
-//   let activity = activities.find(
-//     (activity) => activity.id.toString() === activityId.toString()
-//   );
-
-//   res.render(req.protoUrl + "/payrate", {
-//     activityId,
-//     activity,
-//     prisoner,
-//     prisonerId,
-//   });
-// });
-
-// // payrate page post logic
-// router.post("/:activityId/allocate/:prisonerId/payrate", function (req, res) {
-//   let activityId = req.params.activityId;
-//   let prisonerId = req.params.prisonerId;
-
-//   let payRate = {
-//     "payAmount": 1.3,
-//     "incentiveLevels": {
-//         "basic": true,
-//         "standard": true,
-//         "enhanced": true
-//     },
-//     "payBands": {
-//         "unskilled": true,
-//         "skilled": true,
-//         "experienced": true
-//     }
-//   }
-
-//   // redirect to the check your answers page
-//   res.redirect("check-allocation-details");
-// });
 
 // check allocation details page
 router.get(
