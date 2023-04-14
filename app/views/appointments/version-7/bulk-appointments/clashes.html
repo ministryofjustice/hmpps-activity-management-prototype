@@ -15,10 +15,10 @@ Appointments prototype
 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
       <span class="govuk-caption-l">Bulk appointments</span>
-      Check for appointment clashes
+      Review appointment clashes on [date]
     </h1>
     <p class="govuk-body">
-      Select and remove prisoners with conflicting events.
+      You can select and remove prisoners with conflicting appointments if you need to.
     </p>
   </div>
 </div>
@@ -30,6 +30,7 @@ Appointments prototype
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header" style="width:30%;"  aria-sort="ascending" >Prisoner name and number</th>
+            <th scope="col" class="govuk-table__header" style="width:23%;" >Time of appointment</th>
             <th scope="col" class="govuk-table__header" style="width:23%;" >Clash details</th>
           </tr>
         </thead>
@@ -47,13 +48,18 @@ Appointments prototype
                 </div>
               </div>
              </td>
+             <td class="govuk-table__cell" >
+              <p class="govuk-body govuk-!-margin-top-2">
+                9:45 - 10:00
+              </p>
+             </td>
             <td class="govuk-table__cell" >
               <ul class="appointment-event">
                 <li>
                   <b>Drugs misuse programme</b><br>
                   <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
                     <li class="nobox">
-                      <b>Time:</b> 13:00 to 16:30
+                      <b>Time:</b> 10:00 to 13:30
                     </li>
                     <li class="nobox">
                       <b>Created by:</b> John Smith
@@ -64,7 +70,7 @@ Appointments prototype
                   <b>Kitchen</b>
                   <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
                     <li class="nobox">
-                      <b>Time:</b> 13:00 to 16:30
+                      <b>Time:</b> 10:00 to 13:30
                     </li>
                     <li class="nobox">
                       <b>Created by:</b> Bill Jones
@@ -89,12 +95,17 @@ Appointments prototype
             </div>
             </td>
             <td class="govuk-table__cell" >
+              <p class="govuk-body govuk-!-margin-top-2">
+                10:45 - 10:00
+              </p>
+            </td>
+            <td class="govuk-table__cell" >
               <ul class="appointment-event">
                 <li>
                   <b>Drugs misuse programme</b><br>
                   <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
                     <li class="nobox">
-                      <b>Time:</b> 13:00 to 16:30
+                      <b>Time:</b> 10:00 to 13:30
                     </li>
                     <li class="nobox">
                       <b>Created by:</b> John Smith
@@ -102,14 +113,6 @@ Appointments prototype
                   </ul>
                </td>
              </tr>
-      
-      
-         
-      
-      
-      
-      
-         
           <tr class="govuk-table__row">
             <td class="govuk-table__cell" data-sort-value="Maths level 1">
               <div class="govuk-checkboxes" data-module="govuk-checkboxes">
@@ -122,13 +125,18 @@ Appointments prototype
                 </div>
               </div>
              </td>
+             <td class="govuk-table__cell" >
+              <p class="govuk-body govuk-!-margin-top-2">
+                12:45 - 13:00
+              </p>
+             </td>
             <td class="govuk-table__cell" >
               <ul class="appointment-event">
                 <li>
                   <b>Drugs misuse programme</b><br>
                   <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
                     <li class="nobox">
-                      <b>Time:</b> 13:00 to 16:30
+                      <b>Time:</b> 10:00 to 13:30
                     </li>
                     <li class="nobox">
                       <b>Created by:</b> John Smith
@@ -139,24 +147,11 @@ Appointments prototype
           
         </tbody>
       </table>
-  
-
-
-
-
-
-
-
-  
-  
-
-
-
-<br />
+  <br>
 <button class="govuk-button govuk-button--warning" data-module="govuk-button" name="editDashboard" value="archive">
 Remove selected prisoners
 </button>
-
+<br><br>
 {{ govukButton({
   text: "Continue",
   href: "comments"
