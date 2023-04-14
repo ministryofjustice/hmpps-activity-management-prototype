@@ -12,6 +12,8 @@ window.history.go(-1)" })}} {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">Allocate to {{activity.name}}</span>
+
         <h1 class="govuk-heading-xl">
             Select how much you want to pay {{prisoner.name.firstname}} {{prisoner.name.surname}} {{prisoner.id}}
         </h1>
@@ -25,10 +27,6 @@ window.history.go(-1)" })}} {% endblock %}
             label: {
             text: "Select the correct pay rate",
             classes: "govuk-label--m"
-            },
-            hint: {
-            html: "There may only be one pay rate for this prisoner. If there are multiple pay rates, select the one
-            that applies to this activity."
             },
             idPrefix: "pay-rate",
             name: "allocation[pay-rate]",
