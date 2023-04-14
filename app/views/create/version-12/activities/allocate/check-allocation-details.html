@@ -72,36 +72,12 @@ text: "Back",
                     {{data['allocation']['pay-rate']}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                    <a href="select-pay-rate?redirect=check-allocation-details" class="govuk-link--no-visited-state">Change</a>
+                    <a href="payrate?redirect=check-allocation-details" class="govuk-link--no-visited-state">Change</a>
                 </dd>
             </div>
         </dl>
 
         <form method="post">
-            <!-- if suitability is 'yes' -->
-            {% if data['new-application']['eligible'] == 'no' %}
-            <div class="govuk-inset-text">
-                <p class="govuk-body">
-                    When you reject an activity request, you should inform the person who made the request the reason
-                    for your decision.
-                </p>
-            </div>
-            
-            <input type="" hidden name="allocate-now" value="no">
-            <input type="" hidden name="new-application[status]" value="rejected">
-
-            {{ govukButton({
-            text: "Reject this request"
-            }) }}
-
-            {% elif data['new-application']['eligible'] == '' %}
-            <input type="" hidden name="new-application[status]" value="pending">
-
-            {% else %}
-            <input type="" hidden name="allocate-now" value="no">
-            <input type="" hidden name="new-application[status]" value="approved">
-            {% endif %}
-
             <h2 class="govuk-heading-m">
                 Now confirm the allocation
             </h2>

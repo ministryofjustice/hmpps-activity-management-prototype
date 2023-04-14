@@ -35,27 +35,25 @@ window.history.go(-1)" })}} {% endblock %}
             items: [
             {
             value: "General - £1.00",
-            text: "General - £1.00"
+            text: "General - £1.00",
+            checked: true if data.allocation["pay-rate"] == "General - £1.00"
             },
             {
             value: "Skilled - £1.45",
-            text: "Skilled - £1.45"
+            text: "Skilled - £1.45",
+            checked: true if data.allocation["pay-rate"] == "Skilled - £1.45"
             },
             {
             value: "Specialist - £1.59",
-            text: "Specialist - £1.59"
-            },
-            {
-            divider: "or"
-            },
-            {
-            value: "new",
-            text: "Add a new pay rate - the one I need is not listed"
+            text: "Specialist - £1.59",
+            checked: true if data.allocation["pay-rate"] == "Specialist - £1.59"
             }
             ]
             }) }}
 
-            <button class="govuk-button" data-module="govuk-button">Continue</button>
+            {{ govukButton({
+            text: "Continue"
+            }) }}
         </form>
     </div>
 </div>
