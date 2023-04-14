@@ -36,52 +36,8 @@ html: bannerHtml
 
 
         {% if application and application.status != 'rejected' %}
-        <!-- <h2 class="govuk-heading-m">
-            {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request
-        </h2> -->
         <dl class="govuk-summary-list govuk-!-margin-bottom-">
-            <!-- <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Prisoner
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    {{prisoner.name.firstname}} {{prisoner.name.surname}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
-                    </a>
-                </dd>
-            </div> -->
-            <!-- <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Activity requested
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    {% set activity = application['activity']|getActivityDetails %}
-                    {{activity.name}}
-                </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Date of request
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    {{application['date']|convertShortDateToLongDate}}
-                </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Requester
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    {% if application['applicant'] == 'prisoner' %}
-                    Prisoner
-                    {% else %}
-                    {{application['applicant']}}
-                    {% endif %}
-                </dd>
-            </div> -->
+
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Suitability
@@ -142,7 +98,7 @@ html: bannerHtml
                 <tr class="govuk-table__row">
                     <th class="govuk-table__header" scope="row">Earliest release date</th>
 
-                    <td class="govuk-table__cell">{{prisoner.releaseDate|convertShortDateToMediumDate}}</td>
+                    <td class="govuk-table__cell">{{prisoner.releaseDate}}</td>
 
                     <td class="govuk-table__cell">
                         <span class="govuk-tag govuk-tag--grey">Not applicable</span>
@@ -164,7 +120,7 @@ html: bannerHtml
         <h2 class="govuk-heading-m">
             {{prisoner.name.firstname}} {{prisoner.name.surname}}'s previous requests
         </h2>
-        {% include "../includes/_previous-requests-table.html" %}
+        {% include "../../includes/_previous-requests-table.html" %}
 
         <p class="govuk-inset-text">
             You may need to <a href="#">view {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or
@@ -178,25 +134,25 @@ html: bannerHtml
             name: "allocate",
             fieldset: {
             legend: {
-            text: "Do you want to set the pay rate for " + prisoner.name.firstname + " " + prisoner.name.surname + "?",
+            text: "Do you want to allocate " + prisoner.name.firstname + " " + prisoner.name.surname + " to " + activity.name + "?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
             }
             },
             items: [
             {
-            value: "yes",
-            html: "Yes, continue to select pay rate"
+            value: "allocate",
+            html: "Yes, start allocating"
             },
             {
             value: "return",
             html: "No, return to the waitlist"
             },
             {
-                divider: "or"
+            divider: "or"
             },
             {
-            value: "no",
+            value: "remove",
             html: "I want to remove " + prisoner.name.firstname + " " + prisoner.name.surname + " from the waitlist"
             }
             ]

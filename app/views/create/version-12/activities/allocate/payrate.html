@@ -20,7 +20,6 @@ window.history.go(-1)" })}} {% endblock %}
             {{prisoner.incentiveLevel|capitalize}}.
         </p>
         <form method="post">
-            {% set prisoner = application['selected-prisoner'] | getPrisonerDetails %}
             {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
             {{ govukRadios({
             label: {
