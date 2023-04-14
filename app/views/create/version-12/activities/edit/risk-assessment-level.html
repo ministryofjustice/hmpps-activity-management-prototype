@@ -29,27 +29,29 @@ text: "Back",
             classes: "govuk-fieldset__legend--l"
             }
             },
-            hint: {
-            text: "If you change the risk assessment level, people who are currently allocated to this activity may no longer meet the requirements."
-            },
             items: [
             {
             text: "Only low workplace risk assessment is suitable",
             value: "low-only",
-            checked: true if activity.riskAssessmentLevel == "low-only"
+            checked: true if activity.riskAssessment == "low-only"
             },
             {
             text: "Either low or medium workplace risk assessment is suitable",
             value: "low-or-medium",
-            checked: true if activity.riskAssessmentLevel == "low-or-medium"
+            checked: true if activity.riskAssessment == "low-or-medium"
             },
             {
             text: "Any of low, medium or high workplace risk assessment is suitable",
             value: "any",
-            checked: true if activity.riskAssessmentLevel == "any"
+            checked: true if activity.riskAssessment == "any"
             }
             ]
             })}}
+
+            {{ govukWarningText({
+                text: "If you change the risk assessment level, people who are currently allocated to this activity may no longer meet the requirements.",
+                classes: "govuk-!-margin-top-8"
+            }) }}
 
             {{ govukButton({
             text: "Update risk assessment level"

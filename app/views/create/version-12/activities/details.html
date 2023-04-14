@@ -15,7 +15,15 @@ Find an activity to record or edit attendance
 {% if data['confirmation-dialog'].display == true %}
 {% set bannerHtml %}
 <h2 class="govuk-notification-banner__heading">
-    {{data['confirmation-dialog'].change | capitalize}} updated
+    {% if data['confirmation-dialog'].change == "bank holidays" %}
+    {% if activity.bankHolidays == 'yes' %}
+    You've scheduled this activity to run on bank holidays
+    {% else %}
+    You've scheduled this activity not to run on bank holidays
+    {% endif %}
+    {% else %}
+    You've changed the {{data['confirmation-dialog'].change | lower}}
+    {% endif %}
 </h2>
 {% endset %}
 {{ govukNotificationBanner({
@@ -124,9 +132,17 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
 
         {% set riskLevels %}
         <ul class="govuk-list">
+            {% if activity.riskAssessment == "low-only" or activity.riskAssessment == "low-or-medium" or activity.riskAssessment == "any" %}
             <li>Low</li>
+            {% endif %}
+
+            {% if activity.riskAssessment == "low-or-medium" or activity.riskAssessment == "any" %}
             <li>Medium</li>
+            {% endif %}
+
+            {% if activity.riskAssessment == "any" %}
             <li>High</li>
+            {% endif %}
         </ul>
         {% endset %}
 
@@ -276,7 +292,7 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
                     End date
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{activity.endDate|convertShortDateToVeryLongDate}}
+                    {{"None set" if activity.endDate == null else activity.endDate|convertShortDateToVeryLongDate}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a href="edit/end-date" class="govuk-link">Change</a>

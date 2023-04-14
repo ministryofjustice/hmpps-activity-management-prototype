@@ -35,22 +35,22 @@ text: "Back",
 
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset" aria-describedby="days-hint">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-margin-bottom-0">
                         <h1 class="govuk-fieldset__heading">
                             Change the days and times when this activity runs
                         </h1>
                     </legend>
 
-                    <div id="days-hint" class="govuk-hint">
-                        Select each day that the activity will run, then select the slots when the activity will run on that day. You can choose any or all of AM (morning), PM (afternoon) and ED (evening duty).
-                    </div>
+                    <p class="govuk-inset-text govuk-!-margin-bottom-6" id="days-hint">
+                        Any changes to the schedule will take effect from tomorrow.
+                    </p>
 
                     <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                         {% for day in activitySchedule %}
                         <div class="govuk-checkboxes__item">
                             <input class="govuk-checkboxes__input" id="day-{{day.day}}" name="days" type="checkbox"
-                                {{"checked" if day.am != null or day.pm != null}}
-                                value="{{day.day}}" aria-controls="conditional-day-{{day.day}}" aria-expanded="false" />
+                                {{"checked" if day.am !=null or day.pm !=null}} value="{{day.day}}"
+                                aria-controls="conditional-day-{{day.day}}" aria-expanded="false" />
                             <label class="govuk-label govuk-checkboxes__label" for="day-{{day.day}}">
                                 {{days[day.day]|capitalize}}
                             </label>
@@ -70,9 +70,10 @@ text: "Back",
                                         {% for period in periods %}
                                         <div class="govuk-checkboxes__item">
                                             <input class="govuk-checkboxes__input" id="times-{{day.day}}-{{period}}"
-                                            {{ "checked" if day[period][0] != null }}
-                                                name="times-{{day.day}}" type="checkbox" value="{{period}}" />
-                                            <label class="govuk-label govuk-checkboxes__label" for="times-{{day.day}}-{{period}}">
+                                                {{ "checked" if day[period][0] !=null }} name="times-{{day.day}}"
+                                                type="checkbox" value="{{period}}" />
+                                            <label class="govuk-label govuk-checkboxes__label"
+                                                for="times-{{day.day}}-{{period}}">
                                                 {{period|upper}}
                                             </label>
                                         </div>
@@ -87,7 +88,7 @@ text: "Back",
             </div>
 
             {{ govukButton({
-                text: "Update schedule"
+            text: "Update schedule"
             }) }}
 
             <p class="govuk-body">

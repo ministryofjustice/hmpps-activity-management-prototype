@@ -72,13 +72,18 @@ text: "Back",
 
             {% endif %}
 
+            {{govukInsetText({
+                text: "If you change the education requirements, it may affect people who are currently allocated to this activity.",
+                classes: "govuk-!-margin-top-7"
+            })}}
+
             {{govukRadios({
             formGroup: {
-            classes: "govuk-!-margin-top-8"
+            classes: "govuk-!-margin-top-5"
             },
             idPrefix: "add-another-education-level",
             name: "add-another-education-level",
-            classes: "govuk-radios--inline",
+            classes: "govuk-radios--inlin",
             fieldset: {
             legend: {
             text: questionText,
@@ -94,11 +99,13 @@ text: "Back",
             },
             {
             value: "no",
-            text: "No",
+            text: "No, I'm finished",
             checked: data['show-add-education-level'] == false
             }
             ]
             })}}
+
+            
 
             <p class="govuk-!-margin-bottom-0">
                 {{govukButton({

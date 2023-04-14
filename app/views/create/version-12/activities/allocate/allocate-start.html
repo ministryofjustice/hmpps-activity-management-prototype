@@ -26,14 +26,11 @@ html: bannerHtml
 {% endif %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-
-
         {% set activity = application['activity'] | getActivityDetails %}
         {% set prisoner = data['new-activity']['prisoner'] %}
         <h1 class="govuk-heading-xl">
             Allocate {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}
         </h1>
-
 
         {% if application and application.status != 'rejected' %}
         <dl class="govuk-summary-list govuk-!-margin-bottom-">
@@ -98,7 +95,7 @@ html: bannerHtml
                 <tr class="govuk-table__row">
                     <th class="govuk-table__header" scope="row">Earliest release date</th>
 
-                    <td class="govuk-table__cell">{{prisoner.releaseDate}}</td>
+                    <td class="govuk-table__cell">{{prisoner.releaseDate | convertShortDateToLongDate}}</td>
 
                     <td class="govuk-table__cell">
                         <span class="govuk-tag govuk-tag--grey">Not applicable</span>
@@ -117,10 +114,18 @@ html: bannerHtml
             </tbody>
         </table>
 
-        <h2 class="govuk-heading-m">
+        <!-- <h2 class="govuk-heading-m">
             {{prisoner.name.firstname}} {{prisoner.name.surname}}'s previous requests
-        </h2>
+        </h2> -->
+
+        {% set previousRequestsHtml %}
         {% include "../../includes/_previous-requests-table.html" %}
+        {% endset %}
+
+        {{ govukDetails({
+        summaryText: prisoner.name.firstname + " " + prisoner.name.surname + "'s previous requests",
+        html: previousRequestsHtml
+        }) }}
 
         <p class="govuk-inset-text">
             You may need to <a href="#">view {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or
@@ -162,10 +167,9 @@ html: bannerHtml
             {{ govukButton({
             text: "Continue"
             }) }}
+
             {% else %}
-            <!-- <h2 class="govuk-heading-m">
-                Start allocating {{prisoner.name.firstname}} {{prisoner.name.surname}}
-            </h2> -->
+
             <input type="hidden" name="allocate" value="allocate">
             {{ govukButton({
             text: "Start allocating",

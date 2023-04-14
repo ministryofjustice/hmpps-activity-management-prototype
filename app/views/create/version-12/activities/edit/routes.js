@@ -499,6 +499,26 @@ router.get("/capacity-warning", function (req, res) {
   });
 });
 
+// edit activity capacity warning POST route
+router.post("/capacity-warning", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // update the activity capacity
+  activity.capacity = req.session.data["capacity"];
+
+  // set the confirmation message to be displayed on the activity page
+  req.session.data["confirmation-dialog"] = {
+    display: true,
+    change: "capacity",
+  };
+
+  // redirect to the activity page
+  res.redirect("../../" + activityId + "/details");
+});
+
+
 // edit activity education level list page
 router.get("/education-levels", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
