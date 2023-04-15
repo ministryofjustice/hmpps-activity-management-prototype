@@ -228,4 +228,35 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
+
+  // select prisoner page
+router.get("/select-prisoner", function (req, res) {
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let searchTerm = req.query.search;
+
+  const matchingPrisoners = prisoners.filter((prisoner) => {
+    const fullName = `${prisoner.name.forename} ${prisoner.name.surname}`;
+    return (
+      fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      prisoner.id.toLowerCase() === searchTerm.toLowerCase()
+    );
+  });
+
+  req.session.data["new-application"] = {}
+
+  // if there is only one matching prisoner
+  if (matchingPrisoners.length === 1) {
+    req.session.data["new-application"]["selected-prisoner"] =
+      matchingPrisoners[0].id;
+    res.redirect("prisoner-existing-applications");
+  } else if (matchingPrisoners.length > 1) {
+    res.render(req.protoUrl + "/select-prisoner", {
+      matchingPrisoners,
+    });
+    return;
+  } else {
+    res.redirect("prisoner-search");
+  }
+});
+
 module.exports = router
