@@ -1,0 +1,82 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+    Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}{% endblock %}
+{% block beforeContent %}
+    {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+    {{ govukBreadcrumbs({
+	classes: "govuk-!-display-none-print",
+	items: [
+	{
+		text: "Digital Prison Services",
+		href: "/dps-home"
+	},
+	{
+		text: "Manage activities",
+		href: "../../../create/version-12/manage-activities"
+	}
+	]
+}) }}
+{% endblock %}
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">
+                What date do you want to see the daily attendance summary for?
+            </h1>
+            <form method="post">
+                {% set dateHtml %}
+                {{ govukDateInput({
+				id: "other-date",
+				namePrefix: "other-date",
+				fieldset: {
+					legend: {
+						text: "Date"
+					}
+				},
+				hint: {
+					html: "For example, " + dateIn30Days|convertShortDateToExampleDate
+				}
+			}) }}
+                {% endset %}
+                {% set today = '_'|today() %}
+                {{ govukRadios({
+				name: "date",
+				fieldset: {
+					legend: {
+						text: "Date",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				hint: {
+					text: "You can view the summary for any of the last 15 days."
+				},
+				items: [
+				{
+					value: today,
+					text: "Today – " + today|convertShortDateToLongDate
+				},
+				{
+					value: today|dayBefore,
+					text: "Yesterday – " + today|dayBefore(today)|convertShortDateToLongDate
+				},
+				{
+					value: "other-date",
+					text: "A different date",
+					conditional: {
+						html: dateHtml
+					}
+				}
+				]
+			}) }}
+
+            {{ govukButton({
+                text: "Continue"
+            })}}
+            </form>
+        </div>
+    </div>
+{% endblock %}
