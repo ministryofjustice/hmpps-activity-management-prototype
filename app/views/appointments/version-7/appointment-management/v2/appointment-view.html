@@ -1,0 +1,685 @@
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post">
+
+	<div class="back">
+		<a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+	</div>
+	<h1 class="govuk-heading-l">
+		<span class="govuk-caption-l">Appointment management</span>
+		View and edit an appointment
+	</h1>
+
+	{%- from "moj/components/filter/macro.njk" import mojFilter -%}
+	{%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
+	<div class="moj-filter-layout">
+		<div class="moj-filter-layout__filter">
+			<div class="moj-filter">
+				<div class="moj-filter__header">
+					<div class="moj-filter__header-title">
+						<h2 class="govuk-heading-m">Filter</h2>
+					</div>
+					<div class="moj-filter__header-action"></div>
+				</div>
+				<div class="moj-filter__content">
+					{% if selectedFilters.length %}
+					<div class="moj-filter__selected">
+						<div class="moj-filter__selected-heading">
+							<div class="moj-filter__heading-title">
+								<h2 class="govuk-heading-m">Selected filters</h2>
+							</div>
+							<div class="moj-filter__heading-action">
+								<p><a class="govuk-link govuk-link--no-visited-state" href="">Clear filters</a>
+								</p>
+							</div>
+						</div>
+						{% for filter in selectedFilters %}
+						<h3 class="govuk-heading-s govuk-!-margin-bottom-0">Colour</h3>
+						<ul class="moj-filter-tags">
+							<li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove
+										this
+										filter</span> Blue</a></li>
+							<li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove
+										this
+										filter</span> Yellow</a></li>
+						</ul>
+						{% endfor %}
+					</div>
+					{% endif %}
+
+					<div class="moj-filter__options">
+						<button class="govuk-button" data-module="govuk-button">
+							Apply filters
+						</button>
+
+
+						<!-- Appointment creator GOVUK radio with component - HTML -->
+						{{ govukRadios({
+						classes: "govuk-radios--small",
+						id: "appointment-type",
+						name: "appointment-type",
+
+						fieldset: {
+						legend: {
+						text: "Appointment type",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--s"
+						}
+						},
+						items: [
+
+						{
+						value: "individual",
+						text: "Individual appointment"
+						},
+						{
+						value: "group",
+						text: "Group appointment"
+						}
+						]
+						}) }}
+
+
+
+						<!-- Start date input GOVUK date component - HTML -->
+						{{ govukDateInput({
+						id: "date",
+						namePrefix: "date",
+						fieldset: {
+						legend: {
+						text: "Start date",
+						isPageHeading: true,
+						classes: "govuk-fieldset__legend--s"
+						}
+						},
+						hint: {
+						text: "For example, 27 3 2007"
+						},
+						items: [
+						{
+						name: "day",
+						label: "Day",
+						value: "27",
+						classes: "govuk-input--width-2 "
+						},
+						{
+						name: "month",
+						label: "Month",
+						value: "2",
+						classes: "govuk-input--width-2"
+						},
+						{
+						name: "year",
+						label: "Year",
+						value: "2023",
+						classes: "govuk-input--width-4"
+						}
+						]
+						}) }}
+
+						<!-- End date input GOVUK date component - HTML -->
+						{{ govukDateInput({
+						id: "date",
+						namePrefix: "date",
+						fieldset: {
+						legend: {
+						text: "End date",
+						isPageHeading: true,
+						classes: "govuk-fieldset__legend--s"
+						}
+						},
+						hint: {
+						text: "For example, 27 3 2007"
+						},
+						items: [
+						{
+						name: "day",
+						label: "Day",
+						value: "5",
+						classes: "govuk-input--width-2"
+						},
+						{
+						name: "month",
+						label: "Month",
+						value: "3",
+						classes: "govuk-input--width-2"
+						},
+						{
+						name: "year",
+						label: "Year",
+						value: "2023",
+						classes: "govuk-input--width-4"
+						}
+						]
+						}) }}
+
+						<!-- Category select GOVUK checkboxes component - HTML -->
+						{{ govukCheckboxes({
+						classes: "govuk-checkboxes--small",
+						id: "appointment-type",
+						name: "appointment-type",
+
+						fieldset: {
+						legend: {
+						text: "Category",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--s"
+						}
+						},
+						items: [
+
+						{
+						value: "Education",
+						text: "Education"
+						},
+						{
+						value: "Faith",
+						text: "Faith"
+						},
+						{
+						value: "Gym",
+						text: "Gym"
+						},
+						{
+						value: "Medical",
+						text: "Medical"
+						},
+						{
+						value: "Programmes and interventions",
+						text: "Programmes and interventions"
+						},
+						{
+						value: "Prisoner case meetings",
+						text: "Prisoner case meetings"
+						},
+						{
+						value: "Release",
+						text: "Release"
+						},
+						{
+						divider: "or"
+						},
+						{
+						value: "abroad",
+						text: "All appointment categories"
+						}
+						]
+						}) }}
+
+						<!-- Prisoner location select GOVUK select component - HTML -->
+						{{ govukSelect({
+						id: "subject",
+						name: "subject",
+						label: {
+						text: "Prisoner location",
+						classes: "govuk-label--s"
+						},
+						items: [
+						{
+						value: "choose",
+						text: "Choose location",
+						selected: true
+						},
+						{
+						value: "block1",
+						text: "Block 1"
+						},
+						{
+						value: "block2",
+						text: "Block 2"
+						},
+						{
+						value: "block3",
+						text: "Block 3"
+						},
+						{
+						value: "block4",
+						text: "Block 4"
+						},
+						{
+						value: "block5",
+						text: "Block 5"
+						}
+						]
+
+						}) }}
+
+
+						<!-- Appointment location MOJ autocomplete component - HTML -->
+						{{ govukInput({
+						label: {
+						text: "Appointment location",
+						classes: "govuk-label--s",
+						isPageHeading: true
+						},
+						classes: "govuk-input--width-20",
+						id: "event-name",
+						name: "event-name"
+						}) }}
+
+
+
+						<!-- Appointment creator GOVUK radio with component - HTML -->
+						{{ govukRadios({
+						classes: "govuk-radios--small",
+						id: "appointment-type",
+						name: "appointment-type",
+
+						fieldset: {
+						legend: {
+						text: "Appointment creator",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--s"
+						}
+						},
+						items: [
+
+						{
+						value: "myself",
+						text: "Myself"
+						},
+						{
+						value: "someoneElse",
+						text: "All appointment creators"
+						}
+						]
+						}) }}
+
+						<button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+							data-module="govuk-button">
+							Apply filters
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="moj-filter-layout__content">
+
+			<div class="moj-action__filter"></div>
+	
+			{% from "govuk/components/table/macro.njk" import govukTable %}
+
+
+			{% if data['appointment-type'] == 'individual' %}
+		
+			<table class="govuk-table" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+				<thead class="govuk-table__head">
+					<tr class="govuk-table__row">
+						<th class="govuk-table__header" scope="col" id="select-all"></th>
+						<th class="govuk-table__header" scope="col">Date</th>
+						<th class="govuk-table__header" scope="col">Time</th>
+						<th class="govuk-table__header" scope="col">Category</th>
+						<th class="govuk-table__header" scope="col">Prisoner name and number</th> 
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col">Occurences left
+						</th>
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col"></th>
+					</tr>
+				</thead>
+				<tbody class="govuk-table__body">
+
+					<tr class="govuk-table__row govuk-table__row--selected">
+						<td class="govuk-table__cell">
+							<div
+								class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+								<input type="checkbox" class="govuk-checkboxes__input"
+									id="prisoner-david_francis-2">
+								<label class="govuk-label govuk-checkboxes__label"
+									for="prisoner-david_francis-2">
+									<span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+								</label>
+							</div>
+						</td>
+						<td class="govuk-table__cell">27 Feb 2023</td>
+						<td class="govuk-table__cell">11:00</td>
+						<td class="govuk-table__cell">Medical</td>
+						<td class="govuk-table__cell">David Francis, A3123DF</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+						<td class="govuk-table__cell">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row govuk-table__row--selected">
+						<td class="govuk-table__cell">
+							<div
+								class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+								<input type="checkbox" class="govuk-checkboxes__input"
+									id="prisoner-david_francis-3">
+								<label class="govuk-label govuk-checkboxes__label"
+									for="prisoner-david_francis-3">
+									<span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+								</label>
+							</div>
+						</td>
+						<td class="govuk-table__cell">28 Feb 2023</td>
+						<td class="govuk-table__cell">09:00</td>
+						<td class="govuk-table__cell">Faith</td>
+						<td class="govuk-table__cell">David Francis, A3123DF</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+						<td class="govuk-table__cell">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+						</td>
+					<tr class="govuk-table__row govuk-table__row--selected">
+						<td class="govuk-table__cell">
+							<div
+								class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+								<input type="checkbox" class="govuk-checkboxes__input"
+									id="prisoner-david_francis-2">
+								<label class="govuk-label govuk-checkboxes__label"
+									for="prisoner-david_francis-2">
+									<span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+								</label>
+							</div>
+						</td>
+						<td class="govuk-table__cell">29 Feb 2023</td>
+						<td class="govuk-table__cell">11:30</td>
+						<td class="govuk-table__cell">Medical</td>
+						<td class="govuk-table__cell">David Francis, A3123DF</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+						<td class="govuk-table__cell">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row govuk-table__row--selected">
+						<td class="govuk-table__cell">
+							<div
+								class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+								<input type="checkbox" class="govuk-checkboxes__input"
+									id="prisoner-david_francis-3">
+								<label class="govuk-label govuk-checkboxes__label"
+									for="prisoner-david_francis-3">
+									<span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+								</label>
+							</div>
+						</td>
+						<td class="govuk-table__cell">2 Mar 2023</td>
+						<td class="govuk-table__cell">15:00</td>
+						<td class="govuk-table__cell">Chaplaincy</td>
+						<td class="govuk-table__cell">David Francis, A3123DF</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">7</td>
+						<td class="govuk-table__cell">
+							<a href="edit-appointment-option-4" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row govuk-table__row--selected">
+						<td class="govuk-table__cell">
+							<div
+								class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+								<input type="checkbox" class="govuk-checkboxes__input"
+									id="prisoner-david_francis-3">
+								<label class="govuk-label govuk-checkboxes__label"
+									for="prisoner-david_francis-3">
+									<span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+								</label>
+							</div>
+						</td>
+						<td class="govuk-table__cell">3 Mar 2023</td>
+						<td class="govuk-table__cell">15:00</td>
+						<td class="govuk-table__cell">Programes</td>
+						<td class="govuk-table__cell">David Francis, A3123DF</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">7</td>
+						<td class="govuk-table__cell">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+			{% else %}
+
+			<table class="govuk-table" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+				<thead class="govuk-table__head">
+					<tr class="govuk-table__row">
+						<th class="govuk-table__header" scope="col" id="select-all"></th>
+						<th class="govuk-table__header" scope="col">Date</th>
+						<th class="govuk-table__header" scope="col">Time</th>
+						<th class="govuk-table__header" scope="col">Category</th>
+						<th class="govuk-table__header govuk-!-width-one-quarter" scope="col">Prisoner name and number</th> 
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col">Occurences left
+						</th>
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col"></th>
+					</tr>
+				</thead>
+				<tbody class="govuk-table__body">
+
+					<tr class="govuk-table__row govuk-table__row--selected">
+						<td class="govuk-table__cell">
+							<div
+								class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+								<input type="checkbox" class="govuk-checkboxes__input"
+									id="prisoner-david_francis-2">
+								<label class="govuk-label govuk-checkboxes__label"
+									for="prisoner-david_francis-2">
+									<span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+								</label>
+							</div>
+						</td>
+						<td class="govuk-table__cell">27 Feb 2023</td>
+						<td class="govuk-table__cell">11:00</td>
+						<td class="govuk-table__cell">Medical</td>
+						<td class="govuk-table__cell">
+							<details class="govuk-details" data-module="govuk-details">
+								<summary class="govuk-details__summary">
+								  <span class="govuk-details__summary-text">
+									Show all <strong>6</strong> people in group
+								  </span>
+								</summary>
+								<div class="govuk-details__text">
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									
+								</div>
+							</details>
+						</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+						<td class="govuk-table__cell">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row govuk-table__row--selected">
+						<td class="govuk-table__cell">
+							<div
+								class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+								<input type="checkbox" class="govuk-checkboxes__input"
+									id="prisoner-david_francis-3">
+								<label class="govuk-label govuk-checkboxes__label"
+									for="prisoner-david_francis-3">
+									<span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+								</label>
+							</div>
+						</td>
+						<td class="govuk-table__cell">28 Feb 2023</td>
+						<td class="govuk-table__cell">09:00</td>
+						<td class="govuk-table__cell">Faith</td>
+						<td class="govuk-table__cell">
+							<details class="govuk-details" data-module="govuk-details">
+								<summary class="govuk-details__summary">
+								  <span class="govuk-details__summary-text">
+									Show all <strong>5</strong> people in group
+								  </span>
+								</summary>
+								<div class="govuk-details__text">
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									
+								</div>
+							</details>
+						</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+						<td class="govuk-table__cell">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+						</td>
+					<tr class="govuk-table__row govuk-table__row--selected">
+						<td class="govuk-table__cell">
+							<div
+								class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+								<input type="checkbox" class="govuk-checkboxes__input"
+									id="prisoner-david_francis-2">
+								<label class="govuk-label govuk-checkboxes__label"
+									for="prisoner-david_francis-2">
+									<span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+								</label>
+							</div>
+						</td>
+						<td class="govuk-table__cell">29 Feb 2023</td>
+						<td class="govuk-table__cell">11:30</td>
+						<td class="govuk-table__cell">Medical</td>
+						<td class="govuk-table__cell">
+							<details class="govuk-details" data-module="govuk-details">
+								<summary class="govuk-details__summary">
+								  <span class="govuk-details__summary-text">
+									Show all <strong>6</strong> people in group
+								  </span>
+								</summary>
+								<div class="govuk-details__text">
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									
+								</div>
+							</details>
+						</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+						<td class="govuk-table__cell">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row govuk-table__row--selected">
+						<td class="govuk-table__cell">
+							<div
+								class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+								<input type="checkbox" class="govuk-checkboxes__input"
+									id="prisoner-david_francis-3">
+								<label class="govuk-label govuk-checkboxes__label"
+									for="prisoner-david_francis-3">
+									<span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+								</label>
+							</div>
+						</td>
+						<td class="govuk-table__cell">2 Mar 2023</td>
+						<td class="govuk-table__cell">15:00</td>
+						<td class="govuk-table__cell">Chaplaincy</td>
+						<td class="govuk-table__cell">
+							<details class="govuk-details" data-module="govuk-details">
+								<summary class="govuk-details__summary">
+								  <span class="govuk-details__summary-text">
+									Show all <strong>3</strong> people in group
+								  </span>
+								</summary>
+								<div class="govuk-details__text"> 
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									
+								</div>
+							</details>
+						</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">7</td>
+						<td class="govuk-table__cell">
+							<a href="edit-appointment-option-4" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row govuk-table__row--selected">
+						<td class="govuk-table__cell">
+							<div
+								class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+								<input type="checkbox" class="govuk-checkboxes__input"
+									id="prisoner-david_francis-3">
+								<label class="govuk-label govuk-checkboxes__label"
+									for="prisoner-david_francis-3">
+									<span class="govuk-visually-hidden">Select David Francis, A3123DF</span>
+								</label>
+							</div>
+						</td>
+						<td class="govuk-table__cell">3 Mar 2023</td>
+						<td class="govuk-table__cell">15:00</td>
+						<td class="govuk-table__cell">Programes</td>
+						<td class="govuk-table__cell">
+							<details class="govuk-details" data-module="govuk-details">
+								<summary class="govuk-details__summary">
+								  <span class="govuk-details__summary-text">
+									Show all <strong>4</strong> people in group
+								  </span>
+								</summary>
+								<div class="govuk-details__text">
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br>
+									David Francis, A3123DF <br> 
+									
+								</div>
+							</details>
+						</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">7</td>
+						<td class="govuk-table__cell">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+
+			{% endif %}
+
+			<div class="govuk-button-group">
+				{{ govukButton({
+				text: "Cancel selected appointments",
+				classes: "govuk-button--secondary"
+				}) }}
+
+				{{ govukButton({
+				text: "Delete selected appointments",
+				classes: "govuk-button--warning"
+				}) }}
+			</div>
+
+
+		</div>
+
+	</div>
+</form>
+{% endblock %}
+
+
+
+{% block pageScripts %}
+<script type="text/javascript">
+	$(document).ready(function () {
+		new MOJFrontend.FilterToggleButton({
+			bigModeMediaQuery: "(min-width: 48.063em)",
+			startHidden: false,
+			toggleButton: {
+				container: $(".moj-action__filter"),
+				showText: "Show filter",
+				hideText: "Hide filter",
+				classes: "govuk-button--secondary",
+			},
+			closeButton: {
+				container: $(".moj-filter__header-action"),
+				text: "Close",
+			},
+			filter: {
+				container: $(".moj-filter"),
+			},
+		});
+	})
+</script>
+{% endblock %}
