@@ -228,6 +228,13 @@ router.get("/:activityId/currently-allocated", function (req, res) {
     delete req.session.data["confirmation-dialog"]
   }
 
+  // get and set the index of the activity in each prisoner's activity array
+  currentlyAllocated.forEach((prisoner) => {
+    prisoner.activityIndex = prisoner.activity.findIndex(
+      (activity) => activity.id.toString() === activityId.toString()
+    );
+  });
+
   res.render(req.protoUrl + "/currently-allocated", {
     activity,
     activityCategory,
