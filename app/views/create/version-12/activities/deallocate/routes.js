@@ -412,18 +412,14 @@ router.post("/:prisonerIds/check-deallocation", function (req, res) {
     (activity) => activity.id.toString() === activityId.toString()
   );
 
-  // add the deallocation data to the prisoner data
   // date, reason, activity
   prisonerData.forEach((prisoner) => {
     let deallocation = req.session.data["deallocation"][prisoner.id];
+    let deallocationDate = deallocation.date;
 
-    // if the prisoner already has a deallocations array, add to it
-    if (prisoner.deallocation) {
-      prisoner.deallocations.push(deallocation);
-    } else {
-      // otherwise create a new deallocations array with the deallocation data
-      prisoner.deallocations = [deallocation];
-    }
+    // add the deallocation data to the prisoner allocation data for the selected activity
+    let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+    prisoner.allocations[activityIndex].endDate = deallocationDate;
   });
 
   res.redirect("deallocation-confirmation");

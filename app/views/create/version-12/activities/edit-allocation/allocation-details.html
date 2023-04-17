@@ -93,10 +93,10 @@ type: "success"
                             Pay rate
                         </dt>
                         <dd class="govuk-summary-list__value">
-
+                            {{prisoner.payrate or "General - £1.00"}}
                         </dd>
                         <dd class="govuk-summary-list__actions">
-                            <a href="{{prisoner.id}}/payrate" class="govuk-link--no-visited-state">Change</a>
+                            <a href="{{prisoner.id}}/payrate?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
                         </dd>
                     </div>
                 </dl>

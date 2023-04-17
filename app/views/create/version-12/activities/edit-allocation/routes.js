@@ -2,12 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
 
-// LOG to console for all get requests
-router.get("/*", function (req, res, next) {
-  console.log(req.session.data["deallocation"]);
-  next();
-});
-
 // routes for pages in the activities section
 // activities page redirect root to /all
 router.get("/:prisonerIds", function (req, res) {
@@ -262,11 +256,17 @@ router.post("/:prisonerId/end-date", function (req, res) {
     req.session.data["allocation"] = {};
   }
 
-  // set the end date in the session
   let endDate = new Date();
-  endDate.setFullYear(req.body["allocation-end-date-year"]);
-  endDate.setMonth(req.body["allocation-end-date-month"] - 1);
-  endDate.setDate(req.body["allocation-end-date-day"]);
+
+  // if the user selects to end the allocation before the next session, set the end date to tomorrow
+  if (req.body["allocation-end-date"] === "before-next-session") {
+    endDate.setDate(endDate.getDate() + 1);
+  } else {
+    // otherwise, set the end date to the date from the form
+    endDate.setFullYear(req.body["specific-end-date-year"]);
+    endDate.setMonth(req.body["specific-end-date-month"] - 1);
+    endDate.setDate(req.body["specific-end-date-day"]);
+  }
 
   // set the endDate of the prisoner's allocation to the end date from the form
   // make sure the date is in ISO format
@@ -317,8 +317,20 @@ router.post("/:prisonerId/payrate", function (req, res) {
     (activity) => activity.id.toString() === activityId.toString()
   );
 
-  // redirect to the check page
-  res.redirect("check-allocation-details");
+  // set the prisoner's payrate to the value from the form
+  prisoner.payrate = req.body["payrate"];
+
+  // set the confirmation dialog to display
+  req.session.data["confirmation-dialog"] = {
+    display: true,
+    change: "pay-rate",
+    prisoner: prisonerId,
+  };
+
+  let selectedPrisoners = req.session.data["selected-prisoners"].split(",");
+
+  // redirect to the allocation details page for selected prisoners
+  res.redirect("../" + selectedPrisoners.join(","));
 });
 
 // allocation check-allocation-details page

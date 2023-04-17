@@ -20,15 +20,15 @@ text: "Back",
                 {{prisoner.name.firstname}} {{prisoner.name.surname}}
             </span>
 
+            {% set dateHtml %}
             {{govukDateInput({
-            idPrefix: "allocation-end-date",
-            namePrefix: "allocation-end-date",
+            idPrefix: "specific-end-date",
+            namePrefix: "specific-end-date",
             fieldset: {
             legend: {
-            text: "When do you want " + prisoner.name.firstname + " " + prisoner.name.surname + " to stop attending this
-            activity?",
+            text: "Date",
             isPageHeading: false,
-            classes: "govuk-fieldset__legend--xl"
+            classes: "govuk-fieldset__legend--s"
             }
             },
             hint: {
@@ -52,6 +52,34 @@ text: "Back",
             }
             ]
             })}}
+            {% endset %}
+
+            {{ govukRadios({
+            idPrefix: "allocation-end-date",
+            name: "allocation-end-date",
+            fieldset: {
+            legend: {
+            text: "When do you want " + prisoner.name.firstname + " " + prisoner.name.surname + " to stop attending " +
+            activity.name + "?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            items: [
+            {
+            value: "before-next-session",
+            text: "Before the next session starts"
+            },
+            {
+            value: "specific-date",
+            text: "On a specific date",
+            checked: true if endDate.year,
+            conditional: {
+            html: dateHtml
+            }
+            }
+            ]
+            }) }}
 
             {% if prisonerData | length == 1 %}
             {% set insetTextText = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " will be
@@ -65,6 +93,10 @@ text: "Back",
             <!-- {{ govukInsetText({
             text: "The reason for removing " + prisoner.name.firstname + " " + prisoner.name.surname + " will be recorded as 'Scheduled end date'."
             }) }} -->
+
+            {{ govukInsetText({
+            text: "Note that their name will be on any unlock and movement lists that have already been printed."
+            }) }}
 
             {{ govukButton({
             text: "Update end date"

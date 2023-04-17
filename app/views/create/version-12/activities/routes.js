@@ -231,7 +231,7 @@ router.get("/:activityId/currently-allocated", function (req, res) {
   // get and set the index of the activity in each prisoner's activity array
   currentlyAllocated.forEach((prisoner) => {
     prisoner.activityIndex = prisoner.activity.findIndex(
-      (activity) => activity.id.toString() === activityId.toString()
+      (activity) => activity.toString() === activityId.toString()
     );
   });
 
