@@ -10,28 +10,56 @@ router.get("/*", function (req, res, next) {
 
 // routes for pages in the activities section
 // activities page redirect root to /all
-router.get("/:prisonerId", function (req, res) {
-  let activityId = req.activityId;
-  let prisonerId = req.params.prisonerId;
-  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
-    (prisoner) => prisoner.id.toString() === prisonerId.toString()
-  );
+router.get("/:prisonerIds", function (req, res) {
+  let selectedPrisoners = req.params.prisonerIds.split(",");
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let prisonerData = [];
+
+  // get prisoner data for each prisoner in the selected prisoners list and add it to the prisonerData array
+  for (let i = 0; i < selectedPrisoners.length; i++) {
+    let prisonerId = selectedPrisoners[i];
+    let prisoner = prisoners.find((prisoner) => prisoner.id.toString() === prisonerId.toString());
+
+    prisonerData.push(prisoner);
+  }
+
   let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
   let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
+  let activityIndex;
 
-  // if there is an application from this prisoner for this activity, find it and pass it to the template
-  let applications = req.session.data["applications"];
-  let application = applications.find(
-    (application) =>
-      application["selected-prisoner"].toString() === prisonerId.toString() &&
-      application["activity"].toString() === activityId.toString()
-  );
+  // for each prisoner in selected prisoners, check if the prisoner activity allocation start date is in the future
+  // if it is, set the start date is in future flag to true and set the activity index to the index of the activity in the prisoner's allocations
+  let pastStartDate;
+  for (let i = 0; i < selectedPrisoners.length; i++) {
+    let prisonerId = selectedPrisoners[i];
+    let prisoner = prisoners.find((prisoner) => prisoner.id.toString() === prisonerId.toString());
 
-  res.render(req.protoUrl + "/allocate-start", {
-    prisoner,
-    prisonerId,
+    // get the allocation matching the index of the activity in the prisoner's activity list
+    let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+
+    let allocation = prisoner.allocations[activityIndex];
+    prisoner.activityIndex = activityIndex;
+
+    // if the allocation start date is in the future, set the start date is in future flag to true
+    if (DateTime.fromISO(allocation.startDate) > DateTime.now()) {
+      prisoner.startDateIsInFuture = true;
+    } else {
+      pastStartDate = true;
+    }
+  }
+
+  // hide the confirmation dialog after showing it once
+  if (req.session.data["confirmation-dialog"]) {
+    delete req.session.data["confirmation-dialog"];
+  }
+
+  res.render(req.protoUrl + "/allocation-details", {
     activity,
-    application,
+    activityIndex,
+    prisonerData,
+    selectedPrisoners,
+    pastStartDate,
   });
 });
 
@@ -62,51 +90,67 @@ router.get("/:prisonerId/start-date", function (req, res) {
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
   );
+  let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+
+  // get the start date of the allocation index matching the activity index
+  let allocation = prisoner.allocations[activityIndex];
+  let startDate = {};
+  startDate.day = DateTime.fromISO(allocation.startDate).day;
+  startDate.month = DateTime.fromISO(allocation.startDate).month;
+  startDate.year = DateTime.fromISO(allocation.startDate).year;
 
   // render the start-date template
   res.render(req.protoUrl + "/start-date", {
     activity,
     prisoner,
     prisonerId,
+    startDate,
   });
 });
 
 // post route for the allocation start-date page
 router.post("/:prisonerId/start-date", function (req, res) {
   let prisonerId = req.params.prisonerId;
+
+  // if there is no allocation object in the session, create one
+  if (
+    !req.session.data["allocation"] ||
+    req.session.data["allocation"] === undefined ||
+    req.session.data["allocation"] === ""
+  ) {
+    req.session.data["allocation"] = {};
+  }
+
+  // set the start date in the session
+  let specificStartDate = new Date();
+  specificStartDate.setFullYear(req.body["allocation"]["start-date"]["year"]);
+  specificStartDate.setMonth(req.body["allocation"]["start-date"]["month"] - 1);
+  specificStartDate.setDate(req.body["allocation"]["start-date"]["day"]);
+
+  req.session.data["allocation"]["start-date"] = specificStartDate.toISOString().slice(0, 10);
+
+  // get the index of the allocation in the prisoner's allocations array based on the index of the activity in the prisoner's activity array
   let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
     (prisoner) => prisoner.id.toString() === prisonerId.toString()
   );
 
   let activityId = req.activityId;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
+  let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
 
-  // if there is no allocation object in the session, create one
-  if (!req.session.data["allocation"] || req.session.data["allocation"] === undefined || req.session.data["allocation"] === '') {
-    req.session.data["allocation"] = {};
-  }
+  // update the start date of the matching allocation in the prisoner's allocations array
+  prisoner.allocations[activityIndex].startDate = req.session.data["allocation"]["start-date"];
+  // and delete the allocation object from the session
+  delete req.session.data["allocation"];
 
-  // set the start date in the session
-  if(req.body["allocation"]["start-date-type"] === "asap") {
-    // set to tomorrow if the user chooses asap
-    req.session.data["allocation"]["start-date"] = DateTime.now().plus({ days: 1 }).toISODate().slice(0, 10);
-  } else {
-    let specificStartDate = new Date();
-    specificStartDate.setFullYear(req.body["allocation"]["specific-start-date"]["year"]);
-    specificStartDate.setMonth(req.body["allocation"]["specific-start-date"]["month"] - 1);
-    specificStartDate.setDate(req.body["allocation"]["specific-start-date"]["day"]);
+  // show the confirmation message
+  req.session.data["confirmation-dialog"] = {
+    display: true,
+    change: "start-date",
+    prisoner: prisonerId,
+  };
 
-    req.session.data["allocation"]["start-date"] = specificStartDate.toISOString().slice(0, 10);
-  }
-
-  let url = "end-date-check";
-
-  // if there is a redirect query param, use that as the redirect url instead
-  if (req.query.redirect) {
-    url = req.query.redirect;
-  }
+  let selectedPrisoners = req.session.data["selected-prisoners"].split(",");
+  let url = "../" + selectedPrisoners.join(",");
 
   res.redirect(url);
 });
@@ -122,12 +166,17 @@ router.get("/:prisonerId/end-date-check", function (req, res) {
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
   );
+  let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+
+  // set the allocation to the index of the activity in the prisoner's activity array
+  let allocation = prisoner.allocations[prisoner.activityIndex];
 
   // render the end-date-check template
   res.render(req.protoUrl + "/end-date-check", {
     activity,
     prisoner,
     prisonerId,
+    allocation,
   });
 });
 
@@ -149,8 +198,19 @@ router.post("/:prisonerId/end-date-check", function (req, res) {
   if (endDateCheck === "yes") {
     res.redirect(`end-date${redirectParam}`);
   } else {
-    req.session.data["allocation"]["end-date"] = null;
-    res.redirect(req.query.redirect ? "check-allocation-details" : "payrate");
+    // set the end date for the prisoner's allocation to null
+    let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+    let allocation = prisoner.allocations[activityIndex];
+    allocation.endDate = null;
+    // then redirect to the confirmation page
+    // and show the confirmation message
+    req.session.data["confirmation-dialog"] = {
+      display: true,
+      change: "end-date",
+      prisoner: prisonerId,
+    };
+    let selectedPrisoners = req.session.data["selected-prisoners"].split(",");
+    res.redirect("../" + selectedPrisoners.join(","));
   }
 });
 
@@ -165,12 +225,23 @@ router.get("/:prisonerId/end-date", function (req, res) {
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
   );
+  let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+
+  // get the end date of the allocation index matching the activity index
+  let allocation = prisoner.allocations[activityIndex];
+
+  let endDate = {};
+  endDate.day = DateTime.fromISO(allocation.endDate).day;
+  endDate.month = DateTime.fromISO(allocation.endDate).month;
+  endDate.year = DateTime.fromISO(allocation.endDate).year;
 
   // render the end-date template
   res.render(req.protoUrl + "/end-date", {
     activity,
     prisoner,
     prisonerId,
+    allocation,
+    endDate,
   });
 });
 
@@ -197,16 +268,20 @@ router.post("/:prisonerId/end-date", function (req, res) {
   endDate.setMonth(req.body["allocation-end-date-month"] - 1);
   endDate.setDate(req.body["allocation-end-date-day"]);
 
-  req.session.data["allocation"]["end-date"] = endDate.toISOString().slice(0, 10);
+  // set the endDate of the prisoner's allocation to the end date from the form
+  // make sure the date is in ISO format
+  let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+  endDate = DateTime.fromJSDate(endDate).toISODate();
+  prisoner.allocations[activityIndex].endDate = endDate;
 
-  // set the redirect url
-  let url = "payrate";
+  req.session.data["confirmation-dialog"] = {
+    display: true,
+    change: "end-date",
+    prisoner: prisonerId,
+  };
 
-  // if there is a redirect query param, use that as the redirect url instead
-  if (req.query.redirect) {
-    url = req.query.redirect;
-  }
-
+  let selectedPrisoners = req.session.data["selected-prisoners"].split(",");
+  let url = "../" + selectedPrisoners.join(",");
   res.redirect(url);
 });
 

@@ -41,6 +41,19 @@ router.use("/:activityId/edit", (req, res, next) => {
   require("./edit/routes")(req, res, next);
 });
 
+// router for edit allocation journey
+router.use("/:activityId/edit-allocation", (req, res, next) => {
+  let serviceName = req.originalUrl.split("/")[1];
+  let version = req.originalUrl.split("/")[2];
+  let journey = req.originalUrl.split("/")[3];
+  let subJourney = req.originalUrl.split("/")[5];
+
+  req.activityId = req.params.activityId;
+
+  req.protoUrl = serviceName + "/" + version + "/" + journey + "/" + subJourney;
+  require("./edit-allocation/routes")(req, res, next);
+});
+
 // routes for pages in the activities section
 // activities page redirect root to /all
 router.get("/", function (req, res) {
@@ -276,7 +289,13 @@ router.get("/:activityId/currently-allocated-v2", function (req, res) {
 router.post("/:activityId/currently-allocated", function (req, res) {
   let selectedPrisoners = req.session.data["selected-prisoners"];
 
-  res.redirect("deallocate/" + selectedPrisoners);
+  // if the user clicks the 'remove' button, redirect to the deallocate page
+  // the button name is allocation-action
+  if (req.body["allocation-action"] === "deallocate") {
+    res.redirect("deallocate/" + selectedPrisoners);
+  } else if (req.body["allocation-action"] === "edit-allocation") {
+    res.redirect("edit-allocation/" + selectedPrisoners);
+  }
 });
 
 // dealocate date check page
@@ -505,7 +524,7 @@ router.post(
     if (req.session.data["update-application"] === "reject") {
       // redirect to the confirm remove application page with the prisoner id
       // e.g. allocate/SH7137Q/confirm-remove as the url
-      res.redirect('../../allocate/' + prisoner.id + "/confirm-remove");
+      res.redirect("confirm-remove");
     }
     // if user accepts the application, set the application eligible to yes
     // and redirect to the activity waitlist page
@@ -549,6 +568,83 @@ router.get(
     res.render(req.protoUrl + "/update-confirmation");
   }
 );
+
+// confirm remove application page
+router.get("/:activityId/applications/:applicationId/confirm-remove", function ( req, res) {
+  let activityId = req.params.activityId;
+  let applicationId = req.params.applicationId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  let applications = req.session.data["applications"];
+  let application = applications.find(
+    (application) => application.id.toString() === applicationId.toString()
+  );
+
+  let prisonerId = application["selected-prisoner"];
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let prisoner = prisoners.find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+  
+
+  // render the confirm remove application page
+  res.render(req.protoUrl + "/confirm-remove-application", {
+    activityId,
+    activity,
+    application,
+    applicationId,
+    prisoner,
+  });
+});
+
+// post logic for confirm remove application page
+router.post("/:activityId/applications/:applicationId/confirm-remove", function ( req, res) {
+  let activityId = req.params.activityId;
+  let applicationId = req.params.applicationId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  let applications = req.session.data["applications"];
+  let application = applications.find(
+    (application) => application.id.toString() === applicationId.toString()
+  );
+
+  let prisonerId = application["selected-prisoner"];
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let prisoner = prisoners.find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+
+  // if user confirms the removal of the application, remove the application
+  // and redirect to the activity waitlist page
+  if (req.session.data["confirm-remove-application"] === "yes") {
+    // remove the application from the applications array
+    let index = applications.indexOf(application);
+    applications.splice(index, 1);
+
+    // set the rejected dialog to show
+    req.session.data["confirmation-dialog"] = {
+      type: "rejected",
+      display: true,
+      prisoner: prisoner.id,
+    }
+    
+    // redirect to the activity waitlist page
+    res.redirect("../../applications");
+  }
+  // if user cancels the removal of the application, redirect to the activity waitlist page
+  else if (req.session.data["confirm-remove-application"] === "no") {
+    // redirect to the activity waitlist page
+    res.redirect("../../applications");
+  }
+});
 
 // confirm remove prisoner page
 router.get(
@@ -750,6 +846,29 @@ router.get(
     });
   }
 );
+
+// edit allocation page
+router.get( "/:activityId/edit-allocation/:prisonerId", function (req, res) {
+  let activityId = req.params.activityId;
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  // render the edit allocation page
+  res.render(req.protoUrl + "/edit-allocation/allocation-details", {
+    activityId,
+    activity,
+    prisoner,
+    prisonerId,
+  });
+});
+
+
 
 module.exports = router;
 

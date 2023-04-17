@@ -16,13 +16,9 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
-            {% set prisoner = allocation['prisoner'] | getPrisonerDetails %}
-            {% set activity = allocation['activity'] | getActivityDetails %}
-
-            <!-- GOVUK radios component to confirm removal of prisoner from activity -->
             {{govukRadios({
-            idPrefix: "confirm-remove",
-            name: "confirm-remove",
+            idPrefix: "confirm-remove-application",
+            name: "confirm-remove-application",
             fieldset: {
             legend: {
             text: "Are you sure you want to remove " + prisoner.name.firstname + " " + prisoner.name.surname + " from
