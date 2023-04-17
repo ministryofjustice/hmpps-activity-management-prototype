@@ -48,7 +48,7 @@ Find an activity to record or edit attendance
                             id="select-all"></th>
                         <th scope="col" class="govuk-table__header">Prisoner details</th>
                         <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
-                        <th scope="col" class="govuk-table__header">Date allocated</th>
+                        <th scope="col" class="govuk-table__header">Start / end date</th>
                         <th scope="col" class="govuk-table__header">Other allocations</th>
                         <th scope="col" class="govuk-table__header">Earliest release date</th>
                     </tr>
@@ -102,10 +102,10 @@ Find an activity to record or edit attendance
                             {% endif %}
                         </td>
                         <td class="govuk-table__cell">
-                            {{'2023-03-02'|convertShortDateToMediumDate}}
-                            {% if loop.index == 2 %}
-                            <br>to {{'2023-05-02'|convertShortDateToMediumDate}}
-                            <br><a class="govuk-link--no-visited-state" href="#">Change</a>
+                            {{prisoner.allocations[prisoner.activityIndex].startDate|convertShortDateToMediumDate}}
+                            {% if prisoner.allocations[prisoner.activityIndex].endDate %}
+                            <br>
+                            to {{prisoner.allocations[prisoner.activityIndex].endDate|convertShortDateToMediumDate}}
                             {% endif %}
                         </td>
                         <td class="govuk-table__cell">
@@ -177,7 +177,8 @@ Find an activity to record or edit attendance
     // run the function on window load to check if any checkboxes are already checked
     $(window).on('load', updateToolbar);
 
-    clearButton.on('click', function () {
+    clearButton.on('click', function (event) {
+        event.preventDefault();
         let selectAllCheckbox = $('body').find('table input[type="checkbox"]').first();
         // if the first checkbox in the table is checked, uncheck it
         if (selectAllCheckbox.is(':checked')) {
