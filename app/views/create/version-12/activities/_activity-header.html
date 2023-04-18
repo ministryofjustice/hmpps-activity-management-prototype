@@ -7,6 +7,12 @@
             {{activity.name}}: manage waitlist and allocate
         </h1>
 
+        {% set riskAssessment %}
+        {{"Low, Medium or High" if activity.riskAssessment == "any"}}
+        {{"Low" if activity.riskAssessment == "low-only"}}
+        {{"Low or Medium" if activity.riskAssessment == "low-or-medium"}}
+        {% endset %}
+
         {% set activityInfoHtml %}
         {{ govukSummaryList({
         classes: "govuk-summary-list--no-borderr",
@@ -17,7 +23,7 @@
         text: "Suitable for workplace risk assessment"
         },
         value: {
-        text: "Medium"
+        text: riskAssessment
         }
         },
         {

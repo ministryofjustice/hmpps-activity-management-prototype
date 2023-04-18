@@ -130,7 +130,7 @@ router.get("/risk-assessment-level-warning", function (req, res) {
     activity,
     activityId,
     activityRiskAssessment,
-    });
+  });
 });
 
 // risk assessment warning POST route
@@ -138,7 +138,7 @@ router.post("/risk-assessment-level-warning", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
   let activityId = req.activityId;
   let activity = activities.find((activity) => activity.id == activityId);
-  
+
   // update the activity risk assessment
   activity.riskAssessment = req.body["risk-assessment-level"];
 
@@ -151,7 +151,6 @@ router.post("/risk-assessment-level-warning", function (req, res) {
   // redirect to the activity page
   res.redirect("../../" + activityId + "/details");
 });
-
 
 // edit activity location page
 router.get("/location", function (req, res) {
@@ -393,6 +392,37 @@ router.post("/end-date", function (req, res) {
   // update the activity end date
   activity.endDate = endDate;
 
+  // check if there are any prisoners allocated to the activity who have an end date before the activity end date
+  // if so, set the prisoner end date to be the same as the activity end date
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+
+  // create an array of prisoners who are allocated to the activity
+  // make sure we only check prisoners if they have activity array and the activity array is not empty or null
+  let allocatedPrisoners = prisoners.filter((prisoner) => prisoner.activity && prisoner.activity.length > 0);
+
+  // filter the prisoners to only include those who are allocated to the activity
+  // we need to convert both to strings to make sure the comparison works
+  allocatedPrisoners = allocatedPrisoners.filter((prisoner) => prisoner.activity.toString().includes(activityId.toString()));
+
+  // loop through the prisoners who are allocated to the activity
+  allocatedPrisoners.forEach((prisoner) => {
+    let prisonerAllocations = prisoner.allocations; // get the prisoner allocations
+
+    // find the index of the allocation for the activity
+    let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() == activityId.toString());
+
+    // get the allocation for the activity
+    let prisonerAllocation = prisonerAllocations[activityIndex];
+
+    console.log("allocation", prisonerAllocation.endDate);
+
+    // change the prisoner allocation end date to be the same as the activity end date
+    // if the allocation has an end date and it is after the new activity end date
+    if (prisonerAllocation.endDate && DateTime.fromISO(prisonerAllocation.endDate) > DateTime.fromISO(endDate)) {
+      prisonerAllocation.endDate = endDate;
+    }
+  });
+
   // set the confirmation message to be displayed on the activity page
   req.session.data["confirmation-dialog"] = {
     display: true,
@@ -518,7 +548,6 @@ router.post("/capacity-warning", function (req, res) {
   res.redirect("../../" + activityId + "/details");
 });
 
-
 // edit activity education level list page
 router.get("/education-levels", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
@@ -550,7 +579,7 @@ router.get("/education-levels", function (req, res) {
     activity,
     activityId,
     educationLevels,
-    });
+  });
 });
 
 // edit activity education level list post route
@@ -579,15 +608,12 @@ router.post("/education-levels", function (req, res) {
   }
 });
 
-
 // remove activity education level get route
 // this just removes the education level from the education levels session data and redirects back to the education levels list page with a confirmation message
 router.get("/remove-education-level/:educationLevelId", function (req, res) {
   let educationLevels = req.session.data["education-levels"];
   let educationLevelId = req.params.educationLevelId;
-  let educationLevel = educationLevels.find(
-    (educationLevel) => educationLevel.id == educationLevelId
-  );
+  let educationLevel = educationLevels.find((educationLevel) => educationLevel.id == educationLevelId);
 
   // remove the education level from the education levels session data
   educationLevels.splice(educationLevels.indexOf(educationLevel), 1);
@@ -604,12 +630,12 @@ router.get("/add-education-level", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
   let activityId = req.activityId;
   let activity = activities.find((activity) => activity.id == activityId);
-  
+
   // render the page
   res.render(req.protoUrl + "/education-level", {
     activity,
     activityId,
-    });
+  });
 });
 
 // edit activity education level POST route
@@ -638,6 +664,5 @@ router.post("/add-education-level", function (req, res) {
   // redirect to the education level list page
   res.redirect("education-levels");
 });
-
 
 module.exports = router;

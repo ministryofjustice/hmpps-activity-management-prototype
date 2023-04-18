@@ -16,18 +16,18 @@ Find an activity to record or edit attendance
 {% block content %}
 
 {% include "./_activity-header.html" %}
-<p>
+<!-- <p>
     Select the person you want to allocate.
 </p>
 <p>
     You can also <a href="../../log-an-application-version-2">add a new activity request</a>.
-</p>
+</p> -->
 
 {% include './_filters.html' %}
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <div class="moj-search govuk-!-margin-bottom-6">
+        <div class="moj-search govuk-!-margin-top-4">
             <form action="other-prisoners" method="get" novalidate="">
                 <div class="govuk-form-group">
                     <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="name">
@@ -44,10 +44,13 @@ Find an activity to record or edit attendance
     </div>
 </div>
 
+{{govukInsetText({
+    text: "93 people are not available because their incentive level is not suitable for this activity."
+})}}
+
 <table class="govuk-table" id="list">
     <caption class="govuk-table__caption govuk-table__caption--m">
-        {{data['timetable-complete-1']['prisoners']|getOtherPrisonersCount(activity.id)}} people are not allocated to
-        this activity
+        {{data['timetable-complete-1']['prisoners']|getOtherPrisonersCount(activity.id) - 93}} people available for allocation
     </caption>
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">

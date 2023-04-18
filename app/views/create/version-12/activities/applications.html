@@ -18,11 +18,11 @@ Find an activity to record or edit attendance
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% if data['confirmation-dialog'].display == true %}
-{% set prisoner = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
+{% set p = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
 {% if data['confirmation-dialog'].type == 'removed' %}
 {% set bannerHtml %}
 <h2 class="govuk-notification-banner__heading">
-    We've removed {{prisoner.name.firstname}} {{prisoner.name.surname}} from the waitlist for
+    We've removed {{p.name.firstname}} {{p.name.surname}} from the waitlist for
     {{activity.name}}.
 </h2>
 {% endset %}
@@ -36,7 +36,7 @@ type: "success"
 {% if data['confirmation-dialog'].type == 'eligible' %}
 {% set bannerHtml %}
 <h2 class="govuk-notification-banner__heading">
-    We've changed {{prisoner.name.firstname}} {{prisoner.name.surname}}'s suitability to 'checks passed'.
+    We've changed {{p.name.firstname}} {{p.name.surname}}'s suitability to 'checks passed'.
 </h2>
 {% endset %}
 {{ govukNotificationBanner({
@@ -49,7 +49,7 @@ type: "success"
 {% if data['confirmation-dialog'].type == 'pending' %}
 {% set bannerHtml %}
 <h2 class="govuk-notification-banner__heading">
-    We've changed {{prisoner.name.firstname}} {{prisoner.name.surname}}'s suitability to 'checks needed'.
+    We've changed {{p.name.firstname}} {{p.name.surname}}'s suitability to 'checks needed'.
 </h2>
 {% endset %}
 {{ govukNotificationBanner({
@@ -75,7 +75,6 @@ type: "success"
 </p>
 
 {% include './_filters.html' %}
-
 
 <table class="govuk-table moj-sortable-table" data-module="moj-sortable-table">
     <caption class="govuk-table__caption govuk-table__caption--m">
