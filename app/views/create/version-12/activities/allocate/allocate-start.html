@@ -28,13 +28,17 @@ html: bannerHtml
     <div class="govuk-grid-column-two-thirds">
         {% set activity = application['activity'] | getActivityDetails %}
         {% set prisoner = data['new-activity']['prisoner'] %}
+        
         <h1 class="govuk-heading-xl">
-            Confirm you want to allocate {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}
+            Before you allocate {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}
         </h1>
+        
+        <!-- <p>
+            Before you allocate {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}, you need to:
+        </p> -->
 
         {% if application and application.status != 'rejected' %}
         <dl class="govuk-summary-list govuk-!-margin-bottom-">
-
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Suitability
@@ -48,13 +52,49 @@ html: bannerHtml
                     <span class="govuk-tag govuk-tag--yellow">Checks needed</span>
                     {% endif %}
                 </dd>
+                <dd class="govuk-summary-list__value">
+                    {{"2023-01-01" | convertShortDateToLongDate}}
+                </dd>
+            </div>
+        </dl>
+        {% endif %}
+
+        <ol class="govuk-list govuk-list--number govuk-!-margin-bottom-8">
+            <li><a href="#requirements">Check they meet the requirements.</a></li>
+            <li><a href="#requests">Review any previous requests.</a></li>
+            <li><a href="#allocations">Review any current allocations.</a></li>
+        </ol>
+
+        <span class="govuk-caption-m">Step 1</span>
+        <h2 class="govuk-heading-l" id="requirements">
+            Check {{prisoner.name.firstname}} {{prisoner.name.surname}} meets the requirements
+        </h2>
+
+        {% if application and application.status != 'rejected' %}
+        <dl class="govuk-summary-list govuk-!-margin-bottom-">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Suitability
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if application['eligible'] == 'yes' %}
+                    <span class="govuk-tag govuk-tag--green">Checks passed</span>
+                    {% elif application['eligible'] == 'no' %}
+                    <span class="govuk-tag govuk-tag--red">Rejected</span>
+                    {% else %}
+                    <span class="govuk-tag govuk-tag--yellow">Checks needed</span>
+                    {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    {{"2023-01-01" | convertShortDateToLongDate}}
+                </dd>
             </div>
         </dl>
         {% endif %}
 
         <table class="govuk-table">
             <caption class="govuk-table__caption govuk-table__caption--m">
-                Prisoner suitability details
+                Requirements
             </caption>
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
@@ -65,6 +105,23 @@ html: bannerHtml
                 </tr>
             </thead>
             <tbody class="govuk-table__body">
+                <!-- <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Suitability</th>
+
+                    <td class="govuk-table__cell">
+                        {% if application['eligible'] == 'yes' %}
+                    <span class="govuk-tag govuk-tag--green">Checks passed</span>
+                    {% elif application['eligible'] == 'no' %}
+                    <span class="govuk-tag govuk-tag--red">Rejected</span>
+                    {% else %}
+                    <span class="govuk-tag govuk-tag--yellow">Checks needed</span>
+                    {% endif %}
+                    </td>
+
+                    <td class="govuk-table__cell">
+                        {{"2023-01-01" | convertShortDateToLongDate}}
+                    </td>
+                </tr> -->
                 <tr class="govuk-table__row">
                     <th class="govuk-table__header" scope="row">Workplace risk assessment level</th>
 
@@ -114,15 +171,16 @@ html: bannerHtml
             </tbody>
         </table>
 
-        <!-- <h2 class="govuk-heading-m">
-            {{prisoner.name.firstname}} {{prisoner.name.surname}}'s previous requests
-        </h2> -->
-
-        {% set previousRequestsHtml %}
+        <span class="govuk-caption-m" id="requests">Step 2</span>
+        <h2 class="govuk-heading-l">
+            Review any previous requests
+        </h2>
         {% include "../../includes/_previous-requests-table.html" %}
-        {% endset %}
 
-        {% set currentAllocationsHtml %}
+        <span class="govuk-caption-m">Step 3</span>
+        <h2 class="govuk-heading-m" id="allocations">
+            Review any current allocations
+        </h2>
         {{govukTable({
         firstCellIsHeader: true,
         head: [
@@ -156,24 +214,15 @@ html: bannerHtml
         ]
         ]
         })}}
-        {% endset %}
-
-        {{govukDetails({
-        summaryText: "View " + prisoner.name.firstname + " " + prisoner.name.surname + "'s previous requests",
-        html: previousRequestsHtml
-        })}}
-
-        {{govukDetails({
-        summaryText: "View " + prisoner.name.firstname + " " + prisoner.name.surname + "'s current allocations",
-        html: currentAllocationsHtml
-        })}}
-
+       
         <p class="govuk-inset-text">
             You may need to <a href="#">view {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or
             consult with other departments before making your decision.
         </p>
 
         <form method="post" class="govuk-!-margin-top-8">
+            <span class="govuk-caption-m">Step 4</span>
+
             {% if application %}
             {{govukRadios({
             idPrefix: "application-status",
