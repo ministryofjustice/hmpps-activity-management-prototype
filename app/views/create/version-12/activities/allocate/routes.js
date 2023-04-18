@@ -61,7 +61,7 @@ router.get("/:prisonerId/start-date", function (req, res) {
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
-  );
+  );  
 
   // render the start-date template
   res.render(req.protoUrl + "/start-date", {

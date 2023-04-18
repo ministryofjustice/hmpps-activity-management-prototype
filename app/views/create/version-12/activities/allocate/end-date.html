@@ -50,13 +50,10 @@ text: "Back",
             ]
             })}}
 
-            {% if prisonerData | length == 1 %}
-            {% set insetTextText = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " will be
-            expected to attend any sessions scheduled to take place between now and the date they are removed from the
-            activity." %}
-            {% else %}
-            {% set insetTextText = "The " + prisonerData | length + " selected prisoners will be expected to attend any
-            sessions scheduled to take place between now and the date they are removed from the activity." %}
+            {% if activity.endDate %}
+            <p class="govuk-inset-text">
+                {{activity.name}} has been scheduled to end on {{activity.endDate|convertShortDateToVeryLongDate}}. You must enter an earlier end date.
+            </p>
             {% endif %}
 
             <!-- {{ govukInsetText({

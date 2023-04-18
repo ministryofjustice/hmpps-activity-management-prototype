@@ -15,15 +15,21 @@ window.history.go(-1)" })}} {% endblock %}
         <span class="govuk-caption-xl">Allocate to {{activity.name}}</span>
 
         <h1 class="govuk-heading-xl">
-            Select how much you want to pay {{prisoner.name.firstname}} {{prisoner.name.surname}} {{prisoner.id}}
+            How much do you want to pay {{prisoner.name.firstname}} {{prisoner.name.surname}}?
         </h1>
         <p class="govuk-inset-text">
-            {{prisoner.name.firstname}} {{prisoner.name.surname}}'s incentive level is
-            {{prisoner.incentiveLevel|capitalize}}.
+            {{prisoner.name.firstname}} {{prisoner.name.surname}} is currently on a {{prisoner.incentiveLevel}} incentive level.
         </p>
         <form method="post">
             {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
             {{ govukRadios({
+            fieldset: {
+            legend: {
+            isPageHeading: true,
+            text: "Select a standard incentive level payrate",
+            classes: "govuk-label--s"
+            }
+            },
             label: {
             text: "Select the correct pay rate",
             classes: "govuk-label--m"
@@ -48,6 +54,8 @@ window.history.go(-1)" })}} {% endblock %}
             }
             ]
             }) }}
+
+
 
             {{ govukButton({
             text: "Continue"
