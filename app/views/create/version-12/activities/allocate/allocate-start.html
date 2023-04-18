@@ -29,15 +29,21 @@ html: bannerHtml
         {% set activity = application['activity'] | getActivityDetails %}
         {% set prisoner = data['new-activity']['prisoner'] %}
         
+        <span class="govuk-caption-l">
+            Allocate to {{activity.name}}
+        </span>
         <h1 class="govuk-heading-xl">
-            Before you allocate {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}
+            Before you allocate
         </h1>
         
-        <!-- <p>
-            Before you allocate {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}, you need to:
-        </p> -->
+        <p class="govuk-body-l">
+            Use the information on this page to decide if <a href="#">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a> is suitable for {{activity.name}}.
+        </p>
+        <p class="govuk-body-l">
+            You may need to consult with other departments before making your decision.
+        </p>
 
-        {% if application and application.status != 'rejected' %}
+        <!-- {% if application and application.status != 'rejected' %}
         <dl class="govuk-summary-list govuk-!-margin-bottom-">
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -57,18 +63,18 @@ html: bannerHtml
                 </dd>
             </div>
         </dl>
-        {% endif %}
+        {% endif %} -->
 
-        <ol class="govuk-list govuk-list--number govuk-!-margin-bottom-8">
+        <!-- <ol class="govuk-list govuk-list--number govuk-!-margin-bottom-8">
             <li><a href="#requirements">Check they meet the requirements.</a></li>
             <li><a href="#requests">Review any previous requests.</a></li>
             <li><a href="#allocations">Review any current allocations.</a></li>
-        </ol>
+        </ol> -->
 
-        <span class="govuk-caption-m">Step 1</span>
+        <!-- <span class="govuk-caption-m">Step 1</span>
         <h2 class="govuk-heading-l" id="requirements">
             Check {{prisoner.name.firstname}} {{prisoner.name.surname}} meets the requirements
-        </h2>
+        </h2> -->
 
         {% if application and application.status != 'rejected' %}
         <dl class="govuk-summary-list govuk-!-margin-bottom-">
@@ -92,10 +98,14 @@ html: bannerHtml
         </dl>
         {% endif %}
 
-        <table class="govuk-table">
-            <caption class="govuk-table__caption govuk-table__caption--m">
-                Requirements
-            </caption>
+        <h2 class="govuk-heading-m" id="requirements">
+            Activity requirements
+        </h2>
+        <p class="govuk-body">
+            Review the requirements for {{activity.name}} and check if {{prisoner.name.firstname}} {{prisoner.name.surname}} meets them.
+        </p>
+
+        <table class="govuk-table govuk-!-margin-bottom-8">
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header">Type of requirement</th>
@@ -171,17 +181,15 @@ html: bannerHtml
             </tbody>
         </table>
 
-        <span class="govuk-caption-m" id="requests">Step 2</span>
-        <h2 class="govuk-heading-l">
-            Review any previous requests
+        <!-- <span class="govuk-caption-m">Step 3</span> -->
+        <h2 class="govuk-heading-m">
+            Current allocations
         </h2>
-        {% include "../../includes/_previous-requests-table.html" %}
-
-        <span class="govuk-caption-m">Step 3</span>
-        <h2 class="govuk-heading-m" id="allocations">
-            Review any current allocations
-        </h2>
+        <p class="govuk-body">
+            Check if {{prisoner.name.firstname}} {{prisoner.name.surname}}'s current allocation would be compatible with Anger Management Class.
+        </p>
         {{govukTable({
+            classes: "govuk-!-margin-bottom-5",
         firstCellIsHeader: true,
         head: [
         {
@@ -200,10 +208,10 @@ html: bannerHtml
         rows: [
         [
         {
-        text: "Carpentry"
+        text: "Gardens"
         },
         {
-        text: "2022-01-01"|convertShortDateToLongDate
+        text: "2021-01-23"|convertShortDateToLongDate
         },
         {
         text: "None set"
@@ -214,15 +222,20 @@ html: bannerHtml
         ]
         ]
         })}}
-       
-        <p class="govuk-inset-text">
-            You may need to <a href="#">view {{prisoner.name.firstname}} {{prisoner.name.surname}}'s profile</a> or
-            consult with other departments before making your decision.
+        <p class="govuk-!-margin-bottom-8">
+            <a href="#" class="govuk-link--no-visited-state">View allocations from the last 12 months</a>
         </p>
 
-        <form method="post" class="govuk-!-margin-top-8">
-            <span class="govuk-caption-m">Step 4</span>
 
+        <h2 class="govuk-heading-m">
+            Previous requests
+        </h2>
+        <p class="govuk-body">
+            Check if {{prisoner.name.firstname}} {{prisoner.name.surname}}'s previous activity requests are compatible with allocation to {{activity.name}}.
+        </p>
+        {% include "../../includes/_previous-requests-table.html" %}
+
+        <form method="post" class="govuk-!-margin-top-8">
             {% if application %}
             {{govukRadios({
             idPrefix: "application-status",
