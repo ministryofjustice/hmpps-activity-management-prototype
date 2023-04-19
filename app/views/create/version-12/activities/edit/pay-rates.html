@@ -30,13 +30,13 @@ type: "success"
 
             {% for incentiveLevel, payRates in payRatesByIncentiveLevel %}
             <h2 class="govuk-heading-m {{'govuk-!-margin-top-8' if loop.index > 1}}">
-                {{incentiveLevel|capitalize}} incentive level
+                {{incentiveLevel|capitalize}} incentive level pay rates
             </h2>
             {% if payRates.length > 0 %}
             <ul class="govuk-list govuk-button-group">
                 <li>
                     <a href="#" class="govuk-link">
-                        Add pay rate<span class="govuk-visually-hidden"> basic incentive level</span>
+                        Add pay rate <span class="govuk-visually-hidden"> for {{incentiveLevel}} incentive level</span>
                     </a>
                 </li>
             </ul>
