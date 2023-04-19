@@ -132,7 +132,8 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
 
         {% set riskLevels %}
         <ul class="govuk-list">
-            {% if activity.riskAssessment == "low-only" or activity.riskAssessment == "low-or-medium" or activity.riskAssessment == "any" %}
+            {% if activity.riskAssessment == "low-only" or activity.riskAssessment == "low-or-medium" or
+            activity.riskAssessment == "any" %}
             <li>Low</li>
             {% endif %}
 
@@ -192,70 +193,35 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
             <li>
                 <a href="#" class="govuk-link">Add new pay rate</a>
             </li>
+            <li>
+                <a href="edit/pay-rates" class="govuk-link">Edit pay rates</a>
+            </li>
         </ul>
-        {{ govukSummaryList({
-        rows: [
-        {
-        key: {
-        text: "Skilled"
-        },
-        actions: {
-        items: [
-        {
-        href: "#",
-        text: "Change",
-        visuallyHiddenText: "activity name"
-        }
-        ]
-        },
-        value: {
-        html: '<ul class="govuk-list govuk-list--spaced">
-            <li>Basic: £1.00</li>
-            <li>Standard: £2.00</li>
-            <li>Enhanced: £3.00</li>
-        </ul>'
-        }
-        },
-        {
-        key: {
-        text: "Expert"
-        },
-        actions: {
-        items: [
-        {
-        href: "#",
-        text: "Change",
-        visuallyHiddenText: "activity name"
-        }
-        ]
-        },
-        value: {
-        html: '<ul class="govuk-list govuk-list--spaced">
-            <li>Basic: £1.00</li>
-            <li>Standard: £2.00</li>
-            <li>Enhanced: £3.00</li>
-        </ul>'
-        }
-        },
-        {
-        key: {
-        text: "Beginner"
-        },
-        actions: {
-        items: [
-        {
-        href: "#",
-        text: "Change",
-        visuallyHiddenText: "activity name"
-        }
-        ]
-        },
-        value: {
-        html: 'Flat rate: £3.00'
-        }
-        }
-        ]
-        }) }}
+        <div class="govuk-summary-list">
+            {% for incentiveLevel, payRates in payRatesByIncentiveLevel %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    {{incentiveLevel|capitalize}}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if payRates.length == 0 %}
+                    None set
+                    {% else %}
+                    <ul class="govuk-list">
+                        {% for payRate in payRates %}
+                        <li>
+                            {{payRate.name|capitalize}}: £{{payRate.amount|decimalPlaces(2)}}<br>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="#" class="govuk-link">Edit</a>
+                </dd>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 

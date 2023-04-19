@@ -7,7 +7,7 @@ Activities Management prototype
 
 {% block beforeContent %}
 {{govukBackLink({
-text: "Back to currenly allocated",
+text: "Back to currently allocated",
 "href": "../currently-allocated"
 })}}
 {% endblock %}
@@ -41,7 +41,13 @@ type: "success"
 
         {% if pastStartDate %}
         <div class="govuk-inset-text">
-            You can only change the start date for people who have not started this activity.
+            You can only change the start date if they have not started this activity.
+        </div>
+        {% endif %}
+
+        {% if noEndDate %}
+        <div class="govuk-inset-text">
+            You can only change the end date for people that have been scheduled to be removed from this activity.
         </div>
         {% endif %}
 

@@ -389,6 +389,11 @@ router.post("/end-date", function (req, res) {
     year: req.body["end-date-year"],
   }).toISODate();
 
+  // if the activity does not have an end date, create an empty object
+  if (!activity.endDate) {
+    activity.endDate = {};
+  }
+
   // update the activity end date
   activity.endDate = endDate;
 
@@ -402,24 +407,30 @@ router.post("/end-date", function (req, res) {
 
   // filter the prisoners to only include those who are allocated to the activity
   // we need to convert both to strings to make sure the comparison works
-  allocatedPrisoners = allocatedPrisoners.filter((prisoner) => prisoner.activity.toString().includes(activityId.toString()));
+  allocatedPrisoners = allocatedPrisoners.filter((prisoner) =>
+    prisoner.activity.toString().includes(activityId.toString())
+  );
 
   // loop through the prisoners who are allocated to the activity
   allocatedPrisoners.forEach((prisoner) => {
     let prisonerAllocations = prisoner.allocations; // get the prisoner allocations
 
     // find the index of the allocation for the activity
-    let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() == activityId.toString());
+    let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
 
     // get the allocation for the activity
     let prisonerAllocation = prisonerAllocations[activityIndex];
 
-    console.log("allocation", prisonerAllocation.endDate);
-
-    // change the prisoner allocation end date to be the same as the activity end date
-    // if the allocation has an end date and it is after the new activity end date
-    if (prisonerAllocation.endDate && DateTime.fromISO(prisonerAllocation.endDate) > DateTime.fromISO(endDate)) {
+    // change the prisoner allocation end date if necessary
+    // if the end date is null, undefined or the prisoner allocation end date is after the activity end date
+    // update the prisoner allocation end date to be the same as the activity end date
+    if (
+      prisonerAllocation.endDate == null ||
+      prisonerAllocation.endDate == undefined ||
+      DateTime.fromISO(prisonerAllocation.endDate) > DateTime.fromISO(activity.endDate)
+    ) {
       prisonerAllocation.endDate = endDate;
+      prisonerAllocation.endDateType = "activity"
     }
   });
 
@@ -663,6 +674,59 @@ router.post("/add-education-level", function (req, res) {
 
   // redirect to the education level list page
   res.redirect("education-levels");
+});
+
+// pay-rates page
+router.get("/pay-rates", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // remove payrates that do not have a value
+  let payRates = activity.payRates.filter((payRate) => payRate.amount !== null);
+
+  // convert payrates array to object grouped by incentive level keys
+  // incentive levels: [basic, standard, enhanced]
+  let incentiveLevels = ["basic", "standard", "enhanced"];
+  let payRatesByIncentiveLevel = {};
+  incentiveLevels.forEach((incentiveLevel) => {
+    payRatesByIncentiveLevel[incentiveLevel] = payRates.filter(
+      (payRate) => payRate.incentiveLevel === incentiveLevel
+    );
+  });
+
+  // render the page
+  res.render(req.protoUrl + "/pay-rates", {
+    activity,
+    activityId,
+    payRatesByIncentiveLevel,
+  });
+});
+
+// pay rate page
+router.get("/pay-rate", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // render the page
+  res.render(req.protoUrl + "/pay-rate", {
+    activity,
+    activityId,
+  });
+});
+
+// delete pay rate check page
+router.get("/delete-pay-rate-check", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // render the page
+  res.render(req.protoUrl + "/delete-pay-rate-check", {
+    activity,
+    activityId,
+  });
 });
 
 module.exports = router;

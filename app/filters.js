@@ -254,6 +254,11 @@ module.exports = function (env) {
     }
   };
 
+  // filter to convert a number to n decimal places
+  filters.decimalPlaces = (number, decimalPlaces) => {
+    return number.toFixed(decimalPlaces);
+  };
+
   filters.push = (array, item) => {
     array.push(item);
     return array;

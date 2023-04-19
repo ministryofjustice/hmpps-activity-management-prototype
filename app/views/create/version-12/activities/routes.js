@@ -185,12 +185,28 @@ router.get("/:activityId/details", function (req, res) {
     delete req.session.data["confirmation-dialog"]
   }
 
+  // remove payrates that do not have a value
+  let payRates = activity.payRates.filter((payRate) => payRate.amount !== null);
+
+  // convert payrates array to object grouped by incentive level keys
+  // incentive levels: [basic, standard, enhanced]
+  let incentiveLevels = ["basic", "standard", "enhanced"];
+  let payRatesByIncentiveLevel = {};
+  incentiveLevels.forEach((incentiveLevel) => {
+    payRatesByIncentiveLevel[incentiveLevel] = payRates.filter(
+      (payRate) => payRate.incentiveLevel === incentiveLevel
+    );
+  });
+
+
   // render the activity details page and pass the activity object to the template
   res.render(req.protoUrl + "/details", {
     activity,
     activitySchedule,
     currentPage,
     schedule,
+    payRates,
+    payRatesByIncentiveLevel,
     });
 });
   
@@ -299,7 +315,7 @@ router.post("/:activityId/currently-allocated", function (req, res) {
   // if the user clicks the 'remove' button, redirect to the deallocate page
   // the button name is allocation-action
   if (req.body["allocation-action"] === "deallocate") {
-    res.redirect("deallocate/" + selectedPrisoners);
+    res.redirect("deallocate/" + selectedPrisoners + "?redirect=");
   } else if (req.body["allocation-action"] === "edit-allocation") {
     res.redirect("edit-allocation/" + selectedPrisoners);
   }
