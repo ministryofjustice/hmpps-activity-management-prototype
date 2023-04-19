@@ -44,29 +44,17 @@ Find an activity to record or edit attendance
                 data-multi-select-checkbox="#select-all">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
-                        <th class="govuk-table__header govuk-!-padding-right-2 govuk-!-padding-left-1" scope="col"
-                            id="select-all"></th>
                         <th scope="col" class="govuk-table__header">Prisoner details</th>
                         <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
                         <th scope="col" class="govuk-table__header">Start / end date</th>
-                        <th scope="col" class="govuk-table__header">Other allocations</th>
+                        <th scope="col" class="govuk-table__header">Pay rate</th>
                         <th scope="col" class="govuk-table__header">Earliest release date</th>
+                        <th scope="col" class="govuk-table__header"></th>
                     </tr>
                 </thead>
                 <tbody class="govuk-table__body">
                     {% for prisoner in currentlyAllocated | sort(false,true,'name.surname') %}
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">
-                            <div
-                                class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-right-2 govuk-!-margin-left-1">
-                                <input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}"
-                                    name="selected-prisoners" value="{{prisoner.id}}">
-                                <label class="govuk-label govuk-checkboxes__label" for="prisoner-{{loop.index}}">
-                                    <span class="govuk-visually-hidden">Select {{prisoner.name.surname}},
-                                        {{prisoner.name.firstname}}</span>
-                                </label>
-                            </div>
-                        </td>
                         <td class="govuk-table__cell">
                             <b>
                                 <a href="#" class="govuk-link--no-visited-state">
@@ -109,23 +97,13 @@ Find an activity to record or edit attendance
                             {% endif %}
                         </td>
                         <td class="govuk-table__cell">
-                            {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
-                            <span class="govuk-hint">None</span>
-                            {% else %}
-                            <ul class="govuk-list">
-                                {% for allocation in prisoner.activity %}
-                                <!-- don't show the allocation if it's the same as the current activity -->
-                                {% if allocation != activity.id %}
-                                {% set activity = allocation|getActivityDetails %}
-                                <li><a href="../{{activity.id}}"
-                                        class="govuk-link--no-visited-state">{{activity.name}}</a></li>
-                                {% endif %}
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
+                            £1.40 - Skilled
                         </td>
                         <td class="govuk-table__cell">
                             {{prisoner.releaseDate|convertShortDateToMediumDate}}
+                        </td>
+                        <td class="govuk-table__cell govuk-table__cell--numeric">
+                            <a href="allocation/{{prisoner.id}}" class="govuk-link--no-visited-state">View or change</a>
                         </td>
                     </tr>
                     {% endfor %}

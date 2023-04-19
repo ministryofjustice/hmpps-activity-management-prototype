@@ -251,6 +251,8 @@ router.get("/:activityId/currently-allocated", function (req, res) {
     );
   });
 
+  let currentlyAllocatedIds = currentlyAllocated.map((prisoner) => prisoner.id);
+
   res.render(req.protoUrl + "/currently-allocated", {
     activity,
     activityCategory,
@@ -258,10 +260,42 @@ router.get("/:activityId/currently-allocated", function (req, res) {
     activityDaysWithTimes,
     currentPage,
     currentlyAllocated,
+    currentlyAllocatedIds,
     schedule,
     activitySchedule,
   });
 });
+
+// view allocation page
+router.get("/:activityId/allocation/:prisonerId", function (req, res) {
+  let currentPage = "currently-allocated";
+  let activityId = req.params.activityId;
+  let prisonerId = req.params.prisonerId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let activity = activities.find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let prisoner = prisoners.find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+
+  // get and set the allocation details for the prisoner
+  let allocations = prisoner.allocations;
+  let activityIndex = prisoner.activity.findIndex(
+    (activity) => activity.toString() === activityId.toString()
+  );
+  let allocation = allocations[activityIndex];
+
+  // render the page
+  res.render(req.protoUrl + "/allocation", {
+    activity,
+    allocation,
+    currentPage,
+    prisoner,
+  });
+});
+
 
 // activity currently allocated page
 router.get("/:activityId/currently-allocated-v2", function (req, res) {

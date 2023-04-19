@@ -30,6 +30,36 @@ router.get("/:prisonerIds", function (req, res) {
   res.redirect(prisonerIds + "/date-check");
 });
 
+// select prisoners page
+router.get("/select-prisoners/:prisonerIds", function (req, res) {
+  let activityId = req.activityId;
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
+  
+  // render the select prisoners page
+  res.render(req.protoUrl + "/select-prisoners", {
+    prisoners,
+    currentlyAllocated,
+  });
+});
+
+// select prisoners page POST handler
+router.post("/select-prisoners/:prisonerIds", function (req, res) {
+  let prisonerIds = req.params.prisonerIds;
+  let selectedPrisoners = prisonerIds.split(",");
+  let prisonerIdsToDeallocate = req.session.data["prisoner-ids-to-deallocate"];
+
+  // if there are no prisoners selected, redirect to the select prisoners page
+  if (!prisonerIdsToDeallocate) {
+    res.redirect("select-prisoners/" + prisonerIds);
+  } else {
+    // if there are prisoners selected, redirect to the deallocate date check page
+    res.redirect('../' + prisonerIdsToDeallocate + "/date-check");
+  }
+});
+
+
+
 // dealocate date check page
 router.get("/:prisonerIds/date-check", function (req, res) {
   // if there is only one selected prisoner, redirect to the deallocate date page
@@ -95,8 +125,8 @@ router.get("/:prisonerIds/date/:prisonerId", function (req, res) {
 
   // if the prisoner deallocation date is already in the session data, split it into year, month and day
   // and send it to the date entry page
-  let existingDate = req.session.data["deallocation"][prisonerId]["date"];
-  if (existingDate) {
+  let existingDate;
+  if (req.session.data["deallocation"] && req.session.data["deallocation"][prisonerId] && req.session.data["deallocation"][prisonerId]["date"]) {
     let date = DateTime.fromISO(existingDate);
     existingDate = {
       year: date.year,
@@ -129,6 +159,17 @@ router.post("/:prisonerIds/date/:prisonerId", function (req, res) {
     day: req.session.data["deallocation-date-day"],
   }).toISODate();
 
+  // if the deallocation object doesn't exist in the session data, create it
+  if (!req.session.data["deallocation"]) {
+    req.session.data["deallocation"] = {};
+  }
+
+  // if the deallocation object for the prisoner doesn't exist in the session data, create it
+  if (!req.session.data["deallocation"][prisonerId]) {
+    req.session.data["deallocation"][prisonerId] = {};
+  }
+
+  // add the deallocation date to the session data
   req.session.data["deallocation"][prisonerId]["date"] = date;
 
   // redirect logic
@@ -169,8 +210,8 @@ router.get("/:prisonerIds/date", function (req, res) {
 
   // if the prisoner deallocation date is already in the session data, split it into year, month and day
   // and send it to the date entry page
-  let existingDate = req.session.data["deallocation"][prisonerId]["date"];
-  if (existingDate) {
+  let existingDate;
+  if (req.session.data["deallocation"] && req.session.data["deallocation"][prisonerId] && req.session.data["deallocation"][prisonerId]["date"]) {
     let date = DateTime.fromISO(existingDate);
     existingDate = {
       year: date.year,
@@ -613,4 +654,27 @@ function scheduleDaysWithTimes(schedule) {
     }
   });
   return activityDaysWithTimes;
+}
+
+// get list of prisoners with allocations
+function getAllocatedPrisoners(prisoners, activityId) {
+  return prisoners.filter((prisoner) => {
+    let prisonerActivities;
+    // check prisoner.activity is not null
+    if (prisoner.activity) {
+      // check prisoner.activity is an array
+      if (Array.isArray(prisoner.activity)) {
+        // set prisonerActivities to prisoner.activity
+        prisonerActivities = prisoner.activity;
+      } else {
+        // set prisonerActivities to an array containing prisoner.activity
+        prisonerActivities = [prisoner.activity];
+      }
+    } else {
+      // return false if prisoner.activity is null
+      return false;
+    }
+    // if the prisoners activity array contains the activityId, return true
+    return prisonerActivities.includes(parseInt(activityId));
+  });
 }

@@ -1,123 +1,151 @@
+{% set currentlyAllocatedCount =
+data['timetable-complete-1']['prisoners']|getCurrentlyAllocatedCount(activity.id) %}
+{% set vacanciesCount = activity.capacity - currentlyAllocatedCount %}
+{% if vacanciesCount < 0 %} {% set vacanciesCount=0 %} {% endif %} 
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l">
+        <!-- <span class="govuk-caption-l">
             Category: {{activity.category|getActivityCategoryName}}
-        </span>
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-            {{activity.name}}: manage waitlist and allocate
+        </span> -->
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+            {{activity.name}}
         </h1>
+        <span class="govuk-caption-l govuk-!-margin-bottom-5">
+            {{vacanciesCount}} vacancies remaining ({{activity.capacity}} total capacity)
+        </span>
 
-        {% set riskAssessment %}
-        {{"Low, Medium or High" if activity.riskAssessment == "any"}}
-        {{"Low" if activity.riskAssessment == "low-only"}}
-        {{"Low or Medium" if activity.riskAssessment == "low-or-medium"}}
-        {% endset %}
+            {% set riskAssessment %}
+            {{"Low, Medium or High" if activity.riskAssessment == "any"}}
+            {{"Low" if activity.riskAssessment == "low-only"}}
+            {{"Low or Medium" if activity.riskAssessment == "low-or-medium"}}
+            {% endset %}
 
-        {% set activityInfoHtml %}
-        {{ govukSummaryList({
-        classes: "govuk-summary-list--no-borderr",
-        rows: [
-        {
-        classes: "govuk-summary-list__row--no-actions",
-        key: {
-        text: "Suitable for workplace risk assessment"
-        },
-        value: {
-        text: riskAssessment
-        }
-        },
-        {
-        key: {
-        text: "Suitable for incentive level"
-        },
-        value: {
-        html: '<p>Basic, Standard or Enhanced</p>
-        <p class="govuk-hint">
-            You can control which incentive levels are suitable by <a href="edit/pay-rates">adding or removing corresponding pay rates</a>.
-        </p>'
-        }
-        },
-        {
-        key: {
-        text: "Education level"
-        },
-        value: {
-        text: "English level 1"
-        }
-        }
-        ]
-        }) }}
-        {% endset %}
-
-        {{govukDetails({
-        summaryText: "Activity requirements",
-        html: activityInfoHtml
-        })}}
-
-        {% set scheduleHtml %}
-        <table class="govuk-table">
-            <caption class="govuk-table__caption">
-                Schedule
-            </caption>
-            <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">Days</th>
-                    <th scope="col" class="govuk-table__header">AM</th>
-                    <th scope="col" class="govuk-table__header">PM</th>
-                    <th scope="col" class="govuk-table__header">ED</th>
-                </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-                {% for day in schedule %}
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">{{day.day|capitalize}}</td>
-                    <td class="govuk-table__cell">
-                        {% if day.am %}
-                        <span class="app-tag app-tag--green">AM</span>
+            {% set scheduleHtml %}
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-0">
+                {% for day in activityDaysWithTimes %}
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">
+                        {% if day.times %}
+                        {{day.day|capitalize}}
                         {% else %}
-                        <span class="app-tag app-tag--grey">No</span>
+                        <span class="govuk-hint">{{day.day|capitalize}}</span>
                         {% endif %}
-                    </td>
-                    <td class="govuk-table__cell">
-                        {% if day.pm %}
-                        <span class="app-tag app-tag--green">PM</span>
+                    </dt>
+                    <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">
+                        {% if day.times %}
+                        {{day.times}}
                         {% else %}
-                        <span class="app-tag app-tag--grey">No</span>
+                        <span class="govuk-hint">Not scheduled</span>
                         {% endif %}
-                    </td>
-                    <td class="govuk-table__cell">
-                        {% if day.ed %}
-                        <span class="app-tag app-tag--green">ED</span>
-                        {% else %}
-                        <span class="app-tag app-tag--grey">No</span>
-                        {% endif %}
-                    </td>
-                </tr>
+                    </dd>
+                </div>
                 {% endfor %}
-            </tbody>
-        </table>
-        {% endset %}
+            </dl>
+            {% endset %}
 
-        {% set currentlyAllocatedCount = data['timetable-complete-1']['prisoners']|getCurrentlyAllocatedCount(activity.id) %}
-        {% set vacanciesCount = activity.capacity - currentlyAllocatedCount %}
-        {% if vacanciesCount < 0 %} {% set vacanciesCount=0 %} {% endif %}
-        
-        <ul class="govuk-list">
-             <li>
+            {% set activityInfoHtml %}
+            {{ govukSummaryList({
+            classes: "govuk-summary-list--no-borderr",
+            rows: [
+            {
+            classes: "govuk-summary-list__row--no-actions",
+            key: {
+            text: "Suitable for workplace risk assessment"
+            },
+            value: {
+            text: riskAssessment
+            }
+            },
+            {
+            key: {
+            text: "Suitable for incentive level"
+            },
+            value: {
+            html: '<p>Basic, Standard or Enhanced</p>
+            <p class="govuk-hint">
+                You can control which incentive levels are suitable by <a href="edit/pay-rates">adding or removing
+                    corresponding pay rates</a>.
+            </p>'
+            }
+            },
+            {
+            key: {
+            text: "Education level"
+            },
+            value: {
+            text: "English level 1"
+            }
+            },
+            {
+            key: {
+            text: "Schedule"
+            },
+            value: {
+            html: scheduleHtml
+            }
+            }
+            ]
+            }) }}
+            {% endset %}
+
+            {{govukDetails({
+            summaryText: "Activity requirements and schedule",
+            html: activityInfoHtml
+            })}}
+
+            <div class="govuk-button-group">
+                {{ govukButton({
+                text: "Allocate to this activity",
+                href: "/create/version-12/activities/edit-allocation/add-prisoner",
+                classes: "govuk-button--secondary"
+                }) }}
+
+                {{ govukButton({
+                text: "Deallocate prisoners",
+                classes: "govuk-button--secondary",
+                href: "deallocate/select-prisoners/" + currentlyAllocatedIds
+                }) }}
+
+                {{ govukButton({
+                text: "Log a request",
+                classes: "govuk-button--secondary",
+                href: "../../log-an-application-version-2"
+                }) }}
+            </div>
+
+            <!-- <ul class="govuk-list govuk-button-group">
+            <li>
+                <a href="#" class="govuk-link govuk-link--no-visited-state">Allocate to this activity</a>
+            </li>
+            <li>
+                <a href="#" class="govuk-link govuk-link--no-visited-state">Deallocate prisoners</a>
+            </li>
+            <li>
+                <a href="#" class="govuk-link govuk-link--no-visited-state">Log a request</a>
+            </li>
+        </ul> -->
+
+            <!-- <ul class="govuk-list">
+            <li>
                 Vacancies: {{vacanciesCount}}
-                </li>
-                <li>
-                    Currently allocated: {{currentlyAllocatedCount}}
-                </li>
-                <li>
-                    Capacity: {{activity.capacity}}
-                </li>
-        </ul>
+            </li>
+            <li>
+                Currently allocated: {{currentlyAllocatedCount}}
+            </li>
+            <li>
+                Capacity: {{activity.capacity}}
+            </li>
+            </ul> -->
     </div>
 
     <div class="govuk-grid-column-one-third">
-        <div class="govuk-!-padding-3" style="border: 1px solid #c7c7c7; box-shadow: 4px 4px 0 rgba(0,0,0,0.1)">
-            <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
+        <!-- <div class="govuk-!-padding-4 govuk-!-padding-right-0 govuk-inset-text"> -->
+        <!-- <h2 class="govuk-heading-m">
+                Summary
+            </h2> -->
+
+        <!-- <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
                 Schedule
             </h2>
             <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-0">
@@ -139,9 +167,9 @@
                     </dd>
                 </div>
                 {% endfor %}
-            </dl>
-        </div>
+            </dl> -->
+        <!-- </div> -->
     </div>
-</div>
+    </div>
 
-{% include "./_sub-navigation.html" %}
+    {% include "./_sub-navigation.html" %}

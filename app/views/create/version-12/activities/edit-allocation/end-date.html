@@ -54,32 +54,38 @@ text: "Back",
             })}}
             {% endset %}
 
-            {{ govukRadios({
+            {% set noun = prisoner.name.firstname + " " + prisoner.name.surname %}
+            {{govukDateInput({
             idPrefix: "allocation-end-date",
-            name: "allocation-end-date",
+            namePrefix: "allocation-end-date",
             fieldset: {
             legend: {
-            text: "When do you want " + prisoner.name.firstname + " " + prisoner.name.surname + " to stop attending " +
-            activity.name + "?",
+            text: "When do you want " + noun + " to attend their last session of " + activity['name'] + "?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--xl"
             }
             },
+            hint: {
+            text: "For example, 31 3 1980"
+            },
             items: [
             {
-            value: "before-next-session",
-            text: "Before the next session starts"
+            name: "day",
+            classes: "govuk-input--width-2",
+            value: existingDate['day'] or ''
             },
             {
-            value: "specific-date",
-            text: "On a specific date",
-            checked: true if endDate.year,
-            conditional: {
-            html: dateHtml
-            }
+            name: "month",
+            classes: "govuk-input--width-2",
+            value: existingDate['month'] or ''
+            },
+            {
+            name: "year",
+            classes: "govuk-input--width-4",
+            value: existingDate['year'] or ''
             }
             ]
-            }) }}
+            })}}
 
             {% if prisonerData | length == 1 %}
             {% set insetTextText = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " will be
@@ -99,7 +105,7 @@ text: "Back",
             }) }}
 
             {{ govukButton({
-            text: "Update end date"
+            text: "Continue"
             }) }}
         </form>
     </div>

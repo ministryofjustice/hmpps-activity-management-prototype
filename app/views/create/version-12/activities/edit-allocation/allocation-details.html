@@ -84,14 +84,23 @@ type: "success"
                     </div>
                     <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key">
-                            End date
+                            Scheduled removal date
                         </dt>
                         <dd class="govuk-summary-list__value">
                             {{(prisoner.allocations[prisoner.activityIndex].endDate | convertShortDateToVeryLongDate) if
                             prisoner.allocations[prisoner.activityIndex].endDate else 'None set'}}
                         </dd>
                         <dd class="govuk-summary-list__actions">
-                            <a href="{{prisoner.id}}/end-date-check?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
+                            <ul class="govuk-summary-list__actions-list">
+                                <li class="govuk-summary-list__actions-list-item">
+                                    <a href="../deallocate/{{prisoner.id}}?selected-prisoners={{selectedPrisoners}}&redirect=edit-allocation" class="govuk-link--no-visited-state">Change</a>
+                                </li>
+                                {% if prisoner.allocations[prisoner.activityIndex].endDate %}
+                                <li class="govuk-summary-list__actions-list-item">
+                                    <a href="{{prisoner.id}}/remove-end-date?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Remove</a>
+                                </li>
+                                {% endif %}
+                            </ul>
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row">
