@@ -14,7 +14,7 @@ Appointments prototype
           <div class="govuk-grid-column-two-thirds-from-desktop">
             
             <div class="back">
-              <a href="group-appointment-multiple-occurrences"  class="govuk-back-link">Back</a>
+              <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
               </div>
               {% if data['which-occurrence'] === 'This occurrence' %}
 
@@ -34,10 +34,10 @@ Appointments prototype
     
               {% endif %}
             <h1 class="govuk-heading-l">
-              <span class="govuk-caption-l">View and edit appointment occurrence</span>
+              <span class="govuk-caption-l">View and edit appointment</span>
               Medical - Other appointment - 20 Apr 2023
              </h1>
-            <h2 class="govuk-heading-m">Appointment occurrence details</h2>
+            <h2 class="govuk-heading-m">Appointment details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -110,60 +110,17 @@ Appointments prototype
              
               
 
-              {% if data['person-1-check'] ==='True' %}
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Prisoners 
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  10 
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> prisoners</span>
-                  </a>
-                </dd>
-              </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Prisoner 
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  Manuel, Bod<br>{{ data['person-1']}} 
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
-                    View and edit<span class="govuk-visually-hidden"> Time</span>
-                  </a>
-                </dd>
-              </div>
-              {% else %}
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Prisoners 
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  9
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="change-answers-group-appointments/person-add-another">
-                    Change<span class="govuk-visually-hidden"> prisoners</span>
-                  </a>
-                </dd>
-              </div>
-              {% endif %}
-
               
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Prisoner 
+                  Prisoners 
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  <a href="#" class="govuk-link"> Rudge, Neil</a><br>G2044E <br>1-2-33 
+                  6
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="prisoner-details/rudge-neil">
-                    View and edit<span class="govuk-visually-hidden"> Rudge, Neil</span>
+                  <a class="govuk-link" href="change-answers-group-appointments/manage-group-participants">
+                    Change<span class="govuk-visually-hidden"> prisoners</span>
                   </a>
                 </dd>
               </div>
@@ -178,6 +135,21 @@ Appointments prototype
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
                     View and edit<span class="govuk-visually-hidden"> Hungerford, Bert</span>
+                  </a>
+                </dd>
+              </div>
+
+              
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link">Rudge, Neil</a><br>G2044E <br>1-2-33
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="prisoner-details/rudge-neil">
+                    View and edit<span class="govuk-visually-hidden">Rudge, Neil</span>
                   </a>
                 </dd>
               </div>
@@ -239,7 +211,7 @@ Appointments prototype
                   </a>
                 </dd>
               </div>
-              <div class="govuk-summary-list__row">
+              <!-- <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Prisoner 
                 </dt>
@@ -279,7 +251,7 @@ Appointments prototype
                     View and edit<span class="govuk-visually-hidden"> Looker, Logan</span>
                   </a>
                 </dd>
-              </div>
+              </div> -->
               
               <!--<div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -307,10 +279,7 @@ Appointments prototype
                 href: "cancel-group/cancel-question"
                }) }}
                
-            </div>
-             <p class="govuk-body">
-              <a href="group-appointment-multiple-occurrences" class="govuk-link">Back to group details</a>
-             </p>
+            </div> 
             </form>
           </div>
         </div>
