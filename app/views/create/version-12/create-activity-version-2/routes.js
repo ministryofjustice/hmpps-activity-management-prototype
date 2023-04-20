@@ -36,15 +36,39 @@ router.get("/risk-assessment-levels", function (req, res) {
 });
 // redirect to payment details page
 router.post("/risk-assessment-levels", function (req, res) {
-  res.redirect("payrate-list");
+  res.redirect("incentive-levels");
+});
+
+// incentive levels page
+router.get("/incentive-levels", function (req, res) {
+  res.render(req.protoUrl + "/incentive-levels");
+});
+
+// redirect to payrate name page
+router.post("/incentive-levels", function (req, res) {
+  res.redirect("payrate-flat-rate-check");
+});
+
+// payrate flat rate check page
+router.get("/payrate-flat-rate-check", function (req, res) {
+  res.render(req.protoUrl + "/payrate-flat-rate-check");
+});
+
+// redirect to payrate name page
+router.post("/payrate-flat-rate-check", function (req, res) {
+  if (req.session.data["new-activity"]["payrate-flat-rate-check"] === "no") {
+    res.redirect("payrate-select");
+  } else {
+    res.redirect("payrate-flat-rate-amount");
+  }
 });
 
 // select payrate page
-router.get("/payrate-name", function (req, res) {
-  res.render(req.protoUrl + "/payrate-name");
+router.get("/payrate-select", function (req, res) {
+  res.render(req.protoUrl + "/payrate-select");
 });
 // post logic for payrate name page
-router.post("/payrate-name", function (req, res) {
+router.post("/payrate-select", function (req, res) {
   // redirect to payment details page
   res.redirect("payrate-amounts");
 });

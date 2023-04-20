@@ -1,0 +1,139 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      {% set valueHtml %}
+      {{govukInput({
+        id: "payrates-low",
+        name: "new-activity[payrates-low]",
+        label: {
+          text: "Pay rate for Band 1"
+        },
+        prefix: {
+          text: "£"
+        },
+        classes: "govuk-input--width-10"
+      })}}
+      {% endset %}
+      
+
+      {{govukCheckboxes({
+      idPrefix: "payrates",
+      name: "new-activity[payrates]",
+      fieldset: {
+        legend: {
+          text: "Basic incentive level: Select pay bands",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: {
+        text: "Select all pay bands that are suitable for this activity."
+      },
+      items: [
+        {
+          value: "low",
+          text: "Band 1",
+          conditional: {
+            html: valueHtml
+          }
+        },
+        {
+          value: "medium",
+          text: "Band 2",
+          conditional: {
+            html: valueHtml
+          }
+        },
+        {
+          value: "high",
+          text: "Band 3",
+          conditional: {
+            html: valueHtml
+          }
+        },
+        {
+          value: "high",
+          text: "Band 4",
+          conditional: {
+            html: valueHtml
+          }
+        },
+        {
+          value: "high",
+          text: "Band 5",
+          conditional: {
+            html: valueHtml
+          }
+        },
+        {
+          value: "high",
+          text: "Band 6",
+          conditional: {
+            html: valueHtml
+          }
+        },
+        {
+          value: "high",
+          text: "Band 7",
+          conditional: {
+            html: valueHtml
+          }
+        },
+        {
+          value: "high",
+          text: "Band 8a",
+          conditional: {
+            html: valueHtml
+          }
+        },
+        {
+          value: "high",
+          text: "Band 8b",
+          conditional: {
+            html: valueHtml
+          }
+        },
+        {
+          value: "high",
+          text: "Band 8c",
+          conditional: {
+            html: valueHtml
+          }
+        },
+        {
+          value: "high",
+          text: "Band 8d",
+          conditional: {
+            html: valueHtml
+          }
+        },
+        {
+          value: "high",
+          text: "Band 9",
+          conditional: {
+            html: valueHtml
+          }
+        }
+      ]
+    })}}
+
+      {{ govukButton({
+      text: "Continue"
+      }) }}
+    </form>
+  </div>
+</div>
+
+{% endblock %}

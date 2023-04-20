@@ -1,0 +1,54 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+        <h2 class="govuk-heading-m">
+            <span class="govuk-caption-m">
+                {{data['new-activity']['category']}}
+            </span>
+            {{data['new-activity']['activity-name']}}
+        </h2>
+
+        {{govukRadios({
+            idPrefix: "payrate-flat-rate-check",
+            name: "new-activity[payrate-flat-rate-check]",
+            fieldset: {
+                legend: {
+                    text: "Do you want to set a flat rate for this activity?",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                }
+            },
+            hint: {
+                text: "If you set a flat rate, the pay rate for this activity will be the same for all incentive levels."
+            },
+            items: [
+                {
+                    value: "yes",
+                    text: "Yes"
+                },
+                {
+                    value: "no",
+                    text: "No"
+                }
+            ]
+        })}}
+        
+
+      <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
