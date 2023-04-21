@@ -191,39 +191,52 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         </h2>
         <ul class="govuk-list govuk-button-group">
             <li>
-                <a href="#" class="govuk-link">Add new pay rate</a>
+                <a href="payrates/add" class="govuk-link">Add new pay rate</a>
             </li>
             <li>
-                <a href="edit/pay-rates" class="govuk-link">Edit pay rates</a>
+                <a href="payrates" class="govuk-link">Edit pay rates</a>
             </li>
         </ul>
-        <div class="govuk-summary-list">
+        <dl class="govuk-summary-list">
             {% for incentiveLevel, payRates in payRatesByIncentiveLevel %}
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    {{incentiveLevel|capitalize}}
+                    {{ incentiveLevel | capitalize }} incentive level
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% if payRates.length == 0 %}
-                    None set
-                    {% else %}
-                    <ul class="govuk-list">
+                    <dl class="govuk-summary-list govuk-summary-list--no-border">
+                        {% if payRates.length == 0 %}
+                        No pay rates set
+                        {% else %}
                         {% for payRate in payRates %}
-                        <li>
-                            {{payRate.name|capitalize}}: £{{payRate.amount|decimalPlaces(2)}}<br>
-                        </li>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                                {{ payRate.name | capitalize }}
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                £{{ payRate.amount | decimalPlaces(2) }}
+                            </dd>
+                            <!-- <dd class="govuk-summary-list__actions">
+                                <ul class="govuk-summary-list__actions-list">
+                                    <li class="govuk-summary-list__actions-list-item">
+                                        <a href="payrates/delete/{{ payRate.id }}" class="govuk-link">Delete</a>
+                                    </li>
+                                    <li class="govuk-summary-list__actions-list-item">
+                                        <a href="payrates/edit/{{ payRate.id }}" class="govuk-link">Edit</a>
+                                    </li>
+                                </ul>
+                            </dd> -->
+                        </div>
                         {% endfor %}
-                    </ul>
-                    {% endif %}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                    <a href="#" class="govuk-link">Edit</a>
+                        {% endif %}
+                    </dl>
                 </dd>
             </div>
             {% endfor %}
-        </div>
+        </dl>
     </div>
 </div>
+
 
 <div class="govuk-grid-row govuk-!-margin-top-7">
     <div class="govuk-grid-column-two-thirds">

@@ -1,0 +1,64 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-xl">
+                Add a new pay rate
+            </span>
+            {{govukRadios({
+            idPrefix: "pay-rate-incentive-level",
+            name: "pay-rate-incentive-level",
+            fieldset: {
+            legend: {
+            text: "What type of payrate are you adding?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            hint: {
+            text: "Select the type of payrate you want to add."
+            },
+            items: [
+            {
+            value: "basic",
+            text: "Basic"
+            },
+            {
+            value: "standard",
+            text: "Standard"
+            },
+            {
+            value: "enhanced",
+            text: "Enhanced"
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "flat-rate",
+            text: "Flat rate (same for all incentive levels)"
+            }
+            ]
+            })}}
+
+            {{govukButton({
+            text: "Continue"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}
