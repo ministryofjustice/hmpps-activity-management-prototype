@@ -74,19 +74,19 @@ Appointments prototype
 						{
 						name: "day",
 						label: "Day",
-						value: "",
+						value: "21",
 						classes: "govuk-input--width-2 "
 						},
 						{
 						name: "month",
 						label: "Month",
-						value: "",
+						value: "04",
 						classes: "govuk-input--width-2"
 						},
 						{
 						name: "year",
 						label: "Year",
-						value: "",
+						value: "2023",
 						classes: "govuk-input--width-4"
 						}
 						]
@@ -145,14 +145,15 @@ Appointments prototype
 	
 							{
 							value: "am",
-							text: "AM"
+							text: "AM",
+							checked: "true"
 							},
 							{
 							value: "pm",
 							text: "PM"
 							},
 							{
-							value: "eD",
+							value: "ed",
 							text: "ED"
 							}
 							]
@@ -311,8 +312,8 @@ Appointments prototype
 							<label class="govuk-label govuk-label--s" for="sort">
 							  Prisoner name or number
 							</label>
-							<select class="govuk-select" id="apppointment-prisoner-name" name="apppointment-prisoner-name">
-								<option value="" selected> </option> 
+							<select class="govuk-select" id="apppointment-prisoner-name" name="apppointment-prisoner-name"> 
+								<option value="" selected> </option>
 								<option value="Jason Elkin, Z4650V">Jason Elkin, Z4650V</option>
 								<option value="Alec Duffrie, R8256V">Alec Duffrie, R8256V</option>
 								<option value="Carter Zorzin, C4342N">Carter Zorzin, C4342N</option>
@@ -406,7 +407,168 @@ Appointments prototype
 			{% from "govuk/components/table/macro.njk" import govukTable %}
 
 
-			<p>Apply filters to see results.</p>
+			<table class="govuk-table">
+				<thead class="govuk-table__head">
+					<tr class="govuk-table__row"> 
+						<th class="govuk-table__header" scope="col">Date</th>
+						<th class="govuk-table__header" scope="col">Time</th>
+						<th class="govuk-table__header" scope="col">Type</th>
+						<th class="govuk-table__header" scope="col">Appointment location</th>
+						<th class="govuk-table__header" scope="col">Attendees</th> 
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col">Occurrence</th>
+						<th class="govuk-table__header govuk-table__header--numeric govuk-!-width-one-quarter" scope="col"></th>
+					</tr>
+				</thead>
+				<tbody class="govuk-table__body">
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">9:00 to 12:00</td>
+						<td class="govuk-table__cell">Case - Substance misuse services</td>
+						<td class="govuk-table__cell">Classroom 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">6</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 6</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="group-appointment-single-occurrence-alt" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row">
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">09:00 to 10:00</td>
+						<td class="govuk-table__cell">Chaplaincy</td>
+						<td class="govuk-table__cell">Chapel</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">10</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+						</td>
+					</tr>
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">10:00 to 11:30</td>
+						<td class="govuk-table__cell">Education</td>
+						<td class="govuk-table__cell">Classroom 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">15</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">10:00 to 12:00</td>
+						<td class="govuk-table__cell">Case - Baile Apps</td>
+						<td class="govuk-table__cell">Classroom 2</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">4 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr> 
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">10:15 to 12:00</td>
+						<td class="govuk-table__cell">Chaplaincy</td>
+						<td class="govuk-table__cell">Chapel</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">10</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="edit-appointment-option-4" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">11:00 to 12:00</td>
+						<td class="govuk-table__cell">Gym - football</td>
+						<td class="govuk-table__cell">Gym</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">10</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">3 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row"> 
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">11:00 to 11:30</td>
+						<td class="govuk-table__cell">Medical - GP</td>
+						<td class="govuk-table__cell">Medical room</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">11:30 to 12:00</td>
+						<td class="govuk-table__cell">Medical - X-Ray</td>
+						<td class="govuk-table__cell">Medical room</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">11:00 to 12:00</td>
+						<td class="govuk-table__cell">Gym - weights</td>
+						<td class="govuk-table__cell">Gym</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">10</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">3 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr> 
+					<tr class="govuk-table__row"> 
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">11:00 to 15:00</td>
+						<td class="govuk-table__cell">Job Centre Plus</td>
+						<td class="govuk-table__cell">Computer room</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">20</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">5 of 20</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">11:30 to 15:00</td>
+						<td class="govuk-table__cell">Case - Baile Apps</td>
+						<td class="govuk-table__cell">Classroom 2</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">20</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">4 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr> 
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">11:30 to 12:00</td>
+						<td class="govuk-table__cell">Chaplaincy</td>
+						<td class="govuk-table__cell">Chapel</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">12</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">4 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr> 
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">10 May 2023</td>
+						<td class="govuk-table__cell">11:30 to 15:00</td>
+						<td class="govuk-table__cell">Case - Legal aid</td>
+						<td class="govuk-table__cell">Classroom 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">20</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">4 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr> 
+				</tbody>
+			</table>
+
+
 
 
 		</div>
@@ -439,6 +601,7 @@ Appointments prototype
 		});
 	})
 </script>
+
 
 
 <script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
@@ -479,4 +642,3 @@ Appointments prototype
     })
 </script>
 {% endblock %}
-

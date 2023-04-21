@@ -245,6 +245,20 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
   });
 
 
+  router.post(`/appointment-management/appointment-creation-method`, function (req, res) {
+	const appRepeat = req.session.data['appointment-creation-method'];
+	if (appRepeat === 'individual or group') {
+		res.redirect(`search-results-default`);
+	} else if (appRepeat === 'bulk') {
+		res.redirect(`search-results-bulk`);
+	}
+	else {
+		res.redirect(`search-results-default`);
+	}
+  });
+
+
+
   router.post(`/appointment-management/change-answers-group-alt/add-more-people`, function (req, res) {
 	const peoleRepeat = req.session.data['add-another-person-question'];
 	if (peoleRepeat === 'No') {
