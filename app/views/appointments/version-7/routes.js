@@ -187,6 +187,32 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
+  router.post(`/appointment-management/change-answers-group-appointments/multi-occurrence-question`, function (req, res) {
+	const appRepeat = req.session.data['which-occurrence'];
+	if (appRepeat === 'This occurrence') {
+		res.redirect(`../group-appointment-single-occurrence`);
+	} else if (appRepeat === 'This and the following occurrences') {
+		res.redirect(`../group-appointment-multiple-occurrences`);
+	}
+	else if (appRepeat === 'All occurrences') {
+		res.redirect(`../group-appointment-multiple-occurrences`);
+	}
+  });
+
+  router.post(`/appointment-management/change-answers-group-alt/multi-occurrence-question`, function (req, res) {
+	const appRepeat = req.session.data['which-occurrence-alt'];
+	if (appRepeat === 'This occurrence') {
+		res.redirect(`../group-appointment-single-occurrence-alt`);
+	} else if (appRepeat === 'This and the following occurrences') {
+		res.redirect(`../group-appointment-multiple-occurrences-alt`);
+	}
+	else if (appRepeat === 'All occurrences') {
+		res.redirect(`../group-appointment-multiple-occurrences-alt`);
+	}
+  });
+	  
+  
+
   router.post(`/appointment-management/change-answers-group-appointments/add-more-people`, function (req, res) {
 	const peoleRepeat = req.session.data['add-another-person-question'];
 	if (peoleRepeat === 'No') {
@@ -227,36 +253,5 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 		res.redirect(`upload-or-per-person`);
 	}
   });
-
-
-  // select prisoner page
-router.get("/select-prisoner", function (req, res) {
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let searchTerm = req.query.search;
-
-  const matchingPrisoners = prisoners.filter((prisoner) => {
-    const fullName = `${prisoner.name.forename} ${prisoner.name.surname}`;
-    return (
-      fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      prisoner.id.toLowerCase() === searchTerm.toLowerCase()
-    );
-  });
-
-  req.session.data["new-application"] = {}
-
-  // if there is only one matching prisoner
-  if (matchingPrisoners.length === 1) {
-    req.session.data["new-application"]["selected-prisoner"] =
-      matchingPrisoners[0].id;
-    res.redirect("prisoner-existing-applications");
-  } else if (matchingPrisoners.length > 1) {
-    res.render(req.protoUrl + "/select-prisoner", {
-      matchingPrisoners,
-    });
-    return;
-  } else {
-    res.redirect("prisoner-search");
-  }
-});
 
 module.exports = router

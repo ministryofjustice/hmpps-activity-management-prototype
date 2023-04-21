@@ -5,7 +5,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="appointment-view">
+<form id="form" method="post" action="search-results">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 	
@@ -24,42 +24,73 @@ Appointments prototype
 	
 			<!-- Individual or group GOVUK radio with hint component - HTML -->
 			
-			{% set individualHtml %}
-					{{ govukInput({
-					id: "prison-id",
-					name: "prison-id",
-					classes: "govuk-!-width-one-third",
-					label: {
-						text: "Enter prisoner's name or number (optional)"
-					}
-					}) }}
-				{% endset -%}
-			{{ govukRadios({
-				classes: "govuk-radios--small",
-				idPrefix: "appointment-type",
-				name: "appointment-type",
-				fieldset: {
-					legend: {
-						text: "Is the appointment for an individual person?",
-						isPageHeading: false,
-						classes: "govuk-fieldset__legend--s"
+		{% set individualHtml %}
+				{{ govukInput({
+				id: "prison-id",
+				name: "prison-id",
+				classes: "govuk-!-width-one-third",
+				label: {
+					text: "Enter prisoner's name or number (optional)"
+				}
+				}) }}
+			{% endset -%}
+		{{ govukRadios({
+			classes: "govuk-radios--small",
+			idPrefix: "appointment-type",
+			name: "appointment-type",
+			fieldset: {
+				legend: {
+					text: "Is the appointment for an individual person?",
+					isPageHeading: false,
+					classes: "govuk-fieldset__legend--s"
+				}
+			},
+			
+			items: [
+				{
+					value: "individual",
+					text: "Yes",
+					conditional: {
+					html: individualHtml
 					}
 				},
-				
-				items: [
-					{
-						value: "individual",
-						text: "Yes",
-						conditional: {
-						html: individualHtml
-						}
-					},
-					{
-						value: "gorup",
-						text: "No, it's for a group of people either at the same time or different times"
-					}
-				]
+				{
+					value: "gorup",
+					text: "No, it's for a group of people"
+				}
+			]
+		}) }}
+
+
+
+		<!-- recurring GOVUK radio with component - HTML -->
+		{{ govukRadios({
+			classes: "govuk-radios--small",
+			id: "reccurring",
+			name: "recurring",
+
+			fieldset: {
+			legend: {
+			text: "Is this appointment part of a recurring series?",
+			isPageHeading: false,
+			classes: "govuk-fieldset__legend--s"
+			}
+			},
+			items: [
+
+			{
+			value: "yes",
+			text: "Yes"
+			},
+			{
+			value: "no",
+			text: "No"
+			}
+			]
 			}) }}
+
+
+
 
 		<!-- Date radio GOVUK radio with hint component - HTML -->
 				{% set dateHtml %}
@@ -108,6 +139,32 @@ Appointments prototype
 					}
 				]
 			}) }}
+
+			<!-- Time GOVUK radio with component - HTML -->
+			{{ govukRadios({
+				classes: "govuk-radios--small",
+				id: "time",
+				name: "time",
+
+				fieldset: {
+				legend: {
+				text: "Time",
+				isPageHeading: false,
+				classes: "govuk-fieldset__legend--s"
+				}
+				},
+				items: [
+
+				{
+				value: "am",
+				text: "AM"
+				},
+				{
+				value: "pm",
+				text: "PM"
+				}
+				]
+				}) }}
 	
 			<!-- Category select GOVUK checkboxes component - HTML -->
 			{{ govukCheckboxes({
@@ -161,50 +218,6 @@ Appointments prototype
 				}
 				]
 			}) }}		
-
-	   
-
-	
-	
-			<!-- Prisoner location GOVUK select component - HTML -->
-			{% from "govuk/components/select/macro.njk" import govukSelect %}
-
-				{{ govukSelect({
-				id: "subject",
-				name: "subject",
-				label: {
-					text: "What is the location of the prisoner? (optional)",
-					classes: "govuk-label--s"
-				}, 
-				items: [
-					{
-					value: "choose",
-					text: "Choose location",
-					selected: true
-					},
-					{
-					value: "block1",
-					text: "Block 1"
-					},
-					{
-					value: "block2",
-					text: "Block 2"
-					},
-					{
-					value: "block3",
-					text: "Block 3"
-					},
-					{
-					value: "block4",
-					text: "Block 4"
-					},
-					{
-					value: "block5",
-					text: "Block 5"
-					}
-				]
-
-				}) }}
 
 
 

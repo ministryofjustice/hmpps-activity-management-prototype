@@ -14,15 +14,15 @@ Appointments prototype
           <div class="govuk-grid-column-two-thirds-from-desktop">
             
             <div class="back">
-              <a href="group-appointment-multiple-occurrences-alt"  class="govuk-back-link">Back</a>
+              <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
               </div>
-              {% if data['which-occurrence'] === 'This occurrence' %}
+              {% if data['which-occurrence-alt'] === 'This occurrence' %}
 
               {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
               {% set html %}
                 <h3 class="govuk-notification-banner__heading">
-                  Appointment [detail here] for this occurrence changed successfully 
+                  Appointment location for this occurrence changed successfully 
                 </h3>
                 
               {% endset %}
@@ -35,16 +35,16 @@ Appointments prototype
               {% endif %}
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">View and edit appointment occurrence</span>
-              Medical - Other appointment - 20 Apr 2023
+               Case - Substance misuse services - 1 May 2023
              </h1>
             <h2 class="govuk-heading-m">Appointment occurrence details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Category
+                  Type
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{data.categoryChoicealt or 'Medical - Other'}} 
+                  Case - Substance misuse services
                 </dd>
                 <dd class="govuk-summary-list__actions">
                  
@@ -54,9 +54,16 @@ Appointments prototype
                 <dt class="govuk-summary-list__key">
                   Location
                 </dt>
+
+                {% if data['which-occurrence-alt'] === 'This occurrence' %}
                 <dd class="govuk-summary-list__value">
-                  {{data.locationChoicealt or 'HB1 Classroom 1'}}
+                  HB1 Classroom 1 
                 </dd>
+                {% else %}
+                <dd class="govuk-summary-list__value">
+                  Medical room
+                </dd>
+                {% endif %}
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="change-answers-group-alt/location">
                     Change <span class="govuk-visually-hidden">  location</span>
@@ -68,7 +75,7 @@ Appointments prototype
                   Date
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  20 Apr 2023
+                  1 May 2023
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="change-answers-group-alt/date-of-appointment">
@@ -81,7 +88,7 @@ Appointments prototype
                   Start time
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['start-hours-alt'] or '11'}}:{{ data['start-minutes-alt'] or '00'}}
+                  9:00
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="change-answers-group-alt/date-of-appointment">
@@ -94,11 +101,11 @@ Appointments prototype
                   End time
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['end-hours-alt'] or '12'}}:{{ data['end-minutes-alt'] or '00'}} 
+                  12:00
                 </dd>
                 <dd class="govuk-summary-list__actions">
                 <a class="govuk-link" href="change-answers-group-alt/date-of-appointment">
-                    Change <span class="govuk-visually-hidden"> end ime</span>
+                    Change <span class="govuk-visually-hidden"> end time</span>
                   </a>
                 </dd>
               </div>
@@ -143,7 +150,7 @@ Appointments prototype
                   Prisoners 
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  9
+                  6
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="change-answers-group-alt/person-add-another">
@@ -239,7 +246,7 @@ Appointments prototype
                   </a>
                 </dd>
               </div>
-              <div class="govuk-summary-list__row">
+              <!-- <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Prisoner 
                 </dt>
@@ -279,7 +286,7 @@ Appointments prototype
                     View and edit<span class="govuk-visually-hidden"> Looker, Logan</span>
                   </a>
                 </dd>
-              </div>
+              </div> -->
               
               <!--<div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -295,6 +302,12 @@ Appointments prototype
                 </dd>
               </div>-->
               </dl>
+
+            
+            {% if data['which-occurrence'] === 'This occurrence' %}
+           
+
+            {% else %}
             <form  method="post" novalidate>
               <div class="govuk-button-group">
                 {{ govukButton({
@@ -304,12 +317,17 @@ Appointments prototype
                {{ govukButton({
                 text: "Cancel appointment",
                 classes: "govuk-button--secondary",
-                href: "cancel-group/cancel-question"
+                href: "cancel-group-alt/cancel-occurrence-question"
                }) }}
                
             </div>
+
+            {% endif %}
+
+
+
              <p class="govuk-body">
-              <a href="group-appointment-multiple-occurrences-alt" class="govuk-link">Back to group details</a>
+              <a href="group-appointment-multiple-occurrences-alt" class="govuk-link">Go to group details</a>
              </p>
             </form>
           </div>
