@@ -14,37 +14,38 @@ Appointments prototype
 
             {% if data['which-occurrence-alt'] === 'All occurrences' %}
 
-            {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
-            {% set html %}
-              <h3 class="govuk-notification-banner__heading">
-                Appointment location for all occurrences changed successfully 
-              </h3>
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  Appointment location for all occurrences changed successfully 
+                </h3>
+                
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }}
+
+            {% elseif data['which-occurrence-alt'] === 'This and the following occurrences' %}
+
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  Appointment location for some occurrences changed successfully 
+                </h3>
               
-            {% endset %}
+                
+              {% endset %}
 
-            {{ govukNotificationBanner({
-              html: html,
-              type: 'success'
-            }) }}
-  
-            {% endif %}
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }}
 
-            {% if data['which-occurrence-alt'] === 'This and the following occurrences' %}
-
-            {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-
-            {% set html %}
-              <h3 class="govuk-notification-banner__heading">
-                Appointment location for some occurrences changed successfully 
-              </h3>
-              
-            {% endset %}
-
-            {{ govukNotificationBanner({
-              html: html,
-              type: 'success'
-            }) }}
+            {% else %}
   
             {% endif %}
             <h1 class="govuk-heading-l">View and edit appointment details</h1>
@@ -113,9 +114,15 @@ Appointments prototype
                 <dt class="govuk-summary-list__key">
                   Location
                 </dt>
+                {% if data['which-occurrence-alt'] === 'This and the following occurrences' or data['which-occurrence-alt'] === 'All occurrences' %}
                 <dd class="govuk-summary-list__value">
-                  HB1 Classroom 1
+                  Classroom 1 
                 </dd>
+                {% else %}
+                <dd class="govuk-summary-list__value">
+                  Medical room
+                </dd>
+                {% endif %}
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="change-answers-group-alt/location">
                     Change <span class="govuk-visually-hidden">  location</span>
