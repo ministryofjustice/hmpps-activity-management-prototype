@@ -25,7 +25,7 @@ text: "Back",
                 {{activity.name}}
             </span>
             <h1 class="govuk-heading-xl">
-                Confirm pay rate change
+                Check before you delete {{oldPayRate.incentiveLevel}} incentive level: {{oldPayRate.payBand|lower}} pay
             </h1>
 
             {% if prisonerActions.length == 1 %}
@@ -35,8 +35,7 @@ text: "Back",
                         Prisoner
                     </dt>
                     <dd class="govuk-summary-list__value">
-                        {{prisonerActions[0].name.firstname}} {{prisonerActions[0].name.surname}}
-                        ({{prisonerActions[0].id}})
+                        {{prisonerActions[0].name.firstname}} {{prisonerActions[0].name.surname}}, {{prisonerActions[0].id}}
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row">
@@ -59,33 +58,11 @@ text: "Back",
 
             {% else %}
 
-            <h2 class="govuk-heading-m">
-                People being deallocated from the activity
-            </h2>
-            <dl class="govuk-summary-list">
-                {% for prisoner in prisonerActions.prisonersToDeallocate %}
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
-                    </dt>
-                    <dd class="govuk-summary-list__actions">
-                        <a href="/create/version-12/activities/payrates/change-prisoner-payrate?prisonerId={{prisoner.id}}&activityId={{activity.id}}"
-                            class="govuk-link">
-                            Change
-                        </a>
-                    </dd>
-                </div>
-                {% endfor %}
-            </dl>
-
-            <h2 class="govuk-heading-m">
-                People moving to a new pay rate
-            </h2>
             {% for prisoner in prisonerActions.prisonersToMove %}
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title">
-                        {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
+                        {{prisoner.name.firstname}} {{prisoner.name.surname}}, {{prisoner.id}}
                     </h2>
                 </div>
                 <div class="govuk-summary-card__content">

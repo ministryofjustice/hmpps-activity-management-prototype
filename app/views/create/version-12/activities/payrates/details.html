@@ -16,23 +16,19 @@ text: "Back",
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
-            <span class="govuk-caption-xl">
-                Add a new pay rate
-            </span>
+            <!-- <span class="govuk-caption-xl">
+                Change pay rate
+            </span> -->
             <h1 class="govuk-heading-xl">
-                {{incentiveLevel|replace('-',' ')|capitalize}} pay rate details
+                Change the pay band name or amount for {{payRate.incentiveLevel|replace('-',' ')|capitalize}} incentive level: {{payRate.payBand}}
             </h1>
-
-            {{govukInsetText({
-            html: "You are adding a new pay rate for the <strong>"+incentiveLevel|replace('-',' ')|capitalize+"</strong> incentive level."
-            })}}
 
             <!-- pay rate amount input with currency prefix -->
             {{govukInput({
             id: "pay-rate-amount",
             name: "pay-rate-amount",
             label: {
-            text: "Pay rate amount"
+            text: "Amount"
             },
             prefix: {
             text: "£"
@@ -47,7 +43,7 @@ text: "Back",
                     Pay band
                 </label>
                 <select class="govuk-select" id="pay-rate-pay-band" name="pay-rate-pay-band">
-                    <option value="">Select a pay band</option>
+                    <option value="" disabled selected>Select a pay band</option>
                     {% set bandOptions = ["Band 1", "Band 2", "Band 3", "Band 4", "Band 5"] %}
                     {% for bandOption in bandOptions %}
                     <option value="{{bandOption}}" {{'selected' if payRate.payBand == bandOption}}>{{bandOption}}</option>

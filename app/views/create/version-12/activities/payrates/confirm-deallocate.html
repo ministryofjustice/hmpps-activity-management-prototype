@@ -25,34 +25,8 @@ text: "Back",
                 {{activity.name}}
             </span>
             <h1 class="govuk-heading-xl">
-                Confirm pay rate change
+                Confirm you want to deallocate {{noun}}
             </h1>
-
-            <div class="govuk-summary-list">
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Old pay rate
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        {{oldPayRate.payBand}}
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        New pay rate
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        {{newPayRate.payBand}}
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a href="../select-payrate/{{prisonersOnPayRate}}" class="govuk-link">Change</a>
-                    </dd>
-                </div>
-            </div>
-
-            <p>
-                The following prisoners will be moved to the new pay rate:
-            </p>
 
             <ul class="govuk-list govuk-list--bullet">
                 {% for prisoner in prisonerData %}
