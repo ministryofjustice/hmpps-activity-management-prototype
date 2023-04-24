@@ -25,13 +25,18 @@ text: "Back",
                 {{activity.name}}
             </span>
             <h1 class="govuk-heading-xl">
-                Confirm pay rate change
+                Check before you delete {{newPayRate.incentiveLevel}} incentive level: {{newPayRate.payBand|lower}} pay
             </h1>
+
+            <p>
+                Because there is only one alternative rate, everyone allocated to the rate you are deleting will be moved.
+            </p>
+
 
             <div class="govuk-summary-list">
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
-                        Old pay rate
+                        Pay rate to be deleted
                     </dt>
                     <dd class="govuk-summary-list__value">
                         {{oldPayRate.payBand}} ({{'Flat rate' if oldPayRate.incentiveLevel == 'flatRate' else oldPayRate.incentiveLevel}})
@@ -44,26 +49,24 @@ text: "Back",
                     <dd class="govuk-summary-list__value">
                         {{newPayRate.payBand}} ({{'flat rate' if newPayRate.incentiveLevel == 'flatRate' else newPayRate.incentiveLevel}})
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a href="../select-payrate/{{prisonersOnPayRate}}" class="govuk-link">Change</a>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        People moving rate
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {% if prisonerData.length > 1 %}
+                        <ul class="govuk-list govuk-list--spaced">
+                            {% for prisoner in prisonerData %}
+                            <li>{{prisoner.name.firstname}} {{prisoner.name.surname}}, {{prisoner.id}}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}}, {{prisonerData[0].id}}
+                        {% endif %}
                     </dd>
                 </div>
             </div>
-
-            <p>
-                The following prisoners will be moved to the new pay rate:
-            </p>
-
-            <ul class="govuk-list govuk-list--bullet">
-                {% for prisoner in prisonerData %}
-                <li>{{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})</li>
-                {% endfor %}
-            </ul>
-
-            {{govukWarningText({
-            text: "The " + oldPayRate.payBand + " pay rate will be deleted from " + activity.name + ".",
-            iconFallbackText: "Warning"
-            })}}
 
             {{govukButton({
             text: "Confirm and delete pay rate",

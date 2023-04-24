@@ -20,22 +20,16 @@ text: "Back",
                 {{activity.name}}
             </span>
             <h1 class="govuk-heading-xl">
-                Decide what to do with prisoners on this pay rate
+                Select a new pay rate for each person
             </h1>
 
-            <p>
-                You need to decide what to do for each prisoner on this pay rate.
-            </p>
-
             {% for prisoner in prisonerData %}
-            <h2 class="govuk-heading-m">
-                {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
-            </h2>
             <div class="govuk-form-group">
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset" aria-describedby="prisoner-{{prisoner.id}}-hint">
-                        <legend class="govuk-fieldset__legend">
-                            Select a new pay rate for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                            <span class="govuk-visually-hidden">Pay rate for </span> {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                            <span class="govuk-hint">{{prisoner.id}}</span>
                         </legend>
                         <div class="govuk-radios" data-module="govuk-radios">
                             {% for payrate in payrates %}
@@ -46,23 +40,10 @@ text: "Back",
                                     aria-expanded="false">
                                 <label class="govuk-label govuk-radios__label"
                                     for="prisoner-action-{{prisoner.id}}-{{payrate.payRate_id}}">
-                                    {{payrate.payBand|capitalize}} - £{{payrate.amount|decimalPlaces(2)}} ({{'flat rate' if payrate.incentiveLevel == 'flatRate' else payrate.incentiveLevel}})
+                                    {{payrate.payBand|capitalize}} – £{{payrate.amount|decimalPlaces(2)}} ({{'flat rate' if payrate.incentiveLevel == 'flatRate' else payrate.incentiveLevel + ' incentive level'}})
                                 </label>
                             </div>
                             {% endfor %}
-                            <div class="govuk-radios__divider">or</div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="prisoner-action-{{prisoner.id}}-deallocate" name="prisoner-actions[{{prisoner.id}}]"
-                                    type="radio" value="deallocate" aria-controls="conditional-prisoner-{{prisoner.id}}"
-                                    aria-expanded="false">
-                                <label class="govuk-label govuk-radios__label" for="prisoner-action-{{prisoner.id}}-deallocate">
-                                    Deallocate this prisoner
-                                </label>
-                            </div>
-                            <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-prisoner-{{prisoner.id}}-deallocate">
-                                <p class="govuk-body">This prisoner will be removed from this activity.</p>
-                            </div>
                         </div>
                     </fieldset>
                 </div>

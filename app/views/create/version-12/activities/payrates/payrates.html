@@ -36,19 +36,21 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
                 href: "payrates/add"
             })}}
 
-            {% if noAlternativePayRates %}
             <div class="govuk-inset-text govuk-!-margin-top-">
                 <p>
-                    You can only delete a pay rate if there is at least one alternative pay rate for prisoners on that incentive level.
+                    You can change pay band names or amounts. You can delete any pay rate, but if there is someone assigned to it you’ll need to change their pay rate or take them off the activity first.
                 </p>
             </div>
-            {% endif %}
 
             {% for incentiveLevel, payRates in payRatesByIncentiveLevel %}
-            <h2 class="govuk-heading-m govuk-!-margin-top-{{'8' if loop.index > 1 else '4'}}">
-                {{incentiveLevel|capitalize}} incentive level pay rates
-            </h2>
             {% if payRates.length > 0 %}
+            <h2 class="govuk-heading-m govuk-!-margin-top-{{'8' if loop.index > 1 else '4'}}">
+                {% if incentiveLevel == 'flatRate' %}
+                Flat rates
+                {% else %}
+                {{incentiveLevel|capitalize}} incentive level pay rates
+                {% endif %}
+            </h2>
             {% for payRate in payRates %}
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -90,13 +92,14 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
                             </dd>
                         </div>
                     </dl>
+                    <!-- <p class="govuk-inset-text govuk-!-margin-bottom-2">
+                        You can't delete this pay rate because there are people assigned to it and it's the only pay rate for this incentive level.
+                    </p> -->
                 </div>
             </div>
             {% endfor %}
             {% else %}
-            <p class="govuk-body">
-                There are no pay rates for the {{incentiveLevel|capitalize}} incentive level.
-            </p>
+            
             {% endif %}
             {% endfor %}
 

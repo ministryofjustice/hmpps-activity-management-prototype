@@ -37,7 +37,7 @@ text: "Back",
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="payrate-{{payrate.payRate_id}}" name="new-payrate-id" type="radio" value="{{payrate.payRate_id}}">
                             <label class="govuk-label govuk-radios__label" for="payrate-{{payrate.payRate_id}}">
-                                {{payrate.payBand|capitalize}} - £{{payrate.amount|decimalPlaces(2)}} ({{'Flat rate' if payrate.incentiveLevel == 'flatRate' else payrate.incentiveLevel}})
+                                {{payrate.payBand|lower}} - £{{payrate.amount|decimalPlaces(2)}} ({{'flat rate' if payrate.incentiveLevel == 'flatRate' else payrate.incentiveLevel + ' incentive level'}})
                             </label>
                         </div>
                         {% endfor %}
