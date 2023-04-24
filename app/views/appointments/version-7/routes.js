@@ -250,7 +250,7 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	if (appRepeat === 'individual or group') {
 		res.redirect(`search-results-default`);
 	} else if (appRepeat === 'bulk') {
-		res.redirect(`search-results-bulk`);
+		res.redirect(`search-results-bulk-default`);
 	}
 	else {
 		res.redirect(`search-results-default`);
