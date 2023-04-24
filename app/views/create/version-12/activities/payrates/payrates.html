@@ -7,11 +7,13 @@ Activities Management prototype
 
 {% block beforeContent %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% if data['confirmation-dialog'] %}
 {{ govukNotificationBanner({
 text: "You have updated the pay rates for this activity.",
 type: "success",
 classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
 }) }}
+{% endif %}
 {% endblock %}
 
 {% block tableArea %}
@@ -43,7 +45,7 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
             {% endif %}
 
             {% for incentiveLevel, payRates in payRatesByIncentiveLevel %}
-            <h2 class="govuk-heading-l govuk-!-margin-top-{{'8' if loop.index > 1 else '4'}}">
+            <h2 class="govuk-heading-m govuk-!-margin-top-{{'8' if loop.index > 1 else '4'}}">
                 {{incentiveLevel|capitalize}} incentive level pay rates
             </h2>
             {% if payRates.length > 0 %}
@@ -81,7 +83,7 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
                         </div>
                         <div class="govuk-summary-list__row">
                             <dt class="govuk-summary-list__key">
-                                People allocated
+                                People on this rate
                             </dt>
                             <dd class="govuk-summary-list__value">
                                 {{payRate.prisonerCount or 'None'}}
@@ -92,8 +94,8 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
             </div>
             {% endfor %}
             {% else %}
-            <p>
-                There are no pay rates for the enhanced incentive level.
+            <p class="govuk-body">
+                There are no pay rates for the {{incentiveLevel|capitalize}} incentive level.
             </p>
             {% endif %}
             {% endfor %}

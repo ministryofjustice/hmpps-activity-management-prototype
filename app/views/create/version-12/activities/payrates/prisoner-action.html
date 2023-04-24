@@ -1,0 +1,78 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-xl">
+                {{activity.name}}
+            </span>
+            <h1 class="govuk-heading-xl">
+                Decide what to do with prisoners on this pay rate
+            </h1>
+
+            <p>
+                You need to decide what to do for each prisoner on this pay rate.
+            </p>
+
+            {% for prisoner in prisonerData %}
+            <h2 class="govuk-heading-m">
+                {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
+            </h2>
+            <div class="govuk-form-group">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset" aria-describedby="prisoner-{{prisoner.id}}-hint">
+                        <legend class="govuk-fieldset__legend">
+                            Select a new pay rate for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                        </legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            {% for payrate in payrates %}
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="prisoner-action-{{prisoner.id}}-{{payrate.payRate_id}}"
+                                    name="prisoner-actions[{{prisoner.id}}]" type="radio" value="{{payrate.payRate_id}}"
+                                    aria-controls="conditional-prisoner-{{prisoner.id}}-{{payrate.payRate_id}}"
+                                    aria-expanded="false">
+                                <label class="govuk-label govuk-radios__label"
+                                    for="prisoner-action-{{prisoner.id}}-{{payrate.payRate_id}}">
+                                    {{payrate.payBand|capitalize}} - £{{payrate.amount|decimalPlaces(2)}}
+                                </label>
+                            </div>
+                            {% endfor %}
+                            <div class="govuk-radios__divider">or</div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="prisoner-action-{{prisoner.id}}-deallocate" name="prisoner-actions[{{prisoner.id}}]"
+                                    type="radio" value="deallocate" aria-controls="conditional-prisoner-{{prisoner.id}}"
+                                    aria-expanded="false">
+                                <label class="govuk-label govuk-radios__label" for="prisoner-action-{{prisoner.id}}-deallocate">
+                                    Deallocate them
+                                </label>
+                            </div>
+                            <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                id="conditional-prisoner-{{prisoner.id}}-deallocate">
+                                <p class="govuk-body">This prisoner will be removed from this activity.</p>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                {% endfor %}
+
+                {{govukButton({
+                text: "Continue",
+                classes: "govuk-!-margin-top-6"
+                })}}
+        </form>
+    </div>
+</div>
+{% endblock %}

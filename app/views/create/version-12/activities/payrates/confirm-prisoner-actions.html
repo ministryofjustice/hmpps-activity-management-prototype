@@ -1,0 +1,135 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {% set noun = "these " + prisonerData.length + " prisoners" %}
+            {% if prisonerData.length == 1 %}
+            {% set noun = "this prisoner" %}
+            {% endif %}
+
+            <span class="govuk-caption-xl">
+                {{activity.name}}
+            </span>
+            <h1 class="govuk-heading-xl">
+                Confirm pay rate change
+            </h1>
+
+            {% if prisonerActions.length == 1 %}
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Prisoner
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {{prisonerActions[0].name.firstname}} {{prisonerActions[0].name.surname}}
+                        ({{prisonerActions[0].id}})
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Old pay rate
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {{prisonerActions[0].oldPayRate.payBand}}
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        New pay rate
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {{prisonerActions[0].newPayRate.payBand}}
+                    </dd>
+                </div>
+            </dl>
+
+            {% else %}
+
+            <h2 class="govuk-heading-m">
+                People being deallocated from the activity
+            </h2>
+            <dl class="govuk-summary-list">
+                {% for prisoner in prisonerActions.prisonersToDeallocate %}
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
+                    </dt>
+                    <dd class="govuk-summary-list__actions">
+                        <a href="/create/version-12/activities/payrates/change-prisoner-payrate?prisonerId={{prisoner.id}}&activityId={{activity.id}}"
+                            class="govuk-link">
+                            Change
+                        </a>
+                    </dd>
+                </div>
+                {% endfor %}
+            </dl>
+
+            <h2 class="govuk-heading-m">
+                People moving to a new pay rate
+            </h2>
+            {% for prisoner in prisonerActions.prisonersToMove %}
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title">
+                        {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
+                    </h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Old pay rate
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {{prisoner.oldPayRate.payBand}}
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                New pay rate
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {{prisoner.newPayRate.payBand}}
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link"
+                                    href="/create/version-12/activities/payrates/change-prisoner-payrate?prisonerId={{prisoner.id}}&activityId={{activity.id}}">
+                                    Change
+                                </a>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% endif %}
+
+
+            {{govukWarningText({
+            text: "The " + oldPayRate.payBand + " pay rate will be deleted from " + activity.name + ".",
+            iconFallbackText: "Warning"
+            })}}
+
+            {{govukButton({
+            text: "Confirm and delete pay rate",
+            classes: "govuk-!-margin-top-"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}
