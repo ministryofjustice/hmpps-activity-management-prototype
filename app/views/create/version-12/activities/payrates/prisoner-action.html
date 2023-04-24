@@ -46,7 +46,7 @@ text: "Back",
                                     aria-expanded="false">
                                 <label class="govuk-label govuk-radios__label"
                                     for="prisoner-action-{{prisoner.id}}-{{payrate.payRate_id}}">
-                                    {{payrate.payBand|capitalize}} - £{{payrate.amount|decimalPlaces(2)}}
+                                    {{payrate.payBand|capitalize}} - £{{payrate.amount|decimalPlaces(2)}} ({{'flat rate' if payrate.incentiveLevel == 'flatRate' else payrate.incentiveLevel}})
                                 </label>
                             </div>
                             {% endfor %}
@@ -56,7 +56,7 @@ text: "Back",
                                     type="radio" value="deallocate" aria-controls="conditional-prisoner-{{prisoner.id}}"
                                     aria-expanded="false">
                                 <label class="govuk-label govuk-radios__label" for="prisoner-action-{{prisoner.id}}-deallocate">
-                                    Deallocate them
+                                    Deallocate this prisoner
                                 </label>
                             </div>
                             <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
