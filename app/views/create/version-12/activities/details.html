@@ -186,7 +186,7 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         ]
         }) }}
 
-        <h2 class="govuk-heading-m govuk-!-margin-top-8">
+        <!-- <h2 class="govuk-heading-m govuk-!-margin-top-8">
             Pay rates
         </h2>
         <ul class="govuk-list govuk-button-group">
@@ -211,21 +211,11 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
                         {% for payRate in payRates %}
                         <div class="govuk-summary-list__row">
                             <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                                {{ payRate.name | capitalize }}
+                                {{ payRate.payBand | capitalize }}
                             </dt>
                             <dd class="govuk-summary-list__value">
                                 £{{ payRate.amount | decimalPlaces(2) }}
                             </dd>
-                            <!-- <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item">
-                                        <a href="payrates/delete/{{ payRate.id }}" class="govuk-link">Delete</a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item">
-                                        <a href="payrates/edit/{{ payRate.id }}" class="govuk-link">Edit</a>
-                                    </li>
-                                </ul>
-                            </dd> -->
                         </div>
                         {% endfor %}
                         {% endif %}
@@ -233,7 +223,7 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
                 </dd>
             </div>
             {% endfor %}
-        </dl>
+        </dl> -->
     </div>
 </div>
 
