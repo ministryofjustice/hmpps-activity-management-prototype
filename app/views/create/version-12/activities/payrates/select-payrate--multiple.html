@@ -28,31 +28,36 @@ text: "Back",
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset" aria-describedby="prisoner-{{prisoner.id}}-hint">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                            <span class="govuk-visually-hidden">Pay rate for </span> {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                            <span class="govuk-visually-hidden">Pay rate for </span> {{prisoner.name.firstname}}
+                            {{prisoner.name.surname}}
                             <span class="govuk-hint">{{prisoner.id}}</span>
                         </legend>
                         <div class="govuk-radios" data-module="govuk-radios">
                             {% for payrate in payrates %}
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="prisoner-action-{{prisoner.id}}-{{payrate.payRate_id}}"
+                                <input class="govuk-radios__input"
+                                    id="prisoner-action-{{prisoner.id}}-{{payrate.payRate_id}}"
                                     name="prisoner-actions[{{prisoner.id}}]" type="radio" value="{{payrate.payRate_id}}"
                                     aria-controls="conditional-prisoner-{{prisoner.id}}-{{payrate.payRate_id}}"
                                     aria-expanded="false">
                                 <label class="govuk-label govuk-radios__label"
                                     for="prisoner-action-{{prisoner.id}}-{{payrate.payRate_id}}">
-                                    {{payrate.payBand|capitalize}} – £{{payrate.amount|decimalPlaces(2)}} ({{'flat rate' if payrate.incentiveLevel == 'flatRate' else payrate.incentiveLevel + ' incentive level'}})
+                                    {{payrate.payBand|capitalize}} – £{{payrate.amount|decimalPlaces(2)}} ({{'flat rate'
+                                    if payrate.incentiveLevel == 'flatRate' else payrate.incentiveLevel + ' incentive
+                                    level'}})
                                 </label>
                             </div>
                             {% endfor %}
                         </div>
                     </fieldset>
                 </div>
-                {% endfor %}
+            </div>
+            {% endfor %}
 
-                {{govukButton({
-                text: "Continue",
-                classes: "govuk-!-margin-top-6"
-                })}}
+            {{govukButton({
+            text: "Continue",
+            classes: "govuk-!-margin-top-6"
+            })}}
         </form>
     </div>
 </div>

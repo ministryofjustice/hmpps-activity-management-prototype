@@ -28,9 +28,10 @@ text: "Back",
                 Check before you delete {{newPayRate.incentiveLevel}} incentive level: {{newPayRate.payBand|lower}} pay
             </h1>
 
-            <p>
-                Because there is only one alternative rate, everyone allocated to the rate you are deleting will be moved.
-            </p>
+            {{govukWarningText({
+                text: "Because there is only one alternative rate, everyone allocated to the rate you are deleting will be moved to the alternative rate.",
+                iconFallbackText: "Warning"
+            })}}
 
 
             <div class="govuk-summary-list">
