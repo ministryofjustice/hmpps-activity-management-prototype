@@ -20,16 +20,11 @@ text: "Back",
                 {{activity.name}}
             </span>
 
-            {% set noun = prisonerData.length + " prisoners" %}
-            {% if prisonerData.length == 1 %}
-            {% set noun = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname %}
-            {% endif %}
-
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
                         <h1 class="govuk-fieldset__heading">
-                            Select a new payrate for {{noun}}
+                            Select a new payrate for {{prisonerData.length}} people
                         </h1>
                     </legend>
                     <div class="govuk-radios" data-module="govuk-radios">

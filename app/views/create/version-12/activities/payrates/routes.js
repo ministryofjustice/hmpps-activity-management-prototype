@@ -201,56 +201,35 @@ router.get("/delete/:payRateId", function (req, res) {
     }
   });
 
-  console.log(prisonersOnPayRate);
-
-  // if (prisonersOnPayRate != undefined && prisonersOnPayRate.length > 1) {
-  //   let prisonerIds = prisonersOnPayRate.join(",");
-
-  //   // redirect to the check prisoners page with this payrate id as a url param
-  //   res.redirect(payRate.payRate_id + "/check-prisoners/" + prisonerIds);
-  // } else if (prisonersOnPayRate != undefined && prisonersOnPayRate.length === 1) {
-  //   let prisonerId = prisonersOnPayRate[0];
-
-  //   // redirect to the check prisoner page with this payrate id as a url param
-  //   res.redirect(payRate.payRate_id + "/prisoner-action/" + prisonerId);
-  // } else {
-  //   // render the delete payrate page
-  //   res.render(req.protoUrl + "/delete", {
-  //     activity,
-  //     payRate,
-  //   });
-  // }
-
   let suitablePayRates = getSuitablePayrates(activity, payRateId);
   let prisonerIds = prisonersOnPayRate.join(",");
 
   // if there are multiple prisoners on the payrate, but only one suitable alternative payrate then redirect to the prisoner action list page
-  if (prisonersOnPayRate != undefined && prisonersOnPayRate.length > 1) {
-    // if there is only one suitable payrate
+
+  // if there are any prisoners on the payrate
+  if (prisonersOnPayRate.length) {
+    // if there is only one suitable alternative payrate
     if (suitablePayRates.length === 1) {
+      // set the prisoner action to move to payrate
       req.session.data["prisoner-action"] = "move-to-payrate";
       req.session.data["new-payrate-id"] = suitablePayRates[0].payRate_id;
 
-      // redirect to the check prisoners list page
-      res.redirect(payRate.payRate_id + "/confirm-payrate-change/" + prisonerIds);
-    } else {
-      // if there are multiple suitable payrates
-      // redirect to the check prisoners page
-      res.redirect(payRate.payRate_id + "/check-prisoners/" + prisonerIds);
+      // redirect to the confirm payrate change page
+      res.redirect(payRate.payRate_id + "/confirm-automatic-payrate-change/" + prisonerIds);
+    }
+    // otherwise if there are multiple suitable alternative payrates
+    else if (suitablePayRates.length > 1) {
+      // if there are multiple suitable alternative payrates then redirect to the check prisoners page if there are multiple prisoners on the payrate
+      if (prisonersOnPayRate.length > 1) {
+        // redirect to the check prisoners page
+        res.redirect(payRate.payRate_id + "/choose-prisoner-action/" + prisonerIds);
+      } else {
+        // otherwise there is only one prisoner on the payrate, so redirect to the check prisoner page
+        res.redirect(payRate.payRate_id + "/select-payrate/" + prisonerIds);
+      }
     }
   }
-  // if there is only one prisoner on the payrate
-  else if (prisonersOnPayRate != undefined && prisonersOnPayRate.length === 1) {
-    if (suitablePayRates.length === 1) {
-      req.session.data["prisoner-action"] = "move-to-payrate";
-      req.session.data["new-payrate-id"] = suitablePayRates[0].payRate_id;
-      let prisonerId = prisonersOnPayRate[0];
-
-      // redirect to the check prisoner page for this prisoner
-      res.redirect(payRate.payRate_id + "/confirm-payrate-change/" + prisonerId);
-    }
-  }
-  // if there are no prisoners on the payrate
+  // otherwise, if there are no prisoners on the payrate
   else {
     // render the delete payrate page
     res.render(req.protoUrl + "/delete", {
@@ -361,8 +340,8 @@ router.post("/edit/:payRateId", function (req, res) {
   res.redirect("../../payrates");
 });
 
-// check prisoners page
-router.get("/delete/:payRateId/check-prisoners/:prisonerIds", function (req, res) {
+// choose-prisoner-action page
+router.get("/delete/:payRateId/choose-prisoner-action/:prisonerIds", function (req, res) {
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
@@ -377,8 +356,8 @@ router.get("/delete/:payRateId/check-prisoners/:prisonerIds", function (req, res
 
   let suitablePayrates = getSuitablePayrates(activity, payRateId);
 
-  // render the check prisoners page
-  res.render(req.protoUrl + "/check-prisoners", {
+  // render the choose-prisoner-action page
+  res.render(req.protoUrl + "/choose-prisoner-action", {
     activity,
     payRate,
     payRateId,
@@ -388,8 +367,8 @@ router.get("/delete/:payRateId/check-prisoners/:prisonerIds", function (req, res
   });
 });
 
-// post route for check prisoners page
-router.post("/delete/:payRateId/check-prisoners/:prisonerIds", function (req, res) {
+// post route for choose-prisoner-action page
+router.post("/delete/:payRateId/choose-prisoner-action/:prisonerIds", function (req, res) {
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
@@ -399,22 +378,8 @@ router.post("/delete/:payRateId/check-prisoners/:prisonerIds", function (req, re
 
   let suitablePayrates = getSuitablePayrates(activity, req.params.payRateId);
 
-  // redirect depending on the user's choice
-  if (req.session.data["prisoner-action"] === "select-payrate") {
-    // redirect to the select payrate page
-    res.redirect("../select-payrate/" + req.params.prisonerIds);
-  } else if (req.session.data["prisoner-action"] === "move-to-payrate") {
-    // set the payrate id in the session data
-    req.session.data["new-payrate-id"] = suitablePayrates[0].payRate_id;
-    // redirect to the confirm deallocate page
-    res.redirect("../confirm-payrate-change/" + req.params.prisonerIds);
-  } else if (req.session.data["prisoner-action"] === "remove-from-activity") {
-    // redirect to the confirm deallocate page
-    res.redirect("../confirm-deallocate/" + req.params.prisonerIds);
-  } else {
-    // redirect to the individual payrate page
-    res.redirect("../prisoner-action/" + req.params.prisonerIds);
-  }
+  // redirect to the select payrate page
+  res.redirect("../select-payrate/" + req.params.prisonerIds);
 });
 
 // select payrate page
@@ -430,25 +395,24 @@ router.get("/delete/:payRateId/select-payrate/:prisonerIds", function (req, res)
   let prisonersOnPayRate = req.params.prisonerIds.split(",");
   let prisonerData = prisoners.filter((prisoner) => prisonersOnPayRate.includes(prisoner.id.toString()));
 
-  let payrates = activity.payRates;
-
   // get a list of suitable payrates to move the prisoners to from the activity
   let suitablePayrates = getSuitablePayrates(activity, payRateId);
 
-  // if (suitablePayrates.length > 1) {
-  //   // render the select payrate page
-  //   res.render(req.protoUrl + "/select-payrate", {
-  //     activity,
-  //     payrates: suitablePayrates,
-  //     prisonersOnPayRate,
-  //     prisonerData,
-  //   });
-  // } else {
-  //   // redirect to the confirm payrate page
-  //   res.redirect("../confirm-payrate/" + req.params.prisonerIds);
-  // }
+  // set the template file we use depending on the number of prisoners on the payrate
+  let prisonerCount = prisonersOnPayRate.length;
+  let action = req.session.data["prisoner-action"];
+  let template;
+  if (prisonerCount === 1) {
+    template = req.protoUrl + "/select-single-payrate";
+  } else if (prisonerCount > 1) {
+    if (action === "choose-individually") {
+      template = req.protoUrl + "/select-multiple-payrates";
+    } else {
+      template = req.protoUrl + "/select-single-payrate";
+    }
+  }
 
-  res.render(req.protoUrl + "/select-payrate", {
+  res.render(template, {
     activity,
     payrates: suitablePayrates,
     prisonersOnPayRate,
@@ -458,14 +422,12 @@ router.get("/delete/:payRateId/select-payrate/:prisonerIds", function (req, res)
 
 // post route for select payrate page
 router.post("/delete/:payRateId/select-payrate/:prisonerIds", function (req, res) {
-  let newPayRateId = req.session.data["payrate-id"];
-
   // redirect to the confirm payrate page
-  res.redirect("../confirm-payrate-change/" + req.params.prisonerIds);
+  res.redirect("../check-answers/" + req.params.prisonerIds);
 });
 
 // confirm payrate page
-router.get("/delete/:payRateId/confirm-payrate-change/:prisonerIds", function (req, res) {
+router.get("/delete/:payRateId/confirm-automatic-payrate-change/:prisonerIds", function (req, res) {
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
@@ -479,7 +441,7 @@ router.get("/delete/:payRateId/confirm-payrate-change/:prisonerIds", function (r
   let prisonersOnPayRate = req.params.prisonerIds.split(",");
   let prisonerData = prisoners.filter((prisoner) => prisonersOnPayRate.includes(prisoner.id.toString()));
 
-  res.render(req.protoUrl + "/confirm-payrate-change", {
+  res.render(req.protoUrl + "/confirm-automatic-payrate-change", {
     activityId: req.activityId,
     activity,
     payRateId: req.params.payRateId,
@@ -494,7 +456,7 @@ router.get("/delete/:payRateId/confirm-payrate-change/:prisonerIds", function (r
 });
 
 // post route for confirm payrate page
-router.post("/delete/:payRateId/confirm-payrate-change/:prisonerIds", function (req, res) {
+router.post("/delete/:payRateId/confirm-automatic-payrate-change/:prisonerIds", function (req, res) {
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
@@ -570,7 +532,7 @@ router.get("/delete/:payRateId/confirm-deallocate/:prisonerIds", function (req, 
 });
 
 // confirm prisoner actions page
-router.get("/delete/:payRateId/confirm-prisoner-actions/:prisonerIds", function (req, res) {
+router.get("/delete/:payRateId/check-answers/:prisonerIds", function (req, res) {
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
   let prisonersOnPayRate = req.params.prisonerIds.split(",");
   let prisonerData = prisoners.filter((prisoner) => prisonersOnPayRate.includes(prisoner.id.toString()));
@@ -584,59 +546,41 @@ router.get("/delete/:payRateId/confirm-prisoner-actions/:prisonerIds", function 
     (payRate) => payRate.payRate_id.toString() === req.params.payRateId.toString()
   );
 
-  // get and set the action for each prisoner
-  let prisonerActionsData = req.session.data["prisoner-actions"];
-  let prisonerActions = [];
-
-  // for each prisoner in the prisonersOnPayRate array
-  // get the action from the prisonerActionsData object
-  // and set the action on the prisoner
-  prisonersOnPayRate.forEach((prisonerId) => {
-    let prisoner = prisonerData.find((prisoner) => prisoner.id.toString() === prisonerId.toString());
-    let action = prisonerActionsData[prisonerId];
-
-    // if the action is "deallocate" then set the action on the prisoner
-    if (action === "deallocate") {
-      prisoner.action = "deallocate";
-    } else {
-      // otherwise set the action on the prisoner to "move"
-      let newPayRate = activity.payRates.filter((payRate) => payRate.payRate_id.toString() === action.toString());
-
-      prisoner.action = "move";
-      prisoner.newPayRate = newPayRate[0];
-      prisoner.oldPayRate = activity.payRates.filter(
-        (payRate) => payRate.payRate_id.toString() === req.params.payRateId.toString()
-      )[0];
-    }
-
-    // add the prisoner to the prisonerActions array
-    prisonerActions.push(prisoner);
-  });
-
-  // split the prisonerActions array into two arrays:
-  // one for prisoners who are being moved and one for prisoners who are being deallocated
-  let prisonersToMove = prisonerActions.filter((prisoner) => prisoner.action === "move");
-  let prisonersToDeallocate = prisonerActions.filter((prisoner) => prisoner.action === "deallocate");
-
-  prisonerActions = {
-    prisonersToMove,
-    prisonersToDeallocate,
-  };
-
   let payrates = activity.payRates;
 
+  // when we load the check answers page, we need to format the new-payrate session data for display
+  let newPayrateData = req.session.data["new-payrate"];
+
+  // check how many payrates are in the new-payrate session data
+  // example data: {"WO4204F":"3","QA6177Q":"1","PN9252V":"3"}
+  if (Object.keys(newPayrateData).length > 1) {
+    // if there is more than one payrate, we need to set payrate data for each prisoner
+    prisonerData.forEach((prisoner) => {
+      let newPayRateId = newPayrateData[prisoner.id.toString()];
+      prisoner.oldPayRate = oldPayRate;
+      prisoner.newPayRate = payrates.find((payRate) => payRate.payRate_id.toString() === newPayRateId.toString());
+    });
+  } else {
+    // if there is only one payrate, we know that all prisoners will be affected
+    prisonerData.forEach((prisoner) => {
+      console.log("one payrate");
+      let newPayRateId = newPayrateData;
+      prisoner.oldPayRate = oldPayRate;
+      prisoner.newPayRate = payrates.find((payRate) => payRate.payRate_id.toString() === newPayRateId.toString());
+    });
+  }
+
   // render the confirm prisoner actions page
-  res.render(req.protoUrl + "/confirm-prisoner-actions", {
+  res.render(req.protoUrl + "/check-answers", {
     prisonerData,
     payrates,
     activity,
-    prisonerActions,
     oldPayRate,
   });
 });
 
 // post route for confirm prisoner actions page
-router.post("/delete/:payRateId/confirm-prisoner-actions/:prisonerIds", function (req, res) {
+router.post("/delete/:payRateId/check-answers/:prisonerIds", function (req, res) {
   let activityId = req.activityId;
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
@@ -646,16 +590,22 @@ router.post("/delete/:payRateId/confirm-prisoner-actions/:prisonerIds", function
   let prisonersOnPayRate = req.params.prisonerIds.split(",");
   let prisonerData = prisoners.filter((prisoner) => prisonersOnPayRate.includes(prisoner.id.toString()));
 
-  prisonerData.forEach((prisoner) => {
-    let action = req.session.data["prisoner-actions"][prisoner.id.toString()];
-    if (action === "deallocate") {
-      // remove the activity from the prisoner's activity array
-      // use string comparison because the prisoner's activity array contains strings
-      prisoner.activity = prisoner.activity.filter((activity) => activity.toString() !== activityId.toString());
-    } else {
-      prisoner.payrates[activityId.toString()] = action;
-    }
-  });
+  let newPayrateData = req.session.data["new-payrate"];
+
+  // update the prisoner data
+  if (Object.keys(newPayrateData).length > 1) {
+    // if there is more than one payrate, we need to set payrate data for each prisoner
+    prisonerData.forEach((prisoner) => {
+      let newPayRateId = newPayrateData[prisoner.id.toString()];
+      prisoner.payrates[activityId] = newPayRateId;
+    });
+  } else {
+    // if there is only one payrate, we know that all prisoners will be affected
+    prisonerData.forEach((prisoner) => {
+      let newPayRateId = newPayrateData;
+      prisoner.payrates[activityId] = newPayRateId;
+    });
+  }
 
   // remove the old payrate from the activity
   let oldPayRateId = req.params.payRateId;
@@ -690,8 +640,6 @@ function getSuitablePayrates(activity, payRateId) {
   } else {
     suitablePayrates = suitablePayrates.concat(flatRatePayrates);
   }
-
-  console.log(suitablePayrates);
 
   // exclude the payrate being deleted from the list of suitable payrates
   suitablePayrates = suitablePayrates.filter((payRate) => payRate.payRate_id.toString() !== payRateId.toString());

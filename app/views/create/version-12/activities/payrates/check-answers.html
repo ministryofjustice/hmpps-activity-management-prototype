@@ -28,6 +28,41 @@ text: "Back",
                 Check before you delete {{oldPayRate.incentiveLevel}} incentive level: {{oldPayRate.payBand|lower}} pay
             </h1>
 
+            <h2 class="govuk-heading-m">
+                {{prisonerData.length}} {{'person is' if prisonerData.length == 1 else 'people are'}} changing pay rate
+            </h2>
+
+            {% for prisoner in prisonerData %}
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title">
+                        {{prisoner.name.firstname}} {{prisoner.name.surname}}, {{prisoner.id}}
+                    </h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Old pay rate
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {{prisoner.oldPayRate.payBand}}
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                New pay rate
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {{prisoner.newPayRate.payBand}}
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            {% endfor %}
+
+
             {% if prisonerActions.length == 1 %}
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row">
