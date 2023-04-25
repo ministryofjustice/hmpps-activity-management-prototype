@@ -51,7 +51,11 @@ router.get("/", function (req, res) {
   // get the number of prisoners who have the payrate id in their payRates array
   // we must check the prisoner.payRates array exists and is not undefined, null or empty
   // we need to compare the ids as strings
-  for (let incentiveLevel in payRatesByIncentiveLevel) {
+  for (let incentiveLevel in payRatesByIncentiveLevel) {;
+    const countRatesForIncentiveLevel = (incentiveLevel) => {
+      return payRatesByIncentiveLevel[incentiveLevel].length;
+    };
+    
     payRatesByIncentiveLevel[incentiveLevel].forEach((payRate) => {
       // prisoner payrates are stored keyed by activity id where the value is the payrate id
       // we need to get the payrate id from the prisoner payrates object
@@ -63,6 +67,19 @@ router.get("/", function (req, res) {
         (prisonerPayRateId) => prisonerPayRateId.toString() === payRate.payRate_id.toString()
       ).length;
       payRate.prisonerCount = prisonerCount;
+
+      // add a key to the payratesByIncentiveLevel object to indicate if the payrate can be deleted
+      if (payRate.prisonerCount === 0) {
+        payRate.canDelete = true;
+      } else if (
+        (payRate.incentiveLevel === "flatRate" && countRatesForIncentiveLevel("flatRate") > 1) ||
+        (payRate.incentiveLevel !== "flatRate" && countRatesForIncentiveLevel("flatRate") > 0) ||
+        (payRate.incentiveLevel !== "flatRate" && countRatesForIncentiveLevel(payRate.incentiveLevel) > 1)
+      ) {
+        payRate.canDelete = true;
+      } else {
+        payRate.canDelete = false;
+      }
     });
   }
 
@@ -486,33 +503,6 @@ router.post("/delete/:payRateId/confirm-automatic-payrate-change/:prisonerIds", 
   res.redirect("../../../../payrates");
 });
 
-// check prisoner page
-router.get("/delete/:payRateId/prisoner-action/:prisonerIds", function (req, res) {
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisonersOnPayRate = req.params.prisonerIds.split(",");
-  let prisonerData = prisoners.filter((prisoner) => prisonersOnPayRate.includes(prisoner.id.toString()));
-
-  let activityId = req.activityId;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() === activityId.toString()
-  );
-
-  let suitablePayrates = getSuitablePayrates(activity, req.params.payRateId);
-
-  // render the check prisoner page
-  res.render(req.protoUrl + "/prisoner-action", {
-    prisonerData,
-    payrates: suitablePayrates,
-    activity,
-  });
-});
-
-// post route for check prisoner page
-router.post("/delete/:payRateId/prisoner-action/:prisonerIds", function (req, res) {
-  // redirect to the confirm prisoner actions page
-  res.redirect("../confirm-prisoner-actions/" + req.params.prisonerIds);
-});
-
 // confirm deallocate page
 router.get("/delete/:payRateId/confirm-deallocate/:prisonerIds", function (req, res) {
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
@@ -551,9 +541,9 @@ router.get("/delete/:payRateId/check-answers/:prisonerIds", function (req, res) 
   // when we load the check answers page, we need to format the new-payrate session data for display
   let newPayrateData = req.session.data["new-payrate"];
 
-  // check how many payrates are in the new-payrate session data
+  // check if req.session.data["new-payrate"] is a string or an object
   // example data: {"WO4204F":"3","QA6177Q":"1","PN9252V":"3"}
-  if (Object.keys(newPayrateData).length > 1) {
+  if (typeof newPayrateData === "object") {
     // if there is more than one payrate, we need to set payrate data for each prisoner
     prisonerData.forEach((prisoner) => {
       let newPayRateId = newPayrateData[prisoner.id.toString()];
@@ -593,7 +583,8 @@ router.post("/delete/:payRateId/check-answers/:prisonerIds", function (req, res)
   let newPayrateData = req.session.data["new-payrate"];
 
   // update the prisoner data
-  if (Object.keys(newPayrateData).length > 1) {
+  // check if req.session.data["new-payrate"] is a string or an object
+  if (typeof newPayrateData === "object") {
     // if there is more than one payrate, we need to set payrate data for each prisoner
     prisonerData.forEach((prisoner) => {
       let newPayRateId = newPayrateData[prisoner.id.toString()];
