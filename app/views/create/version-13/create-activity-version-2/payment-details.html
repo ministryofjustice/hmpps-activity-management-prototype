@@ -1,0 +1,111 @@
+{% extends "layout_hmpps.html" %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">
+            <span class="govuk-caption-m">
+                {{data['new-activity']['category']}}
+            </span>
+            {{data['new-activity']['activity-name']}}
+        </h2>
+        
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+            Enter pay for {{data.activityName or 'Maths level 1'}}
+        </h1>
+
+        <p>
+            Add all the pay rates available for this activity.
+        </p>
+        <p>
+            You can add up to 10 rates for each incentive level. Each time you add one you'll have the option to add
+            another.
+        </p>
+        <p>
+            When you come to allocate someone to this activity, all the rates that can be paid will be displayed.
+        </p>
+
+        <form method="post">
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--s" for="paymentIncentiveAmount">
+                    1. How much will someone be paid for a session?
+                </label>
+                <div id="sign-in-hint" class="govuk-hint">
+                    For example, 1.50
+                </div>
+                <div class="govuk-input__wrapper">
+                    <div class="govuk-input__prefix" aria-hidden="true">£</div>
+                    <input class="govuk-input govuk-input--width-5" id="paymentIncentiveAmount"
+                        name="paymentIncentiveAmount" type="text" spellcheck="false"
+                        value="{{payrateData.amount or ''}}">
+                </div>
+            </div>
+            <div class="govuk-form-group">
+                <label class="govuk-label" for="paymentIncentiveName">
+                    <strong> 2. Optional: give this rate a name that's relevant at your prison, for example, 'worker' or
+                        'general'</strong>
+                </label>
+                <input class="govuk-input govuk-input--width-10" id="paymentIncentiveName" name="paymentIncentiveName"
+                    value="{{payrateData.name or ''}}">
+            </div>
+            {{ govukCheckboxes({
+            name: "PayIncentiveLevel",
+            fieldset: {
+            legend: {
+            text: "3. Select the incentive level or levels for this rate",
+            classes: "govuk-label--s"
+            }
+            },
+            hint: {
+            text: "If pay for this activity is the same for everyone, select all relevant levels."
+            },
+            items: [
+            {
+            value: "Basic",
+            text: "Basic",
+            checked: 'true' if payrateData['incentive-level'] and 'Basic' in payrateData['incentive-level']
+            },
+            {
+            value: "Standard",
+            text: "Standard",
+            checked: 'true' if payrateData['incentive-level'] and 'Standard' in payrateData['incentive-level']
+            },
+            {
+            value: "Enhanced",
+            text: "Enhanced",
+            checked: 'true' if payrateData['incentive-level'] and 'Enhanced' in payrateData['incentive-level']
+            },
+            {
+                divider: "or"
+            },
+            {
+            value: "Flat rate",
+            text: "Flat rate",
+            checked: 'true' if payrateData['incentive-level'] and 'Enhanced' in payrateData['incentive-level'],
+            behaviour: "exclusive"
+            }
+            ]
+            }) }}
+            <div class="moj-button-action govuk-!-margin-top-8">
+                <button class="govuk-button" data-module="govuk-button">
+                    Review and add more rates
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

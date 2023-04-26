@@ -1,0 +1,64 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set titleText %}
+        {% if prisonerData | length == 1 %}
+        You've scheduled {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}}, {{prisonerData[0].id}} to be taken off {{activity.name}}
+        {% else %}
+        You've scheduled {{prisonerData | length}} people to be taken off {{activity.name}}
+        {% endif %}
+        {% endset %}
+
+        {% set panelHtml %}
+        {% if prisonerData | length > 1 %}
+        {{prisonerData | length}} prisoners
+        {% else %}
+        {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}} ({{prisonerData[0].id}})
+        {% endif %}
+        {% endset %}
+
+        {{ govukPanel({
+        titleText: titleText
+        }) }}
+
+        {%- if prisonerData | length > 1 %}
+        <p>
+            {{prisonerData | length}} people will be taken off {{activity.name}}:
+        </p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            {% for prisoner in prisonerData %}
+            <li>
+                {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif -%}
+
+        {% set noun = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname %}
+        {%- if prisonerData | length > 1 %}
+        {% set noun = prisonerData | length + " prisoners" %}
+        {% endif -%}
+
+        <!-- <p>
+            {{ noun }} will be removed from {{activity.name}}.
+        </p>
+        <p>
+            After they have been removed, they will not be able to attend this activity unless they are re-added.
+        </p> -->
+
+        <a href="/create/version-12/activities/{{activity.id}}" class="govuk-button">Finish and return to {{activity.name}}</a>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+<div class="govuk-width-container govuk-!-margin-bottom-">
+    {{ govukBackLink({
+        text: "Back",
+        href: "../all"
+    }) }}
+</div>
+
+<!-- <div class="moj-primary-navigation govuk-!-margin-bottom-0" style="top: -1px; position: relative;">
+    <div class="moj-primary-navigation__container">
+        <div class="moj-primary-navigation__nav">
+            <nav class="moj-primary-navigation" aria-label="Primary navigation">
+                <ul class="moj-primary-navigation__list">
+                    <li class="moj-primary-navigation__item">
+                        <a class="moj-primary-navigation__link" aria-current="page" href="../all">Activities</a>
+                    </li>
+                    <li class="moj-primary-navigation__item">
+                        <a class="moj-primary-navigation__link" href="#2">Daily attendance figures</a>
+                    </li>
+                    <li class="moj-primary-navigation__item">
+                        <a class="moj-primary-navigation__link" href="#3">Appointments</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div> -->
+{{ super() }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% if data['confirmation-dialog'].display == true %}
+
+{% set prisoner = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
+
+{% if data['confirmation-dialog'].type == 'deallocate' %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    {{prisoner.name.firstname}} {{prisoner.name.surname}} is no longer allocated to {{activity.name}}.
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Success",
+type: "success"
+}) }}
+{% endif %}
+{% endif %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        {% set vacanciesCount = activity.capacity - activity.currentlyAllocated %}
+        
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+            {{activity.name}}
+        </h1>
+        <span class="govuk-caption-m govuk-!-margin-bottom-6">
+            {% if vacanciesCount > 0 %}
+            <span class="govuk-tag govuk-tag--red govuk-!-margin-bottom-3">{{vacanciesCount}} {{'vacancies' if
+                vacanciesCount != 1 else 'vacancy'}}</span>
+            {% else %}
+            <span class="govuk-tag govuk-tag--green govuk-!-margin-bottom-3">No vacancies</span>
+            {% endif %}
+            Last updated on {{'_'|today|convertShortDateToLongDate(today)}}
+        </span>
+
+        
+
+        <!-- <ul class="govuk-body govuk-list govuk-list--spaced govuk-!-font-weight-bol">
+            <li class="govuk-!-display-inline-block govuk-!-margin-right-6">
+                {% if vacanciesCount > 0 %}
+                Vacancies: <span class="govuk-tag govuk-tag--red govuk-!-font-size-">{{vacanciesCount}}</span>
+                {% else %}
+                Vacancies: <span class="govuk-tag govuk-tag--green govuk-!-font-size-19">0</span>
+                {% endif %}
+            </li>
+            <li class="govuk-!-display-inline-block govuk-!-margin-right-6">Allocated: <span class="govuk-tag govuk-tag--grey">{{activity.currentlyAllocated}}</span></li>
+            <li class="govuk-!-display-inline-block govuk-!-margin-right-6">Waitlist: <span class="govuk-tag govuk-tag--grey">{{activity.applicationCount}}</span></li>
+        </ul> -->
+
+        <div class="govuk-button-group govuk-!-margin-top-2">
+            <a class="govuk-button" href="allocate">Allocate someone</a>
+            <a class="govuk-button govuk-button--secondary" href="allocate">Log a request</a>
+            <a class="govuk-button govuk-button--secondary" href="find-suitable-prisoners">Find suitable prisoners</a>
+            <a class="govuk-button govuk-button--secondary" href="#">Take people off this activity</a>
+        </div>
+    </div>
+</div>
+
+<nav class="moj-sub-navigation" aria-label="Sub navigation" id="subnav">
+    <ul class="moj-sub-navigation__list">
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" {% if currentPage=='currently-allocated' %}aria-current="page" {% endif
+                %}href="currently-allocated">Current allocations ({{activity.currentlyAllocated}})</a>
+        </li>
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" {% if currentPage=='applications' %}aria-current="page" {% endif
+                %}href="applications">Waitlist ({{activity.applicationCount}})</a>
+        </li>
+        <!-- <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" {% if currentPage=='other-prisoners' %}aria-current="page" {% endif
+                %}href="other-prisoners?page=1">Attendance history</a>
+        </li> -->
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" {% if currentPage=='information' %}aria-current="page" {% endif %}
+                href="information">Details and pay</a>
+        </li>
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" {% if currentPage=='schedule' %}aria-current="page" {% endif %}
+                href="schedule">Schedule</a>
+        </li>
+    </ul>
+</nav>
+
+{% block tableArea %}{% endblock %}
+
+{% endblock %}
+
+
+{% block pageScripts %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+      {{ govukInput({
+      label: {
+      text: "Enter the name of the payrate",
+      classes: "govuk-label--l",
+      isPageHeading: true
+      },
+      hint: {
+      text: "For example, 'worker' or 'general'"
+      },
+      id: "activity-name",
+      name: "new-activity[payrates][payrate-name]"
+      }) }}
+
+      {{ govukButton({
+      text: "Continue"
+      }) }}
+    </form>
+  </div>
+</div>
+
+{% endblock %}

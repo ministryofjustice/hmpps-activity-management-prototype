@@ -1,0 +1,97 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = data['new-application']['selected-prisoner']|getPrisonerDetails %}
+        <h1 class="govuk-heading-xl">
+            Check and confirm your allocation
+        </h1>
+
+        <!-- GOVUK summary list component with fields: name, prison number, cell location and selected pay rate -->
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Prisoner details
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <ul class="govuk-list">
+                        <li>{{prisoner.name.firstname}} {{prisoner.name.surname}}</li>
+                        <li>{{prisoner.id}}</li>
+                        <li>{{prisoner.location.cell}}</li>
+                    </ul>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Activity
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{activity.name}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Start date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{(data['allocation']['start-date'] | convertShortDateToVeryLongDate) if data['allocation']['start-date'] else 'None set'}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="start-date?redirect=check-allocation-details" class="govuk-link--no-visited-state">Change</a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    End date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{(data['allocation']['end-date'] | convertShortDateToVeryLongDate) if data['allocation']['end-date'] else 'None set'}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="end-date-check?redirect=check-allocation-details" class="govuk-link--no-visited-state">Change</a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Pay rate
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisoner.incentiveLevel|capitalize}}: {{data['allocation']['pay-rate']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="payrate?redirect=check-allocation-details" class="govuk-link--no-visited-state">Change</a>
+                </dd>
+            </div>
+        </dl>
+
+        <form method="post">
+            <!-- <h2 class="govuk-heading-m">
+                Now confirm the allocation
+            </h2>
+            <p>
+                {{prisoner.name.firstname}} {{prisoner.name.surname}} will be allocated to {{activity.name}}.
+            </p> -->
+
+            {% if data['new-application']['eligible'] != 'no' %}
+            {{ govukButton({
+            text: "Confirm and allocate"
+            }) }}
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

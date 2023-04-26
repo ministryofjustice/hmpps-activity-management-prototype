@@ -1,0 +1,36 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="get" action="select-prisoner">
+      {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+      {{ govukInput({
+      label: {
+      text: "Who is the activity request for?",
+      classes: "govuk-label--xl",
+      isPageHeading: true
+      },
+      hint: {
+      html: "Enter the name or prison number of the person you've had an activity allocation request for.<br>
+      Example prison number: AC1234B"
+      },
+      id: "search-query",
+      name: "search"
+      }) }}
+
+      <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

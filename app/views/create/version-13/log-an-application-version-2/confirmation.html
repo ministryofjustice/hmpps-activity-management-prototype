@@ -1,0 +1,156 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {% set prisoner = data['new-application']['selected-prisoner'] | getPrisonerDetails %}
+            {% set activity = data['new-application']['activity'] | getActivityDetails %}
+
+            {% set titleText %}
+            {% if data['allocate-now'] == "yes" %}
+            You've allocated {{prisoner.name.firstname}} {{prisoner.name.surname}} to {{activity.name}}
+            {% elif data['new-application']['status'] != "rejected" %}
+            You've added {{prisoner.name.firstname}} {{prisoner.name.surname}} to the waitlist for {{activity.name}}
+            {% else %}
+            You've rejected {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request to be allocated to
+            {{activity.name}}
+            {% endif %}
+            {% endset %}
+
+            {{ govukPanel({
+            titleText: titleText,
+            classes: "govuk-!-margin-bottom-4"
+            }) }}
+
+            {% if data['new-application']['status'] != "rejected" %}
+            <p>
+                There are now {{data['applications']|countApplications(activity.id)}} people on the waitlist for
+                {{activity.name}}.
+            </p>
+            {% endif %}
+
+            {% set currentlyAllocatedCount =
+            data['timetable-complete-1']['prisoners']|getCurrentlyAllocatedCount(activity.id) %}
+
+            <h2 class="govuk-heading-m">
+                Current allocation for {{activity.name}}
+            </h2>
+            <ul class="govuk-list">
+                <li>
+                    Vacancies: {{activity.capacity - currentlyAllocatedCount}}
+                </li>
+                <li>
+                    Currently allocated: {{currentlyAllocatedCount}}
+                </li>
+                <li>
+                    Capacity: {{activity.capacity}}
+                </li>
+                {% if data['new-application']['status'] == "rejected" %}
+                <li>
+                    Waitlist: {{data['applications']|countApplications(activity.id)}}
+                </li>
+                {% endif %}
+            </ul>
+
+
+
+
+            {% set items = [
+            {
+            value: "decision",
+            text: "Allocate the prisoner"
+            },
+            {
+            value: "add-another",
+            text: "Add another application"
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "finish",
+            text: "Finish logging applications"
+            }
+            ]
+            %}
+
+            {% if data['new-application']['status'] == "rejected" %}
+            {% set items = [
+            {
+            value: "add-another",
+            text: "Add another application"
+            },
+            {
+            value: "add-another",
+            text: "Add another application for " + prisoner.name.firstname + " " + prisoner.name.surname
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "finish",
+            text: "Finish logging applications"
+            }
+            ]
+            %}
+            {% endif %}
+
+            <!-- {{govukRadios({
+            idPrefix: "add-application-next-step",
+            name: "add-application-next-step",
+            fieldset: {
+            legend: {
+            text: "What do you want to do next?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            items: items
+            })}}
+
+            {{ govukButton({
+            text: "Continue"
+            }) }} -->
+        </form>
+
+
+        <h2 class="govuk-heading-l govuk-!-margin-top-8">
+            What you can do next
+        </h2>
+        <p class="govuk-body">
+            You can:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+            {% if data['new-application']['status'] == "approved" %}
+            <li><a href="quick-allocate/{{data['application']}}" class="govuk-link--no-visited-state">allocate
+                    {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                    to {{activity.name}}</a></li>
+            {% endif %}
+            <li><a href="select-activity" class="govuk-link--no-visited-state">record another request for
+                    {{prisoner.name.firstname}} {{prisoner.name.surname}}</a></li>
+            <li><a href="prisoner-search" class="govuk-link--no-visited-state">record a request for someone else</a>
+                {% if data['new-application']['status'] != "approved" %}
+            <li><a href="../activities/{{data['new-application'].activity}}"
+                    class="govuk-link--no-visited-state">allocate someone
+                    to {{activity.name}}</a></li>
+            {% endif %}
+            </li>
+        </ul>
+
+        <p>
+            Or you can <a href="../activities/{{data['new-application'].activity}}/applications"
+                class="govuk-link--no-visited-state">view the waitlist for {{activity.name}}</a>.
+        </p>
+    </div>
+</div>
+
+{% endblock %}

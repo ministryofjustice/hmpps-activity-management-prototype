@@ -1,0 +1,37 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+      {{ govukInput({
+      label: {
+      text: "What's the new activity called?",
+      classes: "govuk-label--l",
+      maxlength: 300,
+      isPageHeading: true
+      },
+      rows: 1,
+      hint: {
+      text: "Say what the activity is in plain English. You'll be able to add more details like location and schedules later so you don't have to include them in the name."
+      },
+      id: "activity-name",
+      name: "new-activity[activity-name]"
+      }) }}
+
+      <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

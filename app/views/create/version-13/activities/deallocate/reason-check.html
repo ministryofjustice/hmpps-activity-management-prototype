@@ -1,0 +1,61 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}{% endblock %}
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                            Are you {{"still" if data.redirect}} taking these {{ prisonerData | length }} people off
+                            {{ activity['name'] }} for the same reason?
+                        </h1>
+                    </legend>
+                    <div class="govuk-summary-list govuk-!-margin-bottom-">
+                        {% for prisoner in prisonerData %}
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                <a href="#">
+                                    {{ prisoner.name.surname }}, {{ prisoner.name.firstname }}
+                                </a>
+                            </dt>
+                            <dd class="govuk-summary-list__value">{{ prisoner.id }}</dd>
+                            <dd class="govuk-summary-list__value">{{ prisoner.location.cell }}</dd>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="deallocate-same-reason" name="deallocate-same-reason"
+                                type="radio" value="yes" {{"checked" if data['deallocate-same-reason'] == 'yes' }}/>
+                            <label class="govuk-label govuk-radios__label" for="deallocate-same-reason">
+                                Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="deallocate-same-reason-2"
+                                name="deallocate-same-reason" type="radio" value="no" {{ 'checked' if data['deallocate-same-reason'] == 'no' }}/>
+                            <label class="govuk-label govuk-radios__label" for="deallocate-same-reason-2">
+                                No - it's for different reasons
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+{% endblock %}

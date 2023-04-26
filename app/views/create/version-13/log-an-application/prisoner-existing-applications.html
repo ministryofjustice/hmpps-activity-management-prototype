@@ -1,0 +1,109 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-l">
+            Check existing applications for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+        </h1>
+
+        <form method="post">
+            <table class="govuk-table" data-module="moj-sortable-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%"><button
+                                type="button" data-index="0">Activity applied for</button></th>
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%"><button
+                                type="button" data-index="1">Application date</button></th>
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%"><button
+                                type="button" data-index="2">Application status</button></th>
+                        <th scope="col" class="govuk-table__header" style="width:28%"></th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td data-sort-value="Kitchens" class="govuk-table__cell">
+                            <strong><a href="# target=" _blank"="">Kitchens</a></strong><br>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="20230205">5 February 2023</td>
+                        <td class="govuk-table__cell" data-sort-value="Approved">
+                            <strong class="govuk-tag govuk-tag--turquoise">A<span
+                                    style="text-transform:lowercase;">pproved and allocated</span></strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td data-sort-value="Servery" class="govuk-table__cell">
+                            <strong><a href="/unlock/version-5/prisoner-profile"
+                                    target="_blank">Servery</a></strong><br>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="20221209">9 December 2022</td>
+                        <td class="govuk-table__cell" data-sort-value="On waitlist">
+                            <strong class="govuk-tag govuk-tag--purple">A<span
+                                    style="text-transform:lowercase;">pproved</span></strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td data-sort-value="Electronics" class="govuk-table__cell">
+                            <strong><a href="/unlock/version-5/prisoner-profile"
+                                    target="_blank">Electronics</a></strong><br>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="20230201">1 February 2023</td>
+                        <td class="govuk-table__cell" data-sort-value="Pending">
+                            <strong class="govuk-tag govuk-tag--blue">P<span
+                                    style="text-transform:lowercase;">ending</span></strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td data-sort-value="Gardens" class="govuk-table__cell">
+                            <strong><a href="/unlock/version-5/prisoner-profile"
+                                    target="_blank">Gardens</a></strong><br>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="20230121">21 January 2023</td>
+                        <td class="govuk-table__cell" data-sort-value="Rejected">
+                            <strong class="govuk-tag govuk-tag--red">R<span
+                                    style="text-transform:lowercase;">ejected</span></strong>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <!-- Yes no Radios for choosing whether to create a new application -->
+            {{ govukRadios({
+                idPrefix: "log-new-application",
+                name: "log-new-application",
+                fieldset: {
+                    legend: {
+                        text: "Do you want to log a new application for this prisoner?",
+                        isPageHeading: false,
+                        classes: "govuk-fieldset__legend--m"
+                    }
+                },
+                items: [
+                    {
+                        value: "yes",
+                        text: "Yes"
+                    },
+                    {
+                        value: "no",
+                        text: "No"
+                    }
+                ]
+            }) }}
+            {{govukButton({
+            text: "Continue"
+            })}}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+<div class="govuk-width-container govuk-!-margin-bottom-">
+    {{ govukBackLink({
+    text: "Back to all activities",
+    href: "../all"
+    }) }}
+</div>
+
+{{ super() }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% if data['confirmation-dialog'].display == true %}
+{% set prisoner = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
+{% if data['confirmation-dialog'].type == 'deallocate' %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    {{prisoner.name.firstname}} {{prisoner.name.surname}} is no longer allocated to {{activity.name}}.
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Success",
+type: "success"
+}) }}
+{% endif %}
+{% endif %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Category: {{activity.category|getActivityCategoryName}}
+        </span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+            {{activity.name}}: manage waitlist and allocate
+        </h1>
+        {% set activityInfoHtml %}
+        {{ govukSummaryList({
+        classes: "govuk-summary-list--no-borderr",
+        rows: [
+        {
+        classes: "govuk-summary-list__row--no-actions",
+        key: {
+        text: "Suitable for workplace risk assessment"
+        },
+        value: {
+        text: "Medium"
+        }
+        },
+        {
+        key: {
+        text: "Suitable for incentive level"
+        },
+        value: {
+        text: "Basic, Standard or Enhanced"
+        }
+        },
+        {
+        key: {
+        text: "Education level"
+        },
+        value: {
+        text: "English level 1"
+        }
+        }
+        ]
+        }) }}
+        {% endset %}
+
+        {{govukDetails({
+        summaryText: "Activity requirements",
+        html: activityInfoHtml
+        })}}
+
+        <ul class="govuk-list">
+            <li>
+                Vacancies: {{vacanciesCount}}
+            </li>
+            <li>
+                Currently allocated: {{currentlyAllocatedCount}}
+            </li>
+            <li>
+                Capacity: {{activity.capacity}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+        <div class="govuk-!-padding-3" style="border: 1px solid #c7c7c7; box-shadow: 4px 4px 0 rgba(0,0,0,0.1)">
+            <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
+                Schedule
+            </h2>
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-0">
+                {% for day in activityDaysWithTimes %}
+                <div class="govuk-summary-list__row govuk-!-font-size-16">
+                    <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">
+                        {% if day.times %}
+                        {{day.day|capitalize}}
+                        {% else %}
+                        <span class="govuk-hint govuk-!-font-size-16">{{day.day|capitalize}}</span>
+                        {% endif %}
+                    </dt>
+                    <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">
+                        {% if day.times %}
+                        {{day.times}}
+                        {% else %}
+                        <span class="govuk-hint govuk-!-font-size-16">Not scheduled</span>
+                        {% endif %}
+                    </dd>
+                </div>
+                {% endfor %}
+            </dl>
+        </div>
+    </div>
+</div>
+
+{% include './_sub-navigation.html' %}
+
+{% block tableArea %}{% endblock %}
+
+{% endblock %}
+
+
+{% block pageScripts %}
+{% endblock %}

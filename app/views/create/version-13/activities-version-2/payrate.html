@@ -1,0 +1,64 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">
+            Select how much you want to pay {{prisoner.name.firstname}} {{prisoner.name.surname}} {{prisoner.id}}
+        </h1>
+        <p class="govuk-inset-text">
+            {{prisoner.name.firstname}} {{prisoner.name.surname}}'s incentive level is
+            {{prisoner.incentiveLevel|capitalize}}.
+        </p>
+        <form method="post">
+            {% set prisoner = application['selected-prisoner'] | getPrisonerDetails %}
+            {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+            {{ govukRadios({
+            label: {
+            text: "Select the correct pay rate",
+            classes: "govuk-label--m"
+            },
+            hint: {
+            html: "There may only be one pay rate for this prisoner. If there are multiple pay rates, select the one
+            that applies to this activity."
+            },
+            idPrefix: "pay-rate",
+            name: "allocation[pay-rate]",
+            items: [
+            {
+            value: "General - £1.00",
+            text: "General - £1.00"
+            },
+            {
+            value: "Skilled - £1.45",
+            text: "Skilled - £1.45"
+            },
+            {
+            value: "Specialist - £1.59",
+            text: "Specialist - £1.59"
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "new",
+            text: "Add a new pay rate - the one I need is not listed"
+            }
+            ]
+            }) }}
+
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

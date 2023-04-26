@@ -1,0 +1,55 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+    text: "Back",
+    "href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+        <h2 class="govuk-heading-m">
+            <span class="govuk-caption-m">
+                {{data['new-activity']['category']}}
+            </span>
+            {{data['new-activity']['activity-name']}}
+        </h2>
+        {{govukRadios({
+            idPrefix: "applicant",
+            name: "applicant",
+            fieldset: {
+                legend: {
+                    text: "Who made the application?",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                }
+            },
+            items: [
+                {
+                    value: "prisoner",
+                    text: prisoner.name.firstname + " " + prisoner.name.surname
+                },
+                {
+                    value: "other",
+                    text: "Someone else, for example a member of staff, an activity leader or an orderly",
+                    conditional: {
+                        html: "<p>Select the reason the application was made</p>"
+                    }
+                }
+            ]
+        })}}
+
+      <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

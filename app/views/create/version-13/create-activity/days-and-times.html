@@ -1,0 +1,91 @@
+{% extends "layout_hmpps.html" %} {% block pageTitle %} Activities Management
+prototype {% endblock %} {% block primaryNavigation %} {% endblock %} {% block
+beforeContent %} {{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %} {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      {% set days = [
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+      "sunday"
+      ] %}
+      {% set timesHtml %}
+
+      {% endset %}
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="days-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              Enter the days and times when this activity runs
+            </h1>
+          </legend>
+
+          <div id="days-hint" class="govuk-hint">
+            Select each day that the activity will run, then select the slots when the activity will run on that day.
+            You can choose any or all of AM (morning), PM (afternoon) and ED (evening duty).
+          </div>
+
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            {% for day in days %}
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="days-{{day}}" name="days" type="checkbox" value="{{day}}"
+                aria-controls="conditional-days-{{day}}" aria-expanded="false" />
+              <label class="govuk-label govuk-checkboxes__label" for="days-{{day}}">
+                {{day|capitalize}}
+              </label>
+            </div>
+
+            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+              id="conditional-days-{{day}}">
+              <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                  <legend class="govuk-fieldset__legend govuk-visually-hidden">
+                    Times
+                  </legend>
+
+                  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="times-{{day}}" name="times-{{day}}" type="checkbox"
+                        value="am" />
+                      <label class="govuk-label govuk-checkboxes__label" for="times-{{day}}">
+                        AM
+                      </label>
+                    </div>
+
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="times-{{day}}-2" name="times-{{day}}" type="checkbox"
+                        value="pm" />
+                      <label class="govuk-label govuk-checkboxes__label" for="times-{{day}}-2">
+                        PM
+                      </label>
+                    </div>
+
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="times-{{day}}-3" name="times-{{day}}" type="checkbox"
+                        value="ed" />
+                      <label class="govuk-label govuk-checkboxes__label" for="times-{{day}}-3">
+                        ED
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </fieldset>
+      </div>
+
+      <button class="govuk-button" data-module="govuk-button">
+        Confirm times and days
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

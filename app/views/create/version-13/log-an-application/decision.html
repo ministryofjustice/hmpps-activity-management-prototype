@@ -1,0 +1,62 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+    text: "Back",
+    "href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+        <h2 class="govuk-heading-m">
+            <span class="govuk-caption-m">
+                {{data['new-activity']['category']}}
+            </span>
+            {{data['new-activity']['activity-name']}}
+        </h2>
+
+        {{govukRadios({
+            idPrefix: "status",
+            name: "new-application[status]",
+            fieldset: {
+                legend: {
+                    text: "Accept or reject the application",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                }
+            },
+            items: [
+                {
+                    text: "Add to waitlist with status Pending - the person’s suitability can be checked later",
+                    value: "pending"
+                },
+                {
+                    text: "Add to waitlist with status Approved - you’ve confirmed that the person is suitable",
+                    value: "approved"
+                },
+                {
+                    text: "Reject the application - the person will not be added to the waitlist",
+                    value: "rejected"
+                }
+            ]
+        })}}
+
+        {{govukDetails({
+            summaryText: "Check how suitable this person is",
+            html: "<p>Check the person's suitability for this activity. For example, if they have a history of violence, you may want to reject their application.</p>"
+        })}}
+
+      <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

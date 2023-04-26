@@ -1,0 +1,307 @@
+{% extends "./_layout-activities.html" %}
+
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block tableArea %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% if data['confirmation-dialog'].display == true %}
+
+{% set prisoner = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
+
+{% if data['confirmation-dialog'].type == 'deallocate' %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    {{prisoner.name.firstname}} {{prisoner.name.surname}} is no longer allocated to {{activity.name}}.
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Success",
+type: "success"
+}) }}
+{% endif %}
+{% endif %}
+
+<!-- <h2 class="govuk-heading-l">Details</h2> -->
+
+<div class="govuk-grid-row govuk-!-margin-top-7">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-3">
+            Activity details
+        </h2>
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Name"
+        },
+        value: {
+        text: activity.name
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        }
+        },
+        {
+        key: {
+        text: "Description"
+        },
+        value: {
+        text: "A description of the activity, which might be useful for various reasons, like helping the prisoner to
+        decide whether to sign up for the activity."
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        }
+        },
+        {
+        key: {
+        text: "Category"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.category | getActivityCategoryName
+        }
+        }
+        ]
+        }) }}
+
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-8">
+            Requirements and suitability
+        </h2>
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Suitable for workplace risk assessment"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: "Medium"
+        }
+        },
+        {
+        key: {
+        text: "Suitable for incentive level"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: "Basic, Standard or Enhanced"
+        }
+        },
+        {
+        key: {
+        text: "Education level"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: "English level 1"
+        }
+        },
+        {
+        key: {
+        text: "Maximum allocation"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.capacity
+        }
+        }
+        ]
+        }) }}
+
+        <h2 class="govuk-heading-m govuk-!-margin-top-8">
+            Pay rates
+        </h2>
+        <ul class="govuk-list govuk-button-group">
+            <li>
+                <a href="#" class="govuk-link">Add new pay rate</a>
+            </li>
+        </ul>
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Skilled"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        html: '<ul class="govuk-list govuk-list--spaced">
+            <li>Basic: £1.00</li>
+            <li>Standard: £2.00</li>
+            <li>Enhanced: £3.00</li>
+        </ul>'
+        }
+        },
+        {
+        key: {
+        text: "Expert"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        html: '<ul class="govuk-list govuk-list--spaced">
+            <li>Basic: £1.00</li>
+            <li>Standard: £2.00</li>
+            <li>Enhanced: £3.00</li>
+        </ul>'
+        }
+        },
+        {
+        key: {
+        text: "Beginner"
+        },
+        actions: {
+        items: [
+        {
+        href: "#",
+        text: "Edit",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        html: 'Flat rate: £3.00'
+        }
+        }
+        ]
+        }) }}
+    </div>
+</div>
+
+<!-- <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">Activity schedule</h2>
+        <p class="govuk-body">This activity is scheduled to run on the following days:</p>
+        <ul class="govuk-list govuk-list--spaced">
+            {% for day in activityDaysWithTimes %}
+            <li>
+                {% if day.times %}
+                <b>{{day.day|capitalize}}: {{day.times}}</b>
+                {% else %}
+                <span class="govuk-hint">{{day.day|capitalize}}: Not scheduled</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div> -->
+
+<div class="govuk-grid-row govuk-!-margin-top-7">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m ">
+            Schedule
+        </h2>
+        <ul class="govuk-list govuk-button-group">
+            <li>
+                <a href="#" class="govuk-link">Edit schedule<span class="govuk-visually-hidden"> for
+                        {{activity.name}}</span></a>
+            </li>
+            <li>
+                <a href="#" class="govuk-link">Suspend activity<span class="govuk-visually-hidden"> for
+                        {{activity.name}}</span></a>
+            </li>
+        </ul>
+        <dl class="govuk-summary-list govuk-!-margin-0">
+            {% for day in activityDaysWithTimes %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    {% if day.times %}
+                    {{day.day|capitalize}}
+                    {% else %}
+                    <span class="govuk-hint">{{day.day|capitalize}}</span>
+                    {% endif %}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if day.times %}
+                    {% if day.times.am %}
+                    <span class="govuk-tag govuk-tag--green govuk-!-margin-right-1">AM</span>
+                    {% endif %}
+                    {% if day.times.pm %}
+                    <span class="govuk-tag govuk-tag--green">PM</span>
+                    {% endif %}
+                    {% else %}
+                    <span class="govuk-hint">Not scheduled</span>
+                    {% endif %}
+                </dd>
+            </div>
+            {% endfor %}
+        </dl>
+    </div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}

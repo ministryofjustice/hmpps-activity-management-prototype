@@ -1,0 +1,174 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">
+            Check and confirm who you're taking off {{activity.name}}
+        </h1>
+
+        <!-- {% if data['deallocate-same-reason'] == 'yes' or data['deallocate-same-date'] == 'yes' %}
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+            {% if data['deallocate-same-reason'] == 'yes' %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Same reason for all people
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['deallocate-same-reason'] | capitalize}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Reason
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['deallocation'][prisonerData[0].id]['reason']}}
+                </dd>
+            </div>
+            {% endif %}
+            {% if data['deallocate-same-date'] == 'yes' %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Same date for all people?
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['deallocate-same-date'] | capitalize}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="date-check?redirect=check-deallocation"
+                        class="govuk-link--no-visited-state">Change</a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Date of last session
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['deallocation'][prisonerData[0].id]['date']|convertShortDateToVeryLongDate}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="date-check?redirect=check-deallocation"
+                        class="govuk-link--no-visited-state">Change</a>
+                </dd>
+            </div>
+            {% endif %}
+        </dl>
+        {% endif %} -->
+
+        {% for prisoner in prisonerData | reverse %}
+        {% if prisonerData | length > 1 %}
+        <div class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title">{{prisoner.name.firstname}} {{prisoner.name.surname}} &ndash;
+                    {{prisoner.id}}</h2>
+            </div>
+            <div class="govuk-summary-card__content">
+                {% endif %}
+                <dl class="govuk-summary-list">
+                    {% if prisonerData | length == 1 %}
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Name
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Prison number
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{prisoner.id}}
+                        </dd>
+                    </div>
+                    {% endif %}
+                    <!-- <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Activity
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{activity.name}}
+                        </dd>
+                    </div> -->
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Date of last session
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{data['deallocation'][prisoner.id]['date']|convertShortDateToVeryLongDate}}
+                        </dd>
+                        <!-- Change link -->
+                        <dd class="govuk-summary-list__actions">
+                            {% if data['deallocate-same-date'] == 'yes' %}
+                            <a href="date-check?redirect=check-deallocation"
+                                class="govuk-link--no-visited-state">Change</a>
+                            {% else %}
+                            <a href="date/{{prisoner.id}}?redirect=check-deallocation&change-multiple=false"
+                                class="govuk-link--no-visited-state">Change</a>
+                            {% endif %}
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Reason
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{data['deallocation'][prisoner.id]['reason']}}
+                        </dd>
+                        <!-- Change link -->
+                        <dd class="govuk-summary-list__actions">
+                            {% if data['deallocate-same-reason'] == 'yes' %}
+                            <a href="reason-check?redirect=check-deallocation"
+                                class="govuk-link--no-visited-state">Change</a>
+                            {% else %}
+                            <a href="reason/{{prisoner.id}}?redirect=check-deallocation&change-multiple=false"
+                                class="govuk-link--no-visited-state">Change</a>
+                            {% endif %}
+                        </dd>
+                    </div>
+                </dl>
+                {% if prisonerData | length > 1 %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+
+
+        <form method="post">
+            {% if prisonerData | length > 1 %}
+            <h2 class="govuk-heading-m govuk-!-margin-top-8">
+                Confirm you're taking {{prisonerData | length}} people off {{activity.name}}
+            </h2>
+            <!-- <p class="govuk-body">
+                {{prisonerData | length}} prisoners will be removed from {{activity.name}}.
+            </p> -->
+            {% endif %}
+
+            {{ govukButton({
+            text: "Confirm and remove"
+            }) }}
+            <!-- <p>
+                <a href="/create/version-12/activities" class="govuk-link govuk-link--no-visited-state">
+                    Cancel and return to prisoner profile
+                </a>
+            </p> -->
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-xl">
+                {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            </span>
+
+            {{govukDateInput({
+            idPrefix: "deallocation-date",
+            fieldset: {
+            legend: {
+            html: "When do you want " + prisoner.name.firstname + " " + prisoner.name.surname + " to start attending
+            this activity?",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            hint: {
+            text: "For example, 31 3 1980"
+            },
+            items: [
+            {
+            name: "allocation[start-date][day]",
+            label: "Day",
+            classes: "govuk-input--width-2",
+            value: startDate.day or ''
+            },
+            {
+            name: "allocation[start-date][month]",
+            label: "Month",
+            classes: "govuk-input--width-2",
+            value: startDate.month or ''
+            },
+            {
+            name: "allocation[start-date][year]",
+            label: "Year",
+            classes: "govuk-input--width-4",
+            value: startDate.year or ''
+            }
+            ]
+            })}}
+
+            {% if prisonerData | length == 1 %}
+            {% set insetTextText = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " will be
+            expected to attend any sessions scheduled to take place between now and the date they are removed from the
+            activity." %}
+            {% else %}
+            {% set insetTextText = "The " + prisonerData | length + " selected prisoners will be expected to attend any
+            sessions scheduled to take place between now and the date they are removed from the activity." %}
+            {% endif %}
+
+            {{ govukButton({
+            text: "Update start date"
+            }) }}
+
+            <p class="govuk-body">
+                <a href="javascript: window.history.go(-1)" class="govuk-link">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
