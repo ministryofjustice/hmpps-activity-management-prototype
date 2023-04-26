@@ -39,10 +39,10 @@ text: "Back",
                 <div id="subject-hint" class="govuk-hint">
                     Start typing a location and select the one you need from the list of options.
                 </div>
-                <select class="govuk-select" id="activity-location" name="new-activity[activity-location]">
+                <select class="govuk-select" id="activity-location" name="new-activity[location]">
                     <option value="">Select a location</option>
                     {% for location in locations|sort() %}
-                    <option value="{{ location }}" {{"selected" if location == data['new-activity']['activity-location']}}>{{ location }}</option>
+                    <option value="{{ location }}" {{"selected" if location == data['new-activity']['location']}}>{{ location }}</option>
                     {% endfor %}
                 </select>
             </div>

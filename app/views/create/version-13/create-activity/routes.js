@@ -156,6 +156,14 @@ router.get("/education-level-list", function (req, res) {
 });
 // redirect to start date page
 router.post("/education-level-list", function (req, res) {
+  // set the new activity object in the session data if it doesn't exist
+  req.session.data["new-activity"] = req.session.data["new-activity"] ?? {};
+
+  let educationLevels = req.session.data.educationLevels ?? [];
+
+  // update the new activity object in the session data
+  req.session.data["new-activity"]["education-levels"] = educationLevels;
+
   res.redirect("start-date");
 });
 
@@ -335,10 +343,43 @@ router.get("/remove-payrate/:payrateId", function (req, res) {
 
 // start date page
 router.get("/start-date", function (req, res) {
-  res.render(req.protoUrl + "/start-date");
+  // check if the start-date is already set in the new activity session data
+  let startDate = req.session.data["new-activity"]?.["start-date"];
+
+  // if the start date is already set, split it into day, month and year in a new object called startDate
+  if (startDate) {
+    startDate = startDate.split("-");
+    startDate = {
+      day: startDate[2],
+      month: startDate[1],
+      year: startDate[0],
+    };
+  }
+
+  res.render(req.protoUrl + "/start-date", {
+    startDate,
+  });
 });
 // redirect to end date check page
 router.post("/start-date", function (req, res) {
+  let startDate = {}
+  startDate.day = req.session.data["activity-start-date-day"];
+  startDate.month = req.session.data["activity-start-date-month"];
+  startDate.year = req.session.data["activity-start-date-year"];
+
+  // format the date ISO Luxon format
+  let startDateFormatted;
+  if (startDate.day && startDate.month && startDate.year) {
+    startDateFormatted = DateTime.fromObject(startDate).toISODate();
+  } else {
+    // set the start date to today if no date is entered
+    startDateFormatted = DateTime.now().toISODate();
+  }
+
+  // add the start date to the session data for the new activity
+  req.session.data["new-activity"] = req.session.data["new-activity"] ?? {};
+  req.session.data["new-activity"]["start-date"] = startDateFormatted;
+
   res.redirect("end-date-check");
 });
 
@@ -357,52 +398,106 @@ router.post("/end-date-check", function (req, res) {
 
 // end date page
 router.get("/end-date", function (req, res) {
+  // check if the end-date is already set in the new activity session data
+  let endDate = req.session.data["new-activity"]?.["end-date"];
+
+  // if the end date is already set, split it into day, month and year in a new object called endDate
+  if (endDate) {
+    endDate = endDate.split("-");
+    endDate = {
+      day: endDate[2],
+      month: endDate[1],
+      year: endDate[0],
+    };
+  }
+
   res.render(req.protoUrl + "/end-date");
 });
 // redirect to days and times page
 router.post("/end-date", function (req, res) {
+  let endDate = {}
+  endDate.day = req.session.data["activity-end-date-day"];
+  endDate.month = req.session.data["activity-end-date-month"];
+  endDate.year = req.session.data["activity-end-date-year"];
+
+  // format the date ISO Luxon format
+  let endDateFormatted;
+  if (endDate.day && endDate.month && endDate.year) {
+    endDateFormatted = DateTime.fromObject(endDate).toISODate();
+  } else {
+    // set the end date to today if no date is entered
+    endDateFormatted = DateTime.now().toISODate();
+  }
+
+  // add the end date to the session data for the new activity
+  req.session.data["new-activity"] = req.session.data["new-activity"] ?? {};
+  req.session.data["new-activity"]["end-date"] = endDateFormatted;
+
   res.redirect("days-and-times");
 });
 
 // days and times page
 router.get("/days-and-times", function (req, res) {
-  res.render(req.protoUrl + "/days-and-times");
+  let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+  res.render(req.protoUrl + "/days-and-times", {
+    days,
+  });
 });
-// redirect to bank holiday check page
 router.post("/days-and-times", function (req, res) {
-  // get days and times data
-  const days = req.session.data["days"];
-
-  // if a day has no times associated with it, remove it from the days variable
-  days.forEach(function (day) {
-    let times = req.session.data["times-" + day];
-    if (!times || times.length === 0) {
-      days.splice(days.indexOf(day), 1);
-    }
-  });
-
-  // create a 'schedule' object from days and times, e.g: {"day":0,"am":null,"pm":null, "ed":true}
   let schedule = [];
-  days.forEach(function (day) {
-    let times = req.session.data["times-" + day];
-    let dayObj = {
-      day: day,
-      am: times.includes("am"),
-      pm: times.includes("pm"),
-      ed: times.includes("ed"),
-    };
-    schedule.push(dayObj);
-  });
+  let periods = ["am", "pm", "ed"];
+  let days = [0, 1, 2, 3, 4, 5, 6];
 
-  // if new-activity doesn't exist, create it
-  if (!req.session.data["new-activity"]) {
-    req.session.data["new-activity"] = {};
+  // set the daysData variable to the days array, but remove _unchecked values so that the daysData array only contains the days that have been selected
+  let daysData = req.body.days.filter((day) => day != "_unchecked");
+
+  // create the structure for the schedule object
+  for (let day of days) {
+    let scheduleDay = {
+      day: day,
+      am: null,
+      pm: null,
+      ed: null,
+    };
+    schedule.push(scheduleDay);
   }
 
-  // add the days and times object to the session data for 'new-activity'
-  req.session.data["new-activity"].schedule = schedule;
+  // update the schedule object with the periods that have been selected for each day
+  for (let day of daysData) {
+    let selectedPeriods = req.body["times-" + day];
+    for (let period of periods) {
+      if (selectedPeriods.includes(period)) {
+        let periodTimes = getPeriodTimes(period);
+        let scheduleDay = schedule.find((scheduleDay) => scheduleDay.day == day);
+        scheduleDay[period] = [periodTimes];
+      }
+    }
+  }
 
+  // update the new-activity session data with the schedule object
+  req.session.data["new-activity"] = req.session.data["new-activity"] ?? {};
+  req.session.data["new-activity"]["schedule"] = schedule;
+
+  // redirect to the activity page
   res.redirect("bank-holiday-check");
+
+  // function to set generic start and end times for a given period
+  function getPeriodTimes(period) {
+    let periodTimes = [];
+    switch (period) {
+      case "am":
+        periodTimes = { startTime: "9:00", endTime: "12:00" };
+        break;
+      case "pm":
+        periodTimes = { startTime: "13:00", endTime: "16:00" };
+        break;
+      case "ed":
+        periodTimes = { startTime: "16:00", endTime: "18:00" };
+        break;
+    }
+    return periodTimes;
+  }
 });
 
 // bank holiday check page
@@ -416,7 +511,14 @@ router.post("/bank-holiday-check", function (req, res) {
 
 // create activity check answers page
 router.get("/check-answers", function (req, res) {
-  res.render(req.protoUrl + "/check-answers");
+  let newActivity = req.session.data["new-activity"];
+  let newActivitySchedule = newActivity.schedule;
+  
+  let schedule = getActivitySchedule(newActivitySchedule)
+
+  res.render(req.protoUrl + "/check-answers", {
+    schedule,
+  });
 });
 // redirect to confirmation page
 router.post("/check-answers", function (req, res) {
@@ -440,3 +542,19 @@ router.get("/confirmation", function (req, res) {
 });
 
 module.exports = router;
+
+function getActivitySchedule(activitySchedule) {
+  return activitySchedule.map((day) => {
+    // convert each day number to the name of the weekday
+    // 1 = monday, 2 = tuesday, etc.
+    let dayNames = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    let dayName = dayNames[day.day];
+
+    // return the day name and am/pm values
+    return {
+      day: dayName,
+      am: day.am,
+      pm: day.pm,
+    };
+  });
+}

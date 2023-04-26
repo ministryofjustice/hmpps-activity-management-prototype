@@ -13,10 +13,10 @@ window.history.go(-1)" })}} {% endblock %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">
-            Check details for {{data['new-activity']['activity-name']}}
+            Check details for {{data['new-activity']['name']}}
         </h1>
         <h2 class="govuk-heading-m">
-            Activity details            
+            Activity details
         </h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <div class="govuk-summary-list__row">
@@ -24,7 +24,7 @@ window.history.go(-1)" })}} {% endblock %}
                     Activity category
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{data['new-activity']['category']}}
+                    {{data['new-activity']['category']|replace('-',' ')|capitalize}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
@@ -34,7 +34,7 @@ window.history.go(-1)" })}} {% endblock %}
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Activity name
+                    Name
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {{data['new-activity']['name']}}
@@ -45,18 +45,44 @@ window.history.go(-1)" })}} {% endblock %}
                     </a>
                 </dd>
             </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['new-activity']['location']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> activity name</span>
+                    </a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Capacity
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['new-activity']['capacity']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> activity name</span>
+                    </a>
+                </dd>
+            </div>
         </dl>
 
         <h2 class="govuk-heading-m">
-            Requirements and pay
+            Requirements and suitability
         </h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Risk assessment level
+                    Suitable for workplace risk assessment
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{data['new-activity']['risk-assessment-level']}}
+                    {{data['new-activity']['risk-assessment-level'] | capitalize}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
@@ -66,10 +92,18 @@ window.history.go(-1)" })}} {% endblock %}
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Education requirements
+                    Education level
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{data['new-activity']['education']}}
+                    {% if data['new-activity']['education-levels'].length > 0 %}
+                    <ul class="govuk-list govuk-list--spaced">
+                        {% for educationLevel in data['new-activity']['education-levels'] %}
+                        <li>{{ educationLevel.name }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    None set
+                    {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
@@ -77,23 +111,10 @@ window.history.go(-1)" })}} {% endblock %}
                     </a>
                 </dd>
             </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Pay rates
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    {{data['new-activity']['pay-rates']}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> pay rates</span>
-                    </a>
-                </dd>
-            </div>
         </dl>
 
         <h2 class="govuk-heading-m">
-            Dates and schedule
+            Schedule and dates
         </h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <div class="govuk-summary-list__row">
@@ -114,7 +135,11 @@ window.history.go(-1)" })}} {% endblock %}
                     End date
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{data['new-activity']['end-date']}}
+                    {% if data['new-activity']['end-date'] %}
+                    {{data['new-activity']['end-date']|convertShortDateToLongDate}}
+                    {% else %}
+                    None set
+                    {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
@@ -124,19 +149,34 @@ window.history.go(-1)" })}} {% endblock %}
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Days and times
+                    Schedule
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {% for day in data['new-activity']['schedule'] %}
-                        {{day.day|capitalize}}:
-                        {% if day.am %}
-                            AM
-                        {% endif %}
-                        {% if day.pm %}
-                            PM
-                        {% endif %}
-                        <br>
-                    {% endfor %}
+                    <dl class="govuk-summary-list govuk-summary-list--no-border">
+                        {% for day in schedule %}
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                {% if day.am or day.pm %}
+                                {{day.day|capitalize}}
+                                {% else %}
+                                <span class="govuk-hint">{{day.day|capitalize}}</span>
+                                {% endif %}
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {% if day.am or day.pm %}
+                                {% if day.am %}
+                                AM {{"" if day.pm == null else "and "}}
+                                {% endif %}
+                                {% if day.pm %}
+                                PM {{"" if day.am == null}}
+                                {% endif %}
+                                {% else %}
+                                <span class="govuk-hint">Not scheduled</span>
+                                {% endif %}
+                            </dd>
+                        </div>
+                        {% endfor %}
+                    </dl>
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
@@ -160,36 +200,30 @@ window.history.go(-1)" })}} {% endblock %}
         </dl>
 
         <h2 class="govuk-heading-m">
-            Location and capacity
+            Pay rates
         </h2>
+        {% for incentiveLevel, rates in data['new-activity']['payrates'] %}
+        <h3 class="govuk-heading-s">
+            {{incentiveLevel|capitalize + " incentive level" if incentiveLevel != 'flat-rate' else 'Flat rates'}}
+        </h3>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            {% for payRate in rates %}
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Location
+                    {{payRate.payBand}}
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{data['new-activity']['activity-location']}}
+                    £{{payRate.amount|decimalPlaces(2)}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> location</span>
+                        Change<span class="govuk-visually-hidden"> start date</span>
                     </a>
                 </dd>
             </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Capacity
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    {{data['new-activity']['max-allocations']}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> capacity</span>
-                    </a>
-                </dd>
-            </div>
+            {% endfor %}
         </dl>
+        {% endfor %}
 
         <form method="post">
             <button class="govuk-button" data-module="govuk-button">Continue</button>
