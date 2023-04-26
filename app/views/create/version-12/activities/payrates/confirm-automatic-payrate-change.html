@@ -25,7 +25,7 @@ text: "Back",
                 {{activity.name}}
             </span>
             <h1 class="govuk-heading-xl">
-                Check before you delete {{newPayRate.incentiveLevel}} incentive level: {{newPayRate.payBand|lower}} pay
+                Check before you delete {{newPayRate.incentiveLevel if newPayRate.incentiveLevel != 'flatRate' else 'flat rate'}} incentive level: {{newPayRate.payBand|lower}} pay
             </h1>
 
             {{govukWarningText({
@@ -40,7 +40,7 @@ text: "Back",
                         Pay rate to be deleted
                     </dt>
                     <dd class="govuk-summary-list__value">
-                        {{oldPayRate.payBand}} ({{'Flat rate' if oldPayRate.incentiveLevel == 'flatRate' else oldPayRate.incentiveLevel}})
+                        {{oldPayRate.payBand}} ({{'Flat rate' if oldPayRate.incentiveLevel == 'flatRate' else oldPayRate.incentiveLevel + ' incentive level'}})
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row">
@@ -48,7 +48,7 @@ text: "Back",
                         New pay rate
                     </dt>
                     <dd class="govuk-summary-list__value">
-                        {{newPayRate.payBand}} ({{'flat rate' if newPayRate.incentiveLevel == 'flatRate' else newPayRate.incentiveLevel}})
+                        {{newPayRate.payBand}} ({{'flat rate' if newPayRate.incentiveLevel == 'flatRate' else newPayRate.incentiveLevel + ' incentive level'}})
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row">

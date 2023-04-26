@@ -23,6 +23,7 @@ text: "Back",
             </span>
             {{data['new-activity']['activity-name']}}
         </h2>
+
         {% if data['show-delete-dialog'] == true %}
         {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
         {% set html %}
@@ -35,42 +36,42 @@ text: "Back",
         type: 'success'
         }) }}
         {% endif %}
+
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-            Review pay rates for {{data.activityName or 'Maths level
+            Pay rates for {{data.activityName or 'Maths level
             1'}}
         </h1>
-        {% for level, details in data.payrates %}
-        {% if details|length > 0 %}
-        <h2 class="govuk-heading-m">{{level}} incentive level pay</h2>
+        {% for incentiveLevel, payrates in data.payrates %}
+        <h2 class="govuk-heading-m">{{incentiveLevel|capitalize + ' incentive level pay rates' if incentiveLevel != 'flat-rate' else 'Flat rates'}}</h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-            {% for rate in details %}
+            {% for payrate in payrates %}
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    {{rate.name or 'Payment rate A'}}
+                    {{payrate.payBand or 'Payment rate A'}}
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    &pound; {{rate.amount or '1.10'}}
+                    &pound;{{payrate.amount|decimalPlaces(2) or '1.10'}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <!--  <a class="govuk-link" href="check/activity-risk-assessment?riskLevel={{data.riskLevel or 'High'}}">-->
-                    <a class="govuk-link govuk-!-margin-right-3" href="activity-payment-details?id={{rate.id}}">
+                    <a class="govuk-link govuk-!-margin-right-3" href="payrate-details?id={{payrate.id}}">
                         Change<span class="govuk-visually-hidden"> incentive pay</span>
                     </a>
-                    <a class="govuk-link" href="remove-payment-details?id={{rate.id}}&incentive-level={{level}}">
+                    <a class="govuk-link" href="remove-payrate/{{payrate.id}}">
                         Remove<span class="govuk-visually-hidden"> incentive pay</span>
                     </a>
                 </dd>
             </div>
             {% endfor %}
         </dl>
-        {% endif %}
         {% endfor %}
         <form method="post">
             <div class="govuk-button-group">
                 <button class="govuk-button" data-module="govuk-button" value="confirmPay">
                     Confirm pay rates
                 </button>
-                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" value="addAnother" formaction="payment-details" formmethod="get">
+                <input type="hidden" name="id" value="">
+                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" value="addAnother" formaction="payrate-incentive-levels" formmethod="get">
                     Add another pay rate
                 </button>
             </div>

@@ -20,7 +20,7 @@ text: "Back",
                 Change pay rate
             </span> -->
             <h1 class="govuk-heading-xl">
-                Change the pay band name or amount for {{payRate.incentiveLevel|replace('-',' ')|capitalize}} incentive level: {{payRate.payBand}}
+                Change the pay amount or pay band name for {{'flat rate' if payRate.incentiveLevel == 'flatRate' else payRate.incentiveLevel|replace('-',' ')|lower}} incentive level: {{payRate.payBand|lower}}
             </h1>
 
             <!-- pay rate amount input with currency prefix -->
