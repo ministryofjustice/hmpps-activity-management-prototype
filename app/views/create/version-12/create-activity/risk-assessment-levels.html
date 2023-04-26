@@ -15,7 +15,7 @@ window.history.go(-1)" })}} {% endblock %}
     <form method="post">
         <h2 class="govuk-heading-m">
             <span class="govuk-caption-m">
-                {{data['new-activity']['category']}}
+                {{data['new-activity']['category']|replace('-', ' ')|capitalize}}
             </span>
             {{data['new-activity']['activity-name']}}
         </h2>
@@ -24,29 +24,35 @@ window.history.go(-1)" })}} {% endblock %}
             name: "new-activity[risk-assessment-level]",
             fieldset: {
                 legend: {
-                    text: "Workplace risk assessment levels: which ones are suitable for this activity?",
+                    text: "Workplace risk assessment levels: who is suitable for this activity?",
                     isPageHeading: true,
                     classes: "govuk-fieldset__legend--l"
                 }
             },
             hint: {
-                text: "The risk assessment levels you set on this page will be used to filter the list of people you'll see when allocating to this activity."
+                html: "Choose one option to set the requirement for the activity."
             },
             items: [
                 {
                     value: "low",
-                    text: "Only low workplace risk assessment is suitable"
+                    text: "Only people with a low workplace risk assessment are suitable"
                 },
                 {
                     value: "medium",
-                    text: "Either low or medium workplace risk assessment is suitable"
+                    text: "People with either a low or medium workplace risk assessment are suitable"
                 },
                 {
                     value: "high",
-                    text: "Any of low, medium or high workplace risk assessment is suitable"
+                    text: "Anyone is suitable"
                 }
             ]
         })}}
+
+        {{ govukDetails({
+            summaryText: "What is a workplace risk assessment level?",
+            text: "Each person in your prison should have been given a workplace risk assessment level."
+          }) }}
+
 
       <button class="govuk-button" data-module="govuk-button">Continue</button>
     </form>

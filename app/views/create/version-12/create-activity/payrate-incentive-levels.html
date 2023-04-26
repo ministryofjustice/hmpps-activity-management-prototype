@@ -1,0 +1,67 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <h2 class="govuk-heading-m">
+                <span class="govuk-caption-m">
+                    {{data['new-activity']['category']|replace('-', ' ')|capitalize}}
+                </span>
+                {{data['new-activity']['activity-name']}}
+            </h2>
+            {{govukRadios({
+            idPrefix: "payrate-incentive-level",
+            name: "payrate[incentive-level]",
+            fieldset: {
+            legend: {
+            text: "Choose what kind of pay rate you want to set up",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            hint: {
+            text: "When you’ve set up pay rates for an activity you can allocate people who have a corresponding incentive level. If there’s no pay rate for a certain incentive level, no one on that incentive level can be allocated."
+            },
+            items: [
+            {
+            value: "basic",
+            text: "Basic incentive level"
+            },
+            {
+            value: "standard",
+            text: "Standard incentive level"
+            },
+            {
+            value: "enhanced",
+            text: "Enhanced incentive level"
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "flat-rate",
+            text: "Flat rate (same for all incentive levels)"
+            }
+            ]
+            })}}
+
+            {{govukButton({
+            text: "Continue"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}

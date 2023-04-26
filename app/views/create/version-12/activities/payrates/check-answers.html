@@ -46,7 +46,7 @@ text: "Back",
                                 Old pay rate
                             </dt>
                             <dd class="govuk-summary-list__value">
-                                {{prisoner.oldPayRate.payBand}}
+                                {{prisoner.oldPayRate.payBand}} ({{'Flat rate' if prisoner.oldPayRate.incentiveLevel == 'flatRate' else prisoner.oldPayRate.incentiveLevel + ' incentive level'}})
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row">
@@ -54,7 +54,7 @@ text: "Back",
                                 New pay rate
                             </dt>
                             <dd class="govuk-summary-list__value">
-                                {{prisoner.newPayRate.payBand}}
+                                {{prisoner.newPayRate.payBand}} ({{'flat rate' if prisoner.newPayRate.incentiveLevel == 'flatRate' else prisoner.newPayRate.incentiveLevel + ' incentive level'}})
                             </dd>
                         </div>
                     </dl>

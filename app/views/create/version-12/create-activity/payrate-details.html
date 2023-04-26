@@ -1,0 +1,71 @@
+{% extends "layout_hmpps.html" %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">
+            <span class="govuk-caption-m">
+                {{data['new-activity']['category']|replace('-', ' ')|capitalize}}
+            </span>
+            {{data['new-activity']['activity-name']}}
+        </h2>
+        
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+            Enter the pay amount and pay band name for the {{data['payrate']['incentive-level']}} incentive level pay rate
+        </h1>
+
+        <p class="govuk-inset-text">
+            You can create up to 10 rates for each incentive level.
+        </p>
+
+        <form method="post">
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--s" for="paymentIncentiveAmount">
+                    How much will someone be paid for a session?
+                </label>
+                <div id="sign-in-hint" class="govuk-hint">
+                    For example, 1.50
+                </div>
+                <div class="govuk-input__wrapper">
+                    <div class="govuk-input__prefix" aria-hidden="true">£</div>
+                    <input class="govuk-input govuk-input--width-5" id="paymentIncentiveAmount"
+                        name="payrate[amount]" type="text" spellcheck="false"
+                        value="{{payrateData.amount or ''}}">
+                </div>
+            </div>
+            
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--s" for="paymentPayBand">
+                    Select a pay band
+                </label>
+                <select class="govuk-select" id="paymentPayBand" name="payrate[pay-band]">
+                    <option value="" disabled selected>Select a pay band</option>
+                    {% for payBands in payBands %}
+                    <option value="{{payBands}}" {{'selected' if payrateData.payBand == payBands}}>{{payBands}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <input type="hidden" name="payrate[incentive-level]" value="{{data['payrate']['incentive-level'] or 'basic'}}">
+
+            {{govukButton({
+            text: "Save and continue"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const crypto = require("crypto");
 const { DateTime } = require("luxon");
+const e = require("express");
 
 router.all("*", function (req, res, next) {
   console.log(req.session.data["new-activity"]);
@@ -36,11 +37,22 @@ router.get("/risk-assessment-levels", function (req, res) {
 });
 // redirect to payment details page
 router.post("/risk-assessment-levels", function (req, res) {
-  res.redirect("payment-details");
+  res.redirect("payrate-incentive-levels");
+});
+
+// payment incentive levels page
+router.get("/payrate-incentive-levels", function (req, res) {
+  res.render(req.protoUrl + "/payrate-incentive-levels");
+});
+
+// post logic for payment incentive levels page
+router.post("/payrate-incentive-levels", function (req, res) {
+  // redirect to payment details page
+  res.redirect("payrate-details");
 });
 
 // payment details page
-router.get("/payment-details", function (req, res) {
+router.get("/payrate-details", function (req, res) {
   let payrateId = req.session.data["id"];
   let payrateData;
 
@@ -61,91 +73,108 @@ router.get("/payment-details", function (req, res) {
     return null;
   }
 
+  let payBands = [
+    'Band 1',
+    'Band 2',
+    'Band 3',
+    'Band 4',
+    'Band 5',
+    'Band 6'
+  ];
+
+  // if there is already a payrate with the same pay band in the same incentive level, remove it from the list of available pay bands, but only if the incentive level is the same
+  if (req.session.data.payrates && typeof req.session.data.payrates === "object") {
+    let payrateIncentiveLevel = req.session.data["payrate"]["incentive-level"];
+
+    // get the payrates for the incentive level
+    let payratesForIncentiveLevel = req.session.data.payrates[payrateIncentiveLevel];
+
+    // if there are payrates for the incentive level
+    if (payratesForIncentiveLevel && payratesForIncentiveLevel.length > 0) {
+      // make a list of all the pay bands for the payrates for the incentive level
+      let payratePaybands = payratesForIncentiveLevel.map(payrate => payrate.payBand);
+
+      // remove the pay bands for the payrates for the incentive level from the list of available pay bands
+      payBands = payBands.filter(payBand => !payratePaybands.includes(payBand));
+    }
+  }
+
   // check the payrates object exists and is an object
-  if (
-    req.session.data.payrates &&
-    typeof req.session.data.payrates === "object"
-  ) {
+  if (req.session.data.payrates && typeof req.session.data.payrates === "object") {
     // update the payrateData variable
     payrateData = getPayrateById(req.session.data.payrates, payrateId);
   }
 
   // render the page and include the payrateData variable so we can access it
-  res.render(req.protoUrl + "/payment-details", { payrateData });
+  res.render(req.protoUrl + "/payrate-details", {
+    payrateData,
+    payBands
+  });
 });
+
 // payment details form post logic
-router.post("/payment-details", function (req, res) {
+router.post("/payrate-details", function (req, res) {
   // Assign an empty object to req.session.data.payrates if it is null or undefined
   req.session.data.payrates = req.session.data.payrates ?? {};
 
+  let newPayrateData = req.session.data["payrate"];
+
   // Get the values of the paymentIncentiveName, paymentIncentiveAmount, and PayIncentiveLevel fields from the session data
-  const paymentIncentiveName = req.session.data["paymentIncentiveName"];
-  const paymentIncentiveAmount = req.session.data["paymentIncentiveAmount"];
-  const payIncentiveLevel = req.session.data["PayIncentiveLevel"];
+  let payratePayband = newPayrateData["pay-band"];
+  // set the amount to a number not a string
+  let payrateAmount = Number(newPayrateData["amount"]);
+  let payrateIncentiveLevel = newPayrateData["incentive-level"];
+  let payrateId = crypto.randomBytes(4).toString("hex");
 
   // Get the ID for the payrate or generate a random one
-  let payIncentiveId;
-  if (req.session.data["id"]) {
-    payIncentiveId = req.session.data["id"];
-  } else {
-    payIncentiveId = crypto.randomBytes(4).toString("hex");
+  if (req.query["id"]) {
+    payrateId = req.query["id"];
   }
 
   // Create the payrate data object
   const payrateData = {
-    id: payIncentiveId,
-    name: paymentIncentiveName,
-    amount: paymentIncentiveAmount,
-    "incentive-level": payIncentiveLevel,
+    id: payrateId,
+    payBand: payratePayband,
+    amount: payrateAmount,
+    incentiveLevel: payrateIncentiveLevel,
   };
 
-  function updatePayrate(payrates, id, payrateData) {
-    // remove payrates with matching id from all levels
-    for (const level in payrates) {
-      const levelPayrates = payrates[level];
-      payrates[level] = levelPayrates.filter((payrate) => payrate.id !== id);
-    }
+  // add the payrate data to the payrates session data object
+  // if there is already a payrate with a matching id, it should be overwritten or updated
+  req.session.data.payrates[payrateIncentiveLevel] = req.session.data.payrates[payrateIncentiveLevel] ?? [];
 
-    // add payrate to the correct level
-    if (Array.isArray(payrateData["incentive-level"])) {
-      payrateData["incentive-level"].forEach((level) => {
-        if (!payrates[level]) {
-          payrates[level] = [];
-        }
-        payrates[level].push(payrateData);
-      });
+  if (req.session.data.payrates[payrateIncentiveLevel].length > 0) {
+    // Find the index of the payrate with the matching ID
+    const payrateIndex = req.session.data.payrates[payrateIncentiveLevel].findIndex(
+      (payrate) => payrate.id === payrateId
+    );
+    // If a payrate with the matching ID was found, update it
+    if (payrateIndex > -1) {
+      req.session.data.payrates[payrateIncentiveLevel][payrateIndex] = payrateData;
     } else {
-      if (!payrates[payrateData["incentive-level"]]) {
-        payrates[payrateData["incentive-level"]] = [];
-      }
-      payrates[payrateData["incentive-level"]].push(payrateData);
+      // If no payrate with the matching ID was found, add the new payrate to the array
+      req.session.data.payrates[payrateIncentiveLevel].push(payrateData);
     }
-    return payrateData;
+  } else {
+    // If there are no payrates for the current incentive level, add the new payrate to the array
+    req.session.data.payrates[payrateIncentiveLevel].push(payrateData);
   }
 
-  // Update the payrate in the payrates object
-  const updatedPayrate = updatePayrate(
-    req.session.data.payrates,
-    payIncentiveId,
-    payrateData
-  );
-
   // Redirect the user to the next page
-  res.redirect("payment-details-list");
+  res.redirect("payrate-list");
 });
 
 // payment details check page
-router.get("/payment-details-list", function (req, res) {
-  res.render(req.protoUrl + "/payment-details-list");
+router.get("/payrate-list", function (req, res) {
+  res.render(req.protoUrl + "/payrate-list");
 });
 // redirect to education level page
-router.post("/payment-details-list", function (req, res) {
-  // Assign an empty object to req.session.data['new-activity']
+router.post("/payrate-list", function (req, res) {
+  // Assign an empty object to req.session.data['new-activity'] if it is null or undefined
   req.session.data["new-activity"] = req.session.data["new-activity"] ?? {};
 
   // Assign an empty object to req.session.data['new-activity'].payrates if it is null or undefined
-  req.session.data["new-activity"].payrates =
-    req.session.data["new-activity"].payrates ?? {};
+  req.session.data["new-activity"].payrates = req.session.data["new-activity"].payrates ?? {};
 
   // if payrates data exists, assign it to req.session.data['new-activity'].payrates
   if (req.session.data.payrates) {
@@ -156,74 +185,31 @@ router.post("/payment-details-list", function (req, res) {
 });
 
 // remove payment details
-router.get("remove-payment-details", function (req, res) {
-  let payrateId = req.session.data["id"];
-  let payrateData;
+router.get("/remove-payrate/:payrateId", function (req, res) {
+  let payrateId = req.params.payrateId;
+  let payrates = req.session.data.payrates;
 
-  function getPayrateById(payrates, id) {
-    for (const level in payrates) {
-      const levelPayrates = payrates[level];
-      for (const payrate of levelPayrates) {
-        if (payrate.id === id) {
-          return payrate;
-        }
-      }
-    }
-    return null;
-  }
+  for (const incentiveLevel in payrates) {
+    let payratesForLevel = payrates[incentiveLevel];
 
-  if (
-    req.session.data.payrates &&
-    typeof req.session.data.payrates === "object"
-  ) {
-    payrateData = getPayrateById(req.session.data.payrates, payrateId);
-  }
-
-  res.render(req.protoUrl + "/remove-payment-details", { payrateData });
-});
-
-router.post("/remove-payment-details", function (req, res) {
-  if (req.session.data["confirm-remove-payrate"] == "yes") {
-    let payrateId = req.session.data["id"];
-    let payrateLevel = req.session.data["incentive-level"];
-    let payrateData;
-
-    function removePayrateById(payrates, id) {
-      // Iterate over the payrates object
-      for (const level in payrates) {
-        // Get the array of payrates for the current pay rate level
-        const levelPayrates = payrates[level];
-        // Iterate over the array of payrates
-        for (let i = 0; i < levelPayrates.length; i++) {
-          // If the payrate has the specified ID, remove it from the array
-          if (levelPayrates[i].id === id) {
-            levelPayrates.splice(i, 1);
-            return true;
-          }
-        }
-      }
-      // If no payrate with the specified ID was found, return false
-      return false;
-    }
-
-    // check the payrates object exists and is an object
-    if (
-      req.session.data.payrates &&
-      typeof req.session.data.payrates === "object"
-    ) {
-      // update the payrateData variable
-      if (removePayrateById(req.session.data.payrates, payrateId)) {
-        payrateData = null;
+    payratesForLevel.forEach((payrate, index) => {
+      if (payrate.id === payrateId) {
+        payratesForLevel.splice(index, 1);
       } else {
-        payrateData = "Payrate not found";
+        return null;
       }
-    }
+    });
 
-    req.session.data["show-delete-dialog"] = true;
+    // if there are no payrates for the current incentive level, remove the incentive level from the payrates object
+    if (payratesForLevel.length === 0) {
+      delete payrates[incentiveLevel];
+    } else {
+      payrates[incentiveLevel] = payratesForLevel;
+    }
   }
 
-  // Redirect the user to the payment details list page
-  res.redirect("payment-details-list");
+  // redirect to the payrate list page
+  res.redirect("../payrate-list");
 });
 
 // education level check page
@@ -262,9 +248,7 @@ router.post("/select-education-level", function (req, res) {
 
   // Check if the educationLevelData already exists in the educationLevels array
   let educationLevels = req.session.data.educationLevels || [];
-  let existingEducation = educationLevels.find(
-    (level) => level.id === educationId
-  );
+  let existingEducation = educationLevels.find((level) => level.id === educationId);
 
   if (existingEducation) {
     // If educationLevelData already exists, update it
@@ -283,9 +267,7 @@ router.post("/select-education-level", function (req, res) {
 router.get("/remove-education-level", function (req, res) {
   let educationId = req.query.id;
   let educationLevels = req.session.data.educationLevels;
-  let educationLevel = educationLevels.find(
-    (level) => level.id === educationId
-  );
+  let educationLevel = educationLevels.find((level) => level.id === educationId);
 
   res.render(req.protoUrl + "/remove-education-level", { educationLevel });
 });

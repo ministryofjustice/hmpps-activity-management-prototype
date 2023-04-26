@@ -67,7 +67,7 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
                         {% if payRate.canDelete == true %}
                         <li class="govuk-summary-card__action">
                             <a class="govuk-link" href="payrates/delete/{{payRate.payRate_id}}">
-                                Delete
+                                Delete pay rate
                             </a>
                         </li>
                         {% endif %}
@@ -82,7 +82,21 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
                             <dd class="govuk-summary-list__value">
                                 £{{payRate.amount|decimalPlaces(2)}}
                             </dd>
+                            <!-- <dd class="govuk-summary-list__actions">
+                                <a href="#" class="govuk-summary-list__action">Change</a>
+                            </dd> -->
                         </div>
+                        <!-- <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Pay band
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {{payRate.payBand}}
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                                <a href="#" class="govuk-summary-list__action">Change</a>
+                            </dd>
+                        </div> -->
                         <div class="govuk-summary-list__row">
                             <dt class="govuk-summary-list__key">
                                 People on this rate
