@@ -1,0 +1,108 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-xl">
+                {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            </span>
+
+            {% set dateHtml %}
+            {{govukDateInput({
+            idPrefix: "specific-end-date",
+            namePrefix: "specific-end-date",
+            fieldset: {
+            legend: {
+            text: "Date",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--s"
+            }
+            },
+            hint: {
+            text: "For example, 31 3 1980"
+            },
+            items: [
+            {
+            name: "day",
+            classes: "govuk-input--width-2",
+            value: endDate.day or ''
+            },
+            {
+            name: "month",
+            classes: "govuk-input--width-2",
+            value: endDate.month or ''
+            },
+            {
+            name: "year",
+            classes: "govuk-input--width-4",
+            value: endDate.year or ''
+            }
+            ]
+            })}}
+            {% endset %}
+
+            {{ govukRadios({
+            idPrefix: "allocation-end-date",
+            name: "allocation-end-date",
+            fieldset: {
+            legend: {
+            text: "When do you want " + prisoner.name.firstname + " " + prisoner.name.surname + " to stop attending " +
+            activity.name + "?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            items: [
+            {
+            value: "before-next-session",
+            text: "Before the next session starts"
+            },
+            {
+            value: "specific-date",
+            text: "On a specific date",
+            checked: true if endDate.year,
+            conditional: {
+            html: dateHtml
+            }
+            }
+            ]
+            }) }}
+
+            {% if prisonerData | length == 1 %}
+            {% set insetTextText = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " will be
+            expected to attend any sessions scheduled to take place between now and the date they are removed from the
+            activity." %}
+            {% else %}
+            {% set insetTextText = "The " + prisonerData | length + " selected prisoners will be expected to attend any
+            sessions scheduled to take place between now and the date they are removed from the activity." %}
+            {% endif %}
+
+            <!-- {{ govukInsetText({
+            text: "The reason for removing " + prisoner.name.firstname + " " + prisoner.name.surname + " will be recorded as 'Scheduled end date'."
+            }) }} -->
+
+            {{ govukInsetText({
+            text: "Note that their name will be on any unlock and movement lists that have already been printed."
+            }) }}
+
+            {{ govukButton({
+            text: "Update end date"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

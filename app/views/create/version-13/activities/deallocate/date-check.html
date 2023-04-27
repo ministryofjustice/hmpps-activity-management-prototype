@@ -1,0 +1,129 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <!-- <h1 class="govuk-heading-xl">
+                Date to take people off {{activity['name']}}
+            </h1> -->
+
+            {% if prisonerData | length > 1 %}
+            <h2 class="govuk-heading-m">
+                You've selected {{prisonerData | length}} people
+            </h2>
+
+            <div class="govuk-summary-list govuk-!-margin-bottom-8">
+                {% for prisoner in prisonerData %}
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        <a href="#">
+                            {{prisoner.name.surname}}, {{prisoner.name.firstname}}
+                        </a>
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {{prisoner.id}}
+                    </dd>
+                    <dd class="govuk-summary-list__value">
+                        {{prisoner.location.cell}}
+                    </dd>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if data['redirect'] %}
+            {% set text = "Do you still want them to stop attending " + activity['name'] + " on the same date?" %}
+            {% else %}
+            {% set text = "Do you want them to stop attending " + activity['name'] + " on the same date?" %}
+            {% endif %}
+
+
+            {{govukRadios({
+            idPrefix: "deallocate-same-date",
+            name: "deallocate-same-date",
+            fieldset: {
+            legend: {
+            text: text,
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            items: [
+            {
+            value: "yes",
+            html: "Yes",
+            checked: true if data['deallocate-same-date'] == 'yes'
+            },
+            {
+            value: "no",
+            text: "No - I want to take them off on different dates",
+            checked: true if data['deallocate-same-date'] == 'no'
+            }
+            ]
+            })}}
+
+            <!-- {{ govukInsetText({
+            text: "Selected prisoners will be expected to attend any
+            sessions scheduled to take place between now and the date they are removed from the activity."
+            }) }} -->
+
+
+            {% else %}
+
+
+            {{govukRadios({
+            idPrefix: "deallocation-date",
+            name: "deallocation-date",
+            fieldset: {
+            legend: {
+            text: "When should " + prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " be taken off
+            " +
+            activity['name'] + "?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            items: [
+            {
+            value: "asap",
+            html: "As soon as possible &ndash; " + "_"|today|dayAfter|convertShortDateToVeryLongDate,
+            hint: {
+            text: "Details about why this is the earliest possible date for removal."
+            }
+            },
+            {
+            value: "specific-date",
+            text: "On a specific date",
+            conditional: {
+            html: dateHtml
+            }
+            }
+            ]
+            })}}
+
+            {{ govukInsetText({
+            text: prisonerData[0].name.firstname + " " + prisonerData[0].name.surname + " will be expected to attend any
+            sessions scheduled to take place between now and the date they are removed from the activity."
+            }) }}
+            {% endif %}
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <!-- {% if data['show-delete-dialog'] == true %}
+        {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+        {% set html %}
+        <h3 class="govuk-notification-banner__heading">
+            Qualification removed
+        </h3>
+        {% endset %}
+        {{ govukNotificationBanner({
+        html: html,
+        type: 'success'
+        }) }}
+        {% endif %} -->
+
+        <span class="govuk-caption-l">
+            {{activity.name}}
+        </span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+            Education levels and qualifications
+        </h1>
+
+        <form method="post">
+            {% if data['education-levels'].length > 0 %}
+            
+            {% set questionText %}
+            Do you need to add another education or qualification requirement?
+            {% endset %}
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-">
+                {% for level in data['education-levels'] %}
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key govuk-!-font-weight-regular" style="width: 60%;">
+                        {{level.name}}
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="remove-education-level/{{level.id}}">
+                            Remove<span class="govuk-visually-hidden"> incentive pay</span>
+                        </a>
+                    </dd>
+                </div>
+                {% endfor %}
+            </dl>
+
+            {% else %}
+
+            {% set questionText %}
+            Do you need to add an education or qualification requirement?
+            {% endset %}
+
+            <p class="govuk-body govuk-!-margin-top-6">
+                This activity does not have any education or qualification requirements.
+            </p>
+
+            {% endif %}
+
+            {{govukInsetText({
+                text: "If you change the education requirements, it may affect people who are currently allocated to this activity.",
+                classes: "govuk-!-margin-top-7"
+            })}}
+
+            {{govukRadios({
+            formGroup: {
+            classes: "govuk-!-margin-top-5"
+            },
+            idPrefix: "add-another-education-level",
+            name: "add-another-education-level",
+            classes: "govuk-radios--inlin",
+            fieldset: {
+            legend: {
+            text: questionText,
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            items: [
+            {
+            value: "yes",
+            text: "Yes",
+            checked: data['show-add-education-level'] == true
+            },
+            {
+            value: "no",
+            text: "No, I'm finished",
+            checked: data['show-add-education-level'] == false
+            }
+            ]
+            })}}
+
+            
+
+            <p class="govuk-!-margin-bottom-0">
+                {{govukButton({
+                text: "Continue"
+                })}}
+            </p>
+
+            <p class="govuk-body">
+                <a class="govuk-link govuk-link--no-visited-state" href="../details">
+                    Cancel and discard your changes
+                </a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

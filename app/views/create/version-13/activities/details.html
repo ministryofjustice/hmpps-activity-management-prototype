@@ -1,0 +1,342 @@
+{% extends "./_layout-activity.html" %}
+
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% if data['confirmation-dialog'].display == true %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    {% if data['confirmation-dialog'].change == "bank holidays" %}
+    {% if activity.bankHolidays == 'yes' %}
+    You've scheduled this activity to run on bank holidays
+    {% else %}
+    You've scheduled this activity not to run on bank holidays
+    {% endif %}
+    {% else %}
+    You've changed the {{data['confirmation-dialog'].change | lower}}
+    {% endif %}
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Success",
+type: "success",
+classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
+}) }}
+{% endif %}
+{% endblock %}
+
+{% block tableArea %}
+<div class="govuk-grid-row govuk-!-margin-top-7">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-3">
+            Activity details
+        </h2>
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Name"
+        },
+        value: {
+        text: activity.name
+        },
+        actions: {
+        items: [
+        {
+        href: "edit/name",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        }
+        },
+        {
+        key: {
+        text: "Activity category"
+        },
+        actions: {
+        items: [
+        {
+        href: "edit/category",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.category | getActivityCategoryName
+        }
+        },
+        {
+        key: {
+        text: "Location"
+        },
+        actions: {
+        items: [
+        {
+        href: "edit/location",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.location
+        }
+        },
+        {
+        key: {
+        text: "Capacity"
+        },
+        actions: {
+        items: [
+        {
+        href: "edit/capacity",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.capacity
+        }
+        }
+        ]
+        }) }}
+
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-8">
+            Requirements and suitability
+        </h2>
+        {% if activity.educationLevels.length > 0 %}
+        {% set educationLevels %}
+        <ul class="govuk-list govuk-list--spaced">
+            {% for educationLevel in activity.educationLevels %}
+            <li>{{ educationLevel.name }}</li>
+            {% endfor %}
+        </ul>
+        {% endset %}
+
+        {% else %}
+        {% set educationLevels = "None set" %}
+        {% endif %}
+
+        {% set riskLevels %}
+        <ul class="govuk-list">
+            {% if activity.riskAssessment == "low-only" or activity.riskAssessment == "low-or-medium" or
+            activity.riskAssessment == "any" %}
+            <li>Low</li>
+            {% endif %}
+
+            {% if activity.riskAssessment == "low-or-medium" or activity.riskAssessment == "any" %}
+            <li>Medium</li>
+            {% endif %}
+
+            {% if activity.riskAssessment == "any" %}
+            <li>High</li>
+            {% endif %}
+        </ul>
+        {% endset %}
+
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Suitable for workplace risk assessment"
+        },
+        actions: {
+        items: [
+        {
+        href: "edit/risk-assessment-level",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        html: riskLevels
+        }
+        },
+        {
+        key: {
+        text: "Education level"
+        },
+        actions: {
+        items: [
+        {
+        href: "edit/education-levels",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        html: educationLevels
+        }
+        }
+        ]
+        }) }}
+
+        <!-- <h2 class="govuk-heading-m govuk-!-margin-top-8">
+            Pay rates
+        </h2>
+        <ul class="govuk-list govuk-button-group">
+            <li>
+                <a href="payrates/add" class="govuk-link">Add new pay rate</a>
+            </li>
+            <li>
+                <a href="payrates" class="govuk-link">Edit pay rates</a>
+            </li>
+        </ul>
+        <dl class="govuk-summary-list">
+            {% for incentiveLevel, payRates in payRatesByIncentiveLevel %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    {{ incentiveLevel | capitalize }} incentive level
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <dl class="govuk-summary-list govuk-summary-list--no-border">
+                        {% if payRates.length == 0 %}
+                        No pay rates set
+                        {% else %}
+                        {% for payRate in payRates %}
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                                {{ payRate.payBand | capitalize }}
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                £{{ payRate.amount | decimalPlaces(2) }}
+                            </dd>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </dl>
+                </dd>
+            </div>
+            {% endfor %}
+        </dl> -->
+    </div>
+</div>
+
+
+<div class="govuk-grid-row govuk-!-margin-top-7">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m ">
+            Schedule and dates
+        </h2>
+        <!-- <ul class="govuk-list govuk-button-group">
+            <li>
+                <a href="edit/schedule" class="govuk-link">Edit schedule<span class="govuk-visually-hidden"> for
+                        {{activity.name}}</span></a>
+            </li>
+            <li>
+                <a href="#" class="govuk-link">Suspend activity<span class="govuk-visually-hidden"> for
+                        {{activity.name}}</span></a>
+            </li>
+        </ul> -->
+
+        <dl class="govuk-summary-list govuk-!-margin-">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Start date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{activity.startDate|convertShortDateToVeryLongDate}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="edit/start-date" class="govuk-link">Change</a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    End date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{"None set" if activity.endDate == null else activity.endDate|convertShortDateToVeryLongDate}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="edit/end-date" class="govuk-link">Change</a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Schedule
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <!-- <ol class="govuk-list govuk-list--spaced">
+                        {% for day in schedule %}
+                        <li>
+                            {% if day.am or day.pm %}
+                            {{day.day|capitalize}}
+                            {%- else %}
+                            <span class="govuk-hint">{{day.day|capitalize}}</span>
+                            {%- endif %}:
+
+                            {% if day.am or day.pm %}
+                            {% if day.am %}
+                            AM {{"only" if day.pm == null else "and "}}
+                            {% endif %}
+                            {% if day.pm %}
+                            PM {{"only" if day.am == null}}
+                            {% endif %}
+                            {% else %}
+                            <span class="govuk-hint">Not scheduled</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ol> -->
+
+                    <dl class="govuk-summary-list govuk-summary-list--no-border">
+                        {% for day in schedule %}
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                {% if day.am or day.pm %}
+                                {{day.day|capitalize}}
+                                {% else %}
+                                <span class="govuk-hint">{{day.day|capitalize}}</span>
+                                {% endif %}
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {% if day.am or day.pm %}
+                                {% if day.am %}
+                                AM {{"" if day.pm == null else "and "}}
+                                {% endif %}
+                                {% if day.pm %}
+                                PM {{"" if day.am == null}}
+                                {% endif %}
+                                {% else %}
+                                <span class="govuk-hint">Not scheduled</span>
+                                {% endif %}
+                            </dd>
+                        </div>
+                        {% endfor %}
+                    </dl>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="edit/schedule" class="govuk-link">Change</a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Runs on bank holidays
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{activity.bankHolidays|capitalize or "No"}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="edit/bank-holidays" class="govuk-link">Change</a>
+                </dd>
+            </div>
+        </dl>
+    </div>
+</div>
+{% endblock %}

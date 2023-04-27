@@ -1,0 +1,95 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">
+            Select the activity
+        </h1>
+
+        <p>
+            Even if this person is unsuitable for the activity, it is important to log the application so there's a
+            record of what they've applied for or been referred to.
+        </p>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <form method="post">
+            {{govukButton({
+                text: "Select activity"
+            })}}
+            <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%"><button
+                                type="button" data-index="0">Activity name</button></th>
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%"><button
+                                type="button" data-index="1">Category</button></th>
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%"><button
+                                type="button" data-index="2">Prisoners on waitlist</button></th>
+                        <th scope="col" class="govuk-table__header" style="width:28%"></th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    {% for activity in activities | sort(false, true, 'name') %}
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell" data-sort-value="{{activity.name}}">
+                            <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="selected-activity-{{loop.index}}" name="new-application[activity]"
+                                        type="radio" value="{{activity.id}}">
+                                    <label class="govuk-label govuk-radios__label govuk-!-font-weight-bold" for="selected-activity-{{loop.index}}">
+                                        {{activity.name}}
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell govuk-!-padding-top-4" data-sort-value="{{activity.location}}">
+                            {{activity.location}}
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
+                            {{activity.startTime}}&thinsp;–&thinsp;{{activity.endTime}}
+                        </td>
+                        <td class="govuk-table__cell--numeric govuk-table__cell">
+                            {{activity.attendanceCount[period]['scheduled']}}
+                        </td>
+                        <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint"
+                            data-sort-value="{{activity.attendanceCount[period]['attended']}}">
+                            <span
+                                class="{{'govuk-tag govuk-tag--green' if activity.attendanceCount[period]['attended'] > 0}}">
+                                {{activity.attendanceCount[period]['attended']}}
+                            </span>
+                        </td>
+                        <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">
+                            {{activity.attendanceCount[period]['not-recorded']}}
+                        </td>
+                        <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint">
+                            <span
+                                class="{{'govuk-tag govuk-tag--red' if activity.attendanceCount[period]['not-attended'] > 0}}">
+                                {{activity.attendanceCount[period]['not-attended']}}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {{govukButton({
+                text: "Select activity"
+            })}}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

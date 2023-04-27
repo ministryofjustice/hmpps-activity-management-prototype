@@ -1,0 +1,133 @@
+<div class="app-filter-area govuk-!-display-none-print" id="filters" tabindex=0>
+    <form>
+        <h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+            Filters
+        </h2>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                {{ govukSelect({
+                formGroup: {
+                classes: "govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4"
+                },
+                label: {
+                text: "Employment"
+                },
+                idPrefix: 'attendance',
+                name: 'filters[attendance]',
+                items: [
+                {
+                text: 'Not in work',
+                id: 'not-in-work',
+                value: 'not-in-work'
+                },
+                {
+                text: 'In work',
+                id: 'in-work',
+                value: 'in-work'
+                },
+                {
+                text: 'Everyone',
+                id: 'all',
+                value: 'all'
+                }]
+                }) }}
+
+                {% if currentPage!='applications' %}
+                {{ govukSelect({
+                formGroup: {
+                classes: "govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4"
+                },
+                label: {
+                text: "Workplace assessment risk"
+                },
+                idPrefix: 'attendance',
+                name: 'filters[attendance]',
+                items: [
+                {
+                text: 'Low',
+                id: 'low',
+                value: 'low'
+                },
+                {
+                text: 'Low or Medium',
+                id: 'low-medium',
+                value: 'low-medium',
+                selected: true
+                },
+                {
+                text: 'Low, Medium or High',
+                id: 'all',
+                value: 'all'
+                },
+                {
+                text: 'Medium or High',
+                id: 'medium-high',
+                value: 'medium-high'
+                },
+                {
+                text: 'High',
+                id: 'high',
+                value: 'high'
+                }
+                ]
+                }) }}
+                {% endif %}
+
+                {% if currentPage!='applications' %}
+                {{ govukSelect({
+                formGroup: {
+                classes: "govuk-!-display-inline-block"
+                },
+                label: {
+                text: "Incentive level"
+                },
+                idPrefix: 'attendance',
+                name: 'filters[attendance]',
+                items: [{
+                text: 'Basic',
+                value: 'basic',
+                id: 'basic'
+                },
+                {
+                text: 'Standard',
+                value: 'standard',
+                id: 'standard'
+                },
+                {
+                text: 'Enhanced',
+                value: 'enhanced',
+                id: 'enhanced'
+                },
+                {
+                text: 'Basic or Standard',
+                value: 'basic-standard',
+                id: 'basic-standard'
+                },
+                {
+                text: 'All incentive levels',
+                value: 'all',
+                id: 'all',
+                selected: true
+                },
+                {
+                text: 'Standard or Enhanced',
+                value: 'standard-enhanced',
+                id: 'standard-enhanced'
+                }
+                ]
+                }) }}
+                {% endif %}
+            </div>
+        </div>
+        {% set filterBtnText = "Apply filters" %}
+        {% if currentPage=='applications' %}
+        {% set filterBtnText = "Apply filter" %}
+        {% endif %}
+        {{
+        govukButton({
+        text: "Apply filter" if currentPage=='applications' else "Apply filters",
+        classes: "govuk-!-margin-top-3 govuk-!-margin-bottom-0"
+        })
+        }}
+    </form>
+</div>

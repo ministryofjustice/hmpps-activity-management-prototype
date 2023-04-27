@@ -1,0 +1,54 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+            <!-- <span class="govuk-caption-xl">
+                View activity
+            </span> -->
+            {{activity.name}}
+        </h1>
+        <ul class="govuk-body-l govuk-list govuk-list--spaced">
+            {% set vacanciesCount = activity.capacity - activity.currentlyAllocated %}
+            <li>
+                {% if vacanciesCount > 0 %}
+                <span class="govuk-tag govuk-tag--red govuk-!-font-size-19">
+                    {{vacanciesCount}} vacanc{{'y' if vacanciesCount == 1 else 'ies'}}
+                </span>
+                {% else %}
+                <span class="govuk-tag govuk-tag--green govuk-!-font-size-19">
+                    No vacancies
+                </span>
+                {% endif %}
+            </li>
+            <li>{{activity.currentlyAllocated}} people allocated<br></li>
+            <li>{{activity.applicationCount}} {{'people' if activity.applicationCount != 1 else 'person' }} on the waitlist</li>
+        </ul>
+    </div>
+</div>
+
+{% include "./_sub-navigation.html" %}
+
+<!-- <div class="govuk-!-padding-3" style="border: 1px solid #c7c7c7; box-shadow: 4px 4px 0 rgba(0,0,0,0.1)">
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
+        Schedule
+    </h2>
+    <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-0">
+        {% for day in activityDaysWithTimes %}
+        <div class="govuk-summary-list__row govuk-!-font-size-16">
+            <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">
+                {% if day.times %}
+                {{day.day|capitalize}}
+                {% else %}
+                <span class="govuk-hint govuk-!-font-size-16">{{day.day|capitalize}}</span>
+                {% endif %}
+            </dt>
+            <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">
+                {% if day.times %}
+                {{day.times}}
+                {% else %}
+                <span class="govuk-hint govuk-!-font-size-16">Not scheduled</span>
+                {% endif %}
+            </dd>
+        </div>
+        {% endfor %}
+    </dl>
+</div> -->

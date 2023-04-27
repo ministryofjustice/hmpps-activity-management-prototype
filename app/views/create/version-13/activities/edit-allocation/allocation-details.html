@@ -1,0 +1,122 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back to currently allocated",
+"href": "../currently-allocated"
+})}}
+{% endblock %}
+
+{% block content %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% if data['confirmation-dialog'].display == true %}
+{% set p = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
+{{ govukNotificationBanner({
+text: "You have changed the " + data['confirmation-dialog'].change|replace('-',' ') + " for " + p.name.surname + ", " + p.name.firstname + " (" + p.id + ").",
+type: "success"
+}) }}
+{% endif %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = data['new-application']['selected-prisoner']|getPrisonerDetails %}
+        <span class="govuk-caption-l">
+            {{activity.name}}
+        </span>
+
+        {% if prisonerData.length > 1 %}
+        <h1 class="govuk-heading-l">
+            Change allocation details for {{prisonerData.length}} prisoners
+        </h1>
+        {% else %}
+        <h1 class="govuk-heading-l">
+            Change allocation details for {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}} ({{prisonerData[0].id}})
+        </h1>
+        {% endif %}
+
+        {% if pastStartDate %}
+        <div class="govuk-inset-text">
+            You can only change the start date if they have not started this activity.
+        </div>
+        {% endif %}
+
+        {% if noEndDate %}
+        <div class="govuk-inset-text">
+            You can only change the end date for people that have been scheduled to be removed from this activity.
+        </div>
+        {% endif %}
+
+        {% if payRateIsNotSet %}
+        <div class="govuk-inset-text">
+            You can only change the pay rate for people who have an alternative pay rate.
+        </div>
+        {% endif %}
+        
+        {% for prisoner in prisonerData %}
+        {% if prisonerData.length > 1 %}
+        <div class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title">
+                    {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
+                </h2>
+            </div>
+            <div class="govuk-summary-card__content">
+                {% endif %}
+                <dl class="govuk-summary-list">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Start of allocation
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{(prisoner.allocations[prisoner.activityIndex].startDate | convertShortDateToVeryLongDate)
+                            if prisoner.allocations[prisoner.activityIndex].startDate else 'None set'}}
+                        </dd>
+                        {% if prisoner.startDateIsInFuture %}
+                        <dd class="govuk-summary-list__actions">
+                            <a href="{{prisoner.id}}/start-date?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
+                        </dd>
+                        {% endif %}
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            End of allocation
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{(prisoner.allocations[prisoner.activityIndex].endDate | convertShortDateToVeryLongDate) if
+                            prisoner.allocations[prisoner.activityIndex].endDate else 'None set'}}
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                            <a href="{{prisoner.id}}/end-date-check?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Pay rate
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            {{prisoner.payrate or "General - £1.00"}}
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                            <a href="{{prisoner.id}}/payrate?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
+                        </dd>
+                    </div>
+                </dl>
+                {% if prisonerData.length > 1 %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        {{ govukButton({
+        text: "Return to currently allocated",
+        href: "../currently-allocated"
+        }) }}
+    </div>
+</div>
+
+{% endblock %}

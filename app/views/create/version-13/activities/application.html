@@ -1,0 +1,168 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = data['new-application']['selected-prisoner']|getPrisonerDetails %}
+        <h1 class="govuk-heading-xl">
+            {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request
+        </h1>
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-">
+            <!-- <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Prisoner
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div> -->
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Activity requested
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% set activity = data['new-application']['activity']|getActivityDetails %}
+                    {{activity.name}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Date of request
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['new-application']['date']|convertShortDateToLongDate}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Requester
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if data['new-application']['applicant'] == 'prisoner' %}
+                    Prisoner
+                    {% else %}
+                    {{data['new-application']['applicant']}}
+                    {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Suitability
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if data['new-application']['eligible'] == 'yes' %}
+                    <span class="govuk-tag govuk-tag--green">Checks passed</span>
+                    {% elif data['new-application']['eligible'] == 'no' %}
+                    <span class="govuk-tag govuk-tag--red">Rejected</span>
+                    {% else %}
+                    <span class="govuk-tag govuk-tag--yellow">Checks needed</span>
+                    {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> asd's pizza</span>
+                    </a>
+                </dd>
+            </div>
+        </dl>
+
+        <form method="post">
+            <!-- if suitability is 'yes' -->
+            {% if application['eligible'] == 'no' %}
+            <div class="govuk-inset-text">
+                <p class="govuk-body">
+                    When you reject an activity request, you should inform the person who made the request the reason
+                    for your decision.
+                </p>
+            </div>
+            
+            <input type="" hidden name="allocate-now" value="no">
+            <input type="" hidden name="new-application[status]" value="rejected">
+
+            {{ govukButton({
+            text: "Reject this request"
+            }) }}
+
+            {% elif application['eligible'] == '' %}
+
+            <p>
+                Confirm that you want to add John Smith to the waitlist without checking their suitability.
+            </p>
+            
+            <input type="" hidden name="allocate-now" value="no">
+            <input type="" hidden name="new-application[status]" value="pending">
+
+            {{ govukButton({
+            text: "Confirm and add to waitlist"
+            }) }}
+
+            {% else %}
+
+            {{govukRadios({
+            idPrefix: "allocate-now",
+            name: "allocate-now",
+            fieldset: {
+            legend: {
+            text: "There is 1 vacancy for " + activity.name + ". Do you want to allocate " + prisoner.name.firstname + "
+            " +
+            prisoner.name.surname + " now?",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            items: [
+            {
+            value: "yes",
+            text: "Yes"
+            },
+            {
+            value: "no",
+            text: "Not now, just add them to the waitlist"
+            }
+            ]
+            })}}
+
+            <input type="" hidden name="new-application[status]" value="approved">
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

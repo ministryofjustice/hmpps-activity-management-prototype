@@ -1,0 +1,247 @@
+{% extends "./_layout-activities.html" %}
+
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block tableArea %}
+<form method="post">
+    <div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+            <div class="app-application-cards">
+                <h2 class="govuk-heading-m app-application-cards__heading">
+                    Scheduled for deallocation
+                </h2>
+                {% for prisoner in currentlyAllocated %}
+                {% if loop.index < 3 %}
+                <section class="app-application-card">
+                    <header class="app-application-card__header govuk-!-margin-bottom-1">
+                        <h3 class="govuk-heading-m">
+                            <a href="/applications/46436"
+                                class="govuk-link govuk-link--no-visited-state">{{prisoner.name.surname}}, <span
+                                    class="govuk-!-font-weight-regular">{{prisoner.name.firstname}}</span></a>&nbsp;
+                            <span class="app-application-card__caption">
+                                {{prisoner.id}}
+                            </span>
+                            <span
+                            class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-1 govuk-!-font-size-14">Skilled workers 2023</span>
+                        </h3>
+                        
+                        <strong class="govuk-tag govuk-tag--yellow govuk-!-margin-bottom-1 govuk-!-font-size-14">
+                            Deallocation scheduled
+                        </strong>
+                    </header>
+
+                    <div class="govuk-grid-row app-grid-row--flex">
+                        <div class="govuk-grid-column-one-third">
+                            <dl class="app-application-card__list">
+                                <dt class="govuk-visually-hidden">Other allocations</dt>
+                                <dd class="govuk-body-s govuk-!-font-size-16">
+                                    {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
+                                    <span class="govuk-hint govuk-!-font-size-16">No other allocations</span>
+                                    {% else %}
+                                    <ul class="govuk-list govuk-!-font-size-16 govuk-!-margin-0">
+                                        {% for allocation in prisoner.activity %}
+                                        {% if allocation != activity.id %}
+                                        {% set activity = allocation|getActivityDetails %}
+                                        <li><a href="../{{activity.id}}"
+                                                class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="govuk-grid-column-one-third">
+                            <dl class="app-application-card__list">
+                                <!-- <dt class="govuk-visually-hidden">Relevant alerts</dt>
+                                <dd class="govuk-body-s govuk-!-font-size-16">
+                                    {% if prisoner.alerts %}
+                                    {% for alert in prisoner.alerts %}
+                                    <strong
+                                        class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1 govuk-!-font-size-14">
+                                        {{alert}}
+                                    </strong>
+                                    {% endfor %}
+                                    {% endif %}
+                                </dd> -->
+                                <dt class="govuk-visually-hidden">Non-associations</dt>
+                                <dd><span class="govuk-hint govuk-!-font-size-16">No non-associations</span></dd>
+                            </dl>
+                        </div>
+
+                        <div class="govuk-grid-column-one-third">
+                            <dl class="app-application-card__list app-application-card__list--secondary">
+                                <dt class="govuk-visually-hidden">Date to be taken off activity</dt>
+                                <dd class="govuk-body-s">On 22 April 2023</dd>
+
+                                <dt class="govuk-visually-hidden">Time allocated</dt>
+                                <dd class="govuk-hint govuk-!-font-size-16">17 days until removal</dd>
+
+                                <dd class="govuk-!-margin-top-3 govuk-body-s govuk-!-font-size-16">
+                                    <a href="/applications/46436" class="govuk-link govuk-link--no-visited-state">Edit
+                                        allocation</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    </section>
+                    {% endif %}
+                    {% endfor %}
+
+
+                    <h2 class="govuk-heading-m app-application-cards__heading">
+                        Currently allocated
+                    </h2>
+                    {% for prisoner in currentlyAllocated %}
+                    <section class="app-application-card">
+                        <header class="app-application-card__header">
+                            <h3 class="govuk-heading-m">
+                                <a href="/applications/46436" class="govuk-link govuk-link--no-visited-state">
+                                    {{prisoner.name.surname}}, <span
+                                        class="govuk-!-font-weight-regular">{{prisoner.name.firstname}}</span>
+                                </a>
+                                <span class="app-application-card__caption">
+                                    {{prisoner.id}}
+                                </span>
+                                <br>
+                                <!-- {% if prisoner.alerts %}
+                                {% for alert in prisoner.alerts %}
+                                <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1 govuk-!-font-size-14">
+                                    {{alert}}
+                                </strong>
+                                {% endfor %}
+                                {% endif %} -->
+                            </h3>
+                            <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-1 govuk-!-font-size-14">
+                                Allocated
+                            </strong>
+                        </header>
+
+                        <div class="govuk-grid-row app-grid-row--flex">
+                            <div class="govuk-grid-column-one-third">
+                                <dl class="app-application-card__list">
+                                    <dt class="govuk-visually-hidden">Other allocations</dt>
+                                    <dd class="govuk-body-s govuk-!-font-size-16">
+                                        {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
+                                        <span class="govuk-hint govuk-!-font-size-16">No other allocations</span>
+                                        {% else %}
+                                        <ul class="govuk-list govuk-!-font-size-16 govuk-!-margin-0">
+                                            {% for allocation in prisoner.activity %}
+                                            {% if allocation != activity.id %}
+                                            {% set activity = allocation|getActivityDetails %}
+                                            <li><a href="../{{activity.id}}"
+                                                    class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </dd>
+                                </dl>
+                            </div>
+
+                            <div class="govuk-grid-column-one-third">
+                                <dl class="app-application-card__list">
+                                    <!-- <dt class="govuk-visually-hidden">Relevant alerts</dt>
+                                    <dd class="govuk-body-s govuk-!-font-size-16">
+                                        {% if prisoner.alerts %}
+                                        {% for alert in prisoner.alerts %}
+                                        <strong
+                                            class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1 govuk-!-font-size-14">
+                                            {{alert}}
+                                        </strong>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </dd> -->
+                                    <dt class="govuk-visually-hidden">Non-associations</dt>
+                                    <dd><span class="govuk-hint govuk-!-font-size-16">No non-associations</span></dd>
+                                </dl>
+                            </div>
+
+                            <div class="govuk-grid-column-one-third">
+                                <dl class="app-application-card__list app-application-card__list--secondary">
+                                    <dt class="govuk-visually-hidden">Date allocated</dt>
+                                    <dd class="govuk-body-s">Since 2 March 2023</dd>
+
+                                    <dt class="govuk-visually-hidden">Time allocated</dt>
+                                    <dd class="govuk-hint govuk-!-font-size-16">132 days on this activity</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </section>
+                    {% endfor %}
+            </div>
+
+            <!-- <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidde">
+            {{currentlyAllocated|length}} {{'people' if currentlyAllocated|length != 1 else 'person' }} currently
+            allocated
+        </caption>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Prisoner details</th>
+                <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
+                <th scope="col" class="govuk-table__header">Date allocated</th>
+                <th scope="col" class="govuk-table__header">Other allocations</th>
+                <th scope="col" class="govuk-table__header">Earliest release date</th>
+                <th scope="col" class="govuk-table__header"></th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            {% for prisoner in currentlyAllocated | sort(false,true,'name.surname') %}
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
+                            {{prisoner.name.surname}}</a></b><br>
+                    {{prisoner.id}}<br>
+                    {{prisoner.location.cell}}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {% if loop.index == 3 %}
+                    <ul class="govuk-list">
+                        <li><a href="#" class="govuk-link--no-visited-state">Jordan Johnson-Jones</a></li>
+                    </ul>
+                    {% else %}
+                    None
+                    {% endif %}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {{'2023-03-02'|convertShortDateToMediumDate}}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
+                    <span class="govuk-hint">None</span>
+                    {% else %}
+                    <ul class="govuk-list">
+                        {% for allocation in prisoner.activity %}
+                        {% if allocation != activity.id %}
+                        {% set activity = allocation|getActivityDetails %}
+                        <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    {{prisoner.releaseDate|convertShortDateToMediumDate}}
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">
+                    <a href="deallocate/{{prisoner.id}}" class="govuk-link--no-visited-state">Allocation details</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> -->
+        </div>
+        <div class="govuk-grid-column-one-third">
+            &nbsp;
+        </div>
+    </div>
+</form>
+{% endblock %}

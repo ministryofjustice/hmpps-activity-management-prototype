@@ -1,0 +1,46 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = allocation['prisoner'] | getPrisonerDetails %}
+        {% set activity = allocation['activity'] | getActivityDetails %}
+
+        {% set titleText %}
+        Removed from waitlist
+        {% endset %}
+
+        {% set panelHtml %}
+        {{prisoner.name.firstname}} {{prisoner.name.surname}} is no longer on the waitlist for {{activity.name}}
+        {% endset %}
+
+        {{ govukPanel({
+        titleText: titleText,
+        html: panelHtml,
+        classes: "govuk-!-margin-bottom-8"
+        }) }}
+
+        <h2 class="govuk-heading-l">
+            What you can do next
+        </h2>
+        <p class="govuk-body">
+            You can either:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li><a href="../../../{{activity.id}}" class="govuk-link--no-visited-state">review the allocations for
+                    {{activity.name}}</a> and continue allocating</li>
+            <li>you can also <a href="../../../all" class="govuk-link--no-visited-state">find other activities with
+                    vacancies</a></li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

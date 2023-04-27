@@ -1,0 +1,110 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+            <!-- GOVUK checkboxes component. Each checkbox has a conditional reveal for entering payrate amounts -->
+            {{ govukCheckboxes({
+            idPrefix: "payrate",
+            name: "payrate",
+            fieldset: {
+            legend: {
+            text: "Select incentive levels and enter pay amounts for the " + data['new-activity']['payrates']['payrate-name'] + " payrate",
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            items: [
+            {
+            value: "worker",
+            text: "Basic",
+            conditional: {
+            html: govukInput({
+                classes: "govuk-input--width-5",
+            label: {
+            text: "Enter the pay amount for basic prisoners"
+            },
+            id: "worker-payrate",
+            name: "worker-payrate",
+            prefix: {
+            text: "£"
+            }
+            })
+            }
+            },
+            {
+            value: "general",
+            text: "Standard",
+            conditional: {
+            html: govukInput({
+                classes: "govuk-input--width-5",
+            label: {
+            text: "Enter the pay amount for standard prisoners"
+            },
+            id: "general-payrate",
+            name: "general-payrate",
+            prefix: {
+            text: "£"
+            }
+            })
+            }
+            },
+            {
+            value: "other",
+            text: "Enhanced",
+            conditional: {
+            html: govukInput({
+                classes: "govuk-input--width-5",
+            label: {
+            text: "Enter the pay amount for enhanced prisoners"
+            },
+            id: "other-payrate",
+            name: "other-payrate",
+            prefix: {
+            text: "£"
+            }
+            })
+            }
+            },
+            {
+                divider: "or"
+            },
+            {
+            value: "flat-rate",
+            text: "Flat rate (all incentive levels)",
+            conditional: {
+            html: govukInput({
+                classes: "govuk-input--width-5",
+            label: {
+            text: "Enter the pay amount for all incentive levels"
+            },
+            id: "flat-rate-payrate",
+            name: "flat-rate-payrate",
+            prefix: {
+            text: "£"
+            }
+            })
+            },
+            behaviour: "exclusive"
+            }
+            ]
+            }) }}
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
