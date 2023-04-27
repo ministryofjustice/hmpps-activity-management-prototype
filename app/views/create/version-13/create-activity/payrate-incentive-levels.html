@@ -18,9 +18,9 @@ text: "Back",
         <form method="post">
             <h2 class="govuk-heading-m">
                 <span class="govuk-caption-m">
-                    {{data['new-activity']['category']|replace('-', ' ')|capitalize}}
+                    {{data['new-activity']['category']|replace('-',' ')|capitalize}}
                 </span>
-                {{data['new-activity']['activity-name']}}
+                {{data['new-activity']['name']}}
             </h2>
             {{govukRadios({
             idPrefix: "payrate-incentive-level",
@@ -33,7 +33,9 @@ text: "Back",
             }
             },
             hint: {
-            text: "When you’ve set up pay rates for an activity you can allocate people who have a corresponding incentive level. If there’s no pay rate for a certain incentive level, no one on that incentive level can be allocated."
+            text: "When you’ve set up pay rates for an activity you can allocate people who have a corresponding
+            incentive level. If there’s no pay rate for a certain incentive level, no one on that incentive level can be
+            allocated."
             },
             items: [
             {

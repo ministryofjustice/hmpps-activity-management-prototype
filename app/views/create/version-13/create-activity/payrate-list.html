@@ -19,9 +19,9 @@ text: "Back",
     <div class="govuk-grid-column-two-thirds">
         <h2 class="govuk-heading-m">
             <span class="govuk-caption-m">
-                {{data['new-activity']['category']}}
+                {{data['new-activity']['category']|replace('-',' ')|capitalize}}
             </span>
-            {{data['new-activity']['activity-name']}}
+            {{data['new-activity']['name']}}
         </h2>
 
         {% if data['show-delete-dialog'] == true %}
@@ -42,7 +42,8 @@ text: "Back",
             1'}}
         </h1>
         {% for incentiveLevel, payrates in data.payrates %}
-        <h2 class="govuk-heading-m">{{incentiveLevel|capitalize + ' incentive level pay rates' if incentiveLevel != 'flat-rate' else 'Flat rates'}}</h2>
+        <h2 class="govuk-heading-m">{{incentiveLevel|capitalize + ' incentive level pay rates' if incentiveLevel !=
+            'flat-rate' else 'Flat rates'}}</h2>
         <dl class="govuk-summary-list">
             {% for payrate in payrates %}
             <div class="govuk-summary-list__row">
@@ -51,7 +52,7 @@ text: "Back",
                 </dt>
                 <dd class="govuk-summary-list__value">
                     <!-- <p> -->
-                        &pound;{{payrate.amount|decimalPlaces(2) or '1.10'}}
+                    &pound;{{payrate.amount|decimalPlaces(2) or '1.10'}}
                     <!-- </p>
                     <p class="govuk-hint govuk-!-font-size-16">
                         {{[0,2,2,2,2,3,4,6]|random}} prisoners on this pay rate
@@ -73,13 +74,13 @@ text: "Back",
         <form method="post">
             <p>
                 {{ govukButton({
-                    text: "Add a pay rate",
-                    classes: "govuk-button--secondary",
-                    attributes: {
-                    "formaction": "payrate-incentive-levels",
-                    "formmethod": "get"
-                    }
-                    }) }}
+                text: "Add a pay rate",
+                classes: "govuk-button--secondary",
+                attributes: {
+                "formaction": "payrate-incentive-levels",
+                "formmethod": "get"
+                }
+                }) }}
             </p>
 
             <input type="hidden" name="id" value="">

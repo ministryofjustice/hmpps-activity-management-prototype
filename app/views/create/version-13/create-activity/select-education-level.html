@@ -18,9 +18,9 @@ text: "Back",
         <form method="post">
             <h2 class="govuk-heading-m">
                 <span class="govuk-caption-m">
-                    {{data['new-activity']['category']}}
+                    {{data['new-activity']['category']|replace('-', ' ')|capitalize}}
                 </span>
-                {{data['new-activity']['activity-name']}}
+                {{data['new-activity']['name']}}
             </h2>
             {%- set levelsData = [
             'A Level',
@@ -259,9 +259,9 @@ text: "Back",
                     {% endfor %}
                 </select>
             </div>
-            <p>
+            <!-- <p>
                 If the relevant education level isn't in the list, you can <a href="#">request for it to be added</a>.
-            </p>
+            </p> -->
 
             <button class="govuk-button" data-module="govuk-button">Continue</button>
         </form>

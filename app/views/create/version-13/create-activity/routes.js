@@ -247,8 +247,9 @@ router.post("/payrate-details", function (req, res) {
 
   // Get the values of the paymentIncentiveName, paymentIncentiveAmount, and PayIncentiveLevel fields from the session data
   let payratePayband = newPayrateData["pay-band"];
-  // set the amount to a number not a string
-  let payrateAmount = Number(newPayrateData["amount"]);
+  // set the payrate amount
+  // if it can't be converted to a number, set it to 0
+  let payrateAmount = Number(newPayrateData["amount"]) || 0;
   let payrateIncentiveLevel = newPayrateData["incentive-level"];
   let payrateId = crypto.randomBytes(4).toString("hex");
 
@@ -511,10 +512,20 @@ router.post("/bank-holiday-check", function (req, res) {
 
 // create activity check answers page
 router.get("/check-answers", function (req, res) {
+  req.session.data["new-activity"] = req.session.data["new-activity"] ?? {};
+  
   let newActivity = req.session.data["new-activity"];
   let newActivitySchedule = newActivity.schedule;
-  
-  let schedule = getActivitySchedule(newActivitySchedule)
+  let schedule;
+
+  if(newActivitySchedule) {
+    schedule = getActivitySchedule(newActivitySchedule)
+  } else {
+    // get a schedule from a random activity
+    let activities = req.session.data["timetable-complete-1"]["activities"];
+    let randomActivity = activities[Math.floor(Math.random() * activities.length)];
+    schedule = getActivitySchedule(randomActivity.schedule);
+  }
 
   res.render(req.protoUrl + "/check-answers", {
     schedule,
@@ -522,18 +533,25 @@ router.get("/check-answers", function (req, res) {
 });
 // redirect to confirmation page
 router.post("/check-answers", function (req, res) {
-  // get the schedule from the new-activity session data
-  let schedule = req.session.data["new-activity"].schedule;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let randomActivity = activities[Math.floor(Math.random() * activities.length)];
 
-  // if there is a schedule, convert the day names to numbers
-  if (schedule) {
-    schedule.forEach(function (day) {
-      // use Luxon to convert each day name to a number in the range 1-7
-      day.day = DateTime.fromFormat(day.day, "cccc").weekday;
-    });
+  randomActivity.id = Math.floor(Math.random() * 1000000);
+  
+  // if the new activity has a name, add it to the random activity
+  if (req.session.data["new-activity"]?.name) {
+    randomActivity.name = req.session.data["new-activity"].name;
   }
 
-  res.redirect("confirmation");
+  // if the new activity has a category, add it to the random activity
+  if (req.session.data["new-activity"]?.category) {
+    randomActivity.category = req.session.data["new-activity"].category;
+  }
+
+  // push the new activity to the activities session data
+  req.session.data["timetable-complete-1"]["activities"].push(randomActivity);
+
+  res.redirect("confirmation?activity=" + randomActivity.id);
 });
 
 // confirmation page

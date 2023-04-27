@@ -19,9 +19,9 @@ Activities Management prototype
     <form method="post">
         <h2 class="govuk-heading-m">
             <span class="govuk-caption-m">
-                {{data['new-activity']['category']}}
+                {{data['new-activity']['category']|replace('-',' ')|capitalize}}
             </span>
-            {{data['new-activity']['activity-name']}}
+            {{data['new-activity']['name']}}
         </h2>
         {{govukRadios({
             idPrefix: "end-date-check",

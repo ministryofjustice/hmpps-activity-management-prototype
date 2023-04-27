@@ -15,8 +15,8 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-m">{{data.category or 'Education'}} | Risk level: {{data.riskLevel or 'High'}}</span>
-        <h1 class="govuk-heading-m">{{data.activityName or 'Maths level 1'}}</h1>
+        <span class="govuk-caption-m">{{data['new-activity']['category']|replace('-',' ')|capitalize}}</span>
+        <h1 class="govuk-heading-m">{{data['new-activity']['name']}}</h1>
         {% if data['show-delete-dialog'] == true %}
         {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
         {% set html %}
@@ -30,7 +30,7 @@ text: "Back",
         }) }}
         {% endif %}
         <h2 class="govuk-heading-xl">
-            Education levels and qualifications for {{data.activityName or 'Maths level 1'}}
+            Education levels and qualifications for {{data["new-activity"]["name"] or 'Maths level 1'}}
         </h2>
 
         {% if data.educationLevels.length > 0 %}

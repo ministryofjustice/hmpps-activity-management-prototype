@@ -12,22 +12,31 @@ window.history.go(-1)" })}} {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">
+      <span class="govuk-caption-m">
+        {{data['new-activity']['category']|replace('-',' ')|capitalize}}
+      </span>
+      {{data['new-activity']['name']}}
+    </h2>
     <form method="post">
       {{govukInput({
-        id: "allocation-count",
-        name: "new-activity[capacity]",
-        value: data['new-activity']['capacity'] or '',
-        classes: "govuk-input--width-5",
-        label: {
-          text: "How many people can be allocated to this activity?",
-          classes: "govuk-label--l"
-        },
-        hint: {
-          html: "Enter the maximum number (known as capacity) of people who can be allocated.<br>You'll be able to overallocate to ensure the activity is not short-handed."
-        }
+      id: "allocation-count",
+      name: "new-activity[capacity]",
+      value: data['new-activity']['capacity'] or '',
+      classes: "govuk-input--width-5",
+      label: {
+      text: "How many people can be allocated to this activity?",
+      classes: "govuk-label--l"
+      },
+      hint: {
+      html: "Enter the maximum number (known as capacity) of people who can be allocated.<br>You'll be able to
+      overallocate to ensure the activity is not short-handed."
+      }
       })}}
 
-      <button class="govuk-button" data-module="govuk-button">Continue</button>
+      {{govukButton({
+      text: "Continue"
+      })}}
     </form>
   </div>
 </div>

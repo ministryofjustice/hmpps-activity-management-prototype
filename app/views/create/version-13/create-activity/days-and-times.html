@@ -4,11 +4,14 @@ beforeContent %} {{govukBackLink({ text: "Back", "href": "javascript:
 window.history.go(-1)" })}} {% endblock %} {% block content %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <form method="post">
-      <span class="govuk-caption-l">
-        {{activity.name}}
+    <h2 class="govuk-heading-m">
+      <span class="govuk-caption-m">
+        {{data['new-activity']['category']|replace('-',' ')|capitalize}}
       </span>
-
+      {{data['new-activity']['name']}}
+    </h2>
+    
+    <form method="post">
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset" aria-describedby="days-hint">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-margin-bottom-0">
