@@ -605,7 +605,7 @@ module.exports = {
   {"activity_id":41,"activity_name":"Life Skills"},
   {"activity_id":42,"activity_name":"Office Administration"},
   {"activity_id":43,"activity_name":"Interpersonal Skills"},
-  {"activity_id":44,"activity_name":"Substance Abuse Counseling"},
+  {"activity_id":44,"activity_name":"substance misuse Counseling"},
   {"activity_id":45,"activity_name":"Mental Health Group"},
   {"activity_id":46,"activity_name":"Anger Management"},
   {"activity_id":47,"activity_name":"Stress Management"},
