@@ -17,7 +17,7 @@ text: "Back",
     <div class="govuk-grid-column-two-thirds">
         {% set prisoner = data['new-application']['selected-prisoner']|getPrisonerDetails %}
         <h1 class="govuk-heading-xl">
-            Check and confirm your allocation
+            Check and confirm this allocation
         </h1>
 
         <!-- GOVUK summary list component with fields: name, prison number, cell location and selected pay rate -->
@@ -44,7 +44,15 @@ text: "Back",
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Start date
+                    Location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{activity.location}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Start of allocation
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {{(data['allocation']['start-date'] | convertShortDateToVeryLongDate) if data['allocation']['start-date'] else 'None set'}}
@@ -55,7 +63,7 @@ text: "Back",
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    End date
+                    End of allocation
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {{(data['allocation']['end-date'] | convertShortDateToVeryLongDate) if data['allocation']['end-date'] else 'None set'}}
@@ -69,7 +77,7 @@ text: "Back",
                     Pay rate
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{prisoner.incentiveLevel|capitalize}}: {{data['allocation']['pay-rate']}}
+                    {{prisoner.incentiveLevel|capitalize}} incentive level: {{data['allocation']['pay-rate']}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a href="payrate?redirect=check-allocation-details" class="govuk-link--no-visited-state">Change</a>

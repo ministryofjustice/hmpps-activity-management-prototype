@@ -39,11 +39,11 @@ type: "success"
         </h1>
         {% endif %}
 
-        {% if pastStartDate %}
+        <!-- {% if pastStartDate %}
         <div class="govuk-inset-text">
             You can only change the start date if they have not started this activity.
         </div>
-        {% endif %}
+        {% endif %} -->
 
         {% if noEndDate %}
         <div class="govuk-inset-text">
@@ -80,6 +80,10 @@ type: "success"
                         <dd class="govuk-summary-list__actions">
                             <a href="{{prisoner.id}}/start-date?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
                         </dd>
+                        {% else %}
+                        <dd class="govuk-summary-list__actions">
+                            <span class="govuk-tag govuk-tag--green">Started</span>
+                        </dd>
                         {% endif %}
                     </div>
                     <div class="govuk-summary-list__row">
@@ -91,7 +95,11 @@ type: "success"
                             prisoner.allocations[prisoner.activityIndex].endDate else 'None set'}}
                         </dd>
                         <dd class="govuk-summary-list__actions">
+                            {% if prisoner.allocations[prisoner.activityIndex].endDate %}
                             <a href="{{prisoner.id}}/end-date-check?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
+                            {% else %}
+                            <a href="{{prisoner.id}}/end-date?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
+                            {% endif %}
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row">

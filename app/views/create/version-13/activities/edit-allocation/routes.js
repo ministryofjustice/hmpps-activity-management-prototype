@@ -229,6 +229,11 @@ router.get("/:prisonerId/end-date", function (req, res) {
   endDate.month = DateTime.fromISO(allocation.endDate).month;
   endDate.year = DateTime.fromISO(allocation.endDate).year;
 
+  // check if the start date is in the past
+  let startDate = DateTime.fromISO(allocation.startDate);
+  let today = DateTime.now();
+  let startDateInPast = startDate < today;
+
   // render the end-date template
   res.render(req.protoUrl + "/end-date", {
     activity,
@@ -236,6 +241,7 @@ router.get("/:prisonerId/end-date", function (req, res) {
     prisonerId,
     allocation,
     endDate,
+    startDateInPast,
   });
 });
 

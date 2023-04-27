@@ -50,13 +50,13 @@ text: "Back",
             })}}
             {% endset %}
 
-            <span class="govuk-caption-xl">{{prisoner.name.firstname}} {{prisoner.name.surname}}</span>
+            <span class="govuk-caption-xl">Edit allocation for {{prisoner.name.firstname}} {{prisoner.name.surname}}</span>
             {{govukRadios({
             idPrefix: "end-date-check",
             name: "allocation[end-date-check]",
             fieldset: {
             legend: {
-            html: "Do you want to set an end date for this allocation?",
+            html: "Do you want to change or remove the end of allocation?",
             isPageHeading: false,
             classes: "govuk-fieldset__legend--xl"
             }
@@ -64,13 +64,11 @@ text: "Back",
             items: [
             {
             value: "yes",
-            text: "Yes",
-            checked: true if allocation.endDate
+            text: "Change the date"
             },
             {
             value: "no",
-            text: "No",
-            checked: true if not allocation.endDate
+            text: "Remove it, they will stay on the activity"
             }
             ]
             })}}

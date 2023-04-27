@@ -411,28 +411,28 @@ router.post("/end-date", function (req, res) {
     prisoner.activity.toString().includes(activityId.toString())
   );
 
-  // loop through the prisoners who are allocated to the activity
-  allocatedPrisoners.forEach((prisoner) => {
-    let prisonerAllocations = prisoner.allocations; // get the prisoner allocations
+  // // loop through the prisoners who are allocated to the activity
+  // allocatedPrisoners.forEach((prisoner) => {
+  //   let prisonerAllocations = prisoner.allocations; // get the prisoner allocations
 
-    // find the index of the allocation for the activity
-    let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+  //   // find the index of the allocation for the activity
+  //   let activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
 
-    // get the allocation for the activity
-    let prisonerAllocation = prisonerAllocations[activityIndex];
+  //   // get the allocation for the activity
+  //   let prisonerAllocation = prisonerAllocations[activityIndex];
 
-    // change the prisoner allocation end date if necessary
-    // if the end date is null, undefined or the prisoner allocation end date is after the activity end date
-    // update the prisoner allocation end date to be the same as the activity end date
-    if (
-      prisonerAllocation.endDate == null ||
-      prisonerAllocation.endDate == undefined ||
-      DateTime.fromISO(prisonerAllocation.endDate) > DateTime.fromISO(activity.endDate)
-    ) {
-      prisonerAllocation.endDate = endDate;
-      prisonerAllocation.endDateType = "activity"
-    }
-  });
+  //   // change the prisoner allocation end date if necessary
+  //   // if the end date is null, undefined or the prisoner allocation end date is after the activity end date
+  //   // update the prisoner allocation end date to be the same as the activity end date
+  //   if (
+  //     prisonerAllocation.endDate == null ||
+  //     prisonerAllocation.endDate == undefined ||
+  //     DateTime.fromISO(prisonerAllocation.endDate) > DateTime.fromISO(activity.endDate)
+  //   ) {
+  //     prisonerAllocation.endDate = endDate;
+  //     prisonerAllocation.endDateType = "activity"
+  //   }
+  // });
 
   // set the confirmation message to be displayed on the activity page
   req.session.data["confirmation-dialog"] = {
