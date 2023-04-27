@@ -15,7 +15,7 @@ window.history.go(-1)" })}} {% endblock %}
     <form method="post">
         <h2 class="govuk-heading-m">
             <span class="govuk-caption-m">
-                {{data['new-activity']['category']|replace('-', ' ')|capitalize}}
+                {{data['new-activity']['category']|getActivityCategoryName|replace('-',' ')|capitalize}}
             </span>
             {{data['new-activity']['name']}}
         </h2>

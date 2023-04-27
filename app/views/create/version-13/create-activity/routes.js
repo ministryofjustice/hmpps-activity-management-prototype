@@ -86,6 +86,7 @@ router.get("/select-education-level", function (req, res) {
 // redirect to education level list page
 router.post("/select-education-level", function (req, res) {
   const educationLevel = req.body["education-level"];
+  const educationAreaOfStudy = req.body["area-of-study"];
 
   // Get the ID for the educationLevel or generate a random one
   let educationId = req.query.id ? req.query.id : crypto.randomBytes(4).toString("hex");
@@ -93,6 +94,7 @@ router.post("/select-education-level", function (req, res) {
   let educationLevelData = {
     id: educationId,
     name: educationLevel,
+    areaOfStudy: educationAreaOfStudy,
   };
 
   // Check if the educationLevelData already exists in the educationLevels array
@@ -105,6 +107,7 @@ router.post("/select-education-level", function (req, res) {
     educationLevels = educationLevels.map((level) => {
       if (level.id === educationId) {
         level.name = educationLevel;
+        level.areaOfStudy = educationAreaOfStudy;
       }
       return level;
     });
@@ -202,7 +205,12 @@ router.get("/payrate-details", function (req, res) {
     return payrateData;
   }
 
-  let payBands = ["Band 1", "Band 2", "Band 3", "Band 4", "Band 5", "Band 6"];
+  // construct the pay bands array for 10 pay bands
+  let payBands = [];
+  let payBandCount = 10;
+  for (let i = 1; i <= payBandCount; i++) {
+    payBands.push("Band " + i);
+  }
 
   // if there is an id query parameter in the url we need to remove any pay bands that are already in use on other payrates in the matching incentive level
   if (payrateId) {
@@ -218,9 +226,16 @@ router.get("/payrate-details", function (req, res) {
     });
   } else {
     // if there is no id query parameter in the url we need to remove any pay bands that are already in use on other payrates in the incentive level matching the payrate session data
-    let incentiveLevel = req.session.data.payrate['incentive-level'];
+    let incentiveLevel;
+
+    // fix the weird bug when returning to this page from the payrate list page
+    if (req.session.data.payrate) {
+      incentiveLevel = req.session.data.payrate["incentive-level"];
+    } else {
+      incentiveLevel = "basic";
+    }
     let existingPayrates = req.session.data.payrates;
-    
+
     // if there are any payrates for the incentive level
     if (existingPayrates && existingPayrates[incentiveLevel] && existingPayrates[incentiveLevel].length > 0) {
       let payBandsForIncentiveLevel = existingPayrates[incentiveLevel].map((payrate) => payrate.payBand);
@@ -296,7 +311,19 @@ router.post("/payrate-details", function (req, res) {
 
 // payment details check page
 router.get("/payrate-list", function (req, res) {
-  res.render(req.protoUrl + "/payrate-list");
+  let noPayrates = true;
+  // set the noPayrates variable to false if there are any payrates in the session data
+  if (req.session.data.payrates) {
+    for (const [key, value] of Object.entries(req.session.data.payrates)) {
+      if (value.length > 0) {
+        noPayrates = false;
+      }
+    }
+  }
+
+  res.render(req.protoUrl + "/payrate-list", {
+    noPayrates,
+  });
 });
 // redirect to education level page
 router.post("/payrate-list", function (req, res) {
@@ -363,7 +390,7 @@ router.get("/start-date", function (req, res) {
 });
 // redirect to end date check page
 router.post("/start-date", function (req, res) {
-  let startDate = {}
+  let startDate = {};
   startDate.day = req.session.data["activity-start-date-day"];
   startDate.month = req.session.data["activity-start-date-month"];
   startDate.year = req.session.data["activity-start-date-year"];
@@ -416,7 +443,7 @@ router.get("/end-date", function (req, res) {
 });
 // redirect to days and times page
 router.post("/end-date", function (req, res) {
-  let endDate = {}
+  let endDate = {};
   endDate.day = req.session.data["activity-end-date-day"];
   endDate.month = req.session.data["activity-end-date-month"];
   endDate.year = req.session.data["activity-end-date-year"];
@@ -513,13 +540,13 @@ router.post("/bank-holiday-check", function (req, res) {
 // create activity check answers page
 router.get("/check-answers", function (req, res) {
   req.session.data["new-activity"] = req.session.data["new-activity"] ?? {};
-  
+
   let newActivity = req.session.data["new-activity"];
   let newActivitySchedule = newActivity.schedule;
   let schedule;
 
-  if(newActivitySchedule) {
-    schedule = getActivitySchedule(newActivitySchedule)
+  if (newActivitySchedule) {
+    schedule = getActivitySchedule(newActivitySchedule);
   } else {
     // get a schedule from a random activity
     let activities = req.session.data["timetable-complete-1"]["activities"];
@@ -537,7 +564,7 @@ router.post("/check-answers", function (req, res) {
   let randomActivity = activities[Math.floor(Math.random() * activities.length)];
 
   randomActivity.id = Math.floor(Math.random() * 1000000);
-  
+
   // if the new activity has a name, add it to the random activity
   if (req.session.data["new-activity"]?.name) {
     randomActivity.name = req.session.data["new-activity"].name;
@@ -545,7 +572,8 @@ router.post("/check-answers", function (req, res) {
 
   // if the new activity has a category, add it to the random activity
   if (req.session.data["new-activity"]?.category) {
-    randomActivity.category = req.session.data["new-activity"].category;
+    // set the category to 7 if it can't be converted to a number
+    randomActivity.category = parseInt(req.session.data["new-activity"].category) || 7;
   }
 
   // push the new activity to the activities session data

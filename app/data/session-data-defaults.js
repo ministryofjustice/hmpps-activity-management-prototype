@@ -75,5 +75,6 @@ module.exports = {
       'latest-version': 'version-5',
       'url': '/appointments/version-5/dps-home'
     }
-  }
+  },
+  "areas-of-study": require('./areas-of-study'),
 }

@@ -19,16 +19,19 @@ text: "Back",
     <div class="govuk-grid-column-two-thirds">
         <h2 class="govuk-heading-m">
             <span class="govuk-caption-m">
-                {{data['new-activity']['category']|replace('-',' ')|capitalize}}
+                {{data['new-activity']['category']|getActivityCategoryName|replace('-',' ')|capitalize}}
             </span>
             {{data['new-activity']['name']}}
         </h2>
 
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
             Enter the pay amount and pay band name for the {{data['payrate']['incentive-level']}} incentive level pay
             rate
         </h1>
 
+        <p class="govuk-inset-text">
+            Minimum pay for people in your prison is £0.60 and maximum pay is £2.75 per session.
+        </p>
         <p class="govuk-inset-text">
             You can create up to 10 rates for each incentive level.
         </p>

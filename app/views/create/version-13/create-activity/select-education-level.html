@@ -18,10 +18,14 @@ text: "Back",
         <form method="post">
             <h2 class="govuk-heading-m">
                 <span class="govuk-caption-m">
-                    {{data['new-activity']['category']|replace('-', ' ')|capitalize}}
+                    {{data['new-activity']['category']|getActivityCategoryName|replace('-',' ')|capitalize}}
                 </span>
                 {{data['new-activity']['name']}}
             </h2>
+            <h1 class="govuk-heading-l">
+                Select the education level or other qualification
+            </h1>
+
             {%- set levelsData = [
             'A Level',
             'AS Level',
@@ -244,11 +248,28 @@ text: "Back",
             'iTES Entry Level'] -%}
 
             <div class="govuk-form-group">
-                <h1 class="govuk-label-wrapper" <label class="govuk-label" for="education-level">
-                    <label class="govuk-label govuk-label--l" for="education-level">
+                <h2 class="govuk-label-wrapper" <label class="govuk-label" for="area-of-study">
+                    <label class="govuk-label govuk-label--s" for="area-of-study">
+                        Subject or skill
+                    </label>
+                </h2>
+                <div id="subject-hint" class="govuk-hint">
+                    Choose the area of study for the education level or qualification that participants need to be eligible for this activity.
+                </div>
+                <select class="govuk-select" id="area-of-study" name="area-of-study">
+                    <option value="">Select education level or qualification</option>
+                    {% for area in data['areas-of-study'] %}
+                    <option value="{{ area.name }}">{{ area.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="govuk-form-group">
+                <h2 class="govuk-label-wrapper" <label class="govuk-label" for="education-level">
+                    <label class="govuk-label govuk-label--s" for="education-level">
                         Select education level or other qualification
                     </label>
-                </h1>
+                </h2>
                 <div id="subject-hint" class="govuk-hint">
                     Choose the education level or qualification that participants need to be eligible for this activity.
                 </div>
@@ -259,9 +280,6 @@ text: "Back",
                     {% endfor %}
                 </select>
             </div>
-            <!-- <p>
-                If the relevant education level isn't in the list, you can <a href="#">request for it to be added</a>.
-            </p> -->
 
             <button class="govuk-button" data-module="govuk-button">Continue</button>
         </form>
@@ -278,6 +296,13 @@ text: "Back",
         showAllValues: true,
         defaultValue: '',
         confirmOnBlur: false,
-    })
+    });
+
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#area-of-study'),
+        showAllValues: true,
+        defaultValue: '',
+        confirmOnBlur: false,
+    });
 </script>
 {% endblock %}
