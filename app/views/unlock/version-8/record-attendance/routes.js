@@ -2,30 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
 
-// app data
-const prisoners = require("../../../data/prisoners-list-3");
-
 //redirect the root url to the start page
 router.get("/", function (req, res) {
-  res.redirect(req.version + "/config");
-});
-
-// CONFIG
-router.get("/config", function (req, res) {
-  let version = req.version;
-  req.session.data["config"]["navigation-tiles"][0]["linkURL"] =
-    "/unlock/" + version + "/whereabouts";
-  res.render("unlock/" + req.version + "/config", {
-    version,
-  });
-});
-router.post("/config", function (req, res) {
-  res.redirect("dps-home");
-});
-
-router.post("/reset-config", function (req, res) {
-  delete req.session.data["config"];
-  res.redirect("config");
+  res.redirect("record-attendance/select-date");
 });
 
 // Function to get prisoners by houseblock
@@ -970,7 +949,7 @@ router.get(
       attendanceLocked = true;
     }
 
-    res.render("unlock/" + req.version + "/attendance-list", {
+    res.render(req.protoUrl + "/attendance-list", {
       activity,
       attendanceLocked,
       day,
@@ -1006,7 +985,7 @@ router.get(
       (activity) => activity.id.toString() === activityId
     );
 
-    res.render("unlock/" + req.version + "/choose-cancellation-reason", {
+    res.render(req.protoUrl + "/choose-cancellation-reason", {
       activity,
     });
   }
@@ -1020,7 +999,7 @@ router.post(
 router.get(
   "/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation",
   function (req, res) {
-    res.render("unlock/" + req.version + "/confirm-cancellation");
+    res.render(req.protoUrl + "/confirm-cancellation");
   }
 );
 router.post(
@@ -1103,7 +1082,7 @@ router.post(
 router.get(
   "/activities/:selectedDate/:selectedPeriod/:activityId/confirm-uncancellation",
   function (req, res) {
-    res.render("unlock/" + req.version + "/confirm-uncancellation");
+    res.render(req.protoUrl + "/confirm-uncancellation");
   }
 );
 router.post(
@@ -1181,7 +1160,7 @@ router.get(
 
     let isFutureDate = checkIsFutureDate(date);
 
-    res.render("unlock/" + req.version + "/add-attendance-details", {
+    res.render(req.protoUrl + "/add-attendance-details", {
       filteredPrisoners,
       dateTense,
       isFutureDate,
@@ -1242,7 +1221,7 @@ router.get(
     });
 
     res.render(
-      "unlock/" + req.version + "/check-print-incentive-level-warning",
+      req.protoUrl + "/check-print-incentive-level-warning",
       {
         prisonersWithWarnings,
       }
@@ -1277,7 +1256,7 @@ router.get(
   "/activities/:selectedDate/:selectedPeriod/:activityId/confirm-print-incentive-level-warning",
   function (req, res) {
     res.render(
-      "unlock/" + req.version + "/confirm-print-incentive-level-warning"
+      req.protoUrl + "/confirm-print-incentive-level-warning"
     );
   }
 );
@@ -1300,7 +1279,7 @@ router.get(
     } else {
       refusalPage = "add-other-absence-details";
     }
-    res.render("unlock/" + req.version + "/" + refusalPage, {
+    res.render(req.protoUrl + "/" + refusalPage, {
       filteredPrisoners,
     });
   }
@@ -1418,7 +1397,7 @@ router.get(
       req.session.data["timetable-complete-1"]["prisoners"]
     );
 
-    res.render("unlock/" + req.version + "/check-variable-pay", {
+    res.render(req.protoUrl + "/check-variable-pay", {
       filteredPrisoners,
     });
   }
@@ -1472,7 +1451,7 @@ router.get(
     const attendanceData =
       req.session.data.attendance[activityId][date][period][prisonerId];
 
-    res.render("unlock/" + req.version + "/attendance-details", {
+    res.render(req.protoUrl + "/attendance-details", {
       prisoner,
       date,
       period,
@@ -1509,7 +1488,7 @@ router.get(
     let prisonerAttendanceRecord =
       req.session.data.attendance[activityId][date][period][prisonerId][0];
 
-    res.render("unlock/" + req.version + "/change-attendance", {
+    res.render(req.protoUrl + "/change-attendance", {
       prisoner,
       date,
       period,
@@ -1544,7 +1523,7 @@ router.get(
       (prisoner) => prisoner.id === prisonerId
     );
 
-    res.render("unlock/" + req.version + "/confirm-remove-attendance", {
+    res.render(req.protoUrl + "/confirm-remove-attendance", {
       prisoner,
     });
   }
@@ -1580,7 +1559,7 @@ router.get(
       (prisoner) => prisoner.id === prisonerId
     );
 
-    res.render("unlock/" + req.version + "/confirm-remove-pay", {
+    res.render(req.protoUrl + "/confirm-remove-pay", {
       prisoner,
     });
   }
@@ -1620,7 +1599,7 @@ router.get(
       req.session.data["timetable-complete-1"]["prisoners"]
     );
 
-    res.render("unlock/" + req.version + "/add-attendance-details", {
+    res.render(req.protoUrl + "/add-attendance-details", {
       filteredPrisoners,
     });
   }
@@ -1640,7 +1619,7 @@ router.get(
       (prisoner) => prisoner.id === prisonerId
     );
 
-    res.render("unlock/" + req.version + "/change-pay", {
+    res.render(req.protoUrl + "/change-pay", {
       prisoner,
       prisonerId,
       date,
@@ -1694,7 +1673,7 @@ router.get("/check-attendance-details", function (req, res) {
     req.session.data["timetable-complete-1"]["prisoners"]
   );
 
-  res.render("unlock/" + req.version + "/check-attendance-details", {
+  res.render(req.protoUrl + "/check-attendance-details", {
     attendanceDetails,
   });
 });
@@ -1812,7 +1791,7 @@ router.get(
       }
     }
 
-    res.render("unlock/" + req.version + "/refusals-list", {
+    res.render(req.protoUrl + "/refusals-list", {
       locations,
       prisonersWithEvents,
       prisonersByHouseblock,
@@ -1823,157 +1802,11 @@ router.get(
   }
 );
 
-// SELECT UNLOCK LOCATIONS
-router.get("/unlock-list/select-date-and-location", function (req, res) {
-  let date = new Date();
-  let dateFormatted = date.toISOString().slice(0, 10);
-  let dateIn60Days = DateTime.fromFormat(dateFormatted, "yyyy-MM-dd")
-    .plus({
-      days: 60,
-    })
-    .toFormat("yyyy-MM-dd");
-  dateIn60Days = dateIn60Days.slice(0, 8) + "27";
-
-  res.render("unlock/" + req.version + "/select-unlock-locations", {
-    dateIn60Days,
-  });
+// SELECT-DATE
+router.get("/select-date", function (req, res) {
+  res.render(req.protoUrl + "/select-date");
 });
-router.post("/unlock-list/select-date-and-location", function (req, res) {
-  let date = req.session.data["date"];
-  let period = req.session.data["period"].toUpperCase();
-  let locations = getWings(req.session.data["selected-locations"]);
-  let houseblock = Object.keys(locations)[0];
-
-  if (date == "other-date") {
-    if (
-      req.session.data["other-date-year"] !== undefined &&
-      req.session.data["other-date-month"] !== undefined &&
-      req.session.data["other-date-day"] !== undefined
-    ) {
-      date = req.session.data[
-        "date"
-      ] = `${req.session.data["other-date-year"]}-${req.session.data["other-date-month"]}-${req.session.data["other-date-day"]}`;
-      res.redirect("unlock-list/" + date + "/" + period + "/" + houseblock);
-    } else {
-      res.redirect("select-unlock-locations");
-    }
-  } else {
-    res.redirect(date + "/" + period + "/" + houseblock);
-  }
-});
-
-// unlock list
-router.get(
-  "/unlock-list/:selectedDate/:selectedPeriod/:selectedHouseblock",
-  function (req, res) {
-    let period = req.params.selectedPeriod;
-    let date = req.params.selectedDate;
-    let dayOfWeek = new Date(date).getDay();
-
-    let activities = req.session.data["timetable-complete-1"]["activities"];
-    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-    let houseblock = req.params.selectedHouseblock;
-
-    let attendanceData = req.session.data["attendance"];
-
-    const prisonersByHouseblock = getPrisonersByHouseblock(
-      prisoners,
-      houseblock
-    );
-    const prisonersByDateAndPeriod = getPrisonersByDateAndPeriod(
-      prisonersByHouseblock,
-      activities,
-      date,
-      period,
-      "unlock"
-    );
-    let prisonersWithEvents = addEventsToPrisoners(
-      prisonersByDateAndPeriod,
-      activities,
-      date,
-      period,
-      attendanceData
-    );
-
-    let filteredActivities = getActivitiesForPeriod(
-      activities,
-      period,
-      dayOfWeek
-    );
-
-    let relativeDate;
-    let today = DateTime.local().startOf("day");
-    let dateLuxon = DateTime.fromFormat(date, "yyyy-MM-dd").startOf("day");
-    let diff = Math.abs(today.diff(dateLuxon, "days").days);
-    if (diff <= 1) {
-      relativeDate = dateLuxon.toRelativeCalendar();
-    }
-
-    // remove the confirmation notification on loading the page
-    if (req.session.data["attendance-confirmation"] == "true") {
-      delete req.session.data["attendance-confirmation"];
-    }
-
-    //landing filters
-    if (
-      req.session.data["filters"] &&
-      req.session.data["filters"]["landings"]
-    ) {
-      let landings = req.session.data["filters"]["landings"];
-
-      const removeLanding = req.query["remove-landing"];
-      if (removeLanding) {
-        landings = landings.filter((landing) => landing !== removeLanding);
-        if (landings.length === 0) {
-          delete req.session.data["filters"]["landings"];
-        } else {
-          req.session.data["filters"]["landings"] = landings;
-        }
-        delete req.query["remove-landing"];
-      }
-
-      if (landings !== "_unchecked" && landings.length > 0) {
-        landings = landings.map((landing) => landing.toString());
-        prisonersWithEvents = prisonersWithEvents.filter((prisoner) =>
-          landings.includes(prisoner.location.landing.toString())
-        );
-      }
-    }
-
-    // create a list of unique sub-locations based on the location properties of each prisoner in prisonersWithEvents
-    // residentialLocations should be an array of unique landing numbers, e.g. [1,2,3]
-    let residentialLocations = [];
-    prisonersWithEvents.forEach((prisoner) => {
-      if (
-        !residentialLocations.includes(prisoner.location.landing) &&
-        prisoner.location.landing !== undefined
-      ) {
-        residentialLocations.push(prisoner.location.landing);
-      }
-    });
-
-    res.render("unlock/" + req.version + "/unlock-list", {
-      residentialLocations,
-      prisonersWithEvents,
-      date,
-      relativeDate,
-      period,
-      houseblock,
-      filteredActivities,
-    });
-  }
-);
-
-router.get("/unlock-list/download", function (req, res) {
-  const file = `public/downloads/Unlock list concept.pdf`;
-  res.download(file);
-});
-
-// SELECT-ACTIVITY
-router.get("/select-activity", function (req, res) {
-  res.render("unlock/" + req.version + "/select-activity");
-});
-router.post("/select-activity", function (req, res) {
+router.post("/select-date", function (req, res) {
   let date = req.session.data["date"];
 
   if (date == "other-date") {
@@ -1987,7 +1820,7 @@ router.post("/select-activity", function (req, res) {
       ] = `${req.session.data["other-date-year"]}-${req.session.data["other-date-month"]}-${req.session.data["other-date-day"]}`;
       res.redirect("activities/" + date);
     } else {
-      res.redirect("select-activity");
+      res.redirect("select-date");
     }
   } else {
     res.redirect("activities/" + date);
@@ -2066,7 +1899,7 @@ router.get("/activities/:selectedDate", function (req, res) {
     }
   }
 
-  res.render("unlock/" + req.version + "/activities", {
+  res.render(req.protoUrl + "/activities", {
     locations,
     attendanceTotals,
     selectedDate,
@@ -2083,7 +1916,7 @@ router.get("/prisoner/:prisonerId", function (req, res) {
     (prisoner) => prisoner.id === prisonerId
   );
 
-  res.render("unlock/" + req.version + "/prisoner-profile", {
+  res.render(req.protoUrl + "/prisoner-profile", {
     prisoner,
   });
 });
@@ -2096,26 +1929,6 @@ router.use("/attendance-dashboard", (req, res, next) => {
 
   req.protoUrl = serviceName + "/" + version + "/" + journey;
   require("./attendance-dashboard/routes")(req, res, next);
-});
-
-// create-movement-list journey routes
-router.use("/create-movement-list", (req, res, next) => {
-  let serviceName = req.originalUrl.split("/")[1];
-  let version = req.originalUrl.split("/")[2];
-  let journey = req.originalUrl.split("/")[3];
-
-  req.protoUrl = serviceName + "/" + version + "/" + journey;
-  require("./create-movement-list/routes")(req, res, next);
-});
-
-// create-unlock-list journey routes
-router.use("/create-unlock-list", (req, res, next) => {
-  let serviceName = req.originalUrl.split("/")[1];
-  let version = req.originalUrl.split("/")[2];
-  let journey = req.originalUrl.split("/")[3];
-
-  req.protoUrl = serviceName + "/" + version + "/" + journey;
-  require("./create-unlock-list/routes")(req, res, next);
 });
 
 module.exports = router;

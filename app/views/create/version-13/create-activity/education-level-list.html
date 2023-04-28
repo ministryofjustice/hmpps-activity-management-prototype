@@ -15,7 +15,9 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-m">{{data['new-activity']['category']|replace('-',' ')|capitalize}}</span>
+        <span class="govuk-caption-m">
+            {{data['new-activity']['category']|getActivityCategoryName|replace('-',' ')|capitalize}}
+        </span>
         <h1 class="govuk-heading-m">{{data['new-activity']['name']}}</h1>
         {% if data['show-delete-dialog'] == true %}
         {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}

@@ -64,12 +64,12 @@ module.exports = {
   "appointment-categories-1": require('./appointment-categories-1'),
   "prototype-versions": {
     'create-and-allocate': {
-      'latest-version': 'v10',
-      'url': '/v10/dps-home-2'
+      'latest-version': 'version-13',
+      'url': '/create/version-13/manage-activities'
     },
     'unlock-and-attend': {
-      'latest-version': 'version-7',
-      'url': '/unlock/version-7/whereabouts'
+      'latest-version': 'version-8',
+      'url': '/unlock/version-8/whereabouts'
     },
     'appointments': {
       'latest-version': 'version-5',

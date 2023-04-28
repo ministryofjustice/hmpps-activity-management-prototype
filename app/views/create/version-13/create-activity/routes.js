@@ -6,6 +6,16 @@ const e = require("express");
 const { isObject } = require("lodash");
 
 router.all("*", function (req, res, next) {
+  // if there's no new-activity session data, set it to an empty object
+  if (!req.session.data["new-activity"]) {
+    req.session.data["new-activity"] = {};
+  }
+
+  // if there's no category session data, set it to a random number between 1 and 7
+  if (!req.session.data["new-activity"]["category"]) {
+    req.session.data["new-activity"]["category"] = Math.floor(Math.random() * 7) + 1;
+  }
+
   console.log(req.session.data["new-activity"]);
   next();
 });
@@ -477,30 +487,39 @@ router.post("/days-and-times", function (req, res) {
   let periods = ["am", "pm", "ed"];
   let days = [0, 1, 2, 3, 4, 5, 6];
 
-  // set the daysData variable to the days array, but remove _unchecked values so that the daysData array only contains the days that have been selected
-  let daysData = req.body.days.filter((day) => day != "_unchecked");
+  // check if the days array has been set in the session data
+  // it should be an object
+  if (req.body.days && typeof req.body.days === "object") {
+    // set the daysData variable to the days array, but remove _unchecked values so that the daysData array only contains the days that have been selected
+    let daysData = req.body.days.filter((day) => day != "_unchecked");
 
-  // create the structure for the schedule object
-  for (let day of days) {
-    let scheduleDay = {
-      day: day,
-      am: null,
-      pm: null,
-      ed: null,
-    };
-    schedule.push(scheduleDay);
-  }
+    // create the structure for the schedule object
+    for (let day of days) {
+      let scheduleDay = {
+        day: day,
+        am: null,
+        pm: null,
+        ed: null,
+      };
+      schedule.push(scheduleDay);
+    }
 
-  // update the schedule object with the periods that have been selected for each day
-  for (let day of daysData) {
-    let selectedPeriods = req.body["times-" + day];
-    for (let period of periods) {
-      if (selectedPeriods.includes(period)) {
-        let periodTimes = getPeriodTimes(period);
-        let scheduleDay = schedule.find((scheduleDay) => scheduleDay.day == day);
-        scheduleDay[period] = [periodTimes];
+    // update the schedule object with the periods that have been selected for each day
+    for (let day of daysData) {
+      let selectedPeriods = req.body["times-" + day];
+      for (let period of periods) {
+        if (selectedPeriods.includes(period)) {
+          let periodTimes = getPeriodTimes(period);
+          let scheduleDay = schedule.find((scheduleDay) => scheduleDay.day == day);
+          scheduleDay[period] = [periodTimes];
+        }
       }
     }
+  } else {
+    // get a random schedule from the activities session data
+    let activities = req.session.data["timetable-complete-1"]["activities"];
+    let randomActivity = activities[Math.floor(Math.random() * activities.length)];
+    schedule = randomActivity["schedule"];
   }
 
   // update the new-activity session data with the schedule object
@@ -577,7 +596,7 @@ router.post("/check-answers", function (req, res) {
   }
 
   // push the new activity to the activities session data
-  req.session.data["timetable-complete-1"]["activities"].push(randomActivity);
+  // req.session.data["timetable-complete-1"]["activities"].push(randomActivity);
 
   res.redirect("confirmation?activity=" + randomActivity.id);
 });
