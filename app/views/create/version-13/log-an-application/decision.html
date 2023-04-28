@@ -16,35 +16,32 @@ Activities Management prototype
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <form method="post">
-        <h2 class="govuk-heading-m">
-            <span class="govuk-caption-m">
-                {{data['new-activity']['category']}}
-            </span>
-            {{data['new-activity']['activity-name']}}
-        </h2>
+        {% set prisoner = data['new-application']['prisoner']|getPrisonerDetails %}
 
         {{govukRadios({
             idPrefix: "status",
-            name: "new-application[status]",
+            name: "new-application[decision]",
             fieldset: {
                 legend: {
-                    text: "Accept or reject the application",
+                    text: "Do you want to approve or reject the application?",
                     isPageHeading: true,
-                    classes: "govuk-fieldset__legend--l"
+                    classes: "govuk-fieldset__legend--xl"
                 }
             },
             items: [
                 {
-                    text: "Add to waitlist with status Pending - the person’s suitability can be checked later",
-                    value: "pending"
+                    html: "<b>Approve</b> and add to waitlist",
+                    value: "approved",
+                    hint: {
+                        text: "You've confirmed that " + prisoner.name.firstname + " " + prisoner.name.surname + " is suitable for this activity"
+                    }
                 },
                 {
-                    text: "Add to waitlist with status Approved - you’ve confirmed that the person is suitable",
-                    value: "approved"
-                },
-                {
-                    text: "Reject the application - the person will not be added to the waitlist",
-                    value: "rejected"
+                    html: "<b>Reject</b> the application",
+                    value: "rejected",
+                    hint: {
+                        text: prisoner.name.firstname + " " + prisoner.name.surname + " will not be added to the waitlist"
+                    }
                 }
             ]
         })}}
@@ -54,7 +51,9 @@ Activities Management prototype
             html: "<p>Check the person's suitability for this activity. For example, if they have a history of violence, you may want to reject their application.</p>"
         })}}
 
-      <button class="govuk-button" data-module="govuk-button">Continue</button>
+      {{ govukButton({
+        text: "Continue"
+      }) }}
     </form>
   </div>
 </div>

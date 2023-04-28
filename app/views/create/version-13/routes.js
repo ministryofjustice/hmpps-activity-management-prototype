@@ -53,7 +53,7 @@ router.use("/log-an-application-version-2", (req, res, next) => {
   let journey = req.originalUrl.split("/")[3];
 
   req.protoUrl = serviceName + "/" + version + "/" + journey;
-  require("./log-an-application-version-2/routes")(req, res, next);
+  require("./log-an-application/routes")(req, res, next);
 });
 
 // activities page

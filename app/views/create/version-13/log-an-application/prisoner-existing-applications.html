@@ -11,99 +11,68 @@ window.history.go(-1)" })}} {% endblock %}
 
 {% block content %}
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">
-            Check existing applications for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            Activity request history for {{prisoner.name.firstname}} {{prisoner.name.surname}}
         </h1>
 
+        <!-- <p>
+            Use the history to decide if the request should be reviewed in full.
+        </p> -->
         <form method="post">
-            <table class="govuk-table" data-module="moj-sortable-table">
-                <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                        <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%"><button
-                                type="button" data-index="0">Activity applied for</button></th>
-                        <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%"><button
-                                type="button" data-index="1">Application date</button></th>
-                        <th scope="col" class="govuk-table__header" aria-sort="ascending" style="width:33%"><button
-                                type="button" data-index="2">Application status</button></th>
-                        <th scope="col" class="govuk-table__header" style="width:28%"></th>
-                    </tr>
-                </thead>
-                <tbody class="govuk-table__body">
-                    <tr class="govuk-table__row">
-                        <td data-sort-value="Kitchens" class="govuk-table__cell">
-                            <strong><a href="# target=" _blank"="">Kitchens</a></strong><br>
-                        </td>
-                        <td class="govuk-table__cell" data-sort-value="20230205">5 February 2023</td>
-                        <td class="govuk-table__cell" data-sort-value="Approved">
-                            <strong class="govuk-tag govuk-tag--turquoise">A<span
-                                    style="text-transform:lowercase;">pproved and allocated</span></strong>
-                        </td>
-                    </tr>
-                    <tr class="govuk-table__row">
-                        <td data-sort-value="Servery" class="govuk-table__cell">
-                            <strong><a href="/unlock/version-5/prisoner-profile"
-                                    target="_blank">Servery</a></strong><br>
-                        </td>
-                        <td class="govuk-table__cell" data-sort-value="20221209">9 December 2022</td>
-                        <td class="govuk-table__cell" data-sort-value="On waitlist">
-                            <strong class="govuk-tag govuk-tag--purple">A<span
-                                    style="text-transform:lowercase;">pproved</span></strong>
-                        </td>
-                    </tr>
-                    <tr class="govuk-table__row">
-                        <td data-sort-value="Electronics" class="govuk-table__cell">
-                            <strong><a href="/unlock/version-5/prisoner-profile"
-                                    target="_blank">Electronics</a></strong><br>
-                        </td>
-                        <td class="govuk-table__cell" data-sort-value="20230201">1 February 2023</td>
-                        <td class="govuk-table__cell" data-sort-value="Pending">
-                            <strong class="govuk-tag govuk-tag--blue">P<span
-                                    style="text-transform:lowercase;">ending</span></strong>
-                        </td>
-                    </tr>
-                    <tr class="govuk-table__row">
-                        <td data-sort-value="Gardens" class="govuk-table__cell">
-                            <strong><a href="/unlock/version-5/prisoner-profile"
-                                    target="_blank">Gardens</a></strong><br>
-                        </td>
-                        <td class="govuk-table__cell" data-sort-value="20230121">21 January 2023</td>
-                        <td class="govuk-table__cell" data-sort-value="Rejected">
-                            <strong class="govuk-tag govuk-tag--red">R<span
-                                    style="text-transform:lowercase;">ejected</span></strong>
-                        </td>
-                    </tr>
+            <input type="hidden" name="new-application['selected-prisoner']" value="{{prisoner.id}}">
 
-                </tbody>
-            </table>
+            {% include "../includes/_previous-requests-table.html" %}
 
-            <!-- Yes no Radios for choosing whether to create a new application -->
-            {{ govukRadios({
-                idPrefix: "log-new-application",
-                name: "log-new-application",
-                fieldset: {
+            {% set reasonHtml %}
+            {{ govukTextarea({
+            id: "reject-new-application-reason",
+            name: "reject-new-application-reason",
+            label: {
+            text: "Reason for rejection"
+            },
+            hint: {
+            text: "This will be sent to the requester"
+            }
+            }) }}
+            {% endset %}
+
+            <!-- {{ govukRadios({
+                    idPrefix: "log-new-application",
+                    name: "log-new-application",
+                    fieldset: {
                     legend: {
-                        text: "Do you want to log a new application for this prisoner?",
-                        isPageHeading: false,
-                        classes: "govuk-fieldset__legend--m"
+                    text: "Is the request valid?",
+                    isPageHeading: false,
+                    classes: "govuk-fieldset__legend--l"
                     }
-                },
-                items: [
+                    },
+                    items: [
                     {
-                        value: "yes",
-                        text: "Yes"
+                    value: "yes",
+                    text: "Yes, it's a valid request and I want to review it"
                     },
                     {
-                        value: "no",
-                        text: "No"
+                    value: "no",
+                    text: "No, it's not a valid request. I will inform the person who made the request that it won't be reviewed and why.",
+                    conditional: {
+                    html: reasonHtml
                     }
-                ]
-            }) }}
+                    }
+                    ]
+                    }) }} -->
+            <p>
+                If you decide not to record the activity request, tell the person who submitted it, including the reason why.
+            </p>
             {{govukButton({
-            text: "Continue"
+            text: "Continue",
+            name: "log-new-application",
+            value: "yes"
             })}}
-        </form>
     </div>
+</div>
+</form>
+</div>
 </div>
 
 {% endblock %}

@@ -16,24 +16,18 @@ Activities Management prototype
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <form method="post">
-        <h2 class="govuk-heading-m">
-            <span class="govuk-caption-m">
-                {{data['new-activity']['category']}}
-            </span>
-            {{data['new-activity']['activity-name']}}
-        </h2>
         {{ govukDateInput({
             id: "start-date",
             namePrefix: "application-date",
             fieldset: {
               legend: {
-                text: "Enter the date shown on the application",
+                text: "Enter the date shown on the request",
                 isPageHeading: true,
-                classes: "govuk-fieldset__legend--l"
+                classes: "govuk-fieldset__legend--xl"
               }
             },
             hint: {
-              html: "If the application has not been dated, use today's date.<br>
+              html: "If the request has not been dated, use today's date.<br>
               For example, " + date|today|convertShortDateToExampleDate
             }
           }) }}
