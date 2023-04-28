@@ -1,0 +1,99 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% set prisonersNoun %}
+{% if filteredPrisoners.length > 1 %}
+{{filteredPrisoners.length or "3"}} prisoners
+{% else %}
+{{filteredPrisoners[0].name.firstname}} {{filteredPrisoners[0].name.surname}}
+{% endif %}
+{% endset %}
+
+{% block pageTitle %}
+Add attendance details for {{prisonersNoun}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-l">
+			{% if data['attendance-action'] == 'not-attended' %}
+			Enter sickness details for {{prisonersNoun}}
+			{% else %}
+			Add sickness details for {{prisonersNoun}}
+			{% endif %}
+		</h1>
+
+		{% if filteredPrisoners|length > 3 %}
+		<div class="app-search">
+			<form action="/applications" method="get" novalidate="" class="govuk-!-margin-bottom-8">
+				<div class="govuk-form-group">
+					<label class="govuk-label app-search__label govuk-label--m" for="keywords">
+						Search by prisoner name
+					</label>
+					<input class="govuk-input app-search__input " id="keywords" name="keywords" type="search">
+				</div>
+				<button class="govuk-button app-search__button" data-module="govuk-button">
+					Search
+				</button>
+			</form>
+		</div>
+		{% endif %}
+
+		<form method="post">
+			{% for prisoner in filteredPrisoners %}
+			<div class="prisoner">
+				{% if filteredPrisoners.length > 1 %}
+				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+				<h2 class="govuk-heading-m">
+					{{prisoner.name.surname}}, {{prisoner.name.firstname}}
+					<span class="govuk-caption-m">{{prisoner.id}}</span>
+				</h2>
+				{% endif %}
+
+				<input type="hidden" name="attendance-details[{{prisoner.id}}][attendance]" value="{{data['attendance-action']}}">
+				<input type="hidden" name="attendance-details[{{prisoner.id}}][absence-reason]" value="sick">
+
+				{{ govukRadios({
+					id: "pay-prisoner--sick",
+					name: "attendance-details[" + prisoner.id + "][pay-prisoner]",
+					classes: "govuk-radios--small govuk-radios--inline",
+					fieldset: {
+						legend: {
+							text: "Should the prisoner be paid?"
+						}
+					},
+					items: [
+					{
+						value: "yes",
+						text: "Yes",
+						id: "sick-pay-1-" + prisoner.id
+
+					},
+					{
+						value: "no",
+						text: "No",
+						id: "sick-pay-2-" + prisoner.id
+					}
+					]
+				}) }}
+			</div>
+			{% endfor %}
+
+			<div class="govuk-button-group govuk-!-margin-top-9">
+				{{govukButton({
+					text: "Record sickness details and finish"
+				})}}
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

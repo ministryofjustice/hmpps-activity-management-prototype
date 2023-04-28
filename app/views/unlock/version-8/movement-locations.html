@@ -1,0 +1,303 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{data['period']|upper}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+classes: "govuk-!-display-none-print",
+items: [
+{
+text: "Digital Prison Services",
+href: "/dps-home"
+},
+{
+text: "Manage prisoner unlock and attendance",
+href: "whereabouts"
+}
+]
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+			<span class="govuk-caption-l">{{data['date']|longDateFormat(data['date'])}} &ndash; {{data['period']|upper}}</span>
+            Movement locations
+        </h1>
+
+        <ul class="govuk-list govuk-!-margin-bottom-8">
+            <li>
+                <a href="select-movement-date" class="govuk-link--no-visited-state">Change the movement date</a>
+            </li>
+        </ul>
+
+
+        <!-- <div class="moj-search govuk-!-margin-bottom-6">
+            <form action="{{data['date']}}" method="get" novalidate="">
+                <div class="govuk-form-group">
+                    <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
+                        Search by activity name
+                    </label>
+                    <input class="govuk-input moj-search__input " id="keywords" name="search" type="search"
+                        value="{{data['search']}}">
+                </div>
+                <button class="govuk-button moj-search__button" data-module="govuk-button">
+                    Search
+                </button>
+            </form>
+        </div> -->
+    </div>
+</div>
+
+{%- from "moj/components/filter/macro.njk" import mojFilter -%}
+{%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
+<div class="moj-filter-layout">
+    <div class="moj-filter-layout__filter">
+        {% set filtersHtml %}
+        {{ govukCheckboxes({
+        fieldset: {
+        legend: {
+        text: "Session",
+        classes: "govuk-label--m"
+        }
+        },
+        classes: "govuk-checkboxes--small",
+        idPrefix: 'attendance',
+        name: 'filters[attendance]',
+        items: [
+        {
+        text: 'Morning (AM)',
+        id: 'Morning',
+        value: 'Morning',
+        checked: true
+        },
+        {
+        text: 'Afternoon (PM)',
+        id: 'Afternoon',
+        value: 'Afternoon',
+        checked: true
+        },
+        {
+        text: 'Evening (ED)',
+        id: 'Evening',
+        value: 'Evening',
+        checked: true
+        }]
+        }) }}
+
+        <!-- <fieldset class="govuk-fieldset govuk-!-margin-bottom-7">
+			<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+				Locations
+			</legend>
+			<div class="dropdown" data-control="checkbox-dropdown">
+				<label class="dropdown-label">All locations</label>
+				<div class="dropdown-list">
+					<div class="govuk-form-group">
+						<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+							{% for location in locations %}
+							<div class="govuk-checkboxes__item">
+								<input class="govuk-checkboxes__input" id="location-{{loop.index}}" name="filters[locations]" type="checkbox" value="1">
+								<label class="govuk-label govuk-checkboxes__label" for="location-{{loop.index}}">
+									{{location}}
+								</label>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</fieldset> -->
+
+        {{ govukRadios({
+        fieldset: {
+        legend: {
+        text: "Category",
+        classes: "govuk-label--m"
+        }
+        },
+        classes: "govuk-radios--small",
+        idPrefix: 'attendance',
+        name: 'filters[attendance]',
+        items: [
+        {
+        text: 'All categories',
+        id: 'all',
+        value: 'all',
+        checked: true
+        },
+        {
+        text: 'Education',
+        id: 'education',
+        value: 'Education'
+        },
+        {
+        text: 'Industries',
+        id: 'industries',
+        value: 'Industries'
+        },
+        {
+        text: 'Prison jobs',
+        id: 'prison',
+        value: 'Prison jobs'
+        },
+        {
+        text: 'Gym, sport and fitness',
+        id: 'gym',
+        value: 'Gym, sport and fitness'
+        },
+        {
+        text: 'Induction',
+        id: 'induction',
+        value: 'Induction'
+        },
+        {
+        text: 'Intervention programmes',
+        id: 'intervention',
+        value: 'Intervention programmes'
+        },
+        {
+        text: 'Faith',
+        id: 'faith',
+        value: 'Faith'
+        },
+        {
+        text: 'Other',
+        id: 'other',
+        value: 'Other'
+        }]
+        }) }}
+        {% endset %}
+
+        <div class="moj-filter">
+            <div class="moj-filter__header">
+                <div class="moj-filter__header-title">
+                    <h2 class="govuk-heading-m">Filter</h2>
+                </div>
+                <div class="moj-filter__header-action">
+                </div>
+            </div>
+            <div class="moj-filter__content">
+                {% if selectedFilters.length %}
+                <div class="moj-filter__selected">
+                    <div class="moj-filter__selected-heading">
+                        <div class="moj-filter__heading-title">
+                            <h2 class="govuk-heading-m">Selected filters</h2>
+                        </div>
+                        <div class="moj-filter__heading-action">
+                            <p><a class="govuk-link govuk-link--no-visited-state" href="">Clear filters</a></p>
+                        </div>
+                    </div>
+                    {% for filter in selectedFilters %}
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Colour</h3>
+                    <ul class="moj-filter-tags">
+                        <li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove this
+                                    filter</span> Blue</a></li>
+                        <li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove this
+                                    filter</span> Yellow</a></li>
+                    </ul>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="moj-filter__options">
+                    <button class="govuk-button" data-module="govuk-button">
+                        Apply filters
+                    </button>
+
+                    {{filtersHtml | safe}}
+
+                    <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+                        data-module="govuk-button">
+                        Apply filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <p>
+                Not all locations will show in this list. You'll only see the locations where there are activities or appointments happening at this time.
+            </p> -->
+
+    <div class="moj-filter-layout__content">
+        <!-- <div class="moj-filter-button"></div> -->
+
+        <div class="moj-scrollable-pane">
+            <h2 class="govuk-heading-m">
+                {{locations.length}} locations
+            </h2>
+
+            <table class="govuk-table app-whereabouts-table--sticky-head govuk-!-margin-bottom-8"
+                data-module="moj-sortable-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending">Location</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending">Prisoners</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Sessions</th>
+                        <th scope="col" class="govuk-table__header"></th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    {% for location in locations | sort(false, true, 'name') %}
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <h2 class="govuk-heading-m">{{location.name}}</h2>
+                        </td>
+                        <td class="govuk-table__cell">
+                            {{location.prisoners}}
+                        </td>
+                        <td class="govuk-table__cell">
+                            <ul class="govuk-list govuk-!-margin-bottom-0">
+                                {% for activity in location.activities %}
+                                <li>
+                                    <a href="activities/{{data['date']}}/{{data['period']|upper}}/{{activity.id}}"
+                                        class="govuk-link--no-visited-state">{{activity.name}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td class="govuk-table__cell">
+                            <a href="movement-list?period={{data['period']}}&date={{data['date']}}&location={{location.name}}&activities={{location.activityIds}}"
+                                class="govuk-link--no-visited-state">View movement list</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/jquery.modal.js"></script>
+<script type="text/javascript" src="/public/javascripts/dropdown-checkboxes.js"></script>
+<script type="text/javascript" src="/public/javascripts/vanillaSelectBox.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        new MOJFrontend.FilterToggleButton({
+            bigModeMediaQuery: "(min-width: 48.063em)",
+            startHidden: true,
+            toggleButton: {
+                container: $(".moj-filter-button"),
+                showText: "Show filter",
+                hideText: "Hide filter",
+                classes: "govuk-button--secondary",
+            },
+            closeButton: {
+                container: $(".moj-filter__header-action"),
+                text: "Close",
+            },
+            filter: {
+                container: $(".moj-filter"),
+            },
+        });
+    })
+</script>
+{% endblock %}

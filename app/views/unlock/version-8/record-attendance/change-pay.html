@@ -1,0 +1,78 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% set titleText %}
+
+{% endset %}
+
+{% block pageTitle %}
+{{titleText}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			<h1 class="govuk-heading-l">
+				Change pay details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+			</h1>
+
+			{% set insetTextHtml %}
+			<p>
+				{{activity.name}} on {{date|convertShortDateToLongDate}} ({{period|upper}})
+			</p>
+			{% endset %}
+
+			{{govukInsetText({
+				html: insetTextHtml
+			})}}
+			
+			{% set caseNoteHtml %}
+			{{ govukTextarea({
+				name: "case-note",
+				id: "bonus-detail-" + prisoner.id,
+				label: {
+					text: "Provide a short explanation for your decision, this will be added to their case notes."
+				}
+			}) }}
+			{% endset %}
+
+			{{ govukRadios({
+				id: "pay-details-" + prisoner.id,
+				name: "pay-prisoner",
+				fieldset: {
+					legend: {
+						text: "Should " + prisoner.name.firstname + " " + prisoner.name.surname + " be paid?",
+						classes: "govuk-label--m"
+					}
+				},
+				items: [
+				{
+					value: "yes",
+					text: "Yes"
+				},
+				{
+					value: "no",
+					text: "No",
+					conditional: {
+						html: caseNoteHtml
+					}
+				}
+				]
+			}) }}
+
+			{{govukButton({
+				text: "Continue"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back to attendance list",
+	"href": "../"+activity.id
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-three-quarters">
+		<h1 class="govuk-heading-l">
+			Attendance record for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+		</h1>
+
+		<div class="govuk-inset-text">
+			<a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a> on {{ date | convertShortDateToLongDate(date) }} ({{period}})
+		</div>
+
+		{% for record in attendanceData | reverse %}
+		{% if loop.index == 1 %}
+		<h2 class="govuk-heading-m">
+			Recorded on {{record.timestamp.date|convertShortDateToLongDate(record.timestamp.date)}} at {{record.timestamp.time | truncate(5, true, "")}}
+		</h2>
+		{% else %}
+		{% if loop.index == 2 %}
+		<h1 class="govuk-heading-m govuk-!-margin-top-8">
+			{{attendanceData|length - 1}} {{"changes have" if attendanceData|length > 2 else "change has"}} been made to this attendance record
+		</h1>
+		{% endif %}
+		<h2 class="govuk-heading-s">
+			Recorded on {{record.timestamp.date|convertShortDateToLongDate(record.timestamp.date)}} at {{record.timestamp.time | truncate(5, true, "")}}
+		</h2>
+		{% endif %}
+		<dl class="govuk-summary-list">
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Attendance
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{% if record.attendance == "attended" %}
+					Attended
+					{% elif record.attendance == "not-attended" %}
+					Not attended - {{record.attendanceStatus|capitalize|replace('-',' ')}}
+					{% endif %}
+					<!-- <p class="govuk-hint">
+						You can change the pay for this attendance record until 9 February 2023 at 11:36.
+					</p> -->
+				</dd>
+				{% if loop.index == 1 %}
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link govuk-link--no-visited-state" href="{{prisoner.id}}/change-attendance">
+						Change<span class="govuk-visually-hidden"> attendance</span>
+					</a>
+				</dd>
+				{% endif %}
+			</div>
+
+			{% if record.attendanceStatus == 'session-cancelled' %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Details
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{record.detail}}
+				</dd>
+			</div>
+			{% endif %}
+
+			{% if record.attendanceStatus == 'sick' or record.attendanceStatus == 'other' %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Details
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{record.detail}}
+				</dd>
+			</div>
+			{% endif %}
+			
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Pay
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{% if record.pay == true %}
+					<p>£1.54</p>
+					{% else %}
+					<p>None</p>
+					{% endif %}
+				</dd>
+				{% if loop.index == 1 %}
+				{% if record.attendance == 'attended' or record.attendanceStatus == 'sick' or record.attendanceStatus == 'rest-day' or record.attendanceStatus == 'other' %}
+				<!-- <dd class="govuk-summary-list__actions">
+					<a class="govuk-link govuk-link--no-visited-state" href="{{prisoner.id}}/change-pay">
+						Change<span class="govuk-visually-hidden"> pay</span>
+					</a>
+				</dd> -->
+				{% endif %}
+				{% endif %}
+			</div>
+
+			{% if record.attendanceStatus == "refused" %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Incentive level warning
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{record.incentiveLevelWarning|capitalize}}
+				</dd>
+			</div>
+			{% endif %}
+
+			{% if record.caseNote %}
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Case note
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{record.caseNote | striptags(true) | escape | nl2br}}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link govuk-link--no-visited-state" href="#">
+						View<span class="govuk-visually-hidden"> case note</span>
+					</a>
+				</dd>
+			</div>
+			{% endif %}
+
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Recorded by
+				</dt>
+				<dd class="govuk-summary-list__value">
+					Person Name
+				</dd>
+			</div>
+		</dl>
+		{% if record.attendance == "attended" and record.pay == true %}
+		{% if loop.index == 1 %}
+		{{govukButton({
+			text: "Remove pay and add case note",
+			classes: "govuk-button--warning",
+			href: prisoner.id + "/confirm-remove-pay"
+		})}}
+		{% endif %}
+		{% endif %}
+		{% endfor %}
+
+		<p>
+			<a href="../../../../prisoner/{{prisoner.id}}">View the prisoner's profile</a>
+		</p>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Manage prisoner unlock and attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+{% block beforeContent %}
+<div class="govuk-width-container">
+	<a href="/dps-home" class="govuk-back-link">Digital Prison Services</a>
+	<h1 class="govuk-heading-l govuk-!-margin-top-7">Manage prisoner unlock and attendance</h1>
+</div>
+{% endblock %}
+<div class="homepage-content">
+	<div class="govuk-width-container">
+		<ul class="govuk-grid-row card-group">
+			<li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-activity-location">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="create-unlock-list/select-date-and-location">Create unlock lists</a>
+					</h2>
+					<p class="govuk-body card__description">Create and print prisoner unlock lists.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-all-appointments">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="select-refusals-locations">Record unlock refusals and absences</a>
+					</h2>
+					<p class="govuk-body card__description">Update attendance lists by recording prisoners who are sick, refusing to attend or will be absent.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item">
+				<div class="card card--clickable" data-test="view-activity-location">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="create-movement-list">Create movement lists</a>
+					</h2>
+					<p class="govuk-body card__description">Create and print lists of prisoners by activity location.</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script src="/public/javascripts/cards.js"></script>
+{% endblock %}
