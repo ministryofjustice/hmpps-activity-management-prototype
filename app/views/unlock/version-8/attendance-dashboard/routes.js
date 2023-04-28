@@ -11,7 +11,7 @@ router.get("/", function (req, res) {
 router.get("/select-date", function (req, res) {
   let dateIn30Days = DateTime.now().plus({ days: 30 }).toISODate();
 
-  res.render("unlock/version-7/attendance-dashboard/select-date", {
+  res.render(req.protoUrl + "/select-date", {
     dateIn30Days,
   });
 });
