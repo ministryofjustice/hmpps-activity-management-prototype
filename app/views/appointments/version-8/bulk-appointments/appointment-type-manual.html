@@ -1,0 +1,72 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+
+<form id="form" method="post" action="location">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+   
+   <h1 class="govuk-heading-l">
+    <span class="govuk-caption-l">Bulk appointments</span>
+    Do you want to show {appointment category} on the unlock list?
+   </h1>
+     
+   {% from "govuk/components/radios/macro.njk" import govukRadios %}
+    {% from "govuk/components/input/macro.njk" import govukInput %}
+
+    {% set categoryHtml %}
+    {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+{{ govukCharacterCount({
+  name: "manual-category",
+  id: "manual-category",
+  maxlength: 40,
+  rows: 1,
+  label: {
+    text: "Enter your own category",
+    classes: "govuk-label--s"
+  }
+}) }}
+    {% endset -%}
+
+
+
+    {{ govukRadios({
+      name: "manual-category-entry",
+      items: [
+        {
+          value: "Yes",
+          text: "Yes - I want [appointment category] to show on the unlock list"
+        },
+        {
+          value: "No",
+          text: "No - I want to enter my own appointment description to show on the unlock list",
+          conditional: {
+            html: categoryHtml
+          }
+        }
+      ]
+    }) }}
+   
+
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </div>
+</div>
+</form>
+
+{% endblock %}

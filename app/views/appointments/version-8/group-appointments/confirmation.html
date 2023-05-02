@@ -1,0 +1,53 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+
+{% block content %}
+<div class="back">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+        titleText: "Appointment created"
+      }) }}
+
+
+      {% if data['appointment-repeat'] === 'Yes' %}
+                   
+      <p class="govuk-body">
+        You have successfully created an appointment for   {% if data['person-1-check'] ==='True' %} 6  {% else %} 5  {% endif %} prisoners starting on {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}. It will repeat {{ data['appointment-frequency']}}  for {{ data['number-of-appointments']}}  occurrences.
+      </p>
+   
+    
+    {% else  %}
+   
+    <p class="govuk-body">
+      You have successfully created a group appointment for  {% if data['person-1-check'] ==='True' %} 6  {% else %} 5  {% endif %} prisoners on {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}.
+
+     </p>
+    
+    {% endif %}
+
+
+
+
+
+    
+      <h2 class="govuk-heading-m">What you can do next</h2>
+      <p class="govuk-body">
+      <a href="../dps-home?prototype-versions[appointments][url]=/appointments/version-5/dps-home" class="govuk-link">Create another appointment</a>
+      </p>
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">View and edit appointment details</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

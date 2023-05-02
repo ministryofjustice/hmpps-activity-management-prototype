@@ -1,0 +1,887 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<div class="back">
+  <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+</div>
+    <div class="govuk-width-container">
+      
+      <main class="govuk-main-wrapper " id="main-content" role="main">
+       
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds-from-desktop">
+            <h1 class="govuk-heading-l">View and edit bulk appointment</h1>
+            <h2 class="govuk-heading-m">Bulk appointment details</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+             
+              
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  3 May 2023
+                </dd>
+              </div>
+              <!-- <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Type
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Medical - Doctor
+                </dd> 
+              </div> -->
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Appointments created
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  20
+                </dd> 
+              </div>
+              <!-- <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Medical room
+                </dd> 
+              </div> -->
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Created by 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Adela Wookey
+                </dd> 
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Date created
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  3 April 2023
+                </dd> 
+              </div>
+            </dl>
+            
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+
+            <div class="govuk-button-group">
+              {{ govukButton({
+                text: "Print all movement slips"
+              }) }}
+
+              {{ govukButton({
+                text: "Cancel all appointments",
+                classes: "govuk-button--secondary"
+              }) }}
+            </div>
+             
+
+
+            <h2 class="govuk-heading-m">
+              Prisoner appointment details
+            </h2>
+
+            <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  View individual prisoner appointment details
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <!--appointment details start-->
+
+            <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 1 <a href="single-appointment-no-recurrence" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner
+                </dt>
+                <dd class="govuk-summary-list__value">
+                 <a href="prisoner-details/rudge-neil" class="govuk-link">Rudge, Neil</a>
+                <br>
+                G2044E
+                <br>
+                1−1−2 
+                </dd>
+              </div>
+             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Start time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  9:00
+                </dd>
+                
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  End time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  10:00
+                </dd>
+                
+              </div>
+              </dl>
+
+              <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 2 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+            
+              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+               
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Prisoner
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                   <a href="#" class="govuk-link">Hungerford, Bert</a>
+                  <br>
+                  C2598E
+                  <br>
+                  1-5-111
+                  </dd>
+                  
+                </div>
+                
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Start time
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    9:00
+                  </dd>
+                 
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    End time
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    10:00
+                  </dd>
+                 
+                </div>
+                </dl>
+
+                <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 3 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+            
+                <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                 
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Prisoner
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                     <a href="#" class="govuk-link">Doyle, Matthew</a>
+                    <br>
+                    E4911C
+                    <br>
+                    1−8−333
+                    </dd>
+                  
+                  </div>
+                  
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Start time
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      9:00
+                    </dd>
+                   
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      End time
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      10:00
+                    </dd>
+                   
+                  </div>
+                  </dl>
+
+                  <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 4 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+            
+                  <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                   
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Prisoner
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                       <a href="#" class="govuk-link">Gee, Ryan</a>
+                      <br>
+                      F5132C
+                      <br>
+                      1−1−204
+                      </dd>
+                      
+                    </div>
+                   
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Start time
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        9:00
+                      </dd>
+                     
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        End time
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        {10:00
+                      </dd>
+                      
+                    </div>
+                    </dl>
+
+                    <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 5 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+            
+                    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                     
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Prisoner
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                         <a href="#" class="govuk-link">Bab, Robin</a>
+                        <br>
+                        F4933A
+                        <br>
+                        11−2−57
+                        </dd>
+                      
+                      </div>
+                     
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Start time
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          9:00
+                        </dd>
+                        
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          End time
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          10:00
+                        </dd>
+                        
+                      </div>
+                      </dl>
+
+                      <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 6 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+            
+                      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                       
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Prisoner
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                           <a href="#" class="govuk-link">Knox, Tommy-Lee</a>
+                          <br>
+                          C8361E
+                          <br>
+                          2−5−115
+                          </dd>
+                       
+                        </div>
+                       
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Start time
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            9:00
+                          </dd>
+                         
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            End time
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            10:00
+                          </dd>
+                         
+                        </div>
+                        </dl>
+
+                        <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 7 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+            
+                        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                         
+                          <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                              Prisoner
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                             <a href="#" class="govuk-link">Rasmussen, Fuentes</a>
+                            <br>
+                            E2405E
+                            <br>
+                            6−7−581
+                            </dd>
+                            
+                          </div>
+                          
+                          <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                              Start time
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                              9:00
+                            </dd>
+                          
+                          </div>
+                          <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                              End time
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                              10:00
+                            </dd>
+                            
+                          </div>
+                          </dl>
+
+                          <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 8 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+            
+                          <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                           
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                Prisoner
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                               <a href="#" class="govuk-link">Drove, Luther</a>
+                              <br>
+                              C7950C
+                              <br>
+                              1−1−211
+                              </dd>
+                              
+                            </div>
+                            
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                Start time
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                                9:00
+                              </dd>
+                             
+                            </div>
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                End time
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                                10:00
+                              </dd>
+                              
+                            </div>
+                            </dl>
+
+                            <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 8 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+            
+                            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                             
+                              <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                  Prisoner
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                 <a href="#" class="govuk-link">Looker, Logan</a>
+                                <br>
+                                B9295C
+                                <br>
+                                2−2−876
+                                </dd>
+                               
+                              </div>
+                              
+                              <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                  Start time
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                  9:00
+                                </dd>
+                              
+                              </div>
+                              <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                  End time
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                  10:00
+                                </dd>
+                            
+                              </div>
+                              </dl>
+
+                              <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 10 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+            
+                              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                               
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    Prisoner
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                   <a href="#" class="govuk-link">Sykes, Eric</a>
+                                  <br>
+                                  F6726E
+                                  <br>
+                                  1−8−122
+                                  </dd>
+                               
+                                </div>
+                               
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    Start time
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                    9:00
+                                  </dd>
+                                  
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    End time
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                    10:00
+                                  </dd>
+                                 
+                                </div>
+                                </dl>
+
+                                <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 11 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+              
+                                <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+             
+                                  <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                      Prisoner
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                     <a href="#" class="govuk-link">Rudge, Neil</a>
+                                    <br>
+                                    G2044E
+                                    <br>
+                                    1−1−2 
+                                    </dd>
+                                  </div>
+                                 
+                                  <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                      Start time
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                      9:00
+                                    </dd>
+                                    
+                                  </div>
+                                  <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                      End time
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                      10:00
+                                    </dd>
+                                    
+                                  </div>
+                                  </dl>
+                    
+                                  <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 12 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+                                
+                                  <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                   
+                                    <div class="govuk-summary-list__row">
+                                      <dt class="govuk-summary-list__key">
+                                        Prisoner
+                                      </dt>
+                                      <dd class="govuk-summary-list__value">
+                                       <a href="#" class="govuk-link">Hungerford, Bert</a>
+                                      <br>
+                                      C2598E
+                                      <br>
+                                      1-5-111
+                                      </dd>
+                                      
+                                    </div>
+                                    
+                                    <div class="govuk-summary-list__row">
+                                      <dt class="govuk-summary-list__key">
+                                        Start time
+                                      </dt>
+                                      <dd class="govuk-summary-list__value">
+                                        9:00
+                                      </dd>
+                                     
+                                    </div>
+                                    <div class="govuk-summary-list__row">
+                                      <dt class="govuk-summary-list__key">
+                                        End time
+                                      </dt>
+                                      <dd class="govuk-summary-list__value">
+                                        10:00
+                                      </dd>
+                                     
+                                    </div>
+                                    </dl>
+                    
+                                    <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 13 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+                                
+                                    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                     
+                                      <div class="govuk-summary-list__row">
+                                        <dt class="govuk-summary-list__key">
+                                          Prisoner
+                                        </dt>
+                                        <dd class="govuk-summary-list__value">
+                                         <a href="#" class="govuk-link">Doyle, Matthew</a>
+                                        <br>
+                                        E4911C
+                                        <br>
+                                        1−8−333
+                                        </dd>
+                                      
+                                      </div>
+                                      
+                                      <div class="govuk-summary-list__row">
+                                        <dt class="govuk-summary-list__key">
+                                          Start time
+                                        </dt>
+                                        <dd class="govuk-summary-list__value">
+                                          9:00
+                                        </dd>
+                                       
+                                      </div>
+                                      <div class="govuk-summary-list__row">
+                                        <dt class="govuk-summary-list__key">
+                                          End time
+                                        </dt>
+                                        <dd class="govuk-summary-list__value">
+                                          10:00
+                                        </dd>
+                                       
+                                      </div>
+                                      </dl>
+                    
+                                      <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 14 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+                                
+                                      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                       
+                                        <div class="govuk-summary-list__row">
+                                          <dt class="govuk-summary-list__key">
+                                            Prisoner
+                                          </dt>
+                                          <dd class="govuk-summary-list__value">
+                                           <a href="#" class="govuk-link">Gee, Ryan</a>
+                                          <br>
+                                          F5132C
+                                          <br>
+                                          1−1−204
+                                          </dd>
+                                          
+                                        </div>
+                                       
+                                        <div class="govuk-summary-list__row">
+                                          <dt class="govuk-summary-list__key">
+                                            Start time
+                                          </dt>
+                                          <dd class="govuk-summary-list__value">
+                                            9:00
+                                          </dd>
+                                         
+                                        </div>
+                                        <div class="govuk-summary-list__row">
+                                          <dt class="govuk-summary-list__key">
+                                            End time
+                                          </dt>
+                                          <dd class="govuk-summary-list__value">
+                                            {10:00
+                                          </dd>
+                                          
+                                        </div>
+                                        </dl>
+                    
+                                        <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 15 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+                                
+                                        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                         
+                                          <div class="govuk-summary-list__row">
+                                            <dt class="govuk-summary-list__key">
+                                              Prisoner
+                                            </dt>
+                                            <dd class="govuk-summary-list__value">
+                                             <a href="#" class="govuk-link">Bab, Robin</a>
+                                            <br>
+                                            F4933A
+                                            <br>
+                                            11−2−57
+                                            </dd>
+                                          
+                                          </div>
+                                         
+                                          <div class="govuk-summary-list__row">
+                                            <dt class="govuk-summary-list__key">
+                                              Start time
+                                            </dt>
+                                            <dd class="govuk-summary-list__value">
+                                              9:00
+                                            </dd>
+                                            
+                                          </div>
+                                          <div class="govuk-summary-list__row">
+                                            <dt class="govuk-summary-list__key">
+                                              End time
+                                            </dt>
+                                            <dd class="govuk-summary-list__value">
+                                              10:00
+                                            </dd>
+                                            
+                                          </div>
+                                          </dl>
+                    
+                                          <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 16 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+                                
+                                          <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                           
+                                            <div class="govuk-summary-list__row">
+                                              <dt class="govuk-summary-list__key">
+                                                Prisoner
+                                              </dt>
+                                              <dd class="govuk-summary-list__value">
+                                               <a href="#" class="govuk-link">Knox, Tommy-Lee</a>
+                                              <br>
+                                              C8361E
+                                              <br>
+                                              2−5−115
+                                              </dd>
+                                           
+                                            </div>
+                                           
+                                            <div class="govuk-summary-list__row">
+                                              <dt class="govuk-summary-list__key">
+                                                Start time
+                                              </dt>
+                                              <dd class="govuk-summary-list__value">
+                                                9:00
+                                              </dd>
+                                             
+                                            </div>
+                                            <div class="govuk-summary-list__row">
+                                              <dt class="govuk-summary-list__key">
+                                                End time
+                                              </dt>
+                                              <dd class="govuk-summary-list__value">
+                                                10:00
+                                              </dd>
+                                             
+                                            </div>
+                                            </dl>
+                    
+                                            <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 17 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+                                
+                                            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                             
+                                              <div class="govuk-summary-list__row">
+                                                <dt class="govuk-summary-list__key">
+                                                  Prisoner
+                                                </dt>
+                                                <dd class="govuk-summary-list__value">
+                                                 <a href="#" class="govuk-link">Rasmussen, Fuentes</a>
+                                                <br>
+                                                E2405E
+                                                <br>
+                                                6−7−581
+                                                </dd>
+                                                
+                                              </div>
+                                              
+                                              <div class="govuk-summary-list__row">
+                                                <dt class="govuk-summary-list__key">
+                                                  Start time
+                                                </dt>
+                                                <dd class="govuk-summary-list__value">
+                                                  9:00
+                                                </dd>
+                                              
+                                              </div>
+                                              <div class="govuk-summary-list__row">
+                                                <dt class="govuk-summary-list__key">
+                                                  End time
+                                                </dt>
+                                                <dd class="govuk-summary-list__value">
+                                                  10:00
+                                                </dd>
+                                                
+                                              </div>
+                                              </dl>
+                    
+                                              <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 18 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+                                
+                                              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                               
+                                                <div class="govuk-summary-list__row">
+                                                  <dt class="govuk-summary-list__key">
+                                                    Prisoner
+                                                  </dt>
+                                                  <dd class="govuk-summary-list__value">
+                                                   <a href="#" class="govuk-link">Drove, Luther</a>
+                                                  <br>
+                                                  C7950C
+                                                  <br>
+                                                  1−1−211
+                                                  </dd>
+                                                  
+                                                </div>
+                                                
+                                                <div class="govuk-summary-list__row">
+                                                  <dt class="govuk-summary-list__key">
+                                                    Start time
+                                                  </dt>
+                                                  <dd class="govuk-summary-list__value">
+                                                    9:00
+                                                  </dd>
+                                                 
+                                                </div>
+                                                <div class="govuk-summary-list__row">
+                                                  <dt class="govuk-summary-list__key">
+                                                    End time
+                                                  </dt>
+                                                  <dd class="govuk-summary-list__value">
+                                                    10:00
+                                                  </dd>
+                                                  
+                                                </div>
+                                                </dl>
+                    
+                                                <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 19 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+                                
+                                                <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                                 
+                                                  <div class="govuk-summary-list__row">
+                                                    <dt class="govuk-summary-list__key">
+                                                      Prisoner
+                                                    </dt>
+                                                    <dd class="govuk-summary-list__value">
+                                                     <a href="#" class="govuk-link">Looker, Logan</a>
+                                                    <br>
+                                                    B9295C
+                                                    <br>
+                                                    2−2−876
+                                                    </dd>
+                                                   
+                                                  </div>
+                                                  
+                                                  <div class="govuk-summary-list__row">
+                                                    <dt class="govuk-summary-list__key">
+                                                      Start time
+                                                    </dt>
+                                                    <dd class="govuk-summary-list__value">
+                                                      9:00
+                                                    </dd>
+                                                  
+                                                  </div>
+                                                  <div class="govuk-summary-list__row">
+                                                    <dt class="govuk-summary-list__key">
+                                                      End time
+                                                    </dt>
+                                                    <dd class="govuk-summary-list__value">
+                                                      10:00
+                                                    </dd>
+                                                
+                                                  </div>
+                                                  </dl>
+                    
+                                                  <div class="govuk-caption-l govuk-!-margin-bottom-3">Appointment 20 <a href="#" class="govuk-body govuk-link" style="padding-left: 90px">View and edit</a></div>
+            
+                                
+                                                  <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                                   
+                                                    <div class="govuk-summary-list__row">
+                                                      <dt class="govuk-summary-list__key">
+                                                        Prisoner
+                                                      </dt>
+                                                      <dd class="govuk-summary-list__value">
+                                                       <a href="#" class="govuk-link">Sykes, Eric</a>
+                                                      <br>
+                                                      F6726E
+                                                      <br>
+                                                      1−8−122
+                                                      </dd>
+                                                   
+                                                    </div>
+                                                   
+                                                    <div class="govuk-summary-list__row">
+                                                      <dt class="govuk-summary-list__key">
+                                                        Start time
+                                                      </dt>
+                                                      <dd class="govuk-summary-list__value">
+                                                        9:00
+                                                      </dd>
+                                                      
+                                                    </div>
+                                                    <div class="govuk-summary-list__row">
+                                                      <dt class="govuk-summary-list__key">
+                                                        End time
+                                                      </dt>
+                                                      <dd class="govuk-summary-list__value">
+                                                        10:00
+                                                      </dd>
+                                                     
+                                                    </div>
+                                                    </dl>
+
+              
+<!--appointment details end-->
+            </div>
+          </details>
+           
+          </div>
+        </div>
+      </main>
+    </div>
+  
+{% endblock %}

@@ -1,0 +1,82 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="prisoner-confirmed-question">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+        </div>
+          <h1 class="govuk-heading-l">
+            <span class="govuk-caption-l">Individual appointment</span>
+            Check prisoner details
+          </h1>
+        </div>
+      </div>
+
+    <h2 class="govuk-heading-m">We found '2' matches</h2>
+
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <table class="govuk-table" data-module="moj-sortable-table">
+        <thead class="govuk-table__head">
+          <tr>
+            <th class="govuk-table__header">
+              Name
+            </th>
+            <th class="govuk-table__header"  width="120">
+              Location
+            </th>
+            <th class="govuk-table__header" class="govuk-hiddn">
+              
+            </th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"  scope="col">
+              <a href="#" class="govuk-link--no-visited-state"><b>Rudge</b>, Neil</a><br>
+              <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
+            </td>
+            <td class="govuk-table__cell" data-sort-value="112" scope="col">
+              1−1−2
+            </td>
+            <td class="govuk-table__cell">
+              <button class="govuk-button govuk-button--secondary " data-module="govuk-button">
+                Confirm this person
+              </button>
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"  scope="col">
+              <a href="#" class="govuk-link--no-visited-state"><b>Rudge</b>, Neil</a><br>
+              <span class="govuk-hint govuk-!-font-size-16">C2598E</span>
+            </td>
+            <td class="govuk-table__cell" data-sort-value="323" scope="col">
+              3−2−3
+            </td> 
+            <td class="govuk-table__cell">
+              <button class="govuk-button govuk-button--secondary " data-module="govuk-button">
+                Confirm this person
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <a class="govuk-link govuk-body" href="search-person">Search again for a prisoner</a>
+
+  </div>
+</div>
+{% endblock %}

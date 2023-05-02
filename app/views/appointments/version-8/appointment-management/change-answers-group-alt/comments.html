@@ -1,0 +1,59 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="../change-answers-group-appointments/change-occurence-question">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Individual appointment</span>
+        Add comments for Rudge, Neil to be shown on the movement slip
+       </h1>
+
+  </div>
+   </div>
+
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    
+    {{ govukTextarea({
+      id: "comments-single",
+      name: "comments-single",
+      label: {
+        html: "<b class='govuk-fieldset__legend--m'>Comments (optional)</b>"
+      }
+    }) }}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+         
+          
+            {{ govukButton({
+              text: 'Continue'
+            }) }}
+           
+          </div>
+      </div>
+
+
+      
+       
+
+   
+
+
+
+
+  </div>
+</div>
+{% endblock %}
