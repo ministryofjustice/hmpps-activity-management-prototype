@@ -110,7 +110,11 @@ type: "success"
                             {{prisoner.payrate or "General - £1.00"}}
                         </dd>
                         <dd class="govuk-summary-list__actions">
+                            {% if prisoner.payRatesForIncentiveLevel == true %}
                             <a href="{{prisoner.id}}/payrate?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
+                            {% else %}
+                            No alternative pay rates
+                            {% endif %}
                         </dd>
                     </div>
                 </dl>
