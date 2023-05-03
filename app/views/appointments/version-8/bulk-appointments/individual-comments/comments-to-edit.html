@@ -18,35 +18,32 @@ Appointments prototype
       </div>
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-l">Bulk appointments</span>
-        Add comments for Bert Hungerford, C2598E
+        Add a heads up for Bert Hungerford, C2598E
        </h1>
+       <p class="govuk-body">Give the attendee a heads up about their appointment. It will be printed on their movement slip. </p>
 
-  </div>
-   </div>
-
-   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+      </div>
+       </div>
     
-    {{ govukTextarea({
-      id: "comments",
-      name: "comments",
-      label: {
-        html: "<b class='govuk-fieldset__legend--m'>Comments (optional)</b>"
-      },
-      hint: {
-        text: "These will be included on the movement slip"
-      },
-      value: "Example placeholder of text if already added by a user during appointment creation"
-    }) }}
-      <div class="govuk-grid-row">
+       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-         
-          
-            {{ govukButton({
-              text: 'Continue'
-            }) }}
-           
-          </div>
+        
+        {{ govukTextarea({
+          id: "comments",
+          name: "comments", 
+          hint: {
+            text: "For example, 'You need to bring all your documents about your case to this meeting with your solicitor.'"
+          }
+        }) }}
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+             
+              
+                {{ govukButton({
+                  text: 'Continue'
+                }) }}
+               
+              </div>
       </div>
       </div>
       </div>
