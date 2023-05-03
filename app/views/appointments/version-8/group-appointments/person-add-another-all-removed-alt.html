@@ -1,0 +1,50 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="back">
+        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+        </div>
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Group appointment</span>
+          Review and add prisoners to the appointment list
+        </h1>
+
+    </div>
+  </div>
+
+  <p class="govuk-body">No people have been added to the appointment list. You must add at least one person.</p>
+
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+
+    <form method="post">
+     
+      <div class="govuk-grid-row govuk-grid-column-full govuk-!-margin-bottom-3">
+        {{ govukButton({
+          text: "Add a prisoner",
+          attributes: {
+          "formaction": "upload-or-per-person",
+          "formmethod": "get"
+          }
+          }) }}
+      </div>
+
+      <a class="govuk-body" href="#">Cancel</a>
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
