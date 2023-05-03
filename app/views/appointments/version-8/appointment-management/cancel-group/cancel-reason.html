@@ -1,0 +1,71 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="../group-appointment-multiple-occurrences-alt">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Group appointment</span>
+        Why are you cancelling the appointments?
+       </h1>
+   
+      {{ govukRadios({
+        idPrefix: "cancel-reason",
+        name: "cancel-reason",
+        items: [
+          {
+            value: "Staff unavailable",
+            text: "Staff unavailable"
+          },
+          {
+            value: "Staff training",
+            text: "Staff training"
+          },
+          {
+            value: "Session not required",
+            text: "Session not required"
+          },
+          {
+            value: "Location unavailable",
+            text: "Location unavailable"
+          },
+          {
+            value: "Prison operational issue",
+            text: "Prison operational issue"
+          },
+           {
+            divider: "or"
+          },
+          {
+            value: "Created in error",
+            text: "Created in error",
+            hint: {
+              text: "This will remove the appointment from the unlock list"
+            }
+          }
+        ]
+      }) }}
+      
+    
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
+
+
+
+  </div>
+</div>
+{% endblock %}

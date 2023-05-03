@@ -1,0 +1,119 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="cancel-question">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">View and edit appointment details</span>
+        Rudge, Neil G2044E
+       </h1>
+       <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Prisoner 
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <a href="#" class="govuk-link"> Rudge, Neil</a><br>G2044E <br>1-2-33 
+          </dd>
+          <dd class="govuk-summary-list__actions">
+           
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Category
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data.categoryChoicesingle or 'Medical - Other'}} 
+          </dd>
+          <dd class="govuk-summary-list__actions">
+           
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Location
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data.locationChoicesingle or 'HB1 Doctors'}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+           
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Date
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['date-of-appointment-day'] or '23'}} {{ data['date-of-appointment-month']  or 'Mar'}}  {{ data['date-of-appointment-year'] or '2023'}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Start time
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['start-hours'] or '11'}}:{{ data['start-minutes'] or '00'}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            End time
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['end-hours'] or '16'}}:{{ data['end-minutes'] or '00'}} 
+          </dd>
+          <dd class="govuk-summary-list__actions">
+         
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Comments
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['comments'] or 'no comments'}} 
+          </dd>
+          <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="change-answers/comments">
+                    Change <span class="govuk-visually-hidden">  comments</span>
+                  </a>
+          </dd>
+        </div>
+       </dl>
+    
+       <div class="govuk-button-group">
+    
+          {{ govukButton({
+            text: "Print movement slip"
+          }) }}
+          {{ govukButton({
+            text: "Remove prisoner",
+            classes: "govuk-button--warning"
+          }) }}
+      </div>
+
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">
+            Check and confirm who you're removing from Case - Substance Misuse
+        </h1>
+        <div class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title">Neil Rudge &ndash;
+                    G2044E</h2>
+            </div>
+            <div class="govuk-summary-card__content"> 
+                <dl class="govuk-summary-list"> 
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Which appointments
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            All occurences
+                        </dd>
+                        <!-- Change link -->
+                        <dd class="govuk-summary-list__actions">
+                            {% if data['deallocate-same-date'] == 'yes' %}
+                            <a href="date-check?redirect=check-deallocation"
+                                class="govuk-link--no-visited-state">Change</a>
+                            {% else %}
+                            <a href="date/{{prisoner.id}}?redirect=check-deallocation&change-multiple=false"
+                                class="govuk-link--no-visited-state">Change</a>
+                            {% endif %}
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Reason
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            Security
+                        </dd>
+                        <!-- Change link -->
+                        <dd class="govuk-summary-list__actions">
+                            {% if data['deallocate-same-reason'] == 'yes' %}
+                            <a href="reason-check?redirect=check-deallocation"
+                                class="govuk-link--no-visited-state">Change</a>
+                            {% else %}
+                            <a href="reason/{{prisoner.id}}?redirect=check-deallocation&change-multiple=false"
+                                class="govuk-link--no-visited-state">Change</a>
+                            {% endif %}
+                        </dd>
+                    </div>
+                </dl> 
+            </div>
+        </div> 
+
+
+        <form method="post" action="../group-appointment-single-occurrence"> 
+
+            {{ govukButton({
+            text: "Confirm and remove"
+            }) }} 
+        </form>
+    </div>
+</div>
+
+{% endblock %}

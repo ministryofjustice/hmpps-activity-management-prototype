@@ -1,0 +1,86 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="prisoner-comments">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Individual appointment</span>
+        Select repeat appointment details
+       </h1>
+      <h2 class="govuk-heading-m">
+        How often will the appointment repeat?
+       </h2>
+   
+      {{ govukRadios({
+        idPrefix: "appointment-frequency-single",
+        name: "appointment-frequency-single",
+       
+       
+        items: [
+          {
+            value: "Every weekday (Monday to Friday)",
+            text: "Every weekday (Monday to Friday)"
+          },
+          {
+            value: "Daily (includes weekends)",
+            text: "Daily (includes weekends)"
+          },
+          {
+            value: "Weekly",
+            text: "Weekly"
+          },
+          {
+            value: "Fortnightly",
+            text: "Fortnightly"
+          },
+          {
+            value: "Monthly",
+            text: "Monthly"
+          }
+        ]
+      }) }}
+
+
+      <h2 class="govuk-heading-m">
+       
+        How many times will the appointment repeat?
+       </h2>
+     {{ govukInput({
+      id: "number-of-appointments-single",
+      name: "number-of-appointments-single",
+      label: {
+        text: "Enter the number of times the appointment will repeat up to a maximum of one year"
+      },
+           
+      classes: "govuk-input--width-4"
+     }) }}
+     
+     <!--{{ govukInsetText({
+      html: "Last appointment on <b>24 August 2023</b>"
+     }) }}-->
+      
+    
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
+
+
+
+  </div>
+</div>
+{% endblock %}

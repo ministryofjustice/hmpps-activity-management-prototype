@@ -1,0 +1,303 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+
+    <div class="govuk-width-container">
+      
+      <main class="govuk-main-wrapper " id="main-content" role="main">
+        <div class="govuk-grid-row">
+         
+          <div class="govuk-grid-column-two-thirds-from-desktop">
+            
+            <div class="back">
+              <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+              </div>
+              {% if data['which-occurrence'] === 'This occurrence' %}
+
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  Appointment [detail here] for this occurrence changed successfully 
+                </h3>
+                
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }}
+    
+              {% endif %}
+            <h1 class="govuk-heading-l">
+              <span class="govuk-caption-l">View and edit appointment</span>
+              Case - Substance misuse services - 26 Apr 2023
+             </h1>
+            <h2 class="govuk-heading-m">Appointment details</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Type
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  Case - Substance misuse services
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                 
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{data.locationChoicesingle or 'HB1 Classroom 1'}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="change-answers-group-appointments/location">
+                    Change <span class="govuk-visually-hidden">  location</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  26 Apr 2023
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="change-answers-group-appointments/date-of-appointment">
+                    Change <span class="govuk-visually-hidden"> date</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Start time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  11:30
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="change-answers-group-appointments/date-of-appointment">
+                    Change <span class="govuk-visually-hidden"> start time</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  End time
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  12:00
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="change-answers-group-appointments/date-of-appointment">
+                    Change <span class="govuk-visually-hidden"> end time</span>
+                  </a>
+                </dd>
+              </div>
+
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Occurrence
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  3 of 9
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="group-appointment-multiple-occurrences-alt">
+                    View series
+                  </a>
+                </dd>
+              </div>
+             </dl>
+
+             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+
+
+             
+              
+
+              
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoners 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  6
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="change-answers-group-alt/person-add-another.html">
+                    Change<span class="govuk-visually-hidden"> prisoners</span>
+                  </a>
+                </dd>
+              </div>
+             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link"> Hungerford, Bert</a><br>C2598E<br>1-3-44 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    View and edit<span class="govuk-visually-hidden"> Hungerford, Bert</span>
+                  </a>
+                </dd>
+              </div>
+
+              
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link">Rudge, Neil</a><br>G2044E <br>1-2-33
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="prisoner-details/rudge-neil">
+                    View and edit<span class="govuk-visually-hidden">Rudge, Neil</span>
+                  </a>
+                </dd>
+              </div>
+              
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link"> Doyle, Matthew</a><br>E4911C<br>1-2-22 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    View and edit<span class="govuk-visually-hidden"> Doyle, Matthew</span>
+                  </a>
+                </dd>
+              </div>
+             
+             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link"> Gee, Ryan</a><br>F5132C<br>1-2-88 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    View and edit<span class="govuk-visually-hidden"> Gee, Ryan</span>
+                  </a>
+                </dd>
+              </div>
+             
+             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link"> Bab, Robin</a><br>F4933A<br>1-3-66
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    View and edit<span class="govuk-visually-hidden"> Bab, Robin</span>
+                  </a>
+                </dd>
+              </div>
+            
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link"> Knox, Tommy-Lee</a><br>C8361E<br>2-1-22
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    View and edit<span class="govuk-visually-hidden"> Knox, Tommy-Lee</span>
+                  </a>
+                </dd>
+              </div>
+              <!-- <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link"> Rasmussen, Fuentes</a><br>E2405E<br>1-3-2
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    View and edit<span class="govuk-visually-hidden"> Rasmussen, Fuentes</span>
+                  </a>
+                </dd>
+              </div>
+             
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link"> Drove, Luther</a><br>E2405E<br>2-2-2
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    View and edit<span class="govuk-visually-hidden"> Drove, Luther</span>
+                  </a>
+                </dd>
+              </div>
+              
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link"> Looker, Logan</a><br>C7950C<br>1-1-1
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    View and edit<span class="govuk-visually-hidden"> Looker, Logan</span>
+                  </a>
+                </dd>
+              </div> -->
+              
+              <!--<div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Prisoner 
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  <a href="#" class="govuk-link">  Sykes, Eric</a><br>B9295C<br>1-4-5 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    View and edit<span class="govuk-visually-hidden"> Sykes, Eric</span>
+                  </a>
+                </dd>
+              </div>-->
+              </dl>
+            <form  method="post" novalidate>
+              <div class="govuk-button-group">
+                {{ govukButton({
+                  text: "Print movement slip"
+                }) }}
+              
+               {{ govukButton({
+                text: "Cancel appointment",
+                classes: "govuk-button--secondary",
+                href: "cancel-group/cancel-question"
+               }) }}
+               
+            </div> 
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  
+{% endblock %}

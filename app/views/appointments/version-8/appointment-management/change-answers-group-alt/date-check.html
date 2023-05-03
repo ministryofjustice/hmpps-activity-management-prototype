@@ -1,0 +1,117 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post" action="reason-check">
+
+            <h2 class="govuk-heading-m">
+                You've selected 3 people
+            </h2>
+
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row"> 
+                    <th class="govuk-table__header"> 
+                        Name 
+                    </th>
+                    <th class="govuk-table__header" > 
+                        Prison number 
+                    </th> 
+                    <th class="govuk-table__header"> 
+                        Location
+                    </th> 
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+
+                  <tr class="govuk-table__row">
+                    
+                    <td class="govuk-table__cell"  scope="col">
+                      <a href="#" class="govuk-link--no-visited-state"><b>Hungerford, </b>Bert</a><br>
+                      <span class="govuk-hint govuk-!-font-size-16"></span>
+                    </td>
+                    <td class="govuk-table__cell" data-sort-value="112" scope="col">
+                      C2598E 
+                    </td>
+                  
+                    <td class="govuk-table__cell" data-sort-value="" scope="col">
+                      1-5-111
+                    </td>
+                  </tr>
+
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell"  scope="col">
+                      <a href="#" class="govuk-link--no-visited-state"><b>Rudge, </b>Neil</a><br>
+                      <span class="govuk-hint govuk-!-font-size-16"></span>
+                    </td>
+                    <td class="govuk-table__cell" data-sort-value="112" scope="col">
+                      G2044E
+                    </td>
+                  
+                    <td class="govuk-table__cell" data-sort-value="" scope="col">
+                      1-2-33
+                    </td>
+                  </tr>
+
+                  <tr class="govuk-table__row"> 
+                    <td class="govuk-table__cell"  scope="col">
+                      <a href="#" class="govuk-link--no-visited-state"><b>Doyle, </b>Matthew</a><br>
+                      <span class="govuk-hint govuk-!-font-size-16"></span>
+                    </td>
+                    <td class="govuk-table__cell" data-sort-value="112" scope="col">
+                      E4911C
+                    </td>
+                  
+                    <td class="govuk-table__cell" data-sort-value="" scope="col">
+                      1-2-22
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h1 class="govuk-heading-l"> 
+                Which appointments do you wish to remove prisoners from?
+               </h1>
+
+               {{ govukRadios({
+                idPrefix: "which-occurrence-alt-prisoners",
+                name: "which-occurrence-alt-prisoners",
+                items: [
+                  {
+                    value: "This occurrence-prisoners",
+                    text: "This occurrence"
+                  },
+                  {
+                    value: "This and the following occurrences-prisoners",
+                    text: "This and the following occurrences"
+                  },
+                  {
+                    value: "All occurrences-prisoners",
+                    text: "All occurrences"
+                  }
+                ]
+               }) }}
+             
+
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

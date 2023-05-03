@@ -1,0 +1,78 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="../check-answers">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Individual appointment</span>
+        Repeat appointments
+       </h1>
+      <h2 class="govuk-heading-m">
+        How often will the appointment repeat?
+       </h2>
+   
+      {{ govukRadios({
+        idPrefix: "appointment-frequency-single",
+        name: "appointment-frequency-single",
+        value: data['appointment-frequency-single'],
+        
+        items: [
+          {
+            value: "Every weekday (Monday to Friday)",
+            text: "Every weekday (Monday to Friday)"
+          },
+          {
+            value: "Daily (includes weekends)",
+            text: "Daily (includes weekends)"
+          },
+          {
+            value: "Weekly",
+            text: "Weekly"
+          },
+          {
+            value: "Fortnightly",
+            text: "Fortnightly"
+          },
+          {
+            value: "Monthly",
+            text: "Monthly"
+          }
+        ]
+      }) }}
+
+
+      <h2 class="govuk-heading-m">
+       
+        How many times will the appointment repeat?
+       </h2>
+     
+     <label class="govuk-label">Enter the number of times the appointment will repeat up to a maximum of one year</label>
+     <input class="govuk-input govuk-input--width-4" id="number-of-appointments" name="number-of-appointments" type="text" value="{{ data['number-of-appointments']}}">
+
+    
+      <br><br>
+    
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
+
+
+
+  </div>
+</div>
+{% endblock %}

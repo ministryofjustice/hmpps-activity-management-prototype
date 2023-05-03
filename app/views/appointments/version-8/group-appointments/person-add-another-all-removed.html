@@ -1,0 +1,74 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="add-more-people-all-removed">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="back">
+          <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+        </div>
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Group appointment</span>
+            Review and add prisoners to the appointment list
+        </h1>
+      </div>
+    </div>
+
+    <p class="govuk-body">No people have been added to the appointment list. You must add at least one person.</p>
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+        {{ govukRadios({
+          idPrefix: "remove-last-person-question",
+          name: "remove-last-person-question",
+          fieldset: {
+            legend: {
+              text: "Add another prisoner?",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--l"
+            }
+            
+          },
+          items: [
+            {
+              value: "Yes",
+              text: "Yes"
+            },
+            {
+              value: "No",
+              text: "No - cancel appointment creation"
+            }
+          ]
+        }) }}  
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+         
+          
+            {{ govukButton({
+              text: 'Continue'
+            }) }}
+           
+          </div>
+      </div>
+
+
+      
+       
+
+   
+
+
+
+
+  </div>
+</div>
+{% endblock %}

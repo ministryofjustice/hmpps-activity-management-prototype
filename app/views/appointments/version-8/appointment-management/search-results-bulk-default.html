@@ -1,0 +1,538 @@
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="search-results-bulk">
+
+	<div class="back">
+		<a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+	</div>
+	<h1 class="govuk-heading-l">
+		<span class="govuk-caption-l">Appointment management</span>
+		View and edit a bulk appointment 
+	</h1>
+
+	{%- from "moj/components/filter/macro.njk" import mojFilter -%}
+	{%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
+	<div class="moj-filter-layout">
+		<div class="moj-filter-layout__filter">
+			<div class="moj-filter">
+				<div class="moj-filter__header">
+					<div class="moj-filter__header-title">
+						<h2 class="govuk-heading-m">Filter</h2>
+					</div>
+					<div class="moj-filter__header-action"></div>
+				</div>
+				<div class="moj-filter__content">
+					{% if selectedFilters.length %}
+					<div class="moj-filter__selected">
+						<div class="moj-filter__selected-heading">
+							<div class="moj-filter__heading-title">
+								<h2 class="govuk-heading-m">Selected filters</h2>
+							</div>
+							<div class="moj-filter__heading-action">
+								<p><a class="govuk-link govuk-link--no-visited-state" href="">Clear filters</a>
+								</p>
+							</div>
+						</div>
+						{% for filter in selectedFilters %}
+						<h3 class="govuk-heading-s govuk-!-margin-bottom-0">Colour</h3>
+						<ul class="moj-filter-tags">
+							<li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove
+										this
+										filter</span> Blue</a></li>
+							<li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove
+										this
+										filter</span> Yellow</a></li>
+						</ul>
+						{% endfor %}
+					</div>
+					{% endif %}
+
+					<div class="moj-filter__options">
+						<button class="govuk-button" data-module="govuk-button" action="appointment-view">
+							Apply filters
+						</button>
+
+
+						<!-- Start date input GOVUK date component - HTML -->
+						{{ govukDateInput({
+							id: "date",
+							namePrefix: "date",
+							fieldset: {
+							legend: {
+							text: "Appointment date",
+							isPageHeading: true,
+							classes: "govuk-fieldset__legend--s"
+							}
+							},
+							hint: {
+							text: "For example, 27 3 2007"
+							},
+							items: [
+							{
+							name: "day",
+							label: "Day",
+							value: "26",
+							classes: "govuk-input--width-2 "
+							},
+							{
+							name: "month",
+							label: "Month",
+							value: "4",
+							classes: "govuk-input--width-2"
+							},
+							{
+							name: "year",
+							label: "Year",
+							value: "2023",
+							classes: "govuk-input--width-4"
+							}
+							]
+							}) }}
+	
+
+						<!-- Start date input GOVUK date component - HTML -->
+						{{ govukDateInput({
+						id: "date",
+						namePrefix: "date",
+						fieldset: {
+						legend: {
+						text: "Date created",
+						isPageHeading: true,
+						classes: "govuk-fieldset__legend--s"
+						}
+						},
+						hint: {
+						text: "For example, 27 3 2007"
+						},
+						items: [
+						{
+						name: "day",
+						label: "Day",
+						value: "",
+						classes: "govuk-input--width-2 "
+						},
+						{
+						name: "month",
+						label: "Month",
+						value: "",
+						classes: "govuk-input--width-2"
+						},
+						{
+						name: "year",
+						label: "Year",
+						value: "",
+						classes: "govuk-input--width-4"
+						}
+						]
+						}) }}
+
+						<!-- Category select MOJ autocomplete component - HTML -->
+						<div class="govuk-form-group">
+							<label class="govuk-label govuk-label--s" for="sort">
+							  Appointment type
+							</label>
+							<select class="govuk-select" id="apppointment-type" name="apppointment-type"> 
+								<option value="" selected> </option>
+								<option value="Activities">Activities</option>
+								
+								<option value="Adjudication review">Adjudication review</option>
+								
+								<option value="Canteen">Canteen</option>
+								
+								<option value="Careers Adviser Appointment">Careers Adviser Appointment</option>
+								
+								<option value="Case - Baile Apps">Case - Baile Apps</option>
+								
+								<option value="Case - Benefits">Case - Benefits</option>
+								
+								<option value="Case - Housing">Case - Housing</option>
+								
+								<option value="Case - Legal aid">Case - Legal aid</option>
+								
+								<option value="Case - Other">Case - Other</option>
+								
+								<option value="Case - Probation">Case - Probation</option>
+								
+								<option value="Case - RAPT">Case - RAPT</option>
+								
+								<option value="Case - Substance misuse services">Case - Substance misuse services</option>
+								
+								<option value="Chaplaincy">Chaplaincy</option>
+								
+								<option value="Children and families">Children and families</option>
+								
+								<option value="Counselling session">Counselling session</option>
+								
+								<option value="Education">Education</option>
+								
+								<option value="Governor">Governor</option>
+								
+								<option value="Gym - Football">Gym - Football</option>
+								
+								<option value="Gym - PE Course">Gym - PE Course</option>
+								
+								<option value="Gym - Sports hall activity">Gym - Sports hall activity</option>
+								
+								<option value="Gym - Weights">Gym - Weights</option>
+								
+								<option value="Gym - Remedial physiotherapy">Gym - Remedial physiotherapy</option>
+								
+								<option value="Gym - Walking to health">Gym - Walking to health</option>
+								
+								<option value="IMB">IMB</option>
+								
+								<option value="Immigration appointment">Immigration appointment</option>
+								
+								<option value="Induction meeting">Induction meeting</option>
+								
+								<option value="Interventions">Interventions</option>
+								
+								<option value="Job Centre Plus">Job Centre Plus</option>
+								
+								<option value="Labour control">Labour control</option>
+								
+								<option value="Library">Library</option>
+								
+								<option value="Medical - Dentist">Medical - Dentist</option>
+								
+								<option value="Medical - Doctor">Medical - Doctor</option>
+								
+								<option value="Medical - Other">Medical - Other</option>
+								
+								<option value="Medical - Psy">Medical - Psy</option>
+								
+								<option value="Medical - X-Ray">Medical - X-Ray</option>
+								
+								<option value="OMU Appointment">OMU Appointment</option>
+								
+								<option value="Other">Other</option>
+								
+								<option value="Pre-release meeting">Pre-release meeting</option>
+								
+								<option value="Programme appointment">Programme appointment</option>
+								
+								<option value="ROTL Board">ROTL Board</option>
+								
+								<option value="Rec - MPU photo">Rec - MPU photo</option>
+								
+								<option value="Rec - Other">Rec - Other</option>
+								
+								<option value="Rec - Prop">Rec - Prop</option>
+								
+								<option value="Reset appointment">Reset appointment</option>
+								
+								<option value="Resolve">Resolve</option>
+								
+								<option value="SOTP Assessment">SOTP Assessment</option>
+								
+								<option value="Storybook Dads appointment">Storybook Dads appointment</option>
+								
+								<option value="TSP Appointment">TSP Appointment</option>
+								
+								<option value="Toe by Toe appointment">Toe by Toe appointment</option>
+								
+								<option value="Trailblazers Appointment">Trailblazers Appointment</option>
+								
+								<option value="User Voice Session">User Voice Session</option>
+								
+								<option value="Video Link Booking">Video Link Booking</option>
+								</select>
+						</div>
+
+						
+
+
+						<!-- Appointment location MOJ autocomplete component - HTML -->
+						<div class="govuk-form-group">
+							<label class="govuk-label govuk-label--s" for="sort">
+							  Appointment location
+							</label>
+							<select class="govuk-select" id="apppointment-location" name="apppointment-location"> 
+								<option value="" selected> </option>
+								<option value="Arts and Crafts Room">Arts and Crafts Room</option>
+								<option value="Canteen">Canteen</option>
+								<option value="Chapel">Chapel</option> 
+								<option value="Classroom 1">Classroom 1</option> 
+								<option value="Classroom 2">Classroom 2</option> 
+								<option value="Computer Room">Computer Room</option>
+								<option value="Courtyard">Courtyard</option>
+								<option value="Garden">Garden</option>
+								<option value="Gym">Gym</option> 
+								<option value="Kitchen">Kitchen</option>
+								<option value="Laundry Room">Laundry Room</option>
+								<option value="Library">Library</option>
+								<option value="Medical Room">Medical Room</option> 
+								<option value="Music Room">Music Room</option>
+								<option value="Office">Office</option>
+								<option value="Recreation Room">Recreation Room</option>
+								<option value="Visiting Room">Visiting Room</option>
+								<option value="Workshop 1">Workshop 1</option>
+								<option value="Workshop 2">Workshop 2</option>
+								<option value="Workshop 3">Workshop 3</option> 
+								<option value="Workshop 4">Workshop 4</option>
+								</select>
+						</div> 
+
+
+
+						<!-- Appointment creator GOVUK radio with component - HTML -->
+						{{ govukRadios({
+						classes: "govuk-radios--small",
+						id: "appointment-type",
+						name: "appointment-type",
+
+						fieldset: {
+						legend: {
+						text: "Appointment creator",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--s"
+						}
+						},
+						items: [
+
+						{
+						value: "myself",
+						text: "Myself"
+						},
+						{
+						value: "someoneElse",
+						text: "All appointment creators"
+						}
+						]
+						}) }}
+
+
+						<button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+							data-module="govuk-button" action="appointment-view">
+							Apply filters
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="moj-filter-layout__content">
+
+			<div class="moj-action__filter"></div>
+	
+			{% from "govuk/components/table/macro.njk" import govukTable %}
+
+			<table class="govuk-table">
+				<thead class="govuk-table__head">
+					<tr class="govuk-table__row">
+						<th class="govuk-table__header" scope="col">Appointment date</th> 
+						<th class="govuk-table__header" scope="col">Type</th>
+						<th class="govuk-table__header" scope="col">Created by</th>
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col">Appointments created</th>
+						<th class="govuk-table__header" scope="col">Date created</th>
+						<th class="govuk-table__header govuk-table__header--numeric govuk-!-width-one-quarter" scope="col"></th>
+					</tr>
+				</thead>
+				<tbody class="govuk-table__body">
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">26 April 2023</td>
+						<td class="govuk-table__cell">Medical - Psy</td>
+						<td class="govuk-table__cell">Bordie Millthorpe</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">35</td>
+						<td class="govuk-table__cell">1 April 2023</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">26 April 2023</td> 
+						<td class="govuk-table__cell">Medical - Psy</td>
+						<td class="govuk-table__cell">Moe Stoffer</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+						<td class="govuk-table__cell">3 April 2023</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+
+
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">26 April 2023</td> 
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Moe Stoffer</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">18</td>
+						<td class="govuk-table__cell">10 April 2023</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">26 April 2023</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Adela Wookey</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">27</td>
+						<td class="govuk-table__cell">13 April 2023</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="bulk-session-view" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">26 April 2023</td> 
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Selie Ness</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">80</td>
+						<td class="govuk-table__cell">13 April 2023</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">26 April 2023</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Karmen Glanister</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">40</td>
+						<td class="govuk-table__cell">15 April 2023</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">26 April 2023</td> 
+						<td class="govuk-table__cell">Medical - Psy</td>
+						<td class="govuk-table__cell">Moe Stoffer</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">32</td>
+						<td class="govuk-table__cell">19 April 2023</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+
+
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">26 April 2023</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Gennie Bee</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">27</td>
+						<td class="govuk-table__cell">23 April 2023</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="bulk-session-view" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">26 April 2023</td> 
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Agace Turnell</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+						<td class="govuk-table__cell">23 April 2023</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+
+
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">26 April 2023</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Angela Amby</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">27</td>
+						<td class="govuk-table__cell">23 April 2023</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="bulk-session-view" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+
+					
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">26 April 2023</td> 
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Moe Stoffe</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">90</td>
+						<td class="govuk-table__cell">23 April 2023</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">View and edit</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+		</div>
+
+	</div>
+</form>
+{% endblock %}
+
+
+
+{% block pageScripts %}
+<script type="text/javascript">
+	$(document).ready(function () {
+		new MOJFrontend.FilterToggleButton({
+			bigModeMediaQuery: "(min-width: 48.063em)",
+			startHidden: false,
+			toggleButton: {
+				container: $(".moj-action__filter"),
+				showText: "Show filter",
+				hideText: "Hide filter",
+				classes: "govuk-button--secondary",
+			},
+			closeButton: {
+				container: $(".moj-filter__header-action"),
+				text: "Close",
+			},
+			filter: {
+				container: $(".moj-filter"),
+			},
+		});
+	})
+</script>
+
+
+
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#apppointment-location'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+</script>
+
+
+
+
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#apppointment-type'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+</script>
+
+
+
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#apppointment-prisoner-name'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+</script>
+{% endblock %}
