@@ -47,42 +47,6 @@ Appointments prototype
               </div>
               <div class="govuk-summary-card__content">
                 <dl class="govuk-summary-list">
-             
-                  <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                      Created by
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                      J. Smith
-                    </dd>
-                    </div>
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                        Date created
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        13 Feb 2023
-                      </dd>
-                    </div>
-
-                    {% if data['which-occurrence-alt'] === 'This and the following occurrences' or data['which-occurrence-alt'] === 'All occurrences' or data['which-occurrence-alt'] === 'This occurrence' %}
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">
-                        Last edited by
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        B. Milman
-                      </dd>
-                      </div>
-                      <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key">
-                          Last edited date
-                        </dt>
-                        <dd class="govuk-summary-list__value">
-                          22 April 2023
-                        </dd>
-                        </div>
-                    {% endif %}
                     <div class="govuk-summary-list__row">
                       <dt class="govuk-summary-list__key">
                         Frequency
@@ -90,12 +54,20 @@ Appointments prototype
                       <dd class="govuk-summary-list__value">
                         Weekly
                       </dd>
-                    </div> 
-                 </dl>
+                    </div>   
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Next appointment
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      1 May 2023
+                    </dd>
+                  </div> 
+               </dl>
               </div>
             </div> 
 
-             <!-- <div class="govuk-summary-card">
+             <div class="govuk-summary-card">
               <div class="govuk-summary-card__title-wrapper">
                 <h2 class="govuk-summary-card__title">Next occurrence</h2>
                 <ul class="govuk-summary-card__actions">
@@ -200,7 +172,7 @@ Appointments prototype
                   </div>
                  </dl>
               </div>
-            </div>  -->
+            </div> 
 
             <div class="govuk-summary-card">
               <div class="govuk-summary-card__title-wrapper">
@@ -272,7 +244,7 @@ Appointments prototype
               </div>
             </div> 
 
-            <!-- <div class="govuk-summary-card">
+            <div class="govuk-summary-card">
               <div class="govuk-summary-card__title-wrapper">
                 <h2 class="govuk-summary-card__title">Previous appointments</h2>
               </div>
@@ -281,7 +253,7 @@ Appointments prototype
                   <caption class="govuk-table__caption govuk-visually-hidden">Previous appointments</caption>
                   <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
-                      <th scope="col" class="govuk-table__header govuk-table__header--numeric width-one-eighth">Appointment number</th>
+                      <th scope="col" class="govuk-table__header govuk-table__header--numeric width-one-eighth">Occurrences</th>
                       <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Date</th>
                       <th scope="col" class="govuk-table__header"></th>
                       <th scope="col" class="govuk-table__header width-one-eighth"></th>
@@ -303,7 +275,50 @@ Appointments prototype
                   </tbody>
                 </table>
               </div>
-            </div>  -->
+            </div> 
+
+            <div class="govuk-summary-card">
+              <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title">Updates to the series</h2> 
+              </div>
+              <div class="govuk-summary-card__content">
+                <dl class="govuk-summary-list">
+             
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Created by
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      J. Smith
+                    </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Date created
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        13 Feb 2023
+                      </dd>
+                    </div>
+                     <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Last edited by
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        B. Milman
+                      </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Last edited date
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          22 April 2023
+                        </dd>
+                        </div> 
+                 </dl>
+              </div>
+            </div>
                 
               <!-- <div class="govuk-button-group">
              {{ govukButton({
