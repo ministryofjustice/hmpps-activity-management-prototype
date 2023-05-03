@@ -248,10 +248,13 @@ router.get("/delete/:payRateId", function (req, res) {
   }
   // otherwise, if there are no prisoners on the payrate
   else {
+    let isLastPayrate = activity.payRates.length === 1;
+
     // render the delete payrate page
     res.render(req.protoUrl + "/delete", {
       activity,
       payRate,
+      isLastPayrate,
     });
   }
 });
