@@ -41,7 +41,7 @@ Appointments prototype
 
              <div class="govuk-summary-card">
               <div class="govuk-summary-card__title-wrapper">
-                <h2 class="govuk-summary-card__title">Series details</h2>
+                <h2 class="govuk-summary-card__title">This appointment repeats</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> <a class="govuk-link" href="group-appointment-multiple-occurrences-cards">
                       View series
@@ -51,14 +51,6 @@ Appointments prototype
               </div>
               <div class="govuk-summary-card__content">
                 <dl class="govuk-summary-list">
-                  <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                      Type
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                      Case - Substance misuse services
-                    </dd> 
-                  </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       Frequency
@@ -91,20 +83,28 @@ Appointments prototype
               </div>
               <div class="govuk-summary-card__content"> 
                 <dl class="govuk-summary-list">
+
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Type
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      Case - Substance misuse services
+                    </dd> 
+                    <dd class="govuk-summary-list__actions">
+                      <a class="govuk-link" href="#">
+                        Change <span class="govuk-visually-hidden">  type</span>
+                      </a>
+                    </dd>
+                  </div>
+
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       Location
                     </dt>
-    
-                    {% if data['which-occurrence-alt'] === 'This occurrence' %}
-                    <dd class="govuk-summary-list__value">
-                      Classroom 1 
-                    </dd>
-                    {% else %}
                     <dd class="govuk-summary-list__value">
                       Medical room
                     </dd>
-                    {% endif %}
                     <dd class="govuk-summary-list__actions">
                       <a class="govuk-link" href="change-answers-group-alt/location">
                         Change <span class="govuk-visually-hidden">  location</span>
@@ -334,6 +334,50 @@ Appointments prototype
                }) }}
                
             </div>  -->
+
+            <div class="govuk-summary-card">
+              <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title">Updates to the appointment</h2> 
+              </div>
+              <div class="govuk-summary-card__content">
+                <dl class="govuk-summary-list">
+             
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Created by
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      J. Smith
+                    </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Date created
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        13 Feb 2023
+                      </dd>
+                    </div>
+                     <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Last edited by
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        B. Milman
+                      </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Last edited date
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          22 April 2023
+                        </dd>
+                        </div> 
+                 </dl>
+              </div>
+            </div>
+            
             </form>
           </div>
         </div>
