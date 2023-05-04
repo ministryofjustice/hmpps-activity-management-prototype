@@ -12,12 +12,12 @@ html: html
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l">
-            Category: {{activity.category|getActivityCategoryName}}
-        </span>
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-            {{activity.name}}: manage waitlist and allocate
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+            {{activity.name}}
         </h1>
+        <span class="govuk-caption-m govuk-!-margin-bottom-4 govuk-!-font-size-19">
+            Last updated 3 February 2023
+        </span>
 
         {% set riskAssessment %}
         {{"Low, Medium or High" if activity.riskAssessment == "any"}}
@@ -61,10 +61,10 @@ html: html
         }) }}
         {% endset %}
 
-        {{govukDetails({
+        <!-- {{govukDetails({
         summaryText: "Activity requirements",
         html: activityInfoHtml
-        })}}
+        })}} -->
 
         {% set scheduleHtml %}
         <table class="govuk-table">
@@ -114,7 +114,7 @@ html: html
         {% set vacanciesCount = activity.capacity - currentlyAllocatedCount %}
         {% if vacanciesCount < 0 %} {% set vacanciesCount=0 %} {% endif %}
         
-        <ul class="govuk-list">
+        <!-- <ul class="govuk-list">
              <li>
                 Vacancies: {{vacanciesCount}}
                 </li>
@@ -124,10 +124,10 @@ html: html
                 <li>
                     Capacity: {{activity.capacity}}
                 </li>
-        </ul>
+        </ul> -->
     </div>
 
-    <div class="govuk-grid-column-one-third">
+    <!-- <div class="govuk-grid-column-one-third">
         <div class="govuk-!-padding-3" style="border: 1px solid #c7c7c7; box-shadow: 4px 4px 0 rgba(0,0,0,0.1)">
             <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
                 Schedule
@@ -153,7 +153,12 @@ html: html
                 {% endfor %}
             </dl>
         </div>
-    </div>
+    </div> -->
+</div>
+
+<div class="govuk-button-group">
+        <a href="{{activity.id}}/delete" class="govuk-button">Allocate to this activity</a>
+        <a href="{{activity.id}}/edit" class="govuk-link">Log a request</a>
 </div>
 
 {% include "./_sub-navigation.html" %}

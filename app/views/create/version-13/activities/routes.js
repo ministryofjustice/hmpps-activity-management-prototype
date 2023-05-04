@@ -5,7 +5,7 @@ const { DateTime } = require("luxon");
 // when we load any page in the activities section
 router.get("/:activityId/*", function (req, res, next) {
   console.log("activities section");
-  
+
   let activityId = req.params.activityId;
   // get the data for the activity we're on
   let activityData = req.session.data["timetable-complete-1"]["activities"].find(
@@ -43,6 +43,35 @@ router.get("/:activityId/*", function (req, res, next) {
   });
 
   next();
+});
+
+// router for activity tiles page
+router.use("/:activityId/tiles", (req, res, next) => {
+  let activityId = req.params.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() == activityId.toString()
+  );
+
+  res.render(req.protoUrl + "/activity-tiles", {
+    activity: activity,
+  });
+});
+
+// router for activity dashboard page
+router.use("/:activityId/dashboard", (req, res, next) => {
+  let activityId = req.params.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() == activityId.toString()
+  );
+
+  let activitySchedule = activity.schedule;
+  let schedule = getActivitySchedule(activitySchedule);
+  let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
+
+  res.render(req.protoUrl + "/dashboard", {
+    activity: activity,
+    activityDaysWithTimes: activityDaysWithTimes,
+  });
 });
 
 // router for deallocate prisoner journey
