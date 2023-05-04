@@ -35,6 +35,15 @@ router.get("/:prisonerIds", function (req, res) {
     let allocation = prisoner.allocations[activityIndex];
     prisoner.activityIndex = activityIndex;
 
+    // check if there are any pay rates with the same incentive level as the prisoner's incentive level
+    // or if there are any flat rate pay rates
+    prisoner.payRatesForIncentiveLevel = false;
+    for (let i = 0; i < activity.payRates.length; i++) {
+      if (activity.payRates[i].incentiveLevel === prisoner.incentiveLevel || activity.payRates[i].flatRate === true) {
+        prisoner.payRatesForIncentiveLevel = true;
+      }
+    }
+
     // if the allocation start date is in the future, set the start date is in future flag to true
     if (DateTime.fromISO(allocation.startDate) > DateTime.now()) {
       prisoner.startDateIsInFuture = true;

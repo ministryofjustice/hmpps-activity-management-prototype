@@ -41,6 +41,12 @@ text: "Back",
             ]
             })}}
 
+            {% if isLastPayrate %}
+            {{govukWarningText({
+            text: "This is the only pay rate for " + activity.name + ". If you delete it, you will not be able to allocate anyone to this activity."
+            })}}
+            {% endif %}
+
             {{govukButton({
             text: "Continue"
             })}}
