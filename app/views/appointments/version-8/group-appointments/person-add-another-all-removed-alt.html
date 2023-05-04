@@ -17,13 +17,20 @@ Appointments prototype
         </div>
         <h1 class="govuk-heading-l">
           <span class="govuk-caption-l">Group appointment</span>
-          Review and add prisoners to the appointment list
+          Review and add people to the appointment list
         </h1>
 
     </div>
   </div>
 
-  <p class="govuk-body">No people have been added to the appointment list. You must add at least one person.</p>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+      The appointment list is empty. You must add at least one person to be able to schedule an appointment.
+    </strong>
+  </div>
+ 
 
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -33,7 +40,7 @@ Appointments prototype
      
       <div class="govuk-grid-row govuk-grid-column-full govuk-!-margin-bottom-3">
         {{ govukButton({
-          text: "Add a prisoner",
+          text: "Add someone to the list",
           attributes: {
           "formaction": "upload-or-per-person",
           "formmethod": "get"
