@@ -107,7 +107,11 @@ type: "success"
                             Pay rate
                         </dt>
                         <dd class="govuk-summary-list__value">
-                            {{prisoner.payrate or "General - £1.00"}}
+                            {% if prisoner.payrate %}
+                            {{prisoner.payrate.payBand}} - £{{prisoner.payrate.amount|decimalPlaces(2)}}
+                            {% else %}
+                            {{prisoner.payrate.name or "General - £1.00"}}
+                            {% endif %}
                         </dd>
                         <dd class="govuk-summary-list__actions">
                             {% if prisoner.payRatesForIncentiveLevel == true %}

@@ -312,11 +312,17 @@ router.get("/:prisonerId/payrate", function (req, res) {
     (activity) => activity.id.toString() === activityId.toString()
   );
 
+  // get all payrates which match the prisoner's incentive level
+  let payRatesForIncentiveLevel = activity.payRates.filter(
+    payrate => payrate.incentiveLevel === prisoner.incentiveLevel
+  );
+
   // render the payrate template
   res.render(req.protoUrl + "/payrate", {
     activity,
     prisoner,
     prisonerId,
+    payRatesForIncentiveLevel,
   });
 });
 
@@ -332,8 +338,9 @@ router.post("/:prisonerId/payrate", function (req, res) {
     (activity) => activity.id.toString() === activityId.toString()
   );
 
-  // set the prisoner's payrate to the value from the form
-  prisoner.payrate = req.body["payrate"];
+  // set the prisoner's payrate to the payrate with the same id as the one selected in the form
+  let payRate = activity.payRates.find((payRate) => payRate.payRate_id.toString() === req.body["payrate"].toString());
+  prisoner.payrate = payRate;
 
   // set the confirmation dialog to display
   req.session.data["confirmation-dialog"] = {

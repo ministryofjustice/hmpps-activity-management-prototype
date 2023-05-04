@@ -7,8 +7,8 @@ Activities Management prototype
 
 {% block beforeContent %}
 {{govukBackLink({
-    text: "Back",
-    "href": "javascript:window.history.go(-1)"
+text: "Back",
+"href": "javascript:window.history.go(-1)"
 })}}
 {% endblock %}
 
@@ -28,32 +28,19 @@ Activities Management prototype
             {{prisoner.payRate}}.
         </p>
         <form method="post">
-            {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
-            {{ govukRadios({
-            label: {
-            text: "Select the correct pay rate",
-            classes: "govuk-label--m"
-            },
-            idPrefix: "pay-rate",
-            name: "payrate",
-            items: [
-            {
-            value: "General - £1.00",
-            text: "General - £1.00",
-            checked: true if data.allocation["pay-rate"] == "General - £1.00"
-            },
-            {
-            value: "Skilled - £1.45",
-            text: "Skilled - £1.45",
-            checked: true if data.allocation["pay-rate"] == "Skilled - £1.45"
-            },
-            {
-            value: "Specialist - £1.59",
-            text: "Specialist - £1.59",
-            checked: true if data.allocation["pay-rate"] == "Specialist - £1.59"
-            }
-            ]
-            }) }}
+            <div class="govuk-form-group">
+                <div class="govuk-radios" data-module="govuk-radios">
+                    {% for payrate in payRatesForIncentiveLevel %}
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="pay-rate-{{loop.index}}" name="payrate" type="radio"
+                            value="{{payrate.payRate_id}}" {{"checked" if payrate.payRate_id == prisoner.payrate.payRate_id}}>
+                        <label class="govuk-label govuk-radios__label" for="pay-rate-{{loop.index}}">
+                            {{payrate.payBand|capitalize}} – £{{payrate.amount|decimalPlaces(2)}} ({{'flat rate' if payrate.incentiveLevel == 'flatRate' else payrate.incentiveLevel + ' incentive level'}})
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
 
             {{ govukButton({
             text: "Update pay rate"
