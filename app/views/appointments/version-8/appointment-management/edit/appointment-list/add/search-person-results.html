@@ -9,14 +9,13 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form method="post" action="person-add-another-alt">
+<form method="post" action="person-add-another">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div class="back">
         <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
-        <h1 class="govuk-heading-l">
-          <span class="govuk-caption-l">Group appointment</span>
+        <h1 class="govuk-heading-l"> 
           Search for an individual to add to the appointment list
         </h1>
           
@@ -41,7 +40,7 @@ Appointments prototype
             <button class="govuk-button govuk-button--secondary"  style="margin-top: 30px; margin-left: 10px;">Search</button>
           </div>
 
-          <div><h2 class="govuk-heading-m" style="clear: both;">We found '1' match</h2></div>
+          <div><h2 class="govuk-heading-m" style="clear: both;">There is 1 result for {search term}.</h2></div>
 
           <table class="govuk-table">
             <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
@@ -93,7 +92,7 @@ Appointments prototype
         </div>
 
       
-      <h2 class="govuk-heading-m" style="clear: both;">We found '5' matches</h2>
+      <h2 class="govuk-heading-m" style="clear: both;">There are 5 results for {search term}. Select the correct one from the list.</h2>
       <table class="govuk-table">
         <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
             Prisoners
@@ -198,6 +197,29 @@ Appointments prototype
     </div>
 
 
+
+    {% elseif data['prisoner-search-query'] == 'none' or data['prisoner-search-query'] == '0'  %}  
+      <div>
+        <div style="float: left;">
+            {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+            {{ govukInput({
+              value: "",
+              label: {
+              text: "Search by name or prison number",
+              classes: "",
+              isPageHeading: false
+              }, 
+            classes: "govuk-input--width-20", 
+            id: "prisoner-search-query", 
+            name: "prisoner-search-query"
+            }) }}
+        </div>
+          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin-top: 30px; margin-left: 10px;">Search</button>
+        </div>
+
+      
+      <h2 class="govuk-heading-m" style="clear: both;">There are no matching results for {search term}.</h2>
+
     {% else %}  
     <div>
       <div style="float: left;">
@@ -217,7 +239,7 @@ Appointments prototype
         <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin-top: 30px; margin-left: 10px;">Search</button>
       </div>
 
-      <h2 class="govuk-heading-m" style="clear: both;">We found '1' match</h2>
+      <h2 class="govuk-heading-m" style="clear: both;">There is 1 result for {search term}.</h2>
 
       <table class="govuk-table">
         <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
