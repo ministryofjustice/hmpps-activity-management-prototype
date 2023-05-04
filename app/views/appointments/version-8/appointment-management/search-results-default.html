@@ -11,7 +11,7 @@ Appointments prototype
 	</div>
 	<h1 class="govuk-heading-l">
 		<span class="govuk-caption-l">View and manage an appointment</span>
-		View and edit an appointment
+		Find and edit an appointment
 	</h1>
 
 	{%- from "moj/components/filter/macro.njk" import mojFilter -%}
@@ -344,7 +344,8 @@ Appointments prototype
 							<label class="govuk-label govuk-label--s" for="sort">
 								Name or prison number
 							</label>
-							<select class="govuk-select" id="apppointment-prisoner-name" name="apppointment-prisoner-name"> 
+							<input class="govuk-input" id="appointment-prisoner-name" name="appointment-prisoner-name" type="text">
+							<!-- <select class="govuk-select" id="appointment-prisoner-name" name="appointment-prisoner-name"> 
 								<option value="" selected> </option>
 								<option value="Jason Elkin, Z4650V">Jason Elkin, Z4650V</option>
 								<option value="Alec Duffrie, R8266V">Alec Duffrie, R8266V</option>
@@ -366,7 +367,7 @@ Appointments prototype
 								<option value="Ezra Inkin, G0310R">Ezra Inkin, G0310R</option>
 								<option value="Ashlin Ferenc, Y9087Q">Ashlin Ferenc, Y9087Q</option>
 								<option value="Lonnie Baal, G1766F">Lonnie Baal, G1766F</option>
-								</select>
+								</select> -->
 						</div> 
 
 
@@ -447,7 +448,7 @@ Appointments prototype
 						<th class="govuk-table__header" scope="col">Type</th>
 						<th class="govuk-table__header" scope="col">Appointment location</th>
 						<th class="govuk-table__header" scope="col">Attendees</th> 
-						<th class="govuk-table__header govuk-table__header--numeric" scope="col">Occurrence</th>
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col">Frequency</th>
 						<th class="govuk-table__header govuk-table__header--numeric govuk-!-width-one-quarter" scope="col"></th>
 					</tr>
 				</thead>
@@ -508,7 +509,7 @@ Appointments prototype
 						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
 						<td class="govuk-table__cell govuk-table__cell--numeric">
 							<strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1">Cancelled</strong><br>
-							<a href="#" class="govuk-link">View</a>
+							<a href="appointment-summary/group/non-repeating-cancelled.html" class="govuk-link">View</a>
 						</td>
 					</tr>
 					<!-- <tr class="govuk-table__row "> 
