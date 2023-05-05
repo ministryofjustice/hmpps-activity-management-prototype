@@ -14,9 +14,22 @@ Find an activity to record or edit attendance
 <form method="post">
     <div class="govuk-width-container">
         {% block beforeContent %}
-        {{ govukBackLink({
-        text: "Back to all activities",
-        href: "../all"
+        {{ govukBreadcrumbs({
+        classes: "govuk-!-display-none-print",
+        items: [
+        {
+        text: "Digital Prison Services",
+        href: "/dps-home"
+        },
+        {
+        text: "Manage activities",
+        href: "../manage-activities"
+        },
+        {
+        text: "Manage allocations",
+        href: "../manage-allocations"
+        }
+        ]
         }) }}
         {% endblock %}
 
@@ -167,7 +180,7 @@ Find an activity to record or edit attendance
                                 <dd
                                     class="govuk-summary-list__value govuk-!-font-size-16 govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-top-1 govuk-!-padding-bottom-1">
                                     {% if day.times %}
-                                    <b>{{day.times}}</b>
+                                    {{day.times}}
                                     {% else %}
                                     <span class="govuk-hint govuk-!-font-size-16">Not scheduled</span>
                                     {% endif %}
@@ -201,7 +214,7 @@ Find an activity to record or edit attendance
                     </li>
                     <li class="govuk-tabs__list-item">
                         <a class="govuk-tabs__tab" href="#past-month">
-                            Candidates
+                            Other people
                         </a>
                     </li>
                 </ul>
@@ -399,34 +412,39 @@ Find an activity to record or edit attendance
                     </table>
                 </div>
                 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-month">
+                    <h2 class="govuk-heading-l">
+                        Find someone to allocate
+                    </h2>
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-two-thirds">
                             <div class="moj-search govuk-!-margin-top-4">
                                 <form action="other-prisoners" method="get" novalidate="">
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="name">
+                                        <label class="govuk-label moj-search__label govuk-!-font-weight-bold"
+                                            for="name">
                                             Search by name or prison number
                                         </label>
-                                        <input class="govuk-input moj-search__input " id="name" name="search" type="search"
-                                            value="{{data['person-search']}}">
+                                        <input class="govuk-input moj-search__input " id="name" name="search"
+                                            type="search" value="{{data['person-search']}}">
                                     </div>
                                     <button class="govuk-button moj-search__button" data-module="govuk-button">
                                         Search
                                     </button>
                                 </form>
                             </div>
+
+                            {{govukInsetText({
+                            text: "Some people shown are not available for allocation because there is no suitable pay
+                            rate for them on this activity.",
+                            classes: "govuk-!-margin-top-7"
+                            })}}
                         </div>
                     </div>
-                    
-                    {{govukWarningText({
-                        text: "Some people shown are not available for allocation because there is no suitable pay rate for them.",
-                        iconFallbackText: "Warning",
-                        classes: "govuk-!-margin-top-7"
-                    })}}
-                    
-                    <table class="govuk-table govuk-!-margin-top-8" id="list">
+
+                    <table class="govuk-table govuk-!-margin-top-5" id="list">
                         <caption class="govuk-table__caption govuk-table__caption--m">
-                            {{data['timetable-complete-1']['prisoners']|getOtherPrisonersCount(activity.id)}} people available for allocation
+                            {{data['timetable-complete-1']['prisoners']|getOtherPrisonersCount(activity.id)}} people
+                            available for allocation
                         </caption>
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
@@ -435,7 +453,8 @@ Find an activity to record or edit attendance
                                 <th scope="col" class="govuk-table__header" aria-sort="none">Current allocation</th>
                                 <th scope="col" class="govuk-table__header" aria-sort="none">Education level held</th>
                                 <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
-                                <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none">Other waitlists</th>
+                                <th scope="col" class="govuk-table__header govuk-table__header--numeric"
+                                    aria-sort="none">Other waitlists</th>
                                 <th scope="col" class="govuk-table__header"></th>
                             </tr>
                         </thead>
@@ -487,9 +506,11 @@ Find an activity to record or edit attendance
                                 <td class="govuk-table__cell" data-sort-value="{{prisoner.releaseDate}}">
                                     {{prisoner.releaseDate|convertShortDateToMediumDate}}
                                 </td>
-                                <td class="govuk-table__cell" data-sort-value="{{prisoner.releaseDate}}" style="text-align: center;">
+                                <td class="govuk-table__cell" data-sort-value="{{prisoner.releaseDate}}"
+                                    style="text-align: center;">
                                     <ul class="govuk-list">
-                                        {% if (loop.index == 1 and data['page'] == 1) or (loop.index == 2 and data['page'] == 1) %}
+                                        {% if (loop.index == 1 and data['page'] == 1) or (loop.index == 2 and
+                                        data['page'] == 1) %}
                                         <li>0</li>
                                         {% else %}
                                         <li>1</li>
@@ -508,13 +529,15 @@ Find an activity to record or edit attendance
                         <ul class="moj-pagination__list">
                             {% if data.page > 1 %}
                             <li class="moj-pagination__item  moj-pagination__item--prev">
-                                <a class="moj-pagination__link" href="?page={{data.page|int - 1|int}}#list">Previous<span
+                                <a class="moj-pagination__link"
+                                    href="?page={{data.page|int - 1|int}}#list">Previous<span
                                         class="govuk-visually-hidden"> page</span></a>
                             </li>
                             {% endif %}
-                    
+
                             {% for page in range(1, 6) %}
-                            <li class="moj-pagination__item {% if page == data.page %}moj-pagination__item--active{% endif %}">
+                            <li
+                                class="moj-pagination__item {% if page == data.page %}moj-pagination__item--active{% endif %}">
                                 {% if page != data.page %}
                                 <a class="moj-pagination__link" href="?page={{page}}#list"
                                     aria-label="Page {{page}} of {{totalPages}}">{{page}}</a>
@@ -523,14 +546,15 @@ Find an activity to record or edit attendance
                                 {% endif %}
                             </li>
                             {% endfor %}
-                    
+
                             {% if data.page < 5 %} <li class="moj-pagination__item  moj-pagination__item--next">
                                 <a class="moj-pagination__link" href="?page={{data.page|int + 1|int}}#list">Next<span
                                         class="govuk-visually-hidden"> page</span></a>
                                 </li>
                                 {% endif %}
                         </ul>
-                        <p class="moj-pagination__results">Showing <b>{{offset+1}}</b> to <b>{{offset+limit}}</b> of <b>{{5*limit}}</b>
+                        <p class="moj-pagination__results">Showing <b>{{offset+1}}</b> to <b>{{offset+limit}}</b> of
+                            <b>{{5*limit}}</b>
                             people</p>
                     </nav>
                 </div>

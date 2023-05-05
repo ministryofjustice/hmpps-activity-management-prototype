@@ -43,11 +43,16 @@ type: "success"
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l">
-            Category: {{activity.category|getActivityCategoryName}}
+            Edit activity details
         </span>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-            {{activity.name}}: manage waitlist and allocate
+            {{activity.name}}
         </h1>
+        <p>
+            <a href="tabs" class="govuk-link govuk-link--no-visited-state">
+                Manage allocations
+            </a>
+        </p>
         {% set activityInfoHtml %}
         {{ govukSummaryList({
         classes: "govuk-summary-list--no-borderr",
@@ -81,12 +86,12 @@ type: "success"
         }) }}
         {% endset %}
 
-        {{govukDetails({
+        <!-- {{govukDetails({
         summaryText: "Activity requirements",
         html: activityInfoHtml
-        })}}
+        })}} -->
 
-        <ul class="govuk-list">
+        <!-- <ul class="govuk-list">
             <li>
                 Vacancies: {{vacanciesCount}}
             </li>
@@ -96,10 +101,10 @@ type: "success"
             <li>
                 Capacity: {{activity.capacity}}
             </li>
-        </ul>
+        </ul> -->
     </div>
 
-    <div class="govuk-grid-column-one-third">
+    <!-- <div class="govuk-grid-column-one-third">
         <div class="govuk-!-padding-3" style="border: 1px solid #c7c7c7; box-shadow: 4px 4px 0 rgba(0,0,0,0.1)">
             <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
                 Schedule
@@ -125,7 +130,7 @@ type: "success"
                 {% endfor %}
             </dl>
         </div>
-    </div>
+    </div> -->
 </div>
 
 {% include './_sub-navigation.html' %}

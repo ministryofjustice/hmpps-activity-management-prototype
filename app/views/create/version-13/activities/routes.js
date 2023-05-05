@@ -183,7 +183,7 @@ router.get("/", function (req, res) {
 });
 
 // all activities page
-router.get("/all", function (req, res) {
+router.get("/manage-allocations", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
   let applications = req.session.data["applications"];
 
@@ -209,7 +209,42 @@ router.get("/all", function (req, res) {
   }
 
   // render the activities page and pass the activities array to the template
-  res.render(req.protoUrl + "/activities", {
+  res.render(req.protoUrl + "/manage-allocations", {
+    activities,
+    activitiesCount,
+    list: "all",
+    vacanciesCount,
+  });
+});
+
+// all activities page
+router.get("/edit-activity", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let applications = req.session.data["applications"];
+
+  // count the number of prisoners allocated to each activity
+  // and add it to each activity object in the activities array
+  addAllocationsCountToActivities(activities, req, applications);
+  let activitiesCount = activities.length;
+
+  let activitiesWithVacancies = activities.filter((activity) => activity.capacity - activity.currentlyAllocated > 0);
+  let vacanciesCount = activitiesWithVacancies.length;
+
+  // for each activity, add the next session to the activities array
+  for (let activity of activities) {
+    // get and set the selected date and period using the current date and time
+    // date should be formatted as YYYY-MM-DD
+    let selectedDate = new Date().toISOString().slice(0, 10);
+    let selectedPeriod = "AM";
+    let currentTime = Date.now().toString().slice(11, 16);
+    if (currentTime > "12:00") {
+      selectedPeriod = "PM";
+    }
+    activity.nextSession = getNextSession(activity, selectedDate, selectedPeriod);
+  }
+
+  // render the activities page and pass the activities array to the template
+  res.render(req.protoUrl + "/edit-activity", {
     activities,
     activitiesCount,
     list: "all",
