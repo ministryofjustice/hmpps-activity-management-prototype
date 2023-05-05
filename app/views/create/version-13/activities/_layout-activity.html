@@ -10,17 +10,28 @@ Find an activity to record or edit attendance
 {% endblock %}
 
 {% block main %}
-<div class="govuk-width-container govuk-!-margin-bottom-">
-    {{ govukBackLink({
-    text: "Back to all activities",
-    href: "../all"
-    }) }}
-</div>
-
 {{ super() }}
 {% endblock %}
 
-{% block beforeContent %}{% endblock %}
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+    classes: "govuk-!-display-none-print",
+    items: [
+    {
+    text: "Digital Prison Services",
+    href: "/dps-home"
+    },
+    {
+    text: "Manage activities",
+    href: "../manage-activities"
+    },
+    {
+    text: "Edit activity details",
+    href: "../edit-activity"
+    }
+    ]
+    }) }}
+    {% endblock %}
 
 {% block content %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
@@ -40,7 +51,7 @@ type: "success"
 {% endif %}
 {% endif %}
 
-<div class="govuk-grid-row">
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
     <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l">
             Edit activity details
@@ -50,7 +61,7 @@ type: "success"
         </h1>
         <p>
             <a href="tabs" class="govuk-link govuk-link--no-visited-state">
-                Manage allocations
+                Manage allocations for this activity
             </a>
         </p>
         {% set activityInfoHtml %}

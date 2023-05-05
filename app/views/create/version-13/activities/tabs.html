@@ -37,15 +37,18 @@ Find an activity to record or edit attendance
             {% block content %}
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
-                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
                         <span class="govuk-caption-l">
                             Manage allocations <span class="govuk-visually-hidden">for</span>
                         </span>
-                        {{activity.name}}
+                        {{activity.name}} <span class="govuk-tag govuk-tag--green">Vacancies</span>
                     </h1>
-                    <span class="govuk-tag govuk-tag--green govuk-!-margin-bottom-5">
-                        {{activity.vacancies}} vacancies
-                    </span>
+
+                    <p class="govuk-!-margin-bottom-6">
+                        <a href="details" class="govuk-link govuk-link--no-visited-state">
+                            Edit activity details
+                        </a>
+                    </p>
 
                     {% set riskAssessment %}
                     {{"Low, Medium or High" if activity.riskAssessment == "any"}}
@@ -90,8 +93,17 @@ Find an activity to record or edit attendance
                     }) }}
                     {% endset %}
 
+                    <div class="govuk-button-group govuk-!-margin-bottom-5">
+                        {{govukButton({
+                        text: "Allocate to this activity"
+                        })}}
+                        <a href="#" class="govuk-link" style="color: #be0e0e;">
+                            Remove people from this activity
+                        </a>
+                    </div>
+
                     {{govukDetails({
-                    summaryText: "Activity requirements",
+                    summaryText: "Check the requirements for this activity",
                     html: activityInfoHtml
                     })}}
 
@@ -162,9 +174,9 @@ Find an activity to record or edit attendance
                         </div>
                     </div> -->
 
-                    <div class="govuk-!-padding-3" style="background-color: #f1f2f3;">
-                        <h2 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-visually-hidden">
-                            Schedule
+                    <div class="govuk-!-padding-4" style="background-color: #f1f2f3;">
+                        <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-visually-hidde">
+                            Weekly schedule
                         </h2>
                         <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-0">
                             {% for day in activityDaysWithTimes %}
@@ -223,11 +235,11 @@ Find an activity to record or edit attendance
                         {{currentlyAllocated.length}} people currently allocated
                     </h2>
 
-                    <p>
+                    <!-- <p>
                         <a href="#" class="govuk-link" style="color: #be0e0e;">
                             Remove people from this activity
                         </a>
-                    </p>
+                    </p> -->
 
                     <table class="govuk-table govuk-!-margin-bottom-5" data-module="moj-multi-select"
                         data-multi-select-checkbox="#select-all">
@@ -328,11 +340,12 @@ Find an activity to record or edit attendance
                     </table>
                 </div>
                 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-week">
+                    <h2 class="govuk-heading-l govuk-!-margin-bottom-5">
+                        {{activityApplications|length}} {{'people' if activityApplications|length != 1 else 'person'
+                        }} on the waitlist
+                    </h2>
+
                     <table class="govuk-table moj-sortable-table" data-module="moj-sortable-table">
-                        <caption class="govuk-table__caption govuk-table__caption--l">
-                            {{activityApplications|length}} {{'people' if activityApplications|length != 1 else 'person'
-                            }} on the waitlist
-                        </caption>
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header" aria-sort="none">Prisoner</th>
@@ -555,7 +568,8 @@ Find an activity to record or edit attendance
                         </ul>
                         <p class="moj-pagination__results">Showing <b>{{offset+1}}</b> to <b>{{offset+limit}}</b> of
                             <b>{{5*limit}}</b>
-                            people</p>
+                            people
+                        </p>
                     </nav>
                 </div>
                 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-year">

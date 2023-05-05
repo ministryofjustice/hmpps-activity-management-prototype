@@ -32,11 +32,11 @@ type: "success"
 
         {% if prisonerData.length > 1 %}
         <h1 class="govuk-heading-l">
-            Change allocation details for {{prisonerData.length}} prisoners
+            Allocation details for {{prisonerData.length}} prisoners
         </h1>
         {% else %}
         <h1 class="govuk-heading-l">
-            Change allocation details for {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}}
+            Allocation details for {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}}
             ({{prisonerData[0].id}})
         </h1>
         {% endif %}
@@ -129,8 +129,9 @@ type: "success"
         {% endfor %}
 
         {{ govukButton({
-        text: "Remove from activity",
-        classes: "govuk-button--warning"
+        text: "Remove from " + activity.name,
+        classes: "govuk-button--warning",
+        href: "../deallocate/" + prisonerData[0].id 
         }) }}
 
         <p class="govuk-!-margin-top-5">
