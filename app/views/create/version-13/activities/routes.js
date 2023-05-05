@@ -45,52 +45,71 @@ router.get("/:activityId/*", function (req, res, next) {
   next();
 });
 
-// router for activity tiles page
-router.use("/:activityId/tiles", (req, res, next) => {
+// router for activity tabs page
+router.use("/:activityId/tabs", (req, res, next) => {
   let activityId = req.params.activityId;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() == activityId.toString()
-  );
-
-  res.render(req.protoUrl + "/activity-tiles", {
-    activity: activity,
-  });
-});
-
-// router for activity dashboard page
-router.use("/:activityId/dashboard", (req, res, next) => {
-  let activityId = req.params.activityId;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() == activityId.toString()
-  );
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
 
   let activitySchedule = activity.schedule;
   let schedule = getActivitySchedule(activitySchedule);
   let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
 
-  res.render(req.protoUrl + "/dashboard", {
-    activity: activity,
-    activityDaysWithTimes: activityDaysWithTimes,
-  });
-});
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
 
-// router for activity accordion page
-router.use("/:activityId/accordions", (req, res, next) => {
-  let activityId = req.params.activityId;
-  let activity = req.session.data["timetable-complete-1"]["activities"].find(
-    (activity) => activity.id.toString() == activityId.toString()
+  // get list of prisoners with allocations
+  const currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
+
+  // get the category name for the activity
+  let activityCategory = req.session.data["timetable-complete-1"]["categories"].find(
+    (category) => category.id.toString() === activity.category.toString()
   );
 
-  let activitySchedule = activity.schedule;
-  let schedule = getActivitySchedule(activitySchedule);
-  let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
+  // hide the confirmation message if it's shown
+  if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
+    delete req.session.data["confirmation-dialog"];
+  }
 
-  res.render(req.protoUrl + "/accordions", {
+  // get and set the index of the activity in each prisoner's activity array
+  currentlyAllocated.forEach((prisoner) => {
+    prisoner.activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+  });
+
+  // get the list of applications
+  let applications = req.session.data["applications"];
+
+  // get a list of all applications for the selected activity
+  // exclude those with a status of 'rejected'
+  let activityApplications = applications.filter(
+    (application) => application.activity.toString() === activityId.toString() && application.status !== "rejected"
+  );
+
+  // get a list of all prisoners without an application for the selected activity
+  // and without the activity id in their activity array
+  // make sure we account for prisoners whose activity array is empty or undefined (i.e. no activities)
+  let prisonersWithoutApplication = prisoners.filter(
+    (prisoner) => !prisoner.activity || prisoner.activity.length === 0 || !prisoner.activity.includes(activityId)
+  );
+
+  // simple code for paginating prisoners to 5 per page
+  // should show like:
+  // Previous 1 ⋯ 6 7 8 ⋯ 42 Next
+  let page = req.query.page || 1;
+  let limit = 5;
+  let offset = (page - 1) * limit;
+  let prisonersWithoutApplicationPaginated = prisonersWithoutApplication.slice(offset, offset + limit);
+  let totalPages = Math.ceil(prisonersWithoutApplication.length / limit);
+
+  res.render(req.protoUrl + "/tabs", {
     activity: activity,
     activityDaysWithTimes: activityDaysWithTimes,
+    activityCategory: activityCategory,
+    currentlyAllocated: currentlyAllocated,
+    activityApplications: activityApplications,
+    prisonersWithoutApplication: prisonersWithoutApplicationPaginated,
+    totalPages: totalPages,
   });
 });
-    
 
 // router for deallocate prisoner journey
 router.use("/:activityId/deallocate", (req, res, next) => {
@@ -183,7 +202,7 @@ router.get("/all", function (req, res) {
     let selectedDate = new Date().toISOString().slice(0, 10);
     let selectedPeriod = "AM";
     let currentTime = Date.now().toString().slice(11, 16);
-    if( currentTime > "12:00" ) {
+    if (currentTime > "12:00") {
       selectedPeriod = "PM";
     }
     activity.nextSession = getNextSession(activity, selectedDate, selectedPeriod);
@@ -1032,11 +1051,7 @@ function getNextSession(activity, selectedDate, selectedPeriod) {
   var maxIterations = 8;
   while (maxIterations > 0) {
     if (selectedPeriod === "AM") {
-      if (
-        activity.schedule &&
-        activity.schedule[currentDay] &&
-        activity.schedule[currentDay].pm !== null
-      ) {
+      if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
         return (nextSession = {
           date: selectedDate.toISOString().slice(0, 10),
           period: "PM",
@@ -1046,22 +1061,14 @@ function getNextSession(activity, selectedDate, selectedPeriod) {
         if (currentDay === 7) {
           currentDay = 0;
         }
-        if (
-          activity.schedule &&
-          activity.schedule[currentDay] &&
-          activity.schedule[currentDay].am !== null
-        ) {
+        if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
           selectedDate.setDate(selectedDate.getDate() + 1);
           return (nextSession = {
             date: selectedDate.toISOString().slice(0, 10),
             period: "AM",
           });
         } else {
-          if (
-            activity.schedule &&
-            activity.schedule[currentDay] &&
-            activity.schedule[currentDay].pm !== null
-          ) {
+          if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
             selectedDate.setDate(selectedDate.getDate() + 1);
             return (nextSession = {
               date: selectedDate.toISOString().slice(0, 10),
@@ -1079,22 +1086,14 @@ function getNextSession(activity, selectedDate, selectedPeriod) {
         currentDay = 0;
         // selectedDate.setDate(selectedDate.getDate() + 1);
       }
-      if (
-        activity.schedule &&
-        activity.schedule[currentDay] &&
-        activity.schedule[currentDay].am !== null
-      ) {
+      if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
         selectedDate.setDate(selectedDate.getDate() + 1);
         return (nextSession = {
           date: selectedDate.toISOString().slice(0, 10),
           period: "AM",
         });
       } else {
-        if (
-          activity.schedule &&
-          activity.schedule[currentDay] &&
-          activity.schedule[currentDay].pm !== null
-        ) {
+        if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
           selectedDate.setDate(selectedDate.getDate() + 1);
           return (nextSession = {
             date: selectedDate.toISOString().slice(0, 10),
