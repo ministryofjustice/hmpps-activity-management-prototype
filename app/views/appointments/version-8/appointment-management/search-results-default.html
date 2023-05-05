@@ -56,81 +56,81 @@ Appointments prototype
 							Apply filters
 						</button>
 
-						<!-- Date radio GOVUK radio with hint component - HTML -->
-						{% set dateHtml %}
+
 						<!-- date from input GOVUK date component - HTML -->
-						{{ govukDateInput({
-							id: "date",
-							namePrefix: "date",
-							fieldset: {
-							legend: {
-							text: "From",
-							isPageHeading: true,
-							classes: "govuk-fieldset__legend--s"
-							}
-							},
-							hint: {
-							text: "For example, 27 3 2007"
-							},
-							items: [
-							{
-							name: "day",
-							label: "Day",
-							value: "26",
-							classes: "govuk-input--width-2 "
-							},
-							{
-							name: "month",
-							label: "Month",
-							value: "05",
-							classes: "govuk-input--width-2"
-							},
-							{
-							name: "year",
-							label: "Year",
-							value: "2023",
-							classes: "govuk-input--width-4"
-							}
-							]
-							}) }}
+							{{ govukDateInput({
+								id: "date",
+								namePrefix: "date",
+								fieldset: {
+								legend: {
+								text: "From",
+								isPageHeading: true,
+								classes: "govuk-fieldset__legend--s"
+								}
+								},
+								hint: {
+								text: "For example, 27 3 2007"
+								},
+								items: [
+								{
+								name: "day",
+								label: "Day",
+								value: "26",
+								classes: "govuk-input--width-2 "
+								},
+								{
+								name: "month",
+								label: "Month",
+								value: "05",
+								classes: "govuk-input--width-2"
+								},
+								{
+								name: "year",
+								label: "Year",
+								value: "2023",
+								classes: "govuk-input--width-4"
+								}
+								]
+								}) }}
+
+								{{ govukDateInput({
+									id: "date",
+									namePrefix: "date",
+									fieldset: {
+									legend: {
+									text: "To",
+									isPageHeading: true,
+									classes: "govuk-fieldset__legend--s"
+									}
+									},
+									hint: {
+									text: "For example, 27 3 2007"
+									},
+									items: [
+									{
+									name: "day",
+									label: "Day",
+									value: "",
+									classes: "govuk-input--width-2"
+									},
+									{
+									name: "month",
+									label: "Month",
+									value: "",
+									classes: "govuk-input--width-2"
+									},
+									{
+									name: "year",
+									label: "Year",
+									value: "",
+									classes: "govuk-input--width-4"
+									}
+									]
+									}) }}
+
 
 						<!-- Date to input GOVUK date component - HTML -->
-						{{ govukDateInput({
-							id: "date",
-							namePrefix: "date",
-							fieldset: {
-							legend: {
-							text: "To",
-							isPageHeading: true,
-							classes: "govuk-fieldset__legend--s"
-							}
-							},
-							hint: {
-							text: "For example, 27 3 2007"
-							},
-							items: [
-							{
-							name: "day",
-							label: "Day",
-							value: "",
-							classes: "govuk-input--width-2"
-							},
-							{
-							name: "month",
-							label: "Month",
-							value: "",
-							classes: "govuk-input--width-2"
-							},
-							{
-							name: "year",
-							label: "Year",
-							value: "",
-							classes: "govuk-input--width-4"
-							}
-							]
-							}) }}
 	
-						{% endset -%}
 						{{ govukRadios({
 							classes: "govuk-radios--small",
 							idPrefix: "date",
