@@ -27,7 +27,7 @@ router.get("/:prisonerIds", function (req, res) {
   delete req.session.data["deallocate-same-reason"];
   delete req.session.data["deallocate-same-date"];
 
-  res.redirect(prisonerIds + "/date-check");
+  res.redirect(prisonerIds + "/date");
 });
 
 // dealocate date check page
@@ -49,7 +49,7 @@ router.get("/:prisonerIds/date-check", function (req, res) {
     );
 
     // render the deallocate date check page
-    res.render(req.protoUrl + "/date-check", {
+    res.render(req.protoUrl + "/date", {
       activity,
       prisonerData,
     });
@@ -208,7 +208,7 @@ router.post("/:prisonerIds/date", function (req, res) {
   } else {
     // if there are multiple prisoners, redirect to the reason check page
     if (selectedPrisoners.length > 1) {
-      res.redirect("reason-check");
+      res.redirect("reason");
     } else {
       res.redirect("reason");
     }
