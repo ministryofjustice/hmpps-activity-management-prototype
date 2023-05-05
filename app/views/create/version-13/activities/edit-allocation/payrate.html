@@ -23,9 +23,7 @@ text: "Back",
             Select how much you want to pay {{prisoner.name.firstname}} {{prisoner.name.surname}} {{prisoner.id}}
         </h1>
         <p class="govuk-inset-text">
-            {{prisoner.name.firstname}} {{prisoner.name.surname}}'s incentive level is
-            {{prisoner.incentiveLevel|capitalize}} and they are currently paid
-            {{prisoner.payRate}}.
+            {{prisoner.name.firstname}} {{prisoner.name.surname}} is on {{prisoner.incentiveLevel|capitalize}} incentive level
         </p>
         <form method="post">
             <div class="govuk-form-group">
@@ -37,6 +35,13 @@ text: "Back",
                         <label class="govuk-label govuk-radios__label" for="pay-rate-{{loop.index}}">
                             {{payrate.payBand|capitalize}} – £{{payrate.amount|decimalPlaces(2)}} ({{'flat rate' if payrate.incentiveLevel == 'flatRate' else payrate.incentiveLevel + ' incentive level'}})
                         </label>
+                        <!-- add hint text if this is the current pay rate -->
+                        {% if payrate.payRate_id == prisoner.payrate.payRate_id %}
+                        <div id="pay-rate-{{loop.index}}-hint" class="govuk-hint govuk-radios__hint">
+                            <!-- <span class="govuk-tag govuk-tag--blue">Current pay rate</span> -->
+                            This is {{prisoner.name.firstname}} {{prisoner.name.surname}}'s current pay rate
+                          </div>
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </div>
