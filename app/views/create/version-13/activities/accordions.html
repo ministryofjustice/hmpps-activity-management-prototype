@@ -32,30 +32,235 @@ Find an activity to record or edit attendance
                 Last updated on 3 January 2023
             </span>
 
-            <!-- <nav class="moj-sub-navigation" aria-label="Sub navigation" id="subnav">
-                <ul class="moj-sub-navigation__list">
-                    <li class="moj-sub-navigation__item">
-                        <a class="moj-sub-navigation__link" {% if currentPage=='currently-allocated'
-                            %}aria-current="page" {% endif %} href="currently-allocated">Currently allocated</a>
-                    </li>
-                    <li class="moj-sub-navigation__item">
-                        <a class="moj-sub-navigation__link" {% if currentPage=='applications' %}aria-current="page" {%
-                            endif %}href="applications">Waitlist</a>
-                    </li>
-                    <li class="moj-sub-navigation__item">
-                        <a class="moj-sub-navigation__link" {% if currentPage=='other-prisoners' %}aria-current="page"
-                            {% endif %}href="other-prisoners?page=1">Activity details</a>
-                    </li>
-                    <li class="moj-sub-navigation__item">
-                        <a class="moj-sub-navigation__link" {% if currentPage=='details' %}aria-current="page" {% endif
-                            %}href="details">Schedule</a>
-                    </li>
-                    <li class="moj-sub-navigation__item">
-                        <a class="moj-sub-navigation__link" {% if currentPage=='pay-rates' %}aria-current="page" {%
-                            endif %}href="payrates">Pay rates</a>
-                    </li>
-                </ul>
-            </nav> -->
+            <div class="govuk-button-group">
+                <a class="govuk-button" href="../edit">
+                    Allocate someone to this activity
+                </a>
+                <a class="govuk-button govuk-button--secondary" href="../delete">
+                    Log a request
+                </a>
+            </div>
+
+            <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+                <div class="govuk-accordion__section">
+                    <div class="govuk-accordion__section-header">
+                        <h2 class="govuk-accordion__section-heading">
+                            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                                Current allocations
+                            </span>
+                        </h2>
+                        <div class="govuk-accordion__section-summary govuk-body"
+                            id="accordion-with-summary-sections-summary-1">
+                            5 people are currently allocated to this activity.
+                        </div>
+                    </div>
+                    <div id="accordion-default-content-1" class="govuk-accordion__section-content"
+                        aria-labelledby="accordion-default-heading-1">
+                        <p class='govuk-body'>This is the content for Writing well for the web.</p>
+                    </div>
+                </div>
+                <div class="govuk-accordion__section">
+                    <div class="govuk-accordion__section-header">
+                        <h2 class="govuk-accordion__section-heading">
+                            <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+                                Waitlist and requests
+                            </span>
+                        </h2>
+                        <div class="govuk-accordion__section-summary govuk-body"
+                            id="accordion-with-summary-sections-summary-1">
+                            No people are on the waitlist for this activity.
+                        </div>
+                    </div>
+                    <div id="accordion-default-content-2" class="govuk-accordion__section-content"
+                        aria-labelledby="accordion-default-heading-2">
+                        <p class='govuk-body'>This is the content for Writing well for specialists.</p>
+                    </div>
+                </div>
+                <div class="govuk-accordion__section">
+                    <div class="govuk-accordion__section-header">
+                        <h2 class="govuk-accordion__section-heading">
+                            <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
+                                Schedule
+                            </span>
+                        </h2>
+                        <div class="govuk-accordion__section-summary govuk-body"
+                            id="accordion-with-summary-sections-summary-1">
+                            Runs until 3 January 2024.
+                        </div>
+                    </div>
+                    <div id="accordion-default-content-3" class="govuk-accordion__section-content"
+                        aria-labelledby="accordion-default-heading-3">
+                        <p class='govuk-body'>This is the content for Know your audience.</p>
+                    </div>
+                </div>
+                <div class="govuk-accordion__section">
+                    <div class="govuk-accordion__section-header">
+                        <h2 class="govuk-accordion__section-heading">
+                            <span class="govuk-accordion__section-button" id="accordion-default-heading-4">
+                                Activity details
+                            </span>
+                        </h2>
+                        <div class="govuk-accordion__section-summary govuk-body"
+                            id="accordion-with-summary-sections-summary-1">
+                            View or edit activity details and requirements.
+                        </div>
+                    </div>
+                    <div id="accordion-default-content-4" class="govuk-accordion__section-content"
+                        aria-labelledby="accordion-default-heading-4">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-two-thirds">
+                                <h2 class="govuk-heading-m govuk-!-margin-bottom-3">
+                                    Basic details
+                                </h2>
+                                {{ govukSummaryList({
+                                rows: [
+                                {
+                                key: {
+                                text: "Name"
+                                },
+                                value: {
+                                text: activity.name
+                                },
+                                actions: {
+                                items: [
+                                {
+                                href: "edit/name",
+                                text: "Change",
+                                visuallyHiddenText: "activity name"
+                                }
+                                ]
+                                }
+                                },
+                                {
+                                key: {
+                                text: "Activity category"
+                                },
+                                actions: {
+                                items: [
+                                {
+                                href: "edit/category",
+                                text: "Change",
+                                visuallyHiddenText: "activity name"
+                                }
+                                ]
+                                },
+                                value: {
+                                text: activity.category | getActivityCategoryName
+                                }
+                                },
+                                {
+                                key: {
+                                text: "Location"
+                                },
+                                actions: {
+                                items: [
+                                {
+                                href: "edit/location",
+                                text: "Change",
+                                visuallyHiddenText: "activity name"
+                                }
+                                ]
+                                },
+                                value: {
+                                text: activity.location
+                                }
+                                },
+                                {
+                                key: {
+                                text: "Capacity"
+                                },
+                                actions: {
+                                items: [
+                                {
+                                href: "edit/capacity",
+                                text: "Change",
+                                visuallyHiddenText: "activity name"
+                                }
+                                ]
+                                },
+                                value: {
+                                text: activity.capacity
+                                }
+                                }
+                                ]
+                                }) }}
+                        
+                                <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-8">
+                                    Requirements and suitability
+                                </h2>
+                                {% if activity.educationLevels.length > 0 %}
+                                {% set educationLevels %}
+                                <ul class="govuk-list govuk-list--spaced">
+                                    {% for educationLevel in activity.educationLevels %}
+                                    <li>{{ educationLevel.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endset %}
+                        
+                                {% else %}
+                                {% set educationLevels = "None set" %}
+                                {% endif %}
+                        
+                                {% set riskLevels %}
+                                <ul class="govuk-list">
+                                    {% if activity.riskAssessment == "low-only" or activity.riskAssessment == "low-or-medium" or
+                                    activity.riskAssessment == "any" %}
+                                    <li>Low</li>
+                                    {% endif %}
+                        
+                                    {% if activity.riskAssessment == "low-or-medium" or activity.riskAssessment == "any" %}
+                                    <li>Medium</li>
+                                    {% endif %}
+                        
+                                    {% if activity.riskAssessment == "any" %}
+                                    <li>High</li>
+                                    {% endif %}
+                                </ul>
+                                {% endset %}
+                        
+                                {{ govukSummaryList({
+                                rows: [
+                                {
+                                key: {
+                                text: "Suitable for workplace risk assessment"
+                                },
+                                actions: {
+                                items: [
+                                {
+                                href: "edit/risk-assessment-level",
+                                text: "Change",
+                                visuallyHiddenText: "activity name"
+                                }
+                                ]
+                                },
+                                value: {
+                                html: riskLevels
+                                }
+                                },
+                                {
+                                key: {
+                                text: "Education level"
+                                },
+                                actions: {
+                                items: [
+                                {
+                                href: "edit/education-levels",
+                                text: "Change",
+                                visuallyHiddenText: "activity name"
+                                }
+                                ]
+                                },
+                                value: {
+                                html: educationLevels
+                                }
+                                }
+                                ]
+                                }) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <h2 class="govuk-heading-l govuk-!-margin-bottom-4">
                 Allocations
@@ -204,28 +409,28 @@ Find an activity to record or edit attendance
                         {% endfor %}
                     </ul>
                     {% endset %}
-            
+
                     {% else %}
                     {% set educationLevels = "None set" %}
                     {% endif %}
-            
+
                     {% set riskLevels %}
                     <ul class="govuk-list">
                         {% if activity.riskAssessment == "low-only" or activity.riskAssessment == "low-or-medium" or
                         activity.riskAssessment == "any" %}
                         <li>Low</li>
                         {% endif %}
-            
+
                         {% if activity.riskAssessment == "low-or-medium" or activity.riskAssessment == "any" %}
                         <li>Medium</li>
                         {% endif %}
-            
+
                         {% if activity.riskAssessment == "any" %}
                         <li>High</li>
                         {% endif %}
                     </ul>
                     {% endset %}
-            
+
                     {{ govukSummaryList({
                     rows: [
                     {

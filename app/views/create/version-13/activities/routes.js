@@ -74,6 +74,24 @@ router.use("/:activityId/dashboard", (req, res, next) => {
   });
 });
 
+// router for activity accordion page
+router.use("/:activityId/accordions", (req, res, next) => {
+  let activityId = req.params.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() == activityId.toString()
+  );
+
+  let activitySchedule = activity.schedule;
+  let schedule = getActivitySchedule(activitySchedule);
+  let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
+
+  res.render(req.protoUrl + "/accordions", {
+    activity: activity,
+    activityDaysWithTimes: activityDaysWithTimes,
+  });
+});
+    
+
 // router for deallocate prisoner journey
 router.use("/:activityId/deallocate", (req, res, next) => {
   let serviceName = req.originalUrl.split("/")[1];
@@ -157,6 +175,19 @@ router.get("/all", function (req, res) {
 
   let activitiesWithVacancies = activities.filter((activity) => activity.capacity - activity.currentlyAllocated > 0);
   let vacanciesCount = activitiesWithVacancies.length;
+
+  // for each activity, add the next session to the activities array
+  for (let activity of activities) {
+    // get and set the selected date and period using the current date and time
+    // date should be formatted as YYYY-MM-DD
+    let selectedDate = new Date().toISOString().slice(0, 10);
+    let selectedPeriod = "AM";
+    let currentTime = Date.now().toString().slice(11, 16);
+    if( currentTime > "12:00" ) {
+      selectedPeriod = "PM";
+    }
+    activity.nextSession = getNextSession(activity, selectedDate, selectedPeriod);
+  }
 
   // render the activities page and pass the activities array to the template
   res.render(req.protoUrl + "/activities", {
@@ -987,4 +1018,95 @@ function scheduleDaysWithTimes(schedule) {
     }
   });
   return activityDaysWithTimes;
+}
+
+function getNextSession(activity, selectedDate, selectedPeriod) {
+  selectedDate = new Date(selectedDate);
+  var currentDay = selectedDate.getDay();
+
+  var nextSession = {
+    date: null,
+    period: null,
+  };
+
+  var maxIterations = 8;
+  while (maxIterations > 0) {
+    if (selectedPeriod === "AM") {
+      if (
+        activity.schedule &&
+        activity.schedule[currentDay] &&
+        activity.schedule[currentDay].pm !== null
+      ) {
+        return (nextSession = {
+          date: selectedDate.toISOString().slice(0, 10),
+          period: "PM",
+        });
+      } else {
+        currentDay++;
+        if (currentDay === 7) {
+          currentDay = 0;
+        }
+        if (
+          activity.schedule &&
+          activity.schedule[currentDay] &&
+          activity.schedule[currentDay].am !== null
+        ) {
+          selectedDate.setDate(selectedDate.getDate() + 1);
+          return (nextSession = {
+            date: selectedDate.toISOString().slice(0, 10),
+            period: "AM",
+          });
+        } else {
+          if (
+            activity.schedule &&
+            activity.schedule[currentDay] &&
+            activity.schedule[currentDay].pm !== null
+          ) {
+            selectedDate.setDate(selectedDate.getDate() + 1);
+            return (nextSession = {
+              date: selectedDate.toISOString().slice(0, 10),
+              period: "PM",
+            });
+          } else {
+            selectedDate.setDate(selectedDate.getDate() + 1);
+            maxIterations--;
+          }
+        }
+      }
+    } else if (selectedPeriod === "PM") {
+      currentDay++;
+      if (currentDay === 7) {
+        currentDay = 0;
+        // selectedDate.setDate(selectedDate.getDate() + 1);
+      }
+      if (
+        activity.schedule &&
+        activity.schedule[currentDay] &&
+        activity.schedule[currentDay].am !== null
+      ) {
+        selectedDate.setDate(selectedDate.getDate() + 1);
+        return (nextSession = {
+          date: selectedDate.toISOString().slice(0, 10),
+          period: "AM",
+        });
+      } else {
+        if (
+          activity.schedule &&
+          activity.schedule[currentDay] &&
+          activity.schedule[currentDay].pm !== null
+        ) {
+          selectedDate.setDate(selectedDate.getDate() + 1);
+          return (nextSession = {
+            date: selectedDate.toISOString().slice(0, 10),
+            period: "PM",
+          });
+        } else {
+          selectedDate.setDate(selectedDate.getDate() + 1);
+          maxIterations--;
+        }
+      }
+    }
+  }
+
+  return "No upcoming sessions found";
 }

@@ -43,31 +43,37 @@ href: "../manage-activities"
 </div>
 
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
-{{ mojSubNavigation({
-    label: 'Sub navigation',
-    items: [{
-      text: 'All activities (' + activitiesCount + ')',
-      href: 'all',
-      active: true if list == 'all'
-    }, {
-      text: 'Only activities with vacancies (' + vacanciesCount + ')',
-      href: 'vacancies',
-      active: true if list == 'vacancies'
-    }]
-  }) }}
+<!-- {{ mojSubNavigation({
+label: 'Sub navigation',
+items: [{
+text: 'All activities (' + activitiesCount + ')',
+href: 'all',
+active: true if list == 'all'
+}, {
+text: 'Only activities with vacancies (' + vacanciesCount + ')',
+href: 'vacancies',
+active: true if list == 'vacancies'
+}]
+}) }} -->
 
-<table class="govuk-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head govuk-!-margin-bottom-8" data-module="moj-sortable-table">
+<table
+    class="govuk-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head govuk-!-margin-bottom-8"
+    data-module="moj-sortable-table">
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity</th>
-            <th scope="col" class="govuk-table__header" aria-sort="none">Category</th>
-            <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none" style="white-space: nowrap; width: 1%;">Capacity</th>
-            <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none" style="white-space: nowrap; width: 1%;">Allocated</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none">Next session</th>
+            <!-- <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none"
+                style="white-space: nowrap; width: 1%;">Capacity</th> -->
+            <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none"
+                style="white-space: nowrap; width: 1%;">Currently allocated</th>
             <th scope="col" class="govuk-table__header govuk-hint govuk-table__header--numeric" aria-sort="none"
                 style="white-space: nowrap; width: 1%;">Vacancies</th>
-            <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none" style="white-space: nowrap; width: 1%;">Waitlist</th>
-            <th scope="col" class="govuk-table__header govuk-hint govuk-table__header--numeric" aria-sort="none"
-                style="white-space: nowrap; width: 1%;">% allocated</th>
+                <th scope="col" class="govuk-table__header govuk-hint govuk-table__header--numeric"></th>
+            <!-- <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none"
+                style="white-space: nowrap; width: 1%;">Waitlist</th> -->
+            <!-- <th scope="col" class="govuk-table__header govuk-hint govuk-table__header--numeric" aria-sort="none"
+                style="white-space: nowrap; width: 1%;">% allocated</th> -->
         </tr>
     </thead>
     <tbody class="govuk-table__body">
@@ -75,34 +81,48 @@ href: "../manage-activities"
         <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
                 <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
-                    <a href="{{activity.id}}"
-                        class="govuk-link--no-visited-state">{{activity.name}}</a>
+                    <!-- <span class="govuk-!-font-size-16 govuk-!-display-block govuk-!-font-weight-regular">
+                        {{activity.category|getActivityCategoryName}}
+                    </span> -->
+                    {{activity.name}}
+                    <span class="govuk-hint govuk-!-font-size-16 govuk-!-display-block govuk-!-margin-top-1 govuk-!-margin-bottom-0">
+                        {{activity.location}}
+                    </span>
                 </h2>
             </td>
-            <td class="govuk-table__cell" data-sort-value="{{activity.location}}">
-                {{activity.category|getActivityCategoryName}}
+            <td class="govuk-table__cell" data-sort-value="{{activity.nextSession.date}}-{{activity.nextSession.period}}">
+                {{activity.nextSession.date|convertShortDateToLongDate}} ({{activity.nextSession.period}})
+                <a class="govuk-!-display-block govuk-!-font-size-16 govuk-!-margin-top-1"
+                    href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/record-attendance/{{activity.id}}">View next session</a>
             </td>
-            <td class="govuk-table__cell--numeric govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
+            <!-- <td class="govuk-table__cell--numeric govuk-table__cell"
+                data-sort-value="{{activity.startTime|replace(':','')}}">
                 {{activity.capacity}}
-            </td>
+            </td> -->
             <td class="govuk-table__cell--numeric govuk-table__cell">
                 {{activity.currentlyAllocated}}
             </td>
-            <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint" data-sort-value="{{ activity.capacity - activity.currentlyAllocated }}">
-                {% set vacanciesCount = activity.capacity - activity.currentlyAllocated %}
-                {% if vacanciesCount < 0 %}
-                {% set vacanciesCount = 0 %}
-                {% endif %}
-                <span class="govuk-tag {{'govuk-tag--red' if vacanciesCount > 0 else 'govuk-tag--green'}}">{{ vacanciesCount }}</span>
-            </td>
-            <td class="govuk-table__cell--numeric govuk-table__cell" data-sort-value="{{activity.startTime|replace(':','')}}">
-                {{activity.applicationCount}}
-            </td>
             <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint"
+                data-sort-value="{{ activity.capacity - activity.currentlyAllocated }}">
+                {% set vacanciesCount = activity.capacity - activity.currentlyAllocated %}
+                {% if vacanciesCount < 0 %} {% set vacanciesCount=0 %} {% endif %} <span
+                    class="govuk-tag {{'govuk-tag--red' if vacanciesCount > 0 else 'govuk-tag--green'}}">{{
+                    vacanciesCount }}</span>
+            </td>
+            <!-- <td class="govuk-table__cell--numeric govuk-table__cell"
+                data-sort-value="{{activity.startTime|replace(':','')}}">
+                {{activity.applicationCount}}
+            </td> -->
+            <!-- <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint"
                 data-sort-value="{{activity.attendanceCount[period]['attended']}}">
                 {{ (100 - ((activity.capacity - activity.currentlyAllocated) / activity.capacity * 100)) | round(0)}}
+            </td> -->
+            <td class="govuk-table__cell--numeric govuk-table__cell">
+                <a href="{{activity.id}}" class="govuk-link--no-visited-state">
+                    View or edit activity
+                </a>
             </td>
-            
+
         </tr>
         {% endfor %}
     </tbody>
