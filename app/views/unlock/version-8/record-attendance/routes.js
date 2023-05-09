@@ -999,7 +999,9 @@ router.post(
     if (req.session.data["print-incentive-level-warnings"] == "yes") {
       res.redirect("confirm-print-incentive-level-warning");
     } else {
-      res.redirect("/unlock/" + req.version + "/record-attendance/activities/" + date + "/" + period + "/" + activityId);
+      res.redirect(
+        "/unlock/" + req.version + "/record-attendance/activities/" + date + "/" + period + "/" + activityId
+      );
     }
   }
 );
@@ -1237,10 +1239,16 @@ router.post(
     let attendanceDataForActivity = attendanceData[activityId][date][period];
 
     for (let prisonerId in attendanceDataForActivity) {
-      if (attendanceDataForActivity.hasOwnProperty(prisonerId)) {
-        delete attendanceDataForActivity[prisonerId];
-        break;
-      }
+      let selectedPrisoners = [prisonerId];
+      let attendanceDetails = createAttendanceDetailsForMultiplePrisoners(selectedPrisoners, {
+        attendance: "removed",
+        attendanceStatus: "removed",
+        pay: false,
+        caseNote: false,
+        incentiveLevelWarning: false,
+      });
+
+      updateAttendanceData(req, activityId, date, period, attendanceDetails);
     }
 
     res.redirect("../../" + req.params.activityId);

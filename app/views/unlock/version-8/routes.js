@@ -1548,41 +1548,6 @@ router.post(
 );
 // ------------------------------------------------------------------------
 
-router.get(
-  "/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-attendance",
-  function (req, res) {
-    let prisonerId = req.params.prisonerId;
-    let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
-      (prisoner) => prisoner.id === prisonerId
-    );
-
-    res.render("unlock/" + req.version + "/confirm-remove-attendance", {
-      prisoner,
-    });
-  }
-);
-router.post(
-  "/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-attendance",
-  function (req, res) {
-    let prisonerId = req.params.prisonerId;
-    let attendanceData = req.session.data.attendance;
-    let activityId = req.params.activityId;
-    let date = req.params.selectedDate;
-    let period = req.params.selectedPeriod;
-    let attendanceDataForActivity = attendanceData[activityId][date][period];
-
-    for (let prisonerId in attendanceDataForActivity) {
-      if (attendanceDataForActivity.hasOwnProperty(prisonerId)) {
-        delete attendanceDataForActivity[prisonerId];
-        break;
-      }
-    }
-
-    res.redirect("../../" + req.params.activityId);
-  }
-);
-// ------------------------------------------------------------------------
-
 // confirm remove pay
 router.get(
   "/activities/:selectedDate/:selectedPeriod/:activityId/:prisonerId/confirm-remove-pay",
