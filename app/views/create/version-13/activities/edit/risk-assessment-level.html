@@ -19,33 +19,37 @@ text: "Back",
             <span class="govuk-caption-l">
                 {{activity.name}}
             </span>
+
             {{govukRadios({
-            idPrefix: "risk-assessment-level",
-            name: "risk-assessment-level",
-            fieldset: {
-            legend: {
-            text: "Change workplace risk assessment levels",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--l"
-            }
-            },
-            items: [
-            {
-            text: "Only low workplace risk assessment is suitable",
-            value: "low-only",
-            checked: true if activity.riskAssessment == "low-only"
-            },
-            {
-            text: "Either low or medium workplace risk assessment is suitable",
-            value: "low-or-medium",
-            checked: true if activity.riskAssessment == "low-or-medium"
-            },
-            {
-            text: "Any of low, medium or high workplace risk assessment is suitable",
-            value: "any",
-            checked: true if activity.riskAssessment == "any"
-            }
-            ]
+                idPrefix: "risk-assessment-levels",
+                name: "risk-assessment-level",
+                fieldset: {
+                    legend: {
+                        text: "Change workplace risk assessment levels",
+                        isPageHeading: true,
+                        classes: "govuk-fieldset__legend--l"
+                    }
+                },
+                hint: {
+                    html: "Choose one option to set the requirement for the activity."
+                },
+                items: [
+                    {
+                        value: "low-only",
+                        text: "Only people with a low workplace risk assessment are suitable",
+                        checked: true if activity.riskAssessment == "low-only"
+                    },
+                    {
+                        value: "low-or-medium",
+                        text: "People with either a low or medium workplace risk assessment are suitable",
+                        checked: true if activity.riskAssessment == "low-or-medium"
+                    },
+                    {
+                        value: "any",
+                        text: "Anyone is suitable",
+                        checked: true if activity.riskAssessment == "any"
+                    }
+                ]
             })}}
 
             {{ govukWarningText({
