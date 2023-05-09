@@ -17,6 +17,7 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 {% block content %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-three-quarters">
+		<span class="govuk-caption-l">{{activity.name}}</span>
 		<h1 class="govuk-heading-l">
 			Attendance record for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		</h1>
@@ -28,33 +29,34 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 		{% for record in attendanceData | reverse %}
 		{% if loop.index == 1 %}
 		{% if record.attendance != "removed" %}
-		<h2 class="govuk-heading-m">
-			Recorded on {{record.timestamp.date|convertShortDateToLongDate(record.timestamp.date)}} at {{record.timestamp.time | truncate(5, true, "")}}
-		</h2>
+		<!-- <h2 class="govuk-heading-m">
+			Attendance record
+		</h2> -->
 		{% else %}
 		<h2 class="govuk-heading-m">
-			Deleted on {{record.timestamp.date|convertShortDateToLongDate(record.timestamp.date)}} at {{record.timestamp.time | truncate(5, true, "")}}
+			Attendance record reset
 		</h2>
 		{% endif %}
 		{% else %}
 		{% if loop.index == 2 %}
 		<h1 class="govuk-heading-m govuk-!-margin-top-8">
-			{{attendanceData|length - 1}} {{"changes have" if attendanceData|length > 2 else "change has"}} been made to this attendance record
+			Change history for this attendance record
+			<!-- {{attendanceData|length - 1}} {{"changes have" if attendanceData|length > 2 else "change has"}} been made to this attendance record -->
 		</h1>
 		{% endif %}
 		{% if record.attendance == "removed" %}
-		<h2 class="govuk-heading-s">
-			Deleted on {{record.timestamp.date|convertShortDateToLongDate(record.timestamp.date)}} at {{record.timestamp.time | truncate(5, true, "")}}
+		<h2 class="govuk-heading-s govuk-!-margin-bottom-2">
+			Change {{ (-1 * loop.index + attendanceData.length) + 1}} 
 		</h2>
 		{% else %}
-		<h2 class="govuk-heading-s">
-			Recorded on {{record.timestamp.date|convertShortDateToLongDate(record.timestamp.date)}} at {{record.timestamp.time | truncate(5, true, "")}}
+		<h2 class="govuk-heading-s govuk-!-margin-bottom-2">
+			Change {{ (-1 * loop.index + attendanceData.length) + 1}} 
 		</h2>
 		{% endif %}
 		{% endif %}
 		<dl class="govuk-summary-list">
 			<div class="govuk-summary-list__row">
-				<dt class="govuk-summary-list__key">
+				<dt class="govuk-summary-list__key govuk-!-font-weight-regular">
 					Attendance
 				</dt>
 				<dd class="govuk-summary-list__value">
@@ -63,7 +65,7 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 					{% elif record.attendance == "not-attended" %}
 					Not attended - {{record.attendanceStatus|capitalize|replace('-',' ')}}
 					{% elif record.attendance == "removed" %}
-					Not applicable
+					Not recorded yet
 					{% endif %}
 				</dd>
 				{% if loop.index == 1 %}
@@ -79,7 +81,7 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 
 			{% if record.attendanceStatus == 'session-cancelled' %}
 			<div class="govuk-summary-list__row">
-				<dt class="govuk-summary-list__key">
+				<dt class="govuk-summary-list__key govuk-!-font-weight-regular">
 					Details
 				</dt>
 				<dd class="govuk-summary-list__value">
@@ -90,7 +92,7 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 
 			{% if record.attendanceStatus == 'sick' or record.attendanceStatus == 'other' %}
 			<div class="govuk-summary-list__row">
-				<dt class="govuk-summary-list__key">
+				<dt class="govuk-summary-list__key govuk-!-font-weight-regular">
 					Details
 				</dt>
 				<dd class="govuk-summary-list__value">
@@ -100,7 +102,7 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 			{% endif %}
 			
 			<div class="govuk-summary-list__row">
-				<dt class="govuk-summary-list__key">
+				<dt class="govuk-summary-list__key govuk-!-font-weight-regular">
 					Pay
 				</dt>
 				<dd class="govuk-summary-list__value">
@@ -127,7 +129,7 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 
 			{% if record.attendanceStatus == "refused" %}
 			<div class="govuk-summary-list__row">
-				<dt class="govuk-summary-list__key">
+				<dt class="govuk-summary-list__key govuk-!-font-weight-regular">
 					Incentive level warning
 				</dt>
 				<dd class="govuk-summary-list__value">
@@ -138,7 +140,7 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 
 			{% if record.caseNote %}
 			<div class="govuk-summary-list__row">
-				<dt class="govuk-summary-list__key">
+				<dt class="govuk-summary-list__key govuk-!-font-weight-regular">
 					Case note
 				</dt>
 				<dd class="govuk-summary-list__value">
@@ -153,15 +155,24 @@ Attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
 			{% endif %}
 
 			<div class="govuk-summary-list__row">
-				<dt class="govuk-summary-list__key">
+				<dt class="govuk-summary-list__key govuk-!-font-weight-regular">
 					{% if record.attendance == "removed" %}
-					Deleted by
+					Reset by
 					{% else %}
 					Recorded by
 					{% endif %}
 				</dt>
 				<dd class="govuk-summary-list__value">
 					Person Name
+				</dd>
+			</div>
+
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+					Date and time
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{record.timestamp.date|convertShortDateToLongDate}} at {{record.timestamp.time}}
 				</dd>
 			</div>
 		</dl>
