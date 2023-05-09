@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
+const crypto = require("crypto");
 
 // LOG to console for all get requests
 router.get("/*", function (req, res, next) {
@@ -651,26 +652,33 @@ router.get("/add-education-level", function (req, res) {
 
 // edit activity education level POST route
 router.post("/add-education-level", function (req, res) {
-  let activities = req.session.data["timetable-complete-1"]["activities"];
-  let activityId = req.activityId;
-  let activity = activities.find((activity) => activity.id == activityId);
+  const educationLevel = req.body["education-level"];
+  const educationAreaOfStudy = req.body["area-of-study"];
 
-  // if there is no session data for education levels, create it
-  if (!req.session.data["education-levels"]) {
-    req.session.data["education-levels"] = [];
-  }
+  // Get the ID for the educationLevel or generate a random one
+  let educationId = req.query.id ? req.query.id : crypto.randomBytes(4).toString("hex");
 
-  // add the new education level to the session data
-  req.session.data["education-levels"].push({
-    id: req.session.data["education-levels"].length + 1,
-    name: req.body["education-level"],
-  });
-
-  // set the confirmation message to be displayed on the activity page
-  req.session.data["confirmation-dialog"] = {
-    display: true,
-    change: "education level",
+  let educationLevelData = {
+    id: educationId,
+    name: educationLevel,
+    areaOfStudy: educationAreaOfStudy,
   };
+
+  // Check if the educationLevelData already exists in the educationLevels array
+  let educationLevels = req.session.data["education-levels"] || [];
+
+  if (!educationLevels.find((level) => level.id === educationId)) {
+    educationLevels.push(educationLevelData);
+  } else {
+    // If the educationLevelData already exists, update it
+    educationLevels = educationLevels.map((level) => {
+      if (level.id === educationId) {
+        level.name = educationLevel;
+        level.areaOfStudy = educationAreaOfStudy;
+      }
+      return level;
+    });
+  }
 
   // redirect to the education level list page
   res.redirect("education-levels");

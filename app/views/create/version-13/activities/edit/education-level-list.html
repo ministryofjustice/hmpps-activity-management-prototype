@@ -42,14 +42,15 @@ text: "Back",
             Do you need to add another education or qualification requirement?
             {% endset %}
 
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-4">Level or qualification</h3>
             <dl class="govuk-summary-list govuk-!-margin-bottom-">
                 {% for level in data['education-levels'] %}
                 <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key govuk-!-font-weight-regular" style="width: 60%;">
+                    <dt class="govuk-summary-list__key">
                         {{level.name}}
                     </dt>
                     <dd class="govuk-summary-list__value">
-
+                        {{level.areaOfStudy}}
                     </dd>
                     <dd class="govuk-summary-list__actions">
                         <a class="govuk-link" href="remove-education-level/{{level.id}}">
