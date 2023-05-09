@@ -93,7 +93,12 @@ Find an activity to record or edit attendance
                     }) }}
                     {% endset %}
 
-                    <div class="govuk-button-group govuk-!-margin-bottom-5">
+                    {{govukDetails({
+                    summaryText: "Check the requirements for this activity",
+                    html: activityInfoHtml
+                    })}}
+                    
+                     <div class="govuk-button-group govuk-!-margin-bottom-5">
                         {{govukButton({
                         text: "Allocate to this activity"
                         })}}
@@ -101,11 +106,6 @@ Find an activity to record or edit attendance
                             Remove people from this activity
                         </a>
                     </div>
-
-                    {{govukDetails({
-                    summaryText: "Check the requirements for this activity",
-                    html: activityInfoHtml
-                    })}}
 
                     <!-- <div class="govuk-button-group govuk-!-margin-bottom-5">
                         <a class="govuk-button" href="../edit">
