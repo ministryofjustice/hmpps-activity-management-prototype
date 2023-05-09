@@ -38,10 +38,15 @@ router.get("/:prisonerIds", function (req, res) {
     // check if there are any pay rates with the same incentive level as the prisoner's incentive level
     // or if there are any flat rate pay rates
     prisoner.payRatesForIncentiveLevel = false;
-    for (let i = 0; i < activity.payRates.length; i++) {
-      if (activity.payRates[i].incentiveLevel === prisoner.incentiveLevel || activity.payRates[i].flatRate === true) {
-        prisoner.payRatesForIncentiveLevel = true;
-      }
+
+    // get all payrates which match the prisoner's incentive level and also any flat rate payrates
+    let suitablePayrates = activity.payRates.filter(
+      (payRate) => payRate.incentiveLevel === prisoner.incentiveLevel || payRate.isFlatRate === "true"
+    );
+
+    // if there are any pay rates, set the pay rates for incentive level flag to true
+    if (suitablePayrates.length > 0) {
+      prisoner.payRatesForIncentiveLevel = true;
     }
 
     // if the allocation start date is in the future, set the start date is in future flag to true
@@ -312,10 +317,12 @@ router.get("/:prisonerId/payrate", function (req, res) {
     (activity) => activity.id.toString() === activityId.toString()
   );
 
-  // get all payrates which match the prisoner's incentive level
+  // get all payrates which match the prisoner's incentive level and also any flat rate payrates
   let payRatesForIncentiveLevel = activity.payRates.filter(
-    payrate => payrate.incentiveLevel === prisoner.incentiveLevel
+    (payRate) => payRate.incentiveLevel === prisoner.incentiveLevel || payRate.isFlatRate === "true"
   );
+
+  console.log(activity.payRates);
 
   // render the payrate template
   res.render(req.protoUrl + "/payrate", {
