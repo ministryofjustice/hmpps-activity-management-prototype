@@ -29,11 +29,12 @@ text: "Back",
             rate
         </h1>
 
+        <!-- <p>
+            You can create up to 10 rates for each incentive level.
+        </p> -->
+
         <p class="govuk-inset-text">
             Minimum pay for people in your prison is £0.60 and maximum pay is £2.75 per session.
-        </p>
-        <p class="govuk-inset-text">
-            You can create up to 10 rates for each incentive level.
         </p>
 
         <form method="post">
@@ -41,7 +42,7 @@ text: "Back",
                 <label class="govuk-label govuk-label--s" for="paymentIncentiveAmount">
                     How much will someone be paid for a session?
                 </label>
-                <div id="sign-in-hint" class="govuk-hint">
+                <div id="paymentIncentiveAmount-hint" class="govuk-hint">
                     For example, 1.50
                 </div>
                 <div class="govuk-input__wrapper">
@@ -55,6 +56,9 @@ text: "Back",
                 <label class="govuk-label govuk-label--s" for="paymentPayBand">
                     Select a pay band
                 </label>
+                <!-- <div id="paymentPayBand-hint" class="govuk-hint">
+                    ‘Pay band’ is a label to help you easily tell the difference between the pay rates that someone can be paid for this activity
+                </div> -->
                 <select class="govuk-select" id="paymentPayBand" name="payrate[pay-band]">
                     <option value="" disabled selected>Select a pay band</option>
                     {% for payBand in payBands %}
@@ -62,6 +66,11 @@ text: "Back",
                     {% endfor %}
                 </select>
             </div>
+
+            {{govukDetails({
+            summaryText: "What is a pay band?",
+            html: "<p>'Pay band' is a label to help you easily tell the difference between the pay rates that someone can be paid for this activity.</p><p>For example, you might have a pay band called ‘unskilled’ and another called ‘skilled’.</p>"
+            })}}
 
             <input type="hidden" name="payrate[incentive-level]"
                 value="{{data['payrate']['incentive-level'] or 'basic'}}">

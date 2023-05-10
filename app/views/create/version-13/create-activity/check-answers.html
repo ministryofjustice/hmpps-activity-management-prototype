@@ -86,7 +86,11 @@ window.history.go(-1)" })}} {% endblock %}
                     Suitable for workplace risk assessment
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{data['new-activity']['risk-assessment-level'] | capitalize}}
+                    {% if data['new-activity']['risk-assessment-level'] == 'any' %}
+                    Low, medium or high
+                    {% else %}
+                    {{data['new-activity']['risk-assessment-level'] | capitalize | replace('-',' ')}}
+                    {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
