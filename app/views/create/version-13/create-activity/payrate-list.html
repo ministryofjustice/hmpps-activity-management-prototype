@@ -44,7 +44,7 @@ text: "Back",
 
         {% if noPayrates == false %}
         {% for incentiveLevel, payrates in data.payrates %}
-        <h2 class="govuk-heading-m">{{incentiveLevel|capitalize + ' incentive level pay rates' if incentiveLevel !=
+        <h2 class="govuk-heading-m govuk-!-margin-top-7">{{incentiveLevel|capitalize + ' incentive level pay rates' if incentiveLevel !=
             'flat-rate' else 'Flat rates'}}</h2>
         <dl class="govuk-summary-list">
             {% for payrate in payrates %}
@@ -75,6 +75,10 @@ text: "Back",
             No pay rates have been set for this activity. You must set at least one pay rate.
         </p>
         {% endif %}
+
+        <p class="govuk-inset-text">
+            You can create up to 10 rates for each incentive level.
+        </p>
 
         <form method="post">
             <p>
