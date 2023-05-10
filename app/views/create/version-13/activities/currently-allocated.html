@@ -155,20 +155,29 @@ Find an activity to record or edit attendance
     const selectedCount = $('#app-selected-count');
     const clearButton = $('#clear-selection');
 
+    // store the original count string
     selectedCount.attr('data-html', $('#app-selected-count').html());
-
+    
     const generateCountString = (count) => {
-        let noun = count == 1 ? ' person' : ' people';
-        return count + noun + ' selected';
+        let noun = count == 1 ? ' person' : ' people'; // if count is 1, use 'person', otherwise use 'people'
+        return count + noun + ' selected'; // return the count and noun
     }
 
     function updateToolbar() {
+        // if any checkboxes are checked, show the toolbar
         if (checkbox.is(':checked')) {
-            toolbar.addClass('active').attr("aria-disabled", false);
-            selectedCount.html(generateCountString(checkbox.filter(':checked').length));
+            toolbar.addClass('active').attr("aria-disabled", false); // enable the toolbar
+            selectedCount.html(generateCountString(checkbox.filter(':checked').length)); // update the count
         } else {
-            toolbar.removeClass('active').attr("aria-disabled", true);
-            selectedCount.html(selectedCount.attr('data-html'));
+            toolbar.removeClass('active').attr("aria-disabled", true); // disable the toolbar
+            selectedCount.html(selectedCount.attr('data-html')); // reset the count
+        }
+
+        // if more than one checkbox is checked, hide the "Edit allocation" button
+        if (checkbox.filter(':checked').length > 1) {
+            $('#edit-allocation').hide(); // hide the button
+        } else {
+            $('#edit-allocation').show(); // show the button
         }
     };
 
@@ -177,9 +186,13 @@ Find an activity to record or edit attendance
     // run the function on window load to check if any checkboxes are already checked
     $(window).on('load', updateToolbar);
 
+    // clear all checkboxes when the "Clear selection" button is clicked
     clearButton.on('click', function (event) {
-        event.preventDefault();
+        event.preventDefault(); // prevent the page from jumping to the top
+
+        // get the first checkbox in the table
         let selectAllCheckbox = $('body').find('table input[type="checkbox"]').first();
+        
         // if the first checkbox in the table is checked, uncheck it
         if (selectAllCheckbox.is(':checked')) {
             selectAllCheckbox.click();
@@ -187,7 +200,11 @@ Find an activity to record or edit attendance
             // otherwise, uncheck all other checkboxes
             checkbox.prop('checked', false);
         }
+
+        // disable the toolbar and reset the count
         toolbar.removeClass('active').attr("aria-disabled", true);
+
+        // reset the count
         selectedCount.html(selectedCount.attr('data-html'));
     });
 
