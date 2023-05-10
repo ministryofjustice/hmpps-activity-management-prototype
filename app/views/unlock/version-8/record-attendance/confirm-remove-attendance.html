@@ -19,7 +19,7 @@ Activities Management prototype
 				name: "confirm-remove-attendance",
 				fieldset: {
 					legend: {
-						text: "Are you sure you want to remove the attendance record for "+prisoner.name.firstname+" "+prisoner.name.surname+"?",
+						text: "Are you sure you want to reset the attendance record for "+prisoner.name.firstname+" "+prisoner.name.surname+"?",
 						isPageHeading: true,
 						classes: "govuk-fieldset__legend--l"
 					}
@@ -35,6 +35,11 @@ Activities Management prototype
 				}
 				]
 			}) }}
+
+			{{govukInsetText({
+				text: "The attendance record will be changed to 'not recorded yet' and this will be noted in the change history."
+			})}}
+
 
 			{{govukButton({
 				text: "Continue"

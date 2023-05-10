@@ -200,7 +200,7 @@
 					<tr class="govuk-table__row">
 						{% if notRecorded > 0 and attendanceLocked == false %}
 						<td class="govuk-table__cell">
-							{% if not prisoner.attendance.attendance %}
+							{% if not prisoner.attendance.attendance or prisoner.attendance.attendance == "removed" %}
 							<div
 								class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-right-2 govuk-!-margin-left-1">
 								<input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}"
@@ -272,6 +272,10 @@
 							{% set attendance =
 							prisoner.attendance.records[prisoner.attendance.records|length-1].attendance %}
 							<ul class="govuk-list govuk-!-margin-0">
+								{%- if prisoner.attendance.attendance == "removed" %}
+								<span class="govuk-hint">Not recorded yet</span>
+								{%- else %}
+
 								{%- if prisoner.attendance.attendance == 'attended' %}
 								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 										class="app-tag app-tag--attended" style="text-transform: none;">Attended</span>
@@ -311,18 +315,19 @@
 								{%- else %}
 								<span class="govuk-hint">Not recorded yet</span>
 								{% endif -%}
+								{% endif -%}
 
-								{% if prisoner.attendance.attendance and prisoner.attendance.pay == true %}
+								{% if prisoner.attendance.attendance and prisoner.attendance.attendance != "removed" and prisoner.attendance.pay == true %}
 								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 										class="app-tag app-tag--pay" style="text-transform: none;">Pay</span></li>
-								{%- elif prisoner.attendance.attendance and prisoner.attendance.pay == false %}
+								{%- elif prisoner.attendance.attendance and prisoner.attendance.attendance != "removed" and prisoner.attendance.pay == false %}
 								<li class="govuk-!-display-inline-block govuk-!-margin-0"><span
 										class="app-tag app-tag--no-pay" style="text-transform: none;">No pay</span></li>
 								{% endif %}
 							</ul>
 						</td>
 						{%- if prisoner.attendance.attendance %}
-						<td class="govuk-table__cell">
+						<td class="govuk-table__cell govuk-table__cell--numeric">
 							<a href="{{activity.id}}/{{prisoner.id}}" class="govuk-link--no-visited-state">View or edit
 								<span class="govuk-visually-hidden">attendance for {{prisoner.name.firstname}}
 									{{prisoner.name.surname}}</span></a>

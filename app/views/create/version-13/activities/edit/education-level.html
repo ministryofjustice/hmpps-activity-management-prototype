@@ -240,12 +240,33 @@ text: "Back",
             <span class="govuk-caption-l">
                 {{ activity.name }}
             </span>
+            <h1 class="govuk-heading-l">
+                Select the education details
+            </h1>
+
             <div class="govuk-form-group">
-                <h1 class="govuk-label-wrapper">
-                    <label class="govuk-label govuk-label--l" for="education-level">
-                        Select education levels or other qualifications
+                <h2 class="govuk-label-wrapper" <label class="govuk-label" for="area-of-study">
+                    <label class="govuk-label govuk-label--m" for="area-of-study">
+                        Subject or skill
                     </label>
-                </h1>
+                </h2>
+                <div id="subject-hint" class="govuk-hint">
+                    Choose the area of study for the education level or qualification that participants need to be eligible for this activity.
+                </div>
+                <select class="govuk-select" id="area-of-study" name="area-of-study">
+                    <option value="">Select education level or qualification</option>
+                    {% for area in data['areas-of-study'] %}
+                    <option value="{{ area.name }}">{{ area.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="govuk-form-group">
+                <h2 class="govuk-label-wrapper" <label class="govuk-label" for="education-level">
+                    <label class="govuk-label govuk-label--m" for="education-level">
+                        Select education level or other qualification
+                    </label>
+                </h2>
                 <div id="subject-hint" class="govuk-hint">
                     Choose the education level or qualification that participants need to be eligible for this activity.
                 </div>
@@ -274,6 +295,13 @@ text: "Back",
         showAllValues: true,
         defaultValue: '',
         confirmOnBlur: false,
-    })
+    });
+
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#area-of-study'),
+        showAllValues: true,
+        defaultValue: '',
+        confirmOnBlur: false,
+    });
 </script>
 {% endblock %}
