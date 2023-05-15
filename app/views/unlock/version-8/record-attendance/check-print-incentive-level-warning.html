@@ -15,24 +15,52 @@ text: "Back",
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<form method="post">
-			<!-- notification banner component -->
+			{% set count = data["selected-prisoners"]|length %}
+			{% if count == 1 %}
 			{{ govukNotificationBanner({
-			text: "You've recorded attendance for 3 prisoners",
+			text: "You've recorded attendance for 1 person",
 			type: "success"
 			}) }}
+			{% elif count > 1 %}
+			{{ govukNotificationBanner({
+			text: "You've recorded attendance for " ~ count ~ " people",
+			type: "success"
+			}) }}
+			{% endif %}
+
 
 			<h1 class="govuk-heading-xl">
-				View and print incentive level warnings
+				View and print incentive level warning
 			</h1>
 
+			{% if prisonersWithWarnings|length == 1 %}
+			{% for id, warning in prisonersWithWarnings %}
+			{% set prisoner = id|getPrisonerDetails %}
+
+			
+
+			<!-- <p>
+				You can <a href="#">view and print  the incentive level warning for {{prisoner.name.surname}}, {{prisoner.name.firstname}}, {{prisoner.id}} (opens in a new tab)</a>.
+			</p> -->
+
 			<p>
-				You can view and print incentive level warnings for 2 people:
+				You can <a href="#">view and print the incentive level warning (opens in a new tab)</a> that you created for {{prisoner.name.surname}}, {{prisoner.name.firstname}}, {{prisoner.id}}.
+			</p>
+			{% endfor %}
+
+			{% else %}
+			<p>
+				You can view and print incentive level warnings for {{prisonersWithWarnings|length}} people.
 			</p>
 
 			<ul class="govuk-list govuk-list--spaced govuk-list--bullet">
-				<li>John Smith, A1234AA – <a href="#">view and print (opens in a new tab)</a></li>
-				<li>John Smith, A1234AA – <a href="#">view and print (opens in a new tab)</a></li>
+				{% for id, warning in prisonersWithWarnings %}
+				{% set prisoner = id|getPrisonerDetails %}
+				<li>{{prisoner.name.surname}}, {{prisoner.name.firstname}}, {{prisoner.id}} – <a href="#">view and print (opens in a new tab)</a></li>
+				{% endfor %}
 			</ul>
+			
+			{% endif %}
 
 			{{govukButton({
 			text: "Finish and return to record attendance",
