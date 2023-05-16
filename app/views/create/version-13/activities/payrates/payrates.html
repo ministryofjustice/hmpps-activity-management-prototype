@@ -6,6 +6,7 @@ Activities Management prototype
 {% block primaryNavigation %} {% endblock %}
 
 {% block beforeContent %}
+{{ super() }}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% if data['confirmation-dialog'] %}
 {{ govukNotificationBanner({

@@ -97,15 +97,6 @@ Find an activity to record or edit attendance
                     summaryText: "Check the requirements for this activity",
                     html: activityInfoHtml
                     })}}
-                    
-                     <div class="govuk-button-group govuk-!-margin-bottom-5">
-                        {{govukButton({
-                        text: "Allocate to this activity"
-                        })}}
-                        <a href="deallocate" class="govuk-link" style="color: #be0e0e;">
-                            Remove people from this activity
-                        </a>
-                    </div>
 
                     <!-- <div class="govuk-button-group govuk-!-margin-bottom-5">
                         <a class="govuk-button" href="../edit">
@@ -175,7 +166,7 @@ Find an activity to record or edit attendance
                     </div> -->
 
                     <div class="govuk-!-padding-4" style="background-color: #f1f2f3;">
-                        <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-visually-hidde">
+                        <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-visually-hidden">
                             Weekly schedule
                         </h2>
                         <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-0">
@@ -225,7 +216,7 @@ Find an activity to record or edit attendance
                         </a>
                     </li>
                     <li class="govuk-tabs__list-item">
-                        <a class="govuk-tabs__tab" href="#past-month">
+                        <a class="govuk-tabs__tab" href="?page=1#other-people">
                             Other people
                         </a>
                     </li>
@@ -235,6 +226,12 @@ Find an activity to record or edit attendance
                         {{currentlyAllocated.length}} people currently allocated
                     </h2>
 
+                    <div class="govuk-button-group govuk-!-margin-bottom-5">
+                        <a href="deallocate" class="govuk-link" style="color: #be0e0e;">
+                            Remove people from this activity
+                        </a>
+                    </div>
+                    
                     <!-- <p>
                         <a href="#" class="govuk-link" style="color: #be0e0e;">
                             Remove people from this activity
@@ -424,7 +421,7 @@ Find an activity to record or edit attendance
                         </tbody>
                     </table>
                 </div>
-                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-month">
+                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="other-people">
                     <h2 class="govuk-heading-l">
                         Find someone to allocate
                     </h2>

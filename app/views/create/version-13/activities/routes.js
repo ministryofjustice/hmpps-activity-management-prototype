@@ -46,7 +46,7 @@ router.get("/:activityId/*", function (req, res, next) {
 });
 
 // router for activity tabs page
-router.use("/:activityId/tabs", (req, res, next) => {
+router.get("/:activityId/tabs", (req, res, next) => {
   let activityId = req.params.activityId;
   let activities = req.session.data["timetable-complete-1"]["activities"];
   let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
@@ -100,6 +100,10 @@ router.use("/:activityId/tabs", (req, res, next) => {
   let prisonersWithoutApplicationPaginated = prisonersWithoutApplication.slice(offset, offset + limit);
   let totalPages = Math.ceil(prisonersWithoutApplication.length / limit);
 
+  if(!req.session.data["page"]){
+    req.session.data["page"] = 1;
+  }
+
   res.render(req.protoUrl + "/tabs", {
     activity: activity,
     activityDaysWithTimes: activityDaysWithTimes,
@@ -108,6 +112,8 @@ router.use("/:activityId/tabs", (req, res, next) => {
     activityApplications: activityApplications,
     prisonersWithoutApplication: prisonersWithoutApplicationPaginated,
     totalPages: totalPages,
+    offset: offset,
+    limit: limit,
   });
 });
 

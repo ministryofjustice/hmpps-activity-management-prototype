@@ -31,13 +31,15 @@ window.history.go(-1)" })}} {% endblock %}
             }) }}
             {% endif %}
 
-            <table class="govuk-table">
+            <table
+				class="govuk-table govuk-!-margin-bottom-5"
+				data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
                 <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
                     Prisoners
                 </caption>
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
-                        <th scope="col" class="govuk-table__header">Prisoner name</th>
+                        <th class="govuk-table__header" scope="col" id="select-all"></th>
                         <th scope="col" class="govuk-table__header">Prison number</th>
                         <th scope="col" class="govuk-table__header">Cell location</th>
                         <th scope="col" class="govuk-table__header"></th>
