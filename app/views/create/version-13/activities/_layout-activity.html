@@ -57,13 +57,20 @@ type: "success"
             Edit activity details
         </span>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-            {{activity.name}}
+            {{activity.name}} <span class="govuk-tag govuk-tag--green">Live</span>
         </h1>
-        <p>
-            <a href="tabs" class="govuk-link govuk-link--no-visited-state">
-                Manage allocations for this activity
-            </a>
-        </p>
+        <ul class="govuk-list govuk-button-group">
+            <li>
+                <a href="edit-activity" class="govuk-link govuk-link--no-visited-state" style="color: #ca0000;">
+                    Stop activity
+                </a>
+            </li>
+            <li>
+                <a href="tabs" class="govuk-link govuk-link--no-visited-state">
+                    Manage allocations for this activity
+                </a>
+            </li>
+        </ul>
         {% set activityInfoHtml %}
         {{ govukSummaryList({
         classes: "govuk-summary-list--no-borderr",
