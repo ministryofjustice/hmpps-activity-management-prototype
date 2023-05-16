@@ -21,8 +21,9 @@ Appointments prototype
    
    <h1 class="govuk-heading-l">
     <span class="govuk-caption-l">Individual appointment</span>
-    Do you want to show the appointment category {{ data['categoryChoicesingle']}} on the unlock list?
+    Do you want to show {appointment type} on the unlock list?
    </h1>
+     
      
    {% from "govuk/components/radios/macro.njk" import govukRadios %}
     {% from "govuk/components/input/macro.njk" import govukInput %}
@@ -49,11 +50,11 @@ Appointments prototype
       items: [
         {
           value: "Yes",
-          text: "Yes"
+          text: "Yes - I want [appointment type] to show on the unlock list"
         },
         {
           value: "No",
-          text: "No",
+          text: "No - I want to enter my own appointment description to show on the unlock list",
           conditional: {
             html: categoryHtml
           }
@@ -62,9 +63,13 @@ Appointments prototype
     }) }}
    
 
-    {{ govukButton({
-      text: "Continue"
-    }) }}
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    
+      <a class="govuk-link" href="#">Cancel</a>
+    </div>
   </div>
 </div>
 </form>
