@@ -132,17 +132,10 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
 
         {% set riskLevels %}
         <ul class="govuk-list">
-            {% if activity.riskAssessment == "low-only" or activity.riskAssessment == "low-or-medium" or
-            activity.riskAssessment == "any" %}
-            <li>Low</li>
-            {% endif %}
-
-            {% if activity.riskAssessment == "low-or-medium" or activity.riskAssessment == "any" %}
-            <li>Medium</li>
-            {% endif %}
-
-            {% if activity.riskAssessment == "any" %}
-            <li>High</li>
+            {% if activity.riskAssessment == 'any' %}
+            Low, medium or high
+            {% else %}
+            {{activity.riskAssessment | capitalize | replace('-',' ')}}
             {% endif %}
         </ul>
         {% endset %}
