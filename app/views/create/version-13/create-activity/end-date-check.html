@@ -8,8 +8,8 @@ Activities Management prototype
 
 {% block beforeContent %}
 {{govukBackLink({
-    text: "Back",
-    "href": "javascript: window.history.go(-1)"
+text: "Back",
+"href": "javascript: window.history.go(-1)"
 })}}
 {% endblock %}
 
@@ -17,34 +17,31 @@ Activities Management prototype
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <form method="post">
-        <h2 class="govuk-heading-m">
-            <span class="govuk-caption-m">
-              {{data['new-activity']['category']|getActivityCategoryName|replace('-',' ')|capitalize}}
-            </span>
-            {{data['new-activity']['name']}}
-        </h2>
-        {{govukRadios({
-            idPrefix: "end-date-check",
-            name: "end-date-check",
-            classes: "govuk-radios--inline",
-            fieldset: {
-              legend: {
-                text: "Do you want to enter an end date for this activity?",
-                isPageHeading: true,
-                classes: "govuk-fieldset__legend--l"
-              }
-            },
-            items: [
-              {
-                value: "yes",
-                text: "Yes"
-              },
-              {
-                value: "no",
-                text: "No"
-              }
-            ]
-          })}}
+      <span class="govuk-caption-l">
+        Create an activity
+      </span>
+      {{govukRadios({
+      idPrefix: "end-date-check",
+      name: "end-date-check",
+      classes: "govuk-radios--inline",
+      fieldset: {
+      legend: {
+      text: "Do you want to enter an end date for this activity?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+      }
+      },
+      items: [
+      {
+      value: "yes",
+      text: "Yes"
+      },
+      {
+      value: "no",
+      text: "No"
+      }
+      ]
+      })}}
 
       <button class="govuk-button" data-module="govuk-button">Continue</button>
     </form>

@@ -11,52 +11,49 @@ window.history.go(-1)" })}} {% endblock %}
 
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <form method="post">
-        <h2 class="govuk-heading-m">
-            <span class="govuk-caption-m">
-                {{data['new-activity']['category']|getActivityCategoryName|replace('-',' ')|capitalize}}
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                Create an activity
             </span>
-            {{data['new-activity']['name']}}
-        </h2>
-        {{govukRadios({
+            {{govukRadios({
             idPrefix: "risk-assessment-levels",
             name: "new-activity[risk-assessment-level]",
             fieldset: {
-                legend: {
-                    text: "Workplace risk assessment levels: who is suitable for this activity?",
-                    isPageHeading: true,
-                    classes: "govuk-fieldset__legend--l"
-                }
+            legend: {
+            text: "Workplace risk assessment levels: who is suitable for this activity?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+            }
             },
             hint: {
-                html: "Choose one option to set the requirement for the activity."
+            html: "Choose one option to set the requirement for the activity."
             },
             items: [
-                {
-                    value: "low-only",
-                    text: "Only people with a low workplace risk assessment are suitable"
-                },
-                {
-                    value: "low-or-medium",
-                    text: "People with either a low or medium workplace risk assessment are suitable"
-                },
-                {
-                    value: "any",
-                    text: "Anyone is suitable (low, medium or high workplace risk assessment)"
-                }
+            {
+            value: "low-only",
+            text: "Only people with a low workplace risk assessment are suitable"
+            },
+            {
+            value: "low-or-medium",
+            text: "People with either a low or medium workplace risk assessment are suitable"
+            },
+            {
+            value: "any",
+            text: "Anyone is suitable (low, medium or high workplace risk assessment)"
+            }
             ]
-        })}}
+            })}}
 
-        {{ govukDetails({
+            {{ govukDetails({
             summaryText: "What is a workplace risk assessment level?",
             text: "Each person in your prison should have been given a workplace risk assessment level."
-          }) }}
+            }) }}
 
 
-      <button class="govuk-button" data-module="govuk-button">Continue</button>
-    </form>
-  </div>
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
+        </form>
+    </div>
 </div>
 
 {% endblock %}
