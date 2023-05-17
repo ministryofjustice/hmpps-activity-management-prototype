@@ -30,28 +30,18 @@ text: "Back",
 
 
 			<h1 class="govuk-heading-xl">
-				View and print incentive level warning
+				View and print incentive level warnings
 			</h1>
 
 			{% if prisonersWithWarnings|length == 1 %}
-			{% for id, warning in prisonersWithWarnings %}
-			{% set prisoner = id|getPrisonerDetails %}
-
-			
-
-			<!-- <p>
-				You can <a href="#">view and print  the incentive level warning for {{prisoner.name.surname}}, {{prisoner.name.firstname}}, {{prisoner.id}} (opens in a new tab)</a>.
-			</p> -->
-
 			<p>
-				You can <a href="#">view and print the incentive level warning (opens in a new tab)</a> that you created for {{prisoner.name.surname}}, {{prisoner.name.firstname}}, {{prisoner.id}}.
+				You can view and print incentive level warnings for {{prisonersWithWarnings|length}} person:
 			</p>
-			{% endfor %}
-
 			{% else %}
 			<p>
-				You can view and print incentive level warnings for {{prisonersWithWarnings|length}} people.
+				You can view and print incentive level warnings for {{prisonersWithWarnings|length}} people:
 			</p>
+			{% endif %}
 
 			<ul class="govuk-list govuk-list--spaced govuk-list--bullet">
 				{% for id, warning in prisonersWithWarnings %}
@@ -59,8 +49,6 @@ text: "Back",
 				<li>{{prisoner.name.surname}}, {{prisoner.name.firstname}}, {{prisoner.id}} – <a href="#">view and print (opens in a new tab)</a></li>
 				{% endfor %}
 			</ul>
-			
-			{% endif %}
 
 			{{govukButton({
 			text: "Finish and return to record attendance",
