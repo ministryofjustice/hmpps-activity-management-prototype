@@ -10,7 +10,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="appointment-repeat">
+<form id="form" method="post" action="apply-to-date">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div class="back">
@@ -18,15 +18,16 @@ Appointments prototype
         </div>
      <h1 class="govuk-heading-l">
       When is the appointment?
-     </h1>
-     <p class="govuk-body">
-      Select a date and time
-     </p>
+     </h1> 
      {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
   
      {{ govukDateInput({
       id: "date-of-appointment",
-      namePrefix: "date-of-appointment",
+      namePrefix: "date-of-appointment-alt",
+      value: data['date-of-appointment-alt'],
+      hint: {
+        text: "For example, 31 3 2023"
+      },
       fieldset: {
         legend: {
           text: "Date",
@@ -34,27 +35,23 @@ Appointments prototype
           classes: "govuk-fieldset__legend--m"
         }
       },
-      
-      hint: {
-        text: "For example, 31 3 2023"
-      },
       items: [
         {
           name: "day",
           label: "Day",
-          
+          value: '20',
           classes: "govuk-input--width-2"
         },
         {
           name: "month",
           label: "Month",
-          
+          value: '4',
           classes: "govuk-input--width-2"
         },
         {
           name: "year",
           label: "Year",
-         
+          value: '2023',
           classes: "govuk-input--width-4"
         }
       ]
@@ -62,38 +59,38 @@ Appointments prototype
   
   
     
-      <div class="govuk-grid-row">
+      <div class="govuk-grid-row" id="time">
         <div class="govuk-grid-column-one-third">
           <div class="govuk-button-group">
-            <h3 class="govuk-heading-m">
+            <h3 class="govuk-heading-m" id="start-time">
               Start time
             </h3>
             <ul class="time-input">
               <li>
-                <select class="govuk-select" id="start-hours-single" name="start-hours-single">
-                  <option selected>--</option>
+                <select class="govuk-select" id="start-hours-alt" name="start-hours-alt">
+                  <option selected>11</option>
                   <option value="08">08</option>
                   <option value="09">09</option>
                   <option value="10">10</option>
                   <option value="11">11</option>
-                  <option value="11">12</option>
-                  <option value="11">13</option>
-                  <option value="11">14</option>
-                  <option value="11">15</option>
-                  <option value="11">16</option>
-                  <option value="11">17</option>
-                  <option value="11">18</option>
-                  <option value="11">19</option>
-                  <option value="11">20</option>
-                  <option value="11">21</option>
-                  <option value="11">22</option>
-                  <option value="11">23</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
                 </select>
                
               </li>
               <li>
-                <select class="govuk-select minutes" id="start-minutes-single" name="start-minutes-single">
-                  <option selected>--</option>
+                <select class="govuk-select minutes" id="start-minutes-alt" name="start-minutes-alt">
+                  <option selected>00</option>
                   <option value="00">00</option>
                   <option value="15">15</option>
                   <option value="30">30</option>
@@ -110,32 +107,32 @@ Appointments prototype
             <h3 class="govuk-heading-m">
               End time
             </h3>
-            <ul class="time-input">
+            <ul class="time-input" id="end-time">
               <li>
-                <select class="govuk-select" id="end-hours-single" name="end-hours-single">
-                  <option selected>--</option>
+                <select class="govuk-select" id="end-hours-alt" name="end-hours-alt">
+                  <option selected>12</option>
                   <option value="08">08</option>
                   <option value="09">09</option>
                   <option value="10">10</option>
                   <option value="11">11</option>
-                  <option value="11">12</option>
-                  <option value="11">13</option>
-                  <option value="11">14</option>
-                  <option value="11">15</option>
-                  <option value="11">16</option>
-                  <option value="11">17</option>
-                  <option value="11">18</option>
-                  <option value="11">19</option>
-                  <option value="11">20</option>
-                  <option value="11">21</option>
-                  <option value="11">22</option>
-                  <option value="11">23</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
                 </select>
                
               </li>
               <li>
-                <select class="govuk-select minutes" id="end-minutes-single" name="end-minutes-single">
-                  <option selected>--</option>
+                <select class="govuk-select minutes" id="end-minutes-alt" name="end-minutes-alt">
+                  <option selected>00</option>
                   <option value="00">00</option>
                   <option value="15">15</option>
                   <option value="30">30</option>
@@ -150,17 +147,14 @@ Appointments prototype
       </div>
     </div>
     <br>
-    <div class="govuk-button-group">
-      {{ govukButton({
-        text: "Continue"
-      }) }}
-    
-      <a class="govuk-link" href="#">Cancel</a>
-    </div>
-      
-     </div>
-     
-    </div>
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
+
+
+
   </div>
+</div>
 </form>
 {% endblock %}

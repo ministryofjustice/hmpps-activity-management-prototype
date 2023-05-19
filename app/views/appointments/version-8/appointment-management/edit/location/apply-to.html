@@ -15,33 +15,33 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form method="post" action="reason">
+        <form method="post" action="../../appointment-summary/group/repeating">
 
-              <h1 class="govuk-heading-l"> 
-                Which appointments do you want to remove Abraham Amby from?
-               </h1>
+            <h2 class="govuk-heading-l">
+            <span class="govuk-caption-l">Group appointment</span>
+            Which appointments do you want to change the location for?
+            </h2>
 
                {{ govukRadios({
-                idPrefix: "which-occurrence",
-                name: "which-occurrence",
+                idPrefix: "which-occurrence-alt-prisoners",
+                name: "which-occurrence-alt-prisoners",
                 items: [
                   {
-                    value: "This appointment",
-                    text: "Just this one - Sunday, 1 May 2023 (1 of 6)"
+                    value: "This occurrence-prisoners",
+                    text: "Just this one - Saturday, 20 May 2023 (1 of 6)"
                   },
                   {
                     value: "This and the following occurrences-prisoners",
                     text: "This one and all the appointments that come after it in the series",
-                    hint: {  
-                      text: "You're changing appointments 1 to 6"
+                    hint: {
+                      text: "You’re changing appointments 1 to 6"
                     }
-                  } 
+                  }
                 ]
                }) }}
-             
 
             {{ govukButton({
-            text: "Continue"
+            text: "Confirm and add"
             }) }}
         </form>
     </div>
