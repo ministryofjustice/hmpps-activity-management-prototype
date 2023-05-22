@@ -22,6 +22,27 @@ router.post("/select-date", function (req, res) {
   res.redirect(`${date}/daily`);
 });
 
+// select date and period page
+router.get("/select-date-and-period", function (req, res) {
+  let dateIn30Days = DateTime.now().plus({ days: 30 }).toISODate();
+
+  res.render(req.protoUrl + "/select-date-and-period", {
+    dateIn30Days,
+  });
+});
+
+// select date and period page - post
+router.post("/select-date-and-period", function (req, res) {
+  let date = req.body["date"];
+  let period = req.body["period"].toUpperCase();
+
+  if(period === "DAILY") {
+    period = "daily";
+  }
+
+  res.redirect(`${date}/${period}/not-attended-yet?page=1`);
+});
+
 // generate data success page
 router.get("/generate-data-success", function (req, res) {
   // sum all records in attendance data
@@ -398,11 +419,31 @@ router.get("/:date/:period/not-attended-yet", (req, res) => {
   // but who have not yet been marked as attended or not attended for that activity on the selected date and period
   let attendanceList = getPrisonersWithActivity(activities, prisoners, date, period);
 
-  res.render(req.protoUrl + "/prisoners-list--with-attend", {
+  let limit = 10;
+
+  // pagination component variables
+  let pagination = {
+    current: req.query.page,
+    total: attendanceList.length,
+    limit: limit,
+    from: attendanceList.length > 0 ? (req.query.page - 1) * limit + 1 : 0,
+    to: req.query.page * limit > attendanceList.length ? attendanceList.length : req.query.page * limit,
+    previous: req.query.page > 1 ? req.query.page - 1 : false,
+    next: req.query.page * limit < attendanceList.length ? req.query.page + 1 : false,
+    pages: Math.ceil(attendanceList.length / limit),
+    first: req.query.page > 1 ? 1 : false,
+    last: req.query.page * limit < attendanceList.length ? Math.ceil(attendanceList.length / limit) : false,
+  };
+
+  // paginate the attendanceList to show n prisoners per page
+  attendanceList = paginate(attendanceList, limit, req.query.page);
+
+  res.render(req.protoUrl + "/prisoners-list--not-attended", {
     date,
     period,
     pageTitle: "All not attended yet",
     attendanceList,
+    pagination,
   });
 });
 
@@ -954,4 +995,9 @@ function getPrisonersWithActivity(activities, prisoners, date, period) {
   
   // return the list of prisoners with an activity on the selected day and period
   return prisonersWithActivity;
+}
+
+// pagination function
+function paginate(array, pageSize, pageNumber) {
+  return array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
 }

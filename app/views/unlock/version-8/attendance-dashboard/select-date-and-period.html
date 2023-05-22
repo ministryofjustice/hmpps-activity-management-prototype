@@ -1,0 +1,118 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}{% endblock %}
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+classes: "govuk-!-display-none-print",
+items: [
+{
+text: "Digital Prison Services",
+href: "/dps-home"
+},
+{
+text: "Manage activities",
+href: "/create/" + data['prototype-versions']['create-and-allocate']['latest-version'] + "/manage-activities"
+}
+]
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">View not attended prisoners</span>
+        <h1 class="govuk-heading-xl">
+            Select the date and period
+        </h1>
+        <form method="post">
+            {% set dateHtml %}
+            {{ govukDateInput({
+            id: "other-date",
+            namePrefix: "other-date",
+            fieldset: {
+            legend: {
+            text: "Date"
+            }
+            },
+            hint: {
+            html: "For example, " + dateIn30Days|convertShortDateToExampleDate
+            }
+            }) }}
+            {% endset %}
+            {% set today = '_'|today() %}
+            {{ govukRadios({
+            name: "date",
+            fieldset: {
+            legend: {
+            text: "Date",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            hint: {
+            text: "You can view any of the last 15 days."
+            },
+            items: [
+            {
+            value: today,
+            text: "Today – " + today|convertShortDateToLongDate
+            },
+            {
+            value: today|dayBefore,
+            text: "Yesterday – " + today|dayBefore(today)|convertShortDateToLongDate
+            },
+            {
+            value: "other-date",
+            text: "A different date",
+            conditional: {
+            html: dateHtml
+            }
+            }
+            ]
+            }) }}
+
+            <!-- select period -->
+            {{ govukRadios({
+            name: "period",
+            fieldset: {
+            legend: {
+            text: "Period",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            items: [
+            {
+            value: "am",
+            text: "AM session"
+            },
+            {
+            value: "pm",
+            text: "PM session"
+            },
+            {
+            value: "evening",
+            text: "ED session"
+            },
+            {
+                divider: "or"
+            },
+            {
+            value: "daily",
+            text: "Daily (all sessions)"
+            }
+            ]
+            }) }}
+
+
+
+            {{ govukButton({
+            text: "Continue"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}

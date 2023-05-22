@@ -11,12 +11,29 @@ text: "Back to attendance daily summary",
 }) }}
 {% endblock %}
 {% block content %}
-<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
-    {{ pageTitle }}
-    <span class="govuk-caption-l">
-        {{ date|today|convertShortDateToVeryLongDate }}
-    </span>
-</h1>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+            {{ pageTitle }}
+            <span class="govuk-caption-l">
+                {{ date|today|convertShortDateToVeryLongDate }}
+            </span>
+        </h1>
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-bottom-0" style="text-align: right;">
+            Updated at {{time|timestamp}} on {{date|today|convertShortDateToLongDate}}
+        </p>
+        {{govukButton({
+        text: "Refresh",
+        "href": "javascript: window.location.reload()",
+        attributes: {
+            "style": "float: right;"
+        },
+        classes: "govuk-!-margin-top-3 govuk-button--secondary"
+        })}}
+    </div>
+</div>
 
 <div class="app-search govuk-!-margin-bottom-6">
     <div class="govuk-grid-row">
