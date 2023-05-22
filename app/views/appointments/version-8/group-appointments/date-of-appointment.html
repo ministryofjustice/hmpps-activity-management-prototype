@@ -18,15 +18,19 @@ Appointments prototype
         </div>
      <h1 class="govuk-heading-l">
       When is the appointment?
-     </h1>
-     <p class="govuk-body">
-      Select a date and time
-     </p>
+     </h1> 
      {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
   
      {{ govukDateInput({
       id: "date-of-appointment",
       namePrefix: "date-of-appointment",
+      fieldset: {
+        legend: {
+          text: "Date",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--m"
+        }
+      },
       
       hint: {
         text: "For example, 31 3 2023"

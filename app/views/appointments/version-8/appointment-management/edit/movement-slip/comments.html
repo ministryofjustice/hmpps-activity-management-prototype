@@ -1,0 +1,49 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+
+<form id="form" method="post" action="../../appointment-summary/group/repeating">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+      <div class="back">
+        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+        </div>
+     
+     <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">Group appointment</span>
+      Change the heads up for everyone attending {appointment type or alt desc}
+     </h1>
+     <p class="govuk-body">You can edit information for attendees how to prepare for their appointment. Note that changes will not appear on any movement slips that have already been printed.</p>
+     <p class="govuk-body">Wing staff will be notified there is a heads up on the printed unlock list, but for confidentiality the full details will only be visible when you view the details of the appointment in this service.</p>
+
+    {{ govukTextarea({
+      name: "more-detail",
+      value: "Bring all relevant paperwork with you",
+      id: "more-detail"
+    }) }}
+
+ 
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  
+    <!-- <a class="govuk-link" href="#">Cancel</a> -->
+  </div>
+    </div>
+  </div>
+  </form>
+
+
+  
+{% endblock %}
