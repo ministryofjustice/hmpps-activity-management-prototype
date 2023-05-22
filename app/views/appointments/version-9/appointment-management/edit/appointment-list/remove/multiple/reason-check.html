@@ -1,0 +1,98 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}{% endblock %}
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post" action="reason-1">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                        <!-- <span class="govuk-caption-xl">View and edit appointment</span> -->
+                            Are you removing these 3 people from
+                            Chaplaincy for the same reason?
+                        </h1>
+                    </legend>
+
+                    <table class="govuk-table">
+                        <tbody class="govuk-table__body">
+        
+                            <tr class="govuk-table__row">
+                            
+                            <td class="govuk-table__cell"  scope="col">
+                                <a href="#" class="govuk-link--no-visited-state"><b>Hungerford, </b>Bert</a><br>
+                                <span class="govuk-hint govuk-!-font-size-16"></span>
+                            </td>
+                            <td class="govuk-table__cell" data-sort-value="112" scope="col">
+                                C2598E 
+                            </td>
+                            
+                            <td class="govuk-table__cell" data-sort-value="" scope="col">
+                                1-5-111
+                            </td>
+                            </tr>
+        
+                            <tr class="govuk-table__row">
+                            <td class="govuk-table__cell"  scope="col">
+                                <a href="#" class="govuk-link--no-visited-state"><b>Drove, </b>Luther</a><br>
+                                <span class="govuk-hint govuk-!-font-size-16"></span>
+                            </td>
+                            <td class="govuk-table__cell" data-sort-value="112" scope="col">
+                                E2405E
+                            </td>
+                            
+                            <td class="govuk-table__cell" data-sort-value="" scope="col">
+                                2-2-2
+                            </td>
+                            </tr>
+        
+                            <tr class="govuk-table__row"> 
+                            <td class="govuk-table__cell"  scope="col">
+                                <a href="#" class="govuk-link--no-visited-state"><b>Doyle, </b>Matthew</a><br>
+                                <span class="govuk-hint govuk-!-font-size-16"></span>
+                            </td>
+                            <td class="govuk-table__cell" data-sort-value="112" scope="col">
+                                E4911C
+                            </td>
+                            
+                            <td class="govuk-table__cell" data-sort-value="" scope="col">
+                                1-2-22
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table> 
+                    <dsiv class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="deallocate-same-reason" name="deallocate-same-reason"
+                                type="radio" value="yes" {{"checked" if data['deallocate-same-reason'] == 'yes' }}/>
+                            <label class="govuk-label govuk-radios__label" for="deallocate-same-reason">
+                                Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="deallocate-same-reason-2"
+                                name="deallocate-same-reason" type="radio" value="no" {{ 'checked' if data['deallocate-same-reason'] == 'no' }}/>
+                            <label class="govuk-label govuk-radios__label" for="deallocate-same-reason-2">
+                                No - it's for different reasons
+                            </label>
+                        </div>
+                    </div>
+
+                    {{ govukButton({
+                        text: "Continue"
+                        }) }}
+                </fieldset>
+            </div> 
+        </form>
+    </div>
+</div>
+{% endblock %}

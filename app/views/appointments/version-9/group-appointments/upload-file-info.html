@@ -1,0 +1,40 @@
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="upload-file">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Group appointment</span>
+        Use a CSV file to create a group appointment
+      </h1>
+   
+    <p class="govuk-body">
+      You can use a CSV file (a type of spreadsheet) to create a one-off or repeat appointment for a group of people.
+    </p>
+    <p class="govuk-body">
+      You must include a prison number for each individual.
+    </p>
+
+    <p class="govuk-body">
+      <a href="/public/downloads/offenders-for-group-appointments-template.csv" class="govuk-link" download>Download CSV file template</a>
+    </p>
+   
+    
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </div>
+</div>
+{% endblock %}
