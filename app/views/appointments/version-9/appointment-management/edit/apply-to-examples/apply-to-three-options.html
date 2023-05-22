@@ -1,0 +1,57 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post" action="../../appointment-summary/group/repeating">
+
+            <h2 class="govuk-heading-l">
+            <span class="govuk-caption-l">Group appointment</span>
+            Which appointments do you want to change the location for?
+            </h2>
+
+               {{ govukRadios({
+                idPrefix: "which-occurrence-alt-prisoners",
+                name: "which-occurrence-alt-prisoners",
+                items: [
+                  {
+                    value: "This occurrence-prisoners",
+                    text: "Just this one - Saturday, 20 May 2023 (3 of 6)"
+                  },
+                  {
+                    value: "This and the following occurrences",
+                    text: "This one and all the appointments that come after it in the series",
+                    hint: {
+                      text: "You’re changing appointments 3 to 6"
+                    }
+                  },
+                  {
+                    value: "This and all appointments",
+                    text: "This one and all the appointments in the series that haven’t happened yet",
+                    hint: {
+                      text: "You’re changing appointments 1 to 6"
+                    }
+                  }
+                ]
+               }) }}
+
+            {{ govukButton({
+            text: "Confirm and add"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

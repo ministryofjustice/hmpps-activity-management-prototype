@@ -1,0 +1,60 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="are-you-sure">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        Do you want to show the cancelled appointment on the unlock list?
+       </h1>
+   
+      {{ govukRadios({
+        idPrefix: "appointment-cancel",
+        name: "appointment-cancel",
+        items: [
+          {
+            value: "Yes",
+            text: "Yes - show the appointment as cancelled on the unlock list"
+          },
+          {
+            value: "No",
+            text: "No - cancel the appointment and delete it from the unlock list"
+          }
+        ]
+      }) }}
+
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            What is an unlock list?
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          The unlock list is used by wing officers to make sure people are let out of their cells at the right time to get to their schedued activities and appointments.
+        </div>
+      </details>
+      
+    
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
+
+
+
+  </div>
+</div>
+</form>
+{% endblock %}
