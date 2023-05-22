@@ -1,0 +1,36 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+
+{% block content %}
+<div class="back">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+        titleText: "Appointment created"
+      }) }}       
+      <p class="govuk-body">
+        You have successfully created appointments for 10 prisoners on {{ data['date-of-appointment-bulk-day']}} {{ data['date-of-appointment-bulk-month']}}  {{ data['date-of-appointment-bulk-year']}}.
+      </p>
+      <h2 class="govuk-heading-m">What you can do next</h2>
+      <p class="govuk-body">
+      <a href="../dps-home?prototype-versions[appointments][url]=/appointments/version-5/dps-home" class="govuk-link">Create another appointment</a>
+      </p>
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">View, print and edit appointment details</a>
+      </p>
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Print movement slip</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

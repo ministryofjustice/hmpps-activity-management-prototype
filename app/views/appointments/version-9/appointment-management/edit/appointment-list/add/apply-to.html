@@ -1,0 +1,111 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post" action="../../../appointment-summary/group/repeating">
+
+            <h2 class="govuk-heading-l">
+            <span class="govuk-caption-l">Group appointment</span>
+            Which appointment do you want to add the prisoners to?
+            </h2>
+
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row"> 
+                    <th class="govuk-table__header"> 
+                        Name 
+                    </th>
+                    <th class="govuk-table__header" > 
+                        Prison number 
+                    </th> 
+                    <th class="govuk-table__header"> 
+                        Location
+                    </th> 
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+
+                  <tr class="govuk-table__row">
+                    
+                    <td class="govuk-table__cell"  scope="col">
+                      <a href="#" class="govuk-link--no-visited-state"><b>Hungerford, </b>Bert</a><br>
+                      <span class="govuk-hint govuk-!-font-size-16"></span>
+                    </td>
+                    <td class="govuk-table__cell" data-sort-value="112" scope="col">
+                      C2598E 
+                    </td>
+                  
+                    <td class="govuk-table__cell" data-sort-value="" scope="col">
+                      1-5-111
+                    </td>
+                  </tr>
+
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell"  scope="col">
+                      <a href="#" class="govuk-link--no-visited-state"><b>Drove, </b>Luther</a><br>
+                      <span class="govuk-hint govuk-!-font-size-16"></span>
+                    </td>
+                    <td class="govuk-table__cell" data-sort-value="112" scope="col">
+                      E2405E
+                    </td>
+                  
+                    <td class="govuk-table__cell" data-sort-value="" scope="col">
+                      2-2-2
+                    </td>
+                  </tr>
+
+                  <tr class="govuk-table__row"> 
+                    <td class="govuk-table__cell"  scope="col">
+                      <a href="#" class="govuk-link--no-visited-state"><b>Doyle, </b>Matthew</a><br>
+                      <span class="govuk-hint govuk-!-font-size-16"></span>
+                    </td>
+                    <td class="govuk-table__cell" data-sort-value="112" scope="col">
+                      E4911C
+                    </td>
+                  
+                    <td class="govuk-table__cell" data-sort-value="" scope="col">
+                      1-2-22
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+               {{ govukRadios({
+                idPrefix: "which-occurrence-alt-prisoners",
+                name: "which-occurrence-alt-prisoners",
+                items: [
+                  {
+                    value: "This occurrence-prisoners",
+                    text: "Just this one - Saturday, 20 May 2023 (1 of 6)"
+                  },
+                  {
+                    value: "This and the following occurrences-prisoners",
+                    text: "This one and all the appointments that come after it in the series",
+                    hint: {
+                      text: "You’re removing this person from appointments 1 to 6"
+                    }
+                  }
+                ]
+               }) }}
+
+            {{ govukButton({
+            text: "Confirm and add"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
