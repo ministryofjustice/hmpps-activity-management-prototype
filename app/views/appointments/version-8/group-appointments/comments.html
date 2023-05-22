@@ -20,90 +20,16 @@ Appointments prototype
         </div>
      
      <h1 class="govuk-heading-l">
-      <span class="govuk-caption-l">Group appointments</span>
-      Add comments
+      <span class="govuk-caption-l">Group appointment</span>
+      Add a heads up for everyone attending {appointment type or alt desc} (optional)
      </h1>
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header ">Name</th>
-        <th scope="col" class="govuk-table__header "></th>
-        <th scope="col" class="govuk-table__header "></th>
-        
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-      <!--<tr class="govuk-table__row">
-        <td class="govuk-table__cell "><b>All prisoners</b> </td>
-        <td class="govuk-table__cell "> <span class="moj-badge">No comment</span></td>
-        <td class="govuk-table__cell "> <a href="individual-comments/prisoner-comments" class="govuk-link">Add comment</a></td>
-      </tr>-->
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell "><b>ALL PRISONERS</b>
-          <br><br>
-        </td>
-        <td class="govuk-table__cell "> <span class="govuk-tag">No comment</span></td>
-        <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
-          </tr>
-        </tr>
+     <p class="govuk-body">Attendees may need information about how to prepare for their appointment. You can add this as a heads up which will be printed on their movement slips.</p>
+     <p class="govuk-body">Wing staff will be notified there is a heads up on the printed unlock list, but for confidentiality the full details will only be visible when you view the details of the appointment in this service.</p>
 
-
-        {% if data['person-1-check'] ==='True' %}
-       
-
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell "> <a href="#" class="govuk-link--no-visited-state"><b>Manuel, </b> Bod</a><br>
-            <span class="govuk-hint govuk-!-font-size-16">{{ data['person-1']}}</span>
-          </td>
-          <td class="govuk-table__cell "> <span class="govuk-tag">No comment</span></td>
-          <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
-            
-          </tr>
-        {% else %}
-      {% endif %}
-
-
-
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell "><a href="#" class="govuk-link--no-visited-state"><b>Rudge, </b> Neil</a><br>
-            <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
-          </td>
-          <td class="govuk-table__cell "> <span class="govuk-tag">No comment</span></td>
-          <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
-            
-          </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell ">
-            <a href="#" class="govuk-link--no-visited-state"><b>Hungerford, </b>Bert</a><br>
-              <span class="govuk-hint govuk-!-font-size-16">C2598E</span>
-           </td>
-          <td class="govuk-table__cell "> <span class="govuk-tag">No comment</span></td>
-          <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell "><a href="#" class="govuk-link--no-visited-state"><b>Doyle</b>, Matthew</a><br>
-              <span class="govuk-hint govuk-!-font-size-16">E4911C</span>
-            </td>
-             <td class="govuk-table__cell "> <span class="govuk-tag">No comment</span></td>
-            <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell "><a href="#" class="govuk-link--no-visited-state"><b>Gee</b>, Ryan</a><br>
-              <span class="govuk-hint govuk-!-font-size-16">F5132C</span>
-            </td>
-            <td class="govuk-table__cell "> <span class="govuk-tag">No comment</span></td>
-          <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell "><a href="#" class="govuk-link--no-visited-state"><b>Bab</b>, Robin</a><br>
-              <span class="govuk-hint govuk-!-font-size-16">F4933A</span>
-            </td>
-            <td class="govuk-table__cell "> <span class="govuk-tag">No comment</span></td>
-          <td class="govuk-table__cell "> <a href="#" class="govuk-link">Add comment</a></td>
-          </tr>
-        </tbody>
-  </table>
-
+    {{ govukTextarea({
+      name: "more-detail",
+      id: "more-detail"
+    }) }}
 
  
   <div class="govuk-button-group">

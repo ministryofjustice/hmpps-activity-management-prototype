@@ -15,10 +15,11 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form method="post" action="clashes">
+        <form method="post" action="../../../appointment-summary/group/repeating">
 
-            <h2 class="govuk-heading-xl">
-                You've chosen 3 people to add to this appointment
+            <h2 class="govuk-heading-l">
+            <span class="govuk-caption-l">Group appointment</span>
+            Which appointment do you want to add the prisoners to?
             </h2>
 
             <table class="govuk-table">
@@ -82,29 +83,26 @@ text: "Back",
                 </tbody>
               </table>
 
-              <h1 class="govuk-heading-l"> 
-                Which appointment do you want to add the prisoners to?
-               </h1>
-
                {{ govukRadios({
                 idPrefix: "which-occurrence-alt-prisoners",
                 name: "which-occurrence-alt-prisoners",
                 items: [
                   {
                     value: "This occurrence-prisoners",
-                    text: "This appointment - Sunday 1 May 2023"
+                    text: "Just this one - Saturday, 20 May 2023 (1 of 6)"
                   },
                   {
                     value: "This and the following occurrences-prisoners",
-                    text: "This appointment and the 8 following appointments in the series"
+                    text: "This one and all the appointments that come after it in the series",
+                    hint: {
+                      text: "You’re removing this person from appointments 1 to 6"
+                    }
                   }
                 ]
                }) }}
-             
-
 
             {{ govukButton({
-            text: "Continue"
+            text: "Confirm and add"
             }) }}
         </form>
     </div>

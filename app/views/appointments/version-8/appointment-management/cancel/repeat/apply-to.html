@@ -14,38 +14,36 @@ text: "Back",
 
 {% block content %}
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <form method="post" action="cancel-reason">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post" action="../../appointment-summary/group/repeating-cancelled">
 
-              <h1 class="govuk-heading-l"> 
-                Which appointment do you want to cancel?
-               </h1>
+      <h1 class="govuk-heading-l">
+        Which appointments do you want to cancel?
+      </h1>
 
-               {{ govukRadios({
-                idPrefix: "which-occurrence",
-                name: "which-occurrence",
-                items: [
-                  {
-                    value: "This appointment",
-                    text: "This appointment - Sunday 1 May 2023"
-                  },
-                  {
-                    value: "This and the following occurrences-prisoners",
-                    text: "This appointment and the 8 following appointments in the series"
-                  },
-                  {
-                    value: "All appointments",
-                    text: "All 24 appointments in the series"
-                  }
-                ]
-               }) }}
-             
+      {{ govukRadios({
+        idPrefix: "which-occurrence",
+        name: "which-occurrence",
+        items: [
+          {
+            value: "This appointment",
+            text: "Just this one - Sunday, 1 May 2023 (1 of 6)"
+          },
+          {
+            value: "This and the following occurrences-prisoners",
+            text: "This one and all the appointments that come after it in the series",
+            hint: {  
+              text: " You’re cancelling appointments 1 to 6"
+            }
+          } 
+        ]
+       }) }}
 
-            {{ govukButton({
-            text: "Continue"
-            }) }}
-        </form>
-    </div>
+      {{ govukButton({
+        text: "Continue"
+        }) }}
+  </form>
+</div>
 </div>
 
 {% endblock %}
