@@ -46,7 +46,7 @@ router.get("/:activityId/*", function (req, res, next) {
 });
 
 // router for activity tabs page
-router.get("/:activityId/tabs", (req, res, next) => {
+router.get(["/:activityId/tabs", "/:activityId/manage-allocations"], (req, res, next) => {
   let activityId = req.params.activityId;
   let activities = req.session.data["timetable-complete-1"]["activities"];
   let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
@@ -115,6 +115,21 @@ router.get("/:activityId/tabs", (req, res, next) => {
     offset: offset,
     limit: limit,
   });
+});
+
+// post handler for the currently allocated page
+router.post(["/:activityId/tabs", "/:activityId/manage-allocations"], function (req, res) {
+  let selectedPrisoners = req.session.data["selected-prisoners"];
+
+  console.log("selected prisoners: " + selectedPrisoners);
+  
+  // if the user clicks the 'remove' button, redirect to the deallocate page
+  // the button name is allocation-action
+  if (req.body["allocation-action"] === "deallocate") {
+    res.redirect("deallocate/" + selectedPrisoners + "?redirect=");
+  } else if (req.body["allocation-action"] === "edit-allocation") {
+    res.redirect("edit-allocation/" + selectedPrisoners);
+  }
 });
 
 // router for deallocate prisoner journey
@@ -375,50 +390,53 @@ router.get("/:activityId/details", function (req, res) {
 
 // activity currently allocated page
 router.get("/:activityId/currently-allocated", function (req, res) {
-  let currentPage = "currently-allocated";
-  let activityId = req.params.activityId;
-  let activities = req.session.data["timetable-complete-1"]["activities"];
-  let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  // let currentPage = "currently-allocated";
+  // let activityId = req.params.activityId;
+  // let activities = req.session.data["timetable-complete-1"]["activities"];
+  // let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
+  // let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
 
-  // get list of prisoners with allocations
-  const currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
+  // // get list of prisoners with allocations
+  // const currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
 
-  // set an activitySchedule variable from the activity.schedule data
-  let activitySchedule = activity.schedule;
+  // // set an activitySchedule variable from the activity.schedule data
+  // let activitySchedule = activity.schedule;
 
-  // for each day in the activity schedule, create a new object with the day name and am/pm values
-  let schedule = getActivitySchedule(activitySchedule);
+  // // for each day in the activity schedule, create a new object with the day name and am/pm values
+  // let schedule = getActivitySchedule(activitySchedule);
 
-  // create a human-readable list of days the activity is scheduled for
-  let activityDays = humanReadableSchedule(schedule);
-  let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
+  // // create a human-readable list of days the activity is scheduled for
+  // let activityDays = humanReadableSchedule(schedule);
+  // let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
 
-  // get the category name for the activity
-  let activityCategory = req.session.data["timetable-complete-1"]["categories"].find(
-    (category) => category.id.toString() === activity.category.toString()
-  );
+  // // get the category name for the activity
+  // let activityCategory = req.session.data["timetable-complete-1"]["categories"].find(
+  //   (category) => category.id.toString() === activity.category.toString()
+  // );
 
-  // hide the confirmation message if it's shown
-  if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
-    delete req.session.data["confirmation-dialog"];
-  }
+  // // hide the confirmation message if it's shown
+  // if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
+  //   delete req.session.data["confirmation-dialog"];
+  // }
 
-  // get and set the index of the activity in each prisoner's activity array
-  currentlyAllocated.forEach((prisoner) => {
-    prisoner.activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
-  });
+  // // get and set the index of the activity in each prisoner's activity array
+  // currentlyAllocated.forEach((prisoner) => {
+  //   prisoner.activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+  // });
 
-  res.render(req.protoUrl + "/currently-allocated", {
-    activity,
-    activityCategory,
-    activityDays,
-    activityDaysWithTimes,
-    currentPage,
-    currentlyAllocated,
-    schedule,
-    activitySchedule,
-  });
+  // res.render(req.protoUrl + "/currently-allocated", {
+  //   activity,
+  //   activityCategory,
+  //   activityDays,
+  //   activityDaysWithTimes,
+  //   currentPage,
+  //   currentlyAllocated,
+  //   schedule,
+  //   activitySchedule,
+  // });
+
+  // redirect to the manage allocations page for the activity
+  res.redirect("manage-allocations");
 });
 
 // activity currently allocated page

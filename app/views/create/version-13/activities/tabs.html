@@ -97,74 +97,9 @@ Find an activity to record or edit attendance
                     summaryText: "Check the requirements for this activity",
                     html: activityInfoHtml
                     })}}
-
-                    <!-- <div class="govuk-button-group govuk-!-margin-bottom-5">
-                        <a class="govuk-button" href="../edit">
-                            Allocate someone to this activity
-                        </a>
-                        <a class="govuk-button govuk-button--secondary" href="../delete">
-                            Log a request
-                        </a>
-                    </div> -->
-
-                    <!-- <div class="govuk-inset-text">
-                        <ul class="govuk-list">
-                            <li>
-                                Suitable for {{activity.riskAssessment}} workplace risk assessment
-                            </li>
-                            <li>
-                                Basic and enhanced incentive level pay rates
-                            </li>
-                            <li>
-                                No education requirements
-                            </li>
-                        </ul>
-                        <p>
-                            <a class="govuk-link" href="../delete">
-                                View or change details
-                            </a>
-                        </p>
-                    </div> -->
                 </div>
 
                 <div class="govuk-grid-column-one-third">
-                    <!-- <div class="govuk-summary-card">
-                        <div class="govuk-summary-card__title-wrapper">
-                            <h2 class="govuk-summary-card__title">Schedule</h2>
-                            <ul class="govuk-summary-card__actions">
-                                <li class="govuk-summary-card__action">
-                                    <a class="govuk-link" href="#">
-                                        Edit
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="govuk-summary-card__content">
-                            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-0">
-                                {% for day in activityDaysWithTimes %}
-                                <div class="govuk-summary-list__row">
-                                    <dt
-                                        class="govuk-summary-list__key govuk-!-font-size-16 govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-top-1 govuk-!-padding-bottom-1">
-                                        {% if day.times %}
-                                        {{day.day|capitalize}}
-                                        {% else %}
-                                        <span class="govuk-hint govuk-!-font-size-16">{{day.day|capitalize}}</span>
-                                        {% endif %}
-                                    </dt>
-                                    <dd
-                                        class="govuk-summary-list__value govuk-!-font-size-16 govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-top-1 govuk-!-padding-bottom-1">
-                                        {% if day.times %}
-                                        <b>{{day.times}}</b>
-                                        {% else %}
-                                        <span class="govuk-hint govuk-!-font-size-16">Not scheduled</span>
-                                        {% endif %}
-                                    </dd>
-                                </div>
-                                {% endfor %}
-                            </dl>
-                        </div>
-                    </div> -->
-
                     <div class="govuk-!-padding-4" style="background-color: #f1f2f3;">
                         <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-visually-hidden">
                             Weekly schedule
@@ -192,11 +127,6 @@ Find an activity to record or edit attendance
                             {% endfor %}
                         </dl>
                     </div>
-                    <!-- <p class="govuk-!-font-size-6 govuk-!-margin-top-4 govuk-!-margin-bottom-2">
-                        <a href="#" class="govuk-link govuk-!-margin-bottom-1">
-                            Edit schedule
-                        </a>
-                    </p> -->
                 </div>
             </div>
 
@@ -206,12 +136,12 @@ Find an activity to record or edit attendance
                 </h2>
                 <ul class="govuk-tabs__list">
                     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-                        <a class="govuk-tabs__tab" href="#past-day">
+                        <a class="govuk-tabs__tab" href="#curently-allocated">
                             Currently allocated
                         </a>
                     </li>
                     <li class="govuk-tabs__list-item">
-                        <a class="govuk-tabs__tab" href="#past-week">
+                        <a class="govuk-tabs__tab" href="#waitlist">
                             Waitlist
                         </a>
                     </li>
@@ -221,29 +151,23 @@ Find an activity to record or edit attendance
                         </a>
                     </li>
                 </ul>
-                <div class="govuk-tabs__panel" id="past-day">
+                <div class="govuk-tabs__panel" id="curently-allocated">
                     <h2 class="govuk-heading-l govuk-!-margin-bottom-5">
                         {{currentlyAllocated.length}} people currently allocated
                     </h2>
 
                     <div class="govuk-button-group govuk-!-margin-bottom-5">
-                        <a href="deallocate" class="govuk-link" style="color: #be0e0e;">
+                        <!-- <a href="deallocate" class="govuk-link" style="color: #be0e0e;">
                             Remove people from this activity
-                        </a>
+                        </a> -->
                     </div>
-                    
-                    <!-- <p>
-                        <a href="#" class="govuk-link" style="color: #be0e0e;">
-                            Remove people from this activity
-                        </a>
-                    </p> -->
 
                     <table class="govuk-table govuk-!-margin-bottom-5" data-module="moj-multi-select"
                         data-multi-select-checkbox="#select-all">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
-                                <!-- <th class="govuk-table__header govuk-!-padding-right-2 govuk-!-padding-left-1" scope="col"
-                                    id="select-all"></th> -->
+                                <th class="govuk-table__header govuk-!-padding-right-2 govuk-!-padding-left-1"
+                                    scope="col" id="select-all"></th>
                                 <th scope="col" class="govuk-table__header">Prisoner details</th>
                                 <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
                                 <th scope="col" class="govuk-table__header">Allocation start and end</th>
@@ -255,17 +179,19 @@ Find an activity to record or edit attendance
                         <tbody class="govuk-table__body">
                             {% for prisoner in currentlyAllocated | sort(false,true,'name.surname') %}
                             <tr class="govuk-table__row">
-                                <!-- <td class="govuk-table__cell">
+                                <td class="govuk-table__cell">
                                     <div
                                         class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-right-2 govuk-!-margin-left-1">
-                                        <input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}"
-                                            name="selected-prisoners" value="{{prisoner.id}}">
-                                        <label class="govuk-label govuk-checkboxes__label" for="prisoner-{{loop.index}}">
+                                        <input type="checkbox" class="govuk-checkboxes__input"
+                                            id="prisoner-{{loop.index}}" name="selected-prisoners"
+                                            value="{{prisoner.id}}">
+                                        <label class="govuk-label govuk-checkboxes__label"
+                                            for="prisoner-{{loop.index}}">
                                             <span class="govuk-visually-hidden">Select {{prisoner.name.surname}},
                                                 {{prisoner.name.firstname}}</span>
                                         </label>
                                     </div>
-                                </td> -->
+                                </td>
                                 <td class="govuk-table__cell">
                                     <b>
                                         <a href="#" class="govuk-link--no-visited-state">
@@ -327,16 +253,12 @@ Find an activity to record or edit attendance
                                 <td class="govuk-table__cell">
                                     {{prisoner.releaseDate|convertShortDateToMediumDate}}
                                 </td>
-                                <td class="govuk-table__cell">
-                                    <a href="edit-allocation/{{prisoner.id}}"
-                                        class="govuk-link--no-visited-state">Change</a>
-                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-week">
+                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="waitlist">
                     <h2 class="govuk-heading-l govuk-!-margin-bottom-5">
                         {{activityApplications|length}} {{'people' if activityApplications|length != 1 else 'person'
                         }} on the waitlist
@@ -428,7 +350,7 @@ Find an activity to record or edit attendance
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-two-thirds">
                             <div class="moj-search govuk-!-margin-top-4">
-                                <form action="other-prisoners" method="get" novalidate="">
+
                                     <div class="govuk-form-group">
                                         <label class="govuk-label moj-search__label govuk-!-font-weight-bold"
                                             for="name">
@@ -440,7 +362,7 @@ Find an activity to record or edit attendance
                                     <button class="govuk-button moj-search__button" data-module="govuk-button">
                                         Search
                                     </button>
-                                </form>
+
                             </div>
 
                             {{govukInsetText({
@@ -604,9 +526,30 @@ Find an activity to record or edit attendance
             {% endblock %}
         </main>
     </div>
+    <div class="app-actions-toolbar" aria-live="polite" aria-disabled="true" role="toolbar"
+        aria-label="Attendance actions" id="allocation-toolbar">
+        <div class="govuk-width-container">
+            <p class="govuk-!-margin-bottom-0">
+                <span id="app-selected-count">
+                    No prisoners selected. Select prisoners to begin marking attendance.
+                </span>
+                <a href="#" class="govuk-link--no-visited-state govuk-!-margin-left-4" id="clear-selection"
+                    style="color: white">Clear</a>
+            </p>
+            <div class="govuk-button-group govuk-!-margin-bottom-0">
+                <button class="govuk-button govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn"
+                    data-module="govuk-button" value="deallocate" name="allocation-action">
+                    Remove from activity
+                </button>
+                <button class="govuk-button govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn"
+                    data-module="govuk-button" value="edit-allocation" id="edit-allocation" name="allocation-action">
+                    Edit allocation
+                </button>
+            </div>
+        </div>
+    </div>
 </form>
 {% endblock %}
-
 
 {% block pageScripts %}
 <script type="text/javascript">
@@ -617,31 +560,44 @@ Find an activity to record or edit attendance
     const selectedCount = $('#app-selected-count');
     const clearButton = $('#clear-selection');
 
+    // store the original count string
     selectedCount.attr('data-html', $('#app-selected-count').html());
 
     const generateCountString = (count) => {
-        let noun = count == 1 ? ' person' : ' people';
-        return count + noun + ' selected';
+        let noun = count == 1 ? ' person' : ' people'; // if count is 1, use "person", otherwise use "people"
+        return count + noun + ' selected'; // return the count string with the noun
     }
 
     function updateToolbar() {
+        // if any checkboxes are checked, show the toolbar
         if (checkbox.is(':checked')) {
-            toolbar.addClass('active').attr("aria-disabled", false);
-            selectedCount.html(generateCountString(checkbox.filter(':checked').length));
+            toolbar.addClass('active').attr("aria-disabled", false); // enable the toolbar
+            selectedCount.html(generateCountString(checkbox.filter(':checked').length)); // update the count
         } else {
-            toolbar.removeClass('active').attr("aria-disabled", true);
-            selectedCount.html(selectedCount.attr('data-html'));
+            toolbar.removeClass('active').attr("aria-disabled", true); // disable the toolbar
+            selectedCount.html(selectedCount.attr('data-html')); // reset the count
+        }
+
+        // if more than one checkbox is checked, hide the "Edit allocation" button
+        if (checkbox.filter(':checked').length > 1) {
+            $('#edit-allocation').hide(); // hide the button
+        } else {
+            $('#edit-allocation').show(); // show the button
         }
     };
 
-    $('body').on('change', 'table input[type="checkbox"]', updateToolbar);
+    $('body').on('change', 'table input[type="checkbox"]', updateToolbar); // update the toolbar when any checkbox is changed
 
     // run the function on window load to check if any checkboxes are already checked
     $(window).on('load', updateToolbar);
 
+    // clear all checkboxes when the "Clear selection" button is clicked
     clearButton.on('click', function (event) {
-        event.preventDefault();
+        event.preventDefault(); // prevent the page from jumping to the top
+
+        // get the first checkbox in the table
         let selectAllCheckbox = $('body').find('table input[type="checkbox"]').first();
+
         // if the first checkbox in the table is checked, uncheck it
         if (selectAllCheckbox.is(':checked')) {
             selectAllCheckbox.click();
@@ -649,9 +605,12 @@ Find an activity to record or edit attendance
             // otherwise, uncheck all other checkboxes
             checkbox.prop('checked', false);
         }
+
+        // disable the toolbar and reset the count
         toolbar.removeClass('active').attr("aria-disabled", true);
+
+        // reset the count
         selectedCount.html(selectedCount.attr('data-html'));
     });
-
 </script>
 {% endblock %}
