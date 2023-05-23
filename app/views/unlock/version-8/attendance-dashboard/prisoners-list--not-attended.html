@@ -6,7 +6,7 @@ Attendance dashboard
 {% block primaryNavigation %}{% endblock %}
 {% block beforeContent %}
 {{ govukBackLink({
-text: "Back to attendance daily summary",
+text: "Back",
 "href": "javascript: window.history.go(-1)"
 }) }}
 {% endblock %}
@@ -17,6 +17,9 @@ text: "Back to attendance daily summary",
             {{ pageTitle }}
             <span class="govuk-caption-l">
                 {{ date|today|convertShortDateToVeryLongDate }}
+            </span>
+            <span class="govuk-caption-l">
+                {{period}} session
             </span>
         </h1>
     </div>
@@ -176,9 +179,9 @@ text: "Back to attendance daily summary",
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header" aria-sort="none">Attendee</th>
                         <th scope="col" class="govuk-table__header" aria-sort="none">Cell location</th>
-                        <th scope="col" class="govuk-table__header" aria-sort="none">Session</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Activity</th>
                         <th scope="col" class="govuk-table__header" aria-sort="none">Attendance details</th>
-                        <th scope="col" class="govuk-table__header"></th>
+                        <!-- <th scope="col" class="govuk-table__header"></th> -->
                     </tr>
                 </thead>
                 <tbody class="govuk-table__body">
@@ -266,10 +269,10 @@ text: "Back to attendance daily summary",
                                 {% endif %}
                             </ul>
                         </td>
-                        <td class="govuk-table__cell">
+                        <!-- <td class="govuk-table__cell">
                             <a href="../../../activities/{{date}}/{{period}}/{{activity.id}}/{{prisoner.prisonerId}}"
                                 class="govuk-link--no-visited-state">View or edit</a>
-                        </td>
+                        </td> -->
                     </tr>
                     {% endfor %}
                 </tbody>
