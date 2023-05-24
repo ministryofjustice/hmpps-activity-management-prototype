@@ -8,6 +8,42 @@ router.get("/*", function (req, res, next) {
   next();
 });
 
+// redirect / to /select-prisoners
+router.get("/", function (req, res) {
+  res.redirect("deallocate/select-prisoners");
+});
+
+// select prisoners page
+router.get("/select-prisoners", function (req, res) {
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === req.activityId.toString()
+  );
+
+  let allocatedPrisoners = req.session.data["timetable-complete-1"]["prisoners"].filter(
+    (prisoner) => prisoner.activity && prisoner.activity.toString() === req.activityId.toString()
+  );
+
+  // render the select prisoners page
+  res.render(req.protoUrl + "/select-prisoners", {
+    allocatedPrisoners,
+    activity,
+  });
+});
+
+// select prisoners page POST handler
+router.post("/select-prisoners", function (req, res) {
+  let selectedPrisoners = req.body["selected-prisoners"];
+  let activityId = req.activityId;
+
+  // remove "_unchecked" values from the selectedPrisoners array
+  selectedPrisoners = selectedPrisoners.filter((prisonerId) => prisonerId !== "_unchecked");
+
+  // redirect to the deallocate date page
+  res.redirect(selectedPrisoners + "/date-check");
+});
+
+
+
 // routes for pages in the activities section
 // activities page redirect root to /all
 router.get("/:prisonerIds", function (req, res) {

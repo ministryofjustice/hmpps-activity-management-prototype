@@ -1,0 +1,138 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBreadcrumbs({
+classes: "govuk-!-display-none-print",
+items: [
+{
+text: "Digital Prison Services",
+href: "/dps-home"
+},
+{
+text: "Manage activities",
+href: "../manage-activities"
+}
+]
+}) }}
+{% endblock %}
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">Edit activity details</span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-7">
+            Select an activity to edit
+        </h1>
+
+        <p>
+            You can view or edit details for a single activity, or you can select multiple activities to pause, archive or delete them.
+        </p>
+
+        <!-- <p>
+            <a href="../create-activity" class="govuk-button govuk-button--secondar">Create an activity</a>
+        </p> -->
+    </div>
+</div>
+
+{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+{{ mojSubNavigation({
+label: 'Sub navigation',
+items: [{
+text: 'Live activities (43)',
+href: 'all',
+active: true if list == 'all'
+}, {
+text: 'Paused activities (2)',
+href: 'vacancies',
+active: true if list == 'vacancies'
+}, {
+text: 'Archived activities (11)',
+href: 'draft',
+active: true if list == 'draft'
+}
+]
+}) }}
+
+<table class="govuk-table govuk-!-margin-bottom-5" data-module="moj-multi-select"
+    data-multi-select-checkbox="#select-all">
+    <thead class="govuk-table__head">
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col" id="select-all"></th>
+                <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity</th>
+                <th scope="col" class="govuk-table__header" aria-sort="none">Category</th>
+                <!-- <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none"
+                style="white-space: nowrap; width: 1%;">Capacity</th> -->
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none"
+                    style="white-space: nowrap; width: 1%;">Allocated</th>
+                <th scope="col" class="govuk-table__header govuk-hint govuk-table__header--numeric" aria-sort="none"
+                    style="white-space: nowrap; width: 1%;">Sessions per week</th>
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none"
+                    style="white-space: nowrap; width: 1%;">Status</th>
+                <!-- <th scope="col" class="govuk-table__header govuk-hint govuk-table__header--numeric" aria-sort="none"
+                style="white-space: nowrap; width: 1%;">% allocated</th> -->
+            </tr>
+        </thead>
+    <tbody class="govuk-table__body">
+        {% for activity in activities | sort(false, true, 'name') %}
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                {% if not prisoner.attendance.attendance or prisoner.attendance.attendance == "removed" %}
+                <div
+                    class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                    <input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}"
+                        name="selected-prisoners" value="{{prisoner.id}}">
+                    <label class="govuk-label govuk-checkboxes__label" for="prisoner-{{loop.index}}">
+                        <span class="govuk-visually-hidden">Select {{prisoner.name.surname}},
+                            {{prisoner.name.firstname}}</span>
+                    </label>
+                </div>
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
+                <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
+                    <a href="{{activity.id}}/details" class="govuk-link--no-visited-state">
+                        {{activity.name}}
+                    </a>
+                </h2>
+            </td>
+            <td class="govuk-table__cell"
+                data-sort-value="{{activity.nextSession.date}}-{{activity.nextSession.period}}">
+                {{activity.category|getActivityCategoryName}}
+            </td>
+            <!-- <td class="govuk-table__cell--numeric govuk-table__cell"
+                data-sort-value="{{activity.startTime|replace(':','')}}">
+                {{activity.capacity}}
+            </td> -->
+            <td class="govuk-table__cell--numeric govuk-table__cell">
+                {{activity.payRates|length}}
+            </td>
+            <td class="govuk-table__cell--numeric govuk-table__cell"
+                data-sort-value="{{ activity.capacity - activity.currentlyAllocated }}">
+                {{ [1,2,3,4,5,6,7,8,9] | random }}
+            </td>
+            <td class="govuk-table__cell--numeric govuk-table__cell"
+                data-sort-value="{{activity.startTime|replace(':','')}}">
+                <span class="govuk-tag govuk-tag--green">Live</span>
+            </td>
+            <!-- <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint"
+                data-sort-value="{{activity.attendanceCount[period]['attended']}}">
+                {{ (100 - ((activity.capacity - activity.currentlyAllocated) / activity.capacity * 100)) | round(0)}}
+            </td> -->
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}

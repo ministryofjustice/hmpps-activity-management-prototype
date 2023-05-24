@@ -16,6 +16,11 @@ router.get("/manage-activities", function (req, res) {
   res.render("create/" + req.version + "/manage-activities");
 });
 
+// record-check-attendance page
+router.get("/record-check-attendance", function (req, res) {
+  res.render("create/" + req.version + "/record-check-attendance");
+});
+
 // create activity journey
 router.use("/create-activity", (req, res, next) => {
   let serviceName = req.originalUrl.split("/")[1];

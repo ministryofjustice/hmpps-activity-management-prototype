@@ -17,26 +17,9 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-m">
-            <span class="govuk-caption-m">
-                {{data['new-activity']['category']|getActivityCategoryName|replace('-',' ')|capitalize}}
-            </span>
-            {{data['new-activity']['name']}}
-        </h2>
-
-        {% if data['show-delete-dialog'] == true %}
-        {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-        {% set html %}
-        <h3 class="govuk-notification-banner__heading">
-            Pay rate {{rate.name or 'Payment rate A'}} removed
-        </h3>
-        {% endset %}
-        {{ govukNotificationBanner({
-        html: html,
-        type: 'success'
-        }) }}
-        {% endif %}
-
+        <span class="govuk-caption-l">
+            Create an activity
+        </span>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
             Pay rates for {{data['new-activity']['name'] or 'Maths level
             1'}}
@@ -44,7 +27,8 @@ text: "Back",
 
         {% if noPayrates == false %}
         {% for incentiveLevel, payrates in data.payrates %}
-        <h2 class="govuk-heading-m govuk-!-margin-top-7">{{incentiveLevel|capitalize + ' incentive level pay rates' if incentiveLevel !=
+        <h2 class="govuk-heading-m govuk-!-margin-top-7">{{incentiveLevel|capitalize + ' incentive level pay rates' if
+            incentiveLevel !=
             'flat-rate' else 'Flat rates'}}</h2>
         <dl class="govuk-summary-list">
             {% for payrate in payrates %}
@@ -55,9 +39,6 @@ text: "Back",
                 <dd class="govuk-summary-list__value">
                     &pound;{{payrate.amount|decimalPlaces(2) or '1.10'}}
                 </dd>
-                <!-- <dd class="govuk-summary-list__value">
-                    2 allocated
-                </dd> -->
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link govuk-!-margin-right-3" href="payrate-details?id={{payrate.id}}">
                         Change<span class="govuk-visually-hidden"> incentive pay</span>

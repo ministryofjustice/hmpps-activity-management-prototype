@@ -22,6 +22,27 @@ router.post("/select-date", function (req, res) {
   res.redirect(`${date}/daily`);
 });
 
+// select date and period page
+router.get("/select-date-and-period", function (req, res) {
+  let dateIn30Days = DateTime.now().plus({ days: 30 }).toISODate();
+
+  res.render(req.protoUrl + "/select-date-and-period", {
+    dateIn30Days,
+  });
+});
+
+// select date and period page - post
+router.post("/select-date-and-period", function (req, res) {
+  let date = req.body["date"];
+  let period = req.body["period"].toUpperCase();
+
+  if(period === "DAILY") {
+    period = "daily";
+  }
+
+  res.redirect(`${date}/${period}/not-attended-yet?page=1`);
+});
+
 // generate data success page
 router.get("/generate-data-success", function (req, res) {
   // sum all records in attendance data
@@ -117,7 +138,7 @@ router.get("/:selectedDate/:selectedPeriod", function (req, res) {
 
     if (data) {
       let activitiesCheckedCancellations = [];
-      
+
       Object.values(data).forEach((activity) => {
         if (activity[date]) {
           const periodData =
@@ -396,53 +417,34 @@ router.get("/:date/:period/not-attended-yet", (req, res) => {
 
   // set attendanceList to any prisoners with the activity id in their activity array
   // but who have not yet been marked as attended or not attended for that activity on the selected date and period
-  let attendanceList;
+  let attendanceList = getPrisonersWithActivity(activities, prisoners, date, period);
 
-  // if the period is daily, we need to check both morning and afternoon
-  // or run the filter function twice for each period and combine the results
-  if (period === "daily") {
-    attendanceList = notAttendedList("AM", date).concat(notAttendedList("PM", date));
-  } else {
-    attendanceList = notAttendedList(period, date);
-  }
+  let limit = 10;
 
-  res.render(req.protoUrl + "/prisoners-list", {
+  // pagination component variables
+  let pagination = {
+    current: req.query.page,
+    total: attendanceList.length,
+    limit: limit,
+    from: attendanceList.length > 0 ? (req.query.page - 1) * limit + 1 : 0,
+    to: req.query.page * limit > attendanceList.length ? attendanceList.length : req.query.page * limit,
+    previous: req.query.page > 1 ? req.query.page - 1 : false,
+    next: req.query.page * limit < attendanceList.length ? req.query.page + 1 : false,
+    pages: Math.ceil(attendanceList.length / limit),
+    first: req.query.page > 1 ? 1 : false,
+    last: req.query.page * limit < attendanceList.length ? Math.ceil(attendanceList.length / limit) : false,
+  };
+
+  // paginate the attendanceList to show n prisoners per page
+  attendanceList = paginate(attendanceList, limit, req.query.page);
+
+  res.render(req.protoUrl + "/prisoners-list--not-attended", {
     date,
     period,
-    pageTitle: "All absences",
+    pageTitle: "All not attended yet",
     attendanceList,
+    pagination,
   });
-
-  function notAttendedList(period, date) {
-    let list = [];
-    // check attendanceData is not empty or undefined
-    if (attendanceData) {
-      // loop through each prisoner
-      prisoners.forEach((prisoner) => {
-        // check if the prisoner has any activities
-        if (prisoner.activity && prisoner.activity.length > 0) {
-          // loop through each activity
-          prisoner.activity.forEach((activity) => {
-            // if there is already attendanceData for this activity on the selected date and period for this prisoner
-            // do nothing
-            if (
-              attendanceData[activity.id] &&
-              attendanceData[activity.id][date] &&
-              attendanceData[activity.id][date][period] &&
-              !attendanceData[activity.id][date][period][prisoner.id]
-            ) {
-              // if there is no attendanceData for this activity on the selected date and period for this prisoner
-              // add the prisoner to the list
-              list.push({
-                prisoner,
-                activity,
-              });
-            }
-          });
-        }
-      });
-    }
-  }
 });
 
 // PAGE: Sessions cancelled list
@@ -939,4 +941,63 @@ function getPrisonerList(activities, attendanceData, date, period, attended, att
 
   // return the prisoner list
   return prisonerList;
+}
+
+// function to get a list of prisoners with an activity scheduled on the selected date and period
+function getPrisonersWithActivity(activities, prisoners, date, period) {
+  let prisonersWithActivity = [];
+  let selectedDay = new Date(date).getDay();
+  let selectedPeriod = period;
+  let activitiesOnDayAndPeriod = [];
+
+  activities.forEach((activity) => {
+    let activitySchedule = activity.schedule;
+
+    // for each day in the activity schedule
+    activitySchedule.forEach((day) => {
+      // if the "am" or "pm" is null, don't add the activity id to the list of activities on the selected day and period
+      // if the day matches the selected day, add the activity id to the list of activities on the selected day and period
+      // if the selected period is "daily", add the activity id to the list of activities on the selected day and period if the day matches the selected day and either the "am" or "pm" is not null
+      if (
+        (selectedPeriod === "AM" && day.am && day.day === selectedDay) ||
+        (selectedPeriod === "PM" && day.pm && day.day === selectedDay) ||
+        (selectedPeriod === "daily" && day.day === selectedDay && (day.am || day.pm))
+      ) {
+        activitiesOnDayAndPeriod.push(activity.id.toString());
+      }
+    });
+  });
+
+  // for each prisoner in the list of prisoners
+  prisoners.forEach((prisoner) => {
+    // if the "prisoner.activity" array contains an activity id from the activitiesOnDayAndPeriod array
+    // ... make sure we compare the activity ids as strings
+    if (
+      prisoner.activity &&
+      prisoner.activity.length > 0 &&
+      prisoner.activity.some((activity) => activitiesOnDayAndPeriod.includes(activity.toString()))
+    ) {
+      // remove any activities from the prisoner.activity array that are not in the activitiesOnDayAndPeriod array
+      prisoner.activity = prisoner.activity.filter((activity) => activitiesOnDayAndPeriod.includes(activity.toString()));
+
+      // if the prisoner still has more than one activity in their activity array
+      // we need to add them to the list of prisoners with an activity for each activity in their activity array
+      if (prisoner.activity.length > 1) {
+        prisoner.activity.forEach((activity) => {
+          prisonersWithActivity.push({ ...prisoner, activity: [activity] });
+        });
+      } else {
+        // otherwise just add the prisoner to the list of prisoners with an activity
+        prisonersWithActivity.push(prisoner);
+      }
+    }
+  });
+  
+  // return the list of prisoners with an activity on the selected day and period
+  return prisonersWithActivity;
+}
+
+// pagination function
+function paginate(array, pageSize, pageNumber) {
+  return array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
 }

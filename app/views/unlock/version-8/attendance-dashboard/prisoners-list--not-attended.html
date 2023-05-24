@@ -167,52 +167,42 @@ text: "Back to attendance daily summary",
         </div>
         <div class="moj-scrollable-pane">
             <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-                {{ attendanceList|length }}
-                {{ "absence" if attendanceList|length == 1 else "absences" }}
+                {{ pagination.total }}
+                not attended yet
             </h2>
             <table class="govuk-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head"
-                data-module="moj-sortable-table">
+                data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header" aria-sort="none">Attendee</th>
                         <th scope="col" class="govuk-table__header" aria-sort="none">Cell location</th>
                         <th scope="col" class="govuk-table__header" aria-sort="none">Session</th>
-                        {% if attendanceStatus == 'clash' %}
-                        <th scope="col" class="govuk-table__header" aria-sort="none">Other activity</th>
-                        {% else %}
-                        <th scope="col" class="govuk-table__header" aria-sort="none">Time</th>
-                        {% endif %}
                         <th scope="col" class="govuk-table__header" aria-sort="none">Attendance details</th>
                         <th scope="col" class="govuk-table__header"></th>
                     </tr>
                 </thead>
                 <tbody class="govuk-table__body">
                     {% for prisoner in attendanceList %}
-                    {% set prisonerData = prisoner.prisonerId|getPrisonerDetails %}
-
                     {% set activity = session.activity|getActivityDetails %}
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">
-                            {% set prisonerData = prisoner.prisonerId|getPrisonerDetails %}
                             <a href="#" class="govuk-link--no-visited-state">
-                                <b>{{ prisonerData.name.surname }}</b>, {{ prisonerData.name.firstname }}</a>
+                                <b>{{ prisoner.name.surname }}</b>, {{ prisoner.name.firstname }}</a>
                             <br>
-                            <span class="govuk-hint govuk-!-margin-0 govuk-!-font-size-16">{{ prisonerData.id }}</span>
+                            <span class="govuk-hint govuk-!-margin-0 govuk-!-font-size-16">{{ prisoner.id }}</span>
                         </td>
                         <td class="govuk-table__cell">
-                            {{ prisonerData.location.cell }}
+                            {{ prisoner.location.cell }}
                         </td>
                         <td class="govuk-table__cell">
-                            {% set activity = prisoner.activityId|getActivityDetails %}
-                            <a href="#" class="govuk-link--no-visited-state">{{ activity.name }}</a>
-                        </td>
-                        <td class="govuk-table__cell">
-                            {% for activityId in prisonerData.activity %}
-                            {% if activityId != prisoner.activityId %}
-                            {% set activityData = activityId|getActivityDetails %}
-                            {{activityData.name}}
-                            {% endif %}
-                            {% endfor %}
+                            <ul class="govuk-list govuk-!-margin-0">
+                                {% for activityId in prisoner.activity %}
+                                {% set activityData = activityId|getActivityDetails %}
+                                <li>
+                                    <a href="#" class="govuk-link--no-visited-state">{{ activityData.name }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
                         </td>
                         <td class="govuk-table__cell">
                             {% set attendance = prisoner.attendanceRecord.attendance %}
@@ -287,6 +277,39 @@ text: "Back to attendance daily summary",
         </div>
     </div>
 </div>
+
+<nav class="moj-pagination" aria-label="Pagination navigation">
+    <ul class="moj-pagination__list">
+        {% if pagination.current > 1 %}
+        <li class="moj-pagination__item  moj-pagination__item--prev">
+            <a class="moj-pagination__link" href="?page={{data.page|int - 1|int}}#list">Previous<span
+                    class="govuk-visually-hidden"> page</span></a>
+        </li>
+        {% endif %}
+
+        {% for page in range(1, 6) %}
+        <li class="moj-pagination__item {% if page == data.page %}moj-pagination__item--active{% endif %}">
+            {% if page != pagination.current %}
+            <a class="moj-pagination__link" href="?page={{page}}#list"
+                aria-label="Page {{page}} of {{totalPages}}">{{page}}</a>
+            {% else %}
+            {{page}}
+            {% endif %}
+        </li>
+        {% endfor %}
+
+        {% if pagination.current < pagination.last %} <li class="moj-pagination__item  moj-pagination__item--next">
+            <a class="moj-pagination__link" href="?page={{data.page|int + 1|int}}#list">Next<span
+                    class="govuk-visually-hidden"> page</span></a>
+            </li>
+            {% endif %}
+    </ul>
+    <p class="moj-pagination__results">Showing <b>{{pagination.from}}</b> to <b>{{pagination.to}}</b> of
+        <b>{{pagination.total}}</b>
+        people
+    </p>
+</nav>
+
 {% endblock %}
 {% block pageScripts %}
 <script type="text/javascript">

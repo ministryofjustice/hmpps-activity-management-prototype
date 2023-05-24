@@ -9,26 +9,36 @@ Activities Management prototype
 {% block beforeContent %}
 <div class="govuk-width-container">
 	<a href="/dps-home" class="govuk-back-link">Digital Prison Services</a>
-	<h1 class="govuk-heading-l govuk-!-margin-top-7">Manage activities</h1>
+	<h1 class="govuk-heading-l govuk-!-margin-top-7">Manage activities and allocations</h1>
 </div>
 {% endblock %}
 <div class="homepage-content">
 	<div class="govuk-width-container">
 		<ul class="govuk-grid-row card-group" id="sortable">
+			<!-- <li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/record-attendance/select-date">Record attendance</a>
+					</h2>
+					<p class="govuk-body card__description">Record, view and change activity attendance.</p>
+				</div>
+			</li> -->
+
 			<li class="govuk-grid-column-one-third card-group__item" id="tile_003">
 				<div class="card card--clickable" data-test="incentives">
 					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="activities">Allocate people to an activity</a>
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="activities/manage-allocations">Manage allocations</a>
 					</h2>
 					<p class="govuk-body card__description">
 						Allocate people to, or take them off an activity. See vacancies, check who is currently allocated and update the waitlist.
 					</p>
 				</div>
 			</li>
+
 			<li class="govuk-grid-column-one-third card-group__item" id="tile_002">
 				<div class="card card--clickable" data-test="check-my-diary">
 					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="create/activity-dashboard?dashboardCategory=All&dashboardView=live">Edit activity details</a>
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="activities/edit-activity">Edit activity details</a>
 					</h2>
 					<p class="govuk-body card__description">
 						Change the details of an existing activity including pay, requirements and schedule. Also suspend or archive an activity.
@@ -49,7 +59,7 @@ Activities Management prototype
 				<div class="card card--clickable" data-test="change-someones-cell">
 					<h2 class="govuk-heading-m card__heading">
 						<a class="govuk-link card__link govuk-link--no-visited-state" href="log-an-application-version-2">
-							Review requests to be allocated or waitlisted
+							Log a request to attend an activity
 						</a>
 					</h2>
 					<p class="govuk-body card__description">
@@ -57,15 +67,8 @@ Activities Management prototype
 					</p>
 				</div>
 			</li>
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
-				<div class="card card--clickable" data-test="change-someones-cell">
-					<h2 class="govuk-heading-m card__heading">
-						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/record-attendance/select-date">Record and edit attendance</a>
-					</h2>
-					<p class="govuk-body card__description">View, mark and change activity attendance.</p>
-				</div>
-			</li>
-			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+			
+			<!-- <li class="govuk-grid-column-one-third card-group__item" id="tile_001">
 				<div class="card card--clickable" data-test="change-someones-cell">
 					<h2 class="govuk-heading-m card__heading">
 						<a class="govuk-link card__link govuk-link--no-visited-state" href="/unlock/{{data['prototype-versions']['unlock-and-attend']['latest-version']}}/attendance-dashboard">View daily attendance summary</a>
@@ -73,6 +76,7 @@ Activities Management prototype
 					<p class="govuk-body card__description">See daily attendance figures, including prisoners not yet attended, absences, activity cancellations and suspended prisoners.</p>
 				</div>
 			</li>
+
 			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
 				<div class="card card--clickable" data-test="change-someones-cell">
 					<h2 class="govuk-heading-m card__heading">
@@ -80,7 +84,7 @@ Activities Management prototype
 					</h2>
 					<p class="govuk-body card__description">Find today’s prisoners with no recorded attendance information.</p>
 				</div>
-			</li>
+			</li> -->
 		</ul>
 	</div>
 </div>

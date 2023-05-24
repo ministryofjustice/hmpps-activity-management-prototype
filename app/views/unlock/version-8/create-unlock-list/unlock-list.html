@@ -7,19 +7,10 @@ Houseblock {{houseblock}} unlock list for {{relativeDate or date|longDateFormat(
 {% endblock %}
 {% block beforeContent %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{{ govukBreadcrumbs({
-classes: "govuk-!-display-none-print",
-items: [
-{
-text: "Digital Prison Services",
-href: "/dps-home"
-},
-{
-text: "Manage prisoner unlock and attendance",
-href: "../../../whereabouts"
-}
-]
-}) }}
+{{govukBackLink({
+text: "Back to select date and location",
+href: "javascript: window.history.go(-1)"
+})}}
 {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
@@ -28,7 +19,7 @@ href: "../../../whereabouts"
 			Houseblock {{houseblock}} &ndash; unlock list
 			<span class="govuk-caption-l">
 				{{period|upper}} session<br>
-				{{date|longDateFormat(date)}} 
+				{{date|longDateFormat(date)}}
 			</span>
 		</h1>
 		<ul class="govuk-list">
@@ -93,9 +84,9 @@ href: "../../../whereabouts"
 		</p>
 
 		{{ govukCheckboxes({
-			formGroup: {
-				classes: "govuk-!-margin-bottom-1"
-			},
+		formGroup: {
+		classes: "govuk-!-margin-bottom-1"
+		},
 		fieldset: {
 		legend: {
 		text: "Category",
@@ -308,8 +299,9 @@ href: "../../../whereabouts"
 									<br>
 									<span
 										class="govuk-tag govuk-!-margin-bottom-1 govuk-!-margin-right-1 govuk-!-margin-top-1">Appointment</span>
-										<span
-										class="govuk-tag govuk-tag--yellow govuk-!-margin-bottom-1 govuk-!-margin-top-1">Heads up</span>
+									<span
+										class="govuk-tag govuk-tag--yellow govuk-!-margin-bottom-1 govuk-!-margin-top-1">Heads
+										up</span>
 									{% else %}
 									<a href="../../../record-attendance/activities/{{date}}/{{period}}/{{event.id}}"
 										class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{ event.name

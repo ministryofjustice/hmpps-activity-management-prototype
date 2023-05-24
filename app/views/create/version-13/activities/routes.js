@@ -5,7 +5,7 @@ const { DateTime } = require("luxon");
 // when we load any page in the activities section
 router.get("/:activityId/*", function (req, res, next) {
   console.log("activities section");
-  
+
   let activityId = req.params.activityId;
   // get the data for the activity we're on
   let activityData = req.session.data["timetable-complete-1"]["activities"].find(
@@ -43,6 +43,93 @@ router.get("/:activityId/*", function (req, res, next) {
   });
 
   next();
+});
+
+// router for activity tabs page
+router.get(["/:activityId/tabs", "/:activityId/manage-allocations"], (req, res, next) => {
+  let activityId = req.params.activityId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
+
+  let activitySchedule = activity.schedule;
+  let schedule = getActivitySchedule(activitySchedule);
+  let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
+
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+
+  // get list of prisoners with allocations
+  const currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
+
+  // get the category name for the activity
+  let activityCategory = req.session.data["timetable-complete-1"]["categories"].find(
+    (category) => category.id.toString() === activity.category.toString()
+  );
+
+  // hide the confirmation message if it's shown
+  if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
+    delete req.session.data["confirmation-dialog"];
+  }
+
+  // get and set the index of the activity in each prisoner's activity array
+  currentlyAllocated.forEach((prisoner) => {
+    prisoner.activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+  });
+
+  // get the list of applications
+  let applications = req.session.data["applications"];
+
+  // get a list of all applications for the selected activity
+  // exclude those with a status of 'rejected'
+  let activityApplications = applications.filter(
+    (application) => application.activity.toString() === activityId.toString() && application.status !== "rejected"
+  );
+
+  // get a list of all prisoners without an application for the selected activity
+  // and without the activity id in their activity array
+  // make sure we account for prisoners whose activity array is empty or undefined (i.e. no activities)
+  let prisonersWithoutApplication = prisoners.filter(
+    (prisoner) => !prisoner.activity || prisoner.activity.length === 0 || !prisoner.activity.includes(activityId)
+  );
+
+  // simple code for paginating prisoners to 5 per page
+  // should show like:
+  // Previous 1 ⋯ 6 7 8 ⋯ 42 Next
+  let page = req.query.page || 1;
+  let limit = 5;
+  let offset = (page - 1) * limit;
+  let prisonersWithoutApplicationPaginated = prisonersWithoutApplication.slice(offset, offset + limit);
+  let totalPages = Math.ceil(prisonersWithoutApplication.length / limit);
+
+  if(!req.session.data["page"]){
+    req.session.data["page"] = 1;
+  }
+
+  res.render(req.protoUrl + "/tabs", {
+    activity: activity,
+    activityDaysWithTimes: activityDaysWithTimes,
+    activityCategory: activityCategory,
+    currentlyAllocated: currentlyAllocated,
+    activityApplications: activityApplications,
+    prisonersWithoutApplication: prisonersWithoutApplicationPaginated,
+    totalPages: totalPages,
+    offset: offset,
+    limit: limit,
+  });
+});
+
+// post handler for the currently allocated page
+router.post(["/:activityId/tabs", "/:activityId/manage-allocations"], function (req, res) {
+  let selectedPrisoners = req.session.data["selected-prisoners"];
+
+  console.log("selected prisoners: " + selectedPrisoners);
+  
+  // if the user clicks the 'remove' button, redirect to the deallocate page
+  // the button name is allocation-action
+  if (req.body["allocation-action"] === "deallocate") {
+    res.redirect("deallocate/" + selectedPrisoners + "?redirect=");
+  } else if (req.body["allocation-action"] === "edit-allocation") {
+    res.redirect("edit-allocation/" + selectedPrisoners);
+  }
 });
 
 // router for deallocate prisoner journey
@@ -117,7 +204,7 @@ router.get("/", function (req, res) {
 });
 
 // all activities page
-router.get("/all", function (req, res) {
+router.get("/manage-allocations", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
   let applications = req.session.data["applications"];
 
@@ -129,8 +216,56 @@ router.get("/all", function (req, res) {
   let activitiesWithVacancies = activities.filter((activity) => activity.capacity - activity.currentlyAllocated > 0);
   let vacanciesCount = activitiesWithVacancies.length;
 
+  // for each activity, add the next session to the activities array
+  for (let activity of activities) {
+    // get and set the selected date and period using the current date and time
+    // date should be formatted as YYYY-MM-DD
+    let selectedDate = new Date().toISOString().slice(0, 10);
+    let selectedPeriod = "AM";
+    let currentTime = Date.now().toString().slice(11, 16);
+    if (currentTime > "12:00") {
+      selectedPeriod = "PM";
+    }
+    activity.nextSession = getNextSession(activity, selectedDate, selectedPeriod);
+  }
+
   // render the activities page and pass the activities array to the template
-  res.render(req.protoUrl + "/activities", {
+  res.render(req.protoUrl + "/manage-allocations", {
+    activities,
+    activitiesCount,
+    list: "all",
+    vacanciesCount,
+  });
+});
+
+// all activities page
+router.get("/edit-activity", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let applications = req.session.data["applications"];
+
+  // count the number of prisoners allocated to each activity
+  // and add it to each activity object in the activities array
+  addAllocationsCountToActivities(activities, req, applications);
+  let activitiesCount = activities.length;
+
+  let activitiesWithVacancies = activities.filter((activity) => activity.capacity - activity.currentlyAllocated > 0);
+  let vacanciesCount = activitiesWithVacancies.length;
+
+  // for each activity, add the next session to the activities array
+  for (let activity of activities) {
+    // get and set the selected date and period using the current date and time
+    // date should be formatted as YYYY-MM-DD
+    let selectedDate = new Date().toISOString().slice(0, 10);
+    let selectedPeriod = "AM";
+    let currentTime = Date.now().toString().slice(11, 16);
+    if (currentTime > "12:00") {
+      selectedPeriod = "PM";
+    }
+    activity.nextSession = getNextSession(activity, selectedDate, selectedPeriod);
+  }
+
+  // render the activities page and pass the activities array to the template
+  res.render(req.protoUrl + "/edit-activity", {
     activities,
     activitiesCount,
     list: "all",
@@ -255,50 +390,53 @@ router.get("/:activityId/details", function (req, res) {
 
 // activity currently allocated page
 router.get("/:activityId/currently-allocated", function (req, res) {
-  let currentPage = "currently-allocated";
-  let activityId = req.params.activityId;
-  let activities = req.session.data["timetable-complete-1"]["activities"];
-  let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  // let currentPage = "currently-allocated";
+  // let activityId = req.params.activityId;
+  // let activities = req.session.data["timetable-complete-1"]["activities"];
+  // let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
+  // let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
 
-  // get list of prisoners with allocations
-  const currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
+  // // get list of prisoners with allocations
+  // const currentlyAllocated = getAllocatedPrisoners(prisoners, activityId);
 
-  // set an activitySchedule variable from the activity.schedule data
-  let activitySchedule = activity.schedule;
+  // // set an activitySchedule variable from the activity.schedule data
+  // let activitySchedule = activity.schedule;
 
-  // for each day in the activity schedule, create a new object with the day name and am/pm values
-  let schedule = getActivitySchedule(activitySchedule);
+  // // for each day in the activity schedule, create a new object with the day name and am/pm values
+  // let schedule = getActivitySchedule(activitySchedule);
 
-  // create a human-readable list of days the activity is scheduled for
-  let activityDays = humanReadableSchedule(schedule);
-  let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
+  // // create a human-readable list of days the activity is scheduled for
+  // let activityDays = humanReadableSchedule(schedule);
+  // let activityDaysWithTimes = scheduleDaysWithTimes(schedule);
 
-  // get the category name for the activity
-  let activityCategory = req.session.data["timetable-complete-1"]["categories"].find(
-    (category) => category.id.toString() === activity.category.toString()
-  );
+  // // get the category name for the activity
+  // let activityCategory = req.session.data["timetable-complete-1"]["categories"].find(
+  //   (category) => category.id.toString() === activity.category.toString()
+  // );
 
-  // hide the confirmation message if it's shown
-  if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
-    delete req.session.data["confirmation-dialog"];
-  }
+  // // hide the confirmation message if it's shown
+  // if (req.session.data["confirmation-dialog"] && req.session.data["confirmation-dialog"].display === true) {
+  //   delete req.session.data["confirmation-dialog"];
+  // }
 
-  // get and set the index of the activity in each prisoner's activity array
-  currentlyAllocated.forEach((prisoner) => {
-    prisoner.activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
-  });
+  // // get and set the index of the activity in each prisoner's activity array
+  // currentlyAllocated.forEach((prisoner) => {
+  //   prisoner.activityIndex = prisoner.activity.findIndex((activity) => activity.toString() === activityId.toString());
+  // });
 
-  res.render(req.protoUrl + "/currently-allocated", {
-    activity,
-    activityCategory,
-    activityDays,
-    activityDaysWithTimes,
-    currentPage,
-    currentlyAllocated,
-    schedule,
-    activitySchedule,
-  });
+  // res.render(req.protoUrl + "/currently-allocated", {
+  //   activity,
+  //   activityCategory,
+  //   activityDays,
+  //   activityDaysWithTimes,
+  //   currentPage,
+  //   currentlyAllocated,
+  //   schedule,
+  //   activitySchedule,
+  // });
+
+  // redirect to the manage allocations page for the activity
+  res.redirect("manage-allocations");
 });
 
 // activity currently allocated page
@@ -958,4 +1096,75 @@ function scheduleDaysWithTimes(schedule) {
     }
   });
   return activityDaysWithTimes;
+}
+
+function getNextSession(activity, selectedDate, selectedPeriod) {
+  selectedDate = new Date(selectedDate);
+  var currentDay = selectedDate.getDay();
+
+  var nextSession = {
+    date: null,
+    period: null,
+  };
+
+  var maxIterations = 8;
+  while (maxIterations > 0) {
+    if (selectedPeriod === "AM") {
+      if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
+        return (nextSession = {
+          date: selectedDate.toISOString().slice(0, 10),
+          period: "PM",
+        });
+      } else {
+        currentDay++;
+        if (currentDay === 7) {
+          currentDay = 0;
+        }
+        if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
+          selectedDate.setDate(selectedDate.getDate() + 1);
+          return (nextSession = {
+            date: selectedDate.toISOString().slice(0, 10),
+            period: "AM",
+          });
+        } else {
+          if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
+            selectedDate.setDate(selectedDate.getDate() + 1);
+            return (nextSession = {
+              date: selectedDate.toISOString().slice(0, 10),
+              period: "PM",
+            });
+          } else {
+            selectedDate.setDate(selectedDate.getDate() + 1);
+            maxIterations--;
+          }
+        }
+      }
+    } else if (selectedPeriod === "PM") {
+      currentDay++;
+      if (currentDay === 7) {
+        currentDay = 0;
+        // selectedDate.setDate(selectedDate.getDate() + 1);
+      }
+      if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].am !== null) {
+        selectedDate.setDate(selectedDate.getDate() + 1);
+        return (nextSession = {
+          date: selectedDate.toISOString().slice(0, 10),
+          period: "AM",
+        });
+      } else {
+        if (activity.schedule && activity.schedule[currentDay] && activity.schedule[currentDay].pm !== null) {
+          selectedDate.setDate(selectedDate.getDate() + 1);
+          return (nextSession = {
+            date: selectedDate.toISOString().slice(0, 10),
+            period: "PM",
+          });
+        } else {
+          selectedDate.setDate(selectedDate.getDate() + 1);
+          maxIterations--;
+        }
+      }
+    }
+  }
+
+  return "No upcoming sessions found";
 }

@@ -10,17 +10,28 @@ Find an activity to record or edit attendance
 {% endblock %}
 
 {% block main %}
-<div class="govuk-width-container govuk-!-margin-bottom-">
-    {{ govukBackLink({
-    text: "Back to all activities",
-    href: "../all"
-    }) }}
-</div>
-
 {{ super() }}
 {% endblock %}
 
-{% block beforeContent %}{% endblock %}
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+    classes: "govuk-!-display-none-print",
+    items: [
+    {
+    text: "Digital Prison Services",
+    href: "/dps-home"
+    },
+    {
+    text: "Manage activities",
+    href: "../../manage-activities"
+    },
+    {
+    text: "Edit activity details",
+    href: "../edit-activity"
+    }
+    ]
+    }) }}
+    {% endblock %}
 
 {% block content %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
@@ -40,14 +51,26 @@ type: "success"
 {% endif %}
 {% endif %}
 
-<div class="govuk-grid-row">
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
     <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l">
-            Category: {{activity.category|getActivityCategoryName}}
+            Edit activity details
         </span>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-            {{activity.name}}: manage waitlist and allocate
+            {{activity.name}} <span class="govuk-tag govuk-tag--green">Live</span>
         </h1>
+        <ul class="govuk-list govuk-button-group">
+            <li>
+                <a href="edit-activity" class="govuk-link govuk-link--no-visited-state" style="color: #ca0000;">
+                    Stop activity
+                </a>
+            </li>
+            <li>
+                <a href="manage-allocations" class="govuk-link govuk-link--no-visited-state">
+                    Manage allocations for this activity
+                </a>
+            </li>
+        </ul>
         {% set activityInfoHtml %}
         {{ govukSummaryList({
         classes: "govuk-summary-list--no-borderr",
@@ -81,12 +104,12 @@ type: "success"
         }) }}
         {% endset %}
 
-        {{govukDetails({
+        <!-- {{govukDetails({
         summaryText: "Activity requirements",
         html: activityInfoHtml
-        })}}
+        })}} -->
 
-        <ul class="govuk-list">
+        <!-- <ul class="govuk-list">
             <li>
                 Vacancies: {{vacanciesCount}}
             </li>
@@ -96,10 +119,10 @@ type: "success"
             <li>
                 Capacity: {{activity.capacity}}
             </li>
-        </ul>
+        </ul> -->
     </div>
 
-    <div class="govuk-grid-column-one-third">
+    <!-- <div class="govuk-grid-column-one-third">
         <div class="govuk-!-padding-3" style="border: 1px solid #c7c7c7; box-shadow: 4px 4px 0 rgba(0,0,0,0.1)">
             <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
                 Schedule
@@ -125,7 +148,7 @@ type: "success"
                 {% endfor %}
             </dl>
         </div>
-    </div>
+    </div> -->
 </div>
 
 {% include './_sub-navigation.html' %}

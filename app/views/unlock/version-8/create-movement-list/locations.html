@@ -13,7 +13,7 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
     <div class="govuk-width-container">
         {% block beforeContent %}
         {{govukBackLink({
-        text: "Back",
+        text: "Back to select date",
         "href": "javascript: window.history.go(-1)"
         })}}
         {% endblock %}
@@ -110,7 +110,7 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
                             </ul>
                         </td>
                         <td class="govuk-table__cell">
-                            <a href="{{period}}/{{location.activityIds}}?location={{location.name}}"
+                            <a href="{{period}}/{{location.activityIds or 'null'}}?location={{location.name}}"
                                 class="govuk-link--no-visited-state">View movement list</a>
                         </td>
                     </tr>

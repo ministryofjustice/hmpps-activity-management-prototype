@@ -17,7 +17,8 @@ text: "Back to currently allocated",
 {% if data['confirmation-dialog'].display == true %}
 {% set p = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
 {{ govukNotificationBanner({
-text: "You have changed the " + data['confirmation-dialog'].change|replace('-',' ') + " for " + p.name.surname + ", " + p.name.firstname + " (" + p.id + ").",
+text: "You have changed the " + data['confirmation-dialog'].change|replace('-',' ') + " for " + p.name.surname + ", " +
+p.name.firstname + " (" + p.id + ").",
 type: "success"
 }) }}
 {% endif %}
@@ -31,11 +32,12 @@ type: "success"
 
         {% if prisonerData.length > 1 %}
         <h1 class="govuk-heading-l">
-            Change allocation details for {{prisonerData.length}} prisoners
+            Allocation details for {{prisonerData.length}} prisoners
         </h1>
         {% else %}
         <h1 class="govuk-heading-l">
-            Change allocation details for {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}} ({{prisonerData[0].id}})
+            Allocation details for {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}}
+            ({{prisonerData[0].id}})
         </h1>
         {% endif %}
 
@@ -56,7 +58,7 @@ type: "success"
             You can only change the pay rate for people who have an alternative pay rate.
         </div>
         {% endif %}
-        
+
         {% for prisoner in prisonerData %}
         {% if prisonerData.length > 1 %}
         <div class="govuk-summary-card">
@@ -78,11 +80,8 @@ type: "success"
                         </dd>
                         {% if prisoner.startDateIsInFuture %}
                         <dd class="govuk-summary-list__actions">
-                            <a href="{{prisoner.id}}/start-date?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
-                        </dd>
-                        {% else %}
-                        <dd class="govuk-summary-list__actions">
-                            <span class="govuk-tag govuk-tag--green">Started</span>
+                            <a href="{{prisoner.id}}/start-date?selected-prisoners={{selectedPrisoners}}"
+                                class="govuk-link--no-visited-state">Change</a>
                         </dd>
                         {% endif %}
                     </div>
@@ -96,9 +95,11 @@ type: "success"
                         </dd>
                         <dd class="govuk-summary-list__actions">
                             {% if prisoner.allocations[prisoner.activityIndex].endDate %}
-                            <a href="{{prisoner.id}}/end-date-check?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
+                            <a href="{{prisoner.id}}/end-date-check?selected-prisoners={{selectedPrisoners}}"
+                                class="govuk-link--no-visited-state">Change</a>
                             {% else %}
-                            <a href="{{prisoner.id}}/end-date?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
+                            <a href="{{prisoner.id}}/end-date?selected-prisoners={{selectedPrisoners}}"
+                                class="govuk-link--no-visited-state">Change</a>
                             {% endif %}
                         </dd>
                     </div>
@@ -115,9 +116,8 @@ type: "success"
                         </dd>
                         <dd class="govuk-summary-list__actions">
                             {% if prisoner.payRatesForIncentiveLevel == true %}
-                            <a href="{{prisoner.id}}/payrate?selected-prisoners={{selectedPrisoners}}" class="govuk-link--no-visited-state">Change</a>
-                            {% else %}
-                            No alternative pay rates
+                            <a href="{{prisoner.id}}/payrate?selected-prisoners={{selectedPrisoners}}"
+                                class="govuk-link--no-visited-state">Change</a>
                             {% endif %}
                         </dd>
                     </div>
@@ -129,9 +129,16 @@ type: "success"
         {% endfor %}
 
         {{ govukButton({
-        text: "Return to currently allocated",
-        href: "../currently-allocated"
+        text: "Remove from " + activity.name,
+        classes: "govuk-button--warning",
+        href: "../deallocate/" + prisonerData[0].id 
         }) }}
+
+        <p class="govuk-!-margin-top-5">
+            <a href="../../{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
+                Return to currently allocated
+            </a>
+        </p>
     </div>
 </div>
 
