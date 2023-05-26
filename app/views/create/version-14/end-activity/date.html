@@ -17,7 +17,7 @@ text: "Back",
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
             <span class="govuk-caption-l">
-                {{activity.name}}
+                End activities
             </span>
 
             {% set dateHtml %}
@@ -54,27 +54,31 @@ text: "Back",
             }) }}
             {% endset %}
 
+            {% set noun %}
+            {% if activitiesData.length == 1 %}
+            {{activitiesData[0].name}}
+            {%- else -%}
+            the {{activitiesData.length}} activities you've selected
+            {%- endif -%}
+            {% endset %}
+
             {{govukRadios({
             name: "date-type",
             fieldset: {
             legend: {
-            text: "When is the activity ending?",
+            text: "When do you want to end " + noun + "?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--xl"
             }
             },
             items: [
             {
-            value: "today",
-            text: "Today – " + today|convertShortDateToLongDate
+            value: "asap",
+            text: "Before the next session"
             },
             {
-            value: "tomorrow",
-            text: "Tomorrow – " + today|dayAfter(today)|convertShortDateToLongDate
-            },
-            {
-            value: "other-date",
-            text: "A different date",
+            value: "date",
+            text: "On a specific date",
             conditional: {
             html: dateHtml
             }
@@ -82,10 +86,22 @@ text: "Back",
             ]
             })}}
 
-            {{ govukInsetText({
-            text: "Anyone allocated to the activity who was due to be taken off after the end date will now finish on this
-            date."
+            {% if activitiesData.length > 1 %}
+            {% set activitiesList %}
+            <ul class="govuk-list govuk-list--bullet">
+                {% for activity in activitiesData %}
+                <li>
+                    {{activity.name}}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endset %}
+
+            {{ govukDetails({
+            summaryText: "View the " + activitiesData.length + " activities you've selected",
+            html: activitiesList
             }) }}
+            {% endif %}
 
             {{ govukButton({
             text: "Continue"
