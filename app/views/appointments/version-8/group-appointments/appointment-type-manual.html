@@ -21,7 +21,7 @@ Appointments prototype
    
    <h1 class="govuk-heading-l">
     <span class="govuk-caption-l">Group appointment</span>
-    Do you want to show {appointment type} on the unlock list?
+    Do you want to show {appointment name} on the unlock list?
    </h1>
      
    {% from "govuk/components/radios/macro.njk" import govukRadios %}
@@ -36,7 +36,7 @@ Appointments prototype
   maxlength: 40,
   rows: 1,
   label: {
-    text: "Enter your own category",
+    text: "Enter my own appointment name",
     classes: "govuk-label--s"
   }
 }) }}
@@ -49,11 +49,11 @@ Appointments prototype
       items: [
         {
           value: "Yes",
-          text: "Yes - I want [appointment type] to show on the unlock list"
+          text: "Yes - I want [appointment name] to show on the unlock list"
         },
         {
           value: "No",
-          text: "No - I want to enter my own appointment description to show on the unlock list",
+          text: "No - I want to enter my own appointment name to show on the unlock list",
           conditional: {
             html: categoryHtml
           }

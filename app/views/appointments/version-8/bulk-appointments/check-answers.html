@@ -11,67 +11,52 @@ Appointments prototype
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds-from-desktop">
-            <h1 class="govuk-heading-l">Check your appointment details before you accept and save</h1>
+            <h1 class="govuk-heading-l">Check and confirm the appointment details</h1>
             <h2 class="govuk-heading-m">Appointment details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
              
+            
              
-              
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Date
+                  Appointment name
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['date-of-appointment-bulk-day']}} {{ data['date-of-appointment-bulk-month']}}  {{ data['date-of-appointment-bulk-year']}}
+                  {{ data['categoryChoice']}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Date</span>
+                    Change<span class="govuk-visually-hidden"> Appointment name</span>
                   </a>
                 </dd>
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Type
+                  Show appointment name on unlock list
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{data.categoryChoice1 or data.categoryChoice}}
+                  {{ data['categoryChoice']}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> category</span>
+                    Change<span class="govuk-visually-hidden"> Show appointment name on unlock list</span>
                   </a>
                 </dd>
               </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Show on unlock list
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  {{ data['manual-category-entry']}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/appointment-type">
-                    Change<span class="govuk-visually-hidden"> type</span>
-                  </a>
-                </dd>
-              </div>
-              {% if data['manual-category-entry'] ==='No' %}
               
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Appointment description
+                  Alternative appointment name
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['manual-category']}}
+                  {{ data['categoryChoice']}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/appointment-type">
-                    Change<span class="govuk-visually-hidden"> type</span>
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Alternative appointment name</span>
                   </a>
                 </dd>
               </div>
-              {% endif %}
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Location
@@ -82,6 +67,19 @@ Appointments prototype
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
                     Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>      
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Date
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['date-of-appointment-bulk-day']}} {{ data['date-of-appointment-bulk-month']}}  {{ data['date-of-appointment-bulk-year']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Date</span>
                   </a>
                 </dd>
               </div>
@@ -103,15 +101,6 @@ Appointments prototype
             <h2 class="govuk-heading-m">
               Prisoner appointment details
             </h2>
-
-            <details class="govuk-details" data-module="govuk-details">
-              <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">
-                  View individual prisoner appointment details
-                </span>
-              </summary>
-              <div class="govuk-details__text">
-                <!--appointment details start-->
 
             <span class="govuk-caption-l">Appointment 1</span>
             
@@ -158,6 +147,18 @@ Appointments prototype
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="#">
                     Change<span class="govuk-visually-hidden"> Time</span>
+                  </a>
+                </dd>
+              </div>    <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Heads up
+                </dt>
+                <dd class="govuk-summary-list__value">
+                 
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> heads up</span>
                   </a>
                 </dd>
               </div>
@@ -210,6 +211,18 @@ Appointments prototype
                       Change<span class="govuk-visually-hidden"> Time</span>
                     </a>
                   </dd>
+                </div>    <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Heads up
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                   
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                      Change<span class="govuk-visually-hidden"> heads up</span>
+                    </a>
+                  </dd>
                 </div>
                 </dl>
 
@@ -258,6 +271,18 @@ Appointments prototype
                     <dd class="govuk-summary-list__actions">
                       <a class="govuk-link" href="#">
                         Change<span class="govuk-visually-hidden"> Time</span>
+                      </a>
+                    </dd>
+                  </div>    <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Heads up
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                     
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> heads up</span>
                       </a>
                     </dd>
                   </div>
@@ -310,6 +335,19 @@ Appointments prototype
                           Change<span class="govuk-visually-hidden"> Time</span>
                         </a>
                       </dd>
+                    </div>    
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Heads up
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                       
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="#">
+                          Change<span class="govuk-visually-hidden"> heads up</span>
+                        </a>
+                      </dd>
                     </div>
                     </dl>
 
@@ -360,6 +398,19 @@ Appointments prototype
                             Change<span class="govuk-visually-hidden"> Time</span>
                           </a>
                         </dd>
+                      </div>    
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Heads up
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                         
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                          <a class="govuk-link" href="#">
+                            Change<span class="govuk-visually-hidden"> heads up</span>
+                          </a>
+                        </dd>
                       </div>
                       </dl>
 
@@ -408,6 +459,19 @@ Appointments prototype
                           <dd class="govuk-summary-list__actions">
                             <a class="govuk-link" href="#">
                               Change<span class="govuk-visually-hidden"> Time</span>
+                            </a>
+                          </dd>
+                        </div>    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Heads up
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                           
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="#">
+                              Change<span class="govuk-visually-hidden"> heads up</span>
                             </a>
                           </dd>
                         </div>
@@ -461,6 +525,19 @@ Appointments prototype
                               </a>
                             </dd>
                           </div>
+                          <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                              Heads up
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                             
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                              <a class="govuk-link" href="#">
+                                Change<span class="govuk-visually-hidden"> heads up</span>
+                              </a>
+                            </dd>
+                          </div>
                           </dl>
 
                           <span class="govuk-caption-l">Appointment 8</span>
@@ -508,6 +585,19 @@ Appointments prototype
                               <dd class="govuk-summary-list__actions">
                                 <a class="govuk-link" href="#">
                                   Change<span class="govuk-visually-hidden"> Time</span>
+                                </a>
+                              </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                              <dt class="govuk-summary-list__key">
+                                Heads up
+                              </dt>
+                              <dd class="govuk-summary-list__value">
+                               
+                              </dd>
+                              <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link" href="#">
+                                  Change<span class="govuk-visually-hidden"> heads up</span>
                                 </a>
                               </dd>
                             </div>
@@ -561,6 +651,19 @@ Appointments prototype
                                   </a>
                                 </dd>
                               </div>
+                              <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                  Heads up
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                 
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                  <a class="govuk-link" href="#">
+                                    Change<span class="govuk-visually-hidden"> heads up</span>
+                                  </a>
+                                </dd>
+                              </div>
                               </dl>
 
                               <span class="govuk-caption-l">Appointment 10</span>
@@ -611,17 +714,26 @@ Appointments prototype
                                     </a>
                                   </dd>
                                 </div>
+                                <div class="govuk-summary-list__row">
+                                  <dt class="govuk-summary-list__key">
+                                    Heads up
+                                  </dt>
+                                  <dd class="govuk-summary-list__value">
+                                   
+                                  </dd>
+                                  <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" href="#">
+                                      Change<span class="govuk-visually-hidden"> heads up</span>
+                                    </a>
+                                  </dd>
+                                </div>
                                 </dl>
 
-              
-<!--appointment details end-->
-            </div>
-          </details>
             
             <form action="confirmation" method="post" novalidate>
               <input type="hidden" name="answers-checked" value="true">
               <button class="govuk-button" data-module="govuk-button">
-                Accept and save
+                Confirm and save
               </button>
             </form>
           </div>

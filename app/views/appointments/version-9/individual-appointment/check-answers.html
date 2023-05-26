@@ -11,7 +11,7 @@ Appointments prototype
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds-from-desktop">
-            <h1 class="govuk-heading-l">Check your appointment details before you accept and save</h1>
+            <h1 class="govuk-heading-l">Check and confirm the appointment details</h1>
             <h2 class="govuk-heading-m">Appointment details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
               <div class="govuk-summary-list__row">
@@ -19,7 +19,7 @@ Appointments prototype
                   Prisoner
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  <a href="#" class="govuk-link"><b>Rudge</b>, Neil</a> <br>{{ data['prisoner-name-single']}}<br>1−1−2
+                  <a href="#" class="govuk-link"><b>Rudge</b>, Neil</a> <br>G2044E<br>1−1−2
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="check-answer/search-person">
@@ -29,7 +29,7 @@ Appointments prototype
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Type
+                  Appointment name
                 </dt>
                 <dd class="govuk-summary-list__value">
                    {{ data['categoryChoicesingle']}}
@@ -42,7 +42,20 @@ Appointments prototype
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Show on unlock list
+                  Show appointment name on unlock list
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['manual-category']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="check-answer/appointment-type">
+                    Change<span class="govuk-visually-hidden"> type</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Alternative appointment name
                 </dt>
                 <dd class="govuk-summary-list__value">
                   {{ data['manual-category']}}
@@ -54,33 +67,6 @@ Appointments prototype
                 </dd>
               </div>
 
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Appointment desciription
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  {{ data['manual-category-entry']}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/appointment-type">
-                    Change<span class="govuk-visually-hidden"> type</span>
-                  </a>
-                </dd>
-              </div>
-
-              <!--<div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Appointment description
-                </dt>
-                <dd class="govuk-summary-list__value">
-                   Choir in location A
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/appointment-type">
-                    Change<span class="govuk-visually-hidden"> type</span>
-                  </a>
-                </dd>
-              </div>-->
              
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -137,7 +123,7 @@ Appointments prototype
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Repeat
+                  Repeats
                 </dt>
                 <dd class="govuk-summary-list__value">
                   {{ data['appointment-repeat-single']}} 
@@ -179,7 +165,7 @@ Appointments prototype
               {% if data['comments-single'] !='' %}
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Comments
+                  Heads up
                 </dt>
                 <dd class="govuk-summary-list__value">
                   {{ data['comments-single']}}
@@ -195,7 +181,7 @@ Appointments prototype
             <form action="confirmation" method="post" novalidate>
               <input type="hidden" name="answers-checked" value="true">
               <button class="govuk-button" data-module="govuk-button">
-                Accept and save
+                Confirm and save
               </button>
             </form>          
           </div>
