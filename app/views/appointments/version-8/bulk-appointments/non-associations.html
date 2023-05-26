@@ -12,99 +12,164 @@ Appointments prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
    
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
       <span class="govuk-caption-l">Bulk appointments</span>
       Review non-associations
     </h1>
     <p class="govuk-body">
-      You can remove prisoners if you need to.
+      You can select and remove prisoners if you need to.
     </p>
-    <div class="govuk-form-group">
+<div class="govuk-form-group">
 
-      <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
-        <thead class="govuk-table__head">
-          <tr>
-            <th class="govuk-table__header" aria-sort="none"><button type="button" data-index="0">
-              Name
-            </button></th>
-            <th class="govuk-table__header"  aria-sort="none" data-index="2"> 
-              Non-associations
-            </th>
-            <th class="govuk-table__header" >
-              
-            </th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          
+  <table class="govuk-table" data-module="moj-sortable-table" style="margin:30px 0 0 10px;">
+    <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell" width="180" scope="col">
-          <a href="#" class="govuk-link--no-visited-state"><b>Rudge, </b> Neil</a><br>
-          <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
-        </td> 
-        <td class="govuk-table__cell">
-          <strong class="govuk-tag govuk-tag--red ">
-                Bab, Robin
-              </strong>
-              <strong class="govuk-tag govuk-tag--red ">
-                Doyle, Matthew
-              </strong>
-        </td>
-        <td class="govuk-table__cell" data-sort-value="" scope="col">
-              <a href="" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Remove</a>
-        </td>
-      </tr> 
+        <th scope="col" class="govuk-table__header" style="width:30%;"  aria-sort="ascending" >Name and number</th>
+        <th scope="col" class="govuk-table__header" style="width:23%;" aria-sort="none">Non-associations</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      {% if data.personMatthew=='Matthew' and data.rem-prisoner=="Yes" %}
+  
+      {% else %}
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell" width="180" scope="col">
-          <a href="#" class="govuk-link--no-visited-state"><b>Doyle</b>, Matthew</a><br>
-          <span class="govuk-hint govuk-!-font-size-16">E4911C</span>
-        </td> 
-        <td class="govuk-table__cell">
-         
+        <td class="govuk-table__cell" data-sort-value="Maths level 1">
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="person" name="personMatthew" type="checkbox" value="Matthew">
+              <label class="govuk-label govuk-checkboxes__label" for="waste">
+                <a href="#" class="govuk-link"><b>Doyle</b>, Matthew</a><br>E4911C 
+              </label>
+            </div>
+          </div>
+         </td>
+        <td class="govuk-table__cell" >
           <strong class="govuk-tag govuk-tag--red ">
-            Rudge, Neil
+            <b>Rudge</b>, Neil
           </strong>
-        </td>
-        <td class="govuk-table__cell" data-sort-value="" scope="col">
-              <a href="" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Remove</a>
-        </td>
-      </tr> 
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell" width="180" scope="col">
-          <a href="#" class="govuk-link--no-visited-state"><b>Bab</b>, Robin</a><br>
-          <span class="govuk-hint govuk-!-font-size-16">F4933A</span>
-        </td> 
-        <td class="govuk-table__cell">
           <strong class="govuk-tag govuk-tag--red ">
-            Rudge, Neil
+            <b>Bab</b>, Robin
           </strong>
-        </td>
-        <td class="govuk-table__cell" data-sort-value="" scope="col">
-              <a href="" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Remove</a>
         </td>
       </tr>
-      
-      </tr>      
-                     
-        </tbody>
-      </table>
-      </div>
-       
-      
-      <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
-        {{govukButton({
-          text: "Continue",
-          attributes: {
-            "formaction": "appointment-type",
-            "formmethod": "get"
-            }
-          })}}
-          <a class="govuk-link" href="cancel-action-check">Cancel</a>
-      </div>
-      
-      
-      
-        
-      
-      </div>
+      {% endif %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Maths level 1">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="person" name="person" type="checkbox" value="Neil">
+            <label class="govuk-label govuk-checkboxes__label" for="waste">
+              <a href="#" class="govuk-link"><b>Rudge</b>, Neil</a><br>G2044E
+            </label>
+          </div>
+        </div>
+        </td>
+        <td class="govuk-table__cell" >
+          <strong class="govuk-tag govuk-tag--red ">
+            <b>Doyle</b>, Matthew
+          </strong>
+        </td>
+      </tr>
+     
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Maths level 1">
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="person" name="personRobin" type="checkbox" value="Robin">
+              <label class="govuk-label govuk-checkboxes__label" for="waste">
+                <a href="#" class="govuk-link"><b>Bab</b>, Robin</a><br>F4933A 
+              </label>
+            </div>
+          </div>
+         </td>
+        <td class="govuk-table__cell" >
+          <strong class="govuk-tag govuk-tag--red ">
+            <b>Doyle</b>, Matthew
+          </strong>
+          {% if data['person-10'] >= '' %}
+          <strong class="govuk-tag govuk-tag--red ">
+            Eric Sykes, {{ data['person-10']}}  
+          </strong>
+          {% endif  %}
+        </td>
+      </tr>
+      {% if data['person-8'] >= '' %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Maths level 1">
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="person-2" name="person" type="checkbox" value="Luther">
+              <label class="govuk-label govuk-checkboxes__label" for="waste">
+                Luther Drove, {{ data['person-8']}} 
+              </label>
+            </div>
+          </div>
+         </td>
+        <td class="govuk-table__cell" >
+          <strong class="govuk-tag govuk-tag--red ">
+            Matthew Doyle, {{ data['person-3']}} 
+          </strong>
+        </td>
+      </tr>
+      {% endif %}
+      {% if data['person-9'] >= '' %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Maths level 1">
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="person-3" name="person" type="checkbox" value="Logan">
+              <label class="govuk-label govuk-checkboxes__label" for="waste">
+               Logan Looker, {{ data['person-9']}} 
+              </label>
+            </div>
+          </div>
+         </td>
+        <td class="govuk-table__cell" >
+          <strong class="govuk-tag govuk-tag--red ">
+            Matthew Doyle, {{ data['person-3']}}
+          </strong>
+          
+        </td>
+      </tr>
+      {% endif %}
+      {% if data['person-10'] >= '' %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Maths level 1">
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="person-4" name="person" type="checkbox" value="Eric">
+              <label class="govuk-label govuk-checkboxes__label" for="waste">
+               Eric Sykes, {{ data['person-10']}} 
+              </label>
+            </div>
+          </div>
+         </td>
+        <td class="govuk-table__cell" >
+          <strong class="govuk-tag govuk-tag--red ">
+            Robin Bab, {{ data['person-6']}}
+          </strong>
+          
+        </td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+
+{{ govukButton({
+  text: "Remove selected prisoners",
+  classes: "govuk-button--warning"
+}) }}
+<br><br>
+</form>
+{{ govukButton({
+  text: "Continue",
+  href: "appointment-type"
+}) }}
+
+
+
+  
+
+</div>
 {% endblock %}

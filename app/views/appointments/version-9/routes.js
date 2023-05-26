@@ -65,7 +65,7 @@ const router = express.Router()
 		if (appointRepeat === 'Yes') {
 			res.redirect(`appointment-frequency`);
 		} else {
-			res.redirect(`prisoner-comments`);
+			res.redirect(`comments`);
 		}
 	  });
 
