@@ -37,18 +37,27 @@ Find an activity to record or edit attendance
             {% block content %}
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
-                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
                         <span class="govuk-caption-l">
                             Manage allocations <span class="govuk-visually-hidden">for</span>
                         </span>
-                        {{activity.name}} <span class="govuk-tag govuk-tag--green">Vacancies</span>
+                        {{activity.name}}
                     </h1>
 
-                    <p class="govuk-!-margin-bottom-6">
+                    <p class="govuk-!-margin-bottom-7">
                         <a href="details" class="govuk-link govuk-link--no-visited-state">
-                            Edit activity details
+                            View or edit activity details
                         </a>
                     </p>
+
+                    <ul class="govuk-list govuk-!-margin-bottom-7">
+                        <li>
+                            Vacancies: {{activity.vacancies}}
+                        </li>
+                        <li>
+                            Capacity: {{activity.capacity}}
+                        </li>
+                    </ul>
 
                     {% set riskAssessment %}
                     {{"Low, Medium or High" if activity.riskAssessment == "any"}}
@@ -137,7 +146,7 @@ Find an activity to record or edit attendance
                 <ul class="govuk-tabs__list">
                     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
                         <a class="govuk-tabs__tab" href="#curently-allocated">
-                            Currently allocated
+                            Currently allocated ({{currentlyAllocated.length}})
                         </a>
                     </li>
                     <li class="govuk-tabs__list-item">

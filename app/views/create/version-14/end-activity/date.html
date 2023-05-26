@@ -1,0 +1,97 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+
+            {% set dateHtml %}
+            {{ govukDateInput({
+            id: "end-date",
+            namePrefix: "end-date",
+            fieldset: {
+            legend: {
+            text: "Date",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--s"
+            }
+            },
+            hint: {
+            text: "For example, 29 12 2022"
+            },
+            items: [
+            {
+            name: "day",
+            classes: "govuk-input--width-2",
+            value: endDate.day
+            },
+            {
+            name: "month",
+            classes: "govuk-input--width-2",
+            value: endDate.month
+            },
+            {
+            name: "year",
+            classes: "govuk-input--width-4",
+            value: endDate.year
+            }
+            ]
+            }) }}
+            {% endset %}
+
+            {{govukRadios({
+            name: "date-type",
+            fieldset: {
+            legend: {
+            text: "When is the activity ending?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            items: [
+            {
+            value: "today",
+            text: "Today – " + today|convertShortDateToLongDate
+            },
+            {
+            value: "tomorrow",
+            text: "Tomorrow – " + today|dayAfter(today)|convertShortDateToLongDate
+            },
+            {
+            value: "other-date",
+            text: "A different date",
+            conditional: {
+            html: dateHtml
+            }
+            }
+            ]
+            })}}
+
+            {{ govukInsetText({
+            text: "Anyone allocated to the activity who was due to be taken off after the end date will now finish on this
+            date."
+            }) }}
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

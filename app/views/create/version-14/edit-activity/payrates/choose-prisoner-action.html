@@ -1,0 +1,130 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-xl">
+                {{activity.name}}
+            </span>
+
+            {% if suitablePayrates.length === 1 %}
+            <h1 class="govuk-heading-xl">
+                Check before you delete {{payRate.incentiveLevel}} incentive level: {{payRate.payBand|lower}} pay
+            </h1>
+
+            <p>
+                If you delete this pay rate, {{prisonerData.length}} people will be
+                moved to the alternative pay rate:
+            </p>
+
+            {% else %}
+            <h1 class="govuk-heading-xl">
+                There are {{prisonerData.length}} people on {{payRate.incentiveLevel}} incentive level:
+                {{payRate.payBand|lower}} pay
+            </h1>
+
+            <p>
+                Before you can delete this pay rate you must deal with the people who are assigned to it.
+            </p>
+
+            <p>
+                There are {{suitablePayrates.length}} other pay rates that are suitable for them:
+            </p>
+            {% endif %}
+
+            <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
+                {% for payrate in suitablePayrates %}
+                <li>{{payrate.payBand|lower}} – £{{payrate.amount|decimalPlaces(2)}} ({{payrate.incentiveLevel|lower}}
+                    incentive level)</li>
+                {% endfor %}
+            </ul>
+
+
+            {% if suitablePayrates.length === 1 %}
+            <h2 class="govuk-heading-m">
+                People who will be on the alternative pay rate
+            </h2>
+            <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
+                {% for prisoner in prisonerData %}
+                <li>{{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+
+            {% if suitablePayrates.length > 1 %}
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        Do you want to move them all to the same pay rate or choose different ones?
+                    </legend>
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            {% if suitablePayrates.length > 1 %}
+                            <input class="govuk-radios__input" id="prisoner-action" name="prisoner-action" type="radio"
+                                value="select-payrate" aria-describedby="prisoner-action-item-hint">
+                            <label class="govuk-label govuk-radios__label" for="prisoner-action">
+                                Move them all to the same pay rate
+                            </label>
+                            {% else %}
+                            <input class="govuk-radios__input" id="prisoner-action" name="prisoner-action" type="radio"
+                                value="move-to-payrate" aria-describedby="prisoner-action-item-hint">
+                            <label class="govuk-label govuk-radios__label" for="prisoner-action">
+                                Move them to the {{suitablePayrates[0].payBand}} pay rate
+                            </label>
+                            {% endif %}
+                        </div>
+                        <!-- <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="prisoner-action-2" name="prisoner-action"
+                                type="radio" value="remove-from-activity"
+                                aria-describedby="prisoner-action-2-item-hint">
+                            <label class="govuk-label govuk-radios__label" for="prisoner-action-2">
+                                Remove them from the activity
+                            </label>
+                            <div id="prisoner-action-2-item-hint" class="govuk-hint govuk-radios__hint">
+                                They will be deallocated from the activity.
+                            </div>
+                        </div> -->
+                        <!-- <div class="govuk-radios__divider">or</div> -->
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="prisoner-action-4" name="prisoner-action"
+                                type="radio" value="choose-individually" aria-describedby="prisoner-action-4-item-hint">
+                            <label class="govuk-label govuk-radios__label" for="prisoner-action-4">
+                                Choose a rate for each person
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            {{govukButton({
+            text: "Continue",
+            classes: "govuk-!-margin-top-6"
+            })}}
+            {% else %}
+            <input type="hidden" name="prisoner-action" value="move-to-payrate">
+
+            {{govukButton({
+            text: "Confirm and update pay rates",
+            classes: "govuk-!-margin-top-"
+            })}}
+            {% endif %}
+
+
+        </form>
+    </div>
+</div>
+{% endblock %}

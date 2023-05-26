@@ -10,20 +10,10 @@ Find an activity to record or edit attendance
 {% endblock %}
 
 {% block beforeContent %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{{ govukBreadcrumbs({
-	classes: "govuk-!-display-none-print",
-	items: [
-	{
-		text: "Digital Prison Services",
-		href: "/dps-home"
-	},
-	{
-		text: "Record and check attendance",
-		href: "/create/" + data['prototype-versions']['create-and-allocate']['latest-version'] + "/record-check-attendance"
-	}
-	]
-}) }}
+{{govukBackLink({
+	text: "Choose a different date",
+	"href": "../select-date"
+})}}
 {% endblock %}
 {% block content %}
 

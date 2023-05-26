@@ -171,6 +171,19 @@ router.use("/:activityId/edit", (req, res, next) => {
   require("./edit/routes")(req, res, next);
 });
 
+// router for end activity journey (from activity details page)
+router.use("/end-activity", (req, res, next) => {
+  let serviceName = req.originalUrl.split("/")[1];
+  let version = req.originalUrl.split("/")[2];
+  let journey = req.originalUrl.split("/")[3];
+  let subJourney = req.originalUrl.split("/")[4];
+
+  req.activityId = req.params.activityId;
+
+  req.protoUrl = serviceName + "/" + version + "/" + journey + "/" + subJourney;
+  require("./end-activity/routes")(req, res, next);
+});
+
 // router for payrates journey
 router.use("/:activityId/payrates", (req, res, next) => {
   let serviceName = req.originalUrl.split("/")[1];

@@ -1,0 +1,65 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <div class="govuk-form-group">
+                <span class="govuk-caption-l">
+                    {{activity.name}}
+                </span>
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--l" for="activity-location">
+                        Enter the new activity location
+                    </label>
+                </h1>
+                <div id="subject-hint" class="govuk-hint">
+                    Start typing a location and select the one you need from the list of options.
+                </div>
+                <select class="govuk-select" id="activity-location" name="activity-location">
+                    {% for location in locations|sort() %}
+                    <option value="{{ location }}" {{"selected" if location == activityLocation}}>{{ location }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {{govukWarningText({
+            text: "Changing the location may affect the security risk and the capacity of this activity."
+            })}}
+
+            {{ govukButton({
+            text: "Update activity location"
+            }) }}
+            <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#activity-location'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+</script>
+{% endblock %}

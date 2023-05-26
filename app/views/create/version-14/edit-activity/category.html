@@ -1,0 +1,57 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <span class="govuk-caption-l">
+                            {{activity.name}}
+                        </span>
+                        <h1 class="govuk-fieldset__heading">
+                            Select the new activity category
+                        </h1>
+                    </legend>
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        {% for category in data['timetable-complete-1']['categories'] %}
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="activity-category-{{loop.index}}" name="activity-category"
+                                type="radio" value="{{category.id}}" aria-describedby="activity-category-item-hint"
+                                {{"checked" if activityCategoryName == category.name}}>
+                            <label class="govuk-label govuk-radios__label" for="activity-category-{{loop.index}}">
+                                {{category.name}}
+                            </label>
+                            <div id="activity-category-item-hint" class="govuk-hint govuk-radios__hint">
+                                {{category.description}}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
+
+            {{ govukButton({
+            text: "Update activity category"
+            }) }}
+            <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

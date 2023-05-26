@@ -35,6 +35,21 @@ type: "success",
 classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
 }) }}
 {% endif %}
+
+<!-- {% if activity.endDate != null %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    This activity is scheduled to end on {{activity.endDate|convertShortDateToVeryLongDate}}
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Information",
+type: "info",
+classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
+}) }}
+{% endif %} -->
+
 {% endblock %}
 
 {% block tableArea %}

@@ -1,0 +1,307 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {%- set levelsData = [
+            'A Level',
+            'AS Level',
+            'Accredited Programme Case Manager',
+            'Accredited Programme Manager',
+            'Accredited Programme Tutor',
+            'Achievement certificate',
+            'Award Entry Level 1',
+            'Award Entry Level 2',
+            'Award Entry Level 3',
+            'Award Food Safety in Catering (OCF) L2',
+            'Award Level 1',
+            'Award Level 2',
+            'Award in Life and Living Skills Entry 2',
+            'Award in Managing your Money L1',
+            'Award in Using ICT (QCF) Entry 3 OCR',
+            'BICSc Additional Units 1',
+            'BICSc Additional Units 2',
+            'BICSc Assessor Certificate',
+            'BICSc Base Units 1',
+            'BICSc Base Units 2',
+            'BICSc Kitchen/Wing Awareness certificate',
+            'BICSc Mandatory Unit Card',
+            'BICSc Specialist Units',
+            'Barista Skills L2',
+            'Basic cakes/sponges/biscuits/scones L2',
+            'Bio Hazard Major Certificate',
+            'Bio Hazard Minor Certificate',
+            'C&G (City & Guilds)',
+            'C&G AWARD L1 H&S Built Environment',
+            'CYQ (PE)',
+            'Cam Award Eng Construct comp sent L1',
+            'Cambridge Awards',
+            'Cert Cleaning & Supp Services Skills L2',
+            'Cert Creative Tech in 2D (QCF) L1 CG',
+            'Certificate Level 1',
+            'Certificate Level 2',
+            'Certificate Level 3',
+            'Certificate Secondary Education',
+            'Certificate in Creative Techniques L1',
+            'Commendation certificate',
+            'Commendation certificate',
+            'Commissioned Art L2',
+            'Completion certificate',
+            'Degree Level or Higher',
+            'Diploma Level 1',
+            'Diploma Level 2',
+            'End reason - lost interest',
+            'End reason - lost interest',
+            'End reason - other',
+            'End reason - other',
+            'End reason - refused',
+            'End reason - refused',
+            'End reason - release',
+            'End reason - release',
+            'End rsn - stop attending education',
+            'English Entry Level 1',
+            'English Entry Level 2',
+            'English Entry Level 3',
+            'English Level 1',
+            'English Level 2',
+            'English Level 3',
+            'Entry Level 3 Award',
+            'Entry Level Qualification',
+            'Extended Award Level 1',
+            'FS Underpinning 2 aims',
+            'FS Underpinning 4 aims',
+            'Full manual completed',
+            'Func Skills qual Maths Entry 3 OCR',
+            'Functional Skills Entry Level',
+            'Functional Skills Level 1',
+            'Functional Skills Level 2',
+            'Functional Skills Level 3',
+            'GCE Advanced',
+            'General Certificate Secondary Education',
+            'General National Vocational Part One',
+            'General National Vocational Part Three',
+            'General National Vocational Part Two',
+            'ICT produce creative compo Entry 3 OCR',
+            'Induction to using ICT System Entry 3',
+            'Introduction to Learning (7 to 12 hours)',
+            'Introduction to Waste and Recycling L1',
+            'Key Skills',
+            'Level 1',
+            'Level 2',
+            'Level 3',
+            'Literacy - Entry Level 1',
+            'Literacy - Entry Level 2',
+            'Literacy - Entry Level 3',
+            'Literacy - Level 1',
+            'Literacy - Level 2',
+            'Literacy - Level 3',
+            'Literacy - Pre-entry Level',
+            'Literacy 1',
+            'Literacy 2',
+            'Literacy 3',
+            'Maths Entry Level 1',
+            'Maths Entry Level 2',
+            'Maths Entry Level 3',
+            'Maths Level 1',
+            'Maths Level 2',
+            'Maths Level 3',
+            'Mentor Training certificate',
+            'Mentoring qualification',
+            'Mini manual completed',
+            'NVQ Dip in Pro Cookery (Prep & Cooking)',
+            'NVQ Entry Level',
+            'National Vocational Level 1',
+            'National Vocational Level 2',
+            'National Vocational Level 3',
+            'No Qualifications Gained',
+            'Non Regulated SFA funded Entry Level',
+            'Non Regulated SFA funded Level 1',
+            'Non Regulated SFA funded Level 2',
+            'Numeracy 1',
+            'Numeracy 2',
+            'Numeracy 3',
+            'O Level',
+            'PRE Entry',
+            'Picked up on transfer',
+            'Picked up on transfer',
+            'Pre-release Programme',
+            'Presentation Software Level 1',
+            'Provide Reception Services L2',
+            'Reading Measure 1.0',
+            'Reading Measure 1.1',
+            'Reading Measure 1.2',
+            'Reading Measure 1.3',
+            'Reading Measure 1.4',
+            'Reading Measure 1.5',
+            'Reading Measure 1.6',
+            'Reading Measure 1.7',
+            'Reading Measure 1.8',
+            'Reading Measure 1.9',
+            'Reading Measure 10.0',
+            'Reading Measure 10.2',
+            'Reading Measure 10.4',
+            'Reading Measure 11.7',
+            'Reading Measure 12.0',
+            'Reading Measure 12.3',
+            'Reading Measure 12.5',
+            'Reading Measure 12.9',
+            'Reading Measure 14.2',
+            'Reading Measure 14.3',
+            'Reading Measure 14.5',
+            'Reading Measure 14.9',
+            'Reading Measure 15.9',
+            'Reading Measure 16.3',
+            'Reading Measure 17.0',
+            'Reading Measure 17.4',
+            'Reading Measure 17.6',
+            'Reading Measure 2.0',
+            'Reading Measure 2.1',
+            'Reading Measure 2.2',
+            'Reading Measure 2.3',
+            'Reading Measure 2.4',
+            'Reading Measure 2.5',
+            'Reading Measure 2.6',
+            'Reading Measure 2.7',
+            'Reading Measure 2.9',
+            'Reading Measure 3.0',
+            'Reading Measure 3.1',
+            'Reading Measure 3.2',
+            'Reading Measure 3.4',
+            'Reading Measure 3.5',
+            'Reading Measure 3.6',
+            'Reading Measure 3.7',
+            'Reading Measure 3.8',
+            'Reading Measure 4.0',
+            'Reading Measure 4.1',
+            'Reading Measure 4.2',
+            'Reading Measure 4.3',
+            'Reading Measure 4.4',
+            'Reading Measure 4.5',
+            'Reading Measure 4.6',
+            'Reading Measure 4.7',
+            'Reading Measure 4.8',
+            'Reading Measure 5.0',
+            'Reading Measure 5.1',
+            'Reading Measure 5.2',
+            'Reading Measure 5.3',
+            'Reading Measure 5.4',
+            'Reading Measure 5.5',
+            'Reading Measure 5.6',
+            'Reading Measure 5.7',
+            'Reading Measure 5.8',
+            'Reading Measure 5.9',
+            'Reading Measure 6.0',
+            'Reading Measure 6.1',
+            'Reading Measure 6.2',
+            'Reading Measure 6.4',
+            'Reading Measure 6.5',
+            'Reading Measure 6.7',
+            'Reading Measure 6.9',
+            'Reading Measure 7.2',
+            'Reading Measure 7.3',
+            'Reading Measure 7.8',
+            'Reading Measure 7.9',
+            'Reading Measure 8.1',
+            'Reading Measure 8.5',
+            'Reading Measure 8.6',
+            'Reading Measure 9.0',
+            'Reading Measure 9.1',
+            'Reading Measure 9.5',
+            'Reading Measure 9.6',
+            'Reading Measure 9.7',
+            'Reading Measure 9.8',
+            'Reading Measure 9.9',
+            'Safe Hygienic Secure Work Enviro L1',
+            'Start date',
+            'Start date',
+            'Train the Trainer Certificate',
+            'Transfer date',
+            'Transfer date',
+            'Using Maths Skills to problem solve',
+            'VT Intro Awareness (imedia/ICT) L1',
+            'Wastesmart Certificate',
+            'Working in Business and Admin Entry 3',
+            'Working in a Business Environment L2',
+            'iTES Entry Level'] -%}
+
+            <span class="govuk-caption-l">
+                {{ activity.name }}
+            </span>
+            <h1 class="govuk-heading-l">
+                Select the education details
+            </h1>
+
+            <div class="govuk-form-group">
+                <h2 class="govuk-label-wrapper" <label class="govuk-label" for="area-of-study">
+                    <label class="govuk-label govuk-label--m" for="area-of-study">
+                        Subject or skill
+                    </label>
+                </h2>
+                <div id="subject-hint" class="govuk-hint">
+                    Choose the area of study for the education level or qualification that participants need to be eligible for this activity.
+                </div>
+                <select class="govuk-select" id="area-of-study" name="area-of-study">
+                    <option value="">Select education level or qualification</option>
+                    {% for area in data['areas-of-study'] %}
+                    <option value="{{ area.name }}">{{ area.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="govuk-form-group">
+                <h2 class="govuk-label-wrapper" <label class="govuk-label" for="education-level">
+                    <label class="govuk-label govuk-label--m" for="education-level">
+                        Select education level or other qualification
+                    </label>
+                </h2>
+                <div id="subject-hint" class="govuk-hint">
+                    Choose the education level or qualification that participants need to be eligible for this activity.
+                </div>
+                <select class="govuk-select" id="education-level" name="education-level">
+                    <option value="">Select education level or qualification</option>
+                    {% for level in levelsData %}
+                    <option value="{{ level }}">{{ level }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {{ govukButton({
+                text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#education-level'),
+        showAllValues: true,
+        defaultValue: '',
+        confirmOnBlur: false,
+    });
+
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#area-of-study'),
+        showAllValues: true,
+        defaultValue: '',
+        confirmOnBlur: false,
+    });
+</script>
+{% endblock %}

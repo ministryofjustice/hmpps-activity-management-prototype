@@ -28,18 +28,56 @@ href: "../manage-activities"
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l">Edit activity details</span>
+        <span class="govuk-caption-l">Manage activities</span>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-7">
-            Select an activity to edit
+            Edit activity details
         </h1>
 
-        <p>
+        <!-- <p>
+            You can edit the details of an activity, or you can archive activities to remove all people who are allocated.
+        </p> -->
+
+        <div class="govuk-list govuk-button-group">
+            <!-- <a href="../create-activity" class="govuk-link govuk-link--no-visited-state">Pause activities</a> -->
+            <a href="end-activity" class="govuk-button govuk-button--secondary">End multiple activities</a>
+        </div>
+
+        {{govukDetails({
+        summaryText: "What does ending an activity do?",
+        html: "<p>Ending an activity will remove all people who are allocated to it. You can end multiple activities at once.</p>
+        <p>When the end date of an activity is reached, it will be automatically ended and moved to 'Archived activities'.</p>"
+        })}}
+
+        <!-- <p>
             You can view or edit details for a single activity, or you can select multiple activities to pause, archive or delete them.
-        </p>
+        </p> -->
 
         <!-- <p>
             <a href="../create-activity" class="govuk-button govuk-button--secondar">Create an activity</a>
         </p> -->
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+            Related actions
+        </h2>
+        <ul class="govuk-list">
+            <li>
+                <a href="manage-allocations" class="govuk-link govuk-link--no-visited-state">
+                    Manage allocations
+                </a>
+            </li>
+            <li>
+                <a href="#" class="govuk-link govuk-link--no-visited-state">
+                    Create an activity
+                </a>
+            </li>
+            <li>
+                <a href="#" class="govuk-link govuk-link--no-visited-state">
+                    Log a request
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
 
@@ -50,11 +88,7 @@ items: [{
 text: 'Live activities (43)',
 href: 'all',
 active: true if list == 'all'
-}, {
-text: 'Paused activities (2)',
-href: 'vacancies',
-active: true if list == 'vacancies'
-}, {
+},{
 text: 'Archived activities (11)',
 href: 'draft',
 active: true if list == 'draft'
@@ -67,25 +101,24 @@ active: true if list == 'draft'
     <thead class="govuk-table__head">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col" id="select-all"></th>
+                <!-- <th class="govuk-table__header" scope="col" id="select-all"></th> -->
                 <th scope="col" class="govuk-table__header" aria-sort="ascending">Activity</th>
-                <th scope="col" class="govuk-table__header" aria-sort="none">Category</th>
+                <th scope="col" class="govuk-table__header" aria-sort="none">Activity category</th>
+                <th scope="col" class="govuk-table__header" aria-sort="none">Start date</th>
+                <th scope="col" class="govuk-table__header" aria-sort="none">End date</th>
                 <!-- <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none"
                 style="white-space: nowrap; width: 1%;">Capacity</th> -->
                 <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none"
                     style="white-space: nowrap; width: 1%;">Allocated</th>
-                <th scope="col" class="govuk-table__header govuk-hint govuk-table__header--numeric" aria-sort="none"
-                    style="white-space: nowrap; width: 1%;">Sessions per week</th>
-                <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none"
-                    style="white-space: nowrap; width: 1%;">Status</th>
                 <!-- <th scope="col" class="govuk-table__header govuk-hint govuk-table__header--numeric" aria-sort="none"
-                style="white-space: nowrap; width: 1%;">% allocated</th> -->
+                    style="white-space: nowrap; width: 1%;">Sessions per week</th> -->
+                <!-- <th scope="col" class="govuk-table__header govuk-hint govuk-table__header--numeric" aria-sort="none"></th> -->
             </tr>
         </thead>
     <tbody class="govuk-table__body">
         {% for activity in activities | sort(false, true, 'name') %}
         <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
+            <!-- <td class="govuk-table__cell">
                 {% if not prisoner.attendance.attendance or prisoner.attendance.attendance == "removed" %}
                 <div
                     class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
@@ -97,36 +130,41 @@ active: true if list == 'draft'
                     </label>
                 </div>
                 {% endif %}
-            </td>
+            </td> -->
             <td class="govuk-table__cell govuk-!-font-weight-bold" data-sort-value="{{activity.name}}">
                 <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
                     <a href="{{activity.id}}/details" class="govuk-link--no-visited-state">
                         {{activity.name}}
                     </a>
+                    <!-- {{activity.name}} -->
                 </h2>
             </td>
             <td class="govuk-table__cell"
                 data-sort-value="{{activity.nextSession.date}}-{{activity.nextSession.period}}">
                 {{activity.category|getActivityCategoryName}}
             </td>
-            <!-- <td class="govuk-table__cell--numeric govuk-table__cell"
-                data-sort-value="{{activity.startTime|replace(':','')}}">
-                {{activity.capacity}}
-            </td> -->
+            <td class="govuk-table__cell">
+                {% if activity.startDate %}
+                {{activity.startDate|convertShortDateToMediumDate}}
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+                {% if activity.endDate %}
+                {{activity.endDate|convertShortDateToMediumDate}}
+                {% endif %}
+            </td>
             <td class="govuk-table__cell--numeric govuk-table__cell">
                 {{activity.payRates|length}}
             </td>
-            <td class="govuk-table__cell--numeric govuk-table__cell"
+            <!-- <td class="govuk-table__cell--numeric govuk-table__cell"
                 data-sort-value="{{ activity.capacity - activity.currentlyAllocated }}">
                 {{ [1,2,3,4,5,6,7,8,9] | random }}
-            </td>
-            <td class="govuk-table__cell--numeric govuk-table__cell"
-                data-sort-value="{{activity.startTime|replace(':','')}}">
-                <span class="govuk-tag govuk-tag--green">Live</span>
-            </td>
+            </td> -->
             <!-- <td class="govuk-table__cell--numeric govuk-table__cell govuk-hint"
                 data-sort-value="{{activity.attendanceCount[period]['attended']}}">
-                {{ (100 - ((activity.capacity - activity.currentlyAllocated) / activity.capacity * 100)) | round(0)}}
+                <a href="{{activity.id}}/manage-allocations" class="govuk-link--no-visited-state">
+                    View or edit
+                </a>
             </td> -->
         </tr>
         {% endfor %}
