@@ -30,7 +30,7 @@ router.post("/select-activities", function (req, res) {
 router.get("/:activityIds", function (req, res) {
     let activityIds = req.params.activityIds.split(",");
     let activities = req.session.data["timetable-complete-1"]["activities"];
-    
+
     let activitiesData = [];
     activityIds.forEach((activityId) => {
         let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
@@ -38,7 +38,7 @@ router.get("/:activityIds", function (req, res) {
     });
 
     let today = DateTime.now().toISODate();
-    
+
     res.render(req.protoUrl + "/date", {
         activitiesData,
         today,
@@ -49,14 +49,14 @@ router.get("/:activityIds", function (req, res) {
 router.post("/:activityIds", function (req, res) {
     // log the post data to the console
     console.log(req.body);
-    
-    if(req.body["date-type"] === "date") {
+
+    if (req.body["date-type"] === "date") {
         let day = req.session.data["end-date-day"];
         let month = req.session.data["end-date-month"];
         let year = req.session.data["end-date-year"];
 
         // check there is a day, month and year
-        if(day && month && year) {
+        if (day && month && year) {
             // if there is, create a date string using luxon
             req.session.data["end-date"] = DateTime.fromObject({
                 day: parseInt(day),
@@ -79,7 +79,7 @@ router.post("/:activityIds", function (req, res) {
 router.get("/:activityIds/check-answers", function (req, res) {
     let activityIds = req.params.activityIds.split(",");
     let activities = req.session.data["timetable-complete-1"]["activities"];
-    
+
     let activitiesData = [];
     activityIds.forEach((activityId) => {
         let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
@@ -87,6 +87,28 @@ router.get("/:activityIds/check-answers", function (req, res) {
     });
 
     res.render(req.protoUrl + "/check-answers", {
+        activitiesData,
+    });
+});
+
+// post route for check answers page
+router.post("/:activityIds/check-answers", function (req, res) {
+    // redirect to the confirmation page
+    res.redirect("confirmation");
+});
+
+// confirmation page
+router.get("/:activityIds/confirmation", function (req, res) {
+    let activityIds = req.params.activityIds.split(",");
+    let activities = req.session.data["timetable-complete-1"]["activities"];
+
+    let activitiesData = [];
+    activityIds.forEach((activityId) => {
+        let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
+        activitiesData.push(activity);
+    });
+
+    res.render(req.protoUrl + "/confirmation", {
         activitiesData,
     });
 });

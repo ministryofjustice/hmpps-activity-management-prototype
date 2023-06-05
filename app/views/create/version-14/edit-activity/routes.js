@@ -129,6 +129,28 @@ router.get("/:activityId/name", function (req, res) {
   });
 });
 
+// activity schedule dates page
+router.get("/:activityId/schedule-dates", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.params.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // set an activitySchedule variable from the activity.schedule data
+  let activitySchedule = activity.schedule;
+
+  // for each day in the activity schedule, create a new object with the day name and am/pm values
+  let schedule = getActivitySchedule(activitySchedule);
+
+  // render the page
+  res.render(req.protoUrl + "/schedule-dates", {
+    activity,
+    activitySchedule,
+    activityId,
+    currentPage: "schedule",
+    schedule,
+  });
+});
+
 // edit activity name POST route
 router.post("/:activityId/name", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];

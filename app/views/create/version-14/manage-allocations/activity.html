@@ -14,6 +14,7 @@ Find an activity to record or edit attendance
 <form method="post">
     <div class="govuk-width-container">
         {% block beforeContent %}
+        <!-- {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
         {{ govukBreadcrumbs({
         classes: "govuk-!-display-none-print",
         items: [
@@ -22,7 +23,7 @@ Find an activity to record or edit attendance
         href: "/dps-home"
         },
         {
-        text: "Manage activities",
+        text: "Manage activities and allocations",
         href: "../manage-activities"
         },
         {
@@ -30,6 +31,10 @@ Find an activity to record or edit attendance
         href: "../manage-allocations"
         }
         ]
+        })}} -->
+        {{ govukBackLink({
+        text: "Allocation dashboard",
+        href: "../manage-allocations"
         }) }}
         {% endblock %}
 
@@ -80,22 +85,16 @@ Find an activity to record or edit attendance
             {% endif %}
             {% endif %}
 
-            <div class="govuk-grid-row">
+            <div class="govuk-grid-row govuk-!-margin-bottom-4">
                 <div class="govuk-grid-column-two-thirds">
-                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
                         <span class="govuk-caption-l">
-                            Manage allocations <span class="govuk-visually-hidden">for</span>
+                            Manage allocations <span class="govuk-visually-hidden"> for </span>
                         </span>
                         {{activity.name}}
                     </h1>
 
-                    <p class="govuk-!-margin-bottom-7">
-                        <a href="../edit-activity/{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
-                            View or edit activity details
-                        </a>
-                    </p>
-
-                    <ul class="govuk-list govuk-!-margin-bottom-7">
+                    <ul class="govuk-list govuk-!-margin-bottom-5">
                         <li>
                             Vacancies: {{activity.vacancies}}
                         </li>
@@ -154,7 +153,41 @@ Find an activity to record or edit attendance
                 </div>
 
                 <div class="govuk-grid-column-one-third">
-                    <div class="govuk-!-padding-4" style="background-color: #f1f2f3;">
+                    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+                        Related tasks
+                    </h2>
+
+                    <ul class="govuk-list govuk-!-margin-bottom-7">
+                        <li>
+                            <a href="../edit-activity/{{activity.id}}/schedule-dates#schedule"
+                                class="govuk-link govuk-link--no-visited-state" target="_blank">
+                                View activity schedule (opens in new tab)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../edit-activity/{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
+                                Edit activity details
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a href="../create-activity" class="govuk-link govuk-link--no-visited-state">
+                                Create an activity
+                            </a>
+                        </li> -->
+                        <!-- <li>
+                            <a href="../log-request" class="govuk-link govuk-link--no-visited-state">
+                                Log a request
+                            </a>
+                        </li> -->
+                        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+                        <li class="govuk-!-margin-top-0">
+                            <a href="/dps-home" class="govuk-link govuk-link--no-visited-state">
+                                Go to DPS home
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- <div class="govuk-!-padding-4" style="background-color: #f1f2f3;">
                         <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-visually-hidden">
                             Weekly schedule
                         </h2>
@@ -180,7 +213,7 @@ Find an activity to record or edit attendance
                             </div>
                             {% endfor %}
                         </dl>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

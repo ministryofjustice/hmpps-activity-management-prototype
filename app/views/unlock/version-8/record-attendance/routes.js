@@ -1006,6 +1006,19 @@ router.post(
   }
 );
 
+// print incentive level warning page
+router.get('/activities/:selectedDate/:selectedPeriod/:activityId/print-incentive-level-warning', function (req, res) {
+  let activityId = req.params.activityId;
+  let date = req.params.selectedDate;
+  let period = req.params.selectedPeriod;
+
+  let attendanceDetails = req.session.data["attendance-details"];
+
+  res.render(req.protoUrl + "/print-incentive-level-warning", {
+    attendanceDetails,
+  });
+});
+
 router.get(
   "/activities/:selectedDate/:selectedPeriod/:activityId/confirm-print-incentive-level-warning",
   function (req, res) {

@@ -24,13 +24,13 @@ Find an activity to record or edit attendance
 			Find an activity to record or edit attendance
 		</h1>
 
-		<ul class="govuk-list govuk-!-margin-bottom-6">
+		<!-- <ul class="govuk-list govuk-!-margin-bottom-6">
 			<li class=""><a href="../select-date" class="govuk-link--no-visited-state">View the schedule for a different day</a></li>
 			{% if selectedDate != '_'|today %}
 			<li class=""><a href="{{'_'|today}}" class="govuk-link--no-visited-state">View today's schedule</a></li>
 			{% endif %}
 			<li class=""><a href="../../attendance-dashboard/{{selectedDate}}/daily" class="govuk-link--no-visited-state">Go to daily attendance summary</a></li>
-		</ul>
+		</ul> -->
 
 		<div class="moj-search govuk-!-margin-bottom-6">
 			<form action="{{date}}" method="get" novalidate="">
@@ -45,6 +45,12 @@ Find an activity to record or edit attendance
 				</button>
 			</form>
 		</div>
+	</div>
+
+	<div class="govuk-grid-column-one-third">
+		<h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+			Related tasks
+		</h2>
 	</div>
 </div>
 {%- from "moj/components/filter/macro.njk" import mojFilter -%}

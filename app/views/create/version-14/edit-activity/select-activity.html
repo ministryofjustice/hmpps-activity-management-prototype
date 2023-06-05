@@ -9,33 +9,23 @@ Find an activity to record or edit attendance
 {% endblock %}
 
 {% block beforeContent %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{{ govukBreadcrumbs({
-classes: "govuk-!-display-none-print",
-items: [
-{
-text: "Digital Prison Services",
-href: "/dps-home"
-},
-{
-text: "Manage activities",
-href: "manage-activities"
-}
-]
-}) }}
+{{ govukBackLink({
+    text: "Manage activities and allocations",
+    href: "manage-activities"
+    }) }}
 {% endblock %}
 {% block content %}
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l">Manage activities</span>
+        <span class="govuk-caption-l">View and manage activity details</span>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-7">
-            Edit activity details
+            Edit activities
         </h1>
 
-        <!-- <p>
-            You can edit the details of an activity, or you can archive activities to remove all people who are allocated.
-        </p> -->
+        <p class="govuk-body-l">
+            Select an activity to edit details including pay rates, requirements and schedule. You can also end an activity.
+        </p>
 
         <!-- <p>
             You can view or edit details for a single activity, or you can select multiple activities to pause, archive or delete them.
@@ -48,12 +38,12 @@ href: "manage-activities"
 
     <div class="govuk-grid-column-one-third">
         <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-            Related actions
+            Related tasks
         </h2>
         <ul class="govuk-list">
             <li>
                 <a href="manage-allocations" class="govuk-link govuk-link--no-visited-state">
-                    Manage allocations
+                    Allocation dashboard
                 </a>
             </li>
             <li>
@@ -61,9 +51,15 @@ href: "manage-activities"
                     Create an activity
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="log-an-application" class="govuk-link govuk-link--no-visited-state">
                     Log a request
+                </a>
+            </li> -->
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            <li class="govuk-!-margin-top-0">
+                <a href="manage-activities" class="govuk-link govuk-link--no-visited-state">
+                    Go to DPS home
                 </a>
             </li>
         </ul>

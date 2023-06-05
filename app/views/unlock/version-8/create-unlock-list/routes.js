@@ -5,7 +5,13 @@ const { DateTime } = require("luxon");
 //redirect the root url to the start page
 router.get("/", function (req, res) {
   // redirect to the select date and location page
-  res.redirect("/unlock/version-7/create-unlock-list/select-date-and-location");
+  res.redirect("/" + req.protoUrl + "/select-date-and-location");
+});
+
+// print unlock list
+router.get("/print-unlock-list", function (req, res) {
+  let file = `public/downloads/Concept 2.pdf`;
+  res.download(file);
 });
 
 // Function to get prisoners by houseblock

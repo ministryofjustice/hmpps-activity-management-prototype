@@ -14,22 +14,9 @@ Find an activity to record or edit attendance
 {% endblock %}
 
 {% block beforeContent %}
-{{ govukBreadcrumbs({
-classes: "govuk-!-display-none-print",
-items: [
-{
-text: "Digital Prison Services",
-href: "/dps-home"
-},
-{
-text: "Manage activities",
-href: "../../manage-activities"
-},
-{
-text: "Edit activity details",
+{{ govukBackLink({
+text: "Edit activities",
 href: "../../edit-activity"
-}
-]
 }) }}
 
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
@@ -48,14 +35,10 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
         <span class="govuk-caption-l">
             Edit activity details
         </span>
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
             {{activity.name}} <span class="govuk-tag govuk-tag--green">Live</span>
         </h1>
-        <p class="govuk-!-margin-bottom-7">
-            <a href="../../manage-allocations/{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
-                Manage allocations for this activity
-            </a>
-        </p>
+
         <div class="govuk-list govuk-button-group">
             <a href="../../end-activity/{{activity.id}}" class="govuk-button govuk-button--warning">
                 End this activity
@@ -63,23 +46,40 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
         </div>
     </div>
 
-    <!-- <div class="govuk-grid-column-one-third">
+    <div class="govuk-grid-column-one-third">
         <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-            Related actions
+            Related tasks
         </h2>
-        <ul class="govuk-list govuk-list--spaced">
+
+        <ul class="govuk-list govuk-!-margin-bottom-7">
             <li>
-                <a href="#" class="govuk-link govuk-link--no-visited-state">
-                    Manage allocations for this activity
+                <a href="../../manage-allocations/{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
+                    Manage allocations
                 </a>
             </li>
-            <li>
-                <a href="#" class="govuk-link govuk-link--no-visited-state">
+            <!-- <li>
+                <a href="../edit-activity/{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
+                    Edit activity details
+                </a>
+            </li> -->
+            <!-- <li>
+                <a href="../create-activity" class="govuk-link govuk-link--no-visited-state">
                     Create an activity
+                </a>
+            </li> -->
+            <!-- <li>
+                <a href="../log-request" class="govuk-link govuk-link--no-visited-state">
+                    Log a request
+                </a>
+            </li> -->
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            <li class="govuk-!-margin-top-0">
+                <a href="/dps-home" class="govuk-link govuk-link--no-visited-state">
+                    Go to DPS home
                 </a>
             </li>
         </ul>
-    </div> -->
+    </div>
 </div>
 
 <nav class="moj-sub-navigation" aria-label="Sub navigation" id="subnav">
@@ -94,7 +94,7 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
         </li>
         <li class="moj-sub-navigation__item">
             <a class="moj-sub-navigation__link" {% if currentPage=='schedule' %}aria-current="page" {% endif
-                %}href="payrates">Schedule and dates</a>
+                %}href="schedule-dates">Schedule and dates</a>
         </li>
     </ul>
 </nav>
@@ -102,13 +102,14 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
             {{govukButton({
-                text: "Add new pay rate",
-                href: "payrates/add"
+            text: "Add new pay rate",
+            href: "payrates/add"
             })}}
 
             <div class="govuk-inset-text govuk-!-margin-top-">
                 <p>
-                    You can change pay band names or amounts. You can delete any pay rate, but if there is someone assigned to it you’ll need to change their pay rate or take them off the activity first.
+                    You can change pay band names or amounts. You can delete any pay rate, but if there is someone
+                    assigned to it you’ll need to change their pay rate or take them off the activity first.
                 </p>
             </div>
 
@@ -183,7 +184,7 @@ classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
             </div>
             {% endfor %}
             {% else %}
-            
+
             {% endif %}
             {% endfor %}
 

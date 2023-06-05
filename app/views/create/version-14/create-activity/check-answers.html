@@ -134,7 +134,7 @@ window.history.go(-1)" })}} {% endblock %}
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {% if data['new-activity']['start-date'] %}
-                    {{data['new-activity']['start-date']|convertShortDateToLongDate}}
+                    {{data['new-activity']['start-date']|convertShortDateToVeryLongDate}}
                     {% else %}
                     None set
                     {% endif %}
@@ -151,7 +151,7 @@ window.history.go(-1)" })}} {% endblock %}
                 </dt>
                 <dd class="govuk-summary-list__value">
                     {% if data['new-activity']['end-date'] %}
-                    {{data['new-activity']['end-date']|convertShortDateToLongDate}}
+                    {{data['new-activity']['end-date']|convertShortDateToVeryLongDate}}
                     {% else %}
                     None set
                     {% endif %}
@@ -159,6 +159,19 @@ window.history.go(-1)" })}} {% endblock %}
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
                         Change<span class="govuk-visually-hidden"> end date</span>
+                    </a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Weeks in schedule
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    1
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> weeks in schedule</span>
                     </a>
                 </dd>
             </div>

@@ -5,20 +5,10 @@
 {% endblock %}
 {% block primaryNavigation %}{% endblock %}
 {% block beforeContent %}
-    {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-    {{ govukBreadcrumbs({
-	classes: "govuk-!-display-none-print",
-	items: [
-	{
-		text: "Digital Prison Services",
-		href: "/dps-home"
-	},
-	{
-		text: "Record and check attendance",
-		href: "/create/" + data['prototype-versions']['create-and-allocate']['latest-version'] + "/record-check-attendance"
-	}
-	]
-}) }}
+{{ govukBackLink({
+	text: "Record and check attendance",
+	href: '/' + data['prototype-versions']['create-and-allocate']['url'] ~ "/record-check-attendance"
+})}}
 {% endblock %}
 {% block content %}
     <div class="govuk-grid-row">
