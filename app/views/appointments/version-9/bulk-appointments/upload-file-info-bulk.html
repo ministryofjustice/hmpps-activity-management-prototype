@@ -9,33 +9,44 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="upload-file">
+<form id="form" method="post" action="person-add-another">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
       <h1 class="govuk-heading-l">
-        <span class="govuk-caption-l">Bulk appointments</span>
-        Use a CSV file to create appointments
+        <span class="govuk-caption-l">Schedule a set of one-to-ones</span>
+        Upload your list of prison numbers
       </h1>
    
+        <p class="govuk-body">
+          Your list of prison numbers must be in a CSV file. You can also include appointment start and end times using the 24-hour clock. For example 14:00 not 2:00pm.
+        </p>
+      
+        {{ govukFileUpload({
+          id: "file-upload-1",
+          name: "file-upload-1"
+        }) }}
+
+         <!--details component-->
+         <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              Download a CSV file template
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <p>Use a CSV file (a type of spreadsheet) to upload the prison numbers and any times.</p>
+
+            <p>Download the <a href="/public/downloads/offenders-for-appointments-template.csv" class="govuk-link" download>prison number list template</a> [CSV, 1kb]</p>
+          </div>
+        </details>
+       <!--details component-->
+
+
     <p class="govuk-body">
-      You can use a CSV file (a type of spreadsheet) to create multiple appointments for a number of people at different times..
-    </p>
-    <p class="govuk-body">
-        You must include a prison number for each individual. You can also include these details:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>
-        start time
-      </li>
-      <li>
-       end time
-      </li>
-    </ul>
-    <p class="govuk-body">
-    <a href="/public/downloads/offenders-for-appointments-template.csv" class="govuk-link" download>Download CSV file template</a>
+    
     </p>
    
 

@@ -5,106 +5,75 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-
+<form action="confirmation" method="post" >
+  <div class="back">
+    <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+  </div>
     <div class="govuk-width-container">
-      
+    
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds-from-desktop">
-            <h1 class="govuk-heading-l">Check and confirm the appointment details</h1>
-            
-            <h2 class="govuk-heading-m">Appointment details</h2>
-            <dl class="govuk-summary-list">
-             
-            
-             
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Appointment name
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  {{ data['categoryChoice']}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Appointment name</span>
-                  </a>
-                </dd>
-              </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Show appointment name on unlock list
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  {{ data['categoryChoice']}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Show appointment name on unlock list</span>
-                  </a>
-                </dd>
-              </div>
-              
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Alternative appointment name
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  {{ data['categoryChoice']}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Alternative appointment name</span>
-                  </a>
-                </dd>
-              </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Location
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  {{data.locationbulk1 or data.locationbulk}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Time</span>
-                  </a>
-                </dd>
-              </div>      
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Date
-                </dt>
-                <dd class="govuk-summary-list__value">
-                  {{ data['date-of-appointment-bulk-day']}} {{ data['date-of-appointment-bulk-month']}}  {{ data['date-of-appointment-bulk-year']}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Date</span>
-                  </a>
-                </dd>
-              </div> 
-            </dl>
 
-
-                              
-            <form action="confirmation" method="post" novalidate>
-              <input type="hidden" name="answers-checked" value="true">
-              <button class="govuk-button" data-module="govuk-button">
-                Confirm and save
-              </button>
-            </form>
+            <h1 class="govuk-heading-l">
+              <span class="govuk-caption-l">View and manage an appointment</span>
+              Medical - Doctor appointments created on 2 April 2023
+            </h1>
+            <div class="govuk-summary-card">
+              <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title">Details</h2>
+                <ul class="govuk-summary-card__actions">
+                </ul>
+              </div>
+              <div class="govuk-summary-card__content">
+                <dl class="govuk-summary-list"> 
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Created by
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      J. Smith
+                    </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Created on
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        3 April 2023 at 10:47
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Appointments created
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        10
+                      </dd>
+                    </div>
+               </dl>
+              </div>
+            </div> 
 
             <h2 class="govuk-heading-m">
-              You are creating 10 appointments
+              Appointments
             </h2>
+
+            <div class="govuk-button-group">
+              <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                Cancel all
+              </button>
+              <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                Print all movement slips
+              </button>
+            </div>
 
             <div class="govuk-summary-card">
               <div class="govuk-summary-card__title-wrapper">
                 <h2 class="govuk-summary-card__title">Appointment 1</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
-                      Remove <span class="govuk-visually-hidden"> person name</span>
+                      View and manage <span class="govuk-visually-hidden"> person name</span>
                     </a>
                   </li> 
                 </ul>
@@ -130,12 +99,7 @@ Appointments prototype
                       Start time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['start-hours-1-bulk']}}:{{ data['start-minutes-1-bulk']}}
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
+                      9:00
                     </dd>
                   </div>
                   <div class="govuk-summary-list__row">
@@ -143,24 +107,15 @@ Appointments prototype
                       End time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['end-hours-1-bulk']}}:{{ data['end-minutes-1-bulk']}}
+                      9:15
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
-                  </div>    <div class="govuk-summary-list__row">
+                  </div>    
+                  <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       Extra information
                     </dt>
                     <dd class="govuk-summary-list__value">
                      
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> extra information</span>
-                      </a>
                     </dd>
                   </div>
                   </dl>
@@ -173,7 +128,7 @@ Appointments prototype
                 <h2 class="govuk-summary-card__title">Appointment 2</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
-                      Remove <span class="govuk-visually-hidden"> person name</span>
+                      View and manage <span class="govuk-visually-hidden"> person name</span>
                     </a>
                   </li> 
                 </ul>
@@ -191,9 +146,7 @@ Appointments prototype
                     <br>
                     1-5-111
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                    
-                    </dd>
+                   
                   </div>
                   
                   <div class="govuk-summary-list__row">
@@ -201,26 +154,18 @@ Appointments prototype
                       Start time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['start-hours-2-bulk']}}:{{ data['start-minutes-2-bulk']}}
+                      9:15
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                   
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       End time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['end-hours-2-bulk']}}:{{ data['end-minutes-2-bulk']}}
+                      9:30
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                   
                   </div>    <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       Extra information
@@ -228,11 +173,7 @@ Appointments prototype
                     <dd class="govuk-summary-list__value">
                      
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> extra information</span>
-                      </a>
-                    </dd>
+                    
                   </div>
                   </dl>
               </div>
@@ -244,7 +185,7 @@ Appointments prototype
                 <h2 class="govuk-summary-card__title">Appointment 3</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
-                      Remove <span class="govuk-visually-hidden"> person name</span>
+                      View and manage <span class="govuk-visually-hidden"> person name</span>
                     </a>
                   </li> 
                 </ul>
@@ -262,9 +203,7 @@ Appointments prototype
                     <br>
                     1−8−333
                     </dd>
-                    <dd class="govuk-summary-list__actions">
                    
-                    </dd>
                   </div>
                   
                   <div class="govuk-summary-list__row">
@@ -272,26 +211,18 @@ Appointments prototype
                       Start time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['start-hours-3-bulk']}}:{{ data['start-minutes-3-bulk']}}
+                     9:30
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                   
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       End time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['end-hours-3-bulk']}}:{{ data['end-minutes-3-bulk']}}
+                      9:45
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                   
                   </div>    <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       Extra information
@@ -299,11 +230,7 @@ Appointments prototype
                     <dd class="govuk-summary-list__value">
                      
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> extra information</span>
-                      </a>
-                    </dd>
+                   
                   </div>
                   </dl>
               </div>
@@ -314,7 +241,7 @@ Appointments prototype
                 <h2 class="govuk-summary-card__title">Appointment 4</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
-                      Remove <span class="govuk-visually-hidden"> person name</span>
+                      View and manage <span class="govuk-visually-hidden"> person name</span>
                     </a>
                   </li> 
                 </ul>
@@ -332,34 +259,25 @@ Appointments prototype
                     <br>
                     1−1−204
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                    </dd>
+                    
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       Start time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['start-hours-4-bulk']}}:{{ data['start-minutes-4-bulk']}}
+                      9:45
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                   
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       End time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['end-hours-4-bulk']}}:{{ data['end-minutes-4-bulk']}}
+                      10:00
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                    
                   </div>    
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
@@ -368,11 +286,7 @@ Appointments prototype
                     <dd class="govuk-summary-list__value">
                     
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> extra information</span>
-                      </a>
-                    </dd>
+                    
                   </div>
                 </dl>
               </div>
@@ -383,7 +297,7 @@ Appointments prototype
                 <h2 class="govuk-summary-card__title">Appointment 5</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
-                      Remove <span class="govuk-visually-hidden"> person name</span>
+                      View and manage <span class="govuk-visually-hidden"> person name</span>
                     </a>
                   </li> 
                 </ul>
@@ -401,8 +315,7 @@ Appointments prototype
                     <br>
                     11−2−57
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                    </dd>
+                   
                   </div>
                  
                   <div class="govuk-summary-list__row">
@@ -410,26 +323,18 @@ Appointments prototype
                       Start time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['start-hours-5-bulk']}}:{{ data['start-minutes-5-bulk']}}
+                      10:00
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                   
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       End time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['end-hours-5-bulk']}}:{{ data['end-minutes-5-bulk']}}
+                      10:15
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                    
                   </div>    
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
@@ -438,11 +343,7 @@ Appointments prototype
                     <dd class="govuk-summary-list__value">
                      
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> extra information</span>
-                      </a>
-                    </dd>
+                    
                   </div>
                 </dl>
               </div>
@@ -453,7 +354,7 @@ Appointments prototype
                 <h2 class="govuk-summary-card__title">Appointment 6</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
-                      Remove <span class="govuk-visually-hidden"> person name</span>
+                      View and manage <span class="govuk-visually-hidden"> person name</span>
                     </a>
                   </li> 
                 </ul>
@@ -471,9 +372,7 @@ Appointments prototype
                     <br>
                     2−5−115
                     </dd>
-                    <dd class="govuk-summary-list__actions">
                    
-                    </dd>
                   </div>
                  
                   <div class="govuk-summary-list__row">
@@ -481,26 +380,18 @@ Appointments prototype
                       Start time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['start-hours-6-bulk']}}:{{ data['start-minutes-6-bulk']}}
+                      10:15
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                   
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       End time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['end-hours-6-bulk']}}:{{ data['end-minutes-6-bulk']}}
+                      10:30
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                  
                   </div>    
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
@@ -509,11 +400,7 @@ Appointments prototype
                     <dd class="govuk-summary-list__value">
                      
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> extra information</span>
-                      </a>
-                    </dd>
+                   
                   </div>
                 </dl>
               </div>
@@ -524,7 +411,7 @@ Appointments prototype
                 <h2 class="govuk-summary-card__title">Appointment 7</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
-                      Remove <span class="govuk-visually-hidden"> person name</span>
+                      View and manage <span class="govuk-visually-hidden"> person name</span>
                     </a>
                   </li> 
                 </ul>
@@ -542,9 +429,7 @@ Appointments prototype
                       <br>
                       6−7−581
                       </dd>
-                      <dd class="govuk-summary-list__actions">
-                    
-                      </dd>
+                   
                     </div>
                     
                     <div class="govuk-summary-list__row">
@@ -552,26 +437,18 @@ Appointments prototype
                         Start time
                       </dt>
                       <dd class="govuk-summary-list__value">
-                        {{ data['start-hours-7-bulk']}}:{{ data['start-minutes-7-bulk']}}
+                        10:30
                       </dd>
-                      <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="#">
-                          Change<span class="govuk-visually-hidden"> Time</span>
-                        </a>
-                      </dd>
+                     
                     </div>
                     <div class="govuk-summary-list__row">
                       <dt class="govuk-summary-list__key">
                         End time
                       </dt>
                       <dd class="govuk-summary-list__value">
-                        {{ data['end-hours-7-bulk']}}:{{ data['end-minutes-7-bulk']}}
+                        10:45
                       </dd>
-                      <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="#">
-                          Change<span class="govuk-visually-hidden"> Time</span>
-                        </a>
-                      </dd>
+                    
                     </div>
                     <div class="govuk-summary-list__row">
                       <dt class="govuk-summary-list__key">
@@ -580,11 +457,7 @@ Appointments prototype
                       <dd class="govuk-summary-list__value">
                         
                       </dd>
-                      <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="#">
-                          Change<span class="govuk-visually-hidden"> extra information</span>
-                        </a>
-                      </dd>
+                     
                     </div>
                 </dl>
               </div>
@@ -595,7 +468,7 @@ Appointments prototype
                 <h2 class="govuk-summary-card__title">Appointment 8</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
-                      Remove <span class="govuk-visually-hidden"> person name</span>
+                      View and manage <span class="govuk-visually-hidden"> person name</span>
                     </a>
                   </li> 
                 </ul>
@@ -614,9 +487,7 @@ Appointments prototype
                     <br>
                     1−1−211
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                     
-                    </dd>
+                   
                   </div>
                   
                   <div class="govuk-summary-list__row">
@@ -624,26 +495,18 @@ Appointments prototype
                       Start time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['start-hours-8-bulk']}}:{{ data['start-minutes-8-bulk']}}
+                      10:45
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                  
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       End time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['end-hours-8-bulk']}}:{{ data['end-minutes-8-bulk']}}
+                      11:00
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                  
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
@@ -652,12 +515,7 @@ Appointments prototype
                     <dd class="govuk-summary-list__value">
                      
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> extra information</span>
-                      </a>
-                    </dd>
-                  </div>
+                  
                 </dl>
               </div>
             </div> 
@@ -667,7 +525,7 @@ Appointments prototype
                 <h2 class="govuk-summary-card__title">Appointment 9</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
-                      Remove <span class="govuk-visually-hidden"> person name</span>
+                      View and manage <span class="govuk-visually-hidden"> person name</span>
                     </a>
                   </li> 
                 </ul>
@@ -685,9 +543,7 @@ Appointments prototype
                     <br>
                     2−2−876
                     </dd>
-                    <dd class="govuk-summary-list__actions">
                   
-                    </dd>
                   </div>
                   
                   <div class="govuk-summary-list__row">
@@ -695,26 +551,18 @@ Appointments prototype
                       Start time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['start-hours-9-bulk']}}:{{ data['start-minutes-9-bulk']}}
+                      11:00
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                   
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       End time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['end-hours-9-bulk']}}:{{ data['end-minutes-9-bulk']}}
+                      11:15
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                  
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
@@ -723,11 +571,7 @@ Appointments prototype
                     <dd class="govuk-summary-list__value">
                      
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> extra information</span>
-                      </a>
-                    </dd>
+                   
                   </div>
                 </dl>
               </div>
@@ -738,7 +582,7 @@ Appointments prototype
                 <h2 class="govuk-summary-card__title">Appointment 10</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
-                      Remove <span class="govuk-visually-hidden"> person name</span>
+                      View and manage <span class="govuk-visually-hidden"> person name</span>
                     </a>
                   </li> 
                 </ul>
@@ -756,9 +600,7 @@ Appointments prototype
                     <br>
                     1−8−122
                     </dd>
-                    <dd class="govuk-summary-list__actions">
                     
-                    </dd>
                   </div>
                  
                   <div class="govuk-summary-list__row">
@@ -766,26 +608,18 @@ Appointments prototype
                       Start time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['start-hours-10-bulk']}}:{{ data['start-minutes-10-bulk']}}
+                      11:15
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                    
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
                       End time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['end-hours-10-bulk']}}:{{ data['end-minutes-10-bulk']}}
+                      11:30
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> Time</span>
-                      </a>
-                    </dd>
+                    
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
@@ -794,21 +628,15 @@ Appointments prototype
                     <dd class="govuk-summary-list__value">
                      
                     </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> extra information</span>
-                      </a>
-                    </dd>
+                    
                   </div>
                 </dl>
               </div>
             </div>
-                              
-            <form action="confirmation" method="post" novalidate>
-              <input type="hidden" name="answers-checked" value="true">
-              <button class="govuk-button" data-module="govuk-button">
-                Confirm and save
-              </button>
+             
+              </div>
+            </div> 
+
             </form>
           </div>
         </div>

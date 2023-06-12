@@ -20,8 +20,8 @@ Appointments prototype
       </div>
    
    <h1 class="govuk-heading-l">
-    <span class="govuk-caption-l">Bulk appointments</span>
-    Do you want to show {appointment name} on the unlock list?
+    <span class="govuk-caption-l">Schedule a set of one-to-ones</span>
+    Do you want to enter your own name for the one-to-one?
    </h1>
      
    {% from "govuk/components/radios/macro.njk" import govukRadios %}
@@ -36,7 +36,7 @@ Appointments prototype
   maxlength: 40,
   rows: 1,
   label: {
-    text: "Enter my own appointment name",
+    text: "Enter alternative name",
     classes: "govuk-label--s"
   }
 }) }}
@@ -49,17 +49,30 @@ Appointments prototype
       items: [
         {
           value: "Yes",
-          text: "Yes - I want [appointment name] to show on the unlock list"
-        },
-        {
-          value: "No",
-          text: "No - I want to enter my own appointment name to show on the unlock list",
+          text: "Yes - the name you enter will be displayed on the unlock list",
           conditional: {
             html: categoryHtml
           }
+        },
+        {
+          value: "No",
+          text: "No - display the original name, 'Medical - Doctor', on the unlock list"
         }
       ]
     }) }}
+
+      <!--details component-->
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            What is an unlock list?
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <p>The unlock list is used by wing officers to make sure people are let out of their cells at the right time to get to their scheduled activities and appointments.</p>
+        </div>
+      </details>
+     <!--details component-->
    
    
 
