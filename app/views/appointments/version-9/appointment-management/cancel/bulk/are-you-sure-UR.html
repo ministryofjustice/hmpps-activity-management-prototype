@@ -10,7 +10,7 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="are-you-sure">
+<form id="form" method="post" action="../../appointment-summary/bulk/cancelled-UR">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="back">
@@ -18,7 +18,7 @@ Appointments prototype
       </div>
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-l">Cancel a set of one-to-ones</span>
-        Do you want to show the cancelled appointments on the unlock list?
+        Are you sure you want to cancel these 8 appointments?
        </h1>
    
       {{ govukRadios({
@@ -27,29 +27,18 @@ Appointments prototype
         items: [
           {
             value: "Yes",
-            text: "Yes - show the appointments as cancelled on the unlock list"
+            text: "Yes"
           },
           {
             value: "No",
-            text: "No - cancel the appointments and delete them from the unlock list"
+            text: "No"
           }
         ]
       }) }}
 
-      <details class="govuk-details" data-module="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">
-            What is an unlock list?
-          </span>
-        </summary>
-        <div class="govuk-details__text">
-          The unlock list is used by wing officers to make sure people are let out of their cells at the right time to get to their schedued activities and appointments.
-        </div>
-      </details>
-      
     
     {{ govukButton({
-      text: "Continue"
+      text: "Confirm and save"
     }) }}
 
 
