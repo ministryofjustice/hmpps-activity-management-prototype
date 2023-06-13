@@ -267,6 +267,27 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
+  router.post(`/appointment-management/date-filter`, function (req, res) {
+	const appDate = req.session.data['appt-date-day'];
+	if (appDate === '28') {
+		res.redirect(`search-results-28062023`);
+	}
+	else {
+		res.redirect(`search-results-26062023`);
+	}
+  });
+
+
+//   router.post(`/appointment-management/filtered-search-results`, function (req, res) {
+// 	const appName = req.session.data['appointment-type'];
+// 	if (appName === 'Medical - Doctor') {
+// 		res.redirect(`search-results?appointment-type=medical-doctor`);
+// 	}
+// 	else {
+// 		res.redirect(`search-results`);
+// 	}
+//   });
+
 
 
   router.post(`/appointment-management/change-answers-group-alt/add-more-people`, function (req, res) {

@@ -17,7 +17,7 @@ Appointments prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
       <h1 class="govuk-heading-l">
-        Are you sure you want to cancel all 8 appointments?
+        Do you want to show the cancelled appointments on the unlock list?
        </h1>
    
       {{ govukRadios({
@@ -26,14 +26,25 @@ Appointments prototype
         items: [
           {
             value: "Yes",
-            text: "Yes"
+            text: "Yes - show the appointments as cancelled on the unlock list"
           },
           {
             value: "No",
-            text: "No"
+            text: "No - cancel the appointments and delete it from the unlock list"
           }
         ]
       }) }}
+
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            What is an unlock list?
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          The unlock list is used by wing officers to make sure people are let out of their cells at the right time to get to their schedued activities and appointments.
+        </div>
+      </details>
       
     
     {{ govukButton({
