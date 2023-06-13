@@ -585,6 +585,11 @@ Appointments prototype
 				Showing 1 appointment
 			</h2>
 
+			{% elif data['appointment-location'] == 'Medical Room 2' or data['appointment-type'] == 'Medical - Doctor' and data['appointment-location'] == 'Medical Room 2'  %}
+			<h2 class="govuk-heading-s">
+				Showing 1 appointment
+			</h2>
+
 			{% elif data['appointment-type'] == 'Medical - Doctor' and data['appointment-location'] == 'Medical Room 1' %}
 			<h2 class="govuk-heading-s">
 				Showing 10 appointments
@@ -634,6 +639,20 @@ Appointments prototype
 							<a href="../appointment-management/appointment-summary/individual/uploaded-in-bulk" class="govuk-link">Manage details</a>
 						</td>
 					</tr>
+
+					{% elif data['appointment-location'] == 'Medical Room 2' %}
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
+						<td class="govuk-table__cell">8:45 to 9:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Grant Kittel</a><br>O9555U<br>2-4-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="appointment-summary/individual/non-repeating" class="govuk-link">Manage details</a>
+						</td>
+					</tr> 
 
 					{% elif data['appointment-location'] == 'Medical Room 1' or data['appointment-type'] == 'Medical - Doctor' and data['appointment-location'] == 'Medical Room 1' %}
 					
