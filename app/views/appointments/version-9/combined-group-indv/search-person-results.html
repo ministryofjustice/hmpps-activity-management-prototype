@@ -1,0 +1,282 @@
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form method="post" action="person-add-another">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="back">
+        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Schedule an appointment</span>
+          Search for an individual to add to the list of attendees
+        </h1>
+    </div>
+
+    <div class="govuk-grid-column-full">
+          
+
+        {% if data['prisoner-search-query'] == 'Neil Rudge' or data['prisoner-search-query'] == 'neil rudge' %}
+        <div>
+          <div style="float: left;">
+              {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+              {{ govukInput({
+                value: "Neil Rudge",
+                label: {
+                text: "Search by name or prison number",
+                classes: "",
+                isPageHeading: false
+                }, 
+              classes: "govuk-input--width-20", 
+              id: "prisoner-search-query", 
+              name: "prisoner-search-query"
+              }) }}
+          </div>
+
+            <button class="govuk-button govuk-button--secondary"  style="margin-top: 30px; margin-left: 10px;">Search</button>
+          </div>
+
+          <div><h2 class="govuk-heading-m" style="clear: both;">There is 1 result for {search term}.</h2></div>
+
+          <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+            <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
+                Prisoners
+            </caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="0"></button>Name</th>
+                    <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="1"></button>Prison number</th>
+                    <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="2"></button>Cell location</th>
+                    <th scope="col" class="govuk-table__header"></th>
+                </tr>
+            </thead> 
+
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell"><b>Neil Rudge</b></td>
+                    <td class="govuk-table__cell">EN2245U</td>
+                    <td class="govuk-table__cell">1−1−2</td>
+                    <td class="govuk-table__cell"><a href="#">View prisoner profile (opens in a new tab)</a></td>
+                </tr> 
+            </tbody>
+        </table>
+
+        <div class="govuk-button-group">
+          <button class="govuk-button" data-module="govuk-button">
+          Continue
+          </button> 
+      </div>
+
+
+      {% elseif data['prisoner-search-query'] == 'dan' or data['prisoner-search-query'] == 'Dan'  %}  
+      <div>
+        <div style="float: left;">
+            {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+            {{ govukInput({
+              value: "Dan",
+              label: {
+              text: "Search by name or prison number",
+              classes: "",
+              isPageHeading: false
+              }, 
+            classes: "govuk-input--width-20", 
+            id: "prisoner-search-query", 
+            name: "prisoner-search-query"
+            }) }}
+        </div>
+          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin-top: 30px; margin-left: 10px;">Search</button>
+        </div>
+
+      
+      <h2 class="govuk-heading-m" style="clear: both;">There are 5 results for {search term}. Select the correct one from the list.</h2>
+      <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+        <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
+            Prisoners
+        </caption>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="0"></button>Name</th>
+                <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="1"></button>Prison number</th>
+                <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="2"></button>Cell location</th>
+                <th scope="col" class="govuk-table__header"></th>
+            </tr>
+        </thead> 
+        <tbody class="govuk-table__body">
+
+        
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="selected-prisoner-EN2245U" name="new-application[selected-prisoner]" type="radio" value="EN2245U">
+                            <label class="govuk-label govuk-radios__label" for="selected-prisoner-EN2245U">
+                                <b>Dan Brown</b>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">BN2455U</td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">3−4−10</td>
+                <td class="govuk-table__cell govuk-!-padding-top-4"><a href="#">View prisoner profile (opens in a new tab)</a></td>
+            </tr>
+        
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="selected-prisoner-EN2245U" name="new-application[selected-prisoner]" type="radio" value="EN2245U">
+                            <label class="govuk-label govuk-radios__label" for="selected-prisoner-EN2245U">
+                                <b>Noland Danes</b>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">EN2245U</td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">2−2−14</td>
+                <td class="govuk-table__cell govuk-!-padding-top-4"><a href="#">View prisoner profile (opens in a new tab)</a></td>
+            </tr>
+            
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="selected-prisoner-WS7705S" name="new-application[selected-prisoner]" type="radio" value="WS7705S">
+                            <label class="govuk-label govuk-radios__label" for="selected-prisoner-WS7705S">
+                                <b>Gordon Danigel</b>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">WS7705S</td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">2−3−12</td>
+                <td class="govuk-table__cell govuk-!-padding-top-4"><a href="#">View prisoner profile (opens in a new tab)</a></td>
+            </tr>
+            
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="selected-prisoner-LX8857C" name="new-application[selected-prisoner]" type="radio" value="LX8857C">
+                            <label class="govuk-label govuk-radios__label" for="selected-prisoner-LX8857C">
+                                <b>Milton Jordanson</b>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">LX8857C</td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">1−1−13</td>
+                <td class="govuk-table__cell govuk-!-padding-top-4"><a href="#">View prisoner profile (opens in a new tab)</a></td>
+            </tr>
+            
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="selected-prisoner-RG5757H" name="new-application[selected-prisoner]" type="radio" value="RG5757H">
+                            <label class="govuk-label govuk-radios__label" for="selected-prisoner-RG5757H">
+                                <b>Garfield Reddan</b>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">RG5757H</td>
+                <td class="govuk-table__cell govuk-!-padding-top-4">3−1−8</td>
+                <td class="govuk-table__cell govuk-!-padding-top-4"><a href="#">View prisoner profile (opens in a new tab)</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="govuk-button-group">
+        <button class="govuk-button" data-module="govuk-button">
+        Select and continue
+        </button> 
+    </div>
+
+
+
+    {% elseif data['prisoner-search-query'] == 'none' or data['prisoner-search-query'] == '0'  %}  
+      <div>
+        <div style="float: left;">
+            {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+            {{ govukInput({
+              value: "",
+              label: {
+              text: "Search by name or prison number",
+              classes: "",
+              isPageHeading: false
+              }, 
+            classes: "govuk-input--width-20", 
+            id: "prisoner-search-query", 
+            name: "prisoner-search-query"
+            }) }}
+        </div>
+          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin-top: 30px; margin-left: 10px;">Search</button>
+        </div>
+
+      
+      <h2 class="govuk-heading-m" style="clear: both;">There are no matching results for {search term}.</h2>
+
+    {% else %}  
+    <div>
+      <div style="float: left;">
+          {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+          {{ govukInput({
+            value: "Neil Rudge",
+            label: {
+            text: "Search by name or prison number",
+            classes: "",
+            isPageHeading: false
+            }, 
+          classes: "govuk-input--width-20", 
+          id: "prisoner-search-query", 
+          name: "prisoner-search-query"
+          }) }}
+      </div>
+        <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin-top: 30px; margin-left: 10px;">Search</button>
+      </div>
+
+      <h2 class="govuk-heading-m" style="clear: both;">There is 1 result for {search term}.</h2>
+
+      <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+        <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
+            Prisoners
+        </caption>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="0"></button>Name</th>
+                <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="1"></button>Prison number</th>
+                <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="2"></button>Cell location</th>
+                <th scope="col" class="govuk-table__header"></th>
+            </tr>
+          </thead> 
+
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell"><b>Neil Rudge</b></td>
+                <td class="govuk-table__cell">EN2245U</td>
+                <td class="govuk-table__cell">1−1−2</td>
+                <td class="govuk-table__cell"><a href="#">View prisoner profile (opens in a new tab)</a></td>
+            </tr> 
+          </tbody>
+        </table>
+
+      <div class="govuk-button-group">
+        <button class="govuk-button" data-module="govuk-button">
+        Continue
+        </button> 
+      </div>
+
+      {% endif %}
+
+    </div>
+  </div> 
+</form>
+{% endblock %}
