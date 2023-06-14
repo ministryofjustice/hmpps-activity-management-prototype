@@ -18,7 +18,17 @@ const router = express.Router()
 		}
 	  });
 
+	  	
 
+	router.post(`/combined-group-indv/add-people-route`, function (req, res) {
+		const peopleRoute = req.session.data['add-people-method'];
+		if (peopleRoute === 'upload-file') {
+			res.redirect(`upload-file-info`);
+		} else {
+			res.redirect(`search-person`);
+		}
+	  });
+	  
 
 
 
@@ -37,6 +47,17 @@ const router = express.Router()
 			res.redirect(`appointment-frequency`);
 		} else {
 			res.redirect(`clashes`);
+		}
+	  });
+
+
+
+	  router.post(`/combined-group-indv/appointment-repeat-question`, function (req, res) {
+		const appRepeat = req.session.data['appointment-repeat'];
+		if (appRepeat === 'Yes') {
+			res.redirect(`appointment-frequency`);
+		} else {
+			res.redirect(`comments`);
 		}
 	  });
 
@@ -78,6 +99,17 @@ const router = express.Router()
 			res.redirect(`../check-answers`);
 		}
 	  });
+
+
+	  router.post(`/group-or-bulk-route`, function (req, res) {
+		const appointRepeat = req.session.data['group-or-bulk'];
+		if (appointRepeat === 'group') {
+			res.redirect(`group-appointments/upload-or-per-person`);
+		} else {
+			res.redirect(`bulk-appointments/upload-file-info-bulk`);
+		}
+	  });
+
 
 	 
 	 
@@ -277,7 +309,15 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
-
+  router.post(`/combined-create/same-or-different-time-filter`, function (req, res) {
+	const appDate = req.session.data['same-or-different-times'];
+	if (appDate === 'Same') {
+		res.redirect(`appointment-repeat`);
+	}
+	else {
+		res.redirect(`check-answers`);
+	}
+  });
 //   router.post(`/appointment-management/filtered-search-results`, function (req, res) {
 // 	const appName = req.session.data['appointment-type'];
 // 	if (appName === 'Medical - Doctor') {
