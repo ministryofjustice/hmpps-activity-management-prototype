@@ -11,24 +11,13 @@ Appointments prototype
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
           {{ govukPanel({
-            titleText: "Appointment created"
+            titleText: "One-to-one appointment created"
           }) }}
 
-          {% if data['appointment-repeat-single'] === 'Yes' %}
                    
           <p class="govuk-body">
-            You have successfully created an appointment for Neil Rudge, {{ data['prisoner-name-single']}} starting on {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}. It will repeat  {{ data['appointment-frequency-single']}} [X] times.
+            You have successfully created a one-to-one appointment for Neil Rudge, on 26 June 2023. It will repeat 6 times.
           </p>
-       
-        
-        {% else  %}
-       
-        <p class="govuk-body">
-          You have successfully created an appointment for Neil Rudge, {{ data['prisoner-name-single']}} on {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}.
-    
-         </p>
-        
-        {% endif %}
 
           <h2 class="govuk-heading-m">What you can do next</h2>
           <p class="govuk-body">
