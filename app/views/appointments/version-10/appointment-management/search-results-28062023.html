@@ -1,0 +1,1485 @@
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="search-results-28062023">
+
+	<div class="back">
+		<a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+	</div>
+	<h1 class="govuk-heading-l">
+		Appointments dashboard
+		<span class="govuk-caption-l">Wedneday, 28 June 2023</span>
+	</h1>
+
+
+	<p class="govuk-body">Select an appointment to manage details, including changing location and date, and removing people or cancelling.</p>
+
+
+	{%- from "moj/components/filter/macro.njk" import mojFilter -%}
+	{%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
+	<div class="moj-filter-layout">
+		<div class="moj-filter-layout__filter">
+			<div class="moj-filter">
+				<div class="moj-filter__header">
+					<div class="moj-filter__header-title">
+						<h2 class="govuk-heading-m">Filter</h2>
+					</div>
+					<div class="moj-filter__header-action"></div>
+				</div>
+				<div class="moj-filter__content">
+					{% if selectedFilters.length %}
+					<div class="moj-filter__selected">
+						<div class="moj-filter__selected-heading">
+							<div class="moj-filter__heading-title">
+								<h2 class="govuk-heading-m">Selected filters</h2>
+							</div>
+							<div class="moj-filter__heading-action">
+								<p><a class="govuk-link govuk-link--no-visited-state" href="">Clear filters</a>
+								</p>
+							</div>
+						</div>
+						{% for filter in selectedFilters %}
+						<h3 class="govuk-heading-s govuk-!-margin-bottom-0">Colour</h3>
+						<ul class="moj-filter-tags">
+							<li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove
+										this
+										filter</span> Blue</a></li>
+							<li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove
+										this
+										filter</span> Yellow</a></li>
+						</ul>
+						{% endfor %}
+					</div>
+					{% endif %}
+
+					<div class="moj-filter__options">
+						<button class="govuk-button" data-module="govuk-button" action="appointment-view">
+							Apply filters
+						</button>
+
+
+						<!-- date from input GOVUK date component - HTML -->
+							{{ govukDateInput({
+								id: "date",
+								namePrefix: "date",
+								fieldset: {
+								legend: {
+								text: "Appointment date",
+								isPageHeading: true,
+								classes: "govuk-fieldset__legend--s"
+								}
+								},
+								hint: {
+								text: "For example, 27 3 2007"
+								},
+								items: [
+								{
+								name: "day",
+								label: "Day",
+								value: "28",
+								classes: "govuk-input--width-2 "
+								},
+								{
+								name: "month",
+								label: "Month",
+								value: "6",
+								classes: "govuk-input--width-2"
+								},
+								{
+								name: "year",
+								label: "Year",
+								value: "2023",
+								classes: "govuk-input--width-4"
+								}
+								]
+								}) }}
+<!-- 
+								{{ govukDateInput({
+									id: "date",
+									namePrefix: "date",
+									fieldset: {
+									legend: {
+									text: "To",
+									isPageHeading: true,
+									classes: "govuk-fieldset__legend--s"
+									}
+									},
+									hint: {
+									text: "For example, 27 3 2007"
+									},
+									items: [
+									{
+									name: "day",
+									label: "Day",
+									value: "",
+									classes: "govuk-input--width-2"
+									},
+									{
+									name: "month",
+									label: "Month",
+									value: "",
+									classes: "govuk-input--width-2"
+									},
+									{
+									name: "year",
+									label: "Year",
+									value: "",
+									classes: "govuk-input--width-4"
+									}
+									]
+									}) }} -->
+
+
+						<!-- Date to input GOVUK date component - HTML -->
+	
+						<!-- {{ govukRadios({
+							classes: "govuk-radios--small",
+							idPrefix: "date",
+							name: "date",
+							fieldset: {
+								legend: {
+									text: "Appointment date",
+									isPageHeading: true,
+									classes: "govuk-fieldset__legend--s"
+								}
+							},
+							
+							items: [
+								{
+									value: "Value", 
+									text: "Today, 28 June 2023",
+									checked: "true"
+								},
+								{
+									value: "Value",
+									text: "A different date",
+									conditional: {
+									html: dateHtml
+									}
+								}
+							]
+						}) }} -->
+
+					
+						<!-- Time GOVUK radio with component - HTML -->
+						{{ govukRadios({
+							classes: "govuk-radios--small",
+							id: "time",
+							name: "time",
+	
+							fieldset: {
+							legend: {
+							text: "Time",
+							isPageHeading: false,
+							classes: "govuk-fieldset__legend--s"
+							}
+							},
+							items: [
+	
+							{
+							value: "am",
+							text: "Morning (AM)"
+							},
+							{
+							value: "pm",
+							text: "Afternoon (PM)"
+							},
+							{
+							value: "ed",
+							text: "Evening duty (ED)"
+							}
+							]
+							}) }}
+
+						
+						{% if data['appointment-type'] == 'Medical - Doctor'  %}
+						<!-- Type select MOJ autocomplete component - HTML -->
+						<div class="govuk-form-group">
+							<label class="govuk-label govuk-label--s" for="sort">
+							  Appointment name
+							</label>
+							<select class="govuk-select" id="appointment-type" name="appointment-type"> 
+								<option value=""> </option>
+								<option value="Activities">Activities</option>
+								
+								<option value="Adjudication review">Adjudication review</option>
+								
+								<option value="Canteen">Canteen</option>
+								
+								<option value="Careers Adviser Appointment">Careers Adviser Appointment</option>
+								
+								<option value="Case - Baile Apps">Case - Baile Apps</option>
+								
+								<option value="Case - Benefits">Case - Benefits</option>
+								
+								<option value="Case - Housing">Case - Housing</option>
+								
+								<option value="Case - Legal aid">Case - Legal aid</option>
+								
+								<option value="Case - Other">Case - Other</option>
+								
+								<option value="Case - Probation">Case - Probation</option>
+								
+								<option value="Case - RAPT">Case - RAPT</option>
+								
+								<option value="Case - Substance misuse services">Case - Substance misuse services</option>
+								
+								<option value="Chaplaincy">Chaplaincy</option>
+								
+								<option value="Children and families">Children and families</option>
+								
+								<option value="Counselling session">Counselling session</option>
+								
+								<option value="Education">Education</option>
+								
+								<option value="Governor">Governor</option>
+								
+								<option value="Gym - Football">Gym - Football</option>
+								
+								<option value="Gym - PE Course">Gym - PE Course</option>
+								
+								<option value="Gym - Sports hall activity">Gym - Sports hall activity</option>
+								
+								<option value="Gym - Weights">Gym - Weights</option>
+								
+								<option value="Gym - Remedial physiotherapy">Gym - Remedial physiotherapy</option>
+								
+								<option value="Gym - Walking to health">Gym - Walking to health</option>
+								
+								<option value="IMB">IMB</option>
+								
+								<option value="Immigration appointment">Immigration appointment</option>
+								
+								<option value="Induction meeting">Induction meeting</option>
+								
+								<option value="Interventions">Interventions</option>
+								
+								<option value="Job Centre Plus">Job Centre Plus</option>
+								
+								<option value="Labour control">Labour control</option>
+								
+								<option value="Library">Library</option>
+								
+								<option value="Medical - Dentist">Medical - Dentist</option>
+								
+								<option value="Medical - Doctor" selected>Medical - Doctor</option>
+								
+								<option value="Medical - Other">Medical - Other</option>
+								
+								<option value="Medical - Psy">Medical - Psy</option>
+								
+								<option value="Medical - X-Ray">Medical - X-Ray</option>
+								
+								<option value="OMU Appointment">OMU Appointment</option>
+								
+								<option value="Other">Other</option>
+								
+								<option value="Pre-release meeting">Pre-release meeting</option>
+								
+								<option value="Programme appointment">Programme appointment</option>
+								
+								<option value="ROTL Board">ROTL Board</option>
+								
+								<option value="Rec - MPU photo">Rec - MPU photo</option>
+								
+								<option value="Rec - Other">Rec - Other</option>
+								
+								<option value="Rec - Prop">Rec - Prop</option>
+								
+								<option value="Reset appointment">Reset appointment</option>
+								
+								<option value="Resolve">Resolve</option>
+								
+								<option value="SOTP Assessment">SOTP Assessment</option>
+								
+								<option value="Storybook Dads appointment">Storybook Dads appointment</option>
+								
+								<option value="TSP Appointment">TSP Appointment</option>
+								
+								<option value="Toe by Toe appointment">Toe by Toe appointment</option>
+								
+								<option value="Trailblazers Appointment">Trailblazers Appointment</option>
+								
+								<option value="User Voice Session">User Voice Session</option>
+								
+								<option value="Video Link Booking">Video Link Booking</option>
+								</select>
+						</div>
+
+						{% else %}
+
+						<div class="govuk-form-group">
+							<label class="govuk-label govuk-label--s" for="sort">
+							  Appointment name
+							</label>
+							<select class="govuk-select" id="appointment-type" name="appointment-type"> 
+								<option value="" selected> </option>
+								<option value="Activities">Activities</option>
+								
+								<option value="Adjudication review">Adjudication review</option>
+								
+								<option value="Canteen">Canteen</option>
+								
+								<option value="Careers Adviser Appointment">Careers Adviser Appointment</option>
+								
+								<option value="Case - Baile Apps">Case - Baile Apps</option>
+								
+								<option value="Case - Benefits">Case - Benefits</option>
+								
+								<option value="Case - Housing">Case - Housing</option>
+								
+								<option value="Case - Legal aid">Case - Legal aid</option>
+								
+								<option value="Case - Other">Case - Other</option>
+								
+								<option value="Case - Probation">Case - Probation</option>
+								
+								<option value="Case - RAPT">Case - RAPT</option>
+								
+								<option value="Case - Substance misuse services">Case - Substance misuse services</option>
+								
+								<option value="Chaplaincy">Chaplaincy</option>
+								
+								<option value="Children and families">Children and families</option>
+								
+								<option value="Counselling session">Counselling session</option>
+								
+								<option value="Education">Education</option>
+								
+								<option value="Governor">Governor</option>
+								
+								<option value="Gym - Football">Gym - Football</option>
+								
+								<option value="Gym - PE Course">Gym - PE Course</option>
+								
+								<option value="Gym - Sports hall activity">Gym - Sports hall activity</option>
+								
+								<option value="Gym - Weights">Gym - Weights</option>
+								
+								<option value="Gym - Remedial physiotherapy">Gym - Remedial physiotherapy</option>
+								
+								<option value="Gym - Walking to health">Gym - Walking to health</option>
+								
+								<option value="IMB">IMB</option>
+								
+								<option value="Immigration appointment">Immigration appointment</option>
+								
+								<option value="Induction meeting">Induction meeting</option>
+								
+								<option value="Interventions">Interventions</option>
+								
+								<option value="Job Centre Plus">Job Centre Plus</option>
+								
+								<option value="Labour control">Labour control</option>
+								
+								<option value="Library">Library</option>
+								
+								<option value="Medical - Dentist">Medical - Dentist</option>
+								
+								<option value="Medical - Doctor">Medical - Doctor</option>
+								
+								<option value="Medical - Other">Medical - Other</option>
+								
+								<option value="Medical - Psy">Medical - Psy</option>
+								
+								<option value="Medical - X-Ray">Medical - X-Ray</option>
+								
+								<option value="OMU Appointment">OMU Appointment</option>
+								
+								<option value="Other">Other</option>
+								
+								<option value="Pre-release meeting">Pre-release meeting</option>
+								
+								<option value="Programme appointment">Programme appointment</option>
+								
+								<option value="ROTL Board">ROTL Board</option>
+								
+								<option value="Rec - MPU photo">Rec - MPU photo</option>
+								
+								<option value="Rec - Other">Rec - Other</option>
+								
+								<option value="Rec - Prop">Rec - Prop</option>
+								
+								<option value="Reset appointment">Reset appointment</option>
+								
+								<option value="Resolve">Resolve</option>
+								
+								<option value="SOTP Assessment">SOTP Assessment</option>
+								
+								<option value="Storybook Dads appointment">Storybook Dads appointment</option>
+								
+								<option value="TSP Appointment">TSP Appointment</option>
+								
+								<option value="Toe by Toe appointment">Toe by Toe appointment</option>
+								
+								<option value="Trailblazers Appointment">Trailblazers Appointment</option>
+								
+								<option value="User Voice Session">User Voice Session</option>
+								
+								<option value="Video Link Booking">Video Link Booking</option>
+								</select>
+						</div>
+
+						{% endif %}
+
+						{% if data['appointment-location'] == 'Medical Room 1' %}
+						<!-- Appointment location MOJ autocomplete component - HTML -->
+						<div class="govuk-form-group">
+							<label class="govuk-label govuk-label--s" for="sort">
+							  Appointment location
+							</label>
+							<select class="govuk-select" id="appointment-location" name="appointment-location"> 
+								<option value=""> </option>
+								<option value="Arts and Crafts Room">Arts and Crafts Room</option>
+								<option value="Canteen">Canteen</option>
+								<option value="Chapel">Chapel</option> 
+								<option value="Classroom 1">Classroom 1</option> 
+								<option value="Classroom 2">Classroom 2</option> 
+								<option value="Computer Room">Computer Room</option>
+								<option value="Courtyard">Courtyard</option>
+								<option value="Garden">Garden</option>
+								<option value="Gym">Gym</option> 
+								<option value="Kitchen">Kitchen</option>
+								<option value="Laundry Room">Laundry Room</option>
+								<option value="Library">Library</option>
+								<option value="Medical Room 1" selected>Medical Room 1</option> 
+								<option value="Medical Room 2">Medical Room 2</option> 
+								<option value="Music Room">Music Room</option>
+								<option value="Office">Office</option>
+								<option value="Recreation Room">Recreation Room</option>
+								<option value="Visiting Room">Visiting Room</option>
+								<option value="Workshop 1">Workshop 1</option>
+								<option value="Workshop 2">Workshop 2</option>
+								<option value="Workshop 3">Workshop 3</option> 
+								<option value="Workshop 4">Workshop 4</option>
+								</select>
+						</div> 
+						{% else %}
+						<!-- Appointment location MOJ autocomplete component - HTML -->
+						<div class="govuk-form-group">
+							<label class="govuk-label govuk-label--s" for="sort">
+							  Appointment location
+							</label>
+							<select class="govuk-select" id="appointment-location" name="appointment-location"> 
+								<option value="" selected> </option>
+								<option value="Arts and Crafts Room">Arts and Crafts Room</option>
+								<option value="Canteen">Canteen</option>
+								<option value="Chapel">Chapel</option> 
+								<option value="Classroom 1">Classroom 1</option> 
+								<option value="Classroom 2">Classroom 2</option> 
+								<option value="Computer Room">Computer Room</option>
+								<option value="Courtyard">Courtyard</option>
+								<option value="Garden">Garden</option>
+								<option value="Gym">Gym</option> 
+								<option value="Kitchen">Kitchen</option>
+								<option value="Laundry Room">Laundry Room</option>
+								<option value="Library">Library</option>
+								<option value="Medical Room 1">Medical Room 1</option> 
+								<option value="Medical Room 2">Medical Room 2</option> 
+								<option value="Music Room">Music Room</option>
+								<option value="Office">Office</option>
+								<option value="Recreation Room">Recreation Room</option>
+								<option value="Visiting Room">Visiting Room</option>
+								<option value="Workshop 1">Workshop 1</option>
+								<option value="Workshop 2">Workshop 2</option>
+								<option value="Workshop 3">Workshop 3</option> 
+								<option value="Workshop 4">Workshop 4</option>
+								</select>
+						</div> 
+
+						{% endif %}
+
+
+					<!-- Name GDS text input component - HTML -->
+					{% if data['appointment-prisoner-name'] == 'B9295C' %}
+
+					<div class="govuk-form-group">
+						<label class="govuk-label govuk-label--s" for="sort">
+							Prison number
+						</label>
+						<input class="govuk-input" id="appointment-prisoner-name" name="appointment-prisoner-name" type="text" value="B9295C">
+					</div> 
+
+					{% else %}
+					<div class="govuk-form-group">
+							<label class="govuk-label govuk-label--s" for="sort">
+								Prison number
+							</label>
+							<input class="govuk-input" id="appointment-prisoner-name" name="appointment-prisoner-name" type="text">
+						</div>
+
+					{% endif %}
+
+
+
+						<!-- Created by GOVUK radio with component - HTML -->
+						{{ govukRadios({
+						classes: "govuk-radios--small",
+						id: "appointment-creator",
+						name: "appointment-creator",
+
+						fieldset: {
+						legend: {
+						text: "Created by",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--s"
+						}
+						},
+						items: [
+
+						{
+						value: "myself",
+						text: "Myself"
+						},
+						{
+						value: "someoneElse",
+						text: "All appointment creators"
+						}
+						]
+						}) }}
+
+						<!-- Created by GOVUK radio with component - HTML -->
+						{{ govukRadios({
+							classes: "govuk-radios--small",
+							id: "appointment-type",
+							name: "appointment-type",
+	
+							fieldset: {
+							legend: {
+							text: "Individual or group appointment",
+							isPageHeading: false,
+							classes: "govuk-fieldset__legend--s"
+							}
+							},
+							items: [
+	
+							{
+							value: "individual",
+							text: "Individual"
+							},
+							{
+							value: "group",
+							text: "Group"
+							}
+							]
+							}) }}
+
+						<button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+							data-module="govuk-button" action="appointment-view">
+							Apply filters
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="moj-filter-layout__content">
+
+			<div class="moj-action__filter"></div>
+
+			{% if data['appointment-type'] == 'Medical - Doctor' and data['appointment-location'] == 'Medical Room 1' %}
+			<h2 class="govuk-heading-s">
+				Showing 8 appointments
+			</h2>
+
+
+			{% elif data['appointment-location'] == 'Medical Room 2' or data['appointment-type'] == 'Medical - Doctor' and data['appointment-location'] == 'Medical Room 2' %}
+			<h2 class="govuk-heading-s">
+				Showing 7 appointments
+			</h2>
+ 
+			{% elif data['appointment-type'] == 'Medical - Doctor'  %}
+			<h2 class="govuk-heading-s">
+				Showing 15 appointments
+			</h2>
+
+			{% else %}
+			<h2 class="govuk-heading-s">
+				Showing 34 appointments
+			</h2>
+
+			{% endif %}
+		
+			{% from "govuk/components/table/macro.njk" import govukTable %}
+
+
+			<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+				<thead class="govuk-table__head">
+					<tr class="govuk-table__row"> 
+						<!-- <th class="govuk-table__header" scope="col">Date</th> -->
+						<th class="govuk-table__header" style="width:13%" scope="col" aria-sort="ascending"><button type="button" data-index="1"></button>Time</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Name</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Location</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Attendees</th> 
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Appointment</th>
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col"></th>
+					</tr>
+				</thead>
+				<tbody class="govuk-table__body">
+
+
+					{% if data['appointment-location'] == 'Medical Room 1' or data['appointment-type'] == 'Medical - Doctor' and data['appointment-location'] == 'Medical Room 1' %}
+					
+					<tr class="govuk-table__row"> 
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:00 to 9:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Wade Brumbie</a><br>B4942H<br>1-5-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="../appointment-management/appointment-summary/individual/uploaded-in-bulk-amby" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:15 to 9:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Torey Girling</a><br>X5323Z<br>1-8-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:30 to 9:45</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Donalt Cormack</a><br>A3888V<br>5-4-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:45 to 10:00</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Ignatius Haresnape</a><br>S5135F<br>6-4-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:00 to 10:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Flemming Brandel</a><br>H0687K<br>1-4-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:15 to 10:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Devlin Walas</a><br>H0078J<br>1-4-0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="appointment-summary/individual/uploaded-in-bulk.html" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:30 to 10:45</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Keith Ambrois</a><br>L1214R<br>8-4-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+		
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">11:15 to 11:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Laurens Heijnen</a><br>T9955W<br>1-2-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="../appointment-management/appointment-summary/individual/uploaded-in-bulk" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+
+					{% elif data['appointment-location'] == 'Medical Room 2' or data['appointment-type'] == 'Medical - Doctor' and data['appointment-location'] == 'Medical Room 2' %}
+
+						
+					<tr class="govuk-table__row"> 
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:00 to 9:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="" class="govuk-link">Archer Alebeter</a><br>A4962H<br>1-3-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="../appointment-management/appointment-summary/individual/uploaded-in-bulk-archer" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:15 to 9:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Dan Crips</a><br>Y6954Z<br>2-8-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:30 to 9:45</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Harper Jean</a><br>A4820F<br>12-6-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:45 to 10:00</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Ralph Morten</a><br>Y5435F<br>2-1-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:00 to 10:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Nicholas Flemel</a><br>J94287K<br>2-4-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:45 to 11:00</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Luther Drove</a><br>E2405E<br>2-2-2</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">11:00 to 11:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Grant Kittel</a><br>O9555U<br>2-4-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+				
+					{% elif data['appointment-type'] == 'Medical - Doctor'  %}
+				
+						
+					<tr class="govuk-table__row"> 
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:00 to 9:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Wade Brumbie</a><br>B4942H<br>1-5-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="../appointment-management/appointment-summary/individual/uploaded-in-bulk-wade" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+						
+					<tr class="govuk-table__row"> 
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:00 to 9:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="" class="govuk-link">Archer Alebeter</a><br>A4962H<br>1-3-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="../appointment-management/appointment-summary/individual/uploaded-in-bulk-archer" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:15 to 9:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Torey Girling</a><br>X5323Z<br>1-8-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:15 to 9:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Dan Crips</a><br>Y6954Z<br>2-8-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:30 to 9:45</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Donalt Cormack</a><br>A3888V<br>5-4-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:30 to 9:45</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Harper Jean</a><br>A4820F<br>12-6-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:45 to 10:00</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Ignatius Haresnape</a><br>S5135F<br>6-4-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:45 to 10:00</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Ralph Morten</a><br>Y5435F<br>2-1-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:00 to 10:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Flemming Brandel</a><br>H0687K<br>1-4-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:00 to 10:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Nicholas Flemel</a><br>J94287K<br>2-4-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:15 to 10:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Devlin Walas</a><br>H0078J<br>1-4-0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="appointment-summary/individual/uploaded-in-bulk.html" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:30 to 10:45</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Keith Ambrois</a><br>L1214R<br>8-4-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:45 to 11:00</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Luther Drove</a><br>E2405E<br>2-2-2</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">11:00 to 11:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Grant Kittel</a><br>O9555U<br>2-4-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">11:15 to 11:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Laurens Heijnen</a><br>T9955W<br>1-2-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="../appointment-management/appointment-summary/individual/uploaded-in-bulk" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					{% else %}
+		
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">8:30 to 9:30</td>
+						<td class="govuk-table__cell">Chaplaincy</td>
+						<td class="govuk-table__cell">Chapel</td>
+						<td class="govuk-table__cell">40</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">6 of 20</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr> 
+
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">8:45 to 10:00</td>
+						<td class="govuk-table__cell">Gym - Weights</td>
+						<td class="govuk-table__cell">Gym</td>
+						<td class="govuk-table__cell">8</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">2 of 12</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr> 
+				
+					<t	
+					<tr class="govuk-table__row"> 
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:00 to 9:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Wade Brumbie</a><br>B4942H<br>1-5-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="../appointment-management/appointment-summary/individual/uploaded-in-bulk-wade" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+						
+					<tr class="govuk-table__row"> 
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:00 to 9:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="" class="govuk-link">Archer Alebeter</a><br>A4962H<br>1-3-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="../appointment-management/appointment-summary/individual/uploaded-in-bulk-archer" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">9:00 to 9:45</td>
+						<td class="govuk-table__cell">Case - Legal aid</td>
+						<td class="govuk-table__cell">Classroom 1</td>
+						<td class="govuk-table__cell ">20</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">4 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr> 
+
+
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">9:00 to 10:00</td>
+						<td class="govuk-table__cell">Job Centre Plus</td>
+						<td class="govuk-table__cell">Classroom 2</td>
+						<td class="govuk-table__cell">12</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">2 of 12</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr> 
+					<tr class="govuk-table__row">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:00 to 10:00</td>
+						<td class="govuk-table__cell">Chaplaincy</td>
+						<td class="govuk-table__cell">Chapel</td>
+						<td class="govuk-table__cell">10</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="appointment-summary/group/non-repeating" class="govuk-link">Manage details</a>
+						</td>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row "> 
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:00 to 12:00</td>
+						<td class="govuk-table__cell">Case - Substance misuse services</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell">6</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 6</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="appointment-summary/group/repeating.html" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:15 to 9:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Torey Girling</a><br>X5323Z<br>1-8-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:15 to 9:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Dan Crips</a><br>Y6954Z<br>2-8-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:30 to 9:45</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Donalt Cormack</a><br>A3888V<br>5-4-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:30 to 9:45</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Harper Jean</a><br>A4820F<br>12-6-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row">  
+						<td class="govuk-table__cell">9:30 to 10:30</td>
+						<td class="govuk-table__cell">Interventions</td>
+						<td class="govuk-table__cell">Classroom 1</td>
+						<td class="govuk-table__cell">20</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">5 of 20</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:45 to 10:00</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Ignatius Haresnape</a><br>S5135F<br>6-4-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">9:45 to 10:00</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Ralph Morten</a><br>Y5435F<br>2-1-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:00 to 10:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Flemming Brandel</a><br>H0687K<br>1-4-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:00 to 10:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Nicholas Flemel</a><br>J94287K<br>2-4-1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row "> 
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:15 to 12:00</td>
+						<td class="govuk-table__cell">Chaplaincy</td>
+						<td class="govuk-table__cell">Chapel</td>
+						<td class="govuk-table__cell">10</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1">Cancelled</strong><br>
+							<a href="appointment-summary/group/non-repeating-cancelled.html" class="govuk-link">View</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row "> 
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:00 to 12:00</td>
+						<td class="govuk-table__cell">Case - Baile Apps</td>
+						<td class="govuk-table__cell">Classroom 2</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Amby Abraham</a><br>G2044E <br>1-2-33</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">4 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="appointment-summary/individual/repeating.html" class="govuk-link">Manage details</a>
+						</td>
+					</tr> 
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:30 to 10:45</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Fuentes Rasmussen</a><br>E2405E<br>1-3-2</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">10:30 to 12:00</td>
+						<td class="govuk-table__cell">Gym - weights</td>
+						<td class="govuk-table__cell">Gym</td>
+						<td class="govuk-table__cell">10</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">3 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr> 
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">10:45 to 11:00</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Luther Drove</a><br>E2405E<br>2-2-2</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">11:00 to 11:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Grant Kittel</a><br>O9555U<br>2-4-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">11:00 to 11:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Grant Kittel</a><br>O9555U<br>2-4-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row">  
+						<td class="govuk-table__cell">11:00 to 15:00</td>
+						<td class="govuk-table__cell">Job Centre Plus</td>
+						<td class="govuk-table__cell">Computer room</td>
+						<td class="govuk-table__cell">20</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">5 of 8</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+				
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">11:15 to 11:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell  "><a href="#" class="govuk-link">Laurens Heijnen</a><br>T9955W<br>1-2-5</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="../appointment-management/appointment-summary/individual/uploaded-in-bulk" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+				
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">11:30 to 12:00</td>
+						<td class="govuk-table__cell">Chaplaincy</td>
+						<td class="govuk-table__cell">Chapel</td>
+						<td class="govuk-table__cell">12</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">4 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr> 
+
+					<tr class="govuk-table__row">  
+						<td class="govuk-table__cell">11:30 to 13:00</td>
+						<td class="govuk-table__cell">Education</td>
+						<td class="govuk-table__cell">Classroom 2</td>
+						<td class="govuk-table__cell">20</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">5 of 20</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">11:30 to 11:45</td>
+						<td class="govuk-table__cell">Case - Benefits</td>
+						<td class="govuk-table__cell">Meeting room</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Grant Kittel</a><br>O9555U<br>2-4-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr> 
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">11:30 to 15:00</td>
+						<td class="govuk-table__cell">Case - Baile Apps</td>
+						<td class="govuk-table__cell">Classroom 2</td>
+						<td class="govuk-table__cell">20</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">4 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">12:00 to 12:30</td>
+						<td class="govuk-table__cell">Chaplaincy</td>
+						<td class="govuk-table__cell">Chapel</td>
+						<td class="govuk-table__cell">12</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">4 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr> 
+
+					 
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">28 June 2023</td> -->
+						<td class="govuk-table__cell">12:00 to 13:00</td>
+						<td class="govuk-table__cell">Immigration appointment</td>
+						<td class="govuk-table__cell">Visiting room</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Luther Drove</a><br>E2405E<br>2-2-2</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<!-- <strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-1">Created by CSV upload</strong><br> -->
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					<tr class="govuk-table__row">  
+						<td class="govuk-table__cell">12:30 to 13:00</td>
+						<td class="govuk-table__cell">Education</td>
+						<td class="govuk-table__cell">Classroom 2</td>
+						<td class="govuk-table__cell">20</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">5 of 20</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">12:30 to 15:00</td>
+						<td class="govuk-table__cell">Case - Baile Apps</td>
+						<td class="govuk-table__cell">Classroom 2</td>
+						<td class="govuk-table__cell">20</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">4 of 9</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<a href="#" class="govuk-link">Manage details</a>
+						</td>
+					</tr>
+
+					{% endif %} 
+
+				</tbody>
+			</table>
+
+
+
+
+		</div>
+
+	</div>
+</form>
+{% endblock %}
+
+
+
+{% block pageScripts %}
+<script type="text/javascript">
+	$(document).ready(function () {
+		new MOJFrontend.FilterToggleButton({
+			bigModeMediaQuery: "(min-width: 48.063em)",
+			startHidden: false,
+			toggleButton: {
+				container: $(".moj-action__filter"),
+				showText: "Show filter",
+				hideText: "Hide filter",
+				classes: "govuk-button--secondary",
+			},
+			closeButton: {
+				container: $(".moj-filter__header-action"),
+				text: "Close",
+			},
+			filter: {
+				container: $(".moj-filter"),
+			},
+		});
+	})
+</script>
+
+
+
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#appointment-location'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+</script>
+
+
+
+
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#appointment-type'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+</script>
+
+
+
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#appointment-prisoner-name'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,112 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+ 
+<form id="form" method="post" action="date-of-appointment">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+   
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Schedule a group appointment</span>
+        Where will the group appointment take place?
+       </h1>
+         
+       
+
+    <!-- Appointment location MOJ autocomplete component - HTML -->
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--s" for="sort">
+        <span id="event-name-hint" class="govuk-hint">
+          Start typing a location and select from the list of options
+        </span>
+      </label>
+      <select class="govuk-select" id="apppointment-location" name="apppointment-location"> 
+        <option value="" selected> </option>
+        <option value="Arts and Crafts Room">Arts and Crafts Room</option>
+        <option value="Canteen">Canteen</option>
+        <option value="Chapel">Chapel</option> 
+        <option value="Classroom 1">Classroom 1</option> 
+        <option value="Classroom 2">Classroom 2</option> 
+        <option value="Computer Room">Computer Room</option>
+        <option value="Courtyard">Courtyard</option>
+        <option value="Garden">Garden</option>
+        <option value="Gym">Gym</option> 
+        <option value="Kitchen">Kitchen</option>
+        <option value="Laundry Room">Laundry Room</option>
+        <option value="Library">Library</option>
+        <option value="Medical Room">Medical Room</option> 
+        <option value="Music Room">Music Room</option>
+        <option value="Office">Office</option>
+        <option value="Recreation Room">Recreation Room</option>
+        <option value="Visiting Room">Visiting Room</option>
+        <option value="Workshop 1">Workshop 1</option>
+        <option value="Workshop 2">Workshop 2</option>
+        <option value="Workshop 3">Workshop 3</option> 
+        <option value="Workshop 4">Workshop 4</option>
+        </select>
+    </div> 
+
+    <!-- <div class="govuk-inset-text">
+        <p class="">Classroom 2 events on 26 June 2023 at 9:00 to 10:00:</p>
+       
+          <ul class="govuk-list">
+            <li>
+              <b>Maths Level 1</b>
+            </li>
+            <li>
+              <strong class="govuk-tag govuk-tag--grey">Appointment</strong>
+            </li>
+            <li>
+              8:30 to 9:30
+            </li> 
+          </ul>
+          <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+          <ul class="govuk-list">
+            <li>
+              <b>English Level 2</b>
+            </li>
+            <li>
+              <strong class="govuk-tag govuk-tag--grey">Appointment</strong>
+            </li>
+            <li>
+              9:30 to 10:30
+            </li> 
+          </ul>
+        </tbody>
+    </div> -->
+
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    
+      
+    </div>
+</form>
+
+
+
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#apppointment-location'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+</script>
+{% endblock %}

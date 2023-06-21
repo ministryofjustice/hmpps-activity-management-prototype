@@ -1,0 +1,73 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block main %}
+{% block beforeContent %}
+<div class="govuk-width-container">
+	<h1 class="govuk-heading-l govuk-!-margin-top-7">Digital Prison Services</h1>
+</div>
+{% endblock %}
+
+<div class="homepage-content">
+	<div class="govuk-width-container">
+		<ul class="govuk-grid-row card-group">
+			
+		
+			
+			
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="combined-group-indv/upload-or-per-person">Schedule an appointment</a>
+					</h2>
+					<p class="govuk-body card__description">Create a one-off or repeating appointment for one or more people.</p>
+				</div>
+			</li>
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="bulk-appointments/upload-file-info-bulk">Schedule a set of back-to-back appointments</a>
+					</h2>
+					<p class="govuk-body card__description">Create a set of appointments from a pre-prepared list of people. The appointments, for example healthcare, will take place on the same day.</p>
+				</div>
+			</li>
+			
+			<li class="govuk-grid-column-one-third card-group__item" id="tile_001">
+				<div class="card card--clickable" data-test="change-someones-cell">
+					<h2 class="govuk-heading-m card__heading">
+						<a class="govuk-link card__link govuk-link--no-visited-state" href="appointment-management/find-appointment-by-date">Manage existing appointments</a>
+					</h2>
+					<p class="govuk-body card__description">Change the details for an existing appointment, including cancelling the whole appointment and removing people.</p>
+				</div>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+{% endblock %}
+{% block pageScripts %}
+<script src="/public/javascripts/cards.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+	$(document).ready( function() {
+		var $list = "ul#sortable"
+		$($list).sortable({
+			update: function(event, ui) {
+				var order = [];
+				var data = $(this).sortable('serialize');
+
+				$($list + ' li').each( function(e) {
+					order.push( $(this).find('a').html() );
+				});
+
+				console.log( order , data );
+			}
+		});
+		$($list).disableSelection();
+	} );
+</script>
+{% endblock %}

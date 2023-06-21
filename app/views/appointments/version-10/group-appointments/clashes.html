@@ -1,0 +1,170 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+      
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+      <span class="govuk-caption-l">Schedule a group appointment</span>
+      Review appointment clashes
+    </h1> 
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post" >
+
+
+  <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"  aria-sort="ascending" >Name</th> 
+        <th scope="col" class="govuk-table__header ">Clash details</th>
+        <th class="govuk-table__header" ></th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+     
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Maths level 1">
+          <a href="#" class="govuk-link--no-visited-state"><b>Neil Rudge</b></a><br>
+          <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
+            </div>
+          </div>
+         </td>
+        <td class="govuk-table__cell" >
+          <ul class="appointment-event">
+            <li>
+              <b>Drugs misuse programme</b><br>
+              <!--Clashes with <b>2 appointments</b><br>-->
+              <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
+                <li class="nobox">
+                  <b>Time:</b> 13:00 to 16:30
+                </li>
+               
+                <li class="nobox">
+                  <b>Clashes with:</b> 2 appointments
+                </li>
+                
+                <li class="nobox">
+                  <b>Created by:</b> John Smith
+                </li>
+              </ul>
+            </li>
+            <li>
+              <b>Kitchen</b>
+              <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
+                <li class="nobox">
+                  <b>Time:</b> 13:00 to 16:30
+                </li>
+               
+                <li class="nobox">
+                  <b>Clashes with:</b> 10 appointments
+                </li>
+                
+                <li class="nobox">
+                  <b>Created by:</b> Bill Jones
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </td>
+        <td class="govuk-table__cell" data-sort-value="" scope="col">
+          <a href="" class="govuk-link--no-visited-state ">Remove</a>
+      </td>
+      </tr>
+     
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Maths level 1">
+          <a href="#" class="govuk-link--no-visited-state"><b>Matthew Doyle</b></a><br>
+          <span class="govuk-hint govuk-!-font-size-16">E4911C</span>
+        </div>
+        </td> 
+        <td class="govuk-table__cell" >
+          <ul class="appointment-event">
+            <li>
+              <b>Kitchen</b>
+              <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
+                <li class="nobox">
+                  <b>Time:</b> 13:00 to 16:30
+                </li>
+               
+                <li class="nobox">
+                  <b>Clashes with:</b> 10 appointments
+                </li>
+                
+                <li class="nobox">
+                  <b>Created by:</b> Bill Jones
+                </li>
+              </ul>
+           </td>
+
+            <td class="govuk-table__cell" data-sort-value="" scope="col">
+              <a href="" class="govuk-link--no-visited-state ">Remove</a>
+          </td>
+         </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell" data-sort-value="Maths level 1">
+          <a href="#" class="govuk-link--no-visited-state"><b>Robin Bab</b></a><br>
+          <span class="govuk-hint govuk-!-font-size-16">F4933A</span>
+         </td> 
+        <td class="govuk-table__cell" >
+          <ul class="appointment-event">
+            <li>
+              <b>Drugs misuse programme</b><br>
+              <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-3">
+                <li class="nobox">
+                  <b>Time:</b> 13:00 to 16:30
+                </li>
+                <li class="nobox">
+                  <b>Clashes with:</b> 10 appointments
+                </li>
+                <li class="nobox">
+                  <b>Created by:</b> Bill Jones
+                </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell" data-sort-value="" scope="col">
+                  <a href="" class="govuk-link--no-visited-state ">Remove</a>
+            </td>
+         </tr>
+      
+    </tbody>
+  </table>
+
+<div class="govuk-button-group">
+  {{ govukButton({
+    text: "Continue",
+    attributes: {
+      "formaction": "comments",
+      "formmethod": "get"
+      }
+  }) }}
+
+  {{ govukButton({
+    text: "Choose a new time",
+    classes: "govuk-button--secondary",
+    attributes: {
+      "formaction": "date-of-appointment",
+      "formmethod": "get"
+      }
+  }) }}
+</div>
+
+  </form>
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}

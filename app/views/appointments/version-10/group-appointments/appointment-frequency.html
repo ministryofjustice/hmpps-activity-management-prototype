@@ -1,0 +1,93 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="clashes">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Schedule a group appointment</span>
+        Repeat appointments
+       </h1>
+      <h2 class="govuk-heading-m">
+        Select repeat appointment details
+       </h2>
+   
+      {{ govukRadios({
+        idPrefix: "appointment-frequency",
+        name: "appointment-frequency",
+       
+      
+        items: [
+          {
+            value: "Every weekday (Monday to Friday)",
+            text: "Every weekday (Monday to Friday)"
+          },
+          {
+            value: "Daily (includes weekends)",
+            text: "Daily (includes weekends)"
+          },
+          {
+            value: "Weekly",
+            text: "Weekly"
+          },
+          {
+            value: "Fortnightly",
+            text: "Fortnightly"
+          },
+          {
+            value: "Monthly",
+            text: "Monthly",
+            hint: {
+              text: "On the same date every month, or the last day if there is no matching date in the month."
+            }
+          }
+        ]
+      }) }}
+
+
+      <h2 class="govuk-heading-m">
+       
+        How many appointments are there altogether?
+       </h2>
+     {{ govukInput({
+      id: "number-of-appointments",
+      name: "number-of-appointments",
+      label: {
+        text: "Enter the total number of appointments, including the first appointment, up to a maximum of one year."
+      },
+           
+      classes: "govuk-input--width-4"
+     }) }}
+     
+     <!--{{ govukInsetText({
+      html: "Last appointment on <b>24 August 2023</b>"
+     }) }}-->
+      
+   
+     <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    
+      
+    </div>
+
+
+
+
+  </div>
+</div>
+{% endblock %}
