@@ -1,0 +1,231 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+      <span class="govuk-caption-l">Schedule a group appointment</span>
+      Review existing scheduled events to check for clashes
+    </h1> 
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <form method="post" >
+
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Attendees 
+              </dt>
+              <dd class="govuk-summary-list__value">
+                6
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">
+                Change<span class="govuk-visually-hidden"> change</span>
+                </a>
+              </dd>
+            </div>
+            <!-- <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+              Location
+              </dt>
+              <dd class="govuk-summary-list__value">
+              Classroom 2
+              </dd>
+              <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="#">
+                Change <span class="govuk-visually-hidden"> location</span>
+              </a>
+              </dd>
+            </div> -->
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+              Date
+              </dt>
+              <dd class="govuk-summary-list__value">
+              26 June 2023
+              </dd>
+              <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="#">
+                Change<span class="govuk-visually-hidden"> date</span>
+              </a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+              Time
+              </dt>
+              <dd class="govuk-summary-list__value">
+              9:00 to 10:00
+              </dd>
+              <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="#">
+                Change <span class="govuk-visually-hidden"> time</span>
+              </a>
+              </dd>
+            </div>
+          </dl>
+
+          <!-- <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+            <caption class="govuk-table__caption govuk-table__caption--m"><b>Classroom 2 events</b>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
+                <th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Event name</th> 
+                <th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Type</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row"> 
+                <td class="govuk-table__cell" >
+                  9:00 to 11:00
+                </td> 
+                <td class="govuk-table__cell">
+                  Job Centre Plus
+                </td> 
+                <td class="govuk-table__cell">
+                  Appointment
+                </td>
+              </tr>
+            </tbody>
+          </table> -->
+
+
+    </div>
+  </div>
+
+
+      <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Attendee events
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Attendee</th>
+            <th class="govuk-table__header">Time</th>
+            <th class="govuk-table__header">Event name</th>
+            <th class="govuk-table__header">Type</th>
+            <th class="govuk-table__header">Location</th>
+            <th class="govuk-table__header"></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row"> 
+            <td class="govuk-table__cell"  style="border-bottom: 0;">
+              <a href="#" class="govuk-link--no-visited-state"><b>Bert Hungerford</b></a><br>
+              <span class="govuk-hint govuk-!-font-size-16">C2598E</span>
+            </td>
+            <td class="govuk-table__cell" >
+              9:00 to 10:00
+            </td>
+            <td class="govuk-table__cell">
+              Maths 1 
+            </td>
+            <td class="govuk-table__cell">
+              Appointment
+            </td>
+            <td class="govuk-table__cell">
+              Classroom 1
+            </td>
+            <td class="govuk-table__cell" style="border-bottom: 0;">
+              <a href="" class="govuk-link--no-visited-state">Remove attendee</a>
+            </td>
+          </tr>
+          <tr class="govuk-table__row"> 
+            <td class="govuk-table__cell" >
+              <div class="govuk-visually-hidden"><a href="#" class="govuk-link--no-visited-state"><b>Bert Hungerford</b></a><br>
+                <span class="govuk-hint govuk-!-font-size-16">C2598E</span></div>
+            </td>
+            <td class="govuk-table__cell" >
+              9:00 to 12:00
+            </td>
+            <td class="govuk-table__cell">
+              Kitchen 
+            </td>
+            <td class="govuk-table__cell">
+              Activity
+            </td>
+            <td class="govuk-table__cell">
+              Kitchen
+            </td>
+            <td class="govuk-table__cell">
+              <div class="govuk-visually-hidden"><a href="" class="govuk-link--no-visited-state ">Remove from attendee list</a></div>
+            </td>
+          </tr>
+          <tr class="govuk-table__row"> 
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link--no-visited-state"><b>Matthew Doyle</b></a><br>
+              <span class="govuk-hint govuk-!-font-size-16">E4911C</span>
+            </td>
+            <td class="govuk-table__cell" >
+              9:00 to 10:00
+            </td>
+            <td class="govuk-table__cell">
+              Drugs misuse programme
+            </td>
+            <td class="govuk-table__cell">
+              Appointment
+            </td>
+            <td class="govuk-table__cell">
+              Meeting room
+            </td>
+            <td class="govuk-table__cell">
+              <a href="" class="govuk-link--no-visited-state">Remove attendee</a>
+            </td>
+          </tr>
+
+          <tr class="govuk-table__row"> 
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link--no-visited-state"><b>Neil Rudge</b></a><br>
+              <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
+            </td>
+            <td class="govuk-table__cell" >
+              9:00 to 10:00
+            </td>
+            <td class="govuk-table__cell">
+              Drugs misuse programme
+            </td>
+            <td class="govuk-table__cell">
+              Appointment
+            </td>
+            <td class="govuk-table__cell">
+              Meeting room
+            </td>
+            <td class="govuk-table__cell">
+              <a href="" class="govuk-link--no-visited-state">Remove attendee</a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      {{ govukButton({
+        text: "Continue",
+        attributes: {
+          "formaction": "comments",
+          "formmethod": "get"
+          }
+      }) }}
+      
+  </form>
+
+
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}

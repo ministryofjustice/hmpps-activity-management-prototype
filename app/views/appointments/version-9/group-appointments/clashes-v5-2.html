@@ -1,0 +1,225 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+      <span class="govuk-caption-l">Schedule a group appointment</span>
+      Review scheduled events at 9:00 to 10:00
+    </h1> 
+  </div>
+</div>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <form method="post">
+
+		<dl class="govuk-summary-list">
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Attendees 
+				</dt>
+				<dd class="govuk-summary-list__value">
+				  6
+				</dd>
+				<dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="#">
+					Change<span class="govuk-visually-hidden"> change</span>
+				  </a>
+				</dd>
+			  </div>
+			<div class="govuk-summary-list__row">
+			  <dt class="govuk-summary-list__key">
+				Date
+			  </dt>
+			  <dd class="govuk-summary-list__value">
+				26 June 2023
+			  </dd>
+			  <dd class="govuk-summary-list__actions">
+				<a class="govuk-link" href="#">
+				  Change<span class="govuk-visually-hidden"> date</span>
+				</a>
+			  </dd>
+			</div>
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Time
+				</dt>
+				<dd class="govuk-summary-list__value">
+				  9:00 to 10:00
+				</dd>
+				<dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="#">
+					Change <span class="govuk-visually-hidden"> time</span>
+				  </a>
+				</dd>
+			</div>
+			<div class="govuk-summary-list__row">
+			  <dt class="govuk-summary-list__key">
+				Location
+			  </dt>
+			  <dd class="govuk-summary-list__value">
+				<strong class="govuk-tag govuk-tag--grey">Not completed</strong>
+			  </dd>
+			  <dd class="govuk-summary-list__actions">
+				<a class="govuk-link" href="#">
+				  Add <span class="govuk-visually-hidden"> location</span>
+				</a>
+			  </dd>
+			</div>
+		  </dl>
+
+
+
+	
+
+      <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+				<thead class="govuk-table__head">
+					<tr class="govuk-table__row"> 
+						<!-- <th class="govuk-table__header" scope="col">Date</th> -->
+						<th class="govuk-table__header" style="width:13%" scope="col" aria-sort="ascending"><button type="button" data-index="1"></button>Start time</th>
+						<th class="govuk-table__header" style="width:13%" scope="col" aria-sort="none"><button type="button" data-index="1"></button>End time</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Name</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Location</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Attendees</th>  
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Type</th>  
+					</tr>
+				</thead>
+				<tbody class="govuk-table__body">
+		
+	
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
+						<td class="govuk-table__cell">8:45</td>
+						<td class="govuk-table__cell">9:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical room 2</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Grant Kittel</a><br>O9555U<br>2-4-5</td>  
+						<td class="govuk-table__cell">Appointment</td>  
+					</tr> 
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">8:45</td>
+						<td class="govuk-table__cell">12:00</td>
+						<td class="govuk-table__cell">Kitchen</td>
+						<td class="govuk-table__cell">Canteen</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Fuentes Rasmussen</a><br>E2405E<br>1-3-2</td>  
+						<td class="govuk-table__cell">Activity</td>  
+					</tr> 
+				
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
+						<td class="govuk-table__cell">9:00</td>
+						<td class="govuk-table__cell">9:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link"> Amby Abraham</a><br>G2044E <br>1-2-33 </td>  
+						<td class="govuk-table__cell">Appointment</td>  
+					</tr>
+					<tr class="govuk-table__row"> 
+						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
+						<td class="govuk-table__cell">9:00</td>
+						<td class="govuk-table__cell">9:15</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell "><a href="#" class="govuk-link"> Neil Rudge</a><br>G2044E <br>1-2-33 </td> 
+						<td class="govuk-table__cell">Appointment</td>   
+					</tr>
+					<!-- <tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">9:00 to 9:45</td>
+						<td class="govuk-table__cell">Case - Legal aid</td>
+						<td class="govuk-table__cell">Classroom 1</td>
+						<td class="govuk-table__cell ">20</td>  
+						<td class="govuk-table__cell">Appointment</td>  
+					</tr> 
+
+
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">9:00 to 10:00</td>
+						<td class="govuk-table__cell">Job Centre Plus</td>
+						<td class="govuk-table__cell">Classroom 2</td>
+						<td class="govuk-table__cell">12</td>  
+						<td class="govuk-table__cell">Appointment</td>  
+					</tr> 
+					<tr class="govuk-table__row"> 
+						<td class="govuk-table__cell">9:00 to 10:00</td>
+						<td class="govuk-table__cell">Chaplaincy</td>
+						<td class="govuk-table__cell">Chapel</td>
+						<td class="govuk-table__cell">10</td>  
+						<td class="govuk-table__cell">Appointment</td>  
+					</tr>
+
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">9:00 to 12:00</td>
+						<td class="govuk-table__cell">Case - Substance misuse services</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell">6</td>  
+						<td class="govuk-table__cell">Appointment</td>  
+					</tr> -->
+
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">9:00</td>
+						<td class="govuk-table__cell">12:00</td>
+						<td class="govuk-table__cell">Workshop</td>
+						<td class="govuk-table__cell">Workshop</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Amby Abraham</a><br>G2044E <br>1-2-33</td>  
+						<td class="govuk-table__cell">Activity</td>  
+					</tr> 
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
+						<td class="govuk-table__cell">9:15</td>
+						<td class="govuk-table__cell">9:30</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Bert Hungerford</a><br>C2598E<br>1-3-44 </td> 
+						<td class="govuk-table__cell">Appointment</td>  
+					</tr>
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
+						<td class="govuk-table__cell">9:30</td>
+						<td class="govuk-table__cell">9:45</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell"><a href="#" class="govuk-link">Matthew Doyle</a><br>E4911C<br>1-2-22</td>  
+						<td class="govuk-table__cell">Appointment</td>  
+					</tr>
+
+					<!-- <tr class="govuk-table__row">  
+						<td class="govuk-table__cell">9:30 to 10:30</td>
+						<td class="govuk-table__cell">Interventions</td>
+						<td class="govuk-table__cell">Classroom 1</td>
+						<td class="govuk-table__cell">20</td>  
+						<td class="govuk-table__cell">Appointment</td>  
+					</tr> -->
+					<tr class="govuk-table__row ">
+						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
+						<td class="govuk-table__cell">9:45</td>
+						<td class="govuk-table__cell">10:00</td>
+						<td class="govuk-table__cell">Medical - Doctor</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell "><a href="#" class="govuk-link">Ryan Gee</a><br>F5132C<br>1-2-88</td>  
+						<td class="govuk-table__cell">Appointment</td>  
+					</tr>
+				</tbody>
+			</table>
+
+ 			</form>
+
+		</div>	
+	</div>
+</div>
+
+
+{% endblock %}
