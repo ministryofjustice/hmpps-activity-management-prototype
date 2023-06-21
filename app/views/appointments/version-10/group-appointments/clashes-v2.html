@@ -1,0 +1,318 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+      <span class="govuk-caption-l">Schedule a group appointment</span>
+      Review scheduled events for all attendees on [date]
+    </h1> 
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <form method="post" >
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Continue to choose a time",
+          attributes: {
+            "formaction": "appointment-time",
+            "formmethod": "post"
+            }
+        }) }}
+      </div>
+
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m"></caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header">Morning</th>
+            <th scope="col" class="govuk-table__header">Afternoon</th>
+            <th scope="col" class="govuk-table__header">Evening</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row"> 
+            <td class="govuk-table__cell" data-sort-value="Maths level 1">
+              <a href="#" class="govuk-link--no-visited-state"><b>Neil Rudge</b></a><br>
+              <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
+                </div>
+              </div>
+           </td>
+            <td class="govuk-table__cell">
+              <ul class="govuk-list">
+                <li>
+                  <b>Kitchen</b>
+                </li>
+                <li>
+                  <strong class="govuk-tag govuk-tag--grey">Activity</strong>
+                </li>
+                <li>
+                 8:00 to 12:00
+                </li>
+                <li>
+                  Canteen
+                </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+              <ul class="govuk-list">
+                <li>
+                  <b>Drugs misuse programme</b>
+                </li>
+                <li>
+                  <strong class="govuk-tag govuk-tag--grey">Appointment</strong>
+                </li>
+                <li>
+                 13:00 to 16:30
+                </li>
+                <li>
+                  Classroom 1
+                </li>
+              </ul>
+            </td>
+
+            <td class="govuk-table__cell">
+              Nothing scheduled
+            </td>
+          </tr>
+          <tr class="govuk-table__row"> 
+            <td class="govuk-table__cell" data-sort-value="Maths level 1">
+              <a href="#" class="govuk-link--no-visited-state"><b>Bert Hungerford</b></a><br>
+              <span class="govuk-hint govuk-!-font-size-16">C2598E</span>
+                </div>
+              </div>
+           </td>
+            <td class="govuk-table__cell">
+              <ul class="govuk-list">
+                <li>
+                  <b>Chaplaincy</b>
+                </li>
+                <li>
+                  <strong class="govuk-tag govuk-tag--grey">Appointment</strong>
+                </li>
+                <li>
+                 9:00 to 10:00
+                </li>
+                <li>
+                  Chapel
+                </li>
+              </ul>
+            </td>
+            <td class="govuk-table__cell">
+
+              <ul class="govuk-list">
+                <li>
+                  <b>Workshop</b>
+                </li>
+                <li>
+                  <strong class="govuk-tag govuk-tag--grey">Activity</strong>
+                </li>
+                <li>
+                  12:00 to 16:00
+                </li>
+                <li>
+                  Workshop
+                </li>
+              </ul>
+
+              <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+              <ul class="govuk-list">
+                <li>
+                  <b>Family visit</b>
+                </li> 
+                <li>
+                  14:00 to 15:00
+                </li>
+                <li>
+                  Visiting room
+                </li>
+              </ul> 
+            </td>
+
+            <td class="govuk-table__cell">
+              Nothing scheduled
+            </td>
+          </tr>
+
+          <tr class="govuk-table__row"> 
+            <td class="govuk-table__cell" data-sort-value="Maths level 1">
+              <a href="#" class="govuk-link--no-visited-state"><b>Matthew Doyle</b></a><br>
+              <span class="govuk-hint govuk-!-font-size-16">E4911C</span>
+                </div>
+              </div>
+           </td> 
+              <td class="govuk-table__cell">
+                <ul class="govuk-list">
+                  <li>
+                    <b>English Level 2</b>
+                  </li>
+                  <li>
+                    <strong class="govuk-tag govuk-tag--grey">Appointment</strong>
+                  </li>
+                  <li>
+                    11:00 to 12:00
+                  </li>
+                  <li>
+                    Classroom 2
+                  </li>
+                </ul>
+              </td>
+            </td>
+            <td class="govuk-table__cell">
+
+              <ul class="govuk-list">
+                <li>
+                  <b>Gym - Weights</b>
+                </li>
+                <li>
+                  <strong class="govuk-tag govuk-tag--grey">Appointment</strong>
+                </li>
+                <li>
+                  14:00 to 15:00
+                </li>
+                <li>
+                  Gym
+                </li>
+              </ul>
+
+              <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+              <ul class="govuk-list">
+                <li>
+                  <b>Case - Legal Aid</b>
+                </li>
+                <li>
+                  <strong class="govuk-tag govuk-tag--grey">Appointment</strong>
+                </li>
+                <li>
+                  15:30 to 16:30
+                </li>
+                <li>
+                  Classroom 1
+                </li>
+              </ul>
+            
+            </td>
+            <td class="govuk-table__cell">
+              Nothing scheduled
+            </td>
+          </tr>
+          <tr class="govuk-table__row"> 
+            <td class="govuk-table__cell" data-sort-value="Maths level 1">
+              <a href="#" class="govuk-link--no-visited-state"><b>Ryan Gee</b></a><br>
+              <span class="govuk-hint govuk-!-font-size-16">F5132C</span>
+                </div>
+              </div>
+           </td>
+            <td class="govuk-table__cell">
+
+              <ul class="govuk-list">
+                <li>
+                  <b>Chaplaincy</b>
+                </li>
+                <li>
+                  <strong class="govuk-tag govuk-tag--grey">Appointment</strong>
+                </li>
+                <li>
+                  9:00 to 10:00
+                </li>
+                <li>
+                  Chapel
+                </li>
+              </ul>
+
+              <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+              <ul class="govuk-list">
+                <li>
+                  <b>Maths Level 1</b>
+                </li>
+                <li>
+                  <strong class="govuk-tag govuk-tag--grey">Appointment</strong>
+                </li>
+                <li>
+                  11:00 to 12:00
+                </li>
+                <li>
+                  Classroom 2
+                </li>
+              </ul>
+            
+ 
+            </td>
+            <td class="govuk-table__cell"> 
+              Nothing scheduled
+            </td>
+            <td class="govuk-table__cell">
+              Nothing scheduled 
+            </td>
+          </tr>
+        </tr>
+        <tr class="govuk-table__row"> 
+          <td class="govuk-table__cell" data-sort-value="Maths level 1">
+            <a href="#" class="govuk-link--no-visited-state"><b>Robin Bab</b></a><br>
+            <span class="govuk-hint govuk-!-font-size-16">F4933A</span>
+              </div>
+            </div>
+         </td>
+          <td class="govuk-table__cell">
+            Nothing scheduled
+          </td>
+          <td class="govuk-table__cell">
+            Nothing scheduled
+          </td>
+          <td class="govuk-table__cell">
+            <ul class="govuk-list">
+              <li>
+                <b>Chaplaincy - Mass</b>
+              </li>
+              <li>
+                <strong class="govuk-tag govuk-tag--grey">Appointment</strong>
+              </li>
+              <li>
+                18:00 to 19:00
+              </li>
+              <li>
+                Chapel
+              </li>
+            </ul>
+            
+          </td>
+        </tr>
+      </tr>
+        </tbody>
+      </table>
+
+
+
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Continue to choose a time",
+          attributes: {
+            "formaction": "appointment-time",
+            "formmethod": "post"
+            }
+        }) }}
+      </div>
+      
+
+  </form>
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}

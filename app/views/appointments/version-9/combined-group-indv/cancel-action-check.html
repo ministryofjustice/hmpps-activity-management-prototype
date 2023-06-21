@@ -1,0 +1,49 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="cancel-reason">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        Are you sure you want to cancel?
+       </h1>
+   
+      {{ govukRadios({
+        idPrefix: "action-cancel",
+        name: "action-cancel",
+        items: [
+          {
+            value: "Yes - cancel and return to home",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No - go back"
+          }
+        ]
+      }) }}
+      
+    
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
+
+
+
+  </div>
+</div>
+</form>
+{% endblock %}

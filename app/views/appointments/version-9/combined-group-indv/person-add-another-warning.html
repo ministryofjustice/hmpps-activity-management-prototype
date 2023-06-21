@@ -1,0 +1,52 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="back">
+        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+        </div>
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Schedule an appointment</span>
+          Review and add people to the appointment list
+        </h1>
+
+
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+      The list of attendees is empty. You must add at least one person to be able to schedule an appointment.
+    </strong>
+  </div>
+ 
+
+
+    <form method="post">
+     
+      <div class="govuk-!-margin-bottom-3 govuk-button-group">
+        {{ govukButton({
+          text: "Add someone to the list",
+          attributes: {
+          "formaction": "upload-or-per-person",
+          "formmethod": "get"
+          }
+          }) }}
+
+          
+      </div>
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
