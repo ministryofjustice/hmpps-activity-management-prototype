@@ -430,7 +430,42 @@ router.post("/end-date-check", function (req, res) {
   if (req.session.data["end-date-check"] === "yes") {
     res.redirect("end-date");
   } else {
+    res.redirect("schedule-weeks");
+  }
+});
+
+// schedule weeks page
+router.get("/schedule-weeks", function (req, res) {
+  res.render(req.protoUrl + "/schedule-weeks");
+});
+
+// post schedule weeks page
+router.post("/schedule-weeks", function (req, res) {
+  let scheduleWeeks = req.session.data["new-activity"]?.["schedule-weeks"] ?? 1;
+
+  if (scheduleWeeks === "1") {
     res.redirect("days-and-times");
+  } else {
+    res.redirect("days-and-times-weekly?week=1");
+  }
+});
+
+// days and times week 1 page
+router.get("/days-and-times-weekly", function (req, res) {
+  let days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+  res.render(req.protoUrl + "/days-and-times-weekly", {
+    days,
+  });
+});
+
+// post days and times week 1 page
+router.post("/days-and-times-weekly", function (req, res) {
+  let week = req.query.week;
+  
+  if(week === "1") {
+    res.redirect("days-and-times-weekly?week=2");
+  } else {
+    res.redirect("bank-holiday-check");
   }
 });
 
@@ -471,7 +506,7 @@ router.post("/end-date", function (req, res) {
   req.session.data["new-activity"] = req.session.data["new-activity"] ?? {};
   req.session.data["new-activity"]["end-date"] = endDateFormatted;
 
-  res.redirect("days-and-times");
+  res.redirect("schedule-weeks");
 });
 
 // days and times page

@@ -8,7 +8,7 @@ Activities Management prototype
 {% block beforeContent %}
 {{govukBackLink({
 text: "Back",
-"href": "javascript: window.history.go(-1)"
+"href": "../" + activity.id + "/education-levels"
 })}}
 {% endblock %}
 
@@ -251,7 +251,8 @@ text: "Back",
                     </label>
                 </h2>
                 <div id="subject-hint" class="govuk-hint">
-                    Choose the area of study for the education level or qualification that participants need to be eligible for this activity.
+                    Choose the area of study for the education level or qualification that participants need to be
+                    eligible for this activity.
                 </div>
                 <select class="govuk-select" id="area-of-study" name="area-of-study">
                     <option value="">Select education level or qualification</option>
@@ -279,7 +280,7 @@ text: "Back",
             </div>
 
             {{ govukButton({
-                text: "Continue"
+            text: "Continue"
             }) }}
         </form>
     </div>
