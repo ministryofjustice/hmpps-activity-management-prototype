@@ -409,6 +409,59 @@ router.get("/:prisonerId/schedule", function (req, res) {
   });
 });
 
+// get route for the schedule page
+router.get("/:prisonerId/schedule-v2", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+
+  let activityId = req.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let activitySchedule = activity.schedule;
+
+  // render the schedule template
+  res.render(req.protoUrl + "/schedule-v2", {
+    activity,
+    activitySchedule,
+    prisoner,
+    prisonerId,
+  });
+});
+
+
+// get route for the schedule page
+router.get("/:prisonerId/schedule-v3", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+
+  let activityId = req.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let activitySchedule = activity.schedule;
+
+  // copy the schedule object and remove any days which don't have any sessions (am or pm is not null)
+  let daysWithSessions = JSON.parse(JSON.stringify(activitySchedule));
+  daysWithSessions = daysWithSessions.filter(
+    (day) => day.am !== null || day.pm !== null
+  );
+
+  // render the schedule template
+  res.render(req.protoUrl + "/schedule-v3", {
+    daysWithSessions,
+    activity,
+    activitySchedule,
+    prisoner,
+    prisonerId,
+  });
+});
+
+
 // post route for the schedule page
 router.post("/:prisonerId/schedule", function (req, res) {
   //redirect to the check-schedule page
