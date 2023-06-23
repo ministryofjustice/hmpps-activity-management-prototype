@@ -1,0 +1,94 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {% set days = [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+            ] %}
+            {% set timesHtml %}
+
+            {% endset %}
+
+            <span class="govuk-caption-l">
+                Edit allocation for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            </span>
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="days-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-5">
+                        <h1 class="govuk-fieldset__heading">
+                            Select sessions you want to exclude {{prisoner.name.firstname}} from attending
+                        </h1>
+                    </legend>
+
+                    {% set activityScheduleHtml %}
+                    {% endset %}
+
+                    <!-- {{govukDetails({
+                    summaryText: "View the schedule for " + activity.name,
+                    html: activityScheduleHtml
+                    })}} -->
+
+                    <!-- <p class="govuk-inset-text govuk-!-margin-bottom-6" id="days-hint">
+                        You can't select any days or times that the activity isn't scheduled to run.
+                    </p> -->
+
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        {% for day in activitySchedule %}
+                        {% set periods = [ "am", "pm", "ed" ] %}
+                        {% for period in periods %}
+                        {% if day[period][0] != null %}
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="day-{{day.day}}-{{period}}" name="days"
+                                type="checkbox" value="{{day.day}}"
+                                aria-controls="conditional-day-{{day.day}}-{{period}}" aria-expanded="false">
+                            <label class="govuk-label govuk-checkboxes__label" for="day-{{day.day}}-{{period}}">
+                                {{days[day.day]|capitalize}} – {{period|upper}}
+                            </label>
+                        </div>
+
+                        <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-day-{{day.day}}-{{period}}">
+                            <span class="govuk-hint">
+                                {{prisoner.name.firstname}} will not be scheduled to attend this session.
+                            </span>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
+
+            {{ govukButton({
+            text: "Update schedule"
+            }) }}
+
+            <p class="govuk-body">
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

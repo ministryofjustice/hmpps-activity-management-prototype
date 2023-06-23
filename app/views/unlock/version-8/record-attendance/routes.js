@@ -807,7 +807,13 @@ router.post("/activities/:selectedDate/:selectedPeriod/:activityId/cancel", func
   res.redirect("confirm-cancellation");
 });
 router.get("/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation", function (req, res) {
-  res.render(req.protoUrl + "/confirm-cancellation");
+  let activityId = req.params.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId
+  );
+  res.render(req.protoUrl + "/confirm-cancellation", {
+    activity,
+  });
 });
 router.post("/activities/:selectedDate/:selectedPeriod/:activityId/confirm-cancellation", function (req, res) {
   let date = req.params.selectedDate;
@@ -1264,7 +1270,7 @@ router.post(
       updateAttendanceData(req, activityId, date, period, attendanceDetails);
     }
 
-    res.redirect("../../" + req.params.activityId);
+    res.redirect("../" + req.params.prisonerId);
   }
 );
 // ------------------------------------------------------------------------

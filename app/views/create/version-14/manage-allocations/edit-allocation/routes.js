@@ -57,6 +57,10 @@ router.get("/:prisonerIds", function (req, res) {
     }
   }
 
+  // pass the activity schedule to the template
+  let activitySchedule = activity.schedule;
+  let schedule = getActivitySchedule(activitySchedule);
+
   // hide the confirmation dialog after showing it once
   if (req.session.data["confirmation-dialog"]) {
     delete req.session.data["confirmation-dialog"];
@@ -68,6 +72,7 @@ router.get("/:prisonerIds", function (req, res) {
     prisonerData,
     selectedPrisoners,
     pastStartDate,
+    schedule,
   });
 });
 
@@ -382,4 +387,146 @@ router.get("/:prisonerId/check-allocation-details", function (req, res) {
   });
 });
 
+// get route for the schedule page
+router.get("/:prisonerId/schedule", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+
+  let activityId = req.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let activitySchedule = activity.schedule;
+
+  // render the schedule template
+  res.render(req.protoUrl + "/schedule", {
+    activity,
+    activitySchedule,
+    prisoner,
+    prisonerId,
+  });
+});
+
+// get route for the schedule page
+router.get("/:prisonerId/schedule-v2", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+
+  let activityId = req.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let activitySchedule = activity.schedule;
+
+  // render the schedule template
+  res.render(req.protoUrl + "/schedule-v2", {
+    activity,
+    activitySchedule,
+    prisoner,
+    prisonerId,
+  });
+});
+
+
+// get route for the schedule page
+router.get("/:prisonerId/schedule-v3", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+
+  let activityId = req.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let activitySchedule = activity.schedule;
+
+  // copy the schedule object and remove any days which don't have any sessions (am or pm is not null)
+  let daysWithSessions = JSON.parse(JSON.stringify(activitySchedule));
+  daysWithSessions = daysWithSessions.filter(
+    (day) => day.am !== null || day.pm !== null
+  );
+
+  // render the schedule template
+  res.render(req.protoUrl + "/schedule-v3", {
+    daysWithSessions,
+    activity,
+    activitySchedule,
+    prisoner,
+    prisonerId,
+  });
+});
+
+
+// post route for the schedule page
+router.post("/:prisonerId/schedule", function (req, res) {
+  //redirect to the check-schedule page
+  res.redirect("check-schedule");
+});
+
+// get route for the check-schedule page
+router.get("/:prisonerId/check-schedule", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+
+  let activityId = req.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let activitySchedule = activity.schedule;
+
+  let schedule = getActivitySchedule(activitySchedule);
+
+  // generate a random new schedule for the activity and add it to the schedule object
+  // {day:1, amNew: [{"startTime":"8:30","endTime":"12:00"}], pmNew: null ... 
+  
+  // add amNew and pmNew to the schedule object
+  let newSchedule = schedule.map((day) => {
+    // for each period (am/pm), if the value is null, skip it
+    // if the value is not null, randomly assign it a value either the same as the original value or null
+    let period = ["am", "pm"];
+
+    period.forEach((period) => {
+      if (day[period] !== null) {
+        day[period + "New"] = Math.random() < 0.5 ? day[period] : null;
+      }
+    });
+
+    return day;
+  });
+  
+  // render the check-schedule template
+  res.render(req.protoUrl + "/check-schedule", {
+    activity,
+    schedule,
+    newSchedule,
+    prisoner,
+    prisonerId,
+  });
+});
+
+
 module.exports = router;
+
+// generate the activity schedule from the activity schedule data
+function getActivitySchedule(activitySchedule) {
+  return activitySchedule.map((day) => {
+    // convert each day number to the name of the weekday
+    // 1 = monday, 2 = tuesday, etc.
+    let dayNames = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    let dayName = dayNames[day.day];
+
+    // return the day name and am/pm values
+    return {
+      day: dayName,
+      am: day.am,
+      pm: day.pm,
+    };
+  });
+}

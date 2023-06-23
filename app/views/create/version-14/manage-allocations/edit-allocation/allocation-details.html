@@ -60,16 +60,7 @@ type: "success"
         {% endif %}
 
         {% for prisoner in prisonerData %}
-        {% if prisonerData.length > 1 %}
-        <div class="govuk-summary-card">
-            <div class="govuk-summary-card__title-wrapper">
-                <h2 class="govuk-summary-card__title">
-                    {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
-                </h2>
-            </div>
-            <div class="govuk-summary-card__content">
-                {% endif %}
-                <dl class="govuk-summary-list">
+                <dl class="govuk-summary-list govuk-!-margin-">
                     <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key">
                             Start of allocation
@@ -78,12 +69,12 @@ type: "success"
                             {{(prisoner.allocations[prisoner.activityIndex].startDate | convertShortDateToVeryLongDate)
                             if prisoner.allocations[prisoner.activityIndex].startDate else 'None set'}}
                         </dd>
-                        {% if prisoner.startDateIsInFuture %}
                         <dd class="govuk-summary-list__actions">
+                            {% if prisoner.startDateIsInFuture %}
                             <a href="{{prisoner.id}}/start-date?selected-prisoners={{selectedPrisoners}}"
                                 class="govuk-link--no-visited-state">Change</a>
+                                {% endif %}
                         </dd>
-                        {% endif %}
                     </div>
                     <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key">
@@ -121,11 +112,43 @@ type: "success"
                             {% endif %}
                         </dd>
                     </div>
+               
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Schedule
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                                {% for day in schedule %}
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        {% if day.am or day.pm %}
+                                        {{day.day|capitalize}}
+                                        {% else %}
+                                        <span class="govuk-hint">{{day.day|capitalize}}</span>
+                                        {% endif %}
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                        {% if day.am or day.pm %}
+                                        {% if day.am %}
+                                        AM {{"" if day.pm == null else "and "}}
+                                        {% endif %}
+                                        {% if day.pm %}
+                                        PM {{"" if day.am == null}}
+                                        {% endif %}
+                                        {% else %}
+                                        <span class="govuk-hint">Not scheduled</span>
+                                        {% endif %}
+                                    </dd>
+                                </div>
+                                {% endfor %}
+                            </dl>
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                            <a href="{{prisoner.id}}/schedule" class="govuk-link--no-visited-state">Change</a>
+                        </dd>
+                    </div>
                 </dl>
-                {% if prisonerData.length > 1 %}
-            </div>
-        </div>
-        {% endif %}
         {% endfor %}
 
         {{ govukButton({
@@ -134,11 +157,11 @@ type: "success"
         href: "../deallocate/" + prisonerData[0].id 
         }) }}
 
-        <p class="govuk-!-margin-top-5">
+        <!-- <p class="govuk-!-margin-top-5">
             <a href="../../{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
                 Return to manage allocations
             </a>
-        </p>
+        </p> -->
     </div>
 </div>
 

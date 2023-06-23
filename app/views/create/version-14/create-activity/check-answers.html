@@ -164,10 +164,10 @@ window.history.go(-1)" })}} {% endblock %}
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Weeks in schedule
+                    Schedule weeks
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    1
+                    {{data['new-activity']['schedule-weeks']}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">
@@ -175,6 +175,7 @@ window.history.go(-1)" })}} {% endblock %}
                     </a>
                 </dd>
             </div>
+            {% if data['new-activity']['schedule-weeks'] === '1' %}
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Schedule
@@ -212,6 +213,48 @@ window.history.go(-1)" })}} {% endblock %}
                     </a>
                 </dd>
             </div>
+            {% else %}
+            {% set weeks = [1,2] %}
+            {% for week in weeks %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Week {{week}}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <dl class="govuk-summary-list govuk-summary-list--no-border">
+                        {% for day in schedule %}
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                {% if day.am or day.pm %}
+                                {{day.day|capitalize}}
+                                {% else %}
+                                <span class="govuk-hint">{{day.day|capitalize}}</span>
+                                {% endif %}
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {% if day.am or day.pm %}
+                                {% if day.am %}
+                                AM {{"" if day.pm == null else "and "}}
+                                {% endif %}
+                                {% if day.pm %}
+                                PM {{"" if day.am == null}}
+                                {% endif %}
+                                {% else %}
+                                <span class="govuk-hint">Not scheduled</span>
+                                {% endif %}
+                            </dd>
+                        </div>
+                        {% endfor %}
+                    </dl>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">
+                        Change<span class="govuk-visually-hidden"> days and times</span>
+                    </a>
+                </dd>
+            </div>
+            {% endfor %}
+            {% endif %}
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Runs on bank holidays

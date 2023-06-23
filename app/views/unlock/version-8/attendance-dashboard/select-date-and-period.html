@@ -15,7 +15,7 @@ Activities Management prototype
     <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-xl">View not attended prisoners</span>
         <h1 class="govuk-heading-xl">
-            Select the date and period
+            Not attended yet list: select a date
         </h1>
         <form method="post">
             {% set dateHtml %}
@@ -64,8 +64,10 @@ Activities Management prototype
             ]
             }) }}
 
+            <input type="hidden" name="period" value="daily">
+
             <!-- select period -->
-            {{ govukRadios({
+            <!-- {{ govukRadios({
             name: "period",
             fieldset: {
             legend: {
@@ -95,7 +97,7 @@ Activities Management prototype
             text: "All sessions"
             }
             ]
-            }) }}
+            }) }} -->
 
 
 
