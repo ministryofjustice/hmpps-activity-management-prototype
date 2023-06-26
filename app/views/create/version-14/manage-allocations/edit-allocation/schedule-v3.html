@@ -30,7 +30,7 @@ text: "Back",
             {% endset %}
 
             <span class="govuk-caption-l">
-                Edit allocation for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+                {{activity.name}}
             </span>
             <h1 class="govuk-heading-xl">
                 Select any sessions that {{prisoner.name.firstname}} should not attend
@@ -65,15 +65,14 @@ text: "Back",
                                 type="checkbox" value="{{day.day}}"
                                 aria-controls="conditional-session-{{day.day}}-{{period}}" aria-expanded="false">
                             <label class="govuk-label govuk-checkboxes__label" for="day-{{day.day}}-{{period}}">
-                                {{period|upper}} ({{day[period][0].startTime}} to {{day[period][0].endTime}})
+                                {{period|upper}}
                             </label>
                         </div>
 
                         <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
                             id="conditional-session-{{day.day}}-{{period}}">
                             <span class="govuk-hint">
-                                {{prisoner.name.firstname}} will not be scheduled to attend any
-                                {{days[day.day]|capitalize}} {{period|upper}} sessions
+                                Not scheduled to attend
                             </span>
                         </div>
                         {% endif %}
