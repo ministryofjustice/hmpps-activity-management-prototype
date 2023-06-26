@@ -23,14 +23,14 @@ Appointments prototype
       {% if data['appointment-repeat'] === 'Yes' %}
                    
       <p class="govuk-body">
-        You have successfully created an appointment for   {% if data['person-1-check'] ==='True' %} 6  {% else %} 5  {% endif %} prisoners starting on {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}. It will repeat {{ data['appointment-frequency']}} {{ data['number-of-appointments']}}  times.
+        You have successfully created an appointment for   {% if data['person-1-check'] ==='True' %} 6  {% else %} 8  {% endif %} prisoners starting on {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}. It will repeat {{ data['appointment-frequency']}} {{ data['number-of-appointments']}}  times.
       </p>
    
     
     {% else  %}
    
     <p class="govuk-body">
-      You have successfully created a group appointment for  {% if data['person-1-check'] ==='True' %} 6  {% else %} 5  {% endif %} prisoners on {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}.
+      You have successfully created a group appointment for  {% if data['person-1-check'] ==='True' %} 6  {% else %} 8  {% endif %} prisoners on {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}.
 
      </p>
     
@@ -47,7 +47,7 @@ Appointments prototype
       <a href="../dps-home?prototype-versions[appointments][url]=/appointments/version-5/dps-home" class="govuk-link">Create another appointment</a>
       </p>
       <p class="govuk-body">
-        <a href="#" class="govuk-link">Manage details the details of this appointment</a>
+        <a href="../appointment-management/appointment-summary/group/repeating" class="govuk-link">Manage details the details of this appointment</a>
       </p>
     </div>
   </div>
