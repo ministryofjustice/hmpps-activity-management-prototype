@@ -407,7 +407,7 @@ router.get("/:prisonerId/schedule", function (req, res) {
   );
 
   // render the schedule template
-  res.render(req.protoUrl + "/schedule-v4", {
+  res.render(req.protoUrl + "/schedule", {
     activity,
     activitySchedule,
     daysWithSessions,
@@ -489,6 +489,35 @@ router.get("/:prisonerId/schedule-v4", function (req, res) {
 
   // render the schedule template
   res.render(req.protoUrl + "/schedule-v4", {
+    daysWithSessions,
+    activity,
+    activitySchedule,
+    prisoner,
+    prisonerId,
+  });
+});
+
+// get route for the schedule page
+router.get("/:prisonerId/schedule-v5", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+
+  let activityId = req.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let activitySchedule = activity.schedule;
+
+  // copy the schedule object and remove any days which don't have any sessions (am or pm is not null)
+  let daysWithSessions = JSON.parse(JSON.stringify(activitySchedule));
+  daysWithSessions = daysWithSessions.filter(
+    (day) => day.am !== null || day.pm !== null
+  );
+
+  // render the schedule template
+  res.render(req.protoUrl + "/schedule-v5", {
     daysWithSessions,
     activity,
     activitySchedule,
