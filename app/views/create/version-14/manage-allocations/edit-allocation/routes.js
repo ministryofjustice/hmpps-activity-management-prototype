@@ -400,10 +400,17 @@ router.get("/:prisonerId/schedule", function (req, res) {
   );
   let activitySchedule = activity.schedule;
 
+  // copy the schedule object and remove any days which don't have any sessions (am or pm is not null)
+  let daysWithSessions = JSON.parse(JSON.stringify(activitySchedule));
+  daysWithSessions = daysWithSessions.filter(
+    (day) => day.am !== null || day.pm !== null
+  );
+
   // render the schedule template
-  res.render(req.protoUrl + "/schedule", {
+  res.render(req.protoUrl + "/schedule-v4", {
     activity,
     activitySchedule,
+    daysWithSessions,
     prisoner,
     prisonerId,
   });
@@ -461,11 +468,40 @@ router.get("/:prisonerId/schedule-v3", function (req, res) {
   });
 });
 
+// get route for the schedule page
+router.get("/:prisonerId/schedule-v4", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let prisoner = req.session.data["timetable-complete-1"]["prisoners"].find(
+    (prisoner) => prisoner.id.toString() === prisonerId.toString()
+  );
+
+  let activityId = req.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+  let activitySchedule = activity.schedule;
+
+  // copy the schedule object and remove any days which don't have any sessions (am or pm is not null)
+  let daysWithSessions = JSON.parse(JSON.stringify(activitySchedule));
+  daysWithSessions = daysWithSessions.filter(
+    (day) => day.am !== null || day.pm !== null
+  );
+
+  // render the schedule template
+  res.render(req.protoUrl + "/schedule-v4", {
+    daysWithSessions,
+    activity,
+    activitySchedule,
+    prisoner,
+    prisonerId,
+  });
+});
+
 
 // post route for the schedule page
 router.post("/:prisonerId/schedule", function (req, res) {
-  //redirect to the check-schedule page
-  res.redirect("check-schedule");
+  //redirect to the prisoner's allocation details page with a success message
+  res.redirect("../" + req.params.prisonerId);
 });
 
 // get route for the check-schedule page
