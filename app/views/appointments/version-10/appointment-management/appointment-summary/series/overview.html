@@ -14,30 +14,17 @@ Appointments prototype
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds-from-desktop">
-
-            {% if data['which-occurrence-alt'] === 'All occurrences' %}
-
-              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-
-              {% set html %}
-                <h3 class="govuk-notification-banner__heading">
-                  Appointment location changed successfully 
-                </h3>
-                
-              {% endset %}
-
-              {{ govukNotificationBanner({
-                html: html,
-                type: 'success'
-              }) }}
-
-            {% else %}
-  
-            {% endif %}
             
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">Manage appointments</span>
-              Series overview: Case - Substance misuse services
+              Series overview: {% if data['alt-appointment-name'] !='' %}
+
+              {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+              {% else %}
+              
+              {{ data['apppointment-type']}}
+              {% endif %}
             </h1>
             <div class="govuk-summary-card">
               <div class="govuk-summary-card__title-wrapper">
@@ -52,7 +39,7 @@ Appointments prototype
                         Frequency
                       </dt>
                       <dd class="govuk-summary-list__value">
-                        Weekly
+                        {{ data['appointment-frequency']}}  
                       </dd>
                     </div>   
                   <div class="govuk-summary-list__row">
@@ -60,7 +47,7 @@ Appointments prototype
                       Number of appointments
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      6
+                    {{ data['number-of-appointments']}} 
                     </dd>
                   </div> 
                   <div class="govuk-summary-list__row">
@@ -76,7 +63,7 @@ Appointments prototype
                         Date created
                       </dt>
                       <dd class="govuk-summary-list__value">
-                        13 Feb 2023
+                        29 June 2023
                       </dd>
                     </div>
                      <!-- <div class="govuk-summary-list__row">
@@ -235,37 +222,37 @@ Appointments prototype
                   <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
                       <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">1</td>
-                      <td class="govuk-table__cell">1 June 2023</td>
+                      <td class="govuk-table__cell">3 July 2023</td>
                       <td class="govuk-table__cell"></td>
-                      <td class="govuk-table__cell"><a href="../group/repeating.html" class="govuk-link">Manage details</a></td>
+                      <td class="govuk-table__cell"><a href="../group/repeating" class="govuk-link">Manage details</a></td>
                     </tr>
                     <tr class="govuk-table__row">
                       <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">2</td>
-                      <td class="govuk-table__cell">8 June 2023</td>
+                      <td class="govuk-table__cell">10 July 2023</td>
                       <td class="govuk-table__cell"></td>
                       <td class="govuk-table__cell"><a href="#" class="govuk-link">Manage details</a></td>
                     </tr>
                     <tr class="govuk-table__row">
                       <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">3</td>
-                      <td class="govuk-table__cell">15 June 2023</td>
+                      <td class="govuk-table__cell">17 July 2023</td>
                       <td class="govuk-table__cell"></td>
                       <td class="govuk-table__cell"><a href="#" class="govuk-link">Manage details</a></td>
                     </tr>
                     <tr class="govuk-table__row">
                       <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">4</td>
-                      <td class="govuk-table__cell">22 June 2023</td>
+                      <td class="govuk-table__cell">24 July 2023</td>
                       <td class="govuk-table__cell"></td>
-                      <td class="govuk-table__cell"><a href="#" class="govuk-link">Manage details</a></td>
+                      <td class="govuk-table__cell"><a href="../group/repeating-4" class="govuk-link">Manage details</a></td>
                     </tr>
                     <tr class="govuk-table__row">
                       <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">5</td>
-                      <td class="govuk-table__cell">29 June 2023</td>
+                      <td class="govuk-table__cell">31 July 2023</td>
                       <td class="govuk-table__cell"></td>
                       <td class="govuk-table__cell"><a href="#" class="govuk-link">Manage details</a></td>
                     </tr>
                     <tr class="govuk-table__row">
                       <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">6</td>
-                      <td class="govuk-table__cell">5 June 2023</td>
+                      <td class="govuk-table__cell">7 August 2023</td>
                       <td class="govuk-table__cell">
                       </td>
                       <td class="govuk-table__cell"><a href="#" class="govuk-link">Manage details</a></td>

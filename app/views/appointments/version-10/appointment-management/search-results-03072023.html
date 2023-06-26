@@ -4,14 +4,14 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form id="form" method="post" action="search-results-26062023">
+<form id="form" method="post" action="search-results-03072023">
 
 	<div class="back">
 		<a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
 	</div>
 	<h1 class="govuk-heading-l">
 		Appointments dashboard
-		<span class="govuk-caption-l">Monday, 26 June 2023</span>
+		<span class="govuk-caption-l">Monday, 3 July 2023</span>
 	</h1>
 
 
@@ -79,13 +79,13 @@ Appointments prototype
 								{
 								name: "day",
 								label: "Day",
-								value: "26",
+								value: "03",
 								classes: "govuk-input--width-2 "
 								},
 								{
 								name: "month",
 								label: "Month",
-								value: "6",
+								value: "07",
 								classes: "govuk-input--width-2"
 								},
 								{
@@ -296,6 +296,8 @@ Appointments prototype
 								<option value="SOTP Assessment">SOTP Assessment</option>
 								
 								<option value="Storybook Dads appointment">Storybook Dads appointment</option>
+
+								<option value="The Bridge">The Bridge</option>
 								
 								<option value="TSP Appointment">TSP Appointment</option>
 								
@@ -410,6 +412,8 @@ Appointments prototype
 								<option value="SOTP Assessment">SOTP Assessment</option>
 								
 								<option value="Storybook Dads appointment">Storybook Dads appointment</option>
+
+								<option value="The Bridge">The Bridge</option>
 								
 								<option value="TSP Appointment">TSP Appointment</option>
 								
@@ -541,32 +545,7 @@ Appointments prototype
 						]
 						}) }}
 
-						<!-- Created by GOVUK radio with component - HTML -->
-						{{ govukRadios({
-							classes: "govuk-radios--small",
-							id: "appointment-type",
-							name: "appointment-type",
-	
-							fieldset: {
-							legend: {
-							text: "Individual or group appointment",
-							isPageHeading: false,
-							classes: "govuk-fieldset__legend--s"
-							}
-							},
-							items: [
-	
-							{
-							value: "individual",
-							text: "Individual"
-							},
-							{
-							value: "group",
-							text: "Group"
-							}
-							]
-							}) }}
-
+						
 						<button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6"
 							data-module="govuk-button" action="appointment-view">
 							Apply filters
@@ -1036,13 +1015,21 @@ Appointments prototype
 
 					<tr class="govuk-table__row "> 
 						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
-						<td class="govuk-table__cell">9:00 to 12:00</td>
-						<td class="govuk-table__cell">Case - Substance misuse services</td>
-						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell">
+							{{ data['start-hours']}}:{{ data['start-minutes']}} to {{ data['end-hours']}}:{{ data['end-minutes']}}  </td>
+						<td class="govuk-table__cell">{% if data['alt-appointment-name'] !='' %}
+
+							{{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+			  
+							{% else %}
+							
+							{{ data['apppointment-type']}}
+							{% endif %}</td>
+						<td class="govuk-table__cell">{{ data['apppointment-location']}}</td>
 						<td class="govuk-table__cell">6</td> 
 						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 6</td>
 						<td class="govuk-table__cell govuk-table__cell--numeric">
-							<a href="appointment-summary/group/repeating.html" class="govuk-link">Manage details</a>
+							<a href="appointment-summary/group/repeating" class="govuk-link">Manage details</a>
 						</td>
 					</tr>
 					<tr class="govuk-table__row ">

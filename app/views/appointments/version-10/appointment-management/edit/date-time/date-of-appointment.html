@@ -17,46 +17,57 @@ Appointments prototype
         <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
         </div>
      <h1 class="govuk-heading-l">
-      <span class="govuk-caption-l">[Appointment name]</span>
+      <span class="govuk-caption-l">
+        {% if data['alt-appointment-name'] !='' %}
+
+        {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+        {% else %}
+        
+        {{ data['apppointment-type']}}
+        {% endif %}
+      </span>
       Change the date and time of the appointment
      </h1> 
-     {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
-  
-     {{ govukDateInput({
-      id: "date-of-appointment",
-      namePrefix: "date-of-appointment-alt",
-      value: data['date-of-appointment-alt'],
-      hint: {
-        text: "For example, 31 3 2023"
-      },
-      fieldset: {
-        legend: {
-          text: "Date of appointment",
-          isPageHeading: true,
-          classes: "govuk-fieldset__legend--m"
-        }
-      },
-      items: [
-        {
-          name: "day",
-          label: "Day",
-          value: '20',
-          classes: "govuk-input--width-2"
-        },
-        {
-          name: "month",
-          label: "Month",
-          value: '4',
-          classes: "govuk-input--width-2"
-        },
-        {
-          name: "year",
-          label: "Year",
-          value: '2023',
-          classes: "govuk-input--width-4"
-        }
-      ]
-    }) }}
+
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" role="group" aria-describedby="date-of-appointment-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h2 class="govuk-fieldset__heading">
+            Date of appointment
+          </h2>
+        </legend>
+        <div id="date-of-appointment-hint" class="govuk-hint">
+          For example, 27 3 2023
+        </div>
+        <div class="govuk-date-input" id="date-of-appointment">
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-date-input__label" for="date-of-appointment-day">
+                Day
+              </label>
+              <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-of-appointment-day" name="date-of-appointment-day" type="text" inputmode="numeric" value="{{ data['date-of-appointment-day']}}">
+            </div>
+          </div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-date-input__label" for="date-of-appointment-month">
+                Month
+              </label>
+              <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-of-appointment-month" name="date-of-appointment-month" type="text" inputmode="numeric" value="{{ data['date-of-appointment-month']}}">
+            </div>
+          </div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-date-input__label" for="date-of-appointment-year">
+                Year
+              </label>
+              <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="date-of-appointment-year" name="date-of-appointment-year" type="text" inputmode="numeric" value="{{ data['date-of-appointment-year']}}">
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
   
   
     
@@ -68,8 +79,8 @@ Appointments prototype
             </h3>
             <ul class="time-input">
               <li>
-                <select class="govuk-select" id="start-hours-alt" name="start-hours-alt">
-                  <option selected>11</option>
+                <select class="govuk-select" id="start-hours" name="start-hours">
+                  <option selected></option>
                   <option value="08">08</option>
                   <option value="09">09</option>
                   <option value="10">10</option>
@@ -90,8 +101,8 @@ Appointments prototype
                
               </li>
               <li>
-                <select class="govuk-select minutes" id="start-minutes-alt" name="start-minutes-alt">
-                  <option selected>00</option>
+                <select class="govuk-select minutes" id="start-minutes" name="start-minutes">
+                  <option selected></option>
                   <option value="00">00</option>
                   <option value="15">15</option>
                   <option value="30">30</option>
@@ -110,8 +121,8 @@ Appointments prototype
             </h3>
             <ul class="time-input" id="end-time">
               <li>
-                <select class="govuk-select" id="end-hours-alt" name="end-hours-alt">
-                  <option selected>12</option>
+                <select class="govuk-select" id="end-hours" name="end-hours">
+                  <option selected></option>
                   <option value="08">08</option>
                   <option value="09">09</option>
                   <option value="10">10</option>
@@ -132,8 +143,8 @@ Appointments prototype
                
               </li>
               <li>
-                <select class="govuk-select minutes" id="end-minutes-alt" name="end-minutes-alt">
-                  <option selected>00</option>
+                <select class="govuk-select minutes" id="end-minutes" name="end-minutes">
+                  <option selected></option>
                   <option value="00">00</option>
                   <option value="15">15</option>
                   <option value="30">30</option>

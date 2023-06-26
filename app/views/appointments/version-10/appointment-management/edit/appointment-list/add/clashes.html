@@ -11,13 +11,20 @@ Appointments prototype
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
 
-      
-
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      <span class="govuk-caption-l">Group appointment</span>
-      Check for appointment clashes
-    </h1>
-    <p>updated design tbc</p>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+        <span class="govuk-caption-l">
+          {% if data['alt-appointment-name'] !='' %}
+  
+          {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+  
+          {% else %}
+          
+          {{ data['apppointment-type']}}
+          {% endif %}
+        </span>
+        Check for appointment clashes
+      </h1>
+      <p>updated design tbc</p>
 <br>
 {{ govukButton({
   text: "Continue",
