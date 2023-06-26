@@ -11,7 +11,7 @@ Appointments prototype
 
 {% block content %}
 
-<form id="form" method="post" action="appointment-name-manual">
+<form id="form" method="post" action="location">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-half">
     
@@ -136,7 +136,24 @@ Appointments prototype
 					
 					<option value="Video Link Booking">Video Link Booking</option>
 					</select>
-			</div>
+			</div> 
+
+			  <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="40">
+				<div class="govuk-form-group">
+				  <h1 class="govuk-label-wrapper">
+					<label class="govuk-label govuk-label--m" for="with-hint">
+					Add an optional custom name  
+					</label>
+				  </h1>
+				  <div id="with-hint-hint" class="govuk-hint">
+					Use the custom name to add detail about what the appointment is for. It will displayed in this service nd on unlock lists and movement slips.
+				  </div>
+				  <textarea class="govuk-textarea govuk-js-character-count" id="with-hint" name="with-hint" rows="1" aria-describedby="with-hint-info with-hint-hint"></textarea>
+				</div>
+				<div id="with-hint-info" class="govuk-hint govuk-character-count__message">
+				  You can enter up to 40 characters
+				</div>
+			  </div>
 
             <div class="govuk-button-group">
               {{ govukButton({
