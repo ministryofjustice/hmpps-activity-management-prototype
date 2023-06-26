@@ -36,10 +36,10 @@ Appointments prototype
 				  Attendees 
 				</dt>
 				<dd class="govuk-summary-list__value">
-				  9
+				  8
 				</dd>
 				<dd class="govuk-summary-list__actions">
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="person-add-another">
 					Change<span class="govuk-visually-hidden"> change</span>
 				  </a>
 				</dd>
@@ -49,10 +49,10 @@ Appointments prototype
 				  Location
 				</dt>
 				<dd class="govuk-summary-list__value">
-				  Classroom 2
+					{{ data['apppointment-location']}}
 				</dd>
 				<dd class="govuk-summary-list__actions">
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="location">
 					Change<span class="govuk-visually-hidden"> date</span>
 				  </a>
 				</dd>
@@ -65,7 +65,7 @@ Appointments prototype
 				26 June 2023
 			  </dd>
 			  <dd class="govuk-summary-list__actions">
-				<a class="govuk-link" href="#">
+				<a class="govuk-link" href="date-of-appointment">
 				  Change<span class="govuk-visually-hidden"> date</span>
 				</a>
 			  </dd>
@@ -75,10 +75,10 @@ Appointments prototype
 				  Time
 				</dt>
 				<dd class="govuk-summary-list__value">
-				  9:00 to 10:00
+					{{ data['start-hours']}}:{{ data['start-minutes']}} to {{ data['end-hours']}}:{{ data['end-minutes']}} 
 				</dd>
 				<dd class="govuk-summary-list__actions">
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="date-of-appointment">
 					Change<span class="govuk-visually-hidden"> time</span>
 				  </a>
 				</dd>
@@ -98,11 +98,12 @@ Appointments prototype
 
 
 		  <h2 class="govuk-heading-m govuk-visually-hidden">
-			Classroom 2 events on 26 June 2023
+			{{ data['apppointment-location']}} events
 		  </h2> 
 
 		   <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
-            <caption class="govuk-table__caption govuk-table__caption--m"><b>Classroom 2 events on 26 June 2023</b>
+            <caption class="govuk-table__caption govuk-table__caption--m"><b>
+				{{ data['apppointment-location']}} events</b>
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
@@ -148,7 +149,7 @@ Appointments prototype
           </table>
 
 		  <h2 class="govuk-heading-m">
-			Attendee events on 26 June 2023
+			Attendee events
 		  </h2> 
 
 		  <div class="govuk-summary-card">
