@@ -17,8 +17,16 @@ text: "Back",
     <div class="govuk-grid-column-two-thirds">
         <form method="post" action="../../../appointment-summary/group/repeating">
 
-            <h2 class="govuk-heading-l">
-            <span class="govuk-caption-l">[Appointment name]</span>
+            <h2 class="govuk-heading-l"><span class="govuk-caption-l">
+              {% if data['alt-appointment-name'] !='' %}
+      
+              {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+      
+              {% else %}
+              
+              {{ data['apppointment-type']}}
+              {% endif %}
+            </span>
             Which appointment do you want to add the attendees to?
             </h2>
 

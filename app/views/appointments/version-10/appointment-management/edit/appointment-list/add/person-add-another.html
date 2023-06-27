@@ -15,8 +15,16 @@ Appointments prototype
     <div class="back">
       <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
       </div>
-      <h1 class="govuk-heading-l">
-      <span class="govuk-caption-l">[Appointment name]</span>
+      <h1 class="govuk-heading-l"><span class="govuk-caption-l">
+        {% if data['alt-appointment-name'] !='' %}
+
+        {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+        {% else %}
+        
+        {{ data['apppointment-type']}}
+        {% endif %}
+      </span>
         Review and add more people to the list of attendees
        </h1>
 

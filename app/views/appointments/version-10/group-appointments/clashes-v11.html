@@ -13,7 +13,7 @@ Appointments prototype
 
     <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
       <span class="govuk-caption-l">Schedule a group appointment</span>
-      Review scheduled events to check for potential clashes
+      Review clashing events
     </h1> 
   </div>
 </div>
@@ -36,10 +36,10 @@ Appointments prototype
 				  Attendees 
 				</dt>
 				<dd class="govuk-summary-list__value">
-				  9
+				  8
 				</dd>
 				<dd class="govuk-summary-list__actions">
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="person-add-another">
 					Change<span class="govuk-visually-hidden"> change</span>
 				  </a>
 				</dd>
@@ -49,10 +49,10 @@ Appointments prototype
 				  Location
 				</dt>
 				<dd class="govuk-summary-list__value">
-				  Classroom 2
+					{{ data['apppointment-location']}}
 				</dd>
 				<dd class="govuk-summary-list__actions">
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="location">
 					Change<span class="govuk-visually-hidden"> date</span>
 				  </a>
 				</dd>
@@ -65,7 +65,7 @@ Appointments prototype
 				26 June 2023
 			  </dd>
 			  <dd class="govuk-summary-list__actions">
-				<a class="govuk-link" href="#">
+				<a class="govuk-link" href="date-of-appointment">
 				  Change<span class="govuk-visually-hidden"> date</span>
 				</a>
 			  </dd>
@@ -75,10 +75,10 @@ Appointments prototype
 				  Time
 				</dt>
 				<dd class="govuk-summary-list__value">
-				  9:00 to 10:00
+					{{ data['start-hours']}}:{{ data['start-minutes']}} to {{ data['end-hours']}}:{{ data['end-minutes']}} 
 				</dd>
 				<dd class="govuk-summary-list__actions">
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="date-of-appointment">
 					Change<span class="govuk-visually-hidden"> time</span>
 				  </a>
 				</dd>
@@ -98,11 +98,12 @@ Appointments prototype
 
 
 		  <h2 class="govuk-heading-m govuk-visually-hidden">
-			Classroom 2 events on 26 June 2023
+			{{ data['apppointment-location']}} events
 		  </h2> 
 
 		   <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
-            <caption class="govuk-table__caption govuk-table__caption--m"><b>Classroom 2 events on 26 June 2023</b>
+            <caption class="govuk-table__caption govuk-table__caption--m"><b>
+				{{ data['apppointment-location']}} events</b>
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
@@ -135,7 +136,7 @@ Appointments prototype
               </tr>
               <tr class="govuk-table__row"> 
                 <td class="govuk-table__cell" >
-                  14:30:00 to 15:30
+                  15:00 to 16:00
                 </td> 
                 <td class="govuk-table__cell">
                   English 2
@@ -148,7 +149,7 @@ Appointments prototype
           </table>
 
 		  <h2 class="govuk-heading-m">
-			Attendee events on 26 June 2023
+			Attendee events
 		  </h2> 
 
 		  <div class="govuk-summary-card">
@@ -245,16 +246,16 @@ Appointments prototype
 					<tbody class="govuk-table__body">
 						<tr class="govuk-table__row">  
 						  <td class="govuk-table__cell" >
-							9:00 to 10:00
+							9:00 to 12:00
 						  </td>
 						  <td class="govuk-table__cell">
-							  Chaplaincy - Mass
+							Visits Orderly
 						  </td>
 						  <td class="govuk-table__cell">
-							Appointment
+							  Activity
 						  </td>
 						  <td class="govuk-table__cell">
-							Chapel
+							Visits Room
 						  </td> 
 						</tr> 
 					  <tr class="govuk-table__row">  
@@ -299,32 +300,34 @@ Appointments prototype
 					  </tr>
 					</thead>
 					<tbody class="govuk-table__body">
+						<tr class="govuk-table__row">   
+
 						<tr class="govuk-table__row">  
-						  <td class="govuk-table__cell" >
-							9:00 to 10:00
-						  </td>
-						  <td class="govuk-table__cell">
-							  Chaplaincy - Mass
-						  </td>
-						  <td class="govuk-table__cell">
-							Appointment
-						  </td>
-						  <td class="govuk-table__cell">
-							Chapel
-						  </td> 
-						</tr> 
+							<td class="govuk-table__cell" >
+								9:30 to 10:30
+							</td>
+							<td class="govuk-table__cell">
+							  Family visit
+							</td>
+							<td class="govuk-table__cell">
+							  Appointment
+							</td>
+							<td class="govuk-table__cell">
+								Visits Room
+							</td> 
+						  </tr> 
 					  <tr class="govuk-table__row">  
 						<td class="govuk-table__cell" >
-							13:00 to 14:00
+							13:00 to 16:00
 						</td>
 						<td class="govuk-table__cell">
-						Medical - Doctor
+							Motor Vehicle Maintenance Class
 						</td>
 						<td class="govuk-table__cell">
-						  Appointment
+							Activity
 						</td>
 						<td class="govuk-table__cell">
-						  Medical room 1
+						  Workshop
 						</td> 
 					  </tr> 
 					</tbody>
@@ -354,48 +357,21 @@ Appointments prototype
 					  </tr>
 					</thead>
 					<tbody class="govuk-table__body">
-						<tr class="govuk-table__row">  
-						  <td class="govuk-table__cell" >
-							9:00 to 10:00
-						  </td>
-						  <td class="govuk-table__cell">
-							Maths 1 
-						  </td>
-						  <td class="govuk-table__cell">
-							Appointment
-						  </td>
-						  <td class="govuk-table__cell">
-							Classroom 1
-						  </td> 
-						</tr>
-					  <tr class="govuk-table__row">  
+					<tr class="govuk-table__row">  
 						<td class="govuk-table__cell" >
-							13:00 to 14:00
+							13:00 to 16:00
 						</td>
 						<td class="govuk-table__cell">
-							Chaplaincy
+							Recycling Team
 						</td>
 						<td class="govuk-table__cell">
-						  Appointment
+							Activity
 						</td>
 						<td class="govuk-table__cell">
-							Chapel
+							Recycling Center
 						</td> 
-					  </tr> 
-					  <tr class="govuk-table__row">  
-						<td class="govuk-table__cell" >
-						  15:00 to 16:00
-						</td>
-						<td class="govuk-table__cell">
-						  Case - Drug Misuse 
-						</td>
-						<td class="govuk-table__cell">
-						  Appointment
-						</td>
-						<td class="govuk-table__cell">
-						  Classroom 2
-						</td> 
-					  </tr>
+						</tr> 
+						
 					</tbody>
 				  </table>
 			</div>
@@ -424,34 +400,52 @@ Appointments prototype
 					  </tr>
 					</thead>
 					<tbody class="govuk-table__body">
+						<tr class="govuk-table__row">   
 						<tr class="govuk-table__row">  
-						  <td class="govuk-table__cell" >
-							9:00 to 10:00
-						  </td>
-						  <td class="govuk-table__cell">
-							  Gym - weights
-						  </td>
-						  <td class="govuk-table__cell">
-							Appointment
-						  </td>
-						  <td class="govuk-table__cell">
-							Gym
-						  </td> 
-						</tr> 
-					  <tr class="govuk-table__row">  
-						<td class="govuk-table__cell" >
-							13:00 to 14:00
-						</td>
-						<td class="govuk-table__cell">
-						  Family visit
-						</td>
-						<td class="govuk-table__cell">
-						  Appointment
-						</td>
-						<td class="govuk-table__cell">
-						 Visiting room
-						</td> 
-					  </tr> 
+							<td class="govuk-table__cell" >
+								9:30 to 10:30
+							</td>
+							<td class="govuk-table__cell">
+							  Family visit
+							</td>
+							<td class="govuk-table__cell">
+							  Appointment
+							</td>
+							<td class="govuk-table__cell">
+								Visits Room
+							</td> 
+						  </tr> 
+
+						<tr class="govuk-table__row">  
+							<td class="govuk-table__cell" >
+								14:00 to 15:00
+							</td>
+							<td class="govuk-table__cell">
+							  Gym
+							</td>
+							<td class="govuk-table__cell">
+							  Appointment
+							</td>
+							<td class="govuk-table__cell">
+							 Gym
+							</td> 
+						  </tr> 
+
+
+						<tr class="govuk-table__row">  
+							<td class="govuk-table__cell" >
+								15:00 to 16:00
+							</td>
+							<td class="govuk-table__cell">
+								Gym Cleaning Team
+							</td>
+							<td class="govuk-table__cell">
+							  Activity
+							</td>
+							<td class="govuk-table__cell">
+							 Gym
+							</td> 
+						  </tr> 
 					</tbody>
 				  </table>
 			</div>
@@ -481,35 +475,37 @@ Appointments prototype
 						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Location</th>
 					  </tr>
 					</thead>
-					<tbody class="govuk-table__body">
+					<tbody class="govuk-table__body"> 
+
 						<tr class="govuk-table__row">  
-						  <td class="govuk-table__cell" >
-							9:00 to 10:00
-						  </td>
-						  <td class="govuk-table__cell">
-							  Chaplaincy - Mass
-						  </td>
-						  <td class="govuk-table__cell">
-							Appointment
-						  </td>
-						  <td class="govuk-table__cell">
-							Chapel
-						  </td> 
-						</tr> 
-					  <tr class="govuk-table__row">  
-						<td class="govuk-table__cell" >
-							13:00 to 14:00
-						</td>
-						<td class="govuk-table__cell">
-						  Court meeting
-						</td>
-						<td class="govuk-table__cell">
-						  Appointment
-						</td>
-						<td class="govuk-table__cell">
-						  Meeting room
-						</td> 
-					  </tr> 
+							<td class="govuk-table__cell" >
+								9:00 to 12:00
+							</td>
+							<td class="govuk-table__cell">
+								G-Wing Laundry Team
+							</td>
+							<td class="govuk-table__cell">
+							  Activity
+							</td>
+							<td class="govuk-table__cell">
+								G Wing
+							</td> 
+						  </tr> 
+
+						<tr class="govuk-table__row">  
+							<td class="govuk-table__cell" >
+								14:00 to 15:00
+							</td>
+							<td class="govuk-table__cell">
+							  Gym
+							</td>
+							<td class="govuk-table__cell">
+							  Appointment
+							</td>
+							<td class="govuk-table__cell">
+							 Gym
+							</td> 
+						  </tr> 
 					</tbody>
 				  </table>
 			</div>
@@ -541,33 +537,34 @@ Appointments prototype
 					</thead>
 					<tbody class="govuk-table__body">
 						<tr class="govuk-table__row">  
-						  <td class="govuk-table__cell" >
-							9:00 to 10:00
-						  </td>
-						  <td class="govuk-table__cell">
-							  Chaplaincy - Mass
-						  </td>
-						  <td class="govuk-table__cell">
-							Appointment
-						  </td>
-						  <td class="govuk-table__cell">
-							Chapel
-						  </td> 
-						</tr> 
-					  <tr class="govuk-table__row">  
-						<td class="govuk-table__cell" >
-							13:00 to 14:00
-						</td>
-						<td class="govuk-table__cell">
-						  Court meeting
-						</td>
-						<td class="govuk-table__cell">
-						  Appointment
-						</td>
-						<td class="govuk-table__cell">
-						  Meeting room
-						</td> 
-					  </tr> 
+						<tr class="govuk-table__row">  
+							<td class="govuk-table__cell" >
+							  10:00 to 12:00
+							</td>
+							<td class="govuk-table__cell">
+							  Induction meeting
+							</td>
+							<td class="govuk-table__cell">
+							  Appointment
+							</td>
+							<td class="govuk-table__cell">
+							  Classroom 1
+							</td> 
+						  </tr>  
+							<tr class="govuk-table__row">  
+								<td class="govuk-table__cell" >
+									13:00 to 14:00
+								</td>
+								<td class="govuk-table__cell">
+								Court meeting
+								</td>
+								<td class="govuk-table__cell">
+								Appointment
+								</td>
+								<td class="govuk-table__cell">
+								Meeting room
+								</td> 
+							</tr> 
 					</tbody>
 				  </table>
 			</div>
@@ -594,49 +591,38 @@ Appointments prototype
 						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Location</th>
 					  </tr>
 					</thead>
-					<tbody class="govuk-table__body">
+					<tbody class="govuk-table__body"> 
+
 						<tr class="govuk-table__row">  
-						  <td class="govuk-table__cell" >
-							10:00 to 12:00
-						  </td>
-						  <td class="govuk-table__cell">
-							Workshop
-						  </td>
-						  <td class="govuk-table__cell">
-							Activity
-						  </td>
-						  <td class="govuk-table__cell">
-							Workshop
-						  </td> 
-						</tr> 
+							<td class="govuk-table__cell" >
+								9:30 to 10:30
+							</td>
+							<td class="govuk-table__cell">
+							  Family visit
+							</td>
+							<td class="govuk-table__cell">
+							  Appointment
+							</td>
+							<td class="govuk-table__cell">
+								Visits Room
+							</td> 
+						  </tr> 
+						
 						<tr class="govuk-table__row">  
-						  <td class="govuk-table__cell" >
+							<td class="govuk-table__cell" >
 							13:00 to 16:00
-						  </td>
-						  <td class="govuk-table__cell">
-							Workshop
-						  </td>
-						  <td class="govuk-table__cell">
-							Actvity
-						  </td>
-						  <td class="govuk-table__cell">
-							Workshop
-						  </td> 
-						</tr> 
-					  <tr class="govuk-table__row">  
-						<td class="govuk-table__cell" >
-							13:00 to 14:00
-						</td>
-						<td class="govuk-table__cell">
-						  Court meeting
-						</td>
-						<td class="govuk-table__cell">
-						  Appointment
-						</td>
-						<td class="govuk-table__cell">
-						  Meeting room
-						</td> 
-					  </tr> 
+							</td>
+							<td class="govuk-table__cell">
+								Small Works Team
+							</td>
+							<td class="govuk-table__cell">
+							  Activity
+							</td>
+							<td class="govuk-table__cell">
+								Visits Room
+							</td> 
+						  </tr> 
+
 					</tbody>
 				  </table>
 			</div>

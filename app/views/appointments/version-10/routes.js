@@ -301,11 +301,11 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 
   router.post(`/appointment-management/date-filter`, function (req, res) {
 	const appDate = req.session.data['appt-date-day'];
-	if (appDate === '28') {
-		res.redirect(`search-results-28062023`);
+	if (appDate === '24') {
+		res.redirect(`search-results-24072023`);
 	}
 	else {
-		res.redirect(`search-results-26062023`);
+		res.redirect(`search-results-03072023`);
 	}
   });
 

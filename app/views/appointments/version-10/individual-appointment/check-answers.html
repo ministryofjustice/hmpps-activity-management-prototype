@@ -11,6 +11,10 @@ Appointments prototype
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <div class="back">
+        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+        </div>
             <h1 class="govuk-heading-l">Check and confirm the details of this one-to-one appointment</h1>
             <h2 class="govuk-heading-m">Appointment details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
@@ -22,7 +26,7 @@ Appointments prototype
                   <a href="#" class="govuk-link"><b>Rudge</b>, Neil</a> <br>G2044E<br>1−1−2
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/search-person">
+                  <a class="govuk-link" href="search-person">
                     Change<span class="govuk-visually-hidden"> Attendee list</span>
                   </a>
                 </dd>
@@ -32,11 +36,20 @@ Appointments prototype
                   Appointment name
                 </dt>
                 <dd class="govuk-summary-list__value">
-                   {{ data['categoryChoicesingle']}}
+                   
+                {% if data['alt-appointment-name'] !='' %}
+
+                {{ data['alt-appointment-name']}} ({{ data['apppointment-type-indv']}})
+
+                {% else %}
+                
+                {{ data['apppointment-type-indv']}}
+                {% endif %}
+
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/appointment-type">
-                    Change<span class="govuk-visually-hidden"> type</span>
+                  <a class="govuk-link" href="appointment-name">
+                    Change<span class="govuk-visually-hidden"> name</span>
                   </a>
                 </dd>
               </div> 
@@ -47,10 +60,10 @@ Appointments prototype
                   Location
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['locationChoicesingle']}}
+                  {{ data['apppointment-location-indv']}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/location">
+                  <a class="govuk-link" href="location">
                     Change<span class="govuk-visually-hidden"> location</span>
                   </a>
                 </dd>
@@ -64,7 +77,7 @@ Appointments prototype
                   {{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/date-of-appointment">
+                  <a class="govuk-link" href="date-of-appointment">
                     Change <span class="govuk-visually-hidden"> date</span>
                   </a>
                 </dd>
@@ -77,7 +90,7 @@ Appointments prototype
                   {{ data['start-hours-single']}}:{{ data['start-minutes-single']}} 
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/date-of-appointment#time">
+                  <a class="govuk-link" href="date-of-appointment#time">
                     Change<span class="govuk-visually-hidden"> Time</span>
                   </a>
                 </dd>
@@ -90,7 +103,7 @@ Appointments prototype
                   {{ data['end-hours-single']}}:{{ data['end-minutes-single']}} 
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/date-of-appointment#time">
+                  <a class="govuk-link" href="date-of-appointment#time">
                     Change<span class="govuk-visually-hidden"> Time</span>
                   </a>
                 </dd>
@@ -103,7 +116,7 @@ Appointments prototype
                   {{ data['appointment-repeat-single']}} 
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/appointment-repeat">
+                  <a class="govuk-link" href="appointment-repeat">
                     Change<span class="govuk-visually-hidden"> Time</span>
                   </a>
                 </dd>
@@ -117,7 +130,7 @@ Appointments prototype
                   {{ data['appointment-frequency-single']}} 
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/appointment-frequency#appointment-frequency">
+                  <a class="govuk-link" href="appointment-frequency#appointment-frequency">
                     Change<span class="govuk-visually-hidden"> Frequency</span>
                   </a>
                 </dd>
@@ -130,27 +143,32 @@ Appointments prototype
                   {{ data['number-of-appointments-single']}}   
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/appointment-frequency">
+                  <a class="govuk-link" href="appointment-frequency">
                     Change<span class="govuk-visually-hidden"> Occurences left</span>
                   </a>
                 </dd>
               </div>
-              {% endif %}
-              {% if data['comments-single'] !='' %}
+              {% endif %} 
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Extra information
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['comments-single']}}
+                  {% if data['more-detail'] !='' %}
+
+                  {{ data['more-detail']}} 
+  
+                  {% else %}
+                  None
+                  {% endif %}
+                  
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="check-answer/search-person">
-                    Change<span class="govuk-visually-hidden"> Attendee list</span>
+                  <a class="govuk-link" href="search-person">
+                    Change<span class="govuk-visually-hidden"> extra infro</span>
                   </a>
                 </dd>
-              </div>
-              {% endif %}
+              </div> 
             </dl>
             <form action="confirmation" method="post" novalidate>
               <input type="hidden" name="answers-checked" value="true">

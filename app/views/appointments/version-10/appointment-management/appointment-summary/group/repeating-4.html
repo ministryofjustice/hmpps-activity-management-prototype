@@ -17,13 +17,13 @@ Appointments prototype
          
           <div class="govuk-grid-column-two-thirds-from-desktop">
           
-              {% if data['which-occurrence-alt'] === 'This occurrence' %}
+              {% if data['which-occurrence-alt-prisoners'] == 'this' %}
 
               {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
               {% set html %}
                 <h3 class="govuk-notification-banner__heading">
-                  Appointment location for this occurrence changed successfully 
+                  Appointment location for this appointment changed successfully 
                 </h3>
                 
               {% endset %}
@@ -33,6 +33,38 @@ Appointments prototype
                 type: 'success'
               }) }}
     
+              {% elif data['which-occurrence-alt-prisoners'] == 'this and future' %}
+
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  Appointment location for 2 appointments changed successfully 
+                </h3>
+                
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }}
+
+              {% elif data['which-occurrence-alt-prisoners'] == 'this and all' %}
+
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  Appointment location for 6 appointments changed successfully 
+                </h3>
+                
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }}
+ 
               {% endif %}
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">Manage appointments</span>
@@ -44,7 +76,7 @@ Appointments prototype
               {% else %}
               
               {{ data['apppointment-type']}}
-              {% endif %} - {{ data['date-of-appointment-day']}} July 2023
+              {% endif %} - 24 July 2023
              </h1>
 
              <div class="govuk-summary-card">
@@ -72,7 +104,7 @@ Appointments prototype
                       Appointment
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      1 of {{ data['number-of-appointments']}} 
+                      4 of {{ data['number-of-appointments']}} 
                     </dd>
                   </div>
                 </dl>
@@ -122,7 +154,7 @@ Appointments prototype
                     {{ data['apppointment-location']}}
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="../../edit/location/location">
+                      <a class="govuk-link" href="../../edit/location-4/location">
                         Change <span class="govuk-visually-hidden">  location</span>
                       </a>
                     </dd>
@@ -132,10 +164,10 @@ Appointments prototype
                       Date
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      {{ data['date-of-appointment-day']}} July 2023
+                      24 July 2023
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="../../edit/date-time/date-of-appointment">
+                      <a class="govuk-link" href="../../edit/date-time-4/date-of-appointment">
                         Change <span class="govuk-visually-hidden"> date</span>
                       </a>
                     </dd>
@@ -148,7 +180,7 @@ Appointments prototype
                       {{ data['start-hours']}}:{{ data['start-minutes']}}  
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="../../edit/date-time/date-of-appointment">
+                      <a class="govuk-link" href="../../edit/date-time-4/date-of-appointment">
                         Change <span class="govuk-visually-hidden"> start time</span>
                       </a>
                     </dd>
@@ -161,7 +193,7 @@ Appointments prototype
                       {{ data['end-hours']}}:{{ data['end-minutes']}}  
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="../../edit/date-time/date-of-appointment">
+                    <a class="govuk-link" href="../../edit/date-time-4/date-of-appointment">
                         Change <span class="govuk-visually-hidden"> end time</span>
                       </a>
                     </dd>
@@ -174,7 +206,7 @@ Appointments prototype
                       {{ data['more-detail']}}
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="../../edit/movement-slip/comments">
+                    <a class="govuk-link" href="../../edit/movement-slip-4/comments">
                         Change <span class="govuk-visually-hidden"> extra information</span>
                       </a>
                     </dd>
