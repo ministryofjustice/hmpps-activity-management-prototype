@@ -207,7 +207,7 @@ Appointments prototype
 								
 								<option value="Adjudication review">Adjudication review</option>
 
-								<option value="Blood test" selected>Blood test</option>
+								<option value="Blood test">Blood test</option>
 								
 								<option value="Canteen">Canteen</option>
 								
@@ -325,7 +325,7 @@ Appointments prototype
 								
 								<option value="Adjudication review">Adjudication review</option>
 
-								<option value="Blood test" selected>Blood test</option>
+								<option value="Blood test">Blood test</option>
 								
 								<option value="Canteen">Canteen</option>
 								
@@ -444,7 +444,7 @@ Appointments prototype
 								
 								<option value="Adjudication review">Adjudication review</option>
 
-								<option value="Blood test" selected>Blood test</option>
+								<option value="Blood test">Blood test</option>
 								
 								<option value="Canteen">Canteen</option>
 								
@@ -550,6 +550,125 @@ Appointments prototype
 								</select>
 						</div>
 
+
+						{% elif data['appointment-type-fltr'] == 'Blood test' %}
+						<!-- Type select MOJ autocomplete component - HTML -->
+						<div class="govuk-form-group">
+							<label class="govuk-label govuk-label--s" for="sort">
+							  Appointment name
+							</label>
+							<select class="govuk-select" id="appointment-type-fltr" name="appointment-type-fltr"> 
+								<option value=""> </option>
+								<option value="Activities">Activities</option>
+								
+								<option value="Adjudication review">Adjudication review</option>
+
+								<option value="Blood test" selected>Blood test</option>
+								
+								<option value="Canteen">Canteen</option>
+								
+								<option value="Careers Adviser Appointment">Careers Adviser Appointment</option>
+								
+								<option value="Case - Baile Apps">Case - Baile Apps</option>
+								
+								<option value="Case - Benefits">Case - Benefits</option>
+								
+								<option value="Case - Housing">Case - Housing</option>
+								
+								<option value="Case - Legal aid">Case - Legal aid</option>
+								
+								<option value="Case - Other">Case - Other</option>
+								
+								<option value="Case - Probation">Case - Probation</option>
+								
+								<option value="Case - RAPT">Case - RAPT</option>
+								
+								<option value="Case - Substance misuse services">Case - Substance misuse services</option>
+								
+								<option value="Chaplaincy">Chaplaincy</option>
+								
+								<option value="Children and families">Children and families</option>
+								
+								<option value="Counselling session">Counselling session</option>
+								
+								<option value="Education">Education</option>
+								
+								<option value="Governor">Governor</option>
+								
+								<option value="Gym - Football">Gym - Football</option>
+								
+								<option value="Gym - PE Course">Gym - PE Course</option>
+								
+								<option value="Gym - Sports hall activity">Gym - Sports hall activity</option>
+								
+								<option value="Gym - Weights">Gym - Weights</option>
+								
+								<option value="Gym - Remedial physiotherapy">Gym - Remedial physiotherapy</option>
+								
+								<option value="Gym - Walking to health">Gym - Walking to health</option>
+								
+								<option value="IMB">IMB</option>
+								
+								<option value="Immigration appointment">Immigration appointment</option>
+								
+								<option value="Induction meeting">Induction meeting</option>
+								
+								<option value="Interventions">Interventions</option>
+								
+								<option value="Job Centre Plus">Job Centre Plus</option>
+								
+								<option value="Labour control">Labour control</option>
+								
+								<option value="Library">Library</option>
+								
+								<option value="Medical - Dentist">Medical - Dentist</option>
+								
+								<option value="Medical - Doctor">Medical - Doctor</option>
+								
+								<option value="Medical - Other">Medical - Other</option>
+								
+								<option value="Medical - Psy">Medical - Psy</option>
+								
+								<option value="Medical - X-Ray">Medical - X-Ray</option>
+								
+								<option value="OMU Appointment">OMU Appointment</option>
+								
+								<option value="Other">Other</option>
+								
+								<option value="Pre-release meeting">Pre-release meeting</option>
+								
+								<option value="Programme appointment">Programme appointment</option>
+								
+								<option value="ROTL Board">ROTL Board</option>
+								
+								<option value="Rec - MPU photo">Rec - MPU photo</option>
+								
+								<option value="Rec - Other">Rec - Other</option>
+								
+								<option value="Rec - Prop">Rec - Prop</option>
+								
+								<option value="Reset appointment">Reset appointment</option>
+								
+								<option value="Resolve">Resolve</option>
+								
+								<option value="SOTP Assessment">SOTP Assessment</option>
+								
+								<option value="Storybook Dads appointment">Storybook Dads appointment</option>
+
+								<option value="The Bridge">The Bridge</option>
+								
+								<option value="TSP Appointment">TSP Appointment</option>
+								
+								<option value="Toe by Toe appointment">Toe by Toe appointment</option>
+								
+								<option value="Trailblazers Appointment">Trailblazers Appointment</option>
+								
+								<option value="User Voice Session">User Voice Session</option>
+								
+								<option value="Video Link Booking">Video Link Booking</option>
+								</select>
+						</div>
+
 						{% else %}
 
 						<div class="govuk-form-group">
@@ -563,7 +682,7 @@ Appointments prototype
 								<option value="Adjudication review">Adjudication review</option>
 
 
-								<option value="Blood test" selected>Blood test</option>
+								<option value="Blood test">Blood test</option>
 								
 								<option value="Canteen">Canteen</option>
 								
@@ -1060,14 +1179,7 @@ Appointments prototype
 					<tr class="govuk-table__row ">
 						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
 						<td class="govuk-table__cell">8:45 to 9:15</td>
-						<td class="govuk-table__cell"> {% if data['alt-appointment-name-bulk'] !='' %}
-
-                  {{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
-  
-                  {% else %}
-                  
-                  {{ data['apppointment-type-bulk']}}
-                  {% endif %}</td>
+						<td class="govuk-table__cell"> Medical - Dentist</td>
 						<td class="govuk-table__cell">Medical room 2</td>
 						<td class="govuk-table__cell"><a href="#" class="govuk-link">Grant Kittel</a><br>O9555U<br>2-4-5</td> 
 						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
@@ -1077,7 +1189,7 @@ Appointments prototype
 						</td>
 					</tr> 
 
-					{% elif data['appointment-location-fltr'] == 'Medical Room 1' or data['appointment-type-fltr'] == 'Medical - Doctor' and data['appointment-location-fltr'] == 'Medical Room 1' %}
+					{% elif data['appointment-location-fltr'] == 'Medical Room 1' or data['appointment-type-fltr'] == 'Blood test' or data['appointment-type-fltr'] == 'Medical - Doctor' and data['appointment-location-fltr'] == 'Medical Room 1' %}
 					
 					<tr class="govuk-table__row"> 
 						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
@@ -1408,14 +1520,7 @@ Appointments prototype
 					<tr class="govuk-table__row ">
 						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
 						<td class="govuk-table__cell">8:45 to 9:15</td>
-						<td class="govuk-table__cell"> {% if data['alt-appointment-name-bulk'] !='' %}
-
-                  {{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
-  
-                  {% else %}
-                  
-                  {{ data['apppointment-type-bulk']}}
-                  {% endif %}</td>
+						<td class="govuk-table__cell"> Medical - Dentist</td>
 						<td class="govuk-table__cell">Medical room 2</td>
 						<td class="govuk-table__cell"><a href="#" class="govuk-link">Grant Kittel</a><br>O9555U<br>2-4-5</td> 
 						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
@@ -1630,14 +1735,7 @@ Appointments prototype
 					<tr class="govuk-table__row ">
 						<!-- <td class="govuk-table__cell">26 June 2023</td> -->
 						<td class="govuk-table__cell">8:45 to 9:15</td>
-						<td class="govuk-table__cell"> {% if data['alt-appointment-name-bulk'] !='' %}
-
-                  {{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
-  
-                  {% else %}
-                  
-                  {{ data['apppointment-type-bulk']}}
-                  {% endif %}</td>
+						<td class="govuk-table__cell"> Medical - Dentist</td>
 						<td class="govuk-table__cell">Medical room 2</td>
 						<td class="govuk-table__cell"><a href="#" class="govuk-link">Grant Kittel</a><br>O9555U<br>2-4-5</td> 
 						<td class="govuk-table__cell govuk-table__cell--numeric">1 of 1</td>
