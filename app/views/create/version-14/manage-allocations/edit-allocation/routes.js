@@ -407,7 +407,7 @@ router.get("/:prisonerId/schedule", function (req, res) {
   );
 
   // render the schedule template
-  res.render(req.protoUrl + "/schedule", {
+  res.render(req.protoUrl + "/schedule-v3", {
     activity,
     activitySchedule,
     daysWithSessions,
