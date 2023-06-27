@@ -15,17 +15,15 @@ text: "Back to manage allocations",
 {% block content %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% if data['confirmation-dialog'].display == true %}
-{% set p = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
 {{ govukNotificationBanner({
-text: "You have changed the " + data['confirmation-dialog'].change|replace('-',' ') + " for " + p.name.surname + ", " +
-p.name.firstname + " (" + p.id + ").",
+text: "You have changed the " + data['confirmation-dialog'].change|replace('-',' ') + " for " + prisonerData[0].name.surname + ", " +
+prisonerData[0].name.firstname + " (" + prisonerData[0].id + ").",
 type: "success"
 }) }}
 {% endif %}
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        {% set prisoner = data['new-application']['selected-prisoner']|getPrisonerDetails %}
         <span class="govuk-caption-l">
             {{activity.name}}
         </span>
