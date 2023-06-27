@@ -407,7 +407,7 @@ router.get("/:prisonerId/schedule", function (req, res) {
   );
 
   // render the schedule template
-  res.render(req.protoUrl + "/schedule", {
+  res.render(req.protoUrl + "/schedule-v3", {
     activity,
     activitySchedule,
     daysWithSessions,
@@ -530,6 +530,11 @@ router.get("/:prisonerId/schedule-v5", function (req, res) {
 // post route for the schedule page
 router.post("/:prisonerId/schedule", function (req, res) {
   //redirect to the prisoner's allocation details page with a success message
+  req.session.data["confirmation-dialog"] = {
+    display: true,
+    change: "schedule",
+  };
+
   res.redirect("../" + req.params.prisonerId);
 });
 
@@ -550,7 +555,7 @@ router.get("/:prisonerId/check-schedule", function (req, res) {
 
   // generate a random new schedule for the activity and add it to the schedule object
   // {day:1, amNew: [{"startTime":"8:30","endTime":"12:00"}], pmNew: null ... 
-  
+
   // add amNew and pmNew to the schedule object
   let newSchedule = schedule.map((day) => {
     // for each period (am/pm), if the value is null, skip it
@@ -565,7 +570,7 @@ router.get("/:prisonerId/check-schedule", function (req, res) {
 
     return day;
   });
-  
+
   // render the check-schedule template
   res.render(req.protoUrl + "/check-schedule", {
     activity,
