@@ -49,7 +49,7 @@ Appointments prototype
 				  Location
 				</dt>
 				<dd class="govuk-summary-list__value">
-				{{ data['apppointment-location']}}
+				{{ data['apppointment-location-bulk']}}
 				</dd>
 				<dd class="govuk-summary-list__actions">
 				  <a class="govuk-link" href="location">
@@ -61,8 +61,9 @@ Appointments prototype
 			  <dt class="govuk-summary-list__key">
 				Date
 			  </dt>
-			  <dd class="govuk-summary-list__value">
-				26 June 2023
+			  <dd class="govuk-summary-list__value">	
+				{{ data['date-of-appointment-bulk-day']}} {{ data['date-of-appointment-bulk-month']}}  {{ data['date-of-appointment-bulk-year']}}
+                
 			  </dd>
 			  <dd class="govuk-summary-list__actions">
 				<a class="govuk-link" href="date-of-appointment">
@@ -71,6 +72,9 @@ Appointments prototype
 			  </dd>
 			</div> 
 		  </dl>
+
+		  
+		  
 
 
 
@@ -85,7 +89,7 @@ Appointments prototype
 
 
 		  <h2 class="govuk-heading-m">
-			{{ data['apppointment-location']}} events
+			{{ data['apppointment-location-bulk']}} events
 		  </h2> 
 
 		  <details class="govuk-details" data-module="govuk-details">
@@ -435,7 +439,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Neil Rudge, G2044E <br> <span class="govuk-body">9:00 to 9:15</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>
@@ -510,7 +514,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Bert Hungerford, C2598E <br> <span class="govuk-body">9:15 to 9:30</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>
@@ -573,7 +577,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Matthew Doyle, E4911C <br> <span class="govuk-body">9:30 to 9:45</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>
@@ -621,7 +625,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Ryan Gee, F5132C <br> <span class="govuk-body">9:45 to 10:00</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>
@@ -701,7 +705,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Robin Bab, F4933A <br> <span class="govuk-body">10:00 to 10:15</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>
@@ -766,7 +770,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Tommy-Lee Knox, C8361E <br> <span class="govuk-body">10:15 to 10:30</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>
@@ -827,7 +831,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Fuentes Rasmussen, E2405E <br> <span class="govuk-body">10:30 to 10:45</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>
@@ -891,7 +895,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Luther Drove, C7950C <br> <span class="govuk-body">10:45 to 11:00</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>
@@ -941,7 +945,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Logan Looker, B9295C <br> <span class="govuk-body">11:00 to 11:15</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>
@@ -1005,7 +1009,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Eric Sykes, F6726E <br> <span class="govuk-body">11:15 to 11:30</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>
@@ -1033,7 +1037,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Grant Kittel, G2044E <br> <span class="govuk-body">11:30 to 11:45</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>
@@ -1098,7 +1102,7 @@ Appointments prototype
 			  <h2 class="govuk-summary-card__title">Amby Abraham, G2044E <br> <span class="govuk-body">11:45 to 12:00</span></h2>
 			  <ul class="govuk-summary-card__actions" style="align-content: space-between"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" href="appointment-time">
 					Change time
 				  </a>
 				</li>

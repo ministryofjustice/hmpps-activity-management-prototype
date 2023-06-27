@@ -27,10 +27,18 @@ Appointments prototype
                   Appointment name
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{ data['apppointment-type']}}
+                  
+                  {% if data['alt-appointment-name-bulk'] !='' %}
+
+                  {{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
+  
+                  {% else %}
+                  
+                  {{ data['apppointment-type-bulk']}}
+                  {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
+                  <a class="govuk-link" href="appointment-name">
                     Change<span class="govuk-visually-hidden"> Appointment name</span>
                   </a>
                 </dd>
@@ -40,10 +48,10 @@ Appointments prototype
                   Location
                 </dt>
                 <dd class="govuk-summary-list__value">
-                  {{data.locationbulk1 or data.locationbulk}}
+                  {{ data['apppointment-location-bulk']}} 
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
+                  <a class="govuk-link" href="location">
                     Change<span class="govuk-visually-hidden"> Time</span>
                   </a>
                 </dd>
@@ -56,7 +64,7 @@ Appointments prototype
                   {{ data['date-of-appointment-bulk-day']}} {{ data['date-of-appointment-bulk-month']}}  {{ data['date-of-appointment-bulk-year']}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="#">
+                  <a class="govuk-link" href="date-of-appointment">
                     Change<span class="govuk-visually-hidden"> Date</span>
                   </a>
                 </dd>

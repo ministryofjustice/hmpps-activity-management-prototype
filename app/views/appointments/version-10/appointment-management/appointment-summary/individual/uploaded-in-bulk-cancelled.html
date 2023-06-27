@@ -17,7 +17,15 @@ Appointments prototype
             <h1 class="govuk-heading-l">
               <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1">Cancelled</strong><br>
               <span class="govuk-caption-l">Manage appointments</span>
-              Edit details of Medical - Doctor one-to-one for Eric Sykes, B9295C
+              Edit details of  
+              {% if data['alt-appointment-name-bulk'] !='' %}
+
+              {{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
+
+              {% else %}
+              
+              {{ data['apppointment-type-bulk']}}
+              {% endif %} one-to-one for Eric Sykes, B9295C
              </h1>
 
              <!-- <div class="govuk-summary-card">
@@ -33,7 +41,7 @@ Appointments prototype
             </div> -->
 
             <div class="govuk-inset-text">
-              This appointment was scheduled in a <b>set of 10</b>. You can <a href="../bulk/overview">view the set</a> to cancel all 10 appointments, or print all movement slips at once.
+              This appointment was scheduled in a <b>set of 12</b>. You can <a href="../bulk/overview">view the set</a> to cancel all 12 appointments, or print all movement slips at once.
             </div>
 
              <div class="govuk-summary-card">
@@ -53,7 +61,15 @@ Appointments prototype
                       Appointment name
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      Medical - Doctor
+                       
+                  {% if data['alt-appointment-name-bulk'] !='' %}
+
+                  {{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
+  
+                  {% else %}
+                  
+                  {{ data['apppointment-type-bulk']}}
+                  {% endif %}
                     </dd>
                     <dd class="govuk-summary-list__actions">
                       <!-- <a class="govuk-link" href="change-answers/appointment-type">
@@ -67,7 +83,8 @@ Appointments prototype
                       Location
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      Medical room
+                      
+                  {{ data['apppointment-location-bulk']}} 
                     </dd>
                     <dd class="govuk-summary-list__actions">
                       <!-- <a class="govuk-link" href="#">
@@ -80,7 +97,7 @@ Appointments prototype
                       Date
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      26 June 2023
+                      {{ data['date-of-appointment-day']}} July 2023
                     </dd>
                     <dd class="govuk-summary-list__actions">
                       <!-- <a class="govuk-link" href="#">
@@ -120,6 +137,7 @@ Appointments prototype
                     </dt>
                     <dd class="govuk-summary-list__value">
                       
+                      {{ data['more-detail']}}
                     </dd>
                     <dd class="govuk-summary-list__actions">
                     <!-- <a class="govuk-link" href="#">
