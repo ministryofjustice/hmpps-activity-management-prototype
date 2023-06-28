@@ -32,12 +32,12 @@ Appointments prototype
     <div class="govuk-grid-column-full">
           
 
-        {% if data['prisoner-search-query'] == 'Neil Rudge' or data['prisoner-search-query'] == 'neil rudge' %}
+        {% if data['prisoner-search-query'] == 'Hamish' or data['prisoner-search-query'] == 'hamish' %}
         <div>
           <div style="float: left;">
               {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
               {{ govukInput({
-                value: "Neil Rudge",
+                value: "Hamish Laftery",
                 label: {
                 text: "Search by name or prison number",
                 classes: "",
@@ -69,9 +69,9 @@ Appointments prototype
 
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
-                    <td class="govuk-table__cell"><b>Neil Rudge</b></td>
-                    <td class="govuk-table__cell">EN2245U</td>
-                    <td class="govuk-table__cell">1−1−2</td>
+                    <td class="govuk-table__cell"><b>Hamish Laftery</b></td>
+                    <td class="govuk-table__cell">B2084Z</td>
+                    <td class="govuk-table__cell">2−4−3</td>
                     <td class="govuk-table__cell"><a href="#">View prisoner profile (opens in a new tab)</a></td>
                 </tr> 
             </tbody>
@@ -237,7 +237,7 @@ Appointments prototype
       <div style="float: left;">
           {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
           {{ govukInput({
-            value: "Neil Rudge",
+            value: "Hamish Laftery",
             label: {
             text: "Search by name or prison number",
             classes: "",
@@ -248,10 +248,11 @@ Appointments prototype
           name: "prisoner-search-query"
           }) }}
       </div>
-        <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="margin-top: 30px; margin-left: 10px;">Search</button>
+
+        <button class="govuk-button govuk-button--secondary"  style="margin-top: 30px; margin-left: 10px;">Search</button>
       </div>
 
-      <h2 class="govuk-heading-m" style="clear: both;">There is 1 result for {search term}.</h2>
+      <div><h2 class="govuk-heading-m" style="clear: both;">There is 1 result for {search term}.</h2></div>
 
       <table class="govuk-table">
         <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
@@ -264,23 +265,23 @@ Appointments prototype
                 <th scope="col" class="govuk-table__header">Cell location</th>
                 <th scope="col" class="govuk-table__header"></th>
             </tr>
-          </thead> 
+        </thead> 
 
-          <tbody class="govuk-table__body">
+        <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
-                <td class="govuk-table__cell"><b>Neil Rudge</b></td>
-                <td class="govuk-table__cell">EN2245U</td>
-                <td class="govuk-table__cell">1−1−2</td>
+                <td class="govuk-table__cell"><b>Hamish Laftery</b></td>
+                <td class="govuk-table__cell">B2084Z</td>
+                <td class="govuk-table__cell">2−4−3</td>
                 <td class="govuk-table__cell"><a href="#">View prisoner profile (opens in a new tab)</a></td>
             </tr> 
-          </tbody>
-        </table>
+        </tbody>
+    </table>
 
-      <div class="govuk-button-group">
-        <button class="govuk-button" data-module="govuk-button">
-        Continue
-        </button> 
-      </div>
+    <div class="govuk-button-group">
+      <button class="govuk-button" data-module="govuk-button">
+      Continue
+      </button> 
+  </div>
 
       {% endif %}
 

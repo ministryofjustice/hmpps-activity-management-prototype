@@ -12,7 +12,15 @@ Appointments prototype
       </div>
 
     <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
-      <span class="govuk-caption-l">Schedule a one-to-one appointment</span>
+      <span class="govuk-caption-l">
+		{% if data['alt-appointment-name'] !='' %}
+
+		{{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+		{% else %}
+		
+		{{ data['apppointment-type']}}
+		{% endif %}</span>
       Review clashing events
     </h1> 
   </div>
@@ -31,7 +39,7 @@ Appointments prototype
 		  </h2> 
 
 		<dl class="govuk-summary-list">
-			<div class="govuk-summary-list__row">
+			<!-- <div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 				  Attendee
 				</dt>
@@ -43,21 +51,21 @@ Appointments prototype
 					Change<span class="govuk-visually-hidden"> change</span>
 				  </a>
 				</dd>
-			  </div>
-			  <div class="govuk-summary-list__row">
+			  </div> -->
+			  <!-- <div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 				  Location
 				</dt>
 				<dd class="govuk-summary-list__value">
 				  
-					{{ data['apppointment-location-indv']}}
+					{{ data['apppointment-location']}}
 				</dd>
 				<dd class="govuk-summary-list__actions">
 				  <a class="govuk-link" href="#">
 					Change<span class="govuk-visually-hidden"> date</span>
 				  </a>
 				</dd>
-			  </div>
+			  </div> -->
 			<div class="govuk-summary-list__row">
 			  <dt class="govuk-summary-list__key">
 				Date
@@ -87,14 +95,14 @@ Appointments prototype
 			  </div>
 		  </dl>
 
-		  <h2 class="govuk-heading-m govuk-visually-hidden">
+		  <!-- <h2 class="govuk-heading-m govuk-visually-hidden">
 			
-			{{ data['apppointment-location-indv']}} events
+					{{ data['apppointment-location']}} events
 		  </h2> 
 
 		   <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
             <caption class="govuk-table__caption govuk-table__caption--m"><b>
-				{{ data['apppointment-location-indv']}} events</b>
+					{{ data['apppointment-location']}} events</b>
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
@@ -137,7 +145,7 @@ Appointments prototype
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
 
 		  <h2 class="govuk-heading-m">
 			Events for Neil Rudge, G2044E
@@ -202,7 +210,7 @@ Appointments prototype
 		  {{ govukButton({
 			text: "Continue",
 			attributes: {
-			  "formaction": "comments",
+			  "formaction": "../../appointment-summary/individual/non-repeating",
 			  "formmethod": "post"
 			  }
 		  }) }}
