@@ -16,7 +16,14 @@ Appointments prototype
           <div class="govuk-grid-column-two-thirds-from-desktop">
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">Manage appointments</span>
-              Edit appointment details for Medical - Doctor - 26 June 2023
+              Edit details of {% if data['alt-appointment-name'] !='' %}
+
+              {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+              {% else %}
+              
+              {{ data['apppointment-type']}}
+              {% endif %} one-to-one for Grant Kittel, G2044E
              </h1>
 
              <div class="govuk-summary-card">
@@ -36,7 +43,15 @@ Appointments prototype
                       Appointment name
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      Blood test (Medical - Doctor)
+                          
+                  {% if data['alt-appointment-name'] !='' %}
+
+                  {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+  
+                  {% else %}
+                  
+                  {{ data['apppointment-type']}}
+                  {% endif %}
                     </dd>
                     <!-- <dd class="govuk-summary-list__actions">
                       <a class="govuk-link" href="change-answers/appointment-type">
@@ -51,10 +66,10 @@ Appointments prototype
                       Location
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      Medical room 2
+                      {{ data['apppointment-location']}} 
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
+                      <a class="govuk-link" href="../../edit/location-indv/location">
                         Change <span class="govuk-visually-hidden">  location</span>
                       </a>
                     </dd>
@@ -64,10 +79,10 @@ Appointments prototype
                       Date
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      26 June 2023
+                      {{ data['date-of-appointment-day']}} July 2023
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
+                      <a class="govuk-link" href="../../edit/date-time-indv/date-of-appointment">
                         Change <span class="govuk-visually-hidden"> date</span>
                       </a>
                     </dd>
@@ -77,10 +92,10 @@ Appointments prototype
                       Start time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      8:45
+                      {{ data['start-hours']}}:{{ data['start-minutes']}} 
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="#">
+                      <a class="govuk-link" href="../../edit/date-time-indv/date-of-appointment">
                         Change <span class="govuk-visually-hidden"> start time</span>
                       </a>
                     </dd>
@@ -90,10 +105,10 @@ Appointments prototype
                       End time
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      9:15
+                      {{ data['end-hours']}}:{{ data['end-minutes']}}  
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="#">
+                    <a class="govuk-link" href="../../edit/date-time-indv/date-of-appointment">
                         Change <span class="govuk-visually-hidden"> end time</span>
                       </a>
                     </dd>
@@ -103,10 +118,10 @@ Appointments prototype
                       Extra information
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      
+                      {{ data['more-detail']}}
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="#">
+                    <a class="govuk-link" href="../../edit/movement-slip/comments">
                         Change <span class="govuk-visually-hidden"> extra information</span>
                       </a>
                     </dd>

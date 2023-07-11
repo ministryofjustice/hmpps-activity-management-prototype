@@ -12,7 +12,15 @@ Appointments prototype
       </div>
 
     <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
-      <span class="govuk-caption-l">Schedule a group appointment</span>
+      <span class="govuk-caption-l">
+		{% if data['alt-appointment-name'] !='' %}
+
+		{{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+		{% else %}
+		
+		{{ data['apppointment-type']}}
+		{% endif %}</span>
       Review scheduled events to avoid clashes
     </h1> 
   </div>
@@ -31,7 +39,7 @@ Appointments prototype
 		  </h2> 
 
 		<dl class="govuk-summary-list">
-			<div class="govuk-summary-list__row">
+			<!-- <div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 				  Attendees 
 				</dt>
@@ -56,13 +64,13 @@ Appointments prototype
 					Change<span class="govuk-visually-hidden"> date</span>
 				  </a>
 				</dd>
-			  </div>
+			  </div> -->
 			<div class="govuk-summary-list__row">
 			  <dt class="govuk-summary-list__key">
 				Date
 			  </dt>
 			  <dd class="govuk-summary-list__value">
-				{{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}
+				{{ data['date-of-appointment-day']}} July 2023
 			  </dd>
 			  <dd class="govuk-summary-list__actions">
 				<a class="govuk-link" href="date-of-appointment">
@@ -90,18 +98,20 @@ Appointments prototype
 		  {{ govukButton({
 			text: "Continue",
 			attributes: {
-			  "formaction": "comments",
+			  "formaction": "apply-to-date",
 			  "formmethod": "post"
 			  }
 		  }) }}
 
 
-
+<!-- 
 		  <h2 class="govuk-heading-m govuk-visually-hidden">
 			{{ data['apppointment-location']}} events
 		  </h2> 
-		  <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
-            <caption class="govuk-table__caption govuk-table__caption--m"><b>Classroom 2 events</b>
+
+		   <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+            <caption class="govuk-table__caption govuk-table__caption--m"><b>
+				{{ data['apppointment-location']}} events</b>
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
@@ -134,7 +144,7 @@ Appointments prototype
               </tr>
               <tr class="govuk-table__row"> 
                 <td class="govuk-table__cell" >
-                  14:30:00 to 15:30
+                  15:00 to 16:00
                 </td> 
                 <td class="govuk-table__cell">
                   English 2
@@ -144,8 +154,8 @@ Appointments prototype
                 </td>
               </tr>
             </tbody>
-          </table>
-		  
+          </table> -->
+
 		  <h2 class="govuk-heading-m">
 			Attendee events
 		  </h2> 
@@ -153,13 +163,13 @@ Appointments prototype
 		  <div class="govuk-summary-card">
 			<div class="govuk-summary-card__title-wrapper">
 			  <h2 class="govuk-summary-card__title">Neil Rudge, G2044E</h2>
-			  <ul class="govuk-summary-card__actions"> 
+			  <!-- <ul class="govuk-summary-card__actions"> 
 				<li class="govuk-summary-card__action"> 
 				  <a class="govuk-link" href="#">
 					Remove attendee
 				  </a>
 				</li>
-			  </ul>
+			  </ul> -->
 			</div>
 			<div class="govuk-summary-card__content">
 				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
@@ -223,13 +233,13 @@ Appointments prototype
 		  <div class="govuk-summary-card">
 			<div class="govuk-summary-card__title-wrapper">
 			  <h2 class="govuk-summary-card__title">Amby Abraham, G2044E</h2>
-			  <ul class="govuk-summary-card__actions"> 
+			  <!-- <ul class="govuk-summary-card__actions"> 
 				<li class="govuk-summary-card__action"> 
 				  <a class="govuk-link" href="#">
 					Remove attendee
 				  </a>
 				</li>
-			  </ul>
+			  </ul> -->
 			</div>
 			<div class="govuk-summary-card__content">
 				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
@@ -279,13 +289,13 @@ Appointments prototype
 		  <div class="govuk-summary-card">
 			<div class="govuk-summary-card__title-wrapper">
 			  <h2 class="govuk-summary-card__title">Bert Hungerford, C2598E</h2>
-			  <ul class="govuk-summary-card__actions"> 
+			  <!-- <ul class="govuk-summary-card__actions"> 
 				<li class="govuk-summary-card__action"> 
 				  <a class="govuk-link" href="#">
 					Remove attendee
 				  </a>
 				</li>
-			  </ul>
+			  </ul> -->
 			</div>
 			<div class="govuk-summary-card__content">
 				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
@@ -336,13 +346,13 @@ Appointments prototype
 		  <div class="govuk-summary-card">
 			<div class="govuk-summary-card__title-wrapper">
 			  <h2 class="govuk-summary-card__title">Matthew Doyle, E4911C</h2>
-			  <ul class="govuk-summary-card__actions"> 
+			  <!-- <ul class="govuk-summary-card__actions"> 
 				<li class="govuk-summary-card__action"> 
 				  <a class="govuk-link" href="#">
 					Remove attendee
 				  </a>
 				</li>
-			  </ul>
+			  </ul> -->
 			</div>
 			<div class="govuk-summary-card__content">
 				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
@@ -379,13 +389,13 @@ Appointments prototype
 		  <div class="govuk-summary-card">
 			<div class="govuk-summary-card__title-wrapper">
 			  <h2 class="govuk-summary-card__title">Ryan Gee, F5132C</h2>
-			  <ul class="govuk-summary-card__actions"> 
+			  <!-- <ul class="govuk-summary-card__actions"> 
 				<li class="govuk-summary-card__action"> 
 				  <a class="govuk-link" href="#">
 					Remove attendee
 				  </a>
 				</li>
-			  </ul>
+			  </ul> -->
 			</div>
 			<div class="govuk-summary-card__content">
 				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
@@ -455,13 +465,13 @@ Appointments prototype
 		  <div class="govuk-summary-card">
 			<div class="govuk-summary-card__title-wrapper">
 			  <h2 class="govuk-summary-card__title">Robin Bab, F4933A</h2>
-			  <ul class="govuk-summary-card__actions"> 
+			  <!-- <ul class="govuk-summary-card__actions"> 
 				<li class="govuk-summary-card__action"> 
 				  <a class="govuk-link" href="#">
 					Remove attendee
 				  </a>
 				</li>
-			  </ul>
+			  </ul> -->
 			</div>
 			<div class="govuk-summary-card__content">
 				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
@@ -515,13 +525,13 @@ Appointments prototype
 		  <div class="govuk-summary-card">
 			<div class="govuk-summary-card__title-wrapper">
 			  <h2 class="govuk-summary-card__title">Tommy-Lee Knox, C8361E</h2>
-			  <ul class="govuk-summary-card__actions"> 
+			  <!-- <ul class="govuk-summary-card__actions"> 
 				<li class="govuk-summary-card__action"> 
 				  <a class="govuk-link" href="#">
 					Remove attendee
 				  </a>
 				</li>
-			  </ul>
+			  </ul> -->
 			</div>
 			<div class="govuk-summary-card__content">
 				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
@@ -571,13 +581,13 @@ Appointments prototype
 		  <div class="govuk-summary-card">
 			<div class="govuk-summary-card__title-wrapper">
 			  <h2 class="govuk-summary-card__title">Fuentes Rasmussen, E2405E</h2>
-			  <ul class="govuk-summary-card__actions"> 
+			  <!-- <ul class="govuk-summary-card__actions"> 
 				<li class="govuk-summary-card__action"> 
 				  <a class="govuk-link" href="#">
 					Remove attendee
 				  </a>
 				</li>
-			  </ul>
+			  </ul> -->
 			</div>
 			<div class="govuk-summary-card__content">
 				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
@@ -633,7 +643,7 @@ Appointments prototype
 		  {{ govukButton({
 			text: "Continue",
 			attributes: {
-			  "formaction": "comments",
+			  "formaction": "../../appointment-summary/group/non-repeating",
 			  "formmethod": "post"
 			  }
 		  }) }}

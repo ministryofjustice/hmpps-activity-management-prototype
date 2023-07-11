@@ -12,7 +12,15 @@ Appointments prototype
       </div>
 
     <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
-      <span class="govuk-caption-l">Schedule a one-to-one appointment</span>
+      <span class="govuk-caption-l">
+		{% if data['alt-appointment-name'] !='' %}
+
+		{{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+		{% else %}
+		
+		{{ data['apppointment-type']}}
+		{% endif %}</span>
       Review scheduled events to avoid clashes
     </h1> 
   </div>
@@ -31,7 +39,7 @@ Appointments prototype
 		  </h2> 
 
 		<dl class="govuk-summary-list">
-			<div class="govuk-summary-list__row">
+			<!-- <div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 				  Attendee
 				</dt>
@@ -43,14 +51,13 @@ Appointments prototype
 					Change<span class="govuk-visually-hidden"> change</span>
 				  </a>
 				</dd>
-			  </div>
+			  </div> -->
 			  <div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 				  Location
 				</dt>
 				<dd class="govuk-summary-list__value">
-				  
-					{{ data['apppointment-location-indv']}}
+					{{ data['apppointment-location']}}
 				</dd>
 				<dd class="govuk-summary-list__actions">
 				  <a class="govuk-link" href="#">
@@ -66,35 +73,35 @@ Appointments prototype
 				{{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}
                 
 			  </dd>
-			  <dd class="govuk-summary-list__actions">
+			  <!-- <dd class="govuk-summary-list__actions">
 				<a class="govuk-link" href="#">
 				  Change<span class="govuk-visually-hidden"> date</span>
 				</a>
-			  </dd>
+			  </dd> -->
 			</div>
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
 				  Time
 				</dt>
 				<dd class="govuk-summary-list__value">
-					{{ data['start-hours-single']}}:{{ data['start-minutes-single']}} to {{ data['end-hours-single']}}:{{ data['end-minutes-single']}} 
+					{{ data['start-hours']}}:{{ data['start-minutes']}} to {{ data['end-hours']}}:{{ data['end-minutes']}} 
 				</dd>
-				<dd class="govuk-summary-list__actions">
+				<!-- <dd class="govuk-summary-list__actions">
 				  <a class="govuk-link" href="#">
 					Change<span class="govuk-visually-hidden"> time</span>
 				  </a>
-				</dd>
+				</dd> -->
 			  </div>
 		  </dl>
 
 		  <h2 class="govuk-heading-m govuk-visually-hidden">
 			
-			{{ data['apppointment-location-indv']}} events
+			{{ data['apppointment-location']}} events
 		  </h2> 
 
 		   <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
             <caption class="govuk-table__caption govuk-table__caption--m"><b>
-				{{ data['apppointment-location-indv']}} events</b>
+				{{ data['apppointment-location']}} events</b>
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
@@ -138,7 +145,7 @@ Appointments prototype
               </tr>
             </tbody>
           </table>
-
+<!-- 
 		  <h2 class="govuk-heading-m">
 			Events for Neil Rudge, G2044E
 		  </h2> 
@@ -196,13 +203,13 @@ Appointments prototype
 					  </tr>
 					</tbody>
 				  </table>
-	
+	 -->
 		  
 
 		  {{ govukButton({
 			text: "Continue",
 			attributes: {
-			  "formaction": "comments",
+			  "formaction": "apply-to",
 			  "formmethod": "post"
 			  }
 		  }) }}

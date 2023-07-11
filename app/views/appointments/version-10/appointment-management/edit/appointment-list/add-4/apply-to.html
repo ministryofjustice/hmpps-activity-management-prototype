@@ -15,7 +15,7 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form method="post" action="../../../appointment-summary/group/repeating">
+        <form method="post" action="../../../appointment-summary/group/repeating-4">
 
             <h2 class="govuk-heading-l"><span class="govuk-caption-l">
               {% if data['alt-appointment-name'] !='' %}
@@ -78,17 +78,26 @@ text: "Back",
                 </tbody>
               </table> -->
 
-   
+
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="which-occurrence-alt-prisoners" name="which-occurrence-alt-prisoners" type="radio" value="government-gateway" aria-describedby="which-occurrence-alt-prisoners-item-hint">
-                  <label class="govuk-label govuk-radios__label" for="which-occurrence-alt-prisoners">
-                    Just this one - Monday, 3 July 2023 (1 of 6)
+                  <input class="govuk-radios__input" id="which-occurrence-alt-prisoners-1" name="which-occurrence-alt-prisoners-1" type="radio" value="this" aria-describedby="which-occurrence-alt-prisoners-1-item-hint">
+                  <label class="govuk-label govuk-radios__label" for="which-occurrence-alt-prisoners-1">
+                    Just this one - Monday, 24 July 2023 (4 of 6)
                   </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="which-occurrence-alt-prisoners-2" name="which-occurrence-alt-prisoners-2" type="radio" value="this and future" aria-describedby="which-occurrence-alt-prisoners-2-item-hint">
+                  <label class="govuk-label govuk-radios__label" for="which-occurrence-alt-prisoners-2">
+                    This one and all the appointments that come after it in the series
+                  </label>
+                  <div id="which-occurrence-alt-prisoners-2-item-hint" class="govuk-hint govuk-radios__hint">
+                    You’re changing the following 3 appointments: <br> 24 July 2023 (4 of 6) to 7 August 2023 (6 of 6)
+                  </div>
                 </div>
   
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="which-occurrence-alt-prisoners-3" name="which-occurrence-alt-prisoners" type="radio" value="govuk-verify" aria-describedby="which-occurrence-alt-prisoners-3-item-hint">
+                  <input class="govuk-radios__input" id="which-occurrence-alt-prisoners-3" name="which-occurrence-alt-prisoners-3" type="radio" value="this and all" aria-describedby="which-occurrence-alt-prisoners-3-item-hint">
                   <label class="govuk-label govuk-radios__label" for="which-occurrence-alt-prisoners-3">
                     This one and all appointments in the series that haven't happened yet
                   </label>
@@ -101,8 +110,7 @@ text: "Back",
   
               <div class="govuk-inset-text">
                 This appointment repeats every week.
-              </div>
-  
+              </div> 
 
             {{ govukButton({
             text: "Confirm and add"
