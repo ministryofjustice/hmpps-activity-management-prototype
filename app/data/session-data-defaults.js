@@ -64,8 +64,8 @@ module.exports = {
   "appointment-categories-1": require('./appointment-categories-1'),
   "prototype-versions": {
     'create-and-allocate': {
-      'latest-version': 'version-13',
-      'url': 'create/version-13'
+      'latest-version': 'version-14',
+      'url': 'create/version-14'
     },
     'unlock-and-attend': {
       'latest-version': 'version-8',
