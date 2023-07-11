@@ -17,11 +17,11 @@ text: "Back",
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
             {{govukRadios({
-            idPrefix: "confirm-remove-application",
-            name: "confirm-remove-application",
+            idPrefix: "new-application-status",
+            name: "new-application-status",
             fieldset: {
             legend: {
-            text: "Are you sure you want to delete " + prisoner.name.firstname + " " + prisoner.name.surname + "'s request?",
+            text: "Change the status of " + prisoner.name.firstname + " " + prisoner.name.surname + "'s application",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--xl"
             }
@@ -29,17 +29,27 @@ text: "Back",
             items: [
             {
             value: "yes",
-            text: "Yes"
+            text: "Approved",
+            checked: true if application.eligible == "yes" else false
             },
             {
             value: "no",
-            text: "No"
+            text: "Rejected",
+            checked: true if application.eligible == "no" else false
+            },
+            {
+                divider: "or"
+            },
+            {
+            value: "pending",
+            text: "Pending",
+            checked: true if application.eligible != "no" and application.eligible != "yes" else false
             }
             ]
             })}}
 
             {{ govukButton({
-            text: "Continue"
+            text: "Update application status"
             }) }}
         </form>
     </div>

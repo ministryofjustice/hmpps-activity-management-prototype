@@ -205,6 +205,48 @@ router.post("/:activityId/applications/:applicationId", function (req, res) {
     }
 });
 
+// change application page
+router.get("/:activityId/applications/:applicationId/change-status", function (req, res) {
+    let activityId = req.params.activityId;
+    let applicationId = req.params.applicationId;
+    let activities = req.session.data["timetable-complete-1"]["activities"];
+
+    let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
+
+    let applications = req.session.data["applications"];
+    let application = applications.find((application) => application.id.toString() === applicationId.toString());
+
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisoner = prisoners.find((prisoner) => prisoner.id.toString() === application["selected-prisoner"].toString());
+
+    res.render(req.protoUrl + "/change-application-status", {
+        activity,
+        application,
+        prisoner,
+    });
+});
+
+// POST route for change application page
+router.post("/:activityId/applications/:applicationId/change-status", function (req, res) {
+    let newStatus = req.session.data["new-application-status"];
+
+    let applicationId = req.params.applicationId;
+    let applications = req.session.data["applications"];
+    let application = applications.find((application) => application.id.toString() === applicationId.toString());
+
+    // if the new status is 'pending', set the application eligible to null
+    if (newStatus === "pending") {
+        application["eligible"] = null;
+    }
+    // otherwise, set the application eligible to the new status
+    else {
+        application["eligible"] = newStatus;
+    }
+
+    // redirect to the activity page
+    res.redirect("../" + applicationId);
+});
+
 // confirm remove application page
 router.get("/:activityId/applications/:applicationId/confirm-remove", function (req, res) {
     let activityId = req.params.activityId;
@@ -230,43 +272,96 @@ router.get("/:activityId/applications/:applicationId/confirm-remove", function (
     });
 });
 
+// comment page
+router.get("/:activityId/applications/:applicationId/add-comment", function (req, res) {
+    let activities = req.session.data["timetable-complete-1"]["activities"];
+    let activityId = req.params.activityId;
+    let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
+
+    let applications = req.session.data["applications"];
+    let applicationId = req.params.applicationId;
+    let application = applications.find((application) => application.id.toString() === applicationId.toString());
+
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisonerId = application["selected-prisoner"];
+    let prisoner = prisoners.find((prisoner) => prisoner.id.toString() === prisonerId.toString());
+
+    res.render(req.protoUrl + "/application-comment", {
+        activity,
+        application,
+        prisoner,
+    });
+});
+
+// POST route for comment page
+router.post("/:activityId/applications/:applicationId/add-comment", function (req, res) {
+    let activities = req.session.data["timetable-complete-1"]["activities"];
+    let activityId = req.params.activityId;
+    let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
+
+    let applications = req.session.data["applications"];
+    let applicationId = req.params.applicationId;
+    let application = applications.find((application) => application.id.toString() === applicationId.toString());
+
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisonerId = application["selected-prisoner"];
+    let prisoner = prisoners.find((prisoner) => prisoner.id.toString() === prisonerId.toString());
+
+    // create a comment object (date should be the current date formatted as yyyy-mm-dd)
+    let comment = {};
+
+    // if the user has entered a comment, add it to the application
+    if (req.session.data["application-comment"].length > 0) {
+        comment["date"] = new Date().toISOString().slice(0, 10);
+        comment["text"] = req.session.data["application-comment"];
+        console.log(comment);
+        application.comment = comment;
+    } else {
+        application.comment = null;
+    }
+
+    // redirect to the application page
+    res.redirect("../" + applicationId);
+});
+
+
 // confirm remove application page - POST request to confirm removal
 router.post("/:activityId/applications/:applicationId/confirm-remove", function (req, res) {
     let activityId = req.params.activityId;
-  let applicationId = req.params.applicationId;
-  let activities = req.session.data["timetable-complete-1"]["activities"];
+    let applicationId = req.params.applicationId;
+    let activities = req.session.data["timetable-complete-1"]["activities"];
 
-  let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
+    let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
 
-  let applications = req.session.data["applications"];
-  let application = applications.find((application) => application.id.toString() === applicationId.toString());
+    let applications = req.session.data["applications"];
+    let application = applications.find((application) => application.id.toString() === applicationId.toString());
 
-  let prisonerId = application["selected-prisoner"];
-  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let prisoner = prisoners.find((prisoner) => prisoner.id.toString() === prisonerId.toString());
+    let prisonerId = application["selected-prisoner"];
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisoner = prisoners.find((prisoner) => prisoner.id.toString() === prisonerId.toString());
 
-  // if user confirms the removal of the application, remove the application
-  // and redirect to the activity waitlist page
-  if (req.session.data["confirm-remove-application"] === "yes") {
-    // remove the application from the applications array
-    let index = applications.indexOf(application);
-    applications.splice(index, 1);
+    // if user confirms the removal of the application, remove the application
+    // and redirect to the activity waitlist page
+    if (req.session.data["confirm-remove-application"] === "yes") {
+        // remove the application from the applications array
+        let index = applications.indexOf(application);
+        applications.splice(index, 1);
 
-    // set the rejected dialog to show
-    req.session.data["confirmation-dialog"] = {
-      type: "rejected",
-      display: true,
-      prisoner: prisoner.id,
-    };
+        // set the rejected dialog to show
+        req.session.data["confirmation-dialog"] = {
+            type: "rejected",
+            display: true,
+            prisoner: prisoner.id,
+        };
 
-    // redirect to the activity waitlist page
-    res.redirect("../../../" + activityId + "#waitlist");
-  }
-  // if user cancels the removal of the application, redirect to the activity waitlist page
-  else if (req.session.data["confirm-remove-application"] === "no") {
-    // redirect to the activity waitlist page
-    res.redirect("../../../" + activityId + "#waitlist");
-  }
+        // redirect to the activity waitlist page
+        res.redirect("../../../" + activityId + "#waitlist");
+    }
+    // if user cancels the removal of the application, redirect to the activity waitlist page
+    else if (req.session.data["confirm-remove-application"] === "no") {
+        // redirect to the activity waitlist page
+        res.redirect("../../../" + activityId + "#waitlist");
+    }
 });
 
 
