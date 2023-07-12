@@ -37,12 +37,7 @@ router.get("/select-prisoner", function (req, res) {
 
   req.session.data["new-application"] = {}
 
-  // if there is only one matching prisoner
-  if (matchingPrisoners.length === 1) {
-    req.session.data["new-application"]["selected-prisoner"] =
-      matchingPrisoners[0].id;
-    res.redirect("prisoner-existing-applications");
-  } else if (matchingPrisoners.length > 1) {
+  if (matchingPrisoners.length > 0) {
     res.render(req.protoUrl + "/select-prisoner", {
       matchingPrisoners,
     });
@@ -53,7 +48,9 @@ router.get("/select-prisoner", function (req, res) {
 });
 // select prisoner page post logic
 router.post("/select-prisoner", function (req, res) {
-  res.redirect("prisoner-existing-applications");
+  let selectedPrisoner = req.session.data["new-application"]["selected-prisoner"];
+
+  res.redirect(selectedPrisoner + "/application-date");
 });
 
 // prisoner existing applications page
@@ -99,22 +96,7 @@ router.post("/prisoner-existing-applications", function (req, res) {
 });
 
 // select activity page
-router.get("/select-activity", function (req, res) {
-  // check there is a selected prisoner
-  if (!req.session.data["new-application"]["selected-prisoner"]) {
-    req.session.data["new-application"]["selected-prisoner"] =
-      req.session.data["timetable-complete-1"]["prisoners"][0].id;
-  }
-
-  // check if there is already a selected activity in the new application object
-  if (
-    req.session.data["new-application"] &&
-    req.session.data["new-application"]["activity"]
-  ) {
-    res.redirect("check-activity");
-    return;
-  }
-
+router.get("/:prisonerId/select-activity", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
 
   res.render(req.protoUrl + "/select-activity", {
@@ -122,8 +104,9 @@ router.get("/select-activity", function (req, res) {
   });
 });
 // redirect to the application date page
-router.post("/select-activity", function (req, res) {
-  res.redirect("applicant-details");
+router.post("/:prisonerId/select-activity", function (req, res) {
+  let activityId = req.session.data["new-application"]["activity"];
+  res.redirect(activityId + "/applicant-details");
 });
 
 // check activity page logic
@@ -138,12 +121,12 @@ router.post("/check-activity", function (req, res) {
 });
 
 // application date page
-router.get("/application-date", function (req, res) {
+router.get("/:prisonerId/application-date", function (req, res) {
   res.render(req.protoUrl + "/application-date");
 });
 
 // redirect to the applicant details page
-router.post("/application-date", function (req, res) {
+router.post("/:prisonerId/application-date", function (req, res) {
   // check the user has entered a date
   if (
     !req.session.data["application-date-day"] ||
@@ -180,24 +163,29 @@ router.post("/application-date", function (req, res) {
 });
 
 // applicant details page
-router.get("/applicant-details", function (req, res) {
+router.get("/:prisonerId/:activityId/applicant-details", function (req, res) {
+  // make sure there is a new application object
+  if (!req.session.data["new-application"]) {
+    req.session.data["new-application"] = {};
+  }
+
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
   let prisoner = prisoners.find(
     (prisoner) =>
-      prisoner.id === req.session.data["new-application"]["selected-prisoner"]
+      prisoner.id === req.params.prisonerId
   );
   res.render(req.protoUrl + "/applicant-details", { prisoner });
 });
 
 // redirect to the decision page
-router.post("/applicant-details", function (req, res) {
+router.post("/:prisonerId/:activityId/applicant-details", function (req, res) {
   // logic for applicant details page
   if (req.session.data["applicant"] == "prisoner") {
     // add the applicant to the new application object
     req.session.data["new-application"]["applicant"] = "prisoner";
   } else {
     let applicant = req.session.data["other-applicant"];
-    if(applicant) {
+    if (applicant) {
       req.session.data["new-application"]["applicant"] = applicant;
     } else {
       res.redirect("applicant-details");
@@ -205,7 +193,7 @@ router.post("/applicant-details", function (req, res) {
   }
 
   // redirect to the decision page
-  res.redirect("check-eligibility");
+  res.redirect("status");
 });
 
 // checked eligibility page logic
@@ -233,6 +221,55 @@ router.post("/check-eligibility-now", function (req, res) {
   } else {
     res.redirect("check-application-details");
   }
+});
+
+// status page
+router.get("/:prisonerId/:activityId/status", function (req, res) {
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let selectedPrisoner = req.params.prisonerId;
+  let prisoner = prisoners.find((prisoner) => prisoner.id === selectedPrisoner);
+
+  let activityId = req.params.activityId;
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  // if there is no new application object, get a placeholder one from the applications session data
+  if (!req.session.data["new-application"]) {
+    req.session.data["new-application"] = req.session.data["applications"][0];
+  }
+
+  res.render(req.protoUrl + "/status", {
+    prisoner,
+    activity,
+  });
+});
+
+// POST - status page
+router.post("/:prisonerId/:activityId/status", function (req, res) {
+  let prisonerId = req.params.prisonerId;
+  let activityId = req.params.activityId;
+
+  // construct the new application object
+  let newApplication = {
+    id: req.session.data["new-application"]["id"],
+    date: req.session.data["new-application"]["date"],
+    applicant: req.session.data["new-application"]["applicant"],
+    eligible: req.session.data["new-application"]["eligible"],
+    eligibilityCheck: req.session.data["new-application"]["eligibility-check"],
+    eligibilityCheckDate:
+      req.session.data["new-application"]["eligibility-check-date"],
+    status: req.session.data["new-application"]["status"],
+    "selected-prisoner": prisonerId,
+    activity: activityId,
+    comments: req.session.data["new-application"]["comments"],
+  };
+
+  // add the new application object to the session data
+  req.session.data["new-application"] = newApplication;
+
+  // redirect to the check application details page
+  res.redirect("../../check-application-details");
 });
 
 // check eligibility page
@@ -264,12 +301,24 @@ router.post("/check-eligibility", function (req, res) {
 
 // check application details page
 router.get("/check-application-details", function (req, res) {
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let selectedPrisoner = req.session.data["new-application"]["prisoner"];
+  let prisoner = prisoners.find((prisoner) => prisoner.id === selectedPrisoner);
+
+  let activityId = req.session.data["new-application"]["activity"];
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
   // if there is no new application object, get a placeholder one from the applications session data
   if (!req.session.data["new-application"]) {
     req.session.data["new-application"] = req.session.data["applications"][0];
   }
 
-  res.render(req.protoUrl + "/check-application-details");
+  res.render(req.protoUrl + "/check-application-details", {
+    prisoner,
+    activity,
+  });
 });
 // redirect to the applications list page
 router.post("/check-application-details", function (req, res) {
@@ -321,7 +370,20 @@ router.post("/applications-list", function (req, res) {
 router.get("/confirmation", function (req, res) {
   let application = req.session.data["new-application"];
 
-  res.render(req.protoUrl + "/confirmation");
+  let activityId = req.session.data["new-application"]["activity"];
+  let activity = req.session.data["timetable-complete-1"]["activities"].find(
+    (activity) => activity.id.toString() === activityId.toString()
+  );
+
+  let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+  let selectedPrisoner = req.session.data["new-application"]["selected-prisoner"];
+  let prisoner = prisoners.find((prisoner) => prisoner.id === selectedPrisoner);
+
+  res.render(req.protoUrl + "/confirmation", {
+    application,
+    prisoner,
+    activity,
+  })
 });
 // redirect logic for the confirmation page
 router.post("/confirmation", function (req, res) {

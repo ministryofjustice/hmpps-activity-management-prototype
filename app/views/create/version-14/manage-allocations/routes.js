@@ -233,7 +233,7 @@ router.post("/:activityId/applications/:applicationId/change-status", function (
     let applicationId = req.params.applicationId;
     let applications = req.session.data["applications"];
     let application = applications.find((application) => application.id.toString() === applicationId.toString());
-
+    
     // if the new status is 'pending', set the application eligible to null
     if (newStatus === "pending") {
         application["eligible"] = null;
@@ -242,6 +242,8 @@ router.post("/:activityId/applications/:applicationId/change-status", function (
     else {
         application["eligible"] = newStatus;
     }
+
+    application["application-status-date"] = new Date().toISOString().slice(0, 10);
 
     // redirect to the activity page
     res.redirect("../" + applicationId);
