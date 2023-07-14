@@ -1,0 +1,50 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+    text: "Back",
+    "href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+        <span class="govuk-caption-l">
+            Create an activity
+          </span>
+        {{govukRadios({
+            idPrefix: "education-level-check",
+            name: "education-level-check",
+            classes: "govuk-radios--inline",
+            fieldset: {
+                legend: {
+                    text: "Do people allocated on this activity need certain education levels or other qualifications?",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                }
+            },
+            items: [
+                {
+                    value: "yes",
+                    text: "Yes"
+                },
+                {
+                    value: "no",
+                    text: "No"
+                }
+            ]
+        })}}
+
+      <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

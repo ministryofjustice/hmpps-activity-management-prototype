@@ -1,0 +1,57 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-xl">
+                {{activity.name}}
+            </span>
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                            {% if prisonerData.length > 1 %}
+                            Select a new payrate for {{prisonerData.length}} people
+                            {% else %}
+                            Select a new payrate for {{prisonerData[0].name.firstname + " " +
+                            prisonerData[0].name.surname}}
+                            {% endif %}
+                        </h1>
+                    </legend>
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        {% for payrate in payrates %}
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="payrate-{{payrate.payRate_id}}" name="new-payrate"
+                                type="radio" value="{{payrate.payRate_id}}">
+                            <label class="govuk-label govuk-radios__label" for="payrate-{{payrate.payRate_id}}">
+                                {{payrate.payBand|lower}} - £{{payrate.amount|decimalPlaces(2)}} ({{'flat rate' if
+                                payrate.incentiveLevel == 'flatRate' else payrate.incentiveLevel + ' incentive level'}})
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
+
+            {{govukButton({
+            text: "Continue",
+            classes: "govuk-!-margin-top-6"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}

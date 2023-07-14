@@ -1,0 +1,121 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+            <h1 class="govuk-heading-xl">
+                Check the risk assessment level before you change it
+            </h1>
+
+            <p>
+                4 prisoners have a risk assessment level that is higher than the one you are changing to.
+            </p>
+
+            <p>
+                If you change the risk assessment level, these prisoners will be removed from this activity:
+            </p>
+
+            {% set prisoners = [
+            [
+                {
+                    text: "John Smith"
+                },
+                {
+                    text: "A1234BC"
+                },
+                {
+                    text: "High"
+                }
+            ],
+            [
+                {
+                    text: "Bill Jones"
+                },
+                {
+                    text: "B1234BC"
+                },
+                {
+                    text: "High"
+                }
+            ]
+            ] %}
+
+
+            {{ govukTable({
+            firstCellIsHeader: true,
+            head: [
+            {
+            text: "Name"
+            },
+            {
+            text: "Prison number"
+            },
+            {
+            text: "Current risk assessment level"
+            }
+            ],
+            rows: prisoners
+            }) }}
+
+            <p>
+                You can either:
+            </p>
+
+            <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+                <li>remove some prisoners from this activity and then change the risk assessment level</li>
+                <li>change the risk assessment level without removing any prisoners</li>
+            </ul>
+
+            {{ govukRadios({
+            idPrefix: "risk-assessment-change",
+            name: "risk-assessment-change",
+            fieldset: {
+            legend: {
+            text: "What do you want to do?",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            items: [
+            {
+            text: "Remove some prisoners from this activity and then change the risk assessment level",
+            value: "remove-some",
+            checked: true if activity.riskAssessmentLevel == "remove-some"
+            },
+            {
+            text: "Change the risk assessment level without removing any prisoners",
+            value: "change-level",
+            checked: true if activity.riskAssessmentLevel == "change-level"
+            }
+            ]
+            })}}
+
+            
+
+            {{ govukButton({
+            text: "Update risk assessment level"
+            }) }}
+
+            <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

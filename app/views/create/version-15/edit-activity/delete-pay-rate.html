@@ -1,0 +1,61 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <h1 class="govuk-heading-xl">
+                Delete pay rate
+            </h1>
+            {{govukSelect({
+                id: "pay-rate",
+                name: "pay-rate",
+                label: {
+                    text: "Pay band"
+                },
+                items: [
+                    {
+                        text: "Pay band 1",
+                        value: "pay-rate-1"
+                    },
+                    {
+                        text: "Pay band 2",
+                        value: "pay-rate-2"
+                    },
+                    {
+                        text: "Pay band 3",
+                        value: "pay-rate-3"
+                    }
+                ]
+            })}}
+            {{govukInput({
+                id: "amount",
+                name: "amount",
+                label: {
+                    text: "Amount"
+                },
+                prefix: {
+                    text: "£"
+                },
+                classes: "govuk-input--width-10"
+            })}}
+            {{govukButton({
+                text: "Save and continue"
+            })}}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Edit allocation for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+        </span>
+        <h1 class="govuk-heading-xl">
+            Check and confirm schedule
+        </h1>
+
+        <table class="govuk-table govuk-!-margin-bottom-9">
+            <caption class="govuk-table__caption govuk-table__caption--m">
+                {{prisoner.name.firstname}} {{prisoner.name.surname}}’s schedule for {{activity.name}}
+            </caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Day</th>
+                    <th scope="col" class="govuk-table__header">{{prisoner.name.firstname}}’s old schedule</th>
+                    <th scope="col" class="govuk-table__header">{{prisoner.name.firstname}}’s new schedule</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                {% for day in schedule %}
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">{{day.day|capitalize}}</th>
+                    <td class="govuk-table__cell">
+                        {% if day.am or day.pm %}
+                        {% if day.am %}
+                        AM {{" only" if day.pm == null else "and "}}
+                        {% endif %}
+                        {% if day.pm %}
+                        PM {{" only" if day.am == null}}
+                        {% endif %}
+                        {% else %}
+                        <span class="govuk-hint">–</span>
+                        {% endif %}
+                    </td>
+                    <td class="govuk-table__cell govuk-!-font-weight-bold">
+                        {% if not day.am and not day.pm %}
+                        <span class="govuk-hint">–</span>
+                        {% elif not day.amNew and not day.pmNew %}
+                        <span class="govuk-tag govuk-tag--grey">Removed</span>
+                        {% else %}
+                        {% if day.amNew or day.pmNew %}
+                        {% if day.amNew %}
+                        <span class="govuk-tag govuk-tag--green">AM {{" " if day.pmNew == null else " "}}</span>
+                        {% endif %}
+                        {% if day.pmNew %}
+                        <span class="govuk-tag govuk-tag--green">PM {{" " if day.amNew == null}}</span>
+                        {% endif %}
+                        {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- <div class="govuk-grid-row govuk-!-margin-bottom-9">
+    <div class="govuk-grid-column-one-half">
+        <h2 class="govuk-heading-m">
+            Current schedule
+        </h2>
+
+        <dl class="govuk-summary-list govuk-summary-list--no-borde">
+            {% for day in schedule %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    {% if day.am or day.pm %}
+                    {{day.day|capitalize}}
+                    {% else %}
+                    <span class="govuk-hint">{{day.day|capitalize}}</span>
+                    {% endif %}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if day.am or day.pm %}
+                    {% if day.am %}
+                    AM {{"" if day.pm == null else "and "}}
+                    {% endif %}
+                    {% if day.pm %}
+                    PM {{"" if day.am == null}}
+                    {% endif %}
+                    {% else %}
+                    <span class="govuk-hint">Not scheduled</span>
+                    {% endif %}
+                </dd>
+            </div>
+            {% endfor %}
+        </dl>
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+        <h2 class="govuk-heading-m">
+            New schedule
+        </h2>
+
+        <dl class="govuk-summary-list govuk-summary-list--no-borde">
+            {% for day in schedule %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    {% if day.am or day.pm %}
+                    {{day.day|capitalize}}
+                    {% else %}
+                    <span class="govuk-hint">{{day.day|capitalize}}</span>
+                    {% endif %}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if day.am or day.pm %}
+                    {% if day.am %}
+                    AM {{"" if day.pm == null else "and "}}
+                    {% endif %}
+                    {% if day.pm %}
+                    PM {{"" if day.am == null}}
+                    {% endif %}
+                    {% else %}
+                    <span class="govuk-hint">Not scheduled</span>
+                    {% endif %}
+                </dd>
+            </div>
+            {% endfor %}
+        </dl>
+    </div>
+</div> -->
+
+<form method="post">
+    <h2 class="govuk-heading-m">
+        Now confirm your changes
+    </h2>
+    <p class="govuk-inset-text">
+        Any changes to the schedule will take effect from tomorrow.
+    </p>
+
+    {% if data['new-application']['eligible'] != 'no' %}
+    {{ govukButton({
+    text: "Update schedule"
+    }) }}
+    {% endif %}
+</form>
+
+{% endblock %}

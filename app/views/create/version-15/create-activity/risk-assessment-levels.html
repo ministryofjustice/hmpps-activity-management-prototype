@@ -1,0 +1,59 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                Create an activity
+            </span>
+            {{govukRadios({
+            idPrefix: "risk-assessment-levels",
+            name: "new-activity[risk-assessment-level]",
+            fieldset: {
+            legend: {
+            text: "Workplace risk assessment levels: who is suitable for this activity?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            hint: {
+            html: "Choose one option to set the requirement for the activity."
+            },
+            items: [
+            {
+            value: "low-only",
+            text: "Only people with a low workplace risk assessment are suitable"
+            },
+            {
+            value: "low-or-medium",
+            text: "People with either a low or medium workplace risk assessment are suitable"
+            },
+            {
+            value: "any",
+            text: "Anyone is suitable (low, medium or high workplace risk assessment)"
+            }
+            ]
+            })}}
+
+            {{ govukDetails({
+            summaryText: "What is a workplace risk assessment level?",
+            text: "Each person in your prison should have been given a workplace risk assessment level."
+            }) }}
+
+
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

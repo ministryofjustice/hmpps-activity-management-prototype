@@ -1,0 +1,105 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+{% if activity.endDate %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% set html %}
+<p class="govuk-notification-banner__heading">
+  {{activity.name}} has been scheduled to end on {{activity.endDate|convertShortDateToVeryLongDate}}. You must enter an
+  earlier date.
+</p>
+{% endset %}
+{{ govukNotificationBanner({
+html: html
+}) }}
+{% endif %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      {% if multiple == false and prisonerData | length > 1 %}
+      {% set noun = prisonerData|length + " people" %}
+      {% else %}
+      {% set noun = prisonerData[0].name.firstname + " " + prisonerData[0].name.surname %}
+      {% endif %}
+
+      <span class="govuk-caption-xl">{{activity.name}}</span>
+
+      {{govukDateInput({
+      idPrefix: "deallocation-date",
+      namePrefix: "deallocation-date",
+      fieldset: {
+      legend: {
+      text: "When do you want " + noun + " to stop attending this activity?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--xl"
+      }
+      },
+      hint: {
+      text: "For example, 31 3 1980"
+      },
+      items: [
+      {
+      name: "day",
+      classes: "govuk-input--width-2",
+      value: existingDate['day'] or ''
+      },
+      {
+      name: "month",
+      classes: "govuk-input--width-2",
+      value: existingDate['month'] or ''
+      },
+      {
+      name: "year",
+      classes: "govuk-input--width-4",
+      value: existingDate['year'] or ''
+      }
+      ]
+      })}}
+
+      {% set detailsHtml %}
+      <div class="govuk-summary-list">
+      {% for prisoner in prisonerData %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            {{prisoner.name.surname}}, {{prisoner.name.firstname}}
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{prisoner.id}}
+        </dd>
+        <dd class="govuk-summary-list__value">
+          {{prisoner.location.cell}}
+        </dd>
+      </div>
+      {% endfor %}
+      </div>
+      {% endset %}
+
+      {% if prisonerData | length > 1 %}
+      {{govukDetails({
+      summaryText: "People you're taking off " + activity['name'],
+      html: detailsHtml
+      })}}
+      {% endif %}
+
+
+      {{ govukButton({
+      text: "Continue"
+      }) }}
+    </form>
+  </div>
+</div>
+
+{% endblock %}

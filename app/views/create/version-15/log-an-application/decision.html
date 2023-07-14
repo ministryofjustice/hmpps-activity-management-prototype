@@ -1,0 +1,61 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+    text: "Back",
+    "href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+        {% set prisoner = data['new-application']['prisoner']|getPrisonerDetails %}
+
+        {{govukRadios({
+            idPrefix: "status",
+            name: "new-application[decision]",
+            fieldset: {
+                legend: {
+                    text: "Do you want to approve or reject the application?",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--xl"
+                }
+            },
+            items: [
+                {
+                    html: "<b>Approve</b> and add to waitlist",
+                    value: "approved",
+                    hint: {
+                        text: "You've confirmed that " + prisoner.name.firstname + " " + prisoner.name.surname + " is suitable for this activity"
+                    }
+                },
+                {
+                    html: "<b>Reject</b> the application",
+                    value: "rejected",
+                    hint: {
+                        text: prisoner.name.firstname + " " + prisoner.name.surname + " will not be added to the waitlist"
+                    }
+                }
+            ]
+        })}}
+
+        {{govukDetails({
+            summaryText: "Check how suitable this person is",
+            html: "<p>Check the person's suitability for this activity. For example, if they have a history of violence, you may want to reject their application.</p>"
+        })}}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </form>
+  </div>
+</div>
+
+{% endblock %}

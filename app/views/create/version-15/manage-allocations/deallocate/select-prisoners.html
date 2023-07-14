@@ -1,0 +1,78 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Remove people from {{activity.name}}
+        </span>
+        <h1 class="govuk-heading-xl">
+            Select who you want to remove
+        </h1>
+
+        <!-- <p>
+            There is more than one person with the name you searched for. Select the correct person from the list.
+        </p> -->
+
+        <form method="post">
+            {% if matchingPrisoners | length > 10 %}
+            {{ govukButton({
+                text: "Select prisoner and continue",
+                classes: "govuk-!-margin-bottom-8"
+            }) }}
+            {% endif %}
+
+            <table
+				class="govuk-table govuk-!-margin-bottom-5"
+				data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+                <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
+                    Prisoners
+                </caption>
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="col" id="select-all"></th>
+                        <th scope="col" class="govuk-table__header">Prison number</th>
+                        <th scope="col" class="govuk-table__header">Cell location</th>
+                        <th scope="col" class="govuk-table__header"></th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    {% for prisoner in allocatedPrisoners | sort(false, true, 'name.surname') %}
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="selected-prisoner-{{prisoner.id}}" name="selected-prisoners"
+                                        type="checkbox" value="{{prisoner.id}}">
+                                    <label class="govuk-label govuk-checkboxes__label" for="selected-prisoner-{{prisoner.id}}">
+                                        <b>{{prisoner.name.firstname}} {{prisoner.name.surname}}</b>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell govuk-!-padding-top-4">{{prisoner.id}}</td>
+                        <td class="govuk-table__cell govuk-!-padding-top-4">{{prisoner.location.cell}}</td>
+                        <td class="govuk-table__cell govuk-!-padding-top-4"><a href="#">View prisoner profile</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            {{ govukButton({
+                text: "Continue",
+                classes: "govuk-!-margin-top-6"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
