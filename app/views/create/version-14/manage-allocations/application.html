@@ -74,6 +74,9 @@ text: "Back to waitlist",
                     {{application['applicant'] | capitalize}}
                     {% endif %}
                 </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="#" class="govuk-link">Change</a>
+                </dd>
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -82,6 +85,9 @@ text: "Back to waitlist",
                 <dd class="govuk-summary-list__value">
                     {{application['date']|convertShortDateToLongDate}}
                 </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="#" class="govuk-link">Change</a>
+                </dd>
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -89,6 +95,9 @@ text: "Back to waitlist",
                 </dt>
                 <dd class="govuk-summary-list__value">
                     High
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="{{application.id}}/change-priority" class="govuk-link">Change</a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -116,14 +125,14 @@ text: "Back to waitlist",
             </div>
         </dl>
 
-        {{govukButton({
+        <!-- {{govukButton({
         text: "Delete request",
         classes: "govuk-button--warning govuk-!-margin-bottom-8",
         href: application.id + "/confirm-remove"
-        })}}
+        })}} -->
 
-        <p>
-            <a href="../../{{activity.id}}#waitlist" class="govuk-link govuk-link--no-visited-state">Return
+        <p class="govuk-!-margin-top-7">
+            <a href="../../{{activity.id}}#waitlist" class="govuk-button govuk-button--secondary">Return
                 to waitlist</a>
         </p>
 

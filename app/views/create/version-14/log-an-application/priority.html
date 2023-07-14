@@ -17,42 +17,30 @@ text: "Back",
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
             {{ govukRadios({
-            idPrefix: "eligible",
-            name: "new-application[eligible]",
+            idPrefix: "priority",
+            name: "new-application[priority]",
             fieldset: {
             legend: {
-            text: "Record a status for this application",
+            text: "Record a priority for this application",
             isPageHeading: false,
             classes: "govuk-fieldset__legend--xl"
             }
             },
             items: [
             {
-            value: "yes",
-            html: "Accepted"
+            value: "1",
+            html: "🔴 Red"
             },
             {
-            value: "no",
-            html: "Rejected"
+            value: "2",
+            html: "🟠 Amber"
             },
             {
-            divider: "or"
-            },
-            {
-            value: "",
-            text: "Checks needed"
+            value: "3",
+            html: "🟢 Green"
             }
             ]
             }) }}
-
-            {{govukTextarea({
-            id: "comment",
-            name: "new-application[comment]",
-            label: {
-            text: "Add a comment (optional)",
-            classes: "govuk-label--m"
-            }
-            })}}
 
             <button class="govuk-button" data-module="govuk-button">Continue</button>
         </form>

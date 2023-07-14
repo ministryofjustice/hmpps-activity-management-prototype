@@ -106,6 +106,7 @@ router.get("/:prisonerId/select-activity", function (req, res) {
 // redirect to the application date page
 router.post("/:prisonerId/select-activity", function (req, res) {
   let activityId = req.session.data["new-application"]["activity"];
+  // res.redirect(activityId + "/priority");
   res.redirect(activityId + "/applicant-details");
 });
 
@@ -133,8 +134,11 @@ router.post("/:prisonerId/application-date", function (req, res) {
     !req.session.data["application-date-month"] ||
     !req.session.data["application-date-year"]
   ) {
-    res.redirect("application-date");
-    return;
+    // make a random date (yyyy-mm-dd) and add it to the session data
+    let date = new Date();
+    req.session.data["application-date-day"] = date.getDate();
+    req.session.data["application-date-month"] = date.getMonth() + 1;
+    req.session.data["application-date-year"] = date.getFullYear();
   }
 
   // convert the individual date fields into a single date object
@@ -193,8 +197,21 @@ router.post("/:prisonerId/:activityId/applicant-details", function (req, res) {
   }
 
   // redirect to the decision page
+  res.redirect("priority");
+});
+
+// priotity page
+router.get("/:prisonerId/:activityId/priority", function (req, res) {
+  // render the priority page
+  res.render(req.protoUrl + "/priority");
+});
+
+// post route for the priority page
+router.post("/:prisonerId/:activityId/priority", function (req, res) {
+  // redirect to the status page
   res.redirect("status");
 });
+
 
 // checked eligibility page logic
 router.post("/checked-eligibility", function (req, res) {
