@@ -1,0 +1,926 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block header %}
+{% set page = "appointments" %}
+
+{% include "../includes/proto-header.html" %}
+
+<div class="app-masthead">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="app-masthead__title govuk-heading-l govuk-!-margin-bottom-3">
+          Appointments
+        </h1>
+        <h3 class="app-masthead__subtitle govuk-heading-m">A service within Digital Prison Services for prison staff to manage appointments.
+        </h3>
+      </div>
+      <div class="govuk-grid-column-one-third">
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-!-margin-bottom-6">
+  <h2 class="govuk-heading-m">
+    Supporting documentation
+  </h2> 
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li><a href="https://miro.com/app/board/uXjVPPwl3Rk=/" target="_blank" class="govuk-link govuk-link--no-visited-state">Miro for Discovery and Alpha</a></li>
+    <li><a href=" https://miro.com/app/board/uXjVPr57naE=/" target="_blank" class="govuk-link govuk-link--no-visited-state">Miro for Alpha and Beta</a></li>
+    <li><a href=" https://docs.google.com/spreadsheets/d/1RL6wqjs0Heq6cvZV-s4noRCJ_UGprpnpsZl5mwjf7Fk/edit#gid=966162658" target="_blank" class="govuk-link govuk-link--no-visited-state">Design and content decision log (google sheets)</a></li>
+    <li><a href=" https://docs.google.com/spreadsheets/d/1Y8i7ZV5lEdRZJ-QoNVH1xz_9RwMGwZ9Z-gO9iQnKDbc/edit#gid=1204818438" target="_blank" class="govuk-link govuk-link--no-visited-state">Content docs for appointments (google sheets)</a></li>
+  </ul> 
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full"> 
+       
+    {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+
+    {{ mojSubNavigation({
+      label: 'Sub navigation',
+      items: [{
+        text: 'Post-MVP designs',
+        href: '.' 
+      }, {
+        text: 'MVP designs',
+        href: 'mvp'
+      }, {
+        text: 'Pre-MVP designs',
+        href: 'pre-mvp',
+        active: true
+      }]
+    }) }}
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-caption-l" style="color: #0b0c0c;">Prototype versions</caption>
+      <thead class="govuk-table__head" >
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" width="15%">Version</th>
+          <th scope="col" class="govuk-table__header">Description</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+       
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p class="govuk-!-font-weight-bold"><a href="/appointments/version-11/dps-home-main" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 10.1</a></p>
+            <strong class="govuk-tag govuk-tag--green">
+              In design
+            </strong>
+          </td>
+
+          <td class="govuk-table__cell">
+          <p>This version demonstrates decision to combine group and individual appointments under one journey, and the relevant UI and content changes necessary. </p>
+
+          <h3 class="govuk-heading-m">Content changes across the service</h3>
+
+          <ul class="govuk-list govuk-list--bullet"> 
+            <li> 
+             Updating captions to match merging of appointment tiles
+            </li> 
+            <li> 
+              Updated 'apply to' content to surface dates 
+            </li> 
+            
+          </ul>
+
+          <h3 class="govuk-heading-m">Appointment creation</h3> 
+
+          <h3 class="govuk-heading-m">Appointment management</h3>  
+              
+            
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p class="govuk-!-font-weight-bold"><a href="/appointments/version-10/dps-home-main" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 10</a></p>
+            <strong class="govuk-tag govuk-tag--grey">
+              Closed
+            </strong>
+          </td>
+
+          <td class="govuk-table__cell" >
+            
+          <h3 class="govuk-heading-m">Content changes across the service</h3>
+          <ul class="govuk-list govuk-list--bullet"> 
+            <li> 
+             Defined style for surfacing alt name if there is one: "Alternative name (appointment name)"
+            </li> 
+            <li> 
+              Updated 'apply to' content to surface dates 
+            </li> 
+            
+          </ul>
+          
+
+
+            <h3 class="govuk-heading-m">
+              Appointment creation
+          </h3> 
+
+         
+          <h4 class="govuk-heading-s">
+            Alternative name
+          </h4> 
+          <p>Merging the appointment name and alternative appointment name pages to aid understanding of the relationship between the two:</p> 
+          <ul class="govuk-list govuk-list--bullet"> 
+            <li> 
+              <a href="/appointments/version-10/individual-appointment/appointment-name" class="govuk-link">individual - appointment name and alt appointment name condensed onto one page</a>
+            </li> 
+            <li> 
+              <a href="/appointments/version-10/group-appointments/appointment-name" class="govuk-link">group - appointment name and alt appointment name condensed onto one page</a>
+            </li>
+            <li> 
+              <a href="/appointments/version-10/bulk-appointments/appointment-name" class="govuk-link">bulk - appointment name and alt appointment name condensed onto one page</a>
+            </li> 
+          </ul>  
+         
+          <h4 class="govuk-heading-s">Clashes and schedules</h4>
+          <p>In order to schedule their appointment at the right time, the user needs to know what attendees already have scheduled. We see that there are two potential approaches which could help the user make a decision: </p>
+          <ul class="govuk-list govuk-list--bullet"> 
+            <li> 
+              prisoner schedules - what the attendees already have scheduled for a chosen date only
+            </li> 
+              <ul>
+                <li> 
+                  <strong class="govuk-tag govuk-tag--blue">Design in test</strong><a href="/appointments/version-10/group-appointments/clashes-v11" class="govuk-link"> v11 - group - choose date, time and location upfront, show schedules for whole day (cards)</a>
+                </li> 
+                <li> 
+                  <strong class="govuk-tag govuk-tag--blue">Design in test</strong><a href="/appointments/version-10/individual-appointment/clashes-v11" class="govuk-link"> v11 - individual - choose date, time and location upfront, show schedules for whole day (cards)</a>
+                </li> 
+                <li> 
+                  <strong class="govuk-tag govuk-tag--blue">Design in test</strong><a href="/appointments/version-10/bulk-appointments/clashes-v11-4" class="govuk-link"> v11 - bulk - choose date, time and location upfront, show schedules for whole day (cards)</a>
+                </li> 
+
+                <li> 
+                  <strong class="govuk-tag govuk-tag--blue">Design in test</strong><a href="/appointments/version-10/group-appointments/clashes-v11-no-events" class="govuk-link"> v11 - group - no events scheduled</a>
+                </li> 
+                <li> 
+                  <strong class="govuk-tag govuk-tag--blue">Design in test</strong><a href="/appointments/version-10/individual-appointment/clashes-v11-no-events" class="govuk-link"> v11 - individual - no events scheduled</a>
+                </li> 
+                <li> 
+                  <a href="/appointments/version-10/group-appointments/clashes-v10" class="govuk-link">v10 - group - repeating - choose date, time and location upfront, show schedules for whole day (condensed)</a>
+                </li> 
+                <li> 
+                  <a href="/appointments/version-10/group-appointments/clashes-v9" class="govuk-link">v9 - group - choose date, time and location upfront, show schedules for whole day (condensed)</a>
+                </li> 
+                <li> 
+                  <a href="/appointments/version-10/group-appointments/clashes-v8" class="govuk-link">v8 - group - choose date and location upfront, time after (condensed)</a>
+                </li>  
+                <li> 
+                  <a href="/appointments/version-10/group-appointments/clashes-v7" class="govuk-link">v7 - group - choose date upfront, time after (condensed)</a>
+                </li> 
+                <li> 
+                  <a href="/appointments/version-10/group-appointments/clashes-v6" class="govuk-link">v6 - group - choose date and time upfront (condensed)</a>
+                </li> 
+                <li> 
+                  <a href="/appointments/version-10/group-appointments/clashes-v5" class="govuk-link">v5 - group - choose date and time upfront (tabular)</a>
+                </li> 
+                <li> 
+                  <a href="/appointments/version-10/group-appointments/clashes-v4" class="govuk-link">v4 - group - duplicates search results in 'find' but filters results as as you choose time and location</a>
+                </li> 
+                <li> 
+                  <a href="/appointments/version-10/group-appointments/clashes-v3" class="govuk-link">v3 - group - duplicates search results in 'find'</a>
+                </li> 
+                <li> 
+                  <a href="/appointments/version-10/group-appointments/clashes-v2" class="govuk-link">v2 - group - surfacing time periods (am, pm , ed)</a>
+                </li> 
+                <li> 
+                  <a href="/appointments/version-10/individual-appointment/prisoner-schedule" class="govuk-link">v1 - individual - weekly schedule (similar to prisoner profile)</a>
+                </li> 
+              </ul>
+              <br>
+            
+              <li> 
+                clashes - showing where there is a clash between a chosen date and time and what the attendees already have scheduled
+              </li> 
+              <ul>
+                <li> 
+                  <a href="/appointments/version-10/group-appointments/clashes" class="govuk-link">group - replacing checkboxes with inline remove links</a>
+                </li>  
+                <li> 
+                  <a href="/appointments/version-10/bulk-appointments/clashes" class="govuk-link">bulk - replacing checkboxes with inline remove links</a>
+                </li>  
+              </ul>
+          </ul>
+
+            <h3 class="govuk-heading-m">
+              Appointment management
+            </h3>  
+              
+            <h4 class="govuk-heading-s">
+              Find an appointment
+            </h4> 
+            <ul class="govuk-list govuk-list--bullet"> 
+              <li> 
+                removing the the group vs individual filter from find
+              </li> 
+              <li> 
+                allowing user to search by alternative name in the appointment name field - alt names for each day are added to the auto-complete list and become searchable, list refreshes each day.
+              </li> 
+            </ul> 
+
+            <h4 class="govuk-heading-s">Schedule and clashes (in edit)</h4>
+            <p>Re-surfacing clashes and schedule pages where appropriate when user edits and existing appointment: </p>
+            <ul>  
+              <li> 
+                <a href="/appointments/version-10/appointment-management/edit/location-repeating/location" class="govuk-link">group and indv - repeating - changing location</a>
+              </li>
+              <li> 
+                <a href="/appointments/version-10/appointment-management/edit/location/location" class="govuk-link">group and indv (including indv created in bulk) - non-repeating - changing location</a>
+              </li>
+              <li> 
+                <a href="/appointments/version-10/appointment-management/edit/date-time-repeating/date-of-appointment" class="govuk-link">group - repeating - changing date or time</a>
+              </li>
+              <li> 
+                <a href="/appointments/version-10/appointment-management/edit/date-time/date-of-appointment" class="govuk-link">group - non-repeating - changing date or time</a>
+              </li>
+              <li> 
+                <a href="/appointments/version-10/appointment-management/edit/appointment-list/add/upload-or-per-person" class="govuk-link">group - repeating - adding attendees</a>
+              </li>  
+              <li> 
+                <a href="/appointments/version-10/appointment-management/edit/date-time-indv-repeating/date-of-appointment" class="govuk-link">indv - repeating - changing date or time</a>
+              </li>
+              <li> 
+                <a href="/appointments/version-10/appointment-management/edit/date-time-indv/date-of-appointment" class="govuk-link">indv (including indv created in bulk) - non-repeating - changing date or time</a>
+              </li> 
+            </ul>
+
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p class="govuk-!-font-weight-bold"><a href="/appointments/version-9/dps-home-main" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 9</a></p>
+            <strong class="govuk-tag govuk-tag--grey">
+              Closed
+            </strong>
+          </td>
+
+          <td class="govuk-table__cell" >
+          
+          <h3 class="govuk-heading-m">UR Scenario</h3>
+          <p><a href="/appointments/version-9/dps-home">Variant 1 - one-to-one, set and group</a></p>
+
+          <p><a href="/appointments/version-9/dps-home-2">Variant 2 - one-to-one, for a group of people</a></p>
+
+          <p><a href="/appointments/version-9/dps-home-3">Variant 3 - schedule an appointment, schedule a set of appointments</a></p>
+ 
+          <h3 class="govuk-heading-m">Content changes across the service</h3>
+          <ul class="govuk-list govuk-list--bullet"> 
+            <li> 
+              Changing the way we display names to be [First name] [Last name] everywhere
+            </li> 
+            <li> 
+              Updated content for homepage tiles, 
+            </li> 
+
+            <li> 
+              Use of the term 'one-to-one' for individual appointments
+            </li> 
+            <li> 
+              Use of the term 'appointment sets' for bulk appointments
+            </li> 
+          </ul>
+          
+            <h3 class="govuk-heading-m">
+              Appointment management
+          </h3>  
+            
+          <h4 class="govuk-heading-s">
+            Find an appointment
+          </h4>  
+          <p>We've made various changes to the <a href="/appointments/version-9/appointment-management/search-results-default">search results</a> page ahead of next UR round, these include:</p>
+          <ul class="govuk-list govuk-list--bullet">  
+            <li>  
+              Removing the appointment date column to free more horizontal space (needs research)
+            </li>
+            <li> 
+              For appts with only one attendee, surfacing attendee details (name, number and location) in the search results
+            </li>
+            <li> 
+              Adding some status tags for cancelled appointments
+            </li>
+            <br>
+            <strong class="govuk-tag govuk-tag--grey">Alt designs</strong>  
+              <li>    
+                <a href="/appointments/version-9/appointment-management/find-appointment-by-date">Asking for a date before showing results - reinforcing single dates, removing date column</a>
+              </li>   
+              <li>    
+                <a href="">Search results using GOV.UK cards</a>
+              </li>   
+          </ul>
+         
+
+            <h3 class="govuk-heading-m">
+                Appointment creation
+            </h3>  
+           
+          <h4 class="govuk-heading-s">
+            Group
+          </h4>  
+            <strong class="govuk-tag govuk-tag--blue">New / updated designs</strong> 
+            <ul class="govuk-list govuk-list--bullet">  
+              <li> 
+                <a href="/appointments/version-9/group-appointments/non-associations" class="govuk-link">non-associations - replacing checkboxes with inline remove links</a>
+              </li>  
+            </ul>   
+
+           
+            <h4 class="govuk-heading-s">
+              Bulk
+            </h4>  
+              <strong class="govuk-tag govuk-tag--blue">New / updated designs</strong> 
+              <ul class="govuk-list govuk-list--bullet"> 
+
+                <li> 
+                  <a href="/appointments/version-9/bulk-appointments/upload-file-info-bulk" class="govuk-link">Merging the bulk info page and the upload page onto one screen</a>
+                </li>  
+                <li> 
+                  <a href="/appointments/version-9/bulk-appointments/check-answers" class="govuk-link">check your answers - improved design with cards</a>
+                </li>  
+                <li> 
+                  <a href="/appointments/version-9/bulk-appointments/non-associations" class="govuk-link">non-associations - replacing checkboxes with inline remove links</a>
+                </li>  
+                <li> 
+                  <a href="/appointments/version-9/bulk-appointments/alerts" class="govuk-link">alerts - replacing checkboxes with inline remove links</a>
+                </li>  
+              </ul>   
+            
+            <h3 class="govuk-heading-m">Cross-cutting designs</h3>
+            <ul class="govuk-list govuk-list--bullet"> 
+              <li> 
+                <strong class="govuk-tag govuk-tag--grey">Experimental</strong>  
+                Exiting a form mid-journey (<a href="/appointments/version-9/group-appointments/search-person" class="govuk-link">Cancel during creation</a>)
+              </li>
+            </ul>
+
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p class="govuk-!-font-weight-bold"><a href="/appointments/version-8/dps-home-main" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 8</a></p>
+            <strong class="govuk-tag govuk-tag--grey">
+              Closed
+            </strong>
+            
+          </td>
+          <td class="govuk-table__cell" >
+
+                       
+          <h3 class="govuk-heading-m">
+            Content changes across the service
+          </h3>  
+          <p>All content changes have been added to the <a href="https://miro.com/app/board/uXjVPr57naE=/?moveToWidget=3458764550886060113&cot=14">Appointments Beta Miro board</a>, some highlights:</p>
+
+          <ul class="govuk-list govuk-list--bullet"> 
+            <li>
+              removing word 'prisoner' wherever we can, with Keiron providing a <a href="https://docs.google.com/document/d/12WZQgCSNU-EGUHeIgkoUN6Mwf7OSo7fZzNtKmCdzwjw/edit">content justification</a> to explain the changes
+            </li>
+            <li>
+              'appointment type' becomes 'appointment name'
+            </li>
+            <li>
+              'appointment description' becomes 'alternative appointment name'
+            </li>
+            <li>
+              when we playback appointment name, we add single quotes
+            </li>
+            <li>
+              adding (optional) to optional pages
+            </li>
+            <li>
+              'accept and...' becomes 'confirm and...'
+            </li>
+          </ul>
+            <h3 class="govuk-heading-m">
+                Appointment creation
+            </h3>  
+           
+          <h4 class="govuk-heading-s">
+            Group
+          </h4>  
+            <strong class="govuk-tag govuk-tag--blue">New / updated designs</strong> 
+            <ul class="govuk-list govuk-list--bullet"> 
+              
+              <li> 
+                  
+                <a href="/appointments/version-8/group-appointments/person-add-another-single-person-left" class="govuk-link">attendee list - add people - radio removed</a>
+              </li> 
+              <li>  
+                <a href="/appointments/version-8/group-appointments/person-add-another-warning" class="govuk-link">attendee list - all people removed - warning and radio removed</a>
+              </li> 
+              <li>    
+                <a href="/appointments/version-8/group-appointments/appointment-type-manual" class="govuk-link">alternative appointment description - updated content </a>
+              </li>   
+              <li> 
+                <a href="/appointments/version-8/group-appointments/comments" class="govuk-link">heads up - new name for movement slip comments and introducting one heads up per appt</a>
+              </li> 
+            </ul>  
+            <strong class="govuk-tag govuk-tag--grey">Alt designs</strong>  
+            <ul class="govuk-list govuk-list--bullet">   
+              <li>   
+                <a href="/appointments/version-8/group-appointments/person-add-another-warning-old" class="govuk-link"> attendee list - all people removed- with old radios</a>
+              </li>    
+            </ul>  
+
+          <h4 class="govuk-heading-s">
+            Bulk
+          </h4>  
+
+          <strong class="govuk-tag govuk-tag--blue">New / updated designs</strong> 
+            <ul class="govuk-list govuk-list--bullet"> 
+              <li>    
+                <a href="/appointments/version-8/bulk-appointments/appointment-type-manual" class="govuk-link">alternative appointment description - updated content </a>
+              </li> 
+              <li>    
+                <a href="/appointments/version-8/bulk-appointments/comments/comments" class="govuk-link">heads up - adding notes for movement slips</a>
+              </li>  
+            </ul>
+
+            <h4 class="govuk-heading-s">
+              Individual
+            </h4>  
+
+            <strong class="govuk-tag govuk-tag--blue">New / updated designs</strong> 
+              <ul class="govuk-list govuk-list--bullet"> 
+
+              <li>    
+                <a href="/appointments/version-8/individual-appointment/appointment-type-manual" class="govuk-link">alternative appointment description - updated content </a>
+              </li> 
+                <li>    
+                  <a href="/appointments/version-8/individual-appointment/comments" class="govuk-link">heads up - adding notes for movement slips</a>
+                </li>  
+              </ul>    
+
+            <h3 class="govuk-heading-m">
+              Appointment management
+            </h3>
+            
+
+            <strong class="govuk-tag govuk-tag--blue">New / updated designs</strong> 
+            <ul class="govuk-list govuk-list--bullet"> 
+              <li> 
+                Find an appointment
+                <ul class="govuk-list govuk-list--bullet"> 
+                  <li>
+                    <a href="/appointments/version-8/appointment-management/search-results-default" class="govuk-link">Search results - refined based on R3 research</a>
+                  </li>
+                </ul>
+              </li> 
+              <li> 
+                Appointment page examples
+                <ul class="govuk-list govuk-list--bullet"> 
+
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/group/repeating" class="govuk-link">group - repeating</a>
+                  </li>
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/group/repeating-cancelled" class="govuk-link">group - repeating - cancelled</a>
+                  </li>
+
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/group/repeating-edited" class="govuk-link">group - repeating - edited</a>
+                  </li>
+
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/group/non-repeating" class="govuk-link">group - non-repeating</a>
+                  </li>
+
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/group/non-repeating-cancelled" class="govuk-link">group - non-repeating - cancelled</a>
+                  </li>
+
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/individual/repeating" class="govuk-link">individual - repeating</a>
+                  </li>
+
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/individual/non-repeating" class="govuk-link">individual - non-repeating</a>
+                  </li>
+
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/individual/uploaded-in-bulk" class="govuk-link">individual - non-repeating - uploaded by CSV/bulk</a>
+                  </li>
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/series/overview-edited" class="govuk-link">repeating series - overview</a>
+                  </li> 
+
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/series/overview-edited" class="govuk-link">repeating series - overview - edited</a>
+                  </li> 
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/bulk/overview" class="govuk-link">bulk session - overview</a>
+                  </li> 
+                </ul> 
+              </li>
+
+              <li> 
+                Edit an appointment (success banners and edited tags missing for now)
+                <ul class="govuk-list govuk-list--bullet"> 
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/group/repeating" class="govuk-link">attendees - adding multiple & removing one at a time</a>
+                  </li> 
+                  <li> 
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/group/repeating-remove-multiple" class="govuk-link"><strong class="govuk-tag govuk-tag--grey">Alt / old design</strong> attendees - adding multiple, removing multiple - appointment view</a>
+                  </li>
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/group/repeating" class="govuk-link">location</a>
+                  </li> 
+                  <li> 
+                    Date and time   
+                    <ul>
+                      <li><a href="/appointments/version-8/appointment-management/appointment-summary/group/repeating" class="govuk-link">date</a></li>
+                      <li><a href="/appointments/version-8/appointment-management/appointment-summary/group/repeating" class="govuk-link">time</a></li>
+                      <li><a href="/appointments/version-8/appointment-management/edit/date-time/apply-to-date-time" class="govuk-link">dynamic 'apply to' page for where both date and time have been edited</a></li>
+                    </ul>
+                  </li> 
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/group/repeating" class="govuk-link">heads-up</a>
+                  </li> 
+                </ul>
+              </li>
+        
+              <li> 
+                Cancelling an appointment (success banners missing for now)
+                <ul class="govuk-list govuk-list--bullet"> 
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/group/non-repeating" class="govuk-link">non-repeat appointment</a>
+                  </li>  
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/group/repeating" class="govuk-link">repeat appointment</a>
+                  </li> 
+                  <li> 
+                    <strong class="govuk-tag govuk-tag--grey">Experimental</strong>     
+                    <a href="/appointments/version-8/appointment-management/appointment-summary/bulk/overview" class="govuk-link"> appointments uploaded via CSV/bulk</a>
+                  </li> 
+                </ul> 
+              </li>
+
+              <li> 
+                'Apply to' examples - for repeating appointments
+                <ul class="govuk-list govuk-list--bullet"> 
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/edit/apply-to-examples/apply-to-two-options" class="govuk-link">Apply to - two options available - location example</a>
+                  </li> 
+
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/edit/apply-to-examples/apply-to-three-options" class="govuk-link">Apply to - three options available - location example</a>
+                  </li> 
+                </ul>
+
+              </li> 
+
+              <li> 
+                Print movement slips
+                <ul class="govuk-list govuk-list--bullet"> 
+                  <li>    
+                    <a href="/appointments/version-8/appointment-management/edit/movement-slip/movement-slip-example" class="govuk-link">Movement slip example</a>
+                  </li> 
+                </ul>
+              </li> 
+              
+            </ul>
+
+
+
+            
+   
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p class="govuk-!-font-weight-bold"><a href="/appointments/version-7/dps-home-main" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 7</a></p>
+            <strong class="govuk-tag govuk-tag--grey">
+              Closed
+            </strong>
+            
+          </td>
+          <td class="govuk-table__cell" >
+                <h3 class="govuk-heading-s">
+                Appointment creation
+              </h3> 
+
+            <ul class="govuk-list govuk-list--bullet"> 
+              <li>    
+                <a href="/appointments/version-7/bulk-appointments/date-of-appointment" class="govuk-link">Revised Bulk creation flow</a>
+              </li>
+
+              <li>
+                <h2 class="govuk-body">Confirm prisoner details</h2>
+              </li>
+              
+              <ul class="govuk-list govuk-list--bullet">
+                
+                <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--blue">Final designs</strong> <br>
+                  Hint: 'Dan' for multiple results, 'Neil Rudge' for single result, 'none' for no results.
+                </div>
+          
+                <li>
+                  <a href="/appointments/version-7/individual-appointment/search-person-v2" class="govuk-link">Search page - Default - individual appointment</a>
+                </li> 
+          
+                <li>
+                  <a href="/appointments/version-7/individual-appointment/search-person-results?prisoner-search-query=Dan" class="govuk-link">Search page - Multiple results - individual appointment</a>
+                </li> 
+          
+                <li>
+                  <a href="/appointments/version-7/individual-appointment/search-person-results?prisoner-search-query=0" class="govuk-link">Search page - No results - individual appointment</a>
+                </li> 
+          
+                <li class="govuk-!-margin-bottom-3">
+                  <a href="/appointments/version-7/individual-appointment/search-person-results?prisoner-search-query=Neil+Rudge" class="govuk-link">Search page - One result - individual appointment</a>
+                </li> 
+
+                <li>
+                  <a href="/appointments/version-7/group-appointments/search-person-v2" class="govuk-link">Search page - Default - group appointment</a>
+                </li> 
+          
+                <li>
+                  <a href="/appointments/version-7/group-appointments/search-person-results?prisoner-search-query=Dan" class="govuk-link">Search page - Multiple results - group appointment</a>
+                </li> 
+          
+                <li>
+                  <a href="/appointments/version-7/group-appointments/search-person-results?prisoner-search-query=0" class="govuk-link">Search page - No results - group appointment</a>
+                </li> 
+          
+                <li class="govuk-!-margin-bottom-3">
+                  <a href="/appointments/version-7/group-appointments/search-person-results?prisoner-search-query=Neil+Rudge" class="govuk-link">Search page - One result - group appointment</a>
+                </li> 
+
+                <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--grey">Old</strong> <br> 
+                </div>
+
+                <li>  
+                  <a href="/appointments/version-7/individual-appointment/search-person" class="govuk-link">Revised 'confirm a prisoner details' page - individual appointment</a>
+                 
+                </li> 
+
+                <li>   
+                  <a href="/appointments/version-7/group-appointments/search-person" class="govuk-link">Revised 'confirm a prisoner details' page - group appointment</a>
+                 
+                </li>
+              </ul>
+            </ul>
+             
+            
+
+            <h2 class="govuk-heading-s">
+              Appointment management
+              </h2>
+            
+            <ul class="govuk-list govuk-list--bullet">
+
+            <li>    
+              <a href="/appointments/version-7/appointment-management/group-appointment-single-occurrence" class="govuk-link">Removing people from an existing group - option 1 -remove one at a time</a>
+            
+            </li>
+
+            <li>    
+              <a href="/appointments/version-7/appointment-management/group-appointment-single-occurrence-alt" class="govuk-link">Removing people from an existing group - option 2 - remove multiple</a>
+            
+            </li>
+
+            <li>    
+              <a href="/appointments/version-7/appointment-management/find-an-appointment" class="govuk-link">'find an appointment' flow - option 1 - pre-filtering</a>
+            
+            </li>
+
+            <li>    
+              <a href="/appointments/version-7/appointment-management/search-results-default" class="govuk-link">'find an appointment' flow - option 2 - filtering on page</a>
+            
+            </li>
+            </ul> 
+            
+            <h2 class="govuk-heading-s">Research senarios</h2>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>    
+                <a href="/appointments/version-7/dps-home" class="govuk-link">Find an appointment series and find a bulk appointment</a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p class="govuk-!-font-weight-bold"><a href="/appointments/version-6/dps-home-main" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 6</a></p>
+
+            {{ govukButton({
+              text: "Variant A",
+              href: "/appointments/version-6/appointment-management/group-appointment-multiple-occurrences",
+              isStartButton: true
+            }) }}
+
+            {{ govukButton({
+              text: "Variant B",
+              href: "/appointments/version-6/appointment-management/group-appointment-multiple-occurrences-alt",
+              isStartButton: true
+            }) }}
+            <strong class="govuk-tag govuk-tag--grey">
+              Closed
+            </strong>
+          </td>
+
+          <td class="govuk-table__cell" >
+            <h3 class="govuk-heading-s">
+              End to end designs including appointment creation and managemnet
+            </h3>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>
+                <h2 class="govuk-heading-s">
+                Appointment creation
+              </h2>
+            </li>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>    
+                <a href="/appointments/version-6/individual-appointment/search-person" class="govuk-link">Manual category and comments help text update (As part of the individual appointment journey)</a>
+              </li>
+              </ul>
+              <li>
+                <h2 class="govuk-heading-s">
+                Appointment management
+                </h2>
+              </li>
+              <ul class="govuk-list govuk-list--bullet">
+              <li>
+                <a href="/appointments/version-6/appointment-management/single-appointment-no-recurrence" class="govuk-link">Single person - no repeat (including cancel)</a>
+              </li>
+              <li>
+                <a href="/appointments/version-6/appointment-management/single-appointment-multiple-occurrences" class="govuk-link">Single person - multiple occurences</a>
+              </li>
+              <li>
+                <a href="/appointments/version-6/appointment-management/group-appointment-multiple-occurrences" class="govuk-link">Group appointments - multiple occurences - Parent view</a>
+              </li>
+              <li>
+                <a href="/appointments/version-6/appointment-management/group-appointment-multiple-occurrences-alt" class="govuk-link">Group appointments - multiple occurences - Alternative parent view</a>
+              </li>
+              <li>
+                <a href="/appointments/version-6/appointment-management/group-appointment-single-occurrence" class="govuk-link">Group appointments - multiple occurences - Child view</a>
+              </li>
+             </ul>
+            </ul>
+           
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            
+            <p class="govuk-!-font-weight-bold"><a href="/appointments/version-5/dps-home-main" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 5</a></p>
+            <strong class="govuk-tag govuk-tag--grey">
+              Closed
+            </strong>
+          </td>
+
+          <td class="govuk-table__cell" >
+            <h3 class="govuk-heading-s">
+              Group appointments - Post user research iteration
+            </h3>
+            
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p class="govuk-!-font-weight-bold">Version 4</p>
+            <strong class="govuk-tag govuk-tag--grey">
+              Closed
+            </strong>
+          </td>
+
+
+          <td class="govuk-table__cell" >
+            <h3 class="govuk-heading-s">
+              Appointment management
+            </h3>
+            <b>User research links</b><br>
+
+            <ul class="govuk-list govuk-list--bullet">
+              <li>
+                <a href="/appointments/version-4/appointment-management/version-2/start" class="govuk-link">Start of appointment management (Filter page)</a>
+              </li>
+              <li>
+                <a href="/appointments/version-4/appointment-management/version-2/appointment-view" class="govuk-link">View appointments page</a>
+              </li>
+             <li>
+              <a href="/appointments/version-4/appointment-management/version-2/edit-appointment-option-1" class="govuk-link">Edit page (Option 1)</a>
+            </li>
+            <li>
+              <a href="/appointments/version-4/appointment-management/version-2/edit-appointment-option-2" class="govuk-link">Edit page (Option 2)</a>
+            </li>
+            <li>
+              <a href="/appointments/version-4/appointment-management/version-2/edit-appointment-option-3" class="govuk-link">Edit page (Option 3)</a>
+            </li>
+            <li>
+              <a href="/appointments/version-4/appointment-management/version-2/edit-appointment-option-4" class="govuk-link">Edit page (Option 4)</a>
+              </li>
+              <li>
+                <a href="/appointments/version-4/appointment-management/version-2/edit-appointment-option-4-child" class="govuk-link">Child edit page (Option 4)</a>
+                </li>
+            </ul> 
+            <b>other links</b><br>
+            <a href="/appointments/version-4/appointment-management/version-1/start" class="govuk-link">Version 1 (superseded)</a><br>
+            
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p><a href="/appointments/version-3/group-appointments/appointment-start" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 3</a></p>
+            <p><a href="/appointments/version-3/group-appointments/appointment-start-alt" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Alternative front door</a></p>
+            <p><a href="/appointments/version-3/group-appointments/appointment-start-alt-three-entries" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Alternative front door - 3 tiles</a></p>
+            <strong class="govuk-tag govuk-tag--grey">
+              Closed
+            </strong>
+          </td>
+
+          <td class="govuk-table__cell" >
+            Group appointments 
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p><a href="/appointments/version-2/group-appointments/appointment-start" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 2</a></p>
+            <strong class="govuk-tag govuk-tag--red">
+              Superceded by Version 3
+            </strong>
+          </td>
+
+          <td class="govuk-table__cell" >
+            Group appointments 
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <p><a href="/appointments/version-1/scenario-1/appointment-start" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 1</a></p>
+            <strong class="govuk-tag govuk-tag--grey">
+              Closed
+             </strong>
+          </td>
+
+          <td class="govuk-table__cell" >
+            Scheduling - including appointment host details as well as information around priority
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" >
+            <h2 class="govuk-heading-s">
+              Schedule scenarios
+            </h2>
+            <p><a href="/appointments/version-1/scenario-1/prisoner-schedule" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Scenario 1</a></p>
+            <p><a href="/appointments/version-1/scenario-2/prisoner-schedule" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Scenario 2a</a></p>
+            <p><a href="/appointments/version-1/scenario-2b/prisoner-schedule" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Scenario 2b</a></p>
+            <p><a href="/appointments/version-1/scenario-3/prisoner-schedule" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Scenario 3</a></p>
+            <strong class="govuk-tag govuk-tag--grey">
+              Closed
+            </strong>
+          </td>
+
+          <td class="govuk-table__cell" >
+           Various versions and scenarios of the schedule page<br><br><br>
+           <a href="/appointments/version-4/schedule-scenarios/scenario-1/select-prisoner" class="govuk-link">For dev sizing - Appointment creation - Single journey</a>
+          </td>
+         
+        </tr>
+
+        
+      </tbody>
+    </table>
+
+    <div class="govuk-!-margin-bottom-6">
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-4">
+      Designs ready for development (old)
+    </h2>
+    <p class="govuk-body">
+      Designs that have been approved for development by Product Manager
+    </p>
+    <p class="govuk-body">
+      <a href="/appointments/tickets-for-dev/" class="govuk-link">Designs for dev (old)</a>
+    </p>
+    <!--<br><br><hr><br><br>
+    
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-4">
+      Design history
+    </h2>
+    <p class="govuk-body">
+      Articles around design choices made during the Alpha stage of the Appointments project.
+    </p>
+    
+   <p class="govuk-body">
+    <a href="/appointments/design-history/" class="govuk-link">Design history articles</a>
+   
+   </p>-->
+
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+</div>
+    
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="add-people-route">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Schedule an appointment</span>
+        How do you want to select attendees?
+       </h1>
+       
+{{ govukRadios({
+        idPrefix: "add-people-method",
+        name: "add-people-method",
+        items: [
+          {
+            value: "manually-add-people",
+            text: "Search for them one by one"
+            
+          },
+          {
+            value: "upload-file",
+            text: "Add a group of people using a CSV file"
+          }
+        ]
+       }) }}
+     
+
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </div>
+</div>
+</form>
+{% endblock %}

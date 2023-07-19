@@ -1,0 +1,58 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+
+<form id="form" method="post"  action="../../appointment-summary/individual/non-repeating">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+      <div class="back">
+        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+        </div>
+     
+     <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">
+        {% if data['alt-appointment-name'] !='' %}
+
+        {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+        {% else %}
+        
+        {{ data['apppointment-type']}}
+        {% endif %}
+      </span>
+      Change extra information for everyone attending the appointment (optional)
+     </h1>
+     <p class="govuk-body">You can edit information for attendees how to prepare for their appointment. Note that changes will not appear on any movement slips that have already been printed.</p>
+     <p class="govuk-body">Wing staff will be notified there is extra information on the printed unlock list, but for confidentiality the full details will only be visible when you view the details of the appointment in this service.</p>
+
+    {{ govukTextarea({
+      name: "more-detail", 
+      attributes: "{{ data['more-detail']}}",
+      id: "more-detail"
+    }) }}
+
+ 
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  
+    <!--  -->
+  </div>
+    </div>
+  </div>
+  </form>
+
+
+  
+{% endblock %}
