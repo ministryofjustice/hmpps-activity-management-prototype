@@ -1,0 +1,118 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+      <span class="govuk-caption-l">Schedule a one-to-one appointment</span>
+      Review scheduled events to avoid clashes
+    </h1> 
+  </div>
+</div>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <form method="post">
+
+		
+
+		<dl class="govuk-summary-list">
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Attendee
+				</dt>
+				<dd class="govuk-summary-list__value">
+				Neil Rudge<br>G2044E
+				</dd>
+				<dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="#">
+					Change<span class="govuk-visually-hidden"> change</span>
+				  </a>
+				</dd>
+			  </div>
+			  <div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Location
+				</dt>
+				<dd class="govuk-summary-list__value">
+				  
+					{{ data['apppointment-location-indv']}}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="#">
+					Change<span class="govuk-visually-hidden"> date</span>
+				  </a>
+				</dd>
+			  </div>
+			<div class="govuk-summary-list__row">
+			  <dt class="govuk-summary-list__key">
+				Date
+			  </dt>
+			  <dd class="govuk-summary-list__value">
+				Monday, 23 July 2023
+                
+			  </dd>
+			  <dd class="govuk-summary-list__actions">
+				<a class="govuk-link" href="#">
+				  Change<span class="govuk-visually-hidden"> date</span>
+				</a>
+			  </dd>
+			</div>
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Time
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{ data['start-hours-single']}}:{{ data['start-minutes-single']}} to {{ data['end-hours-single']}}:{{ data['end-minutes-single']}} 
+				</dd>
+				<dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="#">
+					Change<span class="govuk-visually-hidden"> time</span>
+				  </a>
+				</dd>
+			  </div>
+		  </dl>
+
+		  <h2 class="govuk-heading-m">
+			
+			{{ data['apppointment-location-indv']}} events on Monday, 23 July 2023
+		  </h2> 
+
+		   
+				<p>No other events scheduled.</p>
+
+		  <h2 class="govuk-heading-m">
+			Events for Neil Rudge, G2044E on Monday, 23 July 2023
+		  </h2> 
+				
+		  <p>No other events scheduled.</p>
+		  
+
+		  {{ govukButton({
+			text: "Continue",
+			attributes: {
+			  "formaction": "comments",
+			  "formmethod": "post"
+			  }
+		  }) }}
+
+ 			</form>
+
+		</div>	
+	</div>
+</div>
+
+
+{% endblock %}

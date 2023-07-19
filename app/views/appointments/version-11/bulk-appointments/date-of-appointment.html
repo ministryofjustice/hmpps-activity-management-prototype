@@ -1,0 +1,65 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="appointment-time">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Schedule a set of one-to-ones</span>
+        When is the appointment?
+       </h1>
+       {{ govukDateInput({
+        id: "date-of-appointment-bulk",
+        namePrefix: "date-of-appointment-bulk",
+        
+        hint: {
+          text: "For example, 31 3 2023"
+        },
+        items: [
+          {
+            name: "day",
+            label: "Day",
+            
+            classes: "govuk-input--width-2"
+          },
+          {
+            name: "month",
+            label: "Month",
+            
+            classes: "govuk-input--width-2"
+          },
+          {
+            name: "year",
+            label: "Year",
+           
+            classes: "govuk-input--width-4"
+          }
+        ]
+      }) }}
+    
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      
+        
+      </div>
+
+
+
+  </div>
+</div>
+</form>
+{% endblock %}

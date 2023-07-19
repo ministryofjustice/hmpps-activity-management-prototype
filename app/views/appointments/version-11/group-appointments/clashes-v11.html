@@ -12,7 +12,7 @@ Appointments prototype
       </div>
 
     <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
-      <span class="govuk-caption-l">Schedule a group appointment</span>
+      <span class="govuk-caption-l">Schedule an appointment</span>
       Review scheduled events to avoid clashes
     </h1> 
   </div>
@@ -31,7 +31,7 @@ Appointments prototype
 		<dl class="govuk-summary-list">
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
-				  Attendees 
+				  Number of attendees 
 				</dt>
 				<dd class="govuk-summary-list__value">
 				  8
@@ -42,6 +42,19 @@ Appointments prototype
 				  </a>
 				</dd>
 			  </div>
+			  <!-- <div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Location
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{ data['apppointment-location']}}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="location">
+					Change<span class="govuk-visually-hidden"> date</span>
+				  </a>
+				</dd>
+			  </div> -->
 			<div class="govuk-summary-list__row">
 			  <dt class="govuk-summary-list__key">
 				Date
@@ -57,7 +70,7 @@ Appointments prototype
 			</div>
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
-				  Time
+				  Start and end time
 				</dt>
 				<dd class="govuk-summary-list__value">
 					{{ data['start-hours']}}:{{ data['start-minutes']}} to {{ data['end-hours']}}:{{ data['end-minutes']}} 
@@ -84,7 +97,7 @@ Appointments prototype
 
 		  
 		  <h2 class="govuk-heading-m">
-			Attendee events on Monday, 23 July 2023
+			Events scheduled for attendees on Monday, 23 July 2023
 		  </h2> 
 
 		  <div class="govuk-summary-card">
@@ -102,9 +115,9 @@ Appointments prototype
 				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
 					<thead class="govuk-table__head">
 					  <tr class="govuk-table__row">
-						<th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
+						<th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Event time</th> 
 						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Event name</th> 
-						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Type</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Event type</th>
 						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Location</th>
 					  </tr>
 					</thead>

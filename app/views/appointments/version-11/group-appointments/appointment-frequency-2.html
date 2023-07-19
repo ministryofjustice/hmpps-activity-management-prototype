@@ -1,0 +1,190 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="clashes-v11">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Schedule an appointment</span>
+        How often will the appointment repeat?
+       </h1> 
+       {% from "govuk/components/radios/macro.njk" import govukRadios %}
+        {% from "govuk/components/input/macro.njk" import govukInput %}
+
+        {% set dailyHtml %}
+        {{ govukRadios({
+          idPrefix: "appointment-frequency-daily",
+          name: "appointment-frequency-daily",
+          label: {
+            text: "Daily"
+          },
+        
+          items: [
+            {
+              value: "Every day",
+              text: "Every day"
+            },
+            {
+              value: "Every 2 days",
+              text: "Every 2 days"
+            },
+            {
+              value: "Every 3 days",
+              text: "Every 3 days"
+            },
+            {
+              value: "Every 4 days",
+              text: "Every 4 days"
+            },
+            {
+              value: "Every 5 days",
+              text: "Every 5 days"
+            },
+            {
+              value: "Every 6 days",
+              text: "Every 6 days"
+            }
+          ]
+        }) }}
+        {% endset -%}
+
+        {% set weeklyHtml %}
+        {{ govukCheckboxes({
+          idPrefix: "appointment-frequency-weekly",
+          name: "appointment-frequency-weekly",
+          label: {
+            text: "Weekly"
+          },
+        
+          items: [
+            {
+              value: "Every Monday",
+              text: "Every Monday"
+            },
+            {
+              value: "Every Tuesday",
+              text: "Every Tuesday"
+            },
+            {
+              value: "Every Wednesday",
+              text: "Every Wednesday"
+            },
+            {
+              value: "Every Thursday",
+              text: "Every Thursday"
+            },
+            {
+              value: "Every Friday",
+              text: "Every Friday"
+            },
+            {
+              value: "Every Saturday",
+              text: "Every Saturday"
+            },
+            {
+              value: "Every Sunday",
+              text: "Every Sunday"
+            }
+          ]
+        }) }}
+       
+        {% endset -%}
+
+
+        {% set monthlyHtml %}
+        {{ govukRadios({
+          idPrefix: "appointment-frequency-monthly",
+          name: "appointment-frequency-monthly",
+          label: {
+            text: "Monthly"
+          },
+          items: [ 
+            {
+              value: "On the 18th of every month",
+              text: "On the 18th of every month",
+              hint: {
+                text: "Or the last day if there is no matching date in the month."
+              }
+            },
+            {
+              value: "Every third Friday of the month",
+              text: "Every third Friday of the month"
+            }
+          ]
+        }) }}
+       <p></p>
+        {% endset -%}
+
+        {{ govukRadios({ 
+          name: "appointment-frequency",  
+          items: [
+            {
+              value: "daily",
+              text: "Daily",
+              conditional: {
+                html: dailyHtml
+              }
+            },
+            {
+              value: "weekly",
+              text: "Weekly",
+              conditional: {
+                html: weeklyHtml
+              }
+            },
+            {
+              value: "Monthly",
+              text: "Monthly",
+              conditional: {
+                html: monthlyHtml
+              }
+            }
+          ]
+        }) }}
+
+      <h2 class="govuk-heading-m">
+       
+        How many appointments are there altogether?
+       </h2>
+     {{ govukInput({
+      id: "number-of-appointments",
+      name: "number-of-appointments",
+      label: {
+        text: "Enter the total number of appointments, including the first appointment, up to a maximum of one year."
+      },
+           
+      classes: "govuk-input--width-4"
+     }) }}
+     
+     <!--{{ govukInsetText({
+      html: "Last appointment on <b>24 August 2023</b>"
+     }) }}-->
+      
+   
+     <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    
+      
+    </div>
+
+
+
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,283 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+      <span class="govuk-caption-l">
+		{% if data['alt-appointment-name'] !='' %}
+
+		{{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+		{% else %}
+		
+		{{ data['apppointment-type']}}
+		{% endif %}</span>
+      Review scheduled events to avoid clashes
+    </h1> 
+  </div>
+</div>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <form method="post">
+
+		
+
+		<dl class="govuk-summary-list">
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Attendees you're adding
+				</dt>
+				<dd class="govuk-summary-list__value">
+				  2
+				</dd>
+				<dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="person-add-another">
+					Change<span class="govuk-visually-hidden"> change</span>
+				  </a>
+				</dd>
+			  </div>
+			  <!-- <div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Location
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{ data['apppointment-location']}}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="location">
+					Change<span class="govuk-visually-hidden"> date</span>
+				  </a>
+				</dd>
+			  </div> -->
+			<div class="govuk-summary-list__row">
+			  <dt class="govuk-summary-list__key">
+				Date
+			  </dt>
+			  <dd class="govuk-summary-list__value">
+				{{ data['date-of-appointment-day']}} July 2023
+			  </dd>
+			  <!-- <dd class="govuk-summary-list__actions">
+				<a class="govuk-link" href="date-of-appointment">
+				  Change<span class="govuk-visually-hidden"> date</span>
+				</a>
+			  </dd> -->
+			</div>
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Time
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{ data['start-hours']}}:{{ data['start-minutes']}} to {{ data['end-hours']}}:{{ data['end-minutes']}} 
+				</dd>
+				<!-- <dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="date-of-appointment">
+					Change<span class="govuk-visually-hidden"> time</span>
+				  </a>
+				</dd> -->
+			  </div>
+		  </dl>
+
+<!-- 
+		  <h2 class="govuk-heading-m govuk-visually-hidden">
+			{{ data['apppointment-location']}} events
+		  </h2> 
+
+		   <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+            <caption class="govuk-table__caption govuk-table__caption--m"><b>
+				{{ data['apppointment-location']}} events</b>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
+                <th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Event name</th> 
+                <th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Type</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row"> 
+                <td class="govuk-table__cell" >
+                  9:00 to 11:00
+                </td> 
+                <td class="govuk-table__cell">
+                  Job Centre Plus
+                </td> 
+                <td class="govuk-table__cell">
+                  Appointment
+                </td>
+              </tr>
+              <tr class="govuk-table__row"> 
+                <td class="govuk-table__cell" >
+                  13:00 to 14:00
+                </td> 
+                <td class="govuk-table__cell">
+                  Mathematics 2
+                </td> 
+                <td class="govuk-table__cell">
+                  Appointment
+                </td>
+              </tr>
+              <tr class="govuk-table__row"> 
+                <td class="govuk-table__cell" >
+                  15:00 to 16:00
+                </td> 
+                <td class="govuk-table__cell">
+                  English 2
+                </td> 
+                <td class="govuk-table__cell">
+                  Appointment
+                </td>
+              </tr>
+            </tbody>
+          </table> -->
+
+		  <h2 class="govuk-heading-m">
+			Attendee events
+		  </h2> 
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title">Hamish Laferty, B2084Z</h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			<div class="govuk-summary-card__content">
+				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
+					<thead class="govuk-table__head">
+					  <tr class="govuk-table__row">
+						<th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Event name</th> 
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Type</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Location</th>
+					  </tr>
+					</thead>
+					<tbody class="govuk-table__body">
+						<tr class="govuk-table__row">  
+						<tr class="govuk-table__row">  
+							<td class="govuk-table__cell" >
+							  10:00 to 12:00
+							</td>
+							<td class="govuk-table__cell">
+							  Induction meeting
+							</td>
+							<td class="govuk-table__cell">
+							  Appointment
+							</td>
+							<td class="govuk-table__cell">
+							  Classroom 1
+							</td> 
+						  </tr>  
+							<tr class="govuk-table__row">  
+								<td class="govuk-table__cell" >
+									13:00 to 14:00
+								</td>
+								<td class="govuk-table__cell">
+								Court meeting
+								</td>
+								<td class="govuk-table__cell">
+								Appointment
+								</td>
+								<td class="govuk-table__cell">
+								Meeting room
+								</td> 
+							</tr> 
+					</tbody>
+				  </table>
+			</div>
+		  </div> 
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title">Andy Greensborough, G4567E</h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			<div class="govuk-summary-card__content">
+				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
+					<thead class="govuk-table__head">
+					  <tr class="govuk-table__row">
+						<th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Event name</th> 
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Type</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Location</th>
+					  </tr>
+					</thead>
+					<tbody class="govuk-table__body"> 
+
+						<tr class="govuk-table__row">  
+							<td class="govuk-table__cell" >
+								9:30 to 10:30
+							</td>
+							<td class="govuk-table__cell">
+							  Family visit
+							</td>
+							<td class="govuk-table__cell">
+							  Appointment
+							</td>
+							<td class="govuk-table__cell">
+								Visits Room
+							</td> 
+						  </tr> 
+						
+						<tr class="govuk-table__row">  
+							<td class="govuk-table__cell" >
+							13:00 to 16:00
+							</td>
+							<td class="govuk-table__cell">
+								Small Works Team
+							</td>
+							<td class="govuk-table__cell">
+							  Activity
+							</td>
+							<td class="govuk-table__cell">
+								Visits Room
+							</td> 
+						  </tr> 
+
+					</tbody>
+				  </table>
+			</div>
+		  </div> 
+
+
+	
+		  
+
+		  {{ govukButton({
+			text: "Continue",
+			attributes: {
+			  "formaction": "apply-to",
+			  "formmethod": "post"
+			  }
+		  }) }}
+
+ 			</form>
+
+		</div>	
+	</div>
+</div>
+
+
+{% endblock %}
