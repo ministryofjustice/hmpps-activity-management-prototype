@@ -9,7 +9,7 @@ const router = express.Router()
 	
 	
 
-	router.post(`/group-appointments/add-people-route`, function (req, res) {
+	router.post(`/create-appointment/add-people-route`, function (req, res) {
 		const peopleRoute = req.session.data['add-people-method'];
 		if (peopleRoute === 'upload-file') {
 			res.redirect(`upload-file-info`);
@@ -32,7 +32,7 @@ const router = express.Router()
 
 
 
-	  router.post(`/group-appointments/single-or-multiple`, function (req, res) {
+	  router.post(`/create-appointment/single-or-multiple`, function (req, res) {
 		const schedType = req.session.data['schedule-type'];
 		if (schedType === 'single-time') {
 			res.redirect(`appointment-time`);
@@ -41,7 +41,7 @@ const router = express.Router()
 		}
 	  });
 
-	  router.post(`/group-appointments/appointment-repeat-question`, function (req, res) {
+	  router.post(`/create-appointment/appointment-repeat-question`, function (req, res) {
 		const appRepeat = req.session.data['appointment-repeat'];
 		if (appRepeat === 'Yes') {
 			res.redirect(`appointment-frequency`);
@@ -104,9 +104,9 @@ const router = express.Router()
 	  router.post(`/group-or-bulk-route`, function (req, res) {
 		const appointRepeat = req.session.data['group-or-bulk'];
 		if (appointRepeat === 'group') {
-			res.redirect(`group-appointments/upload-or-per-person`);
+			res.redirect(`create-appointment/upload-or-per-person`);
 		} else {
-			res.redirect(`bulk-appointments/upload-file-info-bulk`);
+			res.redirect(`create-b2b-appointment/upload-file-info-bulk`);
 		}
 	  });
 
@@ -119,7 +119,7 @@ const router = express.Router()
 
 
 
-router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
+router.post(`/create-b2b-appointment/bulk-more-people`, function (req, res) {
 	const peoleRepeat = req.session.data['add-another-person-question-bulk'];
 	if (peoleRepeat === 'Yes') {
 		res.redirect(`upload-file`);
@@ -129,7 +129,7 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
   });
 
 
-  router.post(`/group-appointments/add-more-people`, function (req, res) {
+  router.post(`/create-appointment/add-more-people`, function (req, res) {
 	const peoleRepeat = req.session.data['add-another-person-question'];
 	if (peoleRepeat === 'No') {
 		res.redirect(`non-associations`);
@@ -139,7 +139,7 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
   });
 
 
-  router.post(`/group-appointments/add-more-people-all-removed`, function (req, res) {
+  router.post(`/create-appointment/add-more-people-all-removed`, function (req, res) {
 	const peoleRepeat = req.session.data['remove-last-person-question'];
 	if (peoleRepeat === 'No') {
 		res.redirect(`dps-home`);
@@ -217,7 +217,7 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
-  router.post(`/appointment-management/change-answers-group-appointments/multi-occurrence-question`, function (req, res) {
+  router.post(`/appointment-management/change-answers-create-appointment/multi-occurrence-question`, function (req, res) {
 	const appRepeat = req.session.data['which-occurrence'];
 	if (appRepeat === 'This occurrence') {
 		res.redirect(`../group-appointment-single-occurrence`);
@@ -229,7 +229,7 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	}
   });
 
-  router.post(`/appointment-management/change-answers-group-appointments/multi-occurrence-question`, function (req, res) {
+  router.post(`/appointment-management/change-answers-create-appointment/multi-occurrence-question`, function (req, res) {
 	const appRepeat = req.session.data['which-occurrence'];
 	if (appRepeat === 'This occurrence') {
 		res.redirect(`../group-appointment-single-occurrence`);
@@ -255,7 +255,7 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
 	  
   
 
-  router.post(`/appointment-management/change-answers-group-appointments/add-more-people`, function (req, res) {
+  router.post(`/appointment-management/change-answers-create-appointment/add-more-people`, function (req, res) {
 	const peoleRepeat = req.session.data['add-another-person-question'];
 	if (peoleRepeat === 'No') {
 		res.redirect(`non-associations`);
@@ -265,7 +265,7 @@ router.post(`/bulk-appointments/bulk-more-people`, function (req, res) {
   });
 
 
-  router.post(`/appointment-management/change-answers-group-appointments/add-people-route`, function (req, res) {
+  router.post(`/appointment-management/change-answers-create-appointment/add-people-route`, function (req, res) {
 	const peopleRoute = req.session.data['add-people-method'];
 	if (peopleRoute === 'upload-file') {
 		res.redirect(`upload-file-info`);
