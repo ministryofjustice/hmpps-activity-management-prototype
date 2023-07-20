@@ -18,7 +18,6 @@ text: "Back",
         <form method="post">
             {% set applicantHtml %}
             {% set applicantOptions = [
-            "IAG or CXK careers information, advice and guidance staff",
             "Education staff",
             "Workshop staff",
             "Neurodiversity staff",
@@ -60,10 +59,20 @@ text: "Back",
             text: prisoner.name.firstname + " " + prisoner.name.surname
             },
             {
+                value: "iag",
+                text: "IAG or CXK careers information, advice and guidance staff"
+                },
+            {
+                divider: "or"
+            },
+            {
             value: "other",
             text: "Someone else, for example a member of staff, an activity leader or an orderly",
             conditional: {
             html: applicantHtml
+            },
+            hint: {
+            text: "You'll need to select from a list"
             }
             }
             ]

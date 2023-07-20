@@ -184,9 +184,9 @@ router.get("/:prisonerId/:activityId/applicant-details", function (req, res) {
 // redirect to the decision page
 router.post("/:prisonerId/:activityId/applicant-details", function (req, res) {
   // logic for applicant details page
-  if (req.session.data["applicant"] == "prisoner") {
+  if (req.session.data["applicant"] == "prisoner" || req.session.data["applicant"] == "iag") {
     // add the applicant to the new application object
-    req.session.data["new-application"]["applicant"] = "prisoner";
+    req.session.data["new-application"]["applicant"] = req.session.data["applicant"];
   } else {
     let applicant = req.session.data["other-applicant"];
     if (applicant) {
@@ -197,7 +197,7 @@ router.post("/:prisonerId/:activityId/applicant-details", function (req, res) {
   }
 
   // redirect to the decision page
-  res.redirect("priority");
+  res.redirect("status");
 });
 
 // priotity page
@@ -318,6 +318,19 @@ router.post("/check-eligibility", function (req, res) {
 
 // check application details page
 router.get("/check-application-details", function (req, res) {
+  // if there is no new application object, get a placeholder one from the applications session data
+  if (!req.session.data["new-application"]) {
+    req.session.data["new-application"] = req.session.data["applications"][0];
+
+    // add a random date to the new application object
+    let date = new Date();
+    req.session.data["new-application"]["date"] = date.toISOString().slice(0, 10);
+
+    // add a random prisoner to the new application object
+    req.session.data["new-application"]["prisoner"] =
+      req.session.data["timetable-complete-1"]["prisoners"][0].id;
+  }
+
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
   let selectedPrisoner = req.session.data["new-application"]["prisoner"];
   let prisoner = prisoners.find((prisoner) => prisoner.id === selectedPrisoner);
@@ -326,11 +339,6 @@ router.get("/check-application-details", function (req, res) {
   let activity = req.session.data["timetable-complete-1"]["activities"].find(
     (activity) => activity.id.toString() === activityId.toString()
   );
-
-  // if there is no new application object, get a placeholder one from the applications session data
-  if (!req.session.data["new-application"]) {
-    req.session.data["new-application"] = req.session.data["applications"][0];
-  }
 
   res.render(req.protoUrl + "/check-application-details", {
     prisoner,
