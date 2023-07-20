@@ -9,27 +9,37 @@ Appointments prototype
 {% block primaryNavigation %}
 {% endblock %}
 
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %}
  
 <form id="form" method="post" action="location">
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
-      
-      <div class="back">
-        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-        </div>
+    <div class="govuk-grid-column-two-thirds"> 
      
      <h1 class="govuk-heading-l">
-      <span class="govuk-caption-l">Schedule a set of one-to-ones</span>
-      What is the appointment?
+      <span class="govuk-caption-l">Schedule a set of back-to-backs</span>
+      What are the appointments?
      </h1>
        
 
 						<!-- Type select MOJ autocomplete component - HTML -->
 						<div class="govuk-form-group">
 							<label class="govuk-label govuk-label--s" for="sort">
-              <span class="govuk-hint">Start typing a name and select from the list of options</span>
+              <span class="govuk-hint">Start typing the appointment name and select from the list.</span>
 							</label>
+
+							<div class="govuk-!-width-one-half">
 							<select class="govuk-select" id="apppointment-type-bulk" name="apppointment-type-bulk"> 
 								<option value="" selected> </option>
 								<option value="Activities">Activities</option>
@@ -136,6 +146,7 @@ Appointments prototype
 								
 								<option value="Video Link Booking">Video Link Booking</option>
 								</select>
+								</div>
 						</div>
 
 
@@ -149,9 +160,12 @@ Appointments prototype
 								</label>
 							  </h1>
 							  <div id="alt-appointment-name-bulk-hint" class="govuk-hint">
-								Use the custom name to add detail about what the appointment is for. It will be displayed in this service and on unlock lists and movement slips.
-							  </div>
+								Use the custom name to add detail about what the appointments are for. It will be displayed in this service and on unlock lists and movement slips.
+							</div>
+
+							<div class="govuk-!-width-one-half">
 							  <textarea class="govuk-textarea govuk-js-character-count" id="alt-appointment-name-bulk" name="alt-appointment-name-bulk" rows="1" aria-describedby="alt-appointment-name-bulk-info alt-appointment-name-bulk-hint"></textarea>
+							</div>
 							</div>
 							<div id="alt-appointment-name-bulk-info" class="govuk-hint govuk-character-count__message">
 							  You can enter up to 40 characters

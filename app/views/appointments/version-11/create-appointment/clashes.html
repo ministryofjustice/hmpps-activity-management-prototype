@@ -4,13 +4,22 @@
 Appointments prototype
 {% endblock %}
 
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <div class="back">
-      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-      </div>
-
+  <div class="govuk-grid-column-two-thirds"> 
     <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
       <span class="govuk-caption-l">Schedule an appointment</span>
       Review scheduled events to avoid clashes
@@ -30,8 +39,28 @@ Appointments prototype
 
 		<dl class="govuk-summary-list">
 			<div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Appointment name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {% if data['alt-appointment-name'] !='' %}
+
+                  {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+  
+                  {% else %}
+                  
+                  {{ data['apppointment-type']}}
+                  {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <!-- <a class="govuk-link" href="appointment-name">
+                    Change<span class="govuk-visually-hidden"> Appointment name</span>
+                  </a> -->
+                </dd>
+              </div> 
+			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
-				  Number of attendees 
+				 Attendees 
 				</dt>
 				<dd class="govuk-summary-list__value">
 				  8
@@ -70,7 +99,7 @@ Appointments prototype
 			</div>
 			<div class="govuk-summary-list__row">
 				<dt class="govuk-summary-list__key">
-				  Start and end time
+				  Time
 				</dt>
 				<dd class="govuk-summary-list__value">
 					{{ data['start-hours']}}:{{ data['start-minutes']}} to {{ data['end-hours']}}:{{ data['end-minutes']}} 
@@ -97,7 +126,7 @@ Appointments prototype
 
 		  
 		  <h2 class="govuk-heading-m">
-			Events scheduled for attendees on Monday, 23 July 2023
+			Attendee events on Monday, 23 July 2023
 		  </h2> 
 
 		  <div class="govuk-summary-card">
@@ -115,9 +144,9 @@ Appointments prototype
 				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
 					<thead class="govuk-table__head">
 					  <tr class="govuk-table__row">
-						<th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Event time</th> 
+						<th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
 						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Event name</th> 
-						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Event type</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Type</th>
 						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Location</th>
 					  </tr>
 					</thead>
