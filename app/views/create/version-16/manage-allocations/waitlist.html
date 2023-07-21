@@ -217,69 +217,7 @@ Find an activity to record or edit attendance
                 </div>
             </div>
 
-            <div class="app-filter-area govuk-!-display-none-print" id="filters" tabindex="0">
-                <h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
-                    Filters
-                </h2>
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-full">
-                        <div
-                            class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4">
-                            <label class="govuk-label">
-                                Employment
-                            </label>
-                            <select class="govuk-select" id="" name="filters[attendance]">
-                                <option value="not-in-work">Not in work</option>
-                                <option value="in-work">In work</option>
-                                <option value="all">Everyone</option>
-                            </select>
-                        </div>
-
-                        <div
-                            class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4">
-                            <label class="govuk-label">
-                                Workplace risk assessment level
-                            </label>
-                            <select class="govuk-select" id="" name="filters[attendance]">
-                                <option value="any">Any</option>
-                                <option value="low-only">Low only</option>
-                                <option value="low-or-medium">Low or medium</option>
-                                <option value="medium-only">Medium only</option>
-                            </select>
-                        </div>
-
-                        <div
-                            class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4">
-                            <label class="govuk-label">
-                                Incentive level
-                            </label>
-                            <select class="govuk-select" id="" name="filters[attendance]">
-                                <option value="any">Any</option>
-                                <option value="basic">Basic only</option>
-                                <option value="standard">Standard only</option>
-                                <option value="enhanced">Enhanced only</option>
-                            </select>
-                        </div>
-
-                        <div
-                            class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4">
-                            <label class="govuk-label">
-                                Waitlist status
-                            </label>
-                            <select class="govuk-select" id="" name="filters[attendance]">
-                                <option value="any">Any</option>
-                                <option value="pending">Pending</option>
-                                <option value="approved">Approved</option>
-                                <option value="rejected">Rejected</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <button class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-0" data-module="govuk-button"
-                    type="submit" name="submit-action" value="apply-filters">
-                    Apply filters
-                </button>
-            </div>
+            
 
             <div class="govuk-tabs" data-module="govuk-tabs">
                 <h2 class="govuk-tabs__title">
@@ -307,6 +245,70 @@ Find an activity to record or edit attendance
                         {{activityApplications|length}} {{'people' if activityApplications|length != 1 else 'person'
                         }} on the waitlist
                     </h2>
+
+                    <div class="app-filter-area govuk-!-display-none-print" id="filters" tabindex="0">
+                        <h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+                            Filters
+                        </h2>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <div
+                                    class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-padding-right-3">
+                                    <label class="govuk-label">
+                                        Employment
+                                    </label>
+                                    <select class="govuk-select" id="" name="filters[attendance]">
+                                        <option value="not-in-work">Not in work</option>
+                                        <option value="in-work">In work</option>
+                                        <option value="all" selected>Everyone</option>
+                                    </select>
+                                </div>
+        
+                                <div
+                                    class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-padding-right-3">
+                                    <label class="govuk-label">
+                                        Workplace risk assessment level
+                                    </label>
+                                    <select class="govuk-select" id="" name="filters[attendance]">
+                                        <option value="any">Any</option>
+                                        <option value="low-only">Low only</option>
+                                        <option value="low-or-medium">Low or medium</option>
+                                        <option value="medium-only">Medium only</option>
+                                    </select>
+                                </div>
+        
+                                <div
+                                    class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-padding-right-3">
+                                    <label class="govuk-label">
+                                        Incentive level
+                                    </label>
+                                    <select class="govuk-select" id="" name="filters[attendance]">
+                                        <option value="any">Any</option>
+                                        <option value="basic">Basic only</option>
+                                        <option value="standard">Standard only</option>
+                                        <option value="enhanced">Enhanced only</option>
+                                    </select>
+                                </div>
+        
+                                <div
+                                    class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-padding-right-3">
+                                    <label class="govuk-label">
+                                        Waitlist status
+                                    </label>
+                                    <select class="govuk-select" id="" name="filters[attendance]">
+                                        <option value="any">Any</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="approved">Approved</option>
+                                        <option value="rejected">Rejected</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-0" data-module="govuk-button"
+                            type="submit" name="submit-action" value="apply-filters">
+                            Apply filters
+                        </button>
+                    </div>
 
                     <table class="govuk-table moj-sortable-table" data-module="moj-sortable-table">
                         <thead class="govuk-table__head">
