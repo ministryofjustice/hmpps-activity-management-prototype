@@ -1,0 +1,61 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript:window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">
+            {{prisoner.name.firstname}} {{prisoner.name.surname}}
+        </span>
+
+        <h1 class="govuk-heading-xl">
+            Select how much you want to pay {{prisoner.name.firstname}} {{prisoner.name.surname}} {{prisoner.id}}
+        </h1>
+        <p class="govuk-inset-text">
+            {{prisoner.name.firstname}} {{prisoner.name.surname}} is on {{prisoner.incentiveLevel|capitalize}} incentive level
+        </p>
+        <form method="post">
+            <div class="govuk-form-group">
+                <div class="govuk-radios" data-module="govuk-radios">
+                    {% for payrate in payRatesForIncentiveLevel %}
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="pay-rate-{{loop.index}}" name="payrate" type="radio"
+                            value="{{payrate.payRate_id}}" {{"checked" if payrate.payRate_id == prisoner.payrate.payRate_id}}>
+                        <label class="govuk-label govuk-radios__label" for="pay-rate-{{loop.index}}">
+                            {{payrate.payBand|capitalize}} – £{{payrate.amount|decimalPlaces(2)}} ({{'flat rate' if payrate.incentiveLevel == 'flatRate' else payrate.incentiveLevel + ' incentive level'}})
+                        </label>
+                        <!-- add hint text if this is the current pay rate -->
+                        {% if payrate.payRate_id == prisoner.payrate.payRate_id %}
+                        <div id="pay-rate-{{loop.index}}-hint" class="govuk-hint govuk-radios__hint">
+                            <!-- <span class="govuk-tag govuk-tag--blue">Current pay rate</span> -->
+                            This is {{prisoner.name.firstname}} {{prisoner.name.surname}}'s current pay rate
+                          </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {{ govukButton({
+            text: "Update pay rate"
+            }) }}
+
+            <p>
+                <a href="javascript:window.history.go(-1)" class="govuk-link">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">Request for {{prisoner.name.firstname}} {{prisoner.name.surname}} to take part in {{activity.name}}</span>
+
+        <form method="post">
+            {{govukTextarea({
+            id: "application-comment",
+            name: "application-comment",
+            label: {
+            text: "Add or edit comment",
+            classes: "govuk-label--xl",
+            isPageHeading: true
+            },
+            value: application.comment.text
+            })}}
+
+            {{ govukWarningText({
+            text: "Any existing comments will be overwritten with this new comment."
+            }) }}
+
+            {{ govukButton({
+            text: "Update application comment"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+a{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {% set prisoner = data['new-application']['prisoner']|getPrisonerDetails %}
+
+            {% set titleText %}
+            {% if new-application[decision] == "approve" %}
+            Application approved
+            {% else %}
+            Application rejected
+            {% endif %}
+            {% endset %}
+
+            {% set panelHtml %}
+            {% if new-application[decision] == "approve" %}
+            You approved the application for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            {% else %}
+            You rejected the application for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            {% endif %}
+            {% endset %}
+
+            {{ govukPanel({
+            titleText: titleText,
+            html: panelHtml,
+            classes: "govuk-!-margin-bottom-8"
+            }) }}
+
+            {{govukRadios({
+            idPrefix: "decision-next-step",
+            name: "decision-next-step",
+            fieldset: {
+            legend: {
+            text: "What do you want to do next?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            items: [
+            {
+            value: "add-another",
+            text: "Add another application"
+            },
+            {
+            value: "finish",
+            text: "Finish logging applications"
+            }
+            ]
+            })}}
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

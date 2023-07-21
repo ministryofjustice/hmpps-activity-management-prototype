@@ -1,0 +1,153 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back to waitlist",
+"href": "../../" + activity.id + "#waitlist"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = application['selected-prisoner']|getPrisonerDetails %}
+        <span class="govuk-caption-l">
+            {{activity.name}}
+        </span>
+        <h1 class="govuk-heading-xl">
+            Request for {{prisoner.name.firstname}} {{prisoner.name.surname}}, {{prisoner.id}}
+        </h1>
+
+        <!-- <h2 class="govuk-heading-m">
+            Request details
+        </h2> -->
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Status
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p class="govuk-body">
+                        {% if application['eligible'] == 'yes' %}
+                        <span class="govuk-tag govuk-tag--green">Approved</span>
+                        {% elif application['eligible'] == 'no' %}
+                        <span class="govuk-tag govuk-tag--red">Rejected</span>
+                        {% else %}
+                        <span class="govuk-tag govuk-tag--yellow">Pending</span>
+                        {% endif %}
+                    </p>
+
+                    <p class="govuk-hint govuk-!-font-size-16">
+                        Last changed {{application.comment.date or application['date']|convertShortDateToLongDate}}
+                    </p>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="{{application.id}}/change-status" class="govuk-link">Change</a>
+                </dd>
+            </div>
+            <!-- <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Date status set
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if application['application-status-date'] %}
+                    {{application['application-status-date']|convertShortDateToLongDate}}
+                    {% else %}
+                    {{application['date']|convertShortDateToLongDate}}
+                    {% endif %}
+                </dd>
+            </div> -->
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Activity requested
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% set activity = application['activity']|getActivityDetails %}
+                    {{activity.name}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Requester
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if application['applicant'] == 'prisoner' %}
+                    Self-requested
+                    {% else %}
+                    {{application['applicant'] | capitalize}}
+                    {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="#" class="govuk-link">Change</a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Date of request
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{application['date']|convertShortDateToLongDate}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="#" class="govuk-link">Change</a>
+                </dd>
+            </div>
+            <!-- <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Priority
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    High
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="{{application.id}}/change-priority" class="govuk-link">Change</a>
+                </dd>
+            </div> -->
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Comments
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p class="govuk-body">
+                        {% if application.comment.text %}
+                        {{application.comment.text | nl2br | safe}}
+                        {% else %}
+                        None
+                        {% endif %}
+                    </p>
+
+                    {% if application.comment.date %}
+                    <p class="govuk-hint govuk-!-font-size-16">
+                        Last updated {{application.comment.date|convertShortDateToLongDate}}
+                    </p>
+                    {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="{{application.id}}/add-comment" class="govuk-link">Change</a>
+                </dd>
+            </div>
+        </dl>
+
+        <!-- {{govukButton({
+        text: "Delete request",
+        classes: "govuk-button--warning govuk-!-margin-bottom-8",
+        href: application.id + "/confirm-remove"
+        })}} -->
+
+        <p class="govuk-!-margin-top-7">
+            <a href="../../{{activity.id}}#waitlist" class="govuk-button govuk-button--secondary">Return
+                to waitlist</a>
+        </p>
+
+        {{detailsHtml|safe}}
+
+    </div>
+</div>
+
+{% endblock %}

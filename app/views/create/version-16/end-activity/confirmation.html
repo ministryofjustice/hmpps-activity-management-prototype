@@ -1,0 +1,50 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {% set noun %}
+            {% if activitiesData.length == 1 %}
+            {{activitiesData[0].name}}
+            {%- else -%}
+            {{activitiesData.length}} activities
+            {%- endif %}
+            {% endset %}
+
+            {{govukPanel({
+            titleText: "You have ended " ~ noun
+            })}}
+
+            <p>
+                {{noun}} will be ended on {{data["end-date"] | convertShortDateToVeryLongDate}}{{"." if activitiesData.length == 1 else ":"}}
+            </p>
+
+            {% if activitiesData.length > 1 %}
+            <ul class="govuk-list govuk-list--bullet">
+                {% for activity in activitiesData %}
+                <li>
+                    {{activity.name}}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <p class="govuk-inset-text">
+                When the end date of an activity is reached, the activity will be automatically ended and moved to 'Archived activities'.
+            </p>
+
+            {{ govukButton({
+            text: "Return to activities",
+            href: "../../edit-activity"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

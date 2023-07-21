@@ -1,0 +1,80 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Select activity date - {{serviceName}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBackLink({
+	text: "Manage activities and allocations",
+	href: '/' + data['prototype-versions']['create-and-allocate']['url'] ~ "/manage-activities"
+})}}
+{% endblock %}
+
+{% block content %}
+<form method="post">
+	{% set dateHtml %}
+	{{ govukDateInput({
+		id: "other-date",
+		namePrefix: "other-date",
+		fieldset: {
+			legend: {
+				text: "Date"
+			}
+		},
+		hint: {
+			text: "For example, 27 3 2022"
+		}
+	}) }}
+	{% endset %}
+
+	{% set today = '_'|today() %}
+
+  <span class="govuk-caption-xl">View changes in circumstances</span>
+
+	{{ govukRadios({
+		name: "date",
+		fieldset: {
+			legend: {
+				text: "Select a date",
+				isPageHeading: true,
+				classes: "govuk-fieldset__legend--xl"
+			}
+		},
+		items: [
+		{
+			value: today,
+			text: "Today – " + today|convertShortDateToLongDate
+		},
+		{
+			value: today|dayBefore(today),
+			text: "Yesterday – " + today|dayBefore(today)|convertShortDateToLongDate
+		},
+		{
+			value: "other-date",
+			text: "A different date",
+			conditional: {
+				html: dateHtml
+			}
+		}
+		]
+	}) }}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			
+
+			<div class="govuk-button-group">
+				{{govukButton({
+					text: "Continue"
+				})}}
+			</div>
+		</div>
+	</div>
+</form>
+{% endblock %}
