@@ -1,0 +1,95 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set prisoner = data['selected-prisoner']|getPrisonerDetails %}
+
+        <h1 class="govuk-heading-l">
+            Application details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+        </h1>
+
+        <div class="govuk-inset-text">
+            Even if this person is unsuitable for the activity, it is important to log the application so there's a
+            record of what they've applied for or been referred to.
+        </div>
+
+        <form method="post">
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--s" for="activity">
+                    Activity
+                </label>
+                <select class="govuk-select" id="activity" name="activity">
+                    <option value="">Select an activity</option>
+                    {% for activity in activities | sort(false, true, 'name') %}
+                    <option value="{{activity.id}}">{{activity.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {{ govukDateInput({
+                id: "start-date",
+                namePrefix: "application-date",
+                fieldset: {
+                  legend: {
+                    text: "Application date",
+                    classes: "govuk-fieldset__legend--s"
+                  }
+                },
+                hint: {
+                  html: "If the application has not been dated, use today's date.<br>
+                  For example, " + date|today|convertShortDateToExampleDate
+                }
+              }) }}
+
+              {{govukRadios({
+                idPrefix: "applicant",
+                name: "applicant",
+                fieldset: {
+                    legend: {
+                        text: "Who made the application?",
+                        classes: "govuk-fieldset__legend--s"
+                    }
+                },
+                items: [
+                    {
+                        value: "prisoner",
+                        text: prisoner.name.firstname + " " + prisoner.name.surname
+                    },
+                    {
+                        value: "other",
+                        text: "Someone else, for example a member of staff, an activity leader or an orderly",
+                        conditional: {
+                            html: "<p>Select the reason the application was made</p>"
+                        }
+                    }
+                ]
+            })}}
+
+            {{govukButton({
+            text: "Save and continue"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#activity'),
+        showAllValues: false,
+        defaultValue: '',
+    })
+</script>
+{% endblock %}

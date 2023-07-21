@@ -1,0 +1,109 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {% set days = [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+            ] %}
+            {% set timesHtml %}
+
+            {% endset %}
+
+            <span class="govuk-caption-l">
+                Edit allocation for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            </span>
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="days-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-margin-bottom-5">
+                        <h1 class="govuk-fieldset__heading">
+                            Change the days and times {{prisoner.name.firstname}} {{prisoner.name.surname}} should attend {{activity.name}}
+                        </h1>
+                    </legend>
+
+                    {% set activityScheduleHtml %}
+                    {% endset %}
+
+                    {{govukDetails({
+                        summaryText: "View the schedule for " + activity.name,
+                        html: activityScheduleHtml
+                    })}}
+
+                    <p class="govuk-inset-text govuk-!-margin-bottom-6" id="days-hint">
+                        You can't select any days or times that the activity isn't scheduled to run.
+                    </p>
+
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        {% for day in activitySchedule %}
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="day-{{day.day}}" name="days" type="checkbox"
+                                {{"checked" if day.am !=null or day.pm !=null else "disabled"}} value="{{day.day}}"
+                                aria-controls="conditional-day-{{day.day}}" aria-expanded="false" indeterminate="true" />
+                            <label class="govuk-label govuk-checkboxes__label" for="day-{{day.day}}">
+                                {{days[day.day]|capitalize}} {{ "– no sessions" if day.am == null and day.pm == null}}
+                            </label>
+                        </div>
+
+                        <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-day-{{loop.index0}}">
+                            <div class="govuk-form-group">
+                                <fieldset class="govuk-fieldset">
+                                    <legend class="govuk-fieldset__legend govuk-visually-hidden">
+                                        Times
+                                    </legend>
+
+                                    <div class="govuk-checkboxes govuk-checkboxes--small"
+                                        data-module="govuk-checkboxes">
+                                        {% set periods = [ "am", "pm", "ed" ] %}
+                                        {% for period in periods %}
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="times-{{day.day}}-{{period}}"
+                                                {{ "checked" if day[period][0] !=null else "disabled"}} name="times-{{day.day}}"
+                                                type="checkbox" value="{{period}}" />
+                                            <label class="govuk-label govuk-checkboxes__label"
+                                                for="times-{{day.day}}-{{period}}">
+                                                {{period|upper}} {{ "– no sessions" if day[period][0] == null}}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
+
+            {{ govukButton({
+            text: "Update schedule"
+            }) }}
+
+            <p class="govuk-body">
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

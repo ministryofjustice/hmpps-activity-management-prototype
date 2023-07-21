@@ -1,0 +1,55 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <div class="govuk-form-group">
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--xl" for="activity">
+                        Search for the activity
+                    </label>
+                </h1>
+                <div id="subject-hint" class="govuk-hint">
+                    Start typing the activity name
+                </div>
+                <select class="govuk-select" id="activity" name="new-application[activity]">
+                    <option value="" selected disabled>Select an activity</option>
+                    {% for activity in activities | sort(false, true, 'name') %}
+                    <option value="{{activity.id}}">{{activity.name}}</option>
+                    <!-- ({{activity.category|getActivityCategoryName}}) - {{activity.location}} -->
+                    {% endfor %}
+                </select>
+            </div>
+
+            
+
+            {{govukButton({
+            text: "Continue"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#activity'),
+        showAllValues: true,
+        defaultValue: '',
+        confirmOnBlur: false,
+        autoselect: true
+    })
+</script>
+{% endblock %}

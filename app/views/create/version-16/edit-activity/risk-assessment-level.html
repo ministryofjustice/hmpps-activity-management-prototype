@@ -1,0 +1,70 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+
+            {{govukRadios({
+                idPrefix: "risk-assessment-levels",
+                name: "risk-assessment-level",
+                fieldset: {
+                    legend: {
+                        text: "Change workplace risk assessment levels",
+                        isPageHeading: true,
+                        classes: "govuk-fieldset__legend--l"
+                    }
+                },
+                hint: {
+                    html: "Choose one option to set the requirement for the activity."
+                },
+                items: [
+                    {
+                        value: "low-only",
+                        text: "Only people with a low workplace risk assessment are suitable",
+                        checked: true if activity.riskAssessment == "low-only"
+                    },
+                    {
+                        value: "low-or-medium",
+                        text: "People with either a low or medium workplace risk assessment are suitable",
+                        checked: true if activity.riskAssessment == "low-or-medium"
+                    },
+                    {
+                        value: "any",
+                        text: "Anyone is suitable",
+                        checked: true if activity.riskAssessment == "any"
+                    }
+                ]
+            })}}
+
+            {{ govukWarningText({
+                text: "If you change the risk assessment level, people who are currently allocated to this activity may no longer meet the requirements.",
+                classes: "govuk-!-margin-top-8"
+            }) }}
+
+            {{ govukButton({
+            text: "Update risk assessment level"
+            }) }}
+
+            <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

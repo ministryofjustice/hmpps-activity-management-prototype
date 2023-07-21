@@ -1,0 +1,62 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {{ govukRadios({
+            idPrefix: "eligible",
+            name: "new-application[eligible]",
+            fieldset: {
+            legend: {
+            text: "Record a status for this application",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            items: [
+            {
+            value: "yes",
+            html: "Accepted"
+            },
+            {
+            value: "no",
+            html: "Rejected"
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "",
+            text: "Pending"
+            }
+            ]
+            }) }}
+
+            {{govukTextarea({
+            id: "comment",
+            name: "new-application[comment]",
+            label: {
+            text: "Add a comment (optional)",
+            classes: "govuk-label--m"
+            }
+            })}}
+
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

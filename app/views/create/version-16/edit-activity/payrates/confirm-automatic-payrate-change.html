@@ -1,0 +1,79 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {% set noun = "these " + prisonerData.length + " prisoners" %}
+            {% if prisonerData.length == 1 %}
+            {% set noun = "this prisoner" %}
+            {% endif %}
+
+            <span class="govuk-caption-xl">
+                {{activity.name}}
+            </span>
+            <h1 class="govuk-heading-xl">
+                Check before you delete {{newPayRate.incentiveLevel if newPayRate.incentiveLevel != 'flatRate' else 'flat rate'}} incentive level: {{newPayRate.payBand|lower}} pay
+            </h1>
+
+            {{govukWarningText({
+                text: "Because there is only one alternative rate, everyone allocated to the rate you are deleting will be moved to the alternative rate.",
+                iconFallbackText: "Warning"
+            })}}
+
+
+            <div class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Pay rate to be deleted
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {{oldPayRate.payBand}} ({{'Flat rate' if oldPayRate.incentiveLevel == 'flatRate' else oldPayRate.incentiveLevel + ' incentive level'}})
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        New pay rate
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {{newPayRate.payBand}} ({{'flat rate' if newPayRate.incentiveLevel == 'flatRate' else newPayRate.incentiveLevel + ' incentive level'}})
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        People moving rate
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {% if prisonerData.length > 1 %}
+                        <ul class="govuk-list govuk-list--spaced">
+                            {% for prisoner in prisonerData %}
+                            <li>{{prisoner.name.firstname}} {{prisoner.name.surname}}, {{prisoner.id}}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}}, {{prisonerData[0].id}}
+                        {% endif %}
+                    </dd>
+                </div>
+            </div>
+
+            {{govukButton({
+            text: "Confirm and delete pay rate",
+            classes: "govuk-!-margin-top-"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}
