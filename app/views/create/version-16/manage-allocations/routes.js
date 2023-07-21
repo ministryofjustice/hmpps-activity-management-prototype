@@ -362,6 +362,46 @@ router.post("/:activityId/applications/:applicationId/change-status", function (
     res.redirect("../" + applicationId);
 });
 
+// change requester page
+router.get("/:activityId/applications/:applicationId/change-requester", function (req, res) {
+    let activityId = req.params.activityId;
+    let applicationId = req.params.applicationId;
+    let activities = req.session.data["timetable-complete-1"]["activities"];
+    let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
+
+    let applications = req.session.data["applications"];
+    let application = applications.find((application) => application.id.toString() === applicationId.toString());
+
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisoner = prisoners.find((prisoner) => prisoner.id.toString() === application["selected-prisoner"].toString());
+
+    res.render(req.protoUrl + "/change-application-requester", {
+        activity,
+        application,
+        prisoner,
+    });
+});
+
+// change application date page
+router.get("/:activityId/applications/:applicationId/change-date", function (req, res) {
+    let activityId = req.params.activityId;
+    let applicationId = req.params.applicationId;
+    let activities = req.session.data["timetable-complete-1"]["activities"];
+    let activity = activities.find((activity) => activity.id.toString() === activityId.toString());
+
+    let applications = req.session.data["applications"];
+    let application = applications.find((application) => application.id.toString() === applicationId.toString());
+
+    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
+    let prisoner = prisoners.find((prisoner) => prisoner.id.toString() === application["selected-prisoner"].toString());
+
+    res.render(req.protoUrl + "/change-application-date", {
+        activity,
+        application,
+        prisoner,
+    });
+});
+
 // confirm remove application page
 router.get("/:activityId/applications/:applicationId/confirm-remove", function (req, res) {
     let activityId = req.params.activityId;
