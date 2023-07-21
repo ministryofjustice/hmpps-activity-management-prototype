@@ -34,7 +34,7 @@ Find an activity to record or edit attendance
         })}} -->
         {{ govukBackLink({
         text: "Allocation dashboard",
-        href: "../manage-allocations"
+        href: "../../manage-allocations"
         }) }}
         {% endblock %}
 
@@ -217,6 +217,70 @@ Find an activity to record or edit attendance
                 </div>
             </div>
 
+            <div class="app-filter-area govuk-!-display-none-print" id="filters" tabindex="0">
+                <h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+                    Filters
+                </h2>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <div
+                            class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4">
+                            <label class="govuk-label">
+                                Employment
+                            </label>
+                            <select class="govuk-select" id="" name="filters[attendance]">
+                                <option value="not-in-work">Not in work</option>
+                                <option value="in-work">In work</option>
+                                <option value="all">Everyone</option>
+                            </select>
+                        </div>
+
+                        <div
+                            class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4">
+                            <label class="govuk-label">
+                                Workplace risk assessment level
+                            </label>
+                            <select class="govuk-select" id="" name="filters[attendance]">
+                                <option value="any">Any</option>
+                                <option value="low-only">Low only</option>
+                                <option value="low-or-medium">Low or medium</option>
+                                <option value="medium-only">Medium only</option>
+                            </select>
+                        </div>
+
+                        <div
+                            class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4">
+                            <label class="govuk-label">
+                                Incentive level
+                            </label>
+                            <select class="govuk-select" id="" name="filters[attendance]">
+                                <option value="any">Any</option>
+                                <option value="basic">Basic only</option>
+                                <option value="standard">Standard only</option>
+                                <option value="enhanced">Enhanced only</option>
+                            </select>
+                        </div>
+
+                        <div
+                            class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-5 govuk-!-padding-right-4">
+                            <label class="govuk-label">
+                                Waitlist status
+                            </label>
+                            <select class="govuk-select" id="" name="filters[attendance]">
+                                <option value="any">Any</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-0" data-module="govuk-button"
+                    type="submit" name="submit-action" value="apply-filters">
+                    Apply filters
+                </button>
+            </div>
+
             <div class="govuk-tabs" data-module="govuk-tabs">
                 <h2 class="govuk-tabs__title">
                     Contents
@@ -252,18 +316,31 @@ Find an activity to record or edit attendance
                                 <th scope="col" class="govuk-table__header" aria-sort="none">Requester</th>
                                 <th scope="col" class="govuk-table__header" aria-sort="none">Current allocations</th>
                                 <th scope="col" class="govuk-table__header" aria-sort="none">Status</th>
-                                <th scope="col" class="govuk-table__header"></th>
                             </tr>
                         </thead>
                         <tbody class="govuk-table__body">
                             {% for application in activityApplications | sort(false, true, 'date') %}
                             {% set prisoner = application["selected-prisoner"]|getPrisonerDetails %}
                             <tr class="govuk-table__row">
-                                <td class="govuk-table__cell">
-                                    <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
-                                            {{prisoner.name.surname}}</a></b><br>
-                                    {{prisoner.id}}<br>
-                                    {{prisoner.location.cell}}
+                                <td class="govuk-table__cell govuk-!-padding-top-1">
+                                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                                        <div class="govuk-radios__item">
+                                            <input
+                                                class="govuk-radios__input govuk-!-margin-right-2 govuk-!-margin-left-1"
+                                                type="radio" id="prisoner-{{loop.index}}" name="selected-prisoner"
+                                                value="{{prisoner.id}},{{application.id}}">
+                                            <label class="govuk-label govuk-radios__label"
+                                                for="prisoner-{{loop.index}}">
+                                                <b><a href="#"
+                                                        class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
+                                                        {{prisoner.name.surname}}</a></b>
+                                                <br>
+                                                {{prisoner.id}}
+                                                <br>
+                                                {{prisoner.location.cell}}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="govuk-table__cell govuk-!-padding-top-4"
                                     data-sort-value="{{application.date}}">
@@ -297,35 +374,12 @@ Find an activity to record or edit attendance
                                     <span class="govuk-tag govuk-tag--yellow">Pending</span>
                                     {% endif %}
                                 </td>
-                                <td class="govuk-table__cell govuk-!-padding-top-4">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item">
-                                            <a class="govuk-link govuk-link--no-visited-state"
-                                                href="{{activity.id}}/applications/{{application.id}}">
-                                                View or edit <span class="govuk-visually-hidden"> {{prisoner.name.firstname}}
-                                                    {{prisoner.name.surname}}'s request</span>
-                                            </a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item">
-                                            <a class="govuk-link govuk-link--no-visited-state" href="{{activity.id}}/allocate/{{prisoner.id}}">
-                                                Allocate<span class="govuk-visually-hidden"> {{prisoner.name.firstname}}
-                                                    {{prisoner.name.surname}}</span></a>
-                                        </li>
-                                    </ul>
-                                    <!-- <a class="govuk-link govuk-link--no-visited-state"
-                                        href="{{activity.id}}/applications/{{application.id}}">
-                                        View details<span class="govuk-visually-hidden"> request for
-                                            {{prisoner.name.firstname}}
-                                            {{prisoner.name.surname}}</span></a> -->
-                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
-
-
             {% endblock %}
         </main>
     </div>
@@ -341,12 +395,12 @@ Find an activity to record or edit attendance
             </p>
             <div class="govuk-button-group govuk-!-margin-bottom-0">
                 <button class="govuk-button govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn"
-                    data-module="govuk-button" value="deallocate" name="allocation-action">
-                    Remove from activity
+                    data-module="govuk-button" value="view-edit" name="submit-action">
+                    View or edit application
                 </button>
                 <button class="govuk-button govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn"
-                    data-module="govuk-button" value="edit-allocation" id="edit-allocation" name="allocation-action">
-                    Edit allocation
+                    data-module="govuk-button" value="allocate" name="submit-action">
+                    Allocate
                 </button>
             </div>
         </div>
@@ -359,7 +413,7 @@ Find an activity to record or edit attendance
     // toggle .app-attendance-sticky-bar--bottom toolbar to display when any table checkboxes are checked
     // ... and hide when no checkboxes are checked
     const toolbar = $('#allocation-toolbar');
-    const checkbox = $('table').find('input[type="checkbox"]');
+    const radio = $('table').find('input[type="radio"]');
     const selectedCount = $('#app-selected-count');
     const clearButton = $('#clear-selection');
 
@@ -373,23 +427,23 @@ Find an activity to record or edit attendance
 
     function updateToolbar() {
         // if any checkboxes are checked, show the toolbar
-        if (checkbox.is(':checked')) {
+        if (radio.is(':checked')) {
             toolbar.addClass('active').attr("aria-disabled", false); // enable the toolbar
-            selectedCount.html(generateCountString(checkbox.filter(':checked').length)); // update the count
+            selectedCount.html(generateCountString(radio.filter(':checked').length)); // update the count
         } else {
             toolbar.removeClass('active').attr("aria-disabled", true); // disable the toolbar
             selectedCount.html(selectedCount.attr('data-html')); // reset the count
         }
 
         // if more than one checkbox is checked, hide the "Edit allocation" button
-        if (checkbox.filter(':checked').length > 1) {
+        if (radio.filter(':checked').length > 1) {
             $('#edit-allocation').hide(); // hide the button
         } else {
             $('#edit-allocation').show(); // show the button
         }
     };
 
-    $('body').on('change', 'table input[type="checkbox"]', updateToolbar); // update the toolbar when any checkbox is changed
+    $('body').on('change', 'table input[type="radio"]', updateToolbar); // update the toolbar when any checkbox is changed
 
     // run the function on window load to check if any checkboxes are already checked
     $(window).on('load', updateToolbar);
@@ -406,7 +460,7 @@ Find an activity to record or edit attendance
             selectAllCheckbox.click();
         } else {
             // otherwise, uncheck all other checkboxes
-            checkbox.prop('checked', false);
+            radio.prop('checked', false);
         }
 
         // disable the toolbar and reset the count

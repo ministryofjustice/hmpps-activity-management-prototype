@@ -148,6 +148,22 @@ router.get("/:activityId/waitlist", function (req, res) {
     });
 });
 
+// POST route for waitlist page
+router.post("/:activityId/waitlist", function (req, res) {
+    let formAction = req.session.data["submit-action"];
+
+    // route the user to the correct page based on the form action
+    if (formAction === "allocate") {
+        let prisonerId = req.session.data["selected-prisoner"].split(",")[0];
+        res.redirect("allocate/" + prisonerId);
+    } else if (formAction === "view-edit") {
+        let applicationId = req.session.data["selected-prisoner"].split(",")[1];
+        res.redirect("applications/" + applicationId);
+    } else if (formAction === "apply-filters") {
+        res.redirect("waitlist");
+    }
+});
+
 // allocate page
 router.get("/:activityId/allocate", function (req, res) {
     let activityId = req.params.activityId;
