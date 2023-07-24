@@ -23,13 +23,13 @@ Appointments prototype
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">Manage appointments</span>
               
-              {% if data['alt-appointment-name'] !='' %}
+              {% if data['alt-appointment-name-bulk'] !='' %}
 
-              {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+              {{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
 
               {% else %}
               
-              {{ data['apppointment-type']}}
+              {{ data['apppointment-type-bulk']}}
               {% endif %}
               <span class="govuk-caption-m govuk-!-margin-top-2">Tuesday, {{ data['date-of-appointment-day']}} August 2023</span>
              </h1>
@@ -43,7 +43,7 @@ Appointments prototype
               <div class="govuk-summary-card__title-wrapper">
                 <h2 class="govuk-summary-card__title">Appointment details</h2>
                 <ul class="govuk-summary-card__actions">
-                  <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
+                  <li class="govuk-summary-card__action"> <a class="govuk-link" href="../../cancel/bulk/cancel-question">
                       Cancel appointment
                     </a>
                   </li>
@@ -135,7 +135,7 @@ Appointments prototype
                       {{ data['more-detail']}}
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="../../edit/movement-slip/comments">
+                    <a class="govuk-link" href="../../edit/extra-information/comments">
                         Change <span class="govuk-visually-hidden"> extra information</span>
                       </a>
                     </dd>

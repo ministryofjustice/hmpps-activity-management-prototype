@@ -9,13 +9,23 @@ Appointments prototype
 {% block primaryNavigation %}
 {% endblock %}
 
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %}
 <form id="form" method="post" action="clashes">
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <div class="back">
-        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-        </div>
+    <div class="govuk-grid-column-two-thirds"> 
     
         <h1 class="govuk-heading-l">
           <span class="govuk-caption-l">
@@ -28,7 +38,7 @@ Appointments prototype
             {{ data['apppointment-type']}}
             {% endif %}
           </span>
-          Enter the new appointment location
+          Enter the new location
         </h1>
 
         <div class="govuk-grid-row govuk-!-margin-bottom-6">

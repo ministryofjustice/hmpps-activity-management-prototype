@@ -5,11 +5,18 @@ Activities Management prototype
 
 {% block primaryNavigation %} {% endblock %}
 
+
+
 {% block beforeContent %}
+<nav class="govuk-!-display-none-print">
 {{govukBackLink({
-text: "Back",
-"href": "javascript: window.history.go(-1)"
-})}}
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
 {% endblock %}
 
 {% block content %}
@@ -28,7 +35,7 @@ text: "Back",
                 {{ data['apppointment-type']}}
                 {% endif %}
               </span>
-            Which appointments do you want to change the date for?
+            Which appointments do you want to change the time for?
             </h2>
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
@@ -56,7 +63,7 @@ text: "Back",
 
 
             {{ govukButton({
-            text: "Confirm and save"
+            text: "Update time"
             }) }}
         </form>
     </div>
