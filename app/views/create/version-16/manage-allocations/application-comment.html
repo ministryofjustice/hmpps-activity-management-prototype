@@ -15,22 +15,27 @@ text: "Back",
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l">Request for {{prisoner.name.firstname}} {{prisoner.name.surname}} to take part in {{activity.name}}</span>
+        <span class="govuk-caption-l">
+            {{activity.name}}
+        </span>
 
         <form method="post">
             {{govukTextarea({
             id: "application-comment",
             name: "application-comment",
             label: {
-            text: "Add or edit comment",
+            text: "Change comment for " + prisoner.name.firstname + " " + prisoner.name.surname + "'s application",
             classes: "govuk-label--xl",
             isPageHeading: true
             },
-            value: application.comment.text
+            value: application.comment.text,
+            hint: {
+            html: "If you add a comment, you may want to include your name and date."
+            }
             })}}
 
             {{ govukWarningText({
-            text: "Any existing comments will be overwritten with this new comment."
+            text: "If you overwrite previous comments, they will be lost."
             }) }}
 
             {{ govukButton({
