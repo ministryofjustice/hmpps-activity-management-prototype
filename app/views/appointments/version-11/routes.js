@@ -46,7 +46,7 @@ const router = express.Router()
 		if (appRepeat === 'Yes') {
 			res.redirect(`appointment-frequency`);
 		} else {
-			res.redirect(`clashes-v11`);
+			res.redirect(`clashes`);
 		}
 	  });
 
@@ -86,7 +86,7 @@ const router = express.Router()
 		if (appointRepeat === 'Yes') {
 			res.redirect(`appointment-frequency`);
 		} else {
-			res.redirect(`clashes-v11`);
+			res.redirect(`clashes`);
 		}
 	  });
 

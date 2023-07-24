@@ -3,19 +3,28 @@
 Appointments prototype
 {% endblock %}
 
-{% block content %}
-<form id="form" method="post" action="search-results-24072023">
 
-	<div class="back">
-		<a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-	</div>
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Choose a different date",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="search-results-24072023"> 
 	<h1 class="govuk-heading-l">
 		Appointments dashboard
 		<span class="govuk-caption-l">Monday, 24 July 2023</span>
 	</h1>
 
 
-	<p class="govuk-body">Select an appointment to manage details, including changing location and date, and removing people or cancelling.</p>
+	<p class="govuk-body">Select an appointment to manage details, including printing movement slips, changing location and date, and removing people or cancelling.</p>
 
 	<p class="govuk-body">You can't change details of appointments that have already taken place.</p>
 
@@ -68,13 +77,13 @@ Appointments prototype
 								namePrefix: "appt-date",
 								fieldset: {
 								legend: {
-								text: "Appointment date",
+								text: "Date",
 								isPageHeading: true,
 								classes: "govuk-fieldset__legend--s"
 								}
 								},
 								hint: {
-								text: "For example, 27 3 2007"
+								text: "For example, 27 03 2023"
 								},
 								items: [
 								{
@@ -173,7 +182,7 @@ Appointments prototype
 	
 							fieldset: {
 							legend: {
-							text: "Time",
+							text: "Time period",
 							isPageHeading: false,
 							classes: "govuk-fieldset__legend--s"
 							}
@@ -794,10 +803,10 @@ Appointments prototype
 							{% endif %}
 
 						{% if data['appointment-location-fltr'] == 'Medical Room 1' %}
-						<!-- Appointment location MOJ autocomplete component - HTML -->
+						<!-- Location MOJ autocomplete component - HTML -->
 						<div class="govuk-form-group">
 							<label class="govuk-label govuk-label--s" for="sort">
-							  Appointment location
+							  Location
 							</label>
 							<select class="govuk-select" id="appointment-location-fltr" name="appointment-location-fltr"> 
 								<option value=""> </option>
@@ -828,10 +837,10 @@ Appointments prototype
 
 
 						{% elif data['appointment-location-fltr'] == 'Classroom 2' %}
-						<!-- Appointment location MOJ autocomplete component - HTML -->
+						<!-- Location MOJ autocomplete component - HTML -->
 						<div class="govuk-form-group">
 							<label class="govuk-label govuk-label--s" for="sort">
-							  Appointment location
+							  Location
 							</label>
 							<select class="govuk-select" id="appointment-location-fltr" name="appointment-location-fltr"> 
 								<option value=""> </option>
@@ -861,10 +870,10 @@ Appointments prototype
 						</div> 
 
 						{% elif data['appointment-location-fltr'] == 'Medical Room 2' %}
-						<!-- Appointment location MOJ autocomplete component - HTML -->
+						<!-- Location MOJ autocomplete component - HTML -->
 						<div class="govuk-form-group">
 							<label class="govuk-label govuk-label--s" for="sort">
-							  Appointment location
+							  Location
 							</label>
 							<select class="govuk-select" id="appointment-location-fltr" name="appointment-location-fltr"> 
 								<option value=""> </option>
@@ -893,10 +902,10 @@ Appointments prototype
 								</select>
 						</div> 
 						{% else %}
-						<!-- Appointment location MOJ autocomplete component - HTML -->
+						<!-- Location MOJ autocomplete component - HTML -->
 						<div class="govuk-form-group">
 							<label class="govuk-label govuk-label--s" for="sort">
-							  Appointment location
+							  Location
 							</label>
 							<select class="govuk-select" id="appointment-location-fltr" name="appointment-location-fltr"> 
 								<option value="" selected> </option>
@@ -928,7 +937,7 @@ Appointments prototype
 						{% endif %}
 
 
-					<!-- Name GDS text input component - HTML -->
+					<!-- Appointment name GDS text input component - HTML -->
 					{% if data['appointment-prisoner-name'] == 'B9295C' %}
 
 					<div class="govuk-form-group">
@@ -1040,7 +1049,7 @@ Appointments prototype
 					<tr class="govuk-table__row"> 
 						<!-- <th class="govuk-table__header" scope="col">Date</th> -->
 						<th class="govuk-table__header" style="width:13%" scope="col" aria-sort="ascending"><button type="button" data-index="1"></button>Time</th>
-						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Name</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Appointment name</th>
 						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Location</th>
 						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Attendees</th> 
 						<th class="govuk-table__header govuk-table__header--numeric" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Appointment</th>

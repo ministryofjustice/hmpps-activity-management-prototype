@@ -4,23 +4,50 @@
 Appointments prototype
 {% endblock %}
 
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print"> 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %}
-
-<div class="back">
-  <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-  </div>
-
+ 
     <div class="govuk-width-container">
       
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <div class="govuk-grid-row">
          
           <div class="govuk-grid-column-two-thirds-from-desktop">
+            
+            {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+            {% set html %}
+              <h3 class="govuk-notification-banner__heading">
+                Appointment cancelled
+              </h3>
+              <p class="govuk-body">This appointment was cancelled by J. Mckechnie on Monday, 24 July 2023</p>
+              
+            {% endset %}
+
+            {{ govukNotificationBanner({
+              html: html 
+            }) }}
           
             <h1 class="govuk-heading-l">
-              <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1">Cancelled</strong><br>
               <span class="govuk-caption-l">Manage appointments</span>
-              Case - Substance misuse services appointment - 1 June 2023
+              
+              {% if data['alt-appointment-name'] !='' %}
+
+              {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+              {% else %}
+              
+              {{ data['apppointment-type']}}
+              {% endif %}
+              <span class="govuk-caption-m govuk-!-margin-top-2">Tuesday, {{ data['date-of-appointment-day']}} August 2023</span>
              </h1>
 
              <div class="govuk-summary-card">
@@ -161,7 +188,7 @@ Appointments prototype
                   </li>
                   <li class="govuk-summary-card__action"> 
                     <a class="govuk-link" href="../../edit/appointment-list/remove/multiple/choose-people">
-                      Remove prisoners
+                      Remove attendees
                     </a>
                   </li>
                 </ul> -->

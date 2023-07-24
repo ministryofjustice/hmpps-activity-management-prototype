@@ -4,19 +4,29 @@
 Appointments prototype
 {% endblock %}
 
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %}
-<form id="form" method="post" action="clashes-v11">
+<form id="form" method="post" action="clashes">
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <div class="back">
-        <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-        </div>
+    <div class="govuk-grid-column-full"> 
      <h1 class="govuk-heading-l">
-      <span class="govuk-caption-l">Schedule a set of one-to-ones</span>
+      <span class="govuk-caption-l">Schedule a set of back-to-backs</span>
       Review appointment start and end times
      </h1>
     <p class="govuk-body">
-      You can edit the start time and end time for each one-to-one if you need to.
+      You can edit the start time and end time for each appointment.
     </p>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -33,7 +43,8 @@ Appointments prototype
          
           <tr class="govuk-table__row">
             <td class="govuk-table__cell "><a href="#" class="govuk-link--no-visited-state"><b>Neil Rudge</b></a><br>
-              <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
+              <span class=" govuk-!-font-size-16">G2044E</span><br>
+              <span class=" govuk-!-font-size-16">4-2-013</span>
             <td class="govuk-table__cell ">
                 <ul class="time-input noMarginBottom">
                   <li>
@@ -251,7 +262,8 @@ Appointments prototype
           </tr>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell "><a href="#" class="govuk-link--no-visited-state"><b>Bert Hungerford</b></a><br>
-              <span class="govuk-hint govuk-!-font-size-16">C2598E</span></td>
+              <span class="govuk-!-font-size-16">C2598E</span><br>
+              <span class=" govuk-!-font-size-16">3-1-113</span></td>
             <td class="govuk-table__cell ">
                 <ul class="time-input noMarginBottom">
                   <li>
@@ -467,7 +479,8 @@ Appointments prototype
           <tr class="govuk-table__row">
             <td class="govuk-table__cell ">
               <a href="#" class="govuk-link--no-visited-state"><b>Matthew Doyle</b></a><br>
-              <span class="govuk-hint govuk-!-font-size-16">E4911C</span>
+              <span class=" govuk-!-font-size-16">E4911C</span><br>
+              <span class=" govuk-!-font-size-16">2-4-13</span>
             </td>
             <td class="govuk-table__cell ">
               <ul class="time-input noMarginBottom">
@@ -685,7 +698,8 @@ Appointments prototype
              <tr class="govuk-table__row">
               <td class="govuk-table__cell ">
                 <a href="#" class="govuk-link--no-visited-state"><b>Ryan Gee</b></a><br>
-              <span class="govuk-hint govuk-!-font-size-16">F5132C</span>
+              <span class=" govuk-!-font-size-16">F5132C</span><br>
+              <span class=" govuk-!-font-size-16">5-2-111</span>
               </td>
               <td class="govuk-table__cell ">
                 <ul class="time-input noMarginBottom">
@@ -904,7 +918,8 @@ Appointments prototype
                <tr class="govuk-table__row">
                 <td class="govuk-table__cell ">
                   <a href="#" class="govuk-link--no-visited-state"><b>Robin Bab</b></a><br>
-              <span class="govuk-hint govuk-!-font-size-16">F4933A</span>
+              <span class=" govuk-!-font-size-16">F4933A</span><br>
+              <span class=" govuk-!-font-size-16">2-3-013</span>
                 </td>
                 <td class="govuk-table__cell ">
                   <ul class="time-input noMarginBottom">
@@ -1124,7 +1139,8 @@ Appointments prototype
                  <tr class="govuk-table__row">
                   <td class="govuk-table__cell ">
                     <a href="#" class="govuk-link--no-visited-state"><b>Tommy-Lee Knox</b></a><br>
-              <span class="govuk-hint govuk-!-font-size-16">C8361E</span>
+              <span class=" govuk-!-font-size-16">C8361E</span><br>
+              <span class=" govuk-!-font-size-16">4-3-113</span>
                   </td>
                   <td class="govuk-table__cell ">
                     <ul class="time-input noMarginBottom">
@@ -1343,7 +1359,8 @@ Appointments prototype
                    <tr class="govuk-table__row">
                     <td class="govuk-table__cell ">
                       <a href="#" class="govuk-link--no-visited-state"><b>Fuentes Rasmussen</b></a><br>
-                      <span class="govuk-hint govuk-!-font-size-16">E2405E</span>
+                      <span class=" govuk-!-font-size-16">E2405E</span><br>
+                      <span class=" govuk-!-font-size-16">5-2-03</span>
                     </td>
                     <td class="govuk-table__cell ">
                       <ul class="time-input noMarginBottom">
@@ -1561,7 +1578,8 @@ Appointments prototype
                      <tr class="govuk-table__row">
                       <td class="govuk-table__cell ">
                         <a href="#" class="govuk-link--no-visited-state"><b>Luther Drove</b></a><br>
-              <span class="govuk-hint govuk-!-font-size-16">C7950C</span>
+              <span class=" govuk-!-font-size-16">C7950C</span><br>
+              <span class=" govuk-!-font-size-16">1-1-043</span>
                       </td>
                       <td class="govuk-table__cell ">
                         <ul class="time-input noMarginBottom">
@@ -1780,7 +1798,8 @@ Appointments prototype
                      <tr class="govuk-table__row">
                       <td class="govuk-table__cell ">
                         <a href="#" class="govuk-link--no-visited-state"><b>Logan Looker</b></a><br>
-           <span class="govuk-hint govuk-!-font-size-16">B9295C</span>
+           <span class=" govuk-!-font-size-16">B9295C</span><br>
+           <span class=" govuk-!-font-size-16">1-5-43</span>
                       </td>
                       <td class="govuk-table__cell ">
                         <ul class="time-input noMarginBottom">
@@ -1999,7 +2018,8 @@ Appointments prototype
                      
                      <tr class="govuk-table__row">
                       <td class="govuk-table__cell "> <a href="#" class="govuk-link--no-visited-state"><b>Eric Sykes</b></a><br>
-            <span class="govuk-hint govuk-!-font-size-16">F6726E</span></td>
+            <span class=" govuk-!-font-size-16">F6726E</span><br>
+            <span class=" govuk-!-font-size-16">1-4-13</span></td>
                       </td>
                       <td class="govuk-table__cell ">
                         <ul class="time-input noMarginBottom">
@@ -2217,7 +2237,8 @@ Appointments prototype
                        
                        <tr class="govuk-table__row">
                         <td class="govuk-table__cell "><a href="#" class="govuk-link--no-visited-state"><b>Grant Kittel</b></a><br>
-              <span class="govuk-hint govuk-!-font-size-16">G2044E</span></td>
+              <span class=" govuk-!-font-size-16">G2044E</span><br>
+              <span class=" govuk-!-font-size-16">3-1-433</span></td>
                         </td>
                         <td class="govuk-table__cell ">
                           <ul class="time-input noMarginBottom">
@@ -2434,7 +2455,8 @@ Appointments prototype
                          
                          <tr class="govuk-table__row">
                           <td class="govuk-table__cell "><a href="#" class="govuk-link--no-visited-state"><b>Amby Abraham</b></a><br>
-                            <span class="govuk-hint govuk-!-font-size-16">C7950C</span></td>
+                            <span class=" govuk-!-font-size-16">C7950C</span><br>
+                            <span class=" govuk-!-font-size-16">3-1-43</span></td>
                           <td class="govuk-table__cell ">
                             <ul class="time-input noMarginBottom">
                                 <li>

@@ -9,15 +9,25 @@ Appointments prototype
 {% block primaryNavigation %}
 {% endblock %}
 
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %} 
   <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <div class="back">
-      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-      </div>
+  <div class="govuk-grid-column-two-thirds"> 
       <h1 class="govuk-heading-l">
-        <span class="govuk-caption-l">Schedule a set of one-to-ones</span>
-        Review who you're scheduling an appointment for
+        <span class="govuk-caption-l">Schedule a set of back-to-backs</span>
+        Review who you’re scheduling appointments for
        </h1>
 
        <p>You can remove anyone who is not required. If you want to add someone, change the list of prison numbers in the CSV file and <a href="upload-file-info-bulk">upload it again</a>.</p>

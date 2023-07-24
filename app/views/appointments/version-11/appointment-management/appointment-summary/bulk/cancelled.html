@@ -4,25 +4,38 @@
 Appointments prototype
 {% endblock %}
 
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print"> 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %}
-<form action="confirmation" method="post" >
-  <div class="back">
-    <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-  </div>
+<form action="confirmation" method="post" > 
     <div class="govuk-width-container">
     
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds-from-desktop">
 
-            <h1 class="govuk-heading-l">
-              <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1">Cancelled</strong><br>
+            <h1 class="govuk-heading-l"> 
               <span class="govuk-caption-l">Manage appointments</span>
-              Medical - Doctor appointments created on 3 April 2023
+              {% if data['alt-appointment-name-bulk'] !='' %}
+
+              {{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
+
+              {% else %}
+              
+              {{ data['apppointment-type-bulk']}}
+              {% endif %} – set of back-to-backs overview
+              <span class="govuk-caption-m govuk-!-margin-top-2">Tuesday, {{ data['date-of-appointment-day']}} August 2023</span>
             </h1>
             <div class="govuk-summary-card">
               <div class="govuk-summary-card__title-wrapper">
-                <h2 class="govuk-summary-card__title">Details</h2>
+                <h2 class="govuk-summary-card__title">Set history</h2>
                 <ul class="govuk-summary-card__actions">
                 </ul>
               </div>

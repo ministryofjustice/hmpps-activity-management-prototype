@@ -9,26 +9,34 @@ Appointments prototype
 {% block primaryNavigation %}
 {% endblock %}
 
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %}
 <form id="form" method="post" action="location">
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-one-half">
-    
-    <div class="back">
-      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-      </div>
-   
+  <div class="govuk-grid-column-two-thirds"> 
    <h1 class="govuk-heading-l">
     <span class="govuk-caption-l">Schedule an appointment</span>
-    What is the appointment?
+    What's the appointment?
    </h1>
 
 						<!-- Type select MOJ autocomplete component - HTML -->
-						<div class="govuk-form-group">
+						<div class="govuk-form-group ">
 							<label class="govuk-label govuk-label--s" for="sort">
-              				<span class="govuk-hint">Start typing a name and select from the list of options</span>
+              				<span class="govuk-hint">Start typing the appointment name and select from the list.</span>
 							</label>
-							<select class="govuk-select" id="apppointment-type" name="apppointment-type"> 
+							<div class="govuk-!-width-one-half">
+							<select class="govuk-select " id="apppointment-type" name="apppointment-type"> 
 								<option value="" selected> </option>
 								<option value="Activities">Activities</option>
 								
@@ -134,6 +142,7 @@ Appointments prototype
 								
 								<option value="Video Link Booking">Video Link Booking</option>
 								</select>
+							</div>
 						</div>
 
 
@@ -148,7 +157,10 @@ Appointments prototype
 				  <div id="alt-appointment-name-hint" class="govuk-hint">
 					Use the custom name to add detail about what the appointment is for. It will be displayed in this service and on unlock lists and movement slips.
 				  </div>
+				  
+				  <div class="govuk-!-width-one-half">
 				  <textarea class="govuk-textarea govuk-js-character-count" id="alt-appointment-name" name="alt-appointment-name" rows="1" aria-describedby="alt-appointment-name-info alt-appointment-name-hint"></textarea>
+				</div>
 				</div>
 				<div id="alt-appointment-name-info" class="govuk-hint govuk-character-count__message">
 				  You can enter up to 40 characters
