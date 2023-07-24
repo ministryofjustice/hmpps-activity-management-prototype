@@ -9,13 +9,23 @@ Appointments prototype
 {% block primaryNavigation %}
 {% endblock %}
 
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %}
 <form id="form" method="post" action="search-person">
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <div class="back">
-      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-      </div>
+  <div class="govuk-grid-column-two-thirds"> 
       <h1 class="govuk-heading-l"> <span class="govuk-caption-l">
         {% if data['alt-appointment-name'] !='' %}
 
@@ -26,7 +36,7 @@ Appointments prototype
         {{ data['apppointment-type']}}
         {% endif %}
       </span>
-        How do you want to add people to the list of attendees?
+      How do you want to select additional attendees?
        </h1>
        
 {{ govukRadios({
@@ -35,12 +45,12 @@ Appointments prototype
         items: [
           {
             value: "manually-add-people",
-            text: "Search by name or prison number to add people to the list of attendees"
+            text: "Search for them one by one"
             
           },
           {
             value: "upload-file",
-            text: "Upload a CSV file of prison numbers to add to the list of attendees"
+            text: "Add a group of people using a CSV file"
           }
         ]
        }) }}
