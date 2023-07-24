@@ -4,11 +4,17 @@
 Appointments prototype
 {% endblock %}
 
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print"> 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %}
-<form action="confirmation" method="post" >
-  <div class="back">
-		<a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-	</div>
+<form action="confirmation" method="post" > 
     <div class="govuk-width-container">
       
       <main class="govuk-main-wrapper " id="main-content" role="main">
@@ -16,31 +22,20 @@ Appointments prototype
           <div class="govuk-grid-column-two-thirds-from-desktop">
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">Manage appointments</span>
-              Edit details of  
-              {% if data['alt-appointment-name-bulk'] !='' %}
+              
+              {% if data['alt-appointment-name'] !='' %}
 
-              {{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
+              {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
 
               {% else %}
               
-              {{ data['apppointment-type-bulk']}}
-              {% endif %} one-to-one for Wade Brumbie, B4942H
-             </h1>
-
-             <!-- <div class="govuk-summary-card">
-              <div class="govuk-summary-card__title-wrapper">
-                <h2 class="govuk-summary-card__title">[This appointment was scheduled as part of a set of 20]</h2>
-                <ul class="govuk-summary-card__actions">
-                  <li class="govuk-summary-card__action"> <a class="govuk-link" href="../bulk/overview">
-                      View all appointments
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div> -->
+              {{ data['apppointment-type']}}
+              {% endif %}
+              <span class="govuk-caption-m govuk-!-margin-top-2">Tuesday, {{ data['date-of-appointment-day']}} August 2023</span>
+             </h1> 
 
             <div class="govuk-inset-text">
-              This appointment was scheduled in a <b>set of 12</b>. You can <a href="../bulk/overview-medical8">view the set</a> to cancel all 8 appointments, or print all movement slips at once.
+              This appointment was scheduled in a <b>set of 12</b>. You can <a href="../bulk/overview-medical8">view the set</a> to print all movement slips at once.
             </div>
 
              <div class="govuk-summary-card">

@@ -4,11 +4,16 @@
 Appointments prototype
 {% endblock %}
 
-{% block content %}
 
-<div class="back">
-  <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-  </div>
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print"> 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %} 
 
     <div class="govuk-width-container">
       
@@ -34,10 +39,19 @@ Appointments prototype
               }) }}
     
               {% endif %}
-            <h1 class="govuk-heading-l">
-              <span class="govuk-caption-l">Manage appointments</span>
-              Chaplaincy appointment - 26 June 2023
-             </h1>
+              <h1 class="govuk-heading-l">
+                <span class="govuk-caption-l">Manage appointments</span>
+                
+                {% if data['alt-appointment-name'] !='' %}
+  
+                {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+  
+                {% else %}
+                
+                {{ data['apppointment-type']}}
+                {% endif %}
+                <span class="govuk-caption-m govuk-!-margin-top-2">Tuesday, {{ data['date-of-appointment-day']}} August 2023</span>
+               </h1>
 
             <div class="govuk-summary-card">
               <div class="govuk-summary-card__title-wrapper">
@@ -150,7 +164,7 @@ Appointments prototype
                   </li>
                   <!-- <li class="govuk-summary-card__action"> 
                     <a class="govuk-link" href="../../edit/appointment-list/remove/choose-people">
-                      Remove prisoners
+                      Remove attendees
                     </a>
                   </li> -->
                 </ul>

@@ -4,11 +4,17 @@
 Appointments prototype
 {% endblock %}
 
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print"> 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %}
-<form action="confirmation" method="post" >
-  <div class="back">
-    <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-  </div>
+<form action="confirmation" method="post" > 
     <div class="govuk-width-container">
     
       <main class="govuk-main-wrapper " id="main-content" role="main">
@@ -17,14 +23,14 @@ Appointments prototype
             
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">Manage appointments</span>
-              Series overview: {% if data['alt-appointment-name'] !='' %}
+              {% if data['alt-appointment-name'] !='' %}
 
               {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
 
               {% else %}
               
               {{ data['apppointment-type']}}
-              {% endif %}
+              {% endif %} – Series overview
             </h1>
             <div class="govuk-summary-card">
               <div class="govuk-summary-card__title-wrapper">

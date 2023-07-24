@@ -4,11 +4,17 @@
 Appointments prototype
 {% endblock %}
 
-{% block content %}
 
-<div class="back">
-  <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-  </div>
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print"> 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %}
+ 
 
     <div class="govuk-width-container">
       
@@ -44,7 +50,8 @@ Appointments prototype
               {% else %}
               
               {{ data['apppointment-type']}}
-              {% endif %} - {{ data['date-of-appointment-day']}} July 2023
+              {% endif %}
+              <span class="govuk-caption-m govuk-!-margin-top-2">Tuesday, {{ data['date-of-appointment-day']}} August 2023</span>
              </h1>
 
              <div class="govuk-summary-card">

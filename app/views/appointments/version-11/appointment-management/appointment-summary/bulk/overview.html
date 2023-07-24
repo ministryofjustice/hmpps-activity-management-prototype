@@ -4,11 +4,16 @@
 Appointments prototype
 {% endblock %}
 
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print"> 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
 {% block content %}
-<form action="confirmation" method="post" >
-  <div class="back">
-    <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
-  </div>
+<form action="confirmation" method="post" > 
     <div class="govuk-width-container">
     
       <main class="govuk-main-wrapper " id="main-content" role="main">
@@ -17,7 +22,6 @@ Appointments prototype
 
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">Manage appointments</span>
-                Edit details of  
                 {% if data['alt-appointment-name-bulk'] !='' %}
 
                 {{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
@@ -25,11 +29,12 @@ Appointments prototype
                 {% else %}
                 
                 {{ data['apppointment-type-bulk']}}
-                {% endif %} - {{ data['date-of-appointment-day']}} July 2023
+                {% endif %} – set of back-to-backs overview 
+              <span class="govuk-caption-m govuk-!-margin-top-2">Tuesday, {{ data['date-of-appointment-day']}} August 2023</span>
             </h1>
             <div class="govuk-summary-card">
               <div class="govuk-summary-card__title-wrapper">
-                <h2 class="govuk-summary-card__title">Set details</h2>
+                <h2 class="govuk-summary-card__title">Set history</h2>
                 <ul class="govuk-summary-card__actions">
                 </ul>
               </div>
@@ -63,11 +68,11 @@ Appointments prototype
                       Print all movement slips
                     </a>
                   </li>
-                  <li class="govuk-summary-card__action"> 
+                  <!-- <li class="govuk-summary-card__action"> 
                     <a class="govuk-link" href="../../cancel/bulk/cancel-question">
                       Cancel all appointments
                     </a>
-                  </li> 
+                  </li>  -->
                 </ul>
               </div>
               <div class="govuk-summary-card__content">
