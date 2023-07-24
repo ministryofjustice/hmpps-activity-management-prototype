@@ -43,13 +43,15 @@ text: "Back",
         {% endset %}
 
         <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
             {{govukRadios({
             idPrefix: "requester",
             name: "requester",
             fieldset: {
             legend: {
-            text: "Change who made the request for " + prisoner.name.firstname + " " + prisoner.name.surname + "'s
-            application",
+            text: "Change the requester for " + prisoner.name.firstname + " " + prisoner.name.surname + "'s application",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--xl"
             }
