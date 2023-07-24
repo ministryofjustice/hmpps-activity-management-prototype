@@ -102,4 +102,12 @@ router.use("/end-activity", (req, res, next) => {
   require("./end-activity/routes")(req, res, next);
 });
 
+
+// navigation concept page
+router.get("/navigation-concept", function (req, res) {
+  res.render("create/" + req.version + "/navigation-concept");
+});
+
+
+
 module.exports = router;
