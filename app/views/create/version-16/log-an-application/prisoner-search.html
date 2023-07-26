@@ -12,17 +12,22 @@ window.history.go(-1)" })}} {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-xl">Log a request to attend an activity</span>
+    {{govukNotificationBanner({
+    "text": "This page will NOT appear in MVP",
+    "classes": "govuk-notification-banner"
+    })}}
+
+    <span class="govuk-caption-xl">{{journeyName}}</span>
     <form method="get" action="select-prisoner">
       {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
       {{ govukInput({
       label: {
-      text: "Who is the activity request for?",
+      text: "Who is the application for?",
       classes: "govuk-label--xl",
       isPageHeading: true
       },
       hint: {
-      html: "Enter the name or prison number of the person you've had an activity allocation request for.<br>
+      html: "Enter the name or prison number of the person you've had an activity application for.<br>
       Example prison number: AC1234B"
       },
       id: "search-query",

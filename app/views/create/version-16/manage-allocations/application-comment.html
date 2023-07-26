@@ -20,9 +20,12 @@ text: "Back",
         </span>
 
         <form method="post">
-            {{govukTextarea({
+            {{govukCharacterCount({
             id: "application-comment",
             name: "application-comment",
+            maxlength: 240,
+            threshold: 0,
+            showCountMessage: true,
             label: {
             text: "Change comment for " + prisoner.name.firstname + " " + prisoner.name.surname + "'s application",
             classes: "govuk-label--xl",

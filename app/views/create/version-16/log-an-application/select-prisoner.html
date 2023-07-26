@@ -12,6 +12,13 @@ window.history.go(-1)" })}} {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+        {{govukNotificationBanner({
+        "text": "This page will NOT appear in MVP",
+        "classes": "govuk-notification-banner"
+        })}}
+
+        <span class="govuk-caption-xl">{{journeyName}}</span>
+        
         {% if matchingPrisoners | length > 1 %}
         <h1 class="govuk-heading-l">
             Select the correct person
@@ -75,7 +82,8 @@ window.history.go(-1)" })}} {% endblock %}
         </h1>
 
         <p>
-            There is only one person with the name you searched for. Check the details below match the person you want to log an application for.
+            There is only one person with the name you searched for. Check the details below match the person you want
+            to log an application for.
         </p>
 
         <form method="post">
@@ -97,8 +105,7 @@ window.history.go(-1)" })}} {% endblock %}
             </dl>
 
             <div class="govuk-button-group">
-                <input type="hidden" name="new-application[selected-prisoner]"
-                    value="{{matchingPrisoners[0].id}}">
+                <input type="hidden" name="new-application[selected-prisoner]" value="{{matchingPrisoners[0].id}}">
                 <button type="submit" class="govuk-button">Confirm and continue</button>
                 <a href="prisoner-search" class="govuk-button govuk-button--secondary">Search again</a>
             </div>

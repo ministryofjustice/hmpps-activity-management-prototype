@@ -8,6 +8,12 @@ router.all("*", function (req, res, next) {
   next();
 });
 
+// pass the journey name to all views so we only need to set it once rather than on each page
+router.use(function (req, res, next) {
+  res.locals.journeyName = "Log an activity application";
+  next();
+});
+
 //redirect the root url to the start page
 router.get("/", function (req, res) {
   res.redirect("log-an-application/prisoner-search");
@@ -286,7 +292,7 @@ router.post("/:prisonerId/:activityId/status", function (req, res) {
   req.session.data["new-application"] = newApplication;
 
   // redirect to the check application details page
-  res.redirect("../../check-application-details");
+  res.redirect("check-application-details");
 });
 
 // check eligibility page
@@ -317,7 +323,7 @@ router.post("/check-eligibility", function (req, res) {
 });
 
 // check application details page
-router.get("/check-application-details", function (req, res) {
+router.get("/:prisonerId/:activityId/check-application-details", function (req, res) {
   // if there is no new application object, get a placeholder one from the applications session data
   if (!req.session.data["new-application"]) {
     req.session.data["new-application"] = req.session.data["applications"][0];
@@ -332,7 +338,7 @@ router.get("/check-application-details", function (req, res) {
   }
 
   let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-  let selectedPrisoner = req.session.data["new-application"]["prisoner"];
+  let selectedPrisoner = req.params.prisonerId;
   let prisoner = prisoners.find((prisoner) => prisoner.id === selectedPrisoner);
 
   let activityId = req.session.data["new-application"]["activity"];
@@ -345,8 +351,9 @@ router.get("/check-application-details", function (req, res) {
     activity,
   });
 });
+
 // redirect to the applications list page
-router.post("/check-application-details", function (req, res) {
+router.post("/:prisonerId/:activityId/check-application-details", function (req, res) {
   // if there is no new application object, get a placeholder one from the applications session data
   if (!req.session.data["new-application"]) {
     req.session.data["new-application"] = req.session.data["applications"][0];
@@ -357,29 +364,13 @@ router.post("/check-application-details", function (req, res) {
   req.session.data["new-application"]["id"] = id;
   req.session.data["last-application"] = id;
 
-  // if the application status is approved and allocate-now is yes then allocate the prisoner to the activity
-  // do this by adding the activity id to the prisoner's activity array
-  if (req.session.data["allocate-now"] == "yes" && req.session.data["new-application"]["status"] == "approved") {
-    let prisoners = req.session.data["timetable-complete-1"]["prisoners"];
-    let prisoner = prisoners.find(
-      (prisoner) =>
-        prisoner.id === req.session.data["new-application"]["selected-prisoner"]
-    );
-    console.log(prisoner)
-    if (prisoner) {
-      // if the prisoner doesn't have an activity array, or the activity array is null, create one
-      if (!prisoner.activity || prisoner.activity == null) {
-        prisoner.activity = [];
-      }
-      // add the activity id to the prisoner's activity array
-      prisoner.activity.push(parseInt(req.session.data["new-application"]["activity"]));
-    }
-  } else if (req.session.data["new-application"]["status"] == "approved" || req.session.data["new-application"]["status"] == "pending") {
-    req.session.data["applications"].push(req.session.data["new-application"]);
-  }
+  // set the new application prisoner to the selected prisoner
+  req.session.data["new-application"]["selected-prisoner"] = req.params.prisonerId;
+  
+  req.session.data["applications"].push(req.session.data["new-application"]);
 
   // redirect to confirmation page
-  res.redirect("confirmation?application=" + id);
+  res.redirect("../../confirmation?application=" + id);
 });
 
 // applications list page

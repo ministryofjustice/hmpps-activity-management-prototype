@@ -22,6 +22,9 @@ text: "Back",
             {{govukRadios({
             idPrefix: "new-application-status",
             name: "new-application-status",
+            hint: {
+                html: '<p>You can approve the application and add the applicant to the waitlist, decline it, or add as pending. If you decline the application, make sure you tell the person concerned.</p><p class="govuk-hint">Select one option.</p>'
+            },
             fieldset: {
             legend: {
             text: "Change the status of " + prisoner.name.firstname + " " + prisoner.name.surname + "'s application",
@@ -32,21 +35,30 @@ text: "Back",
             items: [
             {
             value: "yes",
-            text: "Approved",
-            checked: true if application.eligible == "yes" else false
+            html: '<span class="govuk-tag govuk-tag--green">Approved</span>',
+            checked: true if application.eligible == "yes" else false,
+            hint: {
+                text: 'Add the applicant to the waitlist. They’re ready to be allocated.'
+            }
             },
             {
             value: "no",
-            text: "Rejected",
-            checked: true if application.eligible == "no" else false
+            html: '<span class="govuk-tag govuk-tag--red">Declined</span>',
+            checked: true if application.eligible == "no" else false,
+            hint: {
+                text: 'Reject the application and inform the person concerned.'
+            }
             },
             {
                 divider: "or"
             },
             {
             value: "pending",
-            text: "Pending",
-            checked: true if application.eligible != "no" and application.eligible != "yes" else false
+            html: '<span class="govuk-tag govuk-tag--yellow">Pending</span>',
+            checked: true if application.eligible != "no" and application.eligible != "yes" else false,
+            hint: {
+                text: 'Add the applicant to the waitlist as ‘Pending’. Follow your usual procedure to check if they can be allocated.'
+            }
             }
             ]
             })}}

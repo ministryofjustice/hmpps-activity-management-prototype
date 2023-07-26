@@ -7,7 +7,7 @@ Activities Management prototype
 
 {% block beforeContent %}
 {{govukBackLink({
-text: "Back to waitlist",
+text: "Back",
 "href": "../../" + activity.id + "/waitlist"
 })}}
 {% endblock %}
@@ -44,7 +44,7 @@ text: "Back to waitlist",
                     </p>
 
                     <p class="govuk-hint govuk-!-font-size-16">
-                        Last changed {{application.comment.date or application['date']|convertShortDateToLongDate}}
+                        Last changed {{(application.comment.date or application['date'])|convertShortDateToLongDate}}
                     </p>
                 </dd>
                 <dd class="govuk-summary-list__actions">
