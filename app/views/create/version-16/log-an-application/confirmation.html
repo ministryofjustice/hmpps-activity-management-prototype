@@ -13,20 +13,29 @@ Activities Management prototype
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
             {% set titleText %}
-            {% if data['new-application']['status'] != "rejected" %}
-            You've added {{prisoner.name.firstname}} {{prisoner.name.surname}} to the waitlist for {{activity.name}}
-            {% else %}
-            You've rejected {{prisoner.name.firstname}} {{prisoner.name.surname}}'s request to be allocated to
+            You've successfully logged {{prisoner.name.firstname}} {{prisoner.name.surname}}'s application for
             {{activity.name}}
+            {% endset %}
+
+            {% set subtitleText %}
+            {% if data['new-application']['eligible'] == "yes" %}
+            The application status is approved
+            {% endif %}
+            {% if data['new-application']['eligible'] != "yes" and data['new-application']['eligible'] != "no" %}
+            The application status is pending
+            {% endif %}
+            {% if data['new-application']['eligible'] == "no" %}
+            The application status is declined
             {% endif %}
             {% endset %}
 
             {{ govukPanel({
             titleText: titleText,
+            html: subtitleText,
             classes: "govuk-!-margin-bottom-4"
             }) }}
 
-            {% if data['new-application']['status'] != "rejected" %}
+            {% if data['new-application']['eligible'] != "no" %}
             <p>
                 There are now {{data['applications']|countApplications(activity.id)}} people on the waitlist for
                 {{activity.name}}.
@@ -49,7 +58,7 @@ Activities Management prototype
                 <li>
                     Capacity: {{activity.capacity}}
                 </li>
-                {% if data['new-application']['status'] == "rejected" %}
+                {% if data['new-application']['eligible'] == "no" %}
                 <li>
                     Waitlist: {{data['applications']|countApplications(activity.id)}}
                 </li>
