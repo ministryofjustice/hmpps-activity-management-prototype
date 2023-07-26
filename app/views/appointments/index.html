@@ -64,83 +64,140 @@ Activities Management prototype
       }]
     }) }}
 
-    <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-caption-l" style="color: #0b0c0c;">Prototype versions</caption>
-      <thead class="govuk-table__head" >
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header" width="15%">Version</th>
-          <th scope="col" class="govuk-table__header">Description</th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell" >
-            <p class="govuk-!-font-weight-bold"><a href="/appointments/version-12/dps-home-main" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">Version 12 (Post MVP designs)</a></p>
-            
-            
-            <strong class="govuk-tag govuk-tag--green">
-              In design
-            </strong>
-          </td>
 
-          <td class="govuk-table__cell" >
-          
-          <h3 class="govuk-heading-m">UR Scenarios</h3>
+    <h2 class="govuk-heading-l">
+      Prototype versions
+    </h2> 
 
+    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+              Version 12
+              <strong class="govuk-tag govuk-tag--green govuk-!-margin-left-1">
+                In Design
+              </strong>
+            </span>
+          </h2>
+        </div> 
+        <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
 
-          <h3 class="govuk-heading-m">Content changes across the service</h3>
+  
+          <form method="post">
+            {{govukButton({
+              text: "Launch prototype",
+              attributes: {
+                "formaction": "/appointments/version-12/dps-home-main",
+                "formmethod": "get"
+                },
+                isStartButton: true
+              })}}
+            </form>
+          <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-caption-l govuk-visually-hidden" style="color: #0b0c0c;">Prototype versions</caption>
+            <thead class="govuk-table__head" >
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header" width="15%">Journey</th>
+                <th scope="col" class="govuk-table__header">Description of changes</th>
+                <th scope="col" class="govuk-table__header">Supporting documents</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+             
+              <!-- <tr class="govuk-table__row">
+                <td class="govuk-table__cell" >
+                  <b>Content changes</b>
+                </td>
+      
+                <td class="govuk-table__cell"> 
+      
+                 ...
+    
+                </td>
+                <td class="govuk-table__cell" >
+               ...
+               </td>
+              </tr> -->
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell" >
+                  <b>Appointment creation</b>
+                </td>
+      
+                <td class="govuk-table__cell"> 
 
+                  <h4 class="govuk-heading-m">Custom appointment repeats</h4>
 
+                  <ul class="govuk-list govuk-list--spaced"> 
+      
+                  <li><a href="/appointments/version-12/create-appointment/appointment-frequency-2">Version 1 - nested radios</a></li> 
 
-          <h3 class="govuk-heading-m">Marking attendance</h3> 
-          <p><a href="/appointments/version-11/attendance/repeating-past">From appointment details page</a></p>
-          
-          <h3 class="govuk-heading-m">Appointment creation</h3> 
+                  <li><a href="/appointments/version-12/create-appointment/appointment-frequency-3">Version 2 - nested radios with text input sufix</a></li> 
+         
+                  <li><a href="/appointments/version-12/create-appointment/appointment-frequency-4">Version 3 - nested radios with stepper</a></li> 
+                  </ul>
+                   <h4 class="govuk-heading-m">Alerts</h4>
+         
+                   <ul class="govuk-list govuk-list--spaced"> 
+                     <li> 
+                       <a href="/appointments/version-12/create-appointment/alerts">v1 - showing all alerts as priority tags</a>
+                     </li> 
+                     <li> 
+                       <a href="/appointments/version-12/create-appointment/alerts-2">v2 - showing only priority tags, linking to profile for all alerts - summary list</a>
+                     </li> 
+                     <li> 
+                       <a href="/appointments/version-12/create-appointment/alerts-3">v3 - showing priority tags and all alerts - accordion</a>
+                     </li> 
+                     <li> 
+                       <a href="/appointments/version-12/create-appointment/alerts-4">v4 - showing only priority tags, linking to profile for all alerts - cards</a>
+                     </li> 
+                     <li> 
+                       <a href="/appointments/version-12/create-appointment/alerts-5">v5 - showing priority tags and all alerts - cards</a>
+                     </li> 
+                     <li> 
+                       <a href="/appointments/version-12/create-appointment/alerts-6">v6 - showing all alerts - accordion</a>
+                     </li>
+                     <li> 
+                       <a href="/appointments/version-12/create-appointment/alerts-7">v7 - showing all alerts - cards</a>
+                     </li>
+                     <li> 
+                        <strong class="govuk-tag govuk-tag--blue">Design in test</strong><a href="/appointments/version-12/create-appointment/alerts-7-2">v7.2 - showing all alerts, refined table - cards</a>
+                     </li>
+                   </ul>
 
-         <p><a href="/appointments/version-11/create-appointment/appointment-frequency-2">Repeat appointments - custom frequencies - v1</a></p> 
+                </td>
+                <td class="govuk-table__cell" >
+                <ul class="govuk-list govuk-list--spaced"> 
+                  <li><a href="https://miro.com/app/board/uXjVPr57naE=/?moveToWidget=3458764559057863556&cot=14" target="_blank" class="govuk-link govuk-link--no-visited-state">Alerts ideation (miro)</a></li>
+                  <li><a href="https://miro.com/app/board/uXjVPr57naE=/?moveToWidget=3458764558498648798&cot=14" target="_blank" class="govuk-link govuk-link--no-visited-state">Attendance ideation (miro)</a></li>
+                  <li><a href="https://docs.google.com/presentation/d/1yeB3IHRtArKS9TDkHxHf0Ut43QUXian1LDKnLk0GU20/edit?usp=sharing" target="_blank" class="govuk-link govuk-link--no-visited-state">Alerts on unlock list - activites management (google slides)</a></li>
+                  <li><a href="https://docs.google.com/presentation/d/1cQeaYYQc6fmipHBc0rMQPdmJ0Th6RlVHPfRoRi8XrKY/edit?usp=sharing" target="_blank" class="govuk-link govuk-link--no-visited-state">Attendance insights (google slides)</a></li>
+                  <li><a href="https://docs.google.com/presentation/d/1urM2QFLwaztD8X-rOhgz70xqRzZDrK0iU0AOtsx9iy0/edit?usp=sharing" target="_blank" class="govuk-link govuk-link--no-visited-state">Non-associations and alerts insights (google slides)</a></li>
+                </ul>
+   
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell" >
+                  <b>Marking attendance</b>
+                </td>
+      
+                <td class="govuk-table__cell"> 
+      
+                <p><a href="/appointments/version-12/attendance/repeating-past">From appointment details page</a></p>
 
-         <p><a href="/appointments/version-11/create-appointment/appointment-frequency-3">Repeat appointments - custom frequencies - v2</a></p> 
+                
+                </td>
+                <td class="govuk-table__cell" >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-         <p><a href="/appointments/version-11/create-appointment/appointment-frequency-4">Repeat appointments - custom frequencies - v3</a></p> 
-
-          <h4 class="govuk-heading-s">Alerts</h4>
-
-          <ul class="govuk-list govuk-list--bullet"> 
-            <li> 
-              <a href="/appointments/version-11/create-appointment/alerts">v1 - showing all alerts as priority tags</a>
-            </li> 
-            <li> 
-              <a href="/appointments/version-11/create-appointment/alerts-2">v2 - showing only priority tags, linking to profile for all alerts - summary list</a>
-            </li> 
-            <li> 
-              <a href="/appointments/version-11/create-appointment/alerts-3">v3 - showing priority tags and all alerts - accordion</a>
-            </li> 
-            <li> 
-              <a href="/appointments/version-11/create-appointment/alerts-4">v4 - showing only priority tags, linking to profile for all alerts - cards</a>
-            </li> 
-            <li> 
-              <a href="/appointments/version-11/create-appointment/alerts-5">v5 - showing priority tags and all alerts - cards</a>
-            </li> 
-            <li> 
-              <a href="/appointments/version-11/create-appointment/alerts-6">v6 - showing all alerts - accordion</a>
-            </li>
-            <li> 
-              <a href="/appointments/version-11/create-appointment/alerts-7">v7 - showing all alerts - cards</a>
-            </li>
-            <li> 
-               <strong class="govuk-tag govuk-tag--blue">Design in test</strong><a href="/appointments/version-11/create-appointment/alerts-7-2">v7.2 - showing all alerts, refined table - cards</a>
-            </li>
-          </ul>
-
-            <h3 class="govuk-heading-m">Appointment management</h3>  
-              
-            
-          </td>
-        </tr>
-
-
-      </tbody>
-    </table>
+   
 
 
   </div>

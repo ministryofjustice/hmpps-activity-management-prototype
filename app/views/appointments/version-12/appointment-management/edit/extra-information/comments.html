@@ -1,0 +1,69 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<form id="form" method="post"  action="../../appointment-summary/group/non-repeating?edit-appt=extra-information">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds"> 
+     <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">
+        {% if data['alt-appointment-name'] !='' %}
+
+        {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+        {% else %}
+        
+        {{ data['apppointment-type']}}
+        {% endif %}
+      </span>
+      Change the extra information (optional)
+     </h1>
+     <p class="govuk-body">You can change the information about how to prepare for the appointment. Note that changes will not appear on any movement slips that have already been printed.</p>
+     <p class="govuk-body">Wing staff will be notified there is extra information on the printed unlock list, but for confidentiality the full text will only be visible when you view the details of the appointment in this service.</p>
+
+
+    {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+    {{ govukCharacterCount({
+      name: "more-detail", 
+      attributes: "{{ data['more-detail']}}",
+      id: "more-detail",
+      maxlength: 4000
+    }) }} 
+ 
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: "Update extra information"
+    }) }}
+  
+    <!--  -->
+  </div>
+    </div>
+  </div>
+  </form>
+
+
+  
+{% endblock %}
