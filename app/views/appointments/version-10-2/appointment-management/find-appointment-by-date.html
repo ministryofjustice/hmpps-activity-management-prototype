@@ -1,0 +1,53 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back to all appointment tasks",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="date-filter">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+	
+      <h1 class="govuk-heading-l">
+		<span class="govuk-caption-l">Manage existing appointments</span>
+		What date do you want to view appointments for?
+       </h1>
+	  
+		{{ govukDateInput({
+			id: "appt-date",
+			namePrefix: "appt-date",
+			fieldset: {
+			legend: {
+				isPageHeading: true,
+				classes: "govuk-fieldset__legend--s"
+			}
+			},
+			hint: {
+			text: "For example, 27 07 2023"
+			}
+		}) }}
+			
+
+		{{ govukButton({
+			text: "Continue"
+		}) }}
+
+	</div>
+</div>
+   
+</form>
+{% endblock %}

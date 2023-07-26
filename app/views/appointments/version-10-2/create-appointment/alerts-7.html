@@ -1,0 +1,1993 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %} 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds"> 
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Schedule an appointment</span>
+          Review attendee alerts
+        </h1>
+    </div>
+  </div>
+
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <!-- <p class="govuk-body">Only attendees with alerts are displayed.</p> -->
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title">Neil Rudge, G2044E</h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			<div class="govuk-summary-card__content">  
+
+      
+				<table class="govuk-table" data-qa="active-alerts-table">
+				<caption class="govuk-table__caption govuk-table__caption--m"><b>All alerts</b>
+				<thead class="govuk-table__head">
+					<tr class="govuk-table__row">
+					
+					  <th scope="col" class="govuk-table__header">Type of alert</th>
+					
+					  <th scope="col" class="govuk-table__header">Alert</th>
+					
+					  <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Comments</th>
+					
+					  <th scope="col" class="govuk-table__header">Date from</th>
+					
+					  <th scope="col" class="govuk-table__header">Added by</th>
+					
+					  <th scope="col" class="govuk-table__header"> </th>
+					
+					</tr>
+				  </thead>
+				  
+				  <tbody class="govuk-table__body">
+					
+					  
+						<tr class="govuk-table__row">
+						
+						  
+						  
+						  <td class="govuk-table__cell">Hold Against Transfer (T)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">Allocation Hold (TAH)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell clip-overflow">KV</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">17 June 2015</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">Eastzo Kavuardo</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+						  
+						
+						</tr>
+					  
+					
+					  
+						<tr class="govuk-table__row">
+						
+						  
+						  
+						  <td class="govuk-table__cell">Child Communication Measures (C)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">L1 Restriction No contact with any child (C1)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell clip-overflow">ePKAsrhkrcBKqzkIyZCgrT</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">30 September 2014</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">Ictinis Leopander</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+						  
+						
+						</tr>
+					  
+					
+					  
+						<tr class="govuk-table__row">
+						
+						  
+						  
+						  <td class="govuk-table__cell">Sexual Offence (S)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">Risk to Children (SC)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell clip-overflow">WwHKQpvxLxxfSkIAeqR</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">15 August 2014</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">Ogonanthomasin Tareo</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+						  
+						
+						</tr>
+					  
+					
+					  
+						<tr class="govuk-table__row">
+						
+						  
+						  
+						  <td class="govuk-table__cell">MAPPP Case (P)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">MAPPA Nominal (P0)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell clip-overflow">FFnbu</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">14 August 2014</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+						  
+						
+						</tr>
+					  
+					
+					  
+						<tr class="govuk-table__row">
+						
+						  
+						  
+						  <td class="govuk-table__cell">Risk (R)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">Listed on VISOR System (RVR)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell clip-overflow">pFOTnijTTDqn</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">14 August 2014</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+						  
+						
+						</tr>
+					  
+					
+					  
+						<tr class="govuk-table__row">
+						
+						  
+						  
+						  <td class="govuk-table__cell">Sexual Offence (S)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">On Sex Offender Register (SR)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell clip-overflow">None</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">14 August 2014</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+						  
+						
+						</tr>
+					  
+					
+					  
+						<tr class="govuk-table__row">
+						
+						  
+						  
+						  <td class="govuk-table__cell">Risk (R)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">Risk to lesbian/gay/bisexual people (RLG)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell clip-overflow">uugUBiuRv</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">5 June 2013</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">Izfressa Parkista</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+						  
+						
+						</tr>
+					  
+					
+					  
+						<tr class="govuk-table__row">
+						
+						  
+						  
+						  <td class="govuk-table__cell">Security (X)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell">PSO4400 CH1 Children (XCC)</td>
+						  
+						
+						  
+						  
+						  <td class="govuk-table__cell clip-overflow">None</td>
+						   
+						  
+						  <td class="govuk-table__cell">4 June 2013</td> 
+						  
+						  <td class="govuk-table__cell">Obvenigh Cobinee</td> 
+						  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+						  
+						
+						</tr>
+					  
+					
+				  </tbody>
+				</table>
+			</div>
+		  </div> 
+
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title">Amby Abraham, G2044E</h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+		
+			<div class="govuk-summary-card__content">  
+				
+      
+				<table class="govuk-table" data-qa="active-alerts-table">
+					<caption class="govuk-table__caption govuk-table__caption--m"><b>All alerts</b>
+					<thead class="govuk-table__head">
+						<tr class="govuk-table__row">
+						
+						  <th scope="col" class="govuk-table__header">Type of alert</th>
+						
+						  <th scope="col" class="govuk-table__header">Alert</th>
+						
+						  <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Comments</th>
+						
+						  <th scope="col" class="govuk-table__header">Date from</th>
+						
+						  <th scope="col" class="govuk-table__header">Added by</th>
+						
+						  <th scope="col" class="govuk-table__header"> </th>
+						
+						</tr>
+					  </thead>
+					  
+					  <tbody class="govuk-table__body">
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Hold Against Transfer (T)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Allocation Hold (TAH)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">KV</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">17 June 2015</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Eastzo Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Child Communication Measures (C)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">L1 Restriction No contact with any child (C1)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">ePKAsrhkrcBKqzkIyZCgrT</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">30 September 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Ictinis Leopander</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Sexual Offence (S)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk to Children (SC)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">WwHKQpvxLxxfSkIAeqR</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">15 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Ogonanthomasin Tareo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">MAPPP Case (P)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">MAPPA Nominal (P0)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">FFnbu</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk (R)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Listed on VISOR System (RVR)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">pFOTnijTTDqn</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Sexual Offence (S)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">On Sex Offender Register (SR)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">None</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk (R)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk to lesbian/gay/bisexual people (RLG)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">uugUBiuRv</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">5 June 2013</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Izfressa Parkista</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Security (X)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">PSO4400 CH1 Children (XCC)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">None</td>
+							   
+							  
+							  <td class="govuk-table__cell">4 June 2013</td> 
+							  
+							  <td class="govuk-table__cell">Obvenigh Cobinee</td> 
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+					  </tbody>
+					</table>
+			</div>
+		</div> 
+
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title">Bert Hungerford, C2598E</h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+      		<div class="govuk-summary-card__content">  
+				
+      
+				<table class="govuk-table" data-qa="active-alerts-table">
+					<caption class="govuk-table__caption govuk-table__caption--m"><b>All alerts</b>
+					<thead class="govuk-table__head">
+						<tr class="govuk-table__row">
+						
+						  <th scope="col" class="govuk-table__header">Type of alert</th>
+						
+						  <th scope="col" class="govuk-table__header">Alert</th>
+						
+						  <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Comments</th>
+						
+						  <th scope="col" class="govuk-table__header">Date from</th>
+						
+						  <th scope="col" class="govuk-table__header">Added by</th>
+						
+						  <th scope="col" class="govuk-table__header"> </th>
+						
+						</tr>
+					  </thead>
+					  
+					  <tbody class="govuk-table__body">
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Hold Against Transfer (T)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Allocation Hold (TAH)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">KV</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">17 June 2015</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Eastzo Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Child Communication Measures (C)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">L1 Restriction No contact with any child (C1)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">ePKAsrhkrcBKqzkIyZCgrT</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">30 September 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Ictinis Leopander</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Sexual Offence (S)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk to Children (SC)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">WwHKQpvxLxxfSkIAeqR</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">15 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Ogonanthomasin Tareo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">MAPPP Case (P)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">MAPPA Nominal (P0)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">FFnbu</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk (R)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Listed on VISOR System (RVR)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">pFOTnijTTDqn</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Sexual Offence (S)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">On Sex Offender Register (SR)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">None</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk (R)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk to lesbian/gay/bisexual people (RLG)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">uugUBiuRv</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">5 June 2013</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Izfressa Parkista</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Security (X)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">PSO4400 CH1 Children (XCC)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">None</td>
+							   
+							  
+							  <td class="govuk-table__cell">4 June 2013</td> 
+							  
+							  <td class="govuk-table__cell">Obvenigh Cobinee</td> 
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+					  </tbody>
+					</table>
+     		</div>
+		  </div> 
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title">Matthew Doyle, E4911C</h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+      		<div class="govuk-summary-card__content">  
+				
+      
+				<table class="govuk-table" data-qa="active-alerts-table">
+					<caption class="govuk-table__caption govuk-table__caption--m"><b>All alerts</b>
+					<thead class="govuk-table__head">
+						<tr class="govuk-table__row">
+						
+						  <th scope="col" class="govuk-table__header">Type of alert</th>
+						
+						  <th scope="col" class="govuk-table__header">Alert</th>
+						
+						  <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Comments</th>
+						
+						  <th scope="col" class="govuk-table__header">Date from</th>
+						
+						  <th scope="col" class="govuk-table__header">Added by</th>
+						
+						  <th scope="col" class="govuk-table__header"> </th>
+						
+						</tr>
+					  </thead>
+					  
+					  <tbody class="govuk-table__body">
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Hold Against Transfer (T)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Allocation Hold (TAH)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">KV</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">17 June 2015</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Eastzo Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Child Communication Measures (C)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">L1 Restriction No contact with any child (C1)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">ePKAsrhkrcBKqzkIyZCgrT</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">30 September 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Ictinis Leopander</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Sexual Offence (S)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk to Children (SC)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">WwHKQpvxLxxfSkIAeqR</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">15 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Ogonanthomasin Tareo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">MAPPP Case (P)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">MAPPA Nominal (P0)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">FFnbu</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk (R)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Listed on VISOR System (RVR)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">pFOTnijTTDqn</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Sexual Offence (S)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">On Sex Offender Register (SR)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">None</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk (R)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk to lesbian/gay/bisexual people (RLG)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">uugUBiuRv</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">5 June 2013</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Izfressa Parkista</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Security (X)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">PSO4400 CH1 Children (XCC)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">None</td>
+							   
+							  
+							  <td class="govuk-table__cell">4 June 2013</td> 
+							  
+							  <td class="govuk-table__cell">Obvenigh Cobinee</td> 
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+					  </tbody>
+					</table>
+     		</div>
+		  </div> 
+
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title">Ryan Gee, F5132C</h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			<div class="govuk-summary-card__content">  
+      
+				<table class="govuk-table" data-qa="active-alerts-table">
+					<caption class="govuk-table__caption govuk-table__caption--m"><b>All alerts</b>
+					<thead class="govuk-table__head">
+						<tr class="govuk-table__row">
+						
+						  <th scope="col" class="govuk-table__header">Type of alert</th>
+						
+						  <th scope="col" class="govuk-table__header">Alert</th>
+						
+						  <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Comments</th>
+						
+						  <th scope="col" class="govuk-table__header">Date from</th>
+						
+						  <th scope="col" class="govuk-table__header">Added by</th>
+						
+						  <th scope="col" class="govuk-table__header"> </th>
+						
+						</tr>
+					  </thead>
+					  
+					  <tbody class="govuk-table__body">
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Hold Against Transfer (T)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Allocation Hold (TAH)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">KV</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">17 June 2015</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Eastzo Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Child Communication Measures (C)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">L1 Restriction No contact with any child (C1)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">ePKAsrhkrcBKqzkIyZCgrT</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">30 September 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Ictinis Leopander</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Sexual Offence (S)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk to Children (SC)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">WwHKQpvxLxxfSkIAeqR</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">15 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Ogonanthomasin Tareo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">MAPPP Case (P)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">MAPPA Nominal (P0)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">FFnbu</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk (R)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Listed on VISOR System (RVR)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">pFOTnijTTDqn</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Sexual Offence (S)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">On Sex Offender Register (SR)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">None</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk (R)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk to lesbian/gay/bisexual people (RLG)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">uugUBiuRv</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">5 June 2013</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Izfressa Parkista</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Security (X)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">PSO4400 CH1 Children (XCC)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">None</td>
+							   
+							  
+							  <td class="govuk-table__cell">4 June 2013</td> 
+							  
+							  <td class="govuk-table__cell">Obvenigh Cobinee</td> 
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+					  </tbody>
+					</table> 
+     </div>
+		  </div> 
+
+
+
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title">Robin Bab, F4933A</h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			
+			<div class="govuk-summary-card__content"> 
+        <div class="govuk-!-margin-bottom-3" style="font-family: GDS Transport, arial, sans-serif;">
+        
+      
+				<table class="govuk-table" data-qa="active-alerts-table">
+					<caption class="govuk-table__caption govuk-table__caption--m"><b>All alerts</b>
+					<thead class="govuk-table__head">
+						<tr class="govuk-table__row">
+						
+						  <th scope="col" class="govuk-table__header">Type of alert</th>
+						
+						  <th scope="col" class="govuk-table__header">Alert</th>
+						
+						  <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Comments</th>
+						
+						  <th scope="col" class="govuk-table__header">Date from</th>
+						
+						  <th scope="col" class="govuk-table__header">Added by</th>
+						
+						  <th scope="col" class="govuk-table__header"> </th>
+						
+						</tr>
+					  </thead>
+					  
+					  <tbody class="govuk-table__body">
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Hold Against Transfer (T)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Allocation Hold (TAH)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">KV</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">17 June 2015</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Eastzo Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Child Communication Measures (C)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">L1 Restriction No contact with any child (C1)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">ePKAsrhkrcBKqzkIyZCgrT</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">30 September 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Ictinis Leopander</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Sexual Offence (S)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk to Children (SC)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">WwHKQpvxLxxfSkIAeqR</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">15 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Ogonanthomasin Tareo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">MAPPP Case (P)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">MAPPA Nominal (P0)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">FFnbu</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk (R)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Listed on VISOR System (RVR)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">pFOTnijTTDqn</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Sexual Offence (S)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">On Sex Offender Register (SR)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">None</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">14 August 2014</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Osssefjit Kavuardo</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk (R)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Risk to lesbian/gay/bisexual people (RLG)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">uugUBiuRv</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">5 June 2013</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">Izfressa Parkista</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+						  
+							<tr class="govuk-table__row">
+							
+							  
+							  
+							  <td class="govuk-table__cell">Security (X)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell">PSO4400 CH1 Children (XCC)</td>
+							  
+							
+							  
+							  
+							  <td class="govuk-table__cell clip-overflow">None</td>
+							   
+							  
+							  <td class="govuk-table__cell">4 June 2013</td> 
+							  
+							  <td class="govuk-table__cell">Obvenigh Cobinee</td> 
+							  <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+							  
+							
+							</tr>
+						  
+						
+					  </tbody>
+					</table>
+     </div>
+		  </div> 
+
+      <form method="post"> 
+  
+        <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
+          {{govukButton({
+            text: "Continue",
+            attributes: {
+              "formaction": "appointment-name",
+              "formmethod": "get"
+              }
+            })}}
+            
+        </div>
+  
+  
+  
+      </form>
+
+      
+       
+
+   
+
+
+
+
+  </div>
+</div>
+{% endblock %}

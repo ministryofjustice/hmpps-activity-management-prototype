@@ -1,0 +1,215 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="back">
+      <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
+      </div>
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+      <span class="govuk-caption-l">Schedule an appointment</span>
+      Review scheduled events to avoid clashes
+    </h1> 
+  </div>
+</div>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <form method="post">
+
+		
+
+		<dl class="govuk-summary-list">
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Attendee
+				</dt>
+				<dd class="govuk-summary-list__value">
+				1
+				</dd>
+				<dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="#">
+					Change<span class="govuk-visually-hidden"> change</span>
+				  </a>
+				</dd>
+			  </div>
+			  <div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Location
+				</dt>
+				<dd class="govuk-summary-list__value">
+				  
+					{{ data['apppointment-location-indv']}}
+				</dd>
+				<dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="#">
+					Change<span class="govuk-visually-hidden"> date</span>
+				  </a>
+				</dd>
+			  </div>
+			<div class="govuk-summary-list__row">
+			  <dt class="govuk-summary-list__key">
+				Date
+			  </dt>
+			  <dd class="govuk-summary-list__value">
+				{{ data['date-of-appointment-day']}} {{ data['date-of-appointment-month']}}  {{ data['date-of-appointment-year']}}
+                
+			  </dd>
+			  <dd class="govuk-summary-list__actions">
+				<a class="govuk-link" href="#">
+				  Change<span class="govuk-visually-hidden"> date</span>
+				</a>
+			  </dd>
+			</div>
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+				  Time
+				</dt>
+				<dd class="govuk-summary-list__value">
+					{{ data['start-hours-single']}}:{{ data['start-minutes-single']}} to {{ data['end-hours-single']}}:{{ data['end-minutes-single']}} 
+				</dd>
+				<dd class="govuk-summary-list__actions">
+				  <a class="govuk-link" href="#">
+					Change<span class="govuk-visually-hidden"> time</span>
+				  </a>
+				</dd>
+			  </div>
+		  </dl>
+
+		  <h2 class="govuk-heading-m govuk-visually-hidden">
+			
+			{{ data['apppointment-location-indv']}} events
+		  </h2> 
+
+		   <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+            <caption class="govuk-table__caption govuk-table__caption--m"><b>
+				{{ data['apppointment-location-indv']}} events</b>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
+                <th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Event name</th> 
+                <th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Type</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row"> 
+                <td class="govuk-table__cell" >
+                  9:00 to 11:00
+                </td> 
+                <td class="govuk-table__cell">
+                  Job Centre Plus
+                </td> 
+                <td class="govuk-table__cell">
+                  Appointment
+                </td>
+              </tr>
+              <tr class="govuk-table__row"> 
+                <td class="govuk-table__cell" >
+                  13:00 to 14:00
+                </td> 
+                <td class="govuk-table__cell">
+                  Mathematics 2
+                </td> 
+                <td class="govuk-table__cell">
+                  Appointment
+                </td>
+              </tr>
+              <tr class="govuk-table__row"> 
+                <td class="govuk-table__cell" >
+                  14:30 to 15:30
+                </td> 
+                <td class="govuk-table__cell">
+                  English 2
+                </td> 
+                <td class="govuk-table__cell">
+                  Appointment
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+		  <h2 class="govuk-heading-m">
+			Events for Neil Rudge, G2044E on Saturday, 22 July 2023
+		  </h2> 
+				<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table"> 
+					<thead class="govuk-table__head">
+					  <tr class="govuk-table__row">
+						<th class="govuk-table__header" scope="col" aria-sort="ascending"><button type="button" data-index="0"></button>Time</th> 
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Event name</th> 
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Type</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Location</th>
+					  </tr>
+					</thead>
+					<tbody class="govuk-table__body">
+					  <tr class="govuk-table__row">  
+						<td class="govuk-table__cell" >
+						  9:00 to 10:00
+						</td>
+						<td class="govuk-table__cell">
+						  Mathematics 1
+						</td>
+						<td class="govuk-table__cell">
+						  Appointment
+						</td>
+						<td class="govuk-table__cell">
+						  Classroom 1
+						</td> 
+					  </tr>
+					  <tr class="govuk-table__row">  
+						<td class="govuk-table__cell" >
+						  9:00 to 12:00
+						</td>
+						<td class="govuk-table__cell">
+						  Kitchen 
+						</td>
+						<td class="govuk-table__cell">
+						  Activity
+						</td>
+						<td class="govuk-table__cell">
+						  Kitchen
+						</td> 
+					  </tr> 
+					  <tr class="govuk-table__row">  
+						<td class="govuk-table__cell" >
+						  13:00 to 16:00
+						</td>
+						<td class="govuk-table__cell">
+						  Kitchen 
+						</td>
+						<td class="govuk-table__cell">
+						  Activity
+						</td>
+						<td class="govuk-table__cell">
+						  Kitchen
+						</td> 
+					  </tr>
+					</tbody>
+				  </table>
+	
+		  
+
+		  {{ govukButton({
+			text: "Continue",
+			attributes: {
+			  "formaction": "comments",
+			  "formmethod": "post"
+			  }
+		  }) }}
+
+ 			</form>
+
+		</div>	
+	</div>
+</div>
+
+
+{% endblock %}
