@@ -119,7 +119,7 @@ Activities Management prototype
             What you can do next
         </h2>
         <p class="govuk-body">
-            You can:
+            You can either:
         </p>
         <ul class="govuk-list govuk-list--bullet">
             <!-- {% if data['new-application']['status'] == "approved" %}
@@ -127,19 +127,16 @@ Activities Management prototype
                     {{prisoner.name.firstname}} {{prisoner.name.surname}}
                     to {{activity.name}}</a></li>
             {% endif %} -->
-            <li><a href="select-activity" class="govuk-link--no-visited-state">record another request for
+            <li><a href="{{prisoner.id}}/select-activity" class="govuk-link--no-visited-state">log another activity application for
                     {{prisoner.name.firstname}} {{prisoner.name.surname}}</a></li>
-            <li><a href="prisoner-search" class="govuk-link--no-visited-state">record a request for someone else</a>
-                {% if data['new-application']['status'] != "approved" %}
-            <li><a href="../manage-allocations/{{activity.id}}#other-people"
+            <li><a href="prisoner-search" class="govuk-link--no-visited-state">log an application for someone else</a></li>
+            <li><a href="../manage-allocations/{{activity.id}}/allocate"
                     class="govuk-link--no-visited-state">allocate someone
                     to {{activity.name}}</a></li>
-            {% endif %}
-            </li>
         </ul>
 
         <p>
-            Or you can <a href="../manage-allocations/{{activity.id}}#waitlist"
+            You can also <a href="../manage-allocations/{{activity.id}}/waitlist"
                 class="govuk-link--no-visited-state">view the waitlist for {{activity.name}}</a>.
         </p>
     </div>
