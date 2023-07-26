@@ -28,9 +28,15 @@ const router = express.Router()
 			res.redirect(`search-person`);
 		}
 	  });
-	  
 
-
+	  router.post(`/appointment-management/edit/appointment-list/add/add-people-route-2`, function (req, res) {
+		  const peopleRoute = req.session.data['add-people-method'];
+		  if (peopleRoute === 'upload-file') {
+			  res.redirect(`upload-file-info`);
+		  } else {
+			  res.redirect(`search-person`);
+		  }
+		});
 
 	  router.post(`/create-appointment/single-or-multiple`, function (req, res) {
 		const schedType = req.session.data['schedule-type'];

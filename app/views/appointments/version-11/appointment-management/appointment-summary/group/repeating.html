@@ -23,13 +23,29 @@ Appointments prototype
          
           <div class="govuk-grid-column-two-thirds-from-desktop">
           
-              {% if data['which-occurrence-alt'] === 'This occurrence' %}
+              {% if data['edit-appt'] === 'add-person' %}
 
               {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
               {% set html %}
                 <h3 class="govuk-notification-banner__heading">
-                  Appointment location for this occurrence changed successfully 
+                  You've added Jamie Marke to this appointment
+                </h3>
+                
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }}
+          
+              {% elif data['edit-appt'] === 'remove-person' %}
+
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  You've removed Danny Kaplansky from this appointment
                 </h3>
                 
               {% endset %}
@@ -39,6 +55,54 @@ Appointments prototype
                 type: 'success'
               }) }}
     
+          
+              {% elif data['edit-appt'] === 'extra-information' %}
+
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  You've changed the extra information for this appointment
+                </h3>
+                
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }}
+          
+              {% elif data['edit-appt'] === 'date-time' %}
+
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  You've changed the date and time for this appointment
+                </h3>
+                
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }}
+          
+              {% elif data['edit-appt'] === 'location' %}
+
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  You've changed the location for this appointment
+                </h3>
+                
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }} 
               {% endif %}
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">Manage appointments</span>
@@ -195,7 +259,7 @@ Appointments prototype
                 <h2 class="govuk-summary-card__title">8 attendees</h2>
                 <ul class="govuk-summary-card__actions">
                   <li class="govuk-summary-card__action"> 
-                    <a class="govuk-link" href="#">
+                    <a class="govuk-link" href="movement-slip-example">
                       Print movement slips
                     </a>
                 </li>
@@ -220,7 +284,7 @@ Appointments prototype
                       <a href="#" class="govuk-link"> Neil Rudge</a><br>G2044E <br>1-2-33 
                     </dd> 
                     <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="../../edit/appointment-list/remove/single/apply-to">
+                      <a class="govuk-link" href="../../edit/appointment-list/remove/apply-to">
                           Remove
                         </a>
                       </dd>
@@ -233,7 +297,7 @@ Appointments prototype
                         <a href="#" class="govuk-link"> Amby Abraham</a><br>C7950C <br>1−1−1 
                       </dd> 
                       <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="../../edit/appointment-list/remove/single/apply-to">
+                        <a class="govuk-link" href="../../edit/appointment-list/remove/apply-to">
                             Remove
                           </a>
                         </dd>

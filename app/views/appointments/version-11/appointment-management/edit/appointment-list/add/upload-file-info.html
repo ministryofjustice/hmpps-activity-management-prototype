@@ -25,13 +25,21 @@ Appointments prototype
 <form id="form" method="post" action="person-add-another">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds"> 
-      <h1 class="govuk-heading-l">
-        <span class="govuk-caption-l">Schedule a set of back-to-backs</span>
+      <h1 class="govuk-heading-l"><span class="govuk-caption-l">
+        {% if data['alt-appointment-name'] !='' %}
+
+        {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+        {% else %}
+        
+        {{ data['apppointment-type']}}
+        {% endif %}
+      </span>
         Upload your list of prison numbers
       </h1>
    
         <p class="govuk-body">
-          Your list of prison numbers must be in a CSV file. You can also include start and end times for each appointment. Use the 24-hour clock, for example 14:00, not 2:00pm.
+          Your list of prison numbers must be in a CSV file.
         </p>
       
         {{ govukFileUpload({
@@ -47,7 +55,7 @@ Appointments prototype
             </span>
           </summary>
           <div class="govuk-details__text">
-            <p>A CSV file is a type of spreadsheet. Download the template if you need one, then add prison numbers and any appointment times. When you upload it to this service a list of attendees will be created.</p>
+            <p>A CSV file is a type of spreadsheet. Download the template if you need one, then add the relevant prison numbers. When you upload it to this service a list of attendees will be created.</p>
 
             <p>Download the <a href="/public/downloads/offenders-for-appointments-template.csv" class="govuk-link" download>prison number list template</a> [CSV, 1kb]</p>
           </div>
