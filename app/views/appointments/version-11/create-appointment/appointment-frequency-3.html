@@ -32,6 +32,11 @@ Appointments prototype
         <span class="govuk-caption-l">Schedule an appointment</span>
         How often will the appointment repeat?
        </h1> 
+       
+       <div class="govuk-inset-text">
+        You set the start date for this appointment as as Friday 18 August 2023.
+      </div>
+
        {% from "govuk/components/radios/macro.njk" import govukRadios %}
         {% from "govuk/components/input/macro.njk" import govukInput %}
 
@@ -141,14 +146,14 @@ Appointments prototype
           items: [
             {
               value: "daily",
-              text: "Daily",
+              text: "Days",
               conditional: {
                 html: dailyHtml
               }
             },
             {
               value: "weekly",
-              text: "Weekly",
+              text: "Weeksy",
               conditional: {
                 html: weeklyHtml
               }
