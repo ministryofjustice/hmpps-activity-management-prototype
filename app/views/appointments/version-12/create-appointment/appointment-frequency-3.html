@@ -137,8 +137,7 @@ Appointments prototype
               text: "Every third Friday of the month"
             }
           ]
-        }) }}
-       <p></p>
+        }) }} 
         {% endset -%}
 
         {{ govukRadios({ 
@@ -146,21 +145,21 @@ Appointments prototype
           items: [
             {
               value: "daily",
-              text: "Days",
+              text: "Every set amount of days",
               conditional: {
                 html: dailyHtml
               }
             },
             {
               value: "weekly",
-              text: "Weeks",
+              text: "Specific days in every set amount of weeks",
               conditional: {
                 html: weeklyHtml
               }
             },
             {
               value: "Monthly",
-              text: "Monthly",
+              text: "Specific days in a month",
               conditional: {
                 html: monthlyHtml
               }
@@ -168,19 +167,64 @@ Appointments prototype
           ]
         }) }}
 
+
+        {% set totalHtml %}
+        <div class="govuk-form-group">
+          {{ govukInput({
+            label: {
+              text: "Enter the number of times the appointment will repeat up to a maximum of [x] appointments"
+            },
+            classes: "govuk-input--width-3",
+            id: "appointment-total",
+            name: "appointment-total"
+          }) }}
+        </div> 
+
+        {% endset -%}
+
+
+        {% set endDateHtml %}
+        <div class="govuk-form-group">
+          {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+          {{ govukDateInput({
+            id: "passport-issued",
+            namePrefix: "passport-issued",
+            fieldset: {
+              legend: {
+                text: "Enter an end date for the appointments up to a maximum of one year"
+              }
+            },
+            hint: {
+              text: "For example, 27 3 2023"
+            }
+          }) }}
+        </div> 
+
+        {% endset -%}
+
       <h2 class="govuk-heading-m">
-       
-        How many times will the appointment repeat?
+        When will the series of appointments end?
        </h2>
-     {{ govukInput({
-      id: "number-of-appointments",
-      name: "number-of-appointments",
-      label: {
-        text: "Enter the number of times the appointment will repeat up to a maximum of one year"
-      },
-           
-      classes: "govuk-input--width-4"
-     }) }}
+
+       {{ govukRadios({ 
+        name: "number-of-appointments",  
+        items: [
+          {
+            value: "total",
+            text: "After a number of appointments",
+            conditional: {
+              html: totalHtml
+            }
+          },
+          {
+            value: "end-date",
+            text: "After a specified date",
+            conditional: {
+              html: endDateHtml
+            }
+          }
+        ]
+      }) }}
      
      <!--{{ govukInsetText({
       html: "Last appointment on <b>24 August 2023</b>"
