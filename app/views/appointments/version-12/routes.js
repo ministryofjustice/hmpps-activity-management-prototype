@@ -38,6 +38,16 @@ const router = express.Router()
 		  }
 		});
 
+
+		router.post(`/attendance/add-people-route-3`, function (req, res) {
+			const peopleRoute = req.session.data['add-people-method'];
+			if (peopleRoute === 'upload-file') {
+				res.redirect(`upload-file-info`);
+			} else {
+				res.redirect(`search-person`);
+			}
+			});
+			
 	  router.post(`/create-appointment/single-or-multiple`, function (req, res) {
 		const schedType = req.session.data['schedule-type'];
 		if (schedType === 'single-time') {

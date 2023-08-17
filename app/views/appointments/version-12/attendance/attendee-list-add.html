@@ -9,8 +9,6 @@ Appointments prototype
 {% endblock %}
 
 {% block main %}
-
-<form method="post" action="apply-to">
    <div class="govuk-width-container"> 
 
         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main"> 
@@ -19,16 +17,30 @@ Appointments prototype
               <div class="back">
                 <a href="#" onclick="history.back()" class="govuk-back-link">Back</a>
                 </div>
-				<h1 class="govuk-heading-l"> 
-					<span class="govuk-caption-l">Substance misuse services</span>
-					 Record attendance
-				   </h1>
+				    <h1 class="govuk-heading-l"> 
+					    <span class="govuk-caption-l">Substance misuse services</span>
+					    Record attendance
+				    </h1>
 
-           <button class="govuk-button govuk-button--blue" data-module="govuk-button">
-            Print attendance list
-            </button>
+            <form method="post" action="upload-or-per-person">
+            <div class="govuk-button-group">
+              <button class="govuk-button govuk-button--blue" data-module="govuk-button">
+               Print attendance list
+             </button>
+   
+
+             {{govukButton({
+              text: "Add extra attendees",
+              classes: "govuk-button--secondary",
+              attributes: {
+                "formaction": "upload-or-per-person",
+                "formmethod": "get"
+                }
+              })}}
+            </div>
+
+          </form>
   
-
 				   <table
 				   class="govuk-table app-toolbar-table app-whereabouts-table--sticky-head "
 				   data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
@@ -43,9 +55,6 @@ Appointments prototype
                       <th class="govuk-table__header">
                         Attendance
                       </th> 
-                      <!-- <th class="govuk-table__header">
-                      <span>View or edit</span>
-                      </th>  -->
                     </tr>
                   </thead>
                   <tbody class="govuk-table__body">
@@ -70,9 +79,10 @@ Appointments prototype
                     
                       <td class="govuk-table__cell" data-sort-value="" scope="col">
                         
-                        <span class="app-tag app-tag--attended">
-                          Attended
-                        </span>
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
                       </td>
                     </tr>
 
@@ -95,10 +105,10 @@ Appointments prototype
                       </td> 
                     
                       <td class="govuk-table__cell" data-sort-value="" scope="col">
-                       
-                        <span class="app-tag app-tag--attended">
-                          Attended
-                        </span>
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
                       </td>
                     </tr>
 
@@ -121,9 +131,10 @@ Appointments prototype
                     
                       <td class="govuk-table__cell" data-sort-value="" scope="col">
                         
-                        <span class="app-tag app-tag--not-attended">
-                          Not attended
-                        </span> 
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
                       </td>
                     </tr>
 
@@ -145,9 +156,11 @@ Appointments prototype
                       </td> 
                     
                       <td class="govuk-table__cell" data-sort-value="" scope="col">
-                        <span class="app-tag app-tag--not-attended">
-                          Not attended
-                        </span>
+                        
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
                       </td>
                     </tr>
 
@@ -305,7 +318,11 @@ Appointments prototype
                   </tbody>
                 </table>
 
+			
+
                 <a class="govuk-link" href="#">Back to appointment summary</a>
+			
+
 
             </div>
           </div> 
@@ -316,7 +333,6 @@ Appointments prototype
 
 	{% include '../_includes/attendance-toolbar.html' %}
   
-  </form>
 
 {% endblock %}
  
