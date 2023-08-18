@@ -20,6 +20,37 @@ text: "Back",
       <span class="govuk-caption-l">
         Create an activity
       </span>
+      {% set dateHtml %}
+      {{govukDateInput({
+      idPrefix: "end-date",
+      namePrefix: "end-date",
+      fieldset: {
+      legend: {
+      text: "End date",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--s"
+      }
+      },
+      items: [
+      {
+      name: "day",
+      classes: "govuk-input--width-2",
+      autocomplete: "end-date-day"
+      },
+      {
+      name: "month",
+      classes: "govuk-input--width-2",
+      autocomplete: "end-date-month"
+      },
+      {
+      name: "year",
+      classes: "govuk-input--width-4",
+      autocomplete: "end-date-year"
+      }
+      ]
+      })}}
+      {% endset %}
+
       {{govukRadios({
       idPrefix: "end-date-check",
       name: "end-date-check",

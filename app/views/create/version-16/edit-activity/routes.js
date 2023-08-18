@@ -151,6 +151,65 @@ router.get("/:activityId/schedule-dates", function (req, res) {
   });
 });
 
+// cancelled sessions page
+router.get("/:activityId/cancelled-sessions", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.params.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  res.render(req.protoUrl + "/cancelled-sessions", {
+    activity,
+    activityId,
+    currentPage: "cancelled-sessions",
+  });
+});
+
+// calendar page
+router.get("/:activityId/calendar", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.params.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // get a list of the next 50 scheduled sessions for the activity
+  let sessions = getActivitySessions(activity.schedule, 50);
+
+  function getActivitySessions(schedule, numberOfSessions) {
+    let sessions = [];
+    let days = Object.keys(schedule);
+    let today = new Date();
+
+    // we need to increment the date by 1 day and check the day of the week, then see if there are any sessions scheduled for that day
+    // if there are, add the session to the sessions array
+    // note: we need to add am and pm sessions separately even if they are on the same day
+    for (let i = 0; i < numberOfSessions; i++) {
+      let date = new Date(today);
+      date.setDate(date.getDate() + i);
+      let day = date.getDay();
+      let sessionsToCheck = ['am', 'pm'];
+
+      sessionsToCheck.forEach((session) => {
+        if (schedule[days[day]][session] !== null) {
+          sessions.push({
+            date: date.toISOString().slice(0, 10),
+            session: session,
+            time: schedule[days[day]][session],
+          });
+        }
+      });
+    }
+
+    return sessions;
+  }
+
+  // render the page
+  res.render(req.protoUrl + "/calendar", {
+    activity,
+    activityId,
+    currentPage: "calendar",
+    sessions,
+  });
+});
+
 // edit activity name POST route
 router.post("/:activityId/name", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
@@ -481,6 +540,19 @@ router.post("/:activityId/start-date", function (req, res) {
 
   // redirect to the activity page
   res.redirect("../" + activityId + "/details");
+});
+
+// end date check page
+router.get("/:activityId/end-date-check", function (req, res) {
+  let activityId = req.params.activityId;
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // render the page
+  res.render(req.protoUrl + "/end-date-check", {
+    activity,
+    activityId,
+  });
 });
 
 // edit activity end date page
@@ -864,6 +936,112 @@ router.get("/:activityId/delete-pay-rate-check", function (req, res) {
     activityId,
   });
 });
+
+// add cancelled session page
+router.get("/:activityId/add-cancelled-session", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.params.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // render the page
+  res.render(req.protoUrl + "/add-cancelled-session", {
+    activity,
+    activityId,
+  });
+});
+
+// add cancelled session POST route
+router.post("/:activityId/add-cancelled-session", function (req, res) {
+  res.redirect("cancelled-sessions-list");
+});
+
+// cancelled sessions list page
+router.get("/:activityId/cancelled-sessions-list", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.params.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // render the page
+  res.render(req.protoUrl + "/cancelled-sessions-list", {
+    activity,
+    activityId,
+  });
+});
+
+// cancelled sessions list POST route
+router.post("/:activityId/cancelled-sessions-list", function (req, res) {
+  // create random dummy session data for 5 cancelled sessions
+  if (!req.session.data["cancelled-sessions"]) {
+    req.session.data["cancelled-sessions"] = [];
+  }
+
+  for (let i = 0; i < 5; i++) {
+    // use luxon to generate a random date but make sure the dates are unique
+    let randomDate = DateTime.local().plus({ days: i * Math.floor(Math.random() * 10) + 1 });
+
+    let session = {
+      date: randomDate.toISODate(),
+      // random session either am or pm
+      session: Math.random() < 0.5 ? "am" : "pm",
+      time: {
+        startTime: "09:00",
+        endTime: "12:00",
+      },
+    };
+    req.session.data["cancelled-sessions"].push(session);
+  }
+
+  // sort the cancelled sessions by date
+  req.session.data["cancelled-sessions"].sort((a, b) => {
+    return DateTime.fromISO(a.date) - DateTime.fromISO(b.date);
+  });
+
+  res.redirect("cancelled-sessions");
+});
+
+// add cancelled session end date page
+router.get("/:activityId/add-cancelled-session-check", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.params.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+
+  // render the page
+  res.render(req.protoUrl + "/add-cancelled-session-check", {
+    activity,
+    activityId,
+  });
+});
+
+// add cancelled session end date POST route
+router.post("/:activityId/add-cancelled-session-check", function (req, res) {
+  // create random dummy session data for 5 cancelled sessions
+  req.session.data["cancelled-sessions"] = [];
+
+  for (let i = 0; i < 5; i++) {
+    // use luxon to generate a random date but make sure the dates are unique
+    let randomDate = DateTime.local().plus({ days: i * Math.floor(Math.random() * 10) + 1 });
+
+    let session = {
+      date: randomDate.toISODate(),
+      // random session either am or pm
+      session: Math.random() < 0.5 ? "am" : "pm",
+      time: {
+        startTime: "09:00",
+        endTime: "12:00",
+      },
+    };
+    req.session.data["cancelled-sessions"].push(session);
+  }
+
+  // sort the cancelled sessions by date
+  req.session.data["cancelled-sessions"].sort((a, b) => {
+    return DateTime.fromISO(a.date) - DateTime.fromISO(b.date);
+  });
+
+  res.redirect("cancelled-sessions");
+});
+
+
 
 module.exports = router;
 
