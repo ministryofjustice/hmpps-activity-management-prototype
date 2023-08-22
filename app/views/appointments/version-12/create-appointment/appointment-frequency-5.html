@@ -153,50 +153,37 @@ Appointments prototype
           name: "appointment-frequency",  
           items: [
             {
-              value: "daily",
-              text: "Daily",
-              conditional: {
-                html: dailyHtml
-              }
+              value: "Every weekday (Monday to Friday)",
+              text: "Every weekday (Monday to Friday)"
+            }, 
+            {
+              value: "Daily (includes weekends)",
+              text: "Daily (includes weekends)" 
+            }, 
+            {
+              value: "Every set amount of days",
+              text: "Every set amount of days" 
             },
             {
-              value: "weekly",
+              value: "Weekly",
               text: "Weekly",
-              conditional: {
-                html: weeklyHtml
+              hint: {
+                text: "On chosen days in the week"
+              } 
+            }, 
+            {
+              value: "Every set amount of weeks",
+              text: "Every set amount of weeks",
+              hint: {
+                text: "On chosen days in the week"
               }
             },
             {
               value: "Monthly",
-              text: "Monthly",
-              conditional: {
-                html: monthlyHtml
-              }
-            },
-              {
-                value: "Choose the exact day for each appointment",
-                text: "Choose the exact day for each appointment" 
+              text: "Monthly" 
             }
           ]
         }) }}
-
-      <h2 class="govuk-heading-m">
-       
-        How many times will the appointment repeat?
-       </h2>
-     {{ govukInput({
-      id: "number-of-appointments",
-      name: "number-of-appointments",
-      label: {
-        text: "Enter the number of times the appointment will repeat up to a maximum of one year"
-      },
-           
-      classes: "govuk-input--width-4"
-     }) }}
-     
-     <!--{{ govukInsetText({
-      html: "Last appointment on <b>24 August 2023</b>"
-     }) }}-->
       
    
 <form id="form" method="post" action="clashes">
