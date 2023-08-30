@@ -1,0 +1,203 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full"> 
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Schedule an appointment</span>
+        How often will the appointment repeat?
+       </h1> 
+       {% from "govuk/components/radios/macro.njk" import govukRadios %}
+        {% from "govuk/components/input/macro.njk" import govukInput %}
+
+        {% set dailyHtml %}
+        <div class="">
+          <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--s" for="day-frequency">
+              Repeats every
+            </label>
+          </h1>
+          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="float: left;">
+            −
+          </button>
+          
+          <div style="display: flex;"><div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5" id="weight" name="weight" type="text" spellcheck="false" value="1 day">
+          </div>
+          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="display: inline">
+            +
+          </button>
+          </div>
+        </div> 
+
+        {% endset -%}
+
+        {% set weeklyHtml %}
+
+        <div class="">
+          <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--s" for="week-frequency">
+              Repeats every
+            </label>
+          </h1>
+          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="float: left;">
+            −
+          </button>
+          
+          <div style="display: flex;"><div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5" id="weight" name="weight" type="text" spellcheck="false" value="1 week">
+          </div>
+          <button class="govuk-button govuk-button--secondary" data-module="govuk-button" style="display: inline">
+            +
+          </button>
+          </div>
+        </div> 
+
+        {{ govukCheckboxes({
+          idPrefix: "appointment-frequency-weekly",
+          name: "appointment-frequency-weekly",
+          fieldset: {
+            legend: {
+              text: "Repeats on",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+        
+          items: [
+            {
+              value: "Monday",
+              text: "Monday"
+            },
+            {
+              value: "Tuesday",
+              text: "Tuesday"
+            },
+            {
+              value: "Wednesday",
+              text: "Wednesday"
+            },
+            {
+              value: "Thursday",
+              text: "Thursday"
+            },
+            {
+              value: "Friday",
+              text: "Friday"
+            },
+            {
+              value: "Saturday",
+              text: "Saturday"
+            },
+            {
+              value: "Sunday",
+              text: "Sunday"
+            }
+          ]
+        }) }}
+       
+        {% endset -%}
+
+
+        {% set monthlyHtml %}
+        {{ govukRadios({
+          idPrefix: "appointment-frequency-monthly",
+          name: "appointment-frequency-monthly",
+          fieldset: {
+            legend: {
+              text: "Repeats",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          items: [ 
+            {
+              value: "On the 18th of every month",
+              text: "On the 18th of every month",
+              hint: {
+                text: "Or the last day if there is no matching date in the month."
+              }
+            },
+            {
+              value: "Every third Friday of the month",
+              text: "Every third Friday of the month"
+            }
+          ]
+        }) }}
+       <p></p>
+        {% endset -%}
+
+        {{ govukRadios({ 
+          name: "appointment-frequency",  
+          items: [
+            {
+              value: "Every weekday (Monday to Friday)",
+              text: "Every weekday (Monday to Friday)"
+            }, 
+            {
+              value: "Daily (includes weekends)",
+              text: "Daily (includes weekends)" 
+            }, 
+            {
+              value: "Every set amount of days",
+              text: "Every set amount of days" 
+            },
+            {
+              value: "Weekly",
+              text: "Weekly",
+              hint: {
+                text: "On chosen days in the week"
+              } 
+            }, 
+            {
+              value: "Every set amount of weeks",
+              text: "Every set amount of weeks",
+              hint: {
+                text: "On chosen days in the week"
+              }
+            },
+            {
+              value: "Monthly",
+              text: "Monthly" 
+            }
+          ]
+        }) }}
+      
+   
+<form id="form" method="post" action="clashes">
+     <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    
+      
+    </div>
+
+
+
+
+  </div>
+</div>
+{% endblock %}

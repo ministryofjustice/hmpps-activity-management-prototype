@@ -1,0 +1,79 @@
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="person-add-another">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds"> 
+      <h1 class="govuk-heading-l"><span class="govuk-caption-l">
+        {% if data['alt-appointment-name'] !='' %}
+
+        {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+        {% else %}
+        
+        {{ data['apppointment-type']}}
+        {% endif %}
+      </span>
+        Upload your list of prison numbers
+      </h1>
+   
+        <p class="govuk-body">
+          Your list of prison numbers must be in a CSV file.
+        </p>
+      
+        {{ govukFileUpload({
+          id: "file-upload-1",
+          name: "file-upload-1"
+        }) }}
+
+         <!--details component-->
+         <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              How to use a CSV file
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <p>A CSV file is a type of spreadsheet. Download the template if you need one, then add the relevant prison numbers. When you upload it to this service a list of attendees will be created.</p>
+
+            <p>Download the <a href="/public/downloads/offenders-for-appointments-template.csv" class="govuk-link" download>prison number list template</a> [CSV, 1kb]</p>
+          </div>
+        </details>
+       <!--details component-->
+
+
+    <p class="govuk-body">
+    
+    </p>
+   
+
+    <div class="govuk-button-group">
+    {{ govukButton({
+      text: "Upload file"
+    }) }}
+  
+    </div>
+  </div>
+</div>
+{% endblock %}

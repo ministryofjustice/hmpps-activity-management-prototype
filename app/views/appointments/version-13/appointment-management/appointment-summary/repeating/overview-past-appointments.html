@@ -1,0 +1,238 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print"> 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %}
+<form action="confirmation" method="post" > 
+    <div class="govuk-width-container">
+    
+      <main class="govuk-main-wrapper " id="main-content" role="main">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds-from-desktop">
+            
+            <h1 class="govuk-heading-l">
+              <span class="govuk-caption-l">Manage appointments</span>
+              {% if data['alt-appointment-name'] !='' %}
+
+              {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+              {% else %}
+              
+              {{ data['apppointment-type']}}
+              {% endif %} – series overview
+            </h1>
+            <div class="govuk-summary-card">
+              <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title">Series details</h2>
+                <ul class="govuk-summary-card__actions">
+                </ul>
+              </div>
+              <div class="govuk-summary-card__content">
+                <dl class="govuk-summary-list">
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Frequency
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        {{ data['appointment-frequency']}}  
+                      </dd>
+                    </div>   
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Number of appointments
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                    {{ data['number-of-appointments']}} 
+                    </dd>
+                  </div> 
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Created by
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      J. Smith
+                    </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Date created
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        29 June 2023
+                      </dd>
+                    </div>
+                     <!-- <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">
+                        Last edited by
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        B. Milman
+                      </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Date last edited
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          22 June 2023
+                        </dd>
+                        </div>  -->
+               </dl>
+              </div>
+            </div> 
+
+            <div class="govuk-summary-card">
+              <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title">Remaining appointments</h2>
+                <!-- <ul class="govuk-summary-card__actions">
+                  <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
+                      Print all movement slips
+                    </a>
+                  </li>
+                  <li class="govuk-summary-card__action"> 
+                    <a class="govuk-link" href="#">
+                      Cancel all appointments
+                    </a>
+                  </li> 
+                </ul> -->
+              </div>
+              <div class="govuk-summary-card__content">
+                <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+                  <caption class="govuk-table__caption govuk-visually-hidden">Remaining appointments</caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th scope="col" class="govuk-table__header govuk-table__header--numeric width-one-eighth scope="col" aria-sort="none"><button type="button" data-index="0"></button>Appointment</th>
+                      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter scope="col" aria-sort="none"><button type="button" data-index="0"></button>Date</th>
+                      <th scope="col" class="govuk-table__header"></th>
+                      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">7</td>
+                      <td class="govuk-table__cell">3 August 2023</td>
+                      <td class="govuk-table__cell"></td>
+                      <td class="govuk-table__cell"><a href="../repeating/summary" class="govuk-link">Manage details</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">8</td>
+                      <td class="govuk-table__cell">10 August 2023</td>
+                      <td class="govuk-table__cell"></td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">Manage details</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">9</td>
+                      <td class="govuk-table__cell">17 August 2023</td>
+                      <td class="govuk-table__cell"></td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">Manage details</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">10</td>
+                      <td class="govuk-table__cell">24 August 2023</td>
+                      <td class="govuk-table__cell"></td>
+                      <td class="govuk-table__cell"><a href="../repeating/summary-4" class="govuk-link">Manage details</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">11</td>
+                      <td class="govuk-table__cell">31 August 2023</td>
+                      <td class="govuk-table__cell"></td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">Manage details</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">12</td>
+                      <td class="govuk-table__cell">7 September 2023</td>
+                      <td class="govuk-table__cell">
+                      </td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">Manage details</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>  
+
+            <div class="govuk-summary-card">
+              <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title">Past appointments</h2>
+                <!-- <ul class="govuk-summary-card__actions">
+                  <li class="govuk-summary-card__action"> <a class="govuk-link" href="#">
+                      Print all movement slips
+                    </a>
+                  </li>
+                  <li class="govuk-summary-card__action"> 
+                    <a class="govuk-link" href="#">
+                      Cancel all appointments
+                    </a>
+                  </li> 
+                </ul> -->
+              </div>
+              <div class="govuk-summary-card__content">
+                <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+                  <caption class="govuk-table__caption govuk-visually-hidden">Past appointments</caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th scope="col" class="govuk-table__header govuk-table__header--numeric width-one-eighth scope="col" aria-sort="none"><button type="button" data-index="0"></button>Appointment</th>
+                      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter scope="col" aria-sort="none"><button type="button" data-index="0"></button>Date</th>
+                      <th scope="col" class="govuk-table__header"></th>
+                      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">6</td>
+                      <td class="govuk-table__cell">27 July 2023</td>
+                      <td class="govuk-table__cell"></td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">View</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">5</td>
+                      <td class="govuk-table__cell">20 July 2023</td>
+                      <td class="govuk-table__cell"></td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">View</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">4</td>
+                      <td class="govuk-table__cell">13 July 2023</td>
+                      <td class="govuk-table__cell"></td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">View</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">3</td>
+                      <td class="govuk-table__cell">6 July 2023</td>
+                      <td class="govuk-table__cell"></td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">View</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">2</td>
+                      <td class="govuk-table__cell">29 June 2023</td>
+                      <td class="govuk-table__cell"></td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">View</a></td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell govuk-table__cell--numeric width-one-eighth">1</td>
+                      <td class="govuk-table__cell">22 June 2023</td>
+                      <td class="govuk-table__cell">
+                      </td>
+                      <td class="govuk-table__cell"><a href="#" class="govuk-link">View</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>  
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  
+{% endblock %}

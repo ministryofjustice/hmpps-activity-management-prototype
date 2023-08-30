@@ -1,0 +1,71 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post" action="../../appointment-summary/repeating/summary-cancelled">
+
+      
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l"> 
+          {% if data['alt-appointment-name'] !='' %}
+  
+          {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+          {% else %}
+          
+          {{ data['apppointment-type']}}
+          {% endif %}
+        </span>
+        Which appointments do you want to cancel?
+       </h1>
+
+
+      {{ govukRadios({
+        idPrefix: "which-occurrence",
+        name: "which-occurrence",
+        items: [
+          {
+            value: "This appointment",
+            text: "Just this one - Tuesday, 25 July 2023 (5 of 20)"
+          },
+          {
+            value: "This and the following occurrences-prisoners",
+            text: "This one and all the appointments that come after it in the seriesThis one and all the appointments that come after it in the series",
+            hint: {  
+              text: " You're cancelling the following 16 appointments:
+              25 July 2023 (5 of 20) to 9 August 2023 (20 of 20)"
+            }
+          } 
+        ]
+       }) }}
+
+       <div class="govuk-inset-text" data-qa="frequency-text">
+        This appointment repeats every day
+      </div>
+
+      {{ govukButton({
+        text: "Confirm"
+        }) }}
+  </form>
+</div>
+</div>
+
+{% endblock %}
