@@ -57,6 +57,8 @@ module.exports = {
   'attendance-data-1': require('./attendance-data-1'),
   'applications': require('./applications'),
   "times": "AM",
+  "tier": "Tier 2",
+  "provider": "Other",
   "selected-locations": {},
   "prison-name": "HMP Leeds",
   "chosen-date": "today",
@@ -72,8 +74,8 @@ module.exports = {
       'url': '/unlock/version-8/whereabouts'
     },
     'appointments': {
-      'latest-version': 'version-5',
-      'url': '/appointments/version-5/dps-home'
+      'latest-version': 'version-13',
+      'url': '/appointments/version-13/dps-home'
     }
   },
   "areas-of-study": require('./areas-of-study'),

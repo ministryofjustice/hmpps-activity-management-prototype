@@ -1,0 +1,63 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form id="form" method="post" action="FRD-edit-route">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <span class="govuk-caption-l">
+                            {{activity.name}}
+                        </span>
+                        <h1 class="govuk-fieldset__heading">
+                            Select the new tier
+                        </h1>
+                    </legend>
+                    <p class="govuk-body">Text to explain that this contributes to data collection around purposeful activity for their prison. If the activity is purposeful and is not a basic need of the prisoner then it will be tier 1 or tier 2. Otherwise, it is foundational.</p>
+       
+                    {{ govukRadios({
+                            idPrefix: "FRD-tier",
+                            name: "FRD-tier",
+                            items: [
+                              {
+                                value: "Tier 1",
+                                text: "Tier 1"
+                                
+                              },
+                              {
+                                value: "Tier 2",
+                                text: "Tier 2"
+                              },
+                              {
+                                value: "Foundational Tier",
+                                text: "Non-purposeful activity, including not in work"
+                              }
+                            ]
+                           }) }}
+                </fieldset>
+            </div>
+
+            {{ govukButton({
+            text: "Update activity tier"
+            }) }}
+            <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

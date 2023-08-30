@@ -348,7 +348,7 @@ router.post("/payrate-list", function (req, res) {
     req.session.data["new-activity"].payrates = req.session.data.payrates;
   }
 
-  res.redirect("check-answers");
+  res.redirect("tier");
 });
 
 // remove payment details
@@ -590,6 +590,53 @@ router.get("/bank-holiday-check", function (req, res) {
 router.post("/bank-holiday-check", function (req, res) {
   res.redirect("payrate-incentive-levels");
 });
+
+
+
+// edit activity tier page
+router.get("/:activityId/tier", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.params.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+ 
+  // render the page
+  res.render(req.protoUrl + "/tier", {
+    activity,
+    activityId,
+  });
+});
+
+// direct to right page
+router.post(`/FRD-route`, function (req, res) {
+  const peopleRoute = req.session.data['FRD-tier'];
+  if (peopleRoute === 'Tier 2') {
+    res.redirect(`provider`);
+  } else {
+    res.redirect(`check-answers`);
+  }
+});
+
+
+// redirect activity cya select page
+router.post("/FRD-cya", function (req, res) {
+  res.redirect("check-answers");
+});
+
+
+// edit activity provider page
+router.get("/provider", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.params.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+ 
+  // render the page
+  res.render(req.protoUrl + "/provider", {
+    activity,
+    activityId,
+  });
+});
+
+
 
 // create activity check answers page
 router.get("/check-answers", function (req, res) {

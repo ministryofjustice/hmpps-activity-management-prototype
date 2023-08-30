@@ -103,6 +103,55 @@ Appointments prototype
                 html: html,
                 type: 'success'
               }) }} 
+          
+              {% elif data['edit-appt'] === 'tier' %}
+
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  You've changed the tier for this appointment
+                </h3>
+                
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }} 
+          
+              {% elif data['edit-appt'] === 'provider' %}
+
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  You've changed the provider for this appointment
+                </h3>
+                
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }}  
+          
+              {% elif data['edit-appt'] === 'tier-provider' %}
+
+              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  You've changed the tier and provider for this appointment
+                </h3>
+                
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: 'success'
+              }) }} 
+
               {% endif %}
             <h1 class="govuk-heading-l">
               <span class="govuk-caption-l">Manage appointments</span>
@@ -247,6 +296,36 @@ Appointments prototype
                     <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="../../edit/extra-information-repeating/comments">
                         Change <span class="govuk-visually-hidden"> extra information</span>
+                      </a>
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Tier
+                    </dt>
+                    <dd class="govuk-summary-list__value"> 
+
+                      {{ data['FRD-tier']}}  
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a class="govuk-link" href="../../edit/tier-repeating/appointment-tier">
+                        Change<span class="govuk-visually-hidden">tier</span>
+                      </a>
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Provider
+                    </dt>
+                    <dd class="govuk-summary-list__value"> 
+
+                      {{ data['FRD-provider']}}  
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a class="govuk-link" href="../../edit/tier-repeating/appointment-provider">
+                        Change<span class="govuk-visually-hidden"> provider</span>
                       </a>
                     </dd>
                   </div>

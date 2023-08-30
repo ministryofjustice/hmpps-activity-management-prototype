@@ -1,0 +1,66 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post" action="FRD-cya">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <span class="govuk-caption-l">
+                            Create an activity
+                        </span>
+                        <h1 class="govuk-fieldset__heading">
+                            Who provides this activity?
+                        </h1>
+                    </legend>
+                    <p class="govuk-body">Text to explain more detail about this question</p>
+       
+                    {{ govukRadios({
+                            idPrefix: "FRD-provider",
+                            name: "FRD-provider",
+                            items: [
+                            {
+                                value: "Provided by prison staff",
+                                text: "Provided by prison staff"
+                                
+                            },
+                            {
+                                value: "Provided by prisoners for other prisoners",
+                                text: "Provided by prisoners for other prisoners"
+                            },
+                            {
+                                value: "Provided by an external provider",
+                                text: "Provided by an external provider"
+                            },
+                            {
+                                value: "Other",
+                                text: "Other"
+                            }
+                            ]
+                        }) }}
+     
+                </fieldset>
+            </div>
+
+       
+            {{ govukButton({
+                text: "Continue"
+                }) }} 
+        </form>
+    </div>
+</div>
+
+{% endblock %}

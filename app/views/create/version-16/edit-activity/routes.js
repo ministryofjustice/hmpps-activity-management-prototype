@@ -248,6 +248,43 @@ router.get("/:activityId/category", function (req, res) {
   });
 });
 
+// edit activity tier page
+router.get("/:activityId/tier", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.params.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+ 
+  // render the page
+  res.render(req.protoUrl + "/tier", {
+    activity,
+    activityId,
+  });
+});
+
+// direct to right page
+router.post(`/:activityId/FRD-edit-route`, function (req, res) {
+  const peopleRoute = req.session.data['FRD-tier'];
+  if (peopleRoute === 'Tier 2') {
+    res.redirect(`provider`);
+  } else {
+    res.redirect(`details`);
+  }
+});
+
+
+// edit activity provider page
+router.get("/:activityId/provider", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.params.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+ 
+  // render the page
+  res.render(req.protoUrl + "/provider", {
+    activity,
+    activityId,
+  });
+});
+
 // edit activity category POST route
 router.post("/:activityId/category", function (req, res) {
   let activities = req.session.data["timetable-complete-1"]["activities"];
