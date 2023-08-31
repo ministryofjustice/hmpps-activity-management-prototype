@@ -133,112 +133,218 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         <h2 class="govuk-heading-m govuk-!-margin-bottom-3">
             Activity details
         </h2>
+            
+        {% if data['FRD-tier'] == 'Tier 2' %}
+        
         {{ govukSummaryList({
-        rows: [
-        {
-        key: {
-        text: "Activity category"
-        },
-        actions: {
-        items: [
-        {
-        href: "category",
-        text: "Change",
-        visuallyHiddenText: "activity name"
-        }
-        ]
-        },
-        value: {
-        text: activity.category | getActivityCategoryName
-        }
-        },
-        {
-        key: {
-        text: "Tier"
-        },
-        actions: {
-        items: [
-        {
-        href: "tier",
-        text: "Change",
-        visuallyHiddenText: "activity tier"
-        }
-        ]
-        },
-        value: {
-        text: activity.tier 
-        }
-        },
-        {
-        key: {
-        text: "Provider"
-        },
-        actions: {
-        items: [
-        {
-        href: "provider",
-        text: "Change",
-        visuallyHiddenText: "activity provider"
-        }
-        ]
-        },
-        value: {
-        text: activity.provider
-        }
-        },
-        {
-        key: {
-        text: "Name"
-        },
-        value: {
-        text: activity.name
-        },
-        actions: {
-        items: [
-        {
-        href: "name",
-        text: "Change",
-        visuallyHiddenText: "activity name"
-        }
-        ]
-        }
-        },
-        {
-        key: {
-        text: "Location"
-        },
-        actions: {
-        items: [
-        {
-        href: "location",
-        text: "Change",
-        visuallyHiddenText: "activity name"
-        }
-        ]
-        },
-        value: {
-        text: activity.location
-        }
-        },
-        {
-        key: {
-        text: "Capacity"
-        },
-        actions: {
-        items: [
-        {
-        href: "capacity",
-        text: "Change",
-        visuallyHiddenText: "activity name"
-        }
-        ]
-        },
-        value: {
-        text: activity.capacity
-        }
-        }
-        ]
-        }) }}
+            rows: [
+            {
+            key: {
+            text: "Activity category"
+            },
+            actions: {
+            items: [
+            {
+            href: "category",
+            text: "Change",
+            visuallyHiddenText: "activity name"
+            }
+            ]
+            },
+            value: {
+            text: activity.category | getActivityCategoryName
+            }
+            },
+    
+            
+            {
+            key: {
+            text: "Tier"
+            },
+            value: {
+            text: activity.tier 
+            },
+            actions: {
+            items: [
+            {
+            href: "tier",
+            text: "Change",
+            visuallyHiddenText: "activity tier"
+            }
+            ]
+            }
+            },
+
+            {
+            key: {
+            text: "Provider"
+            },
+            value: {
+            text: activity.provider
+            },
+            actions: {
+            items: [
+            {
+            href: "provider",
+            text: "Change",
+            visuallyHiddenText: "activity provider"
+            }
+            ]
+            }
+            },
+            
+            {
+            key: {
+            text: "Name"
+            },
+            value: {
+            text: activity.name
+            },
+            actions: {
+            items: [
+            {
+            href: "name",
+            text: "Change",
+            visuallyHiddenText: "activity name"
+            }
+            ]
+            }
+            },
+            {
+            key: {
+            text: "Location"
+            },
+            actions: {
+            items: [
+            {
+            href: "location",
+            text: "Change",
+            visuallyHiddenText: "activity name"
+            }
+            ]
+            },
+            value: {
+            text: activity.location
+            }
+            },
+            {
+            key: {
+            text: "Capacity"
+            },
+            actions: {
+            items: [
+            {
+            href: "capacity",
+            text: "Change",
+            visuallyHiddenText: "activity name"
+            }
+            ]
+            },
+            value: {
+            text: activity.capacity
+            }
+            }
+            ]
+            }) }}
+        {% else %}
+
+         
+        {{ govukSummaryList({
+            rows: [
+            {
+            key: {
+            text: "Activity category"
+            },
+            actions: {
+            items: [
+            {
+            href: "category",
+            text: "Change",
+            visuallyHiddenText: "activity name"
+            }
+            ]
+            },
+            value: {
+            text: activity.category | getActivityCategoryName
+            }
+            },
+    
+            
+            {
+            key: {
+            text: "Tier"
+            },
+            value: {
+            text: activity.tier 
+            },
+            actions: {
+            items: [
+            {
+            href: "tier",
+            text: "Change",
+            visuallyHiddenText: "activity tier"
+            }
+            ]
+            }
+            },
+    
+            
+            {
+            key: {
+            text: "Name"
+            },
+            value: {
+            text: activity.name
+            },
+            actions: {
+            items: [
+            {
+            href: "name",
+            text: "Change",
+            visuallyHiddenText: "activity name"
+            }
+            ]
+            }
+            },
+            {
+            key: {
+            text: "Location"
+            },
+            actions: {
+            items: [
+            {
+            href: "location",
+            text: "Change",
+            visuallyHiddenText: "activity name"
+            }
+            ]
+            },
+            value: {
+            text: activity.location
+            }
+            },
+            {
+            key: {
+            text: "Capacity"
+            },
+            actions: {
+            items: [
+            {
+            href: "capacity",
+            text: "Change",
+            visuallyHiddenText: "activity name"
+            }
+            ]
+            },
+            value: {
+            text: activity.capacity
+            }
+            }
+            ]
+            }) }}
+   
+        {% endif %}
+       
 
         <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-8">
             Requirements and suitability
