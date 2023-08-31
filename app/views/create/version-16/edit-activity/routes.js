@@ -262,7 +262,7 @@ router.get("/:activityId/tier", function (req, res) {
 });
 
 // direct to right page
-router.post(`/:activityId/FRD-edit-route`, function (req, res) {
+router.post(`/:activityId/tier`, function (req, res) {
   const peopleRoute = req.session.data['FRD-tier'];
   if (peopleRoute === 'Tier 2') {
     res.redirect(`provider`);
