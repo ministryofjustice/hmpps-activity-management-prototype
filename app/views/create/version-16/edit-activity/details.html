@@ -133,67 +133,69 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         <h2 class="govuk-heading-m govuk-!-margin-bottom-3">
             Activity details
         </h2>
-            
-        {% if data['FRD-tier'] == 'Tier 2' %}
-        
-        {{ govukSummaryList({
-            rows: [
-            {
-            key: {
-            text: "Activity category"
-            },
-            actions: {
-            items: [
-            {
-            href: "category",
-            text: "Change",
-            visuallyHiddenText: "activity name"
-            }
-            ]
-            },
-            value: {
-            text: activity.category | getActivityCategoryName
-            }
-            },
-    
-            
-            {
-            key: {
-            text: "Tier"
-            },
-            value: {
-            text: data['FRD-tier'] or 'Tier 2'
-            },
-            actions: {
-            items: [
-            {
-            href: "tier",
-            text: "Change",
-            visuallyHiddenText: "activity tier"
-            }
-            ]
-            }
-            },
 
-            {
-            key: {
-            text: "Provider"
-            },
-            value: {
-            text: data['FRD-provider'] 
-            },
-            actions: {
-            items: [
-            {
-            href: "provider",
-            text: "Change",
-            visuallyHiddenText: "activity provider"
-            }
-            ]
-            }
-            },
-            
-            {
+        {% if data['FRD-tier'] == 'tier 2' %}
+
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Activity category"
+        },
+        actions: {
+        items: [
+        {
+        href: "category",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.category | getActivityCategoryName
+        }
+        },
+
+
+        {
+        key: {
+        text: "Tier"
+        },
+        value: {
+        text: data['FRD-tier'] or 'tier 2'
+        },
+        actions: {
+        items: [
+        {
+        href: "tier",
+        text: "Change",
+        visuallyHiddenText: "activity tier"
+        }
+        ]
+        }
+        },
+
+        {
+        key: {
+        text: "Organiser"
+        },
+        value: {
+        text: data['FRD-provider']
+        },
+        actions: {
+        items: [
+        {
+        href: "provider",
+        text: "Change",
+        visuallyHiddenText: "activity organiser"
+        }
+        ]
+        }
+        },
+
+       
+
+        {
             key: {
             text: "Name"
             },
@@ -209,142 +211,121 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
             }
             ]
             }
-            },
-            {
-            key: {
-            text: "Location"
-            },
-            actions: {
-            items: [
-            {
-            href: "location",
-            text: "Change",
-            visuallyHiddenText: "activity name"
-            }
-            ]
-            },
-            value: {
-            text: activity.location
-            }
-            },
-            {
-            key: {
-            text: "Capacity"
-            },
-            actions: {
-            items: [
-            {
-            href: "capacity",
-            text: "Change",
-            visuallyHiddenText: "activity name"
-            }
-            ]
-            },
-            value: {
-            text: activity.capacity
-            }
-            }
+            } 
             ]
             }) }}
         {% else %}
 
-         
+
         {{ govukSummaryList({
-            rows: [
-            {
-            key: {
-            text: "Activity category"
-            },
-            actions: {
-            items: [
-            {
-            href: "category",
-            text: "Change",
-            visuallyHiddenText: "activity name"
-            }
-            ]
-            },
-            value: {
-            text: activity.category | getActivityCategoryName
-            }
-            },
-    
-            
-            {
-            key: {
-            text: "Tier"
-            },
-            value: {
-            text: data['FRD-tier']
-            },
-            actions: {
-            items: [
-            {
-            href: "tier",
-            text: "Change",
-            visuallyHiddenText: "activity tier"
-            }
-            ]
-            }
-            },
-    
-            
-            {
-            key: {
-            text: "Name"
-            },
-            value: {
-            text: activity.name
-            },
-            actions: {
-            items: [
-            {
-            href: "name",
-            text: "Change",
-            visuallyHiddenText: "activity name"
-            }
-            ]
-            }
-            },
-            {
-            key: {
-            text: "Location"
-            },
-            actions: {
-            items: [
-            {
-            href: "location",
-            text: "Change",
-            visuallyHiddenText: "activity name"
-            }
-            ]
-            },
-            value: {
-            text: activity.location
-            }
-            },
-            {
-            key: {
-            text: "Capacity"
-            },
-            actions: {
-            items: [
-            {
-            href: "capacity",
-            text: "Change",
-            visuallyHiddenText: "activity name"
-            }
-            ]
-            },
-            value: {
-            text: activity.capacity
-            }
-            }
-            ]
-            }) }}
-   
+        rows: [
+        {
+        key: {
+        text: "Activity category"
+        },
+        actions: {
+        items: [
+        {
+        href: "category",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.category | getActivityCategoryName
+        }
+        },
+
+
+        {
+        key: {
+        text: "Tier"
+        },
+        value: {
+        text: data['FRD-tier']
+        },
+        actions: {
+        items: [
+        {
+        href: "tier",
+        text: "Change",
+        visuallyHiddenText: "activity tier"
+        }
+        ]
+        }
+        },
+
+
+        {
+        key: {
+        text: "Name"
+        },
+        value: {
+        text: activity.name
+        },
+        actions: {
+        items: [
+        {
+        href: "name",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        }
+        } 
+        ]
+        }) }}
+
         {% endif %}
-       
+
+
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-3">
+            Location and capacity
+        </h2>
+
+
+
+        {{ govukSummaryList({
+        rows: [
+
+        {
+        key: {
+        text: "Location"
+        },
+        actions: {
+        items: [
+        {
+        href: "location",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.location
+        }
+        },
+        {
+        key: {
+        text: "Capacity"
+        },
+        actions: {
+        items: [
+        {
+        href: "capacity",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.capacity
+        }
+        }
+        ]
+        }) }}
+
 
         <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-8">
             Requirements and suitability

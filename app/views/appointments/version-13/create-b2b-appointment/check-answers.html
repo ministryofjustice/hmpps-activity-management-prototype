@@ -92,21 +92,26 @@ Appointments prototype
                 </dd>
               </div>
 
-              <div class="govuk-summary-list__row">
+             
+           
+            {% if data['FRD-tier'] == 'tier 2' %}
+            <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                  Provider
+                    Host
                 </dt>
-                <dd class="govuk-summary-list__value"> 
-
-                  {{ data['FRD-provider']}}  
-                  
+                <dd class="govuk-summary-list__value">
+                    
+                    {{data['FRD-provider']}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="comments">
-                    Change<span class="govuk-visually-hidden"> extra information</span>
-                  </a>
+                    <a class="govuk-link" href="provider">
+                        Change<span class="govuk-visually-hidden"> activity provider</span>
+                    </a>
                 </dd>
-              </div>      
+            </div>
+            {% else %}
+       
+            {% endif %}
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Appointments created

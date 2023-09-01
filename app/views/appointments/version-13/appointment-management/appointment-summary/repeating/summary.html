@@ -126,7 +126,7 @@ Appointments prototype
 
               {% set html %}
                 <h3 class="govuk-notification-banner__heading">
-                  You've changed the provider for this appointment
+                  You've changed the host of this appointment
                 </h3>
                 
               {% endset %}
@@ -136,21 +136,6 @@ Appointments prototype
                 type: 'success'
               }) }}  
           
-              {% elif data['edit-appt'] === 'tier-provider' %}
-
-              {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-
-              {% set html %}
-                <h3 class="govuk-notification-banner__heading">
-                  You've changed the tier and provider for this appointment
-                </h3>
-                
-              {% endset %}
-
-              {{ govukNotificationBanner({
-                html: html,
-                type: 'success'
-              }) }} 
 
               {% endif %}
             <h1 class="govuk-heading-l">
@@ -314,21 +299,26 @@ Appointments prototype
                       </a>
                     </dd>
                   </div>
+                
+           
+                  {% if data['FRD-tier'] == 'tier 2' %}
                   <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                      Provider
-                    </dt>
-                    <dd class="govuk-summary-list__value"> 
-
-                      {{ data['FRD-provider']}}  
-                      
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a class="govuk-link" href="../../edit/tier-repeating/appointment-provider">
-                        Change<span class="govuk-visually-hidden"> provider</span>
-                      </a>
-                    </dd>
+                      <dt class="govuk-summary-list__key">
+                          Host
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                          
+                          {{data['FRD-provider']}}
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                          <a class="govuk-link" href="../../edit/tier-repeating/provider">
+                              Change<span class="govuk-visually-hidden"> activity provider</span>
+                          </a>
+                      </dd>
                   </div>
+                  {% else %}
+            
+                  {% endif %}
                  </dl>
               </div>
             </div>

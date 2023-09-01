@@ -42,7 +42,7 @@ const router = express.Router()
 
 		router.post(`/appointment-management/edit/tier/FRD-edit-route`, function (req, res) {
 			const peopleRoute = req.session.data['FRD-tier'];
-			if (peopleRoute === 'Tier 2') {
+			if (peopleRoute === 'tier 2') {
 				res.redirect(`appointment-provider`);
 			} else {
 				res.redirect(`../../appointment-summary/uploaded-in-bulk/bert?edit-appt=tier`);
@@ -53,7 +53,7 @@ const router = express.Router()
 
 		router.post(`/appointment-management/edit/tier-repeating/FRD-repeat-edit-route`, function (req, res) {
 			const peopleRoute = req.session.data['FRD-tier'];
-			if (peopleRoute === 'Tier 2') {
+			if (peopleRoute === 'tier 2') {
 				res.redirect(`appointment-provider`);
 			} else {
 				res.redirect(`apply-to-tier`);

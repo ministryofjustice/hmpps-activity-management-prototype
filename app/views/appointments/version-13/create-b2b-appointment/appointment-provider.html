@@ -27,35 +27,32 @@ Appointments prototype
   <div class="govuk-grid-column-two-thirds"> 
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-l">Schedule a set of back-to-backs</span>
-        Who provides these appointments?
-       </h1>
-       <p class="govuk-body">Text to explain more detail about this question</p>
+        Who hosts these appointments?
+       </h1> 
        
-{{ govukRadios({
+       {{ govukRadios({
         idPrefix: "FRD-provider",
         name: "FRD-provider",
         items: [
-          {
-            value: "Provided by prison staff",
-            text: "Provided by prison staff"
+        {
+            value: "prison staff",
+            text: "prison staff"
             
-          },
-          {
-            value: "Provided by prisoners for other prisoners",
-            text: "Provided by prisoners for other prisoners"
-          },
-          {
-            value: "Provided by an external provider",
-            text: "Provided by an external provider"
-          },
-          {
-            value: "Other",
-            text: "Other"
-          }
+        },
+        {
+            value: "a prisoner or group of prisoners",
+            text: "a prisoner or group of prisoners"
+        },
+        {
+            value: "an external provider",
+            text: "an external provider"
+        },
+        {
+            value: "someone else",
+            text: "someone else"
+        }
         ]
-       }) }}
-     
-
+    }) }}
     {{ govukButton({
       text: "Continue"
     }) }}

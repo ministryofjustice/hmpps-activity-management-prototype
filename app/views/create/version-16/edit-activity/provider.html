@@ -23,40 +23,39 @@ text: "Back",
                             {{activity.name}}
                         </span>
                         <h1 class="govuk-fieldset__heading">
-                            Select the new provider
+                            Select the new organiser
                         </h1>
-                    </legend>
-                    <p class="govuk-body">Text to explain more detail about this question</p>
+                    </legend> 
        
                     {{ govukRadios({
-                            idPrefix: "FRD-provider",
-                            name: "FRD-provider",
-                            items: [
-                            {
-                                value: "Provided by prison staff",
-                                text: "Provided by prison staff"
-                                
-                            },
-                            {
-                                value: "Provided by prisoners for other prisoners",
-                                text: "Provided by prisoners for other prisoners"
-                            },
-                            {
-                                value: "Provided by an external provider",
-                                text: "Provided by an external provider"
-                            },
-                            {
-                                value: "Other",
-                                text: "Other"
-                            }
-                            ]
-                        }) }}
+                        idPrefix: "FRD-provider",
+                        name: "FRD-provider",
+                        items: [
+                        {
+                            value: "prison staff",
+                            text: "prison staff"
+                            
+                        },
+                        {
+                            value: "a prisoner or group of prisoners",
+                            text: "a prisoner or group of prisoners"
+                        },
+                        {
+                            value: "an external provider",
+                            text: "an external provider"
+                        },
+                        {
+                            value: "someone else",
+                            text: "someone else"
+                        }
+                        ]
+                    }) }}
      
                 </fieldset>
             </div>
 
             {{ govukButton({
-            text: "Update activity provider"
+            text: "Update organiser"
             }) }}
             <p>
                 <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
