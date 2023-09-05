@@ -24,8 +24,6 @@ Appointments prototype
 
 
 {% block content %}
-
-<form id="form" method="post">
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-full"> 
 
@@ -36,37 +34,27 @@ Appointments prototype
        {% from "govuk/components/radios/macro.njk" import govukRadios %}
         {% from "govuk/components/input/macro.njk" import govukInput %}
 
-     
-
-        {{ govukRadios({ 
-          name: "appointment-frequency-options",  
-          items: [
+       <div class="govuk-!-margin-bottom-5">
+        {{ govukRadios({
+          idPrefix: "appointment-frequency-monthly",
+          name: "appointment-frequency-monthly", 
+          items: [ 
             {
-              value: "Every weekday (Monday to Friday)",
-              text: "Every weekday (Monday to Friday)"
-            },  
-            {
-              value: "Every set amount of days",
-              text: "Every set amount of days",
+              value: "On the 18th of every month",
+              text: "On the 18th of every month",
               hint: {
-                text: "Including daily"
-              } 
+                text: "Or the last day if there is no matching date in the month."
+              }
             },
             {
-              value: "Every set amount of weeks",
-              text: "Every set amount of weeks",
-              hint: {
-                text: "Including weekly and on chosen days of the week"
-              } 
-            },  
-            {
-              value: "Monthly",
-              text: "Monthly" 
+              value: "Every third Friday of the month",
+              text: "Every third Friday of the month"
             }
           ]
-        }) }}
-      
+        }) }} 
+    
    
+    <form id="form" method="post" action="appointment-frequency-5-ends">
      <div class="govuk-button-group">
       {{ govukButton({
         text: "Continue"
@@ -74,9 +62,6 @@ Appointments prototype
     
       
     </div>
-
-
-
 
   </div>
 </div>

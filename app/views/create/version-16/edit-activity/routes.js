@@ -264,7 +264,7 @@ router.get("/:activityId/tier", function (req, res) {
 // direct to right page
 router.post(`/:activityId/tier`, function (req, res) {
   const peopleRoute = req.session.data['FRD-tier'];
-  if (peopleRoute === 'tier 2') {
+  if (peopleRoute === 'Tier 2') {
     res.redirect(`provider`);
   } else {
     res.redirect(`details`);

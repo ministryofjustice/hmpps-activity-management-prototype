@@ -42,7 +42,7 @@ const router = express.Router()
 
 		router.post(`/appointment-management/edit/tier/FRD-edit-route`, function (req, res) {
 			const peopleRoute = req.session.data['FRD-tier'];
-			if (peopleRoute === 'tier 2') {
+			if (peopleRoute === 'Tier 2') {
 				res.redirect(`appointment-provider`);
 			} else {
 				res.redirect(`../../appointment-summary/uploaded-in-bulk/bert?edit-appt=tier`);
@@ -53,7 +53,7 @@ const router = express.Router()
 
 		router.post(`/appointment-management/edit/tier-repeating/FRD-repeat-edit-route`, function (req, res) {
 			const peopleRoute = req.session.data['FRD-tier'];
-			if (peopleRoute === 'tier 2') {
+			if (peopleRoute === 'Tier 2') {
 				res.redirect(`appointment-provider`);
 			} else {
 				res.redirect(`apply-to-tier`);
@@ -195,6 +195,23 @@ router.post(`/create-b2b-appointment/bulk-more-people`, function (req, res) {
 		res.redirect(`non-associations`);
 	} else {
 		res.redirect(`upload-or-per-person`);
+	}
+  });
+
+
+  router.post(`/create-appointment/appointment-frequency-5`, function (req, res) {
+	const peopleRepeat = req.session.data['appointment-frequency-options'];
+	if (peopleRepeat === 'Every set amount of days') {
+		res.redirect(`appointment-frequency-5-days`);
+	} 
+	else if (peopleRepeat === 'Every set amount of weeks') {
+		res.redirect(`appointment-frequency-5-weeks`);
+	}
+	else if (peopleRepeat === 'Monthly') {
+		res.redirect(`appointment-frequency-5-months`);
+	}
+	else {
+		res.redirect(`appointment-frequency-5-ends`);
 	}
   });
 

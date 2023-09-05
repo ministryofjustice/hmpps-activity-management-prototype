@@ -1,0 +1,125 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full"> 
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Schedule an appointment</span>
+        How often will the appointment repeat?
+       </h1> 
+       {% from "govuk/components/radios/macro.njk" import govukRadios %}
+        {% from "govuk/components/input/macro.njk" import govukInput %}
+
+       <div class="govuk-!-margin-bottom-5">
+        <h2 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--s" for="day-frequency">
+            Repeats every
+          </label>
+        </h2>
+
+        <div style="display: inline-block"><div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5" id="weight" name="weight" type="text" spellcheck="false">
+          <div class="govuk-input__suffix" aria-hidden="true">weeks</div></div>
+        </div>
+      </div> 
+
+      <h2 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--s" for="day-frequency">
+          Repeats on
+        </label>
+      </h2>
+
+        <div class="govuk-checkboxes govuk-!-margin-bottom-5" data-module="govuk-checkboxes">
+          
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="day-0" name="days" type="checkbox" value="0" aria-controls="conditional-day-0" aria-expanded="false">
+              <label class="govuk-label govuk-checkboxes__label" for="day-0">
+                Monday
+                
+              </label>
+            </div> 
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="day-1" name="days" type="checkbox" value="1" aria-controls="conditional-day-1" aria-expanded="false">
+              <label class="govuk-label govuk-checkboxes__label" for="day-1">
+                Tuesday
+                
+              </label>
+            </div>
+ 
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="day-2" name="days" type="checkbox" value="2" aria-controls="conditional-day-2" aria-expanded="false">
+              <label class="govuk-label govuk-checkboxes__label" for="day-2">
+                Wednesday
+                
+                <!-- – you have scheduled this activity to start on Wednesday 7 June 2023 -->
+                <span class="govuk-tag govuk-tag--grey">start day</span>
+                
+              </label>
+            </div> 
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="day-3" name="days" type="checkbox" value="3" aria-controls="conditional-day-3" aria-expanded="false">
+              <label class="govuk-label govuk-checkboxes__label" for="day-3">
+                Thursday
+                
+              </label>
+            </div> 
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="day-4" name="days" type="checkbox" value="4" aria-controls="conditional-day-4" aria-expanded="false">
+              <label class="govuk-label govuk-checkboxes__label" for="day-4">
+                Friday
+                
+              </label>
+            </div> 
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="day-5" name="days" type="checkbox" value="5" aria-controls="conditional-day-5" aria-expanded="false">
+              <label class="govuk-label govuk-checkboxes__label" for="day-5">
+                Saturday
+                
+              </label>
+            </div> 
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="day-6" name="days" type="checkbox" value="6" aria-controls="conditional-day-6" aria-expanded="false">
+              <label class="govuk-label govuk-checkboxes__label" for="day-6">
+                Sunday
+                
+              </label>
+            </div>
+          </div>
+        
+    
+   
+    <form id="form" method="post">
+     <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    
+      
+    </div>
+
+  </div>
+</div>
+{% endblock %}
