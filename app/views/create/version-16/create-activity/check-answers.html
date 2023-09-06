@@ -22,6 +22,20 @@ window.history.go(-1)" })}} {% endblock %}
             Activity details
         </h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['new-activity']['name']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="activity-name">
+                        Change<span class="govuk-visually-hidden"> activity name</span>
+                    </a>
+                </dd>
+            </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Activity category
@@ -34,21 +48,8 @@ window.history.go(-1)" })}} {% endblock %}
                     {{category|getActivityCategoryName|replace('-',' ')|capitalize}}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="#">
+                    <a class="govuk-link" href="select-category">
                         Change<span class="govuk-visually-hidden"> activity category</span>
-                    </a>
-                </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Name
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    {{data['new-activity']['name']}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="#">
-                        Change<span class="govuk-visually-hidden"> activity name</span>
                     </a>
                 </dd>
             </div>
@@ -86,6 +87,7 @@ window.history.go(-1)" })}} {% endblock %}
             {% else %}
        
             {% endif %}
+
         </dl>
 
 
@@ -101,7 +103,7 @@ window.history.go(-1)" })}} {% endblock %}
                 {{data['new-activity']['location']}}
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="#">
+                <a class="govuk-link" href="select-activity-location">
                     Change<span class="govuk-visually-hidden"> activity name</span>
                 </a>
             </dd>
@@ -114,7 +116,7 @@ window.history.go(-1)" })}} {% endblock %}
                 {{data['new-activity']['capacity']}}
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="#">
+                <a class="govuk-link" href="capacity">
                     Change<span class="govuk-visually-hidden"> activity name</span>
                 </a>
             </dd>

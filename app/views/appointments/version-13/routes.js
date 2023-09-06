@@ -22,9 +22,9 @@ const router = express.Router()
 	  router.post(`/create-appointment/FRD-route`, function (req, res) {
 		  const peopleRoute = req.session.data['FRD-tier'];
 		  if (peopleRoute === 'Tier 2') {
-			  res.redirect(`appointment-provider`);
+			  res.redirect(`provider`);
 		  } else {
-			  res.redirect(`check-answers`);
+			  res.redirect(`location`);
 		  }
 		});
    
@@ -32,9 +32,9 @@ const router = express.Router()
 		router.post(`/create-b2b-appointment/FRD-route`, function (req, res) {
 			const peopleRoute = req.session.data['FRD-tier'];
 			if (peopleRoute === 'Tier 2') {
-				res.redirect(`appointment-provider`);
+				res.redirect(`provider`);
 			} else {
-				res.redirect(`check-answers`);
+				res.redirect(`location`);
 			}
 		  });
 
@@ -43,7 +43,7 @@ const router = express.Router()
 		router.post(`/appointment-management/edit/tier/FRD-edit-route`, function (req, res) {
 			const peopleRoute = req.session.data['FRD-tier'];
 			if (peopleRoute === 'Tier 2') {
-				res.redirect(`appointment-provider`);
+				res.redirect(`provider`);
 			} else {
 				res.redirect(`../../appointment-summary/uploaded-in-bulk/bert?edit-appt=tier`);
 			}
@@ -54,9 +54,9 @@ const router = express.Router()
 		router.post(`/appointment-management/edit/tier-repeating/FRD-repeat-edit-route`, function (req, res) {
 			const peopleRoute = req.session.data['FRD-tier'];
 			if (peopleRoute === 'Tier 2') {
-				res.redirect(`appointment-provider`);
+				res.redirect(`provider`);
 			} else {
-				res.redirect(`apply-to-tier`);
+				res.redirect(`../../appointment-summary/repeating/summary?edit-appt=tier`);
 			}
 		  });
 	 

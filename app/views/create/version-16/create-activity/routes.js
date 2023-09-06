@@ -22,23 +22,54 @@ router.all("*", function (req, res, next) {
 
 //redirect the root url to the start page
 router.get("/", function (req, res) {
-  res.redirect("create-activity/select-category");
+  res.redirect("create-activity/activity-name");
 });
+
+// create activity activity category page
+router.get("/select-category", function (req, res) {
+  res.render(req.protoUrl + "/select-category");
+});
+
+
+//redirect to activtiy category
+router.post("/activity-name", function (req, res) {
+  res.redirect("select-category");
+});
+
 
 // create activity select category page
 router.get("/select-category", function (req, res) {
   res.render(req.protoUrl + "/select-category");
 });
 router.post("/select-category", function (req, res) {
-  res.redirect("activity-name");
+  res.redirect("tier");
 });
 
-// create activity activity name page
-router.get("/activity-name", function (req, res) {
-  res.render(req.protoUrl + "/activity-name");
+// Create activity tier page
+router.get("/tier", function (req, res) {
+  let activities = req.session.data["timetable-complete-1"]["activities"];
+  let activityId = req.params.activityId;
+  let activity = activities.find((activity) => activity.id == activityId);
+ 
+  // render the page
+  res.render(req.protoUrl + "/tier", {
+    activity,
+    activityId,
+  });
 });
+
+// direct to right page
+router.post(`/tier`, function (req, res) {
+  const peopleRoute = req.session.data['FRD-tier'];
+  if (peopleRoute === 'Tier 2') {
+    res.redirect(`provider`);
+  } else {
+    res.redirect(`select-activity-location`);
+  }
+});
+
 //redirect to create activity risk assessment page
-router.post("/activity-name", function (req, res) {
+router.post("/provider", function (req, res) {
   res.redirect("select-activity-location");
 });
 
@@ -348,7 +379,7 @@ router.post("/payrate-list", function (req, res) {
     req.session.data["new-activity"].payrates = req.session.data.payrates;
   }
 
-  res.redirect("tier");
+  res.redirect("check-answers");
 });
 
 // remove payment details
@@ -593,33 +624,10 @@ router.post("/bank-holiday-check", function (req, res) {
 
 
 
-// Create activity tier page
-router.get("/tier", function (req, res) {
-  let activities = req.session.data["timetable-complete-1"]["activities"];
-  let activityId = req.params.activityId;
-  let activity = activities.find((activity) => activity.id == activityId);
- 
-  // render the page
-  res.render(req.protoUrl + "/tier", {
-    activity,
-    activityId,
-  });
-});
-
-// direct to right page
-router.post(`/tier`, function (req, res) {
-  const peopleRoute = req.session.data['FRD-tier'];
-  if (peopleRoute === 'Tier 2') {
-    res.redirect(`provider`);
-  } else {
-    res.redirect(`check-answers`);
-  }
-});
-
 
 // redirect activity check answers page
 router.post("/provider", function (req, res) {
-  res.redirect("check-answers");
+  res.redirect("activity-name");
 });
 
 

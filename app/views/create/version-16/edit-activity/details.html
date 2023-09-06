@@ -138,9 +138,32 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
 
         {{ govukSummaryList({
         rows: [
+
+
+        {
+            key: {
+        text: "Name"
+        },
+        value: {
+        text: activity.name
+        },
+        actions: {
+        items: [
+        {
+        href: "name",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        }
+        },
+        
         {
         key: {
         text: "Activity category"
+        },
+        value: {
+        text: activity.category | getActivityCategoryName
         },
         actions: {
         items: [
@@ -150,9 +173,6 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         visuallyHiddenText: "activity name"
         }
         ]
-        },
-        value: {
-        text: activity.category | getActivityCategoryName
         }
         },
 
@@ -187,16 +207,26 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
         {
         href: "provider",
         text: "Change",
-        visuallyHiddenText: "activity organiser"
+        visuallyHiddenText: "Activity organiser"
         }
         ]
         }
-        },
+        }
 
-       
 
-        {
-            key: {
+        ]
+        }) }}
+        {% else %}
+
+
+        {{ govukSummaryList({
+            rows: [
+    
+    
+           
+    
+            {
+                key: {
             text: "Name"
             },
             value: {
@@ -211,71 +241,47 @@ classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
             }
             ]
             }
-            } 
+            },
+            
+            {
+            key: {
+            text: "Activity category"
+            },
+            value: {
+            text: activity.category | getActivityCategoryName
+            },
+            actions: {
+            items: [
+            {
+            href: "category",
+            text: "Change",
+            visuallyHiddenText: "activity name"
+            }
+            ]
+            }
+            },
+    
+    
+            {
+            key: {
+            text: "Tier"
+            },
+            value: {
+            text: data['FRD-tier'] or 'Tier 1'
+            },
+            actions: {
+            items: [
+            {
+            href: "tier",
+            text: "Change",
+            visuallyHiddenText: "activity tier"
+            }
+            ]
+            }
+            }
+    
             ]
             }) }}
-        {% else %}
-
-
-        {{ govukSummaryList({
-        rows: [
-        {
-        key: {
-        text: "Activity category"
-        },
-        actions: {
-        items: [
-        {
-        href: "category",
-        text: "Change",
-        visuallyHiddenText: "activity name"
-        }
-        ]
-        },
-        value: {
-        text: activity.category | getActivityCategoryName
-        }
-        },
-
-
-        {
-        key: {
-        text: "Tier"
-        },
-        value: {
-        text: data['FRD-tier']
-        },
-        actions: {
-        items: [
-        {
-        href: "tier",
-        text: "Change",
-        visuallyHiddenText: "activity tier"
-        }
-        ]
-        }
-        },
-
-
-        {
-        key: {
-        text: "Name"
-        },
-        value: {
-        text: activity.name
-        },
-        actions: {
-        items: [
-        {
-        href: "name",
-        text: "Change",
-        visuallyHiddenText: "activity name"
-        }
-        ]
-        }
-        } 
-        ]
-        }) }}
 
         {% endif %}
 

@@ -49,6 +49,38 @@ Appointments prototype
                   </a>
                 </dd>
               </div> 
+
+            {% if data['FRD-tier'] == 'Tier 2' %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Host
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    
+                    {{data['FRD-provider']}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="provider">
+                        Change<span class="govuk-visually-hidden"> activity provider</span>
+                    </a>
+                </dd>
+            </div>
+            {% else %}
+       
+            {% endif %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Appointments created
+                </dt>
+                <dd class="govuk-summary-list__value">
+                12</dd>
+                <dd class="govuk-summary-list__actions">
+                  <!-- <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> Date</span>
+                  </a> -->
+                </dd>
+              </div> 
+              
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Location
@@ -94,36 +126,6 @@ Appointments prototype
 
              
            
-            {% if data['FRD-tier'] == 'Tier 2' %}
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Host
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    
-                    {{data['FRD-provider']}}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="provider">
-                        Change<span class="govuk-visually-hidden"> activity provider</span>
-                    </a>
-                </dd>
-            </div>
-            {% else %}
-       
-            {% endif %}
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Appointments created
-                </dt>
-                <dd class="govuk-summary-list__value">
-                12</dd>
-                <dd class="govuk-summary-list__actions">
-                  <!-- <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> Date</span>
-                  </a> -->
-                </dd>
-              </div> 
 
             </dl>
 
