@@ -23,8 +23,6 @@ Appointments prototype
             <h1 class="govuk-heading-l">Check and confirm the appointment details</h1>
             <h2 class="govuk-heading-m">Appointment details</h2>
             <dl class="govuk-summary-list">
-             
-
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Appointment name
@@ -80,7 +78,11 @@ Appointments prototype
               </div>
               {% else %}
          
-              {% endif %}
+              {% endif %} 
+              
+            </dl> 
+            <h2 class="govuk-heading-m">Scheduling details</h2>
+            <dl class="govuk-summary-list"> 
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Location
@@ -172,7 +174,14 @@ Appointments prototype
                     Change<span class="govuk-visually-hidden"> number of appointments</span>
                   </a>
                 </dd>
-              </div>
+              </div> 
+              
+            </dl> 
+
+
+
+            <h2 class="govuk-heading-m">Extra information</h2>
+            <dl class="govuk-summary-list">
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Extra information
@@ -193,9 +202,10 @@ Appointments prototype
                   </a>
                 </dd>
               </div>
-
               
             </dl> 
+
+
             <form action="confirmation" method="post" novalidate>
               <input type="hidden" name="answers-checked" value="true">
               <button class="govuk-button" data-module="govuk-button">
