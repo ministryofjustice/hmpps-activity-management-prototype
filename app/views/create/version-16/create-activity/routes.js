@@ -22,7 +22,7 @@ router.all("*", function (req, res, next) {
 
 //redirect the root url to the start page
 router.get("/", function (req, res) {
-  res.redirect("create-activity/activity-name");
+  res.redirect("create-activity/select-category");
 });
 
 // create activity activity category page
@@ -30,11 +30,6 @@ router.get("/select-category", function (req, res) {
   res.render(req.protoUrl + "/select-category");
 });
 
-
-//redirect to activtiy category
-router.post("/activity-name", function (req, res) {
-  res.redirect("select-category");
-});
 
 
 // create activity select category page
@@ -64,14 +59,21 @@ router.post(`/tier`, function (req, res) {
   if (peopleRoute === 'Tier 2') {
     res.redirect(`provider`);
   } else {
-    res.redirect(`select-activity-location`);
+    res.redirect(`activity-name`);
   }
 });
 
 //redirect to create activity risk assessment page
 router.post("/provider", function (req, res) {
+  res.redirect("activity-name");
+});
+
+
+//redirect to activtiy location
+router.post("/activity-name", function (req, res) {
   res.redirect("select-activity-location");
 });
+
 
 // activity location select page
 router.get("/select-activity-location", function (req, res) {
