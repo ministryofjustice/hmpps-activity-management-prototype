@@ -379,10 +379,10 @@ router.post(`/create-b2b-appointment/bulk-more-people`, function (req, res) {
   router.post(`/appointment-management/date-filter`, function (req, res) {
 	const appDate = req.session.data['appt-date-day'];
 	if (appDate === '24') {
-		res.redirect(`search-results-24072023`);
+		res.redirect(`search-results-24102023`);
 	}
 	else {
-		res.redirect(`search-results-03072023`);
+		res.redirect(`search-results-03102023`);
 	}
   });
 
