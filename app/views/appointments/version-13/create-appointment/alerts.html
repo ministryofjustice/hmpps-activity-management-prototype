@@ -27,7 +27,7 @@ Appointments prototype
     <div class="govuk-grid-column-two-thirds"> 
         <h1 class="govuk-heading-l">
           <span class="govuk-caption-l">Schedule an appointment</span>
-          Review attendee alerts
+          Review 6 people with alerts
         </h1>
     </div>
   </div>
@@ -37,22 +37,31 @@ Appointments prototype
 	<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
 	<strong class="govuk-warning-text__text">
 	  <span class="govuk-warning-text__assistive">Important</span>
-	  Check an attendee's prisoner profile for full details on alerts.
+	  Check an attendee's prisoner profile for full details on their alerts.
 	</strong>
   </div>
 
 
 
-  <p class="govuk-body">You're reviewing 6 people with alerts out of a total of 8 attendees.</p>
+
+  <ul class="govuk-list ">
+
+	<li class="govuk-body">People with alerts: 6</li>
+
+	<li class="govuk-body">People you're adding: 9</li> 
+  
+</ul>
+
    <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <!-- <p class="govuk-body">Only attendees with alerts are displayed.</p> -->
+    <div class="govuk-grid-column-two-thirds"> 
+		{% if data == 'remove-ryan' %}
+		{% else %}
 		  <div class="govuk-summary-card">
 			<div class="govuk-summary-card__title-wrapper">
-			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Neil Rudge, G2044E</a></h2>
+				<h2 class="govuk-summary-card__title"><a class="govuk-link" href="">Ryan Gee, F5132C</a></h2>
 			  <ul class="govuk-summary-card__actions"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
+				  <a class="govuk-link" onclick="?remove-ryan" href="#">
 					Remove attendee
 				  </a>
 				</li>
@@ -100,6 +109,7 @@ Appointments prototype
 		  </details>
 			</div>
 		  </div> 
+		  {% endif %}
 
 
 		  <div class="govuk-summary-card">
@@ -202,7 +212,7 @@ Appointments prototype
 
 		  <div class="govuk-summary-card">
 			<div class="govuk-summary-card__title-wrapper">
-			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Ryan Gee, F5132C</a></h2>
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Neil Rudge, G2044E</a></h2>
 			  <ul class="govuk-summary-card__actions"> 
 				<li class="govuk-summary-card__action"> 
 				  <a class="govuk-link" href="#">

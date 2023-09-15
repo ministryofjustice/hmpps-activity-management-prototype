@@ -24,23 +24,15 @@ Appointments prototype
 
 {% block content %} 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds"> 
+    <div class="govuk-grid-column-full"> 
         <h1 class="govuk-heading-l">
-          <span class="govuk-caption-l">
-            {% if data['alt-appointment-name'] !='' %}
-        
-            {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
-        
-            {% else %}
-            
-            {{ data['apppointment-type']}}
-            {% endif %}</span>
-            You've removed all people with alerts
+          <span class="govuk-caption-l">Schedule an appointment</span>
+          You've removed all non-associations
         </h1>
     </div>
   </div>
 
-  	<p>You're still adding 3 people.</p>  
+  	<p>There are 7 attendees remaining on the appointment list.</p>  
 
 
 	<form method="post">
@@ -49,7 +41,7 @@ Appointments prototype
 	{{ govukButton({
 	text: "Continue",
 	attributes: {
-	"formaction": "non-associations-4",
+	"formaction": "appointment-name",
 	"formmethod": "get"
 	}
 	}) }}

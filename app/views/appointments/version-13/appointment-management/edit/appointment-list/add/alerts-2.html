@@ -26,8 +26,16 @@ Appointments prototype
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds"> 
         <h1 class="govuk-heading-l">
-			<span class="govuk-caption-l">Schedule a set of back-to-backs</span>
-          Review attendee alerts
+          <span class="govuk-caption-l">
+			{% if data['alt-appointment-name'] !='' %}
+	
+			{{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+	
+			{% else %}
+			
+			{{ data['apppointment-type']}}
+			{% endif %}</span>
+          Review 1 person with alerts
         </h1>
     </div>
   </div>
@@ -42,16 +50,27 @@ Appointments prototype
   </div>
 
 
+
+  <ul class="govuk-list ">
+
+	<li class="govuk-body">People with alerts: 1</li>
+
+	<li class="govuk-body">People you're adding: 4</li>
+  
+	<li class="govuk-body">Already attending: 8</li>
+  
+</ul>
+
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <!-- <p class="govuk-body">Only attendees with alerts are displayed.</p> -->
 		  <div class="govuk-summary-card">
 			<div class="govuk-summary-card__title-wrapper">
-			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Neil Rudge, G2044E</a></h2>
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Hamish Laftery, B2084Z</a></h2>
 			  <ul class="govuk-summary-card__actions"> 
 				<li class="govuk-summary-card__action"> 
-				  <a class="govuk-link" href="#">
-					Remove appointment
+				  <a class="govuk-link" href="alerts-resolved">
+					Remove attendee
 				  </a>
 				</li>
 			  </ul>
@@ -100,8 +119,7 @@ Appointments prototype
 		  </div> 
 
 
-
-
+		
 
 
 
@@ -111,7 +129,7 @@ Appointments prototype
           {{govukButton({
             text: "Continue",
             attributes: {
-              "formaction": "appointment-name",
+              "formaction": "non-associations-4",
               "formmethod": "get"
               }
             })}}
