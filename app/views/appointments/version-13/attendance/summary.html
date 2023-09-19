@@ -258,9 +258,15 @@ Appointments prototype
             
               <li class="" style="display: inline; margin: 0 15px 0 0; padding-right: 15px; border-right: 1px solid #b1b4b6;" > 
                 <form>
-                  <button class="govuk-button govuk-button--blue" data-module="govuk-button" style="margin-bottom: 0;">
-                    <span>Print movement slips</span>
-                  </button>
+                 
+                  {{govukButton({
+                    text: "Print movement slips",
+                    classes: "govuk-button--blue moj-button-menu__item govuk-!-margin-bottom-0",
+                    attributes: {
+                    "data-module": "govuk-button"
+                    },
+                    href: "../appointment-management/appointment-summary/repeating/movement-slip-example"
+                    })}}
                 </form>
               </li>
 
@@ -268,7 +274,7 @@ Appointments prototype
                 <form>
                   {{govukButton({
                     text: "Print attendance list",
-                    classes: "govuk-button--blue moj-button-menu__item",
+                    classes: "govuk-button--blue moj-button-menu__item govuk-!-margin-bottom-0",
                     attributes: {
                     "data-module": "govuk-button"
                     },
