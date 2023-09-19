@@ -416,4 +416,14 @@ router.post(`/create-b2b-appointment/bulk-more-people`, function (req, res) {
 	}
   });
 
+
+
+
+// print unlock list
+router.get("/attendance/print-attendee-list", function (req, res) {
+	let file = `public/downloads/appt-attendance-list.pdf`;
+	res.download(file);
+  });
+
+  
 module.exports = router
