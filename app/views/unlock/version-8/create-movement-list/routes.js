@@ -1083,4 +1083,10 @@ router.get("/:date/:period/:activities", function (req, res) {
   });
 });
 
+// print movement list
+router.get("/print-movement-list", function (req, res) {
+  let file = `public/downloads/ML.pdf`;
+  res.download(file);
+});
+
 module.exports = router;

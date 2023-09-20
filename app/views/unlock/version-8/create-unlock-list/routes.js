@@ -10,7 +10,7 @@ router.get("/", function (req, res) {
 
 // print unlock list
 router.get("/print-unlock-list", function (req, res) {
-  let file = `public/downloads/Concept 2.pdf`;
+  let file = `public/downloads/UL.pdf`;
   res.download(file);
 });
 
