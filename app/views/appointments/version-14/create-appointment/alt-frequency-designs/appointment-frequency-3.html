@@ -1,0 +1,247 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+<form id="form" method="post" action="clashes">
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full"> 
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Schedule an appointment</span>
+        How often will the appointment repeat?
+       </h1> 
+
+       <div class="govuk-inset-text">
+        You set the start date for this appointment as as Friday 18 October 2023.
+      </div>
+
+       {% from "govuk/components/radios/macro.njk" import govukRadios %}
+        {% from "govuk/components/input/macro.njk" import govukInput %}
+
+        {% set dailyHtml %}
+        <div class="govuk-form-group">
+          <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--s" for="day-frequency">
+              Repeats every
+            </label>
+          </h1>
+          <div style="display: inline-block"><div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5" id="weight" name="weight" type="text" spellcheck="false">
+            <div class="govuk-input__suffix" aria-hidden="true">days</div></div>
+          </div>
+        </div> 
+
+        {% endset -%}
+
+        {% set weeklyHtml %}
+
+        <div class="govuk-form-group">
+          <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--s" for="week-frequency">
+              Repeats every
+            </label>
+          </h1>
+          <div style="display: inline-block"><div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5" id="weight" name="weight" type="text" spellcheck="false">
+            <div class="govuk-input__suffix" aria-hidden="true">weeks</div></div>
+          </div>
+        </div> 
+
+        {{ govukCheckboxes({
+          idPrefix: "appointment-frequency-weekly",
+          name: "appointment-frequency-weekly",
+          fieldset: {
+            legend: {
+              text: "Repeats on",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+        
+          items: [
+            {
+              value: "Monday",
+              text: "Monday"
+            },
+            {
+              value: "Tuesday",
+              text: "Tuesday"
+            },
+            {
+              value: "Wednesday",
+              text: "Wednesday"
+            },
+            {
+              value: "Thursday",
+              text: "Thursday"
+            },
+            {
+              value: "Friday",
+              text: "Friday"
+            },
+            {
+              value: "Saturday",
+              text: "Saturday"
+            },
+            {
+              value: "Sunday",
+              text: "Sunday"
+            }
+          ]
+        }) }}
+       
+        {% endset -%}
+
+
+        {% set monthlyHtml %}
+        {{ govukRadios({
+          idPrefix: "appointment-frequency-monthly",
+          name: "appointment-frequency-monthly",
+          fieldset: {
+            legend: {
+              text: "Repeats",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          items: [ 
+            {
+              value: "On the 18th of every month",
+              text: "On the 18th of every month",
+              hint: {
+                text: "Or the last day if there is no matching date in the month."
+              }
+            },
+            {
+              value: "Every third Friday of the month",
+              text: "Every third Friday of the month"
+            }
+          ]
+        }) }} 
+        {% endset -%}
+
+        {{ govukRadios({ 
+          name: "appointment-frequency",  
+          items: [
+            {
+              value: "daily",
+              text: "Every set amount of days",
+              conditional: {
+                html: dailyHtml
+              }
+            },
+            {
+              value: "weekly",
+              text: "Specific days in every set amount of weeks",
+              conditional: {
+                html: weeklyHtml
+              }
+            },
+            {
+              value: "Monthly",
+              text: "Specific days in a month",
+              conditional: {
+                html: monthlyHtml
+              }
+            }
+          ]
+        }) }}
+
+
+        {% set totalHtml %}
+        <div class="govuk-form-group">
+          {{ govukInput({
+            label: {
+              text: "Enter the number of times the appointment will repeat up to a maximum of [x] appointments"
+            },
+            classes: "govuk-input--width-3",
+            id: "appointment-total",
+            name: "appointment-total"
+          }) }}
+        </div> 
+
+        {% endset -%}
+
+
+        {% set endDateHtml %}
+        <div class="govuk-form-group">
+          {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+          {{ govukDateInput({
+            id: "passport-issued",
+            namePrefix: "passport-issued",
+            fieldset: {
+              legend: {
+                text: "Enter an end date for the appointments up to a maximum of one year"
+              }
+            },
+            hint: {
+              text: "For example, 27 3 2023"
+            }
+          }) }}
+        </div> 
+
+        {% endset -%}
+
+      <h2 class="govuk-heading-m">
+        When will the series of appointments end?
+       </h2>
+
+       {{ govukRadios({ 
+        name: "number-of-appointments",  
+        items: [
+          {
+            value: "total",
+            text: "After a number of appointments",
+            conditional: {
+              html: totalHtml
+            }
+          },
+          {
+            value: "end-date",
+            text: "After a specified date",
+            conditional: {
+              html: endDateHtml
+            }
+          }
+        ]
+      }) }}
+     
+     <!--{{ govukInsetText({
+      html: "Last appointment on <b>24 October 2023</b>"
+     }) }}-->
+      
+   
+     <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    
+      
+    </div>
+
+
+
+
+  </div>
+</div>
+{% endblock %}

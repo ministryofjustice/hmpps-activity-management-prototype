@@ -1,0 +1,305 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %} 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds"> 
+        <h1 class="govuk-heading-l">
+			<span class="govuk-caption-l">Schedule a set of back-to-backs</span>
+			Review 6 people with alerts
+        </h1>
+    </div>
+  </div>
+
+  
+  <div class="govuk-warning-text">
+	<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+	<strong class="govuk-warning-text__text">
+	  <span class="govuk-warning-text__assistive">Important</span>
+	  Check an attendee's prisoner profile for full details on their alerts.
+	</strong>
+  </div>
+
+
+  <ul class="govuk-list ">
+
+	<li class="govuk-body">People with alerts: 6</li>
+
+	<li class="govuk-body">People you're adding: 8</li> 
+  
+</ul>
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <!-- <p class="govuk-body">Only attendees with alerts are displayed.</p> -->
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Neil Rudge, G2044E</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove appointment
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			<div class="govuk-summary-card__content"> 
+         <div class="govuk-!-margin-bottom-3" style="font-family: GDS Transport, arial, sans-serif;"> 
+			<li class="DPS-alert-status DPS-alert-status--acct">ACCT open</li> 
+			<li class="DPS-alert-status DPS-alert-status--security">Arsonist</li>
+			<li class="DPS-alert-status DPS-alert-status--security">Escape list</li>
+			<li class="DPS-alert-status DPS-alert-status--security">Gang mamber</li> 
+			<li class="DPS-alert-status DPS-alert-status--security">Hostage taker</li>  
+			<li class="DPS-alert-status DPS-alert-status--risk">No one-to-one</li> 
+			<li class="DPS-alert-status DPS-alert-status--security">Racist</li> 
+			<li class="DPS-alert-status DPS-alert-status--security">Risk to females</li>
+			<li class="DPS-alert-status DPS-alert-status--risk">Risk to LGBT</li>
+			<li class="DPS-alert-status DPS-alert-status--security">Staff assaulter</li> 
+			<li class="DPS-alert-status DPS-alert-status--mappp">ViSOR</li>
+         </div>
+		 <details class="govuk-details"  style="margin-bottom: 0px;" data-module="govuk-details">
+			<summary class="govuk-details__summary">
+			  <span class="govuk-details__summary-text">
+				View all 15 alerts
+			  </span>
+			</summary>
+			<div class="govuk-details__text">
+				<ul class="govuk-list govuk-list--bullet"> 
+					<li>ACCT open</li>
+					<li>Arsonist</li> 
+					<li>Escape list</li>
+					<li>Gang mamber</li>
+					<li>Hostage taker</li>
+					<li>L1 Restriction No contact with any child </li> 
+					<li>MAPPA</li>
+					<li>No one-to-one</li>
+					<li>PSO4400 CH1 Children</li>
+					<li>Racist</li> 
+					<li>Risk to Children</li>
+					<li>Risk to females</li>
+					<li>Risk to lesbian/gay/bisexual people</li>
+					<li>Staff assaulter</li>
+					<li>ViSOR </li>
+				  </ul>
+			</div>
+		  </details>
+			</div>
+		  </div> 
+
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Matthew Doyle, E4911C</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove appointment
+				  </a>
+				</li>
+			  </ul>
+			</div>
+      <div class="govuk-summary-card__content"> 
+		
+        <div class="govuk-!-margin-bottom-3" style="font-family: GDS Transport, arial, sans-serif;">
+			<li class="DPS-alert-status DPS-alert-status--other">CSIP</li>
+			<li class="DPS-alert-status DPS-alert-status--security">Risk to females</li>
+			<li class="DPS-alert-status DPS-alert-status--veteran">Veteran</li>
+			<li class="DPS-alert-status DPS-alert-status--mappp">ViSOR</li> 
+        </div>
+	
+		<details class="govuk-details"  style="margin-bottom: 0px;" data-module="govuk-details">
+			<summary class="govuk-details__summary">
+			  <span class="govuk-details__summary-text">
+				View all 6 alerts
+			  </span>
+			</summary>
+			<div class="govuk-details__text">
+				<ul class="govuk-list govuk-list--bullet">  	
+					<li>CSIP</li>
+					<li>MAPPA </li> 
+					<li>PSO4400 CH1 Children</li>
+					<li>Risk to females</li> 
+					<li>Veteran</li>
+					<li>ViSOR</li> 
+				  </ul>
+			</div>
+		  </details>
+     </div>
+		  </div> 
+
+
+
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Bert Hungerford, C2598E</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove appointment
+				  </a>
+				</li>
+			  </ul>
+			</div>
+      <div class="govuk-summary-card__content"> 
+  
+		<ul class="govuk-list govuk-list--bullet">  
+			<li>MAPPA</li> 
+			<li>PSO4400 CH1 Children</li>
+			<li>Risk to Children</li> 
+			</ul> 
+     </div>
+		  </div> 
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Robin Bab, F4933A</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove appointment
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			
+			<div class="govuk-summary-card__content">  
+		<div class="govuk-!-margin-bottom-3" style="font-family: GDS Transport, arial, sans-serif;">
+			<li class="DPS-alert-status DPS-alert-status--care">Care experienced</li>
+			<li class="DPS-alert-status DPS-alert-status--risk">Risk to LGBT</li>
+        </div>
+		
+		<details class="govuk-details" style="margin-bottom: 0px;" data-module="govuk-details">
+			<summary class="govuk-details__summary">
+			  <span class="govuk-details__summary-text">
+				View all 2 alerts
+			  </span>
+			</summary>
+			<div class="govuk-details__text">
+				<ul class="govuk-list govuk-list--bullet">  	
+					<li>Care experienced</li> 
+					<li>Risk to LGBT</li>  
+				  </ul>
+			</div>
+		  </details>
+     </div>
+		  </div> 
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Ryan Gee, F5132C</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove appointment
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			<div class="govuk-summary-card__content"> 
+
+ 
+        <div class="govuk-!-margin-bottom-3" style="font-family: GDS Transport, arial, sans-serif;"> 
+          <li class="DPS-alert-status DPS-alert-status--mappp">ViSOR</li> 
+        </div>
+
+		<details class="govuk-details" style="margin-bottom: 0px;"  data-module="govuk-details">
+			<summary class="govuk-details__summary">
+			  <span class="govuk-details__summary-text">
+				View all 2 alerts
+			  </span>
+			</summary>
+			<div class="govuk-details__text">
+				<ul class="govuk-list govuk-list--bullet">  
+					<li>MAPPA</li>  
+					<li>ViSOR</li> 
+				  </ul>
+			</div>
+		  </details>
+		 
+     </div>
+		  </div> 
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Amby Abraham, C4048R</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove appointment
+				  </a>
+				</li>
+			  </ul>
+			</div>
+		
+			<div class="govuk-summary-card__content"> 
+        <div class="govuk-!-margin-bottom-3" style="font-family: GDS Transport, arial, sans-serif;"> 
+          	<li class="DPS-alert-status DPS-alert-status--medical">PEEP</li> 
+        </div>
+		<details class="govuk-details"  style="margin-bottom: 0px;" style="margin-bottom: 0px;" data-module="govuk-details">
+			<summary class="govuk-details__summary">
+			  <span class="govuk-details__summary-text">
+				View 1 alert
+			  </span>
+			</summary>
+			<div class="govuk-details__text">  
+					<p>PEEP</p>   
+			</div>
+		  </details>
+     </div>
+		  </div> 
+
+
+
+
+
+
+
+      <form method="post"> 
+  
+        <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
+          {{govukButton({
+            text: "Continue",
+            attributes: {
+              "formaction": "appointment-name",
+              "formmethod": "get"
+              }
+            })}}
+            
+        </div>
+  
+  
+  
+      </form>
+
+      
+       
+
+   
+
+
+
+
+  </div>
+</div>
+{% endblock %}
