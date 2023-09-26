@@ -1,19 +1,26 @@
-{% extends "layout_hmpps.html" %}
-{% set serviceName = "Appointments" %}
-
+{% extends "layout_hmpps-no-nav.html" %}
 {% block pageTitle %}
 Appointments prototype
 {% endblock %}
 
-{% block primaryNavigation %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
 {% endblock %}
 
-{% block main %}
+{% block content %}
 
 <form method="post" action="apply-to">
    <div class="govuk-width-container"> 
-
-        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main"> 
+ 
             <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
               <div class="back">
@@ -311,9 +318,7 @@ Appointments prototype
           </div> 
 
 		</div>
- 
-        </main>
-
+  
 	{% include '../_includes/attendance-toolbar.html' %}
   
   </form>

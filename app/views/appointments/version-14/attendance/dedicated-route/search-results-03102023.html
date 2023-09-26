@@ -37,7 +37,7 @@ Appointments prototype
 						<label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
 							Search by appointment name
 						</label>
-						<input class="govuk-input moj-search__input " id="keywords" name="search" type="search" value="{{data['search']}}">
+						<input class="govuk-input moj-search__input " id="keywords" name="search" type="search" value="">
 					</div>
 					<button class="govuk-button moj-search__button" data-module="govuk-button">
 						Search
@@ -229,18 +229,19 @@ Appointments prototype
 				<tbody class="govuk-table__body">
 					
 					<tr class="govuk-table__row "> 
-						<td class="govuk-table__cell">
-							<b><a class="govuk-link" href="#">
-								{% if data['alt-appointment-name'] !='' %}
+						
+						<td class="govuk-table__cell"> 
+							<b>
+								<a class="govuk-link" href="attendee-list">
+									{% if data['alt-appointment-name'] !='' %}
 	
 								{{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
-				  
+				
 								{% else %}
 								
 								{{ data['apppointment-type']}}
 								{% endif %}
-								</a>
-							</b>
+								</a></b>
 						</td>
 						<td class="govuk-table__cell">{{ data['apppointment-location']}}</td>
 						<td class="govuk-table__cell">
@@ -291,13 +292,13 @@ Appointments prototype
 					<tr class="govuk-table__row "> 
 						<td class="govuk-table__cell"> 
 							<b><a class="govuk-link" href="#">
-								{% if data['alt-appointment-name-bulk'] !='' %}
+								{% if data['alt-appointment-name'] !='' %}
 
-							{{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
+							{{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
 			
 							{% else %}
 							
-							{{ data['apppointment-type-bulk']}}
+							{{ data['apppointment-type']}}
 							{% endif %}
 							</a></b>
 						</td>
@@ -311,13 +312,13 @@ Appointments prototype
 					<tr class="govuk-table__row">  
 						<td class="govuk-table__cell"> 
 							<b><a class="govuk-link" href="#">
-								{% if data['alt-appointment-name-bulk'] !='' %}
+								{% if data['alt-appointment-name'] !='' %}
 
-							{{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
+							{{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
 			
 							{% else %}
 							
-							{{ data['apppointment-type-bulk']}}
+							{{ data['apppointment-type']}}
 							{% endif %}
 							</a></b>
 						</td>
@@ -367,13 +368,13 @@ Appointments prototype
 						<td class="govuk-table__cell"> 
 							<b>
 								<a class="govuk-link" href="#">
-									{% if data['alt-appointment-name-bulk'] !='' %}
+									{% if data['alt-appointment-name'] !='' %}
 	
-								{{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
+								{{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
 				
 								{% else %}
 								
-								{{ data['apppointment-type-bulk']}}
+								{{ data['apppointment-type']}}
 								{% endif %}
 								</a></b>
 						</td>
@@ -388,13 +389,13 @@ Appointments prototype
 						<td class="govuk-table__cell">
 							<b>
 								<a class="govuk-link" href="#">
-									 {% if data['alt-appointment-name-bulk'] !='' %}
+									 {% if data['alt-appointment-name'] !='' %}
 	
-								{{ data['alt-appointment-name-bulk']}} ({{ data['apppointment-type-bulk']}})
+								{{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
 				
 								{% else %}
 								
-								{{ data['apppointment-type-bulk']}}
+								{{ data['apppointment-type']}}
 								{% endif %}
 								</a></b>
 						</td>
