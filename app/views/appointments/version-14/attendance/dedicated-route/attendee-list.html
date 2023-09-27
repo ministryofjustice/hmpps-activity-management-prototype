@@ -1,25 +1,32 @@
-{% extends "layout_hmpps-no-nav.html" %}
+{% extends "layout_hmpps.html" %}
 {% block pageTitle %}
 Appointments prototype
 {% endblock %}
 
-
-{% block beforeContent %}
-<nav class="govuk-!-display-none-print">
-{{govukBackLink({
-  text: "All appointments on 10 October 2023",
-  "href": "javascript: window.history.go(-1)"
-  })}} 
-  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
-    Go to all appointments tasks
-  </a>
-</nav>
+{% block primaryNavigation %}
 {% endblock %}
 
-{% block content %}
+
+
+
+{% block main %}
 
 <form method="post" action="apply-to">
-   <div class="govuk-width-container"> 
+<div class="govuk-width-container">   
+  {% block beforeContent %}
+    <nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+      <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+        Go to all appointments tasks
+      </a>
+    </nav>
+  {% endblock %}
+
+
+  <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main"> 
 
             <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
@@ -46,10 +53,17 @@ Appointments prototype
               </span>
 				    </h1>
 
-				   <button class="govuk-button govuk-button--blue" data-module="govuk-button">
-					  Print attendance list
-				  </button>
-
+            <div class="govuk-button-group">
+              {{govukButton({
+                text: "Print attendance list",
+                classes: "govuk-button--blue moj-button-menu__item govuk-!-margin-bottom-0",
+                attributes: {
+                "data-module": "govuk-button"
+                },
+                href: "../print-attendee-list"
+                })}} 
+              </div>
+          
 
 			    <h2 class="govuk-heading-m" id="expected">8 total attendees</h2>
 
@@ -340,12 +354,15 @@ Appointments prototype
             </div>
           </div> 
 
-		</div>
 
-	{% include '../../_includes/attendance-toolbar.html' %}
-  
-  </form>
+    
+    
+        </main>
 
+      </div>
+        {% include '../../_includes/attendance-toolbar.html' %} 
+
+      </form>
 {% endblock %}
  
 
