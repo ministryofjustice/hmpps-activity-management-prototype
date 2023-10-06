@@ -29,20 +29,30 @@ Appointments prototype
   <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main"> 
 
             <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds"> 
-              <h1 class="govuk-heading-l"> 
-                <span class="govuk-caption-l">Record attendance</span>
-                {% if data['alt-appointment-name'] !='' %}
-  
-                  {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
-          
-                  {% else %}
-                  
-                  {{ data['apppointment-type']}}
-                  {% endif %}
+            <div class="govuk-grid-column-two-thirds">
+             
+				    <h1 class="govuk-heading-l"> 
+					    <span class="govuk-caption-l">Record attendance</span>
+					    {% if data['alt-appointment-name'] !='' %}
+
+                {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+        
+                {% else %}
+                
+                {{ data['apppointment-type']}}
+                {% endif %}
+              <span class="govuk-caption-l">
+                {{ data['start-hours']}}:{{ data['start-minutes']}} to {{ data['end-hours']}}:{{ data['end-minutes']}}  (AM)
+              </span>
+              
+              <span class="govuk-caption-l">
+                Tuesday, {{ data['date-of-appointment-day']}} October 2023
+              </span>
+              <span class="govuk-caption-l">
+                {{ data['apppointment-location']}}
+              </span>
 				    </h1>
 
-				   
             <div class="govuk-button-group">
               {{govukButton({
                 text: "Print attendance list",
@@ -50,11 +60,19 @@ Appointments prototype
                 attributes: {
                 "data-module": "govuk-button"
                 },
-                href: "print-attendee-list"
+                href: "../print-attendee-list"
                 })}} 
-
               </div>
           
+
+			    <h2 class="govuk-heading-m" id="expected">8 total attendees</h2>
+
+          <ul class="govuk-list">
+            <li>Attended: <b>0</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">0%</span></li>
+            <li>Absent: <b>0</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">0%</span></li>
+            <li>Not recorded: <b>8</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">100%</span></li>
+          </ul>
+
 				   <table
 				   class="govuk-table app-toolbar-table app-whereabouts-table--sticky-head "
 				   data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
@@ -223,9 +241,9 @@ Appointments prototype
                       <td class="govuk-table__cell" data-sort-value="" scope="col">
 						
                         <ul class="govuk-list govuk-!-margin-0">
-							        <span class="govuk-hint">Not recorded yet</span>
+							<span class="govuk-hint">Not recorded yet</span>
 							
-						          </ul>
+						  </ul>
                       </td>
                     </tr>
 
@@ -332,24 +350,19 @@ Appointments prototype
                   </tbody>
                 </table>
 
-			
-
-                <a class="govuk-link" href="#">Back to appointment summary</a>
-
 
             </div>
           </div> 
 
-  
-  </main>
 
+    
+    
+        </main>
 
-</div>
+      </div>
+        {% include '../../_includes/attendance-toolbar.html' %} 
 
-
-	{% include '../_includes/attendance-toolbar.html' %}
-
-</form>
+      </form>
 {% endblock %}
  
 

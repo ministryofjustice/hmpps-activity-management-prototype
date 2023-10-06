@@ -387,6 +387,8 @@ router.post(`/create-b2b-appointment/bulk-more-people`, function (req, res) {
   });
 
 
+
+
   router.post(`/attendance/dedicated-route/find-appointment-by-date`, function (req, res) {
 	const appDate = req.session.data['appt-date-day'];
 	if (appDate === '24') {
@@ -428,6 +430,56 @@ router.post(`/create-b2b-appointment/bulk-more-people`, function (req, res) {
   });
 
 
+
+
+  router.post(`/attendance/merged-route/change-attendance`, function (req, res) {
+	const attRecord = req.session.data['attendance-action'];
+	if (attRecord === 'attended') {
+		res.redirect(`attended`);
+	}
+	else if (attRecord === 'attendance-history-2') {
+		res.redirect(`not-attended`);
+	}
+	else if (attRecord === 'attendance-history-3') {
+		res.redirect(`remove`);
+	}
+	else {
+		res.redirect(`are-you-sure`);
+	}
+  });
+
+
+
+  router.post(`/attendance/merged-route/are-you-sure`, function (req, res) {
+	const attRecord = req.session.data['confirm'];
+	if (attRecord === 'yes') {
+		res.redirect(`attendance-history-2`);
+	}
+	else if (attRecord === 'no') {
+		res.redirect(`attendee-list-marked`);
+	} 
+	else {
+		res.redirect(`are-you-sure`);
+	}
+  });
+
+
+  router.post(`/attendance/dedicated-route/change-attendance`, function (req, res) {
+	const attRecord = req.session.data['attendance-action'];
+	if (attRecord === 'attended') {
+		res.redirect(`attended`);
+	}
+	else if (attRecord === 'attendance-history-2') {
+		res.redirect(`not-attended`);
+	}
+	else if (attRecord === 'attendance-history-3') {
+		res.redirect(`remove`);
+	}
+	else {
+		res.redirect(`are-you-sure`);
+	}
+  });
+  
 
 
 // print unlock list
