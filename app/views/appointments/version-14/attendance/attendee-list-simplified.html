@@ -200,22 +200,6 @@ Appointments prototype
                 </table>
 
 
-        <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
-          {{govukButton({
-            text: "Mark attendance",
-            attributes: {
-              "formaction": "attendee-list-simplified-marked",
-              "formmethod": "get"
-              }
-            })}}
-            
-        </div>
-
-			
-
-                <a class="govuk-link" href="#">Back to appointment summary</a>
-
-
             </div>
           </div> 
 
@@ -224,8 +208,63 @@ Appointments prototype
 
 
 </div>
- 
+
+
+	{% include '../_includes/attendance-toolbar-3.html' %}
 
 </form>
 {% endblock %}
  
+
+{% block pageScripts %}
+<script type="text/javascript">
+	$(document).ready(function () {
+		function toggleToolbar(btn) {
+			let checkbox = $('.app-toolbar-table input[type="checkbox"]')
+			let count = checkbox.filter(':checked').length - $('th .moj-multi-select__checkbox input:checkbox:checked').length
+
+			if (!btn.data('html')) {
+				$.each(btn, function () {
+					$(this).attr('data-html', $(this).html())
+				})
+
+				$('#app-selected-count').attr('data-html', $('#app-selected-count').html())
+			}
+
+			if (checkbox.is(':checked')) {
+				let countText = (count > 1) ? "attendees" : "attendee"
+
+				$('#app-selected-count').html(count + " " + countText + " selected")
+
+				$.each(btn, function () {
+					$(this).attr("disabled", false).html($(this).data('html'))
+				})
+
+				$('.app-attendance-sticky-bar--bottom').addClass('active').attr("aria-disabled", false).find('.govuk-button-group').show()
+			} else {
+				$.each(btn, function () {
+					$(this).attr("disabled", true).html($(this).data('html'))
+				})
+
+				$('.app-attendance-sticky-bar--bottom').removeClass('active').attr("aria-disabled", true).find('.govuk-button-group').hide()
+				$('#app-selected-count').html($('#app-selected-count').data('html'))
+			}
+		}
+		$(window).load(function () {
+			toggleToolbar($('.app-attendance-btn'))
+		})
+		$('.app-toolbar-table input[type="checkbox"]').on('change', function () {
+			toggleToolbar($('.app-attendance-btn'))
+		})
+
+		const el = document.querySelector(".app-attendance-sticky-bar--bottom")
+		const observer = new IntersectionObserver(
+			([e]) => e.target.classList.toggle("is-pinned", e.intersectionRatio < 1),
+			{ threshold: [1] }
+		);
+
+		observer.observe(el);
+	})
+</script>
+ 
+{% endblock %}

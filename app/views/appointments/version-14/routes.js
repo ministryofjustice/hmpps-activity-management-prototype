@@ -399,6 +399,12 @@ router.post(`/create-b2b-appointment/bulk-more-people`, function (req, res) {
 	}
   });
 
+
+  router.post(`/attendance/UR/find-appointment-by-date`, function (req, res) {
+	const appDate = req.session.data['appt-date-day']; 
+		res.redirect(`attendance-appointment-dashboard`); 
+  });
+
   router.post(`/combined-create/same-or-different-time-filter`, function (req, res) {
 	const appDate = req.session.data['same-or-different-times'];
 	if (appDate === 'Same') {
