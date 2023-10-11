@@ -11,7 +11,7 @@ Appointments prototype
 
 {% block main %}
 
-<form method="post" action="apply-to">
+<form method="post">
 <div class="govuk-width-container">   
   {% block beforeContent %}
     <nav class="govuk-!-display-none-print">
@@ -74,9 +74,7 @@ Appointments prototype
           </ul> -->
 
 
-            <table
-            class="govuk-table app-toolbar-table app-whereabouts-table--sticky-head "
-            data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+            <table class="govuk-table app-toolbar-table app-whereabouts-table--sticky-head "data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
                     <thead class="govuk-table__head">
                       <tr class="govuk-table__row">
                         <th class="govuk-table__header" scope="col" id="select-all"></th>
@@ -105,10 +103,10 @@ Appointments prototype
                         <td class="govuk-table__cell">
                           <div
                             class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                            <input type="checkbox" class="govuk-checkboxes__input"
-                              id="prisoner-david_francis-2">
+                            <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                              id="who-attended-1" value="neil">
                             <label class="govuk-label govuk-checkboxes__label"
-                              for="prisoner-david_francis-2">
+                              for="who-attended">
                               <span class="govuk-visually-hidden">Select Neil Rudge, E2405E</span>
                             </label>
                           </div>
@@ -122,9 +120,19 @@ Appointments prototype
                         </td>
                       
                         <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+                          {% if data['who-attended'] == 'neil' %}
+
                           <span class="app-tag app-tag--attended">
                             Attended
                           </span>
+                  
+                          {% else %}
+
+                          <span class="app-tag app-tag--not-attended">
+                            Not attended
+                          </span> 
+                          
+                          {% endif %}
                         </td>
                       </tr>
     
@@ -133,10 +141,10 @@ Appointments prototype
                         <td class="govuk-table__cell">
                           <div
                             class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                            <input type="checkbox" class="govuk-checkboxes__input"
-                              id="prisoner-david_francis-2">
+                            <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                              id="who-attended-2" value="amby">
                             <label class="govuk-label govuk-checkboxes__label"
-                              for="prisoner-david_francis-2">
+                              for="who-attended">
                               <span class="govuk-visually-hidden">Select Abraham Arby, E2405E</span>
                             </label>
                           </div>
@@ -150,9 +158,25 @@ Appointments prototype
                         </td>
                       
                         <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+                          {% for attendance in data['who-attended'] %}
+                            <li>{{ attendance }}</li>
+                          {% else %}
+                            <li>No features selected</li>
+                          {% endfor %}
+
+                          {% if data['who-attended'] != 'amby' %}
+
                           <span class="app-tag app-tag--attended">
                             Attended
                           </span>
+                  
+                          {% else %}
+
+                          <span class="app-tag app-tag--not-attended">
+                            Not attended
+                          </span> 
+                          
+                          {% endif %}
                         </td>
 <!--                       
                         <td class="govuk-table__cell" data-sort-value="" scope="col">
@@ -165,10 +189,10 @@ Appointments prototype
                         <td class="govuk-table__cell">
                           <div
                             class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                            <input type="checkbox" class="govuk-checkboxes__input"
-                              id="prisoner-david_francis-2">
+                            <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                              id="who-attended-3" value="bert">
                             <label class="govuk-label govuk-checkboxes__label"
-                              for="prisoner-david_francis-2">
+                              for="who-attended">
                               <span class="govuk-visually-hidden">Select Bert Hungerford, A3123DF</span>
                             </label>
                           </div>
@@ -183,10 +207,19 @@ Appointments prototype
                         </td>
                       
                         <td class="govuk-table__cell" data-sort-value="" scope="col">
-                        
+                          {% if data['who-attended'] == 'bert' %}
+
                           <span class="app-tag app-tag--attended">
                             Attended
                           </span>
+                  
+                          {% else %}
+
+                          <span class="app-tag app-tag--not-attended">
+                            Not attended
+                          </span> 
+                          
+                          {% endif %}
                         </td>
                       
                         <!-- <td class="govuk-table__cell" data-sort-value="" scope="col">
@@ -198,10 +231,10 @@ Appointments prototype
                         <td class="govuk-table__cell">
                           <div
                             class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                            <input type="checkbox" class="govuk-checkboxes__input"
-                              id="prisoner-david_francis-2">
+                            <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                              id="who-attended-4" value="matthew">
                             <label class="govuk-label govuk-checkboxes__label"
-                              for="prisoner-david_francis-2">
+                              for="who-attended">
                               <span class="govuk-visually-hidden">Select Matthew Doyle, E4911C</span>
                             </label>
                           </div>
@@ -216,10 +249,19 @@ Appointments prototype
                       
                       
                         <td class="govuk-table__cell" data-sort-value="" scope="col">
-                          
+                          {% if data['who-attended'] == 'matthew' %}
+
                           <span class="app-tag app-tag--attended">
                             Attended
                           </span>
+                  
+                          {% else %}
+
+                          <span class="app-tag app-tag--not-attended">
+                            Not attended
+                          </span> 
+                          
+                          {% endif %}
                         </td>
                       
                         <!-- <td class="govuk-table__cell" data-sort-value="" scope="col">
@@ -231,10 +273,10 @@ Appointments prototype
                         <td class="govuk-table__cell">
                           <div
                             class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                            <input type="checkbox" class="govuk-checkboxes__input"
-                              id="prisoner-david_francis-2">
+                            <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                              id="who-attended-5" value="ryan">
                             <label class="govuk-label govuk-checkboxes__label"
-                              for="prisoner-david_francis-2">
+                              for="who-attended">
                               <span class="govuk-visually-hidden">Select Ryan Gee, E4911C</span>
                             </label>
                           </div>
@@ -248,9 +290,19 @@ Appointments prototype
                         </td> 
                       
                         <td class="govuk-table__cell" data-sort-value="" scope="col">
+                          {% if data['who-attended'] == 'ryan' %}
+
+                          <span class="app-tag app-tag--attended">
+                            Attended
+                          </span>
+                  
+                          {% else %}
+
                           <span class="app-tag app-tag--not-attended">
                             Not attended
-                          </span>
+                          </span> 
+                          
+                          {% endif %}
                         </td>
                       
                         <!-- <td class="govuk-table__cell" data-sort-value="" scope="col">
@@ -262,10 +314,10 @@ Appointments prototype
                         <td class="govuk-table__cell">
                           <div
                             class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                            <input type="checkbox" class="govuk-checkboxes__input"
-                              id="prisoner-david_francis-2">
+                            <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                              id="who-attended-6" value="robin">
                             <label class="govuk-label govuk-checkboxes__label"
-                              for="prisoner-david_francis-2">
+                              for="who-attended">
                               <span class="govuk-visually-hidden">Select Robin Bab, F4933A</span>
                             </label>
                           </div>
@@ -279,10 +331,19 @@ Appointments prototype
                         </td>
                       
                         <td class="govuk-table__cell" data-sort-value="" scope="col">
-                          
+                          {% if data['who-attended'] == 'robin' %}
+
                           <span class="app-tag app-tag--attended">
                             Attended
                           </span>
+                  
+                          {% else %}
+
+                          <span class="app-tag app-tag--not-attended">
+                            Not attended
+                          </span> 
+                          
+                          {% endif %}
                         </td>
                       
                         <!-- <td class="govuk-table__cell" data-sort-value="" scope="col">
@@ -294,10 +355,10 @@ Appointments prototype
                         <td class="govuk-table__cell">
                           <div
                             class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                            <input type="checkbox" class="govuk-checkboxes__input"
-                              id="prisoner-david_francis-2">
+                            <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                              id="who-attended-7" value="tommy">
                             <label class="govuk-label govuk-checkboxes__label"
-                              for="prisoner-david_francis-2">
+                              for="who-attended">
                               <span class="govuk-visually-hidden">Select Tommy-Lee Knox, C8361E</span>
                             </label>
                           </div>
@@ -310,10 +371,19 @@ Appointments prototype
                           1-2-88  
                         </td>
                         <td class="govuk-table__cell" data-sort-value="" scope="col">
-              
+                          {% if data['who-attended'] == 'tommy' %}
+
                           <span class="app-tag app-tag--attended">
                             Attended
                           </span>
+                  
+                          {% else %}
+
+                          <span class="app-tag app-tag--not-attended">
+                            Not attended
+                          </span> 
+                          
+                          {% endif %}
                         </td>
 <!--                       
                         <td class="govuk-table__cell" data-sort-value="" scope="col">
@@ -325,10 +395,10 @@ Appointments prototype
                       <td class="govuk-table__cell">
                         <div
                           class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                          <input type="checkbox" class="govuk-checkboxes__input"
-                            id="prisoner-david_francis-2">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-8" value="fuentes">
                           <label class="govuk-label govuk-checkboxes__label"
-                            for="prisoner-david_francis-2">
+                            for="who-attended">
                             <span class="govuk-visually-hidden">Select Fuentes Rasmussen, E2405E</span>
                           </label>
                         </div>
@@ -341,9 +411,19 @@ Appointments prototype
                         1-3-2 
                       </td>
                       <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+                        {% if data['who-attended'] == 'fuentes' %}
+
                         <span class="app-tag app-tag--attended">
                           Attended
                         </span>
+                
+                        {% else %}
+
+                        <span class="app-tag app-tag--not-attended">
+                          Not attended
+                        </span> 
+                        
+                        {% endif %}
                       </td>
                     </tr>
                     

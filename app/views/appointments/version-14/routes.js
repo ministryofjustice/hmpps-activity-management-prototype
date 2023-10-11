@@ -400,7 +400,7 @@ router.post(`/create-b2b-appointment/bulk-more-people`, function (req, res) {
   });
 
 
-  router.post(`/attendance/UR/find-appointment-by-date`, function (req, res) {
+  router.post(`/attendance/UR/find-appointment-by-date-attendance`, function (req, res) {
 	const appDate = req.session.data['appt-date-day']; 
 		res.redirect(`attendance-appointment-dashboard`); 
   });
@@ -485,7 +485,7 @@ router.post(`/create-b2b-appointment/bulk-more-people`, function (req, res) {
 		res.redirect(`are-you-sure`);
 	}
   });
-  
+
 
 
 // print unlock list

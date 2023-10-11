@@ -38,7 +38,7 @@ module.exports = {
     {
       "linkText":"Create and manage appointments",
       "descriptionText":"Add and edit appointments for individuals and groups of people.",
-      "linkURL":"/v10/dps-home-2"
+      "linkURL":"/v14/dps-home"
     }]
   },
   "activity": "Workshop",
@@ -74,8 +74,8 @@ module.exports = {
       'url': '/unlock/version-8/whereabouts'
     },
     'appointments': {
-      'latest-version': 'version-13',
-      'url': '/appointments/version-13/dps-home'
+      'latest-version': 'version-14',
+      'url': '/appointments/version-14/dps-home'
     }
   },
   "areas-of-study": require('./areas-of-study'),

@@ -3,21 +3,12 @@
 		<p class="govuk-!-margin-bottom-0" id="app-selected-count">
 			No attendees selected. Select attendees to begin marking attendance.
 		</p>
-		<div class="govuk-button-group govuk-!-margin-bottom-0">
-			{% if dateTense != 'future' %}
+		<div class="govuk-button-group govuk-!-margin-bottom-0"> 
 			{{ govukButton({
 				text: "Mark attendance",
 				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
-				value: "attended",
-				name: "attendance-action",
-				attributes: {
-					formAction: "attendee-list-marked",
-					formMethod: "post"
-				}
-			}) }}
-			{% endif %} 
-			<input type="hidden" name="activity-id" value="{{activityId}}">
-			<input type="hidden" name="attendance-url" value="activity">
+				value: "attended"
+			}) }} 
 		</div>
 	</div>
 </div>

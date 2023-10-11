@@ -85,17 +85,6 @@ Activities Management prototype
         </div> 
         <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
 
-  
-          <form method="post">
-            {{govukButton({
-              text: "Launch prototype",
-              attributes: {
-                "formaction": "/appointments/version-14/dps-home-main",
-                "formmethod": "get"
-                },
-                isStartButton: true
-              })}}
-            </form>
           <table class="govuk-table">
             <caption class="govuk-table__caption govuk-caption-l govuk-visually-hidden" style="color: #0b0c0c;">Prototype versions</caption>
             <thead class="govuk-table__head" >
@@ -112,14 +101,37 @@ Activities Management prototype
                   <b>User research</b>
                 </td>
       
+
                 <td class="govuk-table__cell"> 
+
+                <form method="post">
+                  {{govukButton({
+                    text: "Launch prototype",
+                    attributes: {
+                      "formaction": "/appointments/version-14/attendance/UR/dps-home-main",
+                      "formmethod": "get"
+                      },
+                      isStartButton: true
+                    })}}
+  
+                  </form>
+                  <h4 class="govuk-heading-s" id="marking-attendance">Marking attendance through manage appointments journey</h4>
+                  <ul class="govuk-list govuk-list--spaced"> 
+                    <li><a href="/appointments/version-14/attendance/UR/find-appointment-by-date">Find appointment by date</a></li>
+                    <li><a href="/appointments/version-14/attendance/UR/search-results-03102023">Apppointments dashboard</a></li>
+                    <li><a href="/appointments/version-14/attendance/UR/summary">Appointment summary</a></li>
+                    <li><a href="/appointments/version-14/attendance/UR/summary-past">Appointment summary (past)</a></li>
+                  </ul>
+
+
                   <h4 class="govuk-heading-s" id="marking-attendance">Marking attendance through dedicated tile on appointments</h4>
 
                   <ul class="govuk-list govuk-list--spaced"> 
                     <li><a href="/appointments/version-14/attendance/UR/dps-home">Dedicated tile on appointments homepage</a></li>
+                    <li><a href="/appointments/version-14/attendance/UR/find-appointment-by-date-attendance">Find appointment by date (attendance version)</a></li>
                     <li><a href="/appointments/version-14/attendance/UR/attendance-appointment-dashboard">Appointment attendance dashboard</a></li>
-
                     <li><a href="/appointments/version-14/attendance/UR/attendee-list">Attendee list</a></li>
+                    <li><a href="/appointments/version-14/attendance/UR/attendee-list-marked">Attendee list (marked)</a></li>
                   </ul>
       
           
@@ -162,7 +174,7 @@ Activities Management prototype
                 </td>
       
                 <td class="govuk-table__cell"> 
-                  <h4 class="govuk-heading-m" id="marking-attendance">Marking attendance
+                  <h4 class="govuk-heading-m" id="marking-attendance">Marking attendance (journey options)
                     <strong class="govuk-tag govuk-tag--green govuk-!-margin-left-1">MVP+</strong></h4>
                   <p>Needs from users and the business emerging that attendance could play a large role in appointment management. Marking attendance in appointments could be as lean or as feature-filled as needed (detailed in miro).</p>
            
