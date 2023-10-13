@@ -17,7 +17,7 @@ Appointments prototype
     <nav class="govuk-!-display-none-print">
     {{govukBackLink({
       text: "Back",
-      "href": "javascript: window.history.go(-1)"
+      "href": "attendance-appointment-dashboard"
       })}} 
       <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
         Go to all appointments tasks
@@ -31,7 +31,6 @@ Appointments prototype
             <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
              
-				    
               <h1 class="govuk-heading-l"> 
                 <span class="govuk-caption-l">Record attendance</span>
                 Medical - Dentist
@@ -47,6 +46,7 @@ Appointments prototype
                 </span>
               </h1>
 
+<!-- 
             <div class="govuk-button-group">
               {{govukButton({
                 text: "Print attendance list",
@@ -56,40 +56,50 @@ Appointments prototype
                 },
                 href: "../print-attendee-list"
                 })}} 
-              </div>
+              </div> -->
+
+             <p><a href="#" class="govuk-link">View appointment summary</a></p> 
           
 
-              <h2 class="govuk-heading-m" id="expected">1 attendee</h2>
+			    <h2 class="govuk-heading-m" id="expected">1 total attendees</h2>
 
-          <!-- <ul class="govuk-list">
+
+          <!-- <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
+            {{govukButton({
+              text: "Mark attendance"
+              })}} 
+          </div> -->
+
+          <ul class="govuk-list">
             <li>Attended: <b>0</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">0%</span></li>
             <li>Absent: <b>0</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">0%</span></li>
-            <li>Not recorded: <b>8</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">100%</span></li>
-          </ul> -->
+            <li>Not recorded: <b>1</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">100%</span></li>
+          </ul>
 
 				   <table class="govuk-table app-toolbar-table app-whereabouts-table--sticky-head " data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
                   <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                       <th class="govuk-table__header" scope="col" id="select-all"></th>
                       <th class="govuk-table__header" aria-sort="none">
-                        <button type="button" data-index="0">
+                        <!-- <button type="button" data-index="0"> -->
                           Name
-                        </button>
+                        <!-- </button> -->
                       </th> 
 
                       <th class="govuk-table__header" scope="col" aria-sort="none">
-                        <button type="button" data-index="0">
+                        <!-- <button type="button" data-index="0"> -->
                           Cell location
-                        </button>
+                        <!-- </button> -->
                       </th> 
                       <th class="govuk-table__header" scope="col" aria-sort="none">
-                        <button type="button" data-index="0">
+                        <!-- <button type="button" data-index="0"> -->
                           Attendance
-                        </button>
+                        <!-- </button> -->
                       </th> 
                     </tr>
                   </thead>
                   <tbody class="govuk-table__body">
+
 
                     <tr class="govuk-table__row govuk-table__row--selected" >
                       <td class="govuk-table__cell">
@@ -114,21 +124,20 @@ Appointments prototype
                     
                       <td class="govuk-table__cell" data-sort-value="" scope="col">
                         <ul class="govuk-list govuk-!-margin-0">
-                        <span class="govuk-hint">Not recorded yet</span>
-                        
-                        </ul>
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
                       </td>
                     </tr>
 
-
                   </tbody>
                 </table>
-
+<!-- 
                 <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
                   {{govukButton({
                     text: "Mark attendance"
                     })}} 
-                </div>
+                </div> -->
 
 
             </div>
@@ -141,7 +150,7 @@ Appointments prototype
 
       </div>
 
-        <!-- {% include '../../_includes/attendance-toolbar-3.html' %}  -->
+        {% include '../../_includes/attendance-toolbar.html' %} 
 
       </form>
 {% endblock %}

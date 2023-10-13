@@ -17,7 +17,7 @@ Appointments prototype
     <nav class="govuk-!-display-none-print">
     {{govukBackLink({
       text: "Back",
-      "href": "javascript: window.history.go(-1)"
+      "href": "attendance-appointment-dashboard"
       })}} 
       <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
         Go to all appointments tasks
@@ -45,7 +45,7 @@ Appointments prototype
           Chapel
           </span>
         </h1>
-
+<!-- 
         <div class="govuk-button-group">
           {{govukButton({
             text: "Print attendance list",
@@ -55,16 +55,17 @@ Appointments prototype
             },
             href: "../print-attendee-list"
             })}} 
-          </div>
+          </div> -->
       
+          <p><a href="#" class="govuk-link">View appointment summary</a></p> 
 
       <h2 class="govuk-heading-m" id="expected">40 total attendees</h2>
 
-          <!-- <ul class="govuk-list">
-            <li>Attended: <b>0</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">0%</span></li>
-            <li>Absent: <b>0</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">0%</span></li>
-            <li>Not recorded: <b>8</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">100%</span></li>
-          </ul> -->
+          <ul class="govuk-list">
+            <li>Attended: <b>39</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">96%</span></li>
+            <li>Not attended: <b>1</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">4%</span></li>
+            <li>Not recorded: <b>0</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">0%</span></li>
+          </ul>
          
 
 	        {% set today = '_'|today() %}
@@ -75,12 +76,12 @@ Appointments prototype
           }) }}
 
 
-
+<!-- 
           <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
             {{govukButton({
               text: "Update attendance"
               })}} 
-          </div>
+          </div> -->
 
 
             <table class="govuk-table app-toolbar-table app-whereabouts-table--sticky-head "data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
@@ -88,20 +89,20 @@ Appointments prototype
                       <tr class="govuk-table__row">
                         <th class="govuk-table__header" scope="col" id="select-all"></th>
                         <th class="govuk-table__header" aria-sort="none">
-                          <button type="button" data-index="0">
+                          <!-- <button type="button" data-index="0"> -->
                             Name
-                          </button>
+                          <!-- </button> -->
                         </th>
 
                         <th class="govuk-table__header" scope="col" aria-sort="none">
-                          <button type="button" data-index="0">
+                          <!-- <button type="button" data-index="0"> -->
                             Cell location
-                          </button>
+                          <!-- </button> -->
                         </th> 
                         <th class="govuk-table__header" scope="col" aria-sort="none">
-                          <button type="button" data-index="0">
+                          <!-- <button type="button" data-index="0"> -->
                             Attendance
-                          </button>
+                          <!-- </button> -->
                         </th> 
                         <!-- <th class="govuk-table__header">
                         <span class="govuk-visually-hidden">View or Edit</span>
@@ -2820,12 +2821,12 @@ Appointments prototype
                     </tbody>
                   </table>
 
-
+<!-- 
             <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
               {{govukButton({
                 text: "Update attendance"
                 })}} 
-            </div>
+            </div> -->
 
 
                   <!-- <a class="govuk-link" href="#">Back to appointment summary</a> -->
@@ -2839,7 +2840,7 @@ Appointments prototype
   </main>
 
 </div>
-  <!-- {% include '../../_includes/attendance-toolbar-3.html' %} -->
+  {% include '../../_includes/attendance-toolbar.html' %}
 
 </form>
 {% endblock %}
