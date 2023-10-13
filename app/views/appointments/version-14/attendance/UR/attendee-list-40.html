@@ -1,0 +1,1242 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+
+
+{% block main %}
+
+<form method="post" action="attendee-list-marked-40">
+<div class="govuk-width-container">   
+  {% block beforeContent %}
+    <nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+      <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+        Go to all appointments tasks
+      </a>
+    </nav>
+  {% endblock %}
+
+
+  <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main"> 
+
+            <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+            {% set today = '_'|today() %}
+				    <h1 class="govuk-heading-l"> 
+					    <span class="govuk-caption-l">Record attendance</span>
+					    Chaplaincy
+              <span class="govuk-caption-l">
+                8:30 to 9:30  (AM)
+              </span>
+              
+              <span class="govuk-caption-l">
+                Tuesday, 16 October 2023
+              </span>
+              <span class="govuk-caption-l">
+               Chapel
+              </span>
+				    </h1>
+
+            <div class="govuk-button-group">
+              {{govukButton({
+                text: "Print attendance list",
+                classes: "govuk-button--blue moj-button-menu__item govuk-!-margin-bottom-0",
+                attributes: {
+                "data-module": "govuk-button"
+                },
+                href: "../print-attendee-list"
+                })}} 
+              </div>
+          
+
+			    <h2 class="govuk-heading-m" id="expected">40 total attendees</h2>
+
+
+          <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
+            {{govukButton({
+              text: "Mark attendance"
+              })}} 
+          </div>
+
+          <!-- <ul class="govuk-list">
+            <li>Attended: <b>0</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">0%</span></li>
+            <li>Absent: <b>0</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">0%</span></li>
+            <li>Not recorded: <b>8</b>&ensp;<span class="govuk-hint govuk-!-font-size-16">100%</span></li>
+          </ul> -->
+
+				   <table class="govuk-table app-toolbar-table app-whereabouts-table--sticky-head " data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="col" id="select-all"></th>
+                      <th class="govuk-table__header" aria-sort="none">
+                        <button type="button" data-index="0">
+                          Name
+                        </button>
+                      </th> 
+
+                      <th class="govuk-table__header" scope="col" aria-sort="none">
+                        <button type="button" data-index="0">
+                          Cell location
+                        </button>
+                      </th> 
+                      <th class="govuk-table__header" scope="col" aria-sort="none">
+                        <button type="button" data-index="0">
+                          Attendance
+                        </button>
+                      </th> 
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended" 
+                            id="who-attended-1" value="neil">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Neil Rudge, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Rudge, </b>Neil</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-33
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-2" value="amby">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Abraham Arby, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Abraham, </b>Amby</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E2405E </span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-66 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+
+                    <tr class="govuk-table__row govuk-table__row--selected" >
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-3" value="bert">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Bert Hungerford, A3123DF</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Hungerford, </b>Bert</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">C2598E </span>
+                      </td> 
+
+                      <td class="govuk-table__cell">
+                        1-2-33 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-4" value="matthew">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Matthew Doyle, E4911C</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Doyle, </b>Matthew</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E4911C</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1−1−1  
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-5" value="ryan">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Ryan Gee, E4911C</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Gee, </b>Ryan</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">F5132C</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-44 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-6" value="robin">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Robin Bab, F4933A</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Bab, </b>Robin</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">F4933A</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-22 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-7" value="tommy">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Tommy-Lee Knox, C8361E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Knox, </b>Tommy-Lee</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">C8361E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-88  
+                      </td>
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							          <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-8" value="fuentes">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Fuentes Rasmussen, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Rasmussen, </b>Fuentes</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E2405E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-2 
+                      </td>
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							          <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+                    
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended" 
+                            id="who-attended-9" value="neil">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Cantu Peterson, A2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Peterson, </b>Cantu</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">A2044E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        2-2-33
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-2" value="amby">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Abraham Arby, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Abraham, </b>Amby</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E2405E </span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-66 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+
+                    <tr class="govuk-table__row govuk-table__row--selected" >
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-3" value="bert">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Bert Hungerford, A3123DF</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Hungerford, </b>Bert</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">C2598E </span>
+                      </td> 
+
+                      <td class="govuk-table__cell">
+                        1-2-33 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-4" value="matthew">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Matthew Doyle, E4911C</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Doyle, </b>Matthew</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E4911C</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1−1−1  
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-5" value="ryan">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Ryan Gee, E4911C</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Gee, </b>Ryan</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">F5132C</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-44 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-6" value="robin">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Robin Bab, F4933A</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Bab, </b>Robin</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">F4933A</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-22 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-7" value="tommy">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Tommy-Lee Knox, C8361E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Knox, </b>Tommy-Lee</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">C8361E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-88  
+                      </td>
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							          <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-8" value="fuentes">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Fuentes Rasmussen, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Rasmussen, </b>Fuentes</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E2405E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-2 
+                      </td>
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							          <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended" 
+                            id="who-attended-1" value="neil">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Neil Rudge, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Rudge, </b>Neil</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-33
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-2" value="amby">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Abraham Arby, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Abraham, </b>Amby</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E2405E </span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-66 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+
+                    <tr class="govuk-table__row govuk-table__row--selected" >
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-3" value="bert">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Bert Hungerford, A3123DF</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Hungerford, </b>Bert</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">C2598E </span>
+                      </td> 
+
+                      <td class="govuk-table__cell">
+                        1-2-33 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-4" value="matthew">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Matthew Doyle, E4911C</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Doyle, </b>Matthew</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E4911C</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1−1−1  
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-5" value="ryan">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Ryan Gee, E4911C</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Gee, </b>Ryan</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">F5132C</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-44 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-6" value="robin">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Robin Bab, F4933A</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Bab, </b>Robin</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">F4933A</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-22 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-7" value="tommy">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Tommy-Lee Knox, C8361E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Knox, </b>Tommy-Lee</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">C8361E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-88  
+                      </td>
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							          <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-8" value="fuentes">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Fuentes Rasmussen, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Rasmussen, </b>Fuentes</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E2405E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-2 
+                      </td>
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							          <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended" 
+                            id="who-attended-1" value="neil">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Neil Rudge, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Rudge, </b>Neil</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-33
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-2" value="amby">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Abraham Arby, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Abraham, </b>Amby</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E2405E </span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-66 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+
+                    <tr class="govuk-table__row govuk-table__row--selected" >
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-3" value="bert">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Bert Hungerford, A3123DF</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Hungerford, </b>Bert</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">C2598E </span>
+                      </td> 
+
+                      <td class="govuk-table__cell">
+                        1-2-33 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-4" value="matthew">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Matthew Doyle, E4911C</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Doyle, </b>Matthew</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E4911C</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1−1−1  
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-5" value="ryan">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Ryan Gee, E4911C</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Gee, </b>Ryan</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">F5132C</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-44 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-6" value="robin">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Robin Bab, F4933A</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Bab, </b>Robin</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">F4933A</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-22 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-7" value="tommy">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Tommy-Lee Knox, C8361E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Knox, </b>Tommy-Lee</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">C8361E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-88  
+                      </td>
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							          <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-8" value="fuentes">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Fuentes Rasmussen, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Rasmussen, </b>Fuentes</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E2405E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-2 
+                      </td>
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							          <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended" 
+                            id="who-attended-1" value="neil">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Neil Rudge, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Rudge, </b>Neil</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">G2044E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-33
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-2" value="amby">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Abraham Arby, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Abraham, </b>Amby</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E2405E </span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-66 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+
+                    <tr class="govuk-table__row govuk-table__row--selected" >
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-3" value="bert">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Bert Hungerford, A3123DF</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Hungerford, </b>Bert</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">C2598E </span>
+                      </td> 
+
+                      <td class="govuk-table__cell">
+                        1-2-33 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-4" value="matthew">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Matthew Doyle, E4911C</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Doyle, </b>Matthew</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E4911C</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1−1−1  
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-5" value="ryan">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Ryan Gee, E4911C</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Gee, </b>Ryan</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">F5132C</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-44 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col">
+                        
+                        <ul class="govuk-list govuk-!-margin-0">
+							<span class="govuk-hint">Not recorded yet</span>
+							
+						  </ul>
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-6" value="robin">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Robin Bab, F4933A</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Bab, </b>Robin</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">F4933A</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-22 
+                      </td>
+                    
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							            <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-7" value="tommy">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Tommy-Lee Knox, C8361E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Knox, </b>Tommy-Lee</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">C8361E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-2-88  
+                      </td>
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							          <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+
+                    <tr class="govuk-table__row govuk-table__row--selected">
+                      <td class="govuk-table__cell">
+                        <div
+                          class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                          <input type="checkbox" class="govuk-checkboxes__input" name="who-attended"
+                            id="who-attended-8" value="fuentes">
+                          <label class="govuk-label govuk-checkboxes__label"
+                            for="who-attended">
+                            <span class="govuk-visually-hidden">Select Fuentes Rasmussen, E2405E</span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="govuk-table__cell" scope="col">
+                        <a href="#" class="govuk-link--no-visited-state"><b>Rasmussen, </b>Fuentes</a><br>
+                        <span class="govuk-hint govuk-!-font-size-16">E2405E</span>
+                      </td> 
+                      <td class="govuk-table__cell">
+                        1-3-2 
+                      </td>
+                      <td class="govuk-table__cell" data-sort-value="" scope="col"> 
+							          <span class="govuk-hint">Not recorded yet</span> 
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
+                  {{govukButton({
+                    text: "Mark attendance"
+                    })}} 
+                </div>
+
+
+            </div>
+          </div> 
+
+
+    
+    
+        </main>
+
+      </div>
+
+        <!-- {% include '../../_includes/attendance-toolbar-3.html' %}  -->
+
+      </form>
+{% endblock %}
+ 
+
+{% block pageScripts %}
+<script type="text/javascript">
+	$(document).ready(function () {
+		function toggleToolbar(btn) {
+			let checkbox = $('.app-toolbar-table input[type="checkbox"]')
+			let count = checkbox.filter(':checked').length - $('th .moj-multi-select__checkbox input:checkbox:checked').length
+
+			if (!btn.data('html')) {
+				$.each(btn, function () {
+					$(this).attr('data-html', $(this).html())
+				})
+
+				$('#app-selected-count').attr('data-html', $('#app-selected-count').html())
+			}
+
+			if (checkbox.is(':checked')) {
+				let countText = (count > 1) ? "attendees" : "attendee"
+
+				$('#app-selected-count').html(count + " " + countText + " selected")
+
+				$.each(btn, function () {
+					$(this).attr("disabled", false).html($(this).data('html'))
+				})
+
+				$('.app-attendance-sticky-bar--bottom').addClass('active').attr("aria-disabled", false).find('.govuk-button-group').show()
+			} else {
+				$.each(btn, function () {
+					$(this).attr("disabled", true).html($(this).data('html'))
+				})
+
+				$('.app-attendance-sticky-bar--bottom').removeClass('active').attr("aria-disabled", true).find('.govuk-button-group').hide()
+				$('#app-selected-count').html($('#app-selected-count').data('html'))
+			}
+		}
+		$(window).load(function () {
+			toggleToolbar($('.app-attendance-btn'))
+		})
+		$('.app-toolbar-table input[type="checkbox"]').on('change', function () {
+			toggleToolbar($('.app-attendance-btn'))
+		})
+
+		const el = document.querySelector(".app-attendance-sticky-bar--bottom")
+		const observer = new IntersectionObserver(
+			([e]) => e.target.classList.toggle("is-pinned", e.intersectionRatio < 1),
+			{ threshold: [1] }
+		);
+
+		observer.observe(el);
+	})
+</script>
+ 
+{% endblock %}
