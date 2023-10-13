@@ -30,26 +30,19 @@ Appointments prototype
 
             <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-             
+            {% set today = '_'|today() %}
 				    <h1 class="govuk-heading-l"> 
 					    <span class="govuk-caption-l">Record attendance</span>
-					    {% if data['alt-appointment-name'] !='' %}
-
-                {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
-        
-                {% else %}
-                
-                {{ data['apppointment-type']}}
-                {% endif %}
+					    The Bridge (Programmes appointment)
               <span class="govuk-caption-l">
-                {{ data['start-hours']}}:{{ data['start-minutes']}} to {{ data['end-hours']}}:{{ data['end-minutes']}}  (AM)
+                9:00 to 10:00  (AM)
               </span>
               
               <span class="govuk-caption-l">
-                Tuesday, {{ data['date-of-appointment-day']}} October 2023
+                Tuesday, 16 October 2023
               </span>
               <span class="govuk-caption-l">
-                {{ data['apppointment-location']}}
+               Classroom 2
               </span>
 				    </h1>
 
@@ -88,9 +81,11 @@ Appointments prototype
                           Cell location
                         </button>
                       </th> 
-                      <th class="govuk-table__header">
-                        Attendance
-                      </th>  
+                      <th class="govuk-table__header" scope="col" aria-sort="none">
+                        <button type="button" data-index="0">
+                          Attendance
+                        </button>
+                      </th> 
                     </tr>
                   </thead>
                   <tbody class="govuk-table__body">
