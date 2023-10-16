@@ -58,6 +58,7 @@ module.exports = {
   'applications': require('./applications'),
   "times": "AM",
   "tier": "Tier 2",
+  "showing": "Name",
   "provider": "Other",
   "selected-locations": {},
   "prison-name": "HMP Leeds",
@@ -72,6 +73,10 @@ module.exports = {
     'unlock-and-attend': {
       'latest-version': 'version-8',
       'url': '/unlock/version-8/whereabouts'
+    },
+    'unlock-and-attend-2': {
+      'latest-version': 'version-82',
+      'url': '/unlock/version-82/whereabouts'
     },
     'appointments': {
       'latest-version': 'version-14',

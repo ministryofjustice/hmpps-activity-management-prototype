@@ -1,0 +1,339 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Attendance dashboard
+{% endblock %}
+{% block primaryNavigation %}{% endblock %}
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+}) }}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+            {{ pageTitle }}
+            <span class="govuk-caption-l">
+                {{ date|today|convertShortDateToVeryLongDate }}
+            </span>
+            <span class="govuk-caption-l">
+                {{period}} session
+            </span>
+        </h1>
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-bottom-0" style="text-align: right;">
+            Updated at {{time|timestamp}} on {{date|today|convertShortDateToLongDate}}
+        </p>
+        {{govukButton({
+        text: "Refresh",
+        "href": "javascript: window.location.reload()",
+        attributes: {
+            "style": "float: right;"
+        },
+        classes: "govuk-!-margin-top-3 govuk-button--secondary"
+        })}}
+    </div>
+</div>
+
+<div class="app-search govuk-!-margin-bottom-6">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form novalidate="">
+                <div class="govuk-form-group">
+                    <label class="govuk-label app-search__label" for="keywords">
+                        Search by name or prison number
+                    </label>
+                    <input class="govuk-input app-search__input" id="keywords" name="search" type="search"
+                        value="{{ data['search'] }}">
+                </div>
+                <button class="govuk-button app-search__button" data-module="govuk-button">
+                    Search
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="moj-filter-layout">
+    <div class="moj-filter-layout__filter">
+        <div class="moj-filter">
+            <div class="moj-filter__header">
+                <div class="moj-filter__header-title">
+                    <h2 class="govuk-heading-m">Filter</h2>
+                </div>
+                <div class="moj-filter__header-action"></div>
+            </div>
+            <div class="moj-filter__content">
+                <div class="moj-filter__selected">
+                    <div class="moj-filter__selected-heading">
+                        <div class="moj-filter__heading-title">
+                            <h2 class="govuk-heading-m">Selected filters</h2>
+                        </div>
+                        <div class="moj-filter__heading-action">
+                            <p>
+                                <a class="govuk-link govuk-link--no-visited-state" href="">Clear filters</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="moj-filter__options">
+                    <button class="govuk-button" data-module="govuk-button">
+                        Apply filters
+                    </button>
+
+                    <div class="govuk-form-group govuk-!-margin-bottom-1">
+                        <div class="govuk-checkboxes govuk-checkboxes--small">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h2 class="govuk-fieldset__heading">
+                                        Landing
+                                    </h2>
+                                </legend>
+                            </fieldset>
+                            {% for location in locations | sort(false,false) %}
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="location-{{loop.index}}" name="location"
+                                    type="checkbox" value="{{location}}" checked>
+                                <label class="govuk-label govuk-checkboxes__label" for="location-{{loop.index}}">
+                                    Landing {{location}}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p class="govuk-!-margin-bottom-7">
+                        <a class="govuk-link" href="#" data-target="location" data-select-all="true">
+                            Select all
+                        </a>
+                    </p>
+
+                    <div class="govuk-form-group govuk-!-margin-bottom-1">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-label--m">
+                                Category
+                            </legend>
+                            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                                {% for category in categoriesList | sort(false,false) %}
+                                {% set category = category | getActivityCategoryName %}
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="{{category|lower}}"
+                                        name="filters[category]" type="checkbox" value="{{category}}" checked="checked">
+                                    <label class="govuk-label govuk-checkboxes__label" for="{{category|lower}}">
+                                        {{category}}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </fieldset>
+                    </div>
+                    <p class="govuk-!-margin-bottom-7">
+                        <a class="govuk-link" href="#" data-target="filters[category]" data-select-all="true">
+                            Select all
+                        </a>
+                    </p>
+
+                    <div class="govuk-form-group govuk-!-margin-bottom-1">
+                        <div class="govuk-checkboxes govuk-checkboxes--small">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h2 class="govuk-fieldset__heading">
+                                        Activity
+                                    </h2>
+                                </legend>
+                            </fieldset>
+                            {% for activity in activitiesList | sort(false,false) %}
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="activity-{{loop.index}}" name="activity"
+                                    type="checkbox" value="{{activity}}" checked>
+                                <label class="govuk-label govuk-checkboxes__label" for="activity-{{loop.index}}">
+                                    {% set activity = activity|getActivityDetails %}
+                                    {{activity.name}}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p class="govuk-!-margin-bottom-7">
+                        <a class="govuk-link" href="#" data-target="activity" data-select-all="true">
+                            Select all
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="moj-filter-layout__content">
+        <div class="moj-action-bar">
+            <div class="moj-filter-button"></div>
+        </div>
+        <div class="moj-scrollable-pane">
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+                {{ pagination.total }}
+                not attended yet
+            </h2>
+            <table class="govuk-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head"
+                data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Attendee</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Cell location</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Activity</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Attendance details</th>
+                        <!-- <th scope="col" class="govuk-table__header"></th> -->
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    {% for prisoner in attendanceList %}
+                    {% set activity = session.activity|getActivityDetails %}
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <a href="#" class="govuk-link--no-visited-state">
+                                <b>{{ prisoner.name.surname }}</b>, {{ prisoner.name.firstname }}</a>
+                            <br>
+                            <span class="govuk-hint govuk-!-margin-0 govuk-!-font-size-16">{{ prisoner.id }}</span>
+                        </td>
+                        <td class="govuk-table__cell">
+                            {{ prisoner.location.cell }}
+                        </td>
+                        <td class="govuk-table__cell">
+                            <ul class="govuk-list govuk-!-margin-0">
+                                {% for activityId in prisoner.activity %}
+                                {% set activityData = activityId|getActivityDetails %}
+                                <li>
+                                    <a href="#" class="govuk-link--no-visited-state">{{ activityData.name }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td class="govuk-table__cell">
+                            {% set attendance = prisoner.attendanceRecord.attendance %}
+                            <ul class="govuk-list govuk-!-margin-0">
+                                {%- if prisoner.attendanceRecord.attendance == 'attended' %}
+                                <li class="govuk-!-display-inline-block govuk-!-margin-0">
+                                    <span class="app-tag app-tag--attended"
+                                        style="text-transform: none;">Attended</span>
+                                </li>
+                                {%- elif prisoner.attendanceRecord.attendance == 'not-attended' %}
+                                {%- if prisoner.attendanceRecord.sessionCancelled == true %}
+                                <li class="govuk-!-display-inline-block govuk-!-margin-0">
+                                    <span class="app-tag app-tag--cancelled" style="text-transform: none;">Session
+                                        cancelled</span>
+                                </li>
+                                {% else %}
+                                {%- if prisoner.attendanceRecord.attendanceStatus == 'sick' %}
+                                <li class="govuk-!-display-inline-block govuk-!-margin-0">
+                                    <span class="app-tag app-tag--not-attended"
+                                        style="text-transform: none;">Sick</span>
+                                </li>
+                                {% elif prisoner.attendanceRecord.attendanceStatus == 'rest-day' %}
+                                <li class="govuk-!-display-inline-block govuk-!-margin-0">
+                                    <span class="app-tag app-tag--not-attended" style="text-transform: none;">Rest
+                                        day</span>
+                                </li>
+                                {% elif prisoner.attendanceRecord.attendanceStatus == 'not-required' %}
+                                <li class="govuk-!-display-inline-block govuk-!-margin-0">
+                                    <span class="app-tag app-tag--not-attended" style="text-transform: none;">Not
+                                        required</span>
+                                </li>
+                                {% elif prisoner.attendanceRecord.attendanceStatus == 'refused' %}
+                                <li class="govuk-!-display-inline-block govuk-!-margin-0">
+                                    <span class="app-tag app-tag--not-attended" style="text-transform: none;">Refused to
+                                        attend</span>
+                                </li>
+                                {% elif prisoner.attendanceRecord.attendanceStatus == 'other' %}
+                                <li class="govuk-!-display-inline-block govuk-!-margin-0">
+                                    <span class="app-tag app-tag--not-attended" style="text-transform: none;">Absent –
+                                        other</span>
+                                </li>
+                                {% elif prisoner.attendanceRecord.attendanceStatus == 'clash' %}
+                                <li class="govuk-!-display-inline-block govuk-!-margin-0">
+                                    <span class="app-tag app-tag--not-attended" style="text-transform: none;">Other
+                                        activity</span>
+                                </li>
+                                {% endif -%}
+                                {% endif -%}
+                                {%- else %}
+                                <span class="govuk-hint">Not recorded yet</span>
+                                {% endif -%}
+                                {% if prisoner.attendanceRecord.attendance and prisoner.attendanceRecord.pay == true %}
+                                <li class="govuk-!-display-inline-block govuk-!-margin-0">
+                                    <span class="app-tag app-tag--pay" style="text-transform: none;">Pay</span>
+                                </li>
+                                {%- elif prisoner.attendanceRecord.attendance and prisoner.attendanceRecord.pay == false
+                                %}
+                                <li class="govuk-!-display-inline-block govuk-!-margin-0">
+                                    <span class="app-tag app-tag--no-pay" style="text-transform: none;">No pay</span>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </td>
+                        <!-- <td class="govuk-table__cell">
+                            <a href="../../../activities/{{date}}/{{period}}/{{activity.id}}/{{prisoner.prisonerId}}"
+                                class="govuk-link--no-visited-state">View or edit</a>
+                        </td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<nav class="moj-pagination" aria-label="Pagination navigation">
+    <ul class="moj-pagination__list">
+        {% if pagination.current > 1 %}
+        <li class="moj-pagination__item  moj-pagination__item--prev">
+            <a class="moj-pagination__link" href="?page={{data.page|int - 1|int}}#list">Previous<span
+                    class="govuk-visually-hidden"> page</span></a>
+        </li>
+        {% endif %}
+
+        {% for page in range(1, 6) %}
+        <li class="moj-pagination__item {% if page == data.page %}moj-pagination__item--active{% endif %}">
+            {% if page != pagination.current %}
+            <a class="moj-pagination__link" href="?page={{page}}#list"
+                aria-label="Page {{page}} of {{totalPages}}">{{page}}</a>
+            {% else %}
+            {{page}}
+            {% endif %}
+        </li>
+        {% endfor %}
+
+        {% if pagination.current < pagination.last %} <li class="moj-pagination__item  moj-pagination__item--next">
+            <a class="moj-pagination__link" href="?page={{data.page|int + 1|int}}#list">Next<span
+                    class="govuk-visually-hidden"> page</span></a>
+            </li>
+            {% endif %}
+    </ul>
+    <p class="moj-pagination__results">Showing <b>{{pagination.from}}</b> to <b>{{pagination.to}}</b> of
+        <b>{{pagination.total}}</b>
+        people
+    </p>
+</nav>
+
+{% endblock %}
+{% block pageScripts %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        new MOJFrontend.FilterToggleButton({
+            bigModeMediaQuery: "(min-width: 48.063em)",
+            startHidden: true,
+            toggleButton: {
+                container: $(".moj-filter-button"),
+                showText: "Show filter",
+                hideText: "Hide filter",
+                classes: "govuk-button--secondary"
+            },
+            closeButton: {
+                container: $(".moj-filter__header-action"),
+                text: "Close"
+            },
+            filter: {
+                container: $(".moj-filter")
+            }
+        });
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			{{ govukRadios({
+				name: "confirm-remove-attendance",
+				fieldset: {
+					legend: {
+						text: "Are you sure you want to reset the attendance record for "+prisoner.name.firstname+" "+prisoner.name.surname+"?",
+						isPageHeading: true,
+						classes: "govuk-fieldset__legend--l"
+					}
+				},
+				items: [
+				{
+					value: "yes",
+					html: 'Yes'
+				},
+				{
+					value: "no",
+					html: 'No'
+				}
+				]
+			}) }}
+
+			{{govukInsetText({
+				text: "The attendance record will be changed to 'not recorded yet' and this will be noted in the change history."
+			})}}
+
+
+			{{govukButton({
+				text: "Continue"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}

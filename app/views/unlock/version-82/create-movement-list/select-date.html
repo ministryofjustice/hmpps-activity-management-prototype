@@ -1,0 +1,103 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{ govukBackLink({
+	text: "Unlocking, refusals and movement lists",
+	href: '../whereabouts'
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-l">
+			Choose movement list details
+		</h1>
+		<form method="post">
+			{% set dateHtml %}
+			{{ govukDateInput({
+				id: "other-date",
+				namePrefix: "other-date",
+				fieldset: {
+					legend: {
+						text: "Date"
+					}
+				}
+			}) }}
+			{% endset %}
+
+			{% set today = '_'|today() %}
+			{{ govukRadios({
+				name: "movement-date",
+				fieldset: {
+					legend: {
+						text: "Date",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: today,
+					html: "Today &ndash; " + today|convertShortDateToLongDate
+				},
+				{
+					value: today|dayAfter,
+					html: "Tomorrow &ndash; " + today|dayAfter|convertShortDateToLongDate
+				},
+				{
+					value: "other-date",
+					text: "A different date",
+					conditional: {
+						html: dateHtml
+					}
+				}
+				]
+			}) }}
+
+			{{ govukRadios({
+				name: "movement-period",
+				fieldset: {
+					legend: {
+						text: "Time period",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "am",
+					text: "AM (morning)"
+				},
+				{
+					value: "pm",
+					text: "PM (afternon)"
+				},
+				{
+					value: "ed",
+					text: "ED (evening duty)"
+				}
+				]
+			}) }}
+
+			{{govukButton({
+				text: "Continue"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+	accessibleAutocomplete.enhanceSelectElement({
+		selectElement: document.querySelector('#by-location'),
+		showAllValues: true
+	})
+</script>
+{% endblock %}

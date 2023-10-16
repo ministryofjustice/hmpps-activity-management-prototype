@@ -1,0 +1,117 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{ govukBackLink({
+	text: "Unlocking, refusals and movement lists",
+	href: 'whereabouts'
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-l">
+			Choose refusals and sickness details
+		</h1>
+		<form method="post">
+			{% set dateHtml %}
+			{{ govukDateInput({
+				id: "other-date",
+				namePrefix: "other-date",
+				fieldset: {
+					legend: {
+						text: "Date"
+					}
+				},
+				hint: {
+					text: "For example, 27 3 2022"
+				}
+			}) }}
+			{% endset %}
+
+			{% set today = '_'|today() %}
+			{{ govukRadios({
+				name: "date",
+				fieldset: {
+					legend: {
+						text: "Unlock date",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				hint: {
+					text: "You can get unlock lists for dates up to 60 days from today."
+				},
+				items: [
+				{
+					value: today,
+					text: "Today – " + today|convertShortDateToLongDate
+				},
+				{
+					value: today|dayBefore(today),
+					text: "Yesterday – " + today|dayBefore(today)|convertShortDateToLongDate
+				},
+				{
+					value: "other-date",
+					text: "A different date",
+					conditional: {
+						html: dateHtml
+					}
+				}
+				]
+			}) }}
+
+			{{ govukRadios({
+				name: "period",
+				fieldset: {
+					legend: {
+						text: "Time period",
+						isPageHeading: false,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "am",
+					text: "AM (morning)"
+				},
+				{
+					value: "pm",
+					text: "PM (afternon)"
+				},
+				{
+					value: "ed",
+					text: "ED (evening duty)"
+				}
+				]
+			}) }}
+
+			<div class="govuk-form-group govuk-!-margin-bottom-6">
+				<fieldset class="govuk-fieldset" aria-describedby="locations-hint">
+					<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+						Location
+					</legend>
+					<div class="govuk-radios" id="locations-radios" data-module="govuk-radios">
+						{% for houseblock in data['residential-locations-2'] %}
+						<div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="locations-{{houseblock.id}}" name="selected-locations[houseblocks]" type="radio" value="{{houseblock.id}}" aria-controls="conditional-locations-{{houseblock.id}}" aria-expanded="false">
+							<label class="govuk-label govuk-radios__label" for="locations-{{houseblock.id}}">
+								{{houseblock.name}}
+							</label>
+						</div>
+						{% endfor %}
+					</div>
+				</fieldset>
+			</div>
+	
+			{{govukButton({
+					text: "Continue"
+				})}}
+		</form>
+	</div>
+</div>
+{% endblock %}

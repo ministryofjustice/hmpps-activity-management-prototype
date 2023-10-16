@@ -1,0 +1,36 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		{{govukPanel({
+			titleText: "Attendance recorded"
+		})}}
+
+		<p>
+			We've recorded attendance details for the prisoners you selected.
+		</p>
+
+		<div class="govuk-button-group">
+			{{govukButton({
+				text: "Return to attendance list",
+				href: "attendance-list"
+			})}}
+		</div>
+	</form>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}

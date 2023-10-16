@@ -1,0 +1,2492 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+
+
+{% block main %}
+
+<form method="post">
+<div class="govuk-width-container">   
+  {% block beforeContent %}
+    <nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+      <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+        Go to all appointments tasks
+      </a>
+    </nav>
+  {% endblock %}
+
+
+  <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main"> 
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+				Houseblock 1 – unlock list
+				<span class="govuk-caption-l">
+					AM session<br>
+					Monday, 16 October 2023
+				</span>
+			</h1>
+			<ul class="govuk-list">
+				<!-- <li>
+					<a href="../../select-date-and-location" class="govuk-link--no-visited-state">Choose a different
+						unlock list</a>
+				</li> -->
+				
+				<li>
+					<a href="../../../refusals-list/2023-10-16/AM/1" class="govuk-link--no-visited-state">Record refusals and absences</a>
+				</li>
+				
+			</ul>
+			<div class="moj-search govuk-!-margin-bottom-6">
+				<form action="2023-10-16" method="get" novalidate="">
+					<div class="govuk-form-group">
+						<label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
+							Search by name
+						</label>
+						<input class="govuk-input moj-search__input" style="min-width: 400px;" id="keywords" name="search" type="search" value="">
+					</div>
+					<button class="govuk-button moj-search__button" data-module="govuk-button">
+						Search
+					</button>
+				</form>
+			</div>
+		</div>
+	
+		<div class="govuk-grid-column-one-third">
+			<h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+				Related tasks
+			</h2>
+			<ul class="govuk-list">
+				<li>
+					<a href="../../../print-unlock-list/2023-10-16/AM/1" class="govuk-link--no-visited-state">Record refusals and absences</a>
+				</li>
+				<li>
+					<a href="../../../print-unlock-list/2023-10-16/AM/1" class="govuk-link--no-visited-state">Create a movement list</a>
+				</li>
+				<hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
+				<li>
+					<a href="../../../print-unlock-list/2023-10-16/AM/1" class="govuk-link--no-visited-state">Go to all unlocking tasks</a>
+				</li>
+			</ul>
+		</div>
+	</div><div class="moj-filter-layout">
+		<div class="moj-filter-layout__filter">
+			
+	
+			<div class="moj-filter moj-js-hidden" tabindex="-1">
+				<div class="moj-filter__header">
+					<div class="moj-filter__header-title">
+						<h2 class="govuk-heading-m">Filter</h2>
+					</div>
+					<div class="moj-filter__header-action">
+					<button class="moj-filter__close" type="button">Close</button></div>
+				</div>
+				<div class="moj-filter__content">
+					
+					<div class="moj-filter__options">
+						<button class="govuk-button" data-module="govuk-button">
+							Apply filters
+						</button>
+	
+	
+	<div class="govuk-form-group govuk-!-margin-bottom-1">
+	
+	  <fieldset class="govuk-fieldset">
+	  
+	  <legend class="govuk-fieldset__legend govuk-label--m">
+	  
+		Showing
+	  
+	  </legend>
+	  
+	  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes"> 
+
+	
+				<div class="govuk-checkboxes__item">
+					<input class="govuk-checkboxes__input" id="name" name="showing" type="checkbox" value="Name" checked disabled="" >
+					<label class="govuk-label govuk-checkboxes__label" for="name">
+				Name
+			</label>
+					
+				</div>
+
+
+			  	
+			  {% if 'Cell location' in data['showing'] %}
+			
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="cell" name="showing" type="checkbox" value="Cell location" checked="">
+				<label class="govuk-label govuk-checkboxes__label" for="cell">
+			Cell location
+		  </label>
+				
+			  </div>
+			  
+			
+			  {% else %}
+			 
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="cell" name="showing" type="checkbox" value="Cell location">
+				<label class="govuk-label govuk-checkboxes__label" for="cell">
+			Cell location
+		  </label>
+				
+			  </div>
+			  
+			
+			  {% endif %}
+		 
+			  	
+			  {% if 'Relevant alerts' in data['showing'] %}
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="alerts" name="showing" type="checkbox" value="Relevant alerts" checked="">
+				<label class="govuk-label govuk-checkboxes__label" for="alerts">
+			Relevant alerts
+		  </label>
+				
+			  </div>
+			  
+			  {% else %}
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="alerts" name="showing" type="checkbox" value="Relevant alerts">
+				<label class="govuk-label govuk-checkboxes__label" for="alerts">
+			Relevant alerts
+		  </label>
+				
+			  </div>
+			  
+			  {% endif %}
+			  
+			  
+			  {% if 'Activity' in data['showing'] %}
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="activity" name="showing" type="checkbox" value="Activity" checked="">
+				<label class="govuk-label govuk-checkboxes__label" for="activity">
+			Activity
+		  </label>
+				
+			  </div>
+
+			  {% else %}
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="activity" name="showing" type="checkbox" value="Activity" >
+				<label class="govuk-label govuk-checkboxes__label" for="activity">
+			Activity
+		  </label>
+				
+			  </div>
+			  
+			  {% endif %}
+			  
+			
+		  
+		
+	  </div>
+	  
+	
+	</fieldset>
+	
+	
+	</div>
+	
+				<p class="govuk-!-margin-bottom-7">
+					<a class="govuk-link" href="#" data-target="showing" data-select-all="true">
+						Select all
+					</a>
+				</p>
+		
+			<!-- GOVUK checkboxes HTML for filtering by landing in residentialLocations data -->
+			<div class="govuk-form-group govuk-!-margin-bottom-1">
+				<div class="govuk-checkboxes govuk-checkboxes--small">
+					<fieldset class="govuk-fieldset">
+						<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+							<h2 class="govuk-fieldset__heading">
+								Landing
+							</h2>
+						</legend>
+					</fieldset>
+					
+					<div class="govuk-checkboxes__item">
+						<input class="govuk-checkboxes__input" id="residentialLocation-1" name="residentialLocation" type="checkbox" value="1" checked="">
+						<label class="govuk-label govuk-checkboxes__label" for="residentialLocation-1">
+							Landing 1
+						</label>
+					</div>
+					
+					<div class="govuk-checkboxes__item">
+						<input class="govuk-checkboxes__input" id="residentialLocation-2" name="residentialLocation" type="checkbox" value="2" checked="">
+						<label class="govuk-label govuk-checkboxes__label" for="residentialLocation-2">
+							Landing 2
+						</label>
+					</div>
+					
+					<div class="govuk-checkboxes__item">
+						<input class="govuk-checkboxes__input" id="residentialLocation-3" name="residentialLocation" type="checkbox" value="3" checked="">
+						<label class="govuk-label govuk-checkboxes__label" for="residentialLocation-3">
+							Landing 3
+						</label>
+					</div>
+					
+				</div>
+			</div>
+			<p class="govuk-!-margin-bottom-7">
+				<a class="govuk-link" href="#" data-target="residentialLocation" data-select-all="true">
+					Select all
+				</a>
+			</p>
+	
+			
+	
+	
+	<div class="govuk-form-group govuk-!-margin-bottom-1">
+	
+	  <fieldset class="govuk-fieldset">
+	  
+	  <legend class="govuk-fieldset__legend govuk-label--m">
+	  
+		Category
+	  
+	  </legend>
+	  
+	
+	  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+		
+		  
+			
+			  
+			  
+			  
+			  
+			  
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="education" name="filters[attendance]" type="checkbox" value="Education" checked="">
+				<label class="govuk-label govuk-checkboxes__label" for="education">
+			Education
+		  </label>
+				
+			  </div>
+			  
+			
+		  
+		
+		  
+			
+			  
+			  
+			  
+			  
+			  
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="industries" name="filters[attendance]" type="checkbox" value="Industries" checked="">
+				<label class="govuk-label govuk-checkboxes__label" for="industries">
+			Industries
+		  </label>
+				
+			  </div>
+			  
+			
+		  
+		
+		  
+			
+			  
+			  
+			  
+			  
+			  
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="prison" name="filters[attendance]" type="checkbox" value="Prison jobs" checked="">
+				<label class="govuk-label govuk-checkboxes__label" for="prison">
+			Prison jobs
+		  </label>
+				
+			  </div>
+			  
+			
+		  
+		
+		  
+			
+			  
+			  
+			  
+			  
+			  
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="gym" name="filters[attendance]" type="checkbox" value="Gym, sport and fitness" checked="">
+				<label class="govuk-label govuk-checkboxes__label" for="gym">
+			Gym, sport and fitness
+		  </label>
+				
+			  </div>
+			  
+			
+		  
+		
+		  
+			
+			  
+			  
+			  
+			  
+			  
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="induction" name="filters[attendance]" type="checkbox" value="Induction" checked="">
+				<label class="govuk-label govuk-checkboxes__label" for="induction">
+			Induction
+		  </label>
+				
+			  </div>
+			  
+			
+		  
+		
+		  
+			
+			  
+			  
+			  
+			  
+			  
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="intervention" name="filters[attendance]" type="checkbox" value="Intervention programmes" checked="">
+				<label class="govuk-label govuk-checkboxes__label" for="intervention">
+			Intervention programmes
+		  </label>
+				
+			  </div>
+			  
+			
+		  
+		
+		  
+			
+			  
+			  
+			  
+			  
+			  
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="faith" name="filters[attendance]" type="checkbox" value="Faith" checked="">
+				<label class="govuk-label govuk-checkboxes__label" for="faith">
+			Faith
+		  </label>
+				
+			  </div>
+			  
+			
+		  
+		
+		  
+			
+			  
+			  
+			  
+			  
+			  
+			  <div class="govuk-checkboxes__item">
+				<input class="govuk-checkboxes__input" id="other" name="filters[attendance]" type="checkbox" value="Other" checked="">
+				<label class="govuk-label govuk-checkboxes__label" for="other">
+			Other
+		  </label>
+				
+			  </div>
+			  
+			
+		  
+		
+	  </div>
+	  
+	
+	</fieldset>
+	
+	
+	</div>
+	
+			<p class="govuk-!-margin-bottom-7">
+				<a class="govuk-link" href="#" data-target="filters[attendance]" data-select-all="true">
+					Select all
+				</a>
+			</p>
+	
+			
+	
+	<div class="govuk-form-group">
+	
+	  <fieldset class="govuk-fieldset">
+	  
+	  <legend class="govuk-fieldset__legend govuk-label--m">
+	  
+		Staying or leaving wing
+	  
+	  </legend>
+	  
+	
+	  <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+		
+		  
+			
+			
+			
+			<div class="govuk-radios__item">
+			  <input class="govuk-radios__input" id="all" name="filters[attendance]" type="radio" value="all" checked="">
+			  <label class="govuk-label govuk-radios__label" for="all">
+			All
+		  </label>
+			  
+			</div>
+			
+			
+		  
+		
+		  
+			
+			
+			
+			<div class="govuk-radios__item">
+			  <input class="govuk-radios__input" id="Staying" name="filters[attendance]" type="radio" value="Staying">
+			  <label class="govuk-label govuk-radios__label" for="Staying">
+			Staying on wing
+		  </label>
+			  
+			</div>
+			
+			
+		  
+		
+		  
+			
+			
+			
+			<div class="govuk-radios__item">
+			  <input class="govuk-radios__input" id="Leaving" name="filters[attendance]" type="radio" value="Leaving">
+			  <label class="govuk-label govuk-radios__label" for="Leaving">
+			Leaving wing
+		  </label>
+			  
+			</div>
+			
+			
+		  
+		
+	  </div>
+	  
+	
+	</fieldset>
+	
+	
+	</div>
+	
+			
+	
+						<button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button">
+							Apply filters
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="moj-filter-layout__content">
+			<div class="moj-action-bar">
+				<div class="moj-action-bar__filter"></div>
+	
+				<div class="moj-button-menu">
+					<div class="moj-button-menu__wrapper">
+						
+	  
+	
+	
+	  
+		
+	  
+	
+	<a href="../../print-unlock-list" role="button" draggable="false" class="govuk-button govuk-button--blue moj-button-menu__item" data-module="govuk-button">
+	  Print this page
+	</a>
+	
+					</div>
+				</div>
+			</div>
+	
+			<div class="moj-scrollable-pane">
+				<table class="govuk-table app-whereabouts-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+					<thead class="govuk-table__head">
+						<tr>
+							<th class="govuk-table__header" aria-sort="none"><button type="button" data-index="0">
+								Name
+							</button></th>
+								
+							{% if 'Cell location' in data['showing'] %}
+							<th class="govuk-table__header" aria-sort="ascending" width="120"><button type="button" data-index="1">
+								Cell location
+							</button></th> 
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							<th class="govuk-table__header" width="250">
+								Relevant alerts
+							</th>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							<th class="govuk-table__header" aria-sort="none"><button type="button" data-index="3">
+								Activity
+							</button></th>
+							{% else %}
+							{% endif %}
+							
+						</tr>
+					</thead>
+					<tbody class="govuk-table__body">
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/OE0455U" class="govuk-link--no-visited-state"><b>Sissel</b>,
+									Lammond</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">OE0455U</span>
+							</td>
+
+								
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="111" scope="col">
+								1−1−1
+							</td>
+							{% else %}
+							{% endif %}
+							
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="Maths Skills Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/17" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Maths Skills Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 12:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Education Room 3
+									</div>
+								</div>
+								
+								
+							</td>
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/GQ8843H" class="govuk-link--no-visited-state"><b>Victor</b>,
+									Itch</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">GQ8843H</span>
+							</td>
+								
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="112" scope="col">
+								1−1−2
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Small Works Team" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/27" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Small Works Team</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:30 – 12:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Workshop 5
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/AW1441E" class="govuk-link--no-visited-state"><b>Stackbridge</b>,
+									Abeu</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">AW1441E</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="116" scope="col">
+								1−1−6
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+								<ul class="alerts-list">
+									
+									<li class="DPS-alert-status DPS-alert-status--cat-a">Cat A</li>
+									
+								</ul>
+								
+							</td>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="New Reception Team" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/46" class="govuk-link--no-visited-state govuk-!-font-weight-bold">New Reception Team</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:15 – 11:45
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Reception
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/CV5659T" class="govuk-link--no-visited-state"><b>Kluge</b>,
+									Ber</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">CV5659T</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="117" scope="col">
+								1−1−7
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="WEE Project" scope="col">
+								
+								<div class="app-unlock-list-event govuk-!-margin-bottom-4 ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/50" class="govuk-link--no-visited-state govuk-!-font-weight-bold">WEE Project</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:15 – 11:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Workshop 1
+									</div>
+								</div>
+								
+								<hr class="govuk-section-break govuk-!-margin-top-3 govuk-!-margin-bottom-3 govuk-section-break--visible">
+								
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/8" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Drama Therapy</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:00 – 12:30
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Workshop 1
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/NK9357M" class="govuk-link--no-visited-state"><b>Bruhn</b>,
+									Theo</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">NK9357M</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="118" scope="col">
+								1−1−8
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+								<ul class="alerts-list">
+									
+									<li class="DPS-alert-status DPS-alert-status--cat-a-higher">Cat A Higher</li>
+									
+								</ul>
+								
+							</td>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Creative Writing Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/58" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Creative Writing Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 11:30
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Education Room 5
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/PB8977M" class="govuk-link--no-visited-state"><b>Hubbuck</b>,
+									Shaine</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">PB8977M</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="119" scope="col">
+								1−1−9
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Sheet Metal Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/26" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Sheet Metal Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:15 – 11:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Workshop 4
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %} 
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/RA4568H" class="govuk-link--no-visited-state"><b>Worton</b>,
+									Reuven</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">RA4568H</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1113" scope="col">
+								1−1−13
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Painting Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/21" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Painting Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:00 – 12:45
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Art Room 2
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/HM2634U" class="govuk-link--no-visited-state"><b>Natwick</b>,
+									Kirk</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">HM2634U</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1117" scope="col">
+								1−1−17
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+								<ul class="alerts-list">
+									
+									<li class="DPS-alert-status DPS-alert-status--peep">PEEP</li>
+									
+									<li class="DPS-alert-status DPS-alert-status--cat-a-higher">Cat A Higher</li>
+									
+								</ul>
+								
+							</td>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Maths Skills Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/17" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Maths Skills Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 12:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Education Room 3
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/EF9450J" class="govuk-link--no-visited-state"><b>Tipling</b>,
+									Lammond</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">EF9450J</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1118" scope="col">
+								1−1−18
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Radio Production Class" scope="col">
+								
+								<div class="app-unlock-list-event govuk-!-margin-bottom-4 ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/24" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Radio Production Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:00 – 11:45
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Education Room 1
+									</div>
+								</div>
+								
+								<hr class="govuk-section-break govuk-!-margin-top-3 govuk-!-margin-bottom-3 govuk-section-break--visible">
+								
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/21" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Painting Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:00 – 12:45
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Art Room 2
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/UN4751Z" class="govuk-link--no-visited-state"><b>Lambrecht</b>,
+									Sully</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">UN4751Z</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="1119" scope="col">
+								1−1−19
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Creative Writing Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/58" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Creative Writing Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 11:30
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Education Room 5
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/VD2954B" class="govuk-link--no-visited-state"><b>Mingardi</b>,
+									Rickert</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">VD2954B</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="1120" scope="col">
+								1−1−20
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+								<ul class="alerts-list">
+									
+									<li class="DPS-alert-status DPS-alert-status--cat-a-provisional">Cat A Provisional</li>
+									
+									<li class="DPS-alert-status DPS-alert-status--cat-a-higher">Cat A Higher</li>
+									
+								</ul>
+								
+							</td>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Education Mentor" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/9" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Education Mentor</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:30 – 12:30
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Education Room 3
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/ZK7034X" class="govuk-link--no-visited-state"><b>Dyzart</b>,
+									Agustin</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">ZK7034X</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="122" scope="col">
+								1−2−2
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Gym Remedial Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/42" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Gym Remedial Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 12:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Gym
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/JB7032C" class="govuk-link--no-visited-state"><b>Keaysell</b>,
+									Irvine</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">JB7032C</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="124" scope="col">
+								1−2−4
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Christian Prayer Meeting" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/4" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Christian Prayer Meeting</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 12:15
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Chapel
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/OH6644J" class="govuk-link--no-visited-state"><b>Yosevitz</b>,
+									Westleigh</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">OH6644J</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="125" scope="col">
+								1−2−5
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Horticulture Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/15" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Horticulture Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:45 – 11:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Greenhouse
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/IW9089M" class="govuk-link--no-visited-state"><b>Bramer</b>,
+									Harmon</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">IW9089M</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="127" scope="col">
+								1−2−7
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Anger Management Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/55" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Anger Management Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:15 – 11:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Therapy Room 3
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/WD5606O" class="govuk-link--no-visited-state"><b>Scurrey</b>,
+									Kendell</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">WD5606O</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="128" scope="col">
+								1−2−8
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Sheet Metal Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/26" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Sheet Metal Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:15 – 11:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Workshop 4
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/ZF6675H" class="govuk-link--no-visited-state"><b>Lawrie</b>,
+									Jessie</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">ZF6675H</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1211" scope="col">
+								1−2−11
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+								<ul class="alerts-list">
+									
+									<li class="DPS-alert-status DPS-alert-status--cat-a">Cat A</li>
+									
+									<li class="DPS-alert-status DPS-alert-status--escape-list">Escape List</li>
+									
+								</ul>
+								
+							</td>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="G-Wing Laundry Team" scope="col">
+								
+								<div class="app-unlock-list-event govuk-!-margin-bottom-4 ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/42" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Gym Remedial Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 12:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Gym
+									</div>
+								</div>
+								
+								<hr class="govuk-section-break govuk-!-margin-top-3 govuk-!-margin-bottom-3 govuk-section-break--visible">
+								
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/40" class="govuk-link--no-visited-state govuk-!-font-weight-bold">G-Wing Laundry Team</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:30 – 11:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">G Wing
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/GA4572K" class="govuk-link--no-visited-state"><b>Houseman</b>,
+									Shepherd</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">GA4572K</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1213" scope="col">
+								1−2−13
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Christian Prayer Meeting" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/4" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Christian Prayer Meeting</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 12:15
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Chapel
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/FZ8865E" class="govuk-link--no-visited-state"><b>Osgodby</b>,
+									Court</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">FZ8865E</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1217" scope="col">
+								1−2−17
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Gym Administration" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/44" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Gym Administration</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:00 – 11:45
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Gym Office
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/NS5757T" class="govuk-link--no-visited-state"><b>Luther</b>,
+									Northrup</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">NS5757T</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1218" scope="col">
+								1−2−18
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Group Therapy" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/14" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Group Therapy</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 12:45
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Therapy Room 2
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/HW9370P" class="govuk-link--no-visited-state"><b>Bonett</b>,
+									Herbert</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">HW9370P</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1220" scope="col">
+								1−2−20
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="New Reception Team" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/46" class="govuk-link--no-visited-state govuk-!-font-weight-bold">New Reception Team</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:15 – 11:45
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Reception
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+					
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/BG1053Y" class="govuk-link--no-visited-state"><b>Phetteplace</b>,
+									Felike</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">BG1053Y</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1219" scope="col">
+								1−2−19
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Maths Skills Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/17" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Maths Skills Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 12:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Education Room 3
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/KL3911B" class="govuk-link--no-visited-state"><b>Grassot</b>,
+									Lauritz</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">KL3911B</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1220" scope="col">
+								1−2−20
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="WEE Project" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/50" class="govuk-link--no-visited-state govuk-!-font-weight-bold">WEE Project</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:15 – 11:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Workshop 1
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/BN0185Z" class="govuk-link--no-visited-state"><b>Males</b>,
+									Nickolai</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">BN0185Z</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="131" scope="col">
+								1−3−1
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+								<ul class="alerts-list">
+									
+									<li class="DPS-alert-status DPS-alert-status--controlled-unlock">Controlled Unlock</li>
+									
+								</ul>
+								
+							</td>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Christian Prayer Meeting" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/4" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Christian Prayer Meeting</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 12:15
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Chapel
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/GR1480Z" class="govuk-link--no-visited-state"><b>McGuffog</b>,
+									Graig</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">GR1480Z</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="134" scope="col">
+								1−3−4
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+								<ul class="alerts-list">
+									
+									<li class="DPS-alert-status DPS-alert-status--cat-a-provisional">Cat A Provisional</li>
+									
+								</ul>
+								
+							</td>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Zumba Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/53" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Zumba Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:00 – 12:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Gym 2
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/XD6188J" class="govuk-link--no-visited-state"><b>De Filippi</b>,
+									Thornie</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">XD6188J</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="135" scope="col">
+								1−3−5
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+								<ul class="alerts-list">
+									
+									<li class="DPS-alert-status DPS-alert-status--cat-a-provisional">Cat A Provisional</li>
+									
+									<li class="DPS-alert-status DPS-alert-status--escape-list">Escape List</li>
+									
+									<li class="DPS-alert-status DPS-alert-status--acct">ACCT</li>
+									
+								</ul>
+								
+							</td>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Christian Prayer Meeting" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/4" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Christian Prayer Meeting</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 12:15
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Chapel
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/CR3990P" class="govuk-link--no-visited-state"><b>Benz</b>,
+									Bartholomeus</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">CR3990P</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="136" scope="col">
+								1−3−6
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Creative Writing Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/58" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Creative Writing Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 11:30
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Education Room 5
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/BL9170N" class="govuk-link--no-visited-state"><b>Hobbing</b>,
+									Markus</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">BL9170N</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1311" scope="col">
+								1−3−11
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="WEE Project" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/50" class="govuk-link--no-visited-state govuk-!-font-weight-bold">WEE Project</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:15 – 11:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Workshop 1
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/AP5196D" class="govuk-link--no-visited-state"><b>Shall</b>,
+									Ulises</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">AP5196D</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="1313" scope="col">
+								1−3−13
+							</td>
+							
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Recycling Team" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/25" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Recycling Team</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 11:45
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Recycling Center
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/TX4131Q" class="govuk-link--no-visited-state"><b>Verrechia</b>,
+									Skipper</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">TX4131Q</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="1315" scope="col">
+								1−3−15
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Anger Management Class" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/55" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Anger Management Class</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:15 – 11:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Therapy Room 3
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/AU6358S" class="govuk-link--no-visited-state"><b>Tomasi</b>,
+									Corney</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">AU6358S</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="1316" scope="col">
+								1−3−16
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Computer Use Session" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/34" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Computer Use Session</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 11:30
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Computer Lab
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/HA2492O" class="govuk-link--no-visited-state"><b>Lawn</b>,
+									Randi</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">HA2492O</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="111" scope="col">
+								1−1−1
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="C-Wing Workers" scope="col">
+								
+								<div class="app-unlock-list-event govuk-!-margin-bottom-4 ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/32" class="govuk-link--no-visited-state govuk-!-font-weight-bold">C-Wing Workers</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 11:00
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">C Wing
+									</div>
+								</div>
+								
+								<hr class="govuk-section-break govuk-!-margin-top-3 govuk-!-margin-bottom-3 govuk-section-break--visible">
+								
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/34" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Computer Use Session</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 11:30
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Computer Lab
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/OJ4207Q" class="govuk-link--no-visited-state"><b>Bisp</b>,
+									Raynard</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">OJ4207Q</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="113" scope="col">
+								1−1−3
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Recycling Team" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/25" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Recycling Team</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:00 – 11:45
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Recycling Center
+									</div>
+								</div>
+								
+								
+							</td>
+							
+							{% else %}
+							{% endif %}
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/FN9739A" class="govuk-link--no-visited-state"><b>Pittway</b>,
+									Mateo</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">FN9739A</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="116" scope="col">
+								1−1−6
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+							</td>
+							{% else %}
+							{% endif %} 
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="Peer Mentoring" scope="col">
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/22" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Peer Mentoring</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:45 – 12:45
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Meeting Room 2
+									</div>
+								</div>
+								
+								
+							</td>
+							{% else %}
+							{% endif %}
+							
+						</tr>
+						
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell" width="180" scope="col">
+								<a href="../../../prisoner/ZE7574G" class="govuk-link--no-visited-state"><b>Hunton</b>,
+									Pooh</a><br>
+								<span class="govuk-hint govuk-!-font-size-16">ZE7574G</span>
+							</td>
+							{% if 'Cell location' in data['showing'] %}
+							
+							<td class="govuk-table__cell" data-sort-value="118" scope="col">
+								1−1−8
+							</td>
+							{% else %}
+							{% endif %}
+							{% if 'Relevant alerts' in data['showing'] %}
+							
+							<td class="govuk-table__cell">
+								
+								<ul class="alerts-list">
+									
+									<li class="DPS-alert-status DPS-alert-status--cat-a-higher">Cat A Higher</li>
+									
+									<li class="DPS-alert-status DPS-alert-status--escape-list">Escape List</li>
+									
+								</ul>
+								
+							</td>
+							{% else %}
+							{% endif %}
+
+							{% if 'Activity' in data['showing'] %}
+							<td class="govuk-table__cell" data-sort-value="New Reception Team" scope="col">
+								
+								<div class="app-unlock-list-event govuk-!-margin-bottom-4 ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/46" class="govuk-link--no-visited-state govuk-!-font-weight-bold">New Reception Team</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										8:15 – 11:45
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Reception
+									</div>
+								</div>
+								
+								<hr class="govuk-section-break govuk-!-margin-top-3 govuk-!-margin-bottom-3 govuk-section-break--visible">
+								
+								
+								<div class="app-unlock-list-event ">
+									<div>
+										
+										<a href="../../../record-attendance/activities/2023-10-16/AM/8" class="govuk-link--no-visited-state govuk-!-font-weight-bold">Drama Therapy</a>
+										
+									</div>
+									
+									
+									
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
+										
+										9:00 – 12:30
+										
+									</div>
+									<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">Workshop 1
+									</div>
+								</div>
+								
+								
+							</td>
+							{% else %}
+							{% endif %}
+					
+						</tr>
+					
+					</tbody>
+				</table>
+			<div aria-live="polite" role="status" aria-atomic="true" class="govuk-visually-hidden"></div></div>
+		</div>
+
+
+</main>
+	</div> 
+	
+	
+{% endblock %}
+{% block pageScripts %}
+<script type="text/javascript">
+	$(document).ready(function () {
+		new MOJFrontend.FilterToggleButton({
+			bigModeMediaQuery: "(min-width: 48.063em)",
+			startHidden: true,
+			toggleButton: {
+				container: $(".moj-action-bar__filter"),
+				showText: "Show filter",
+				hideText: "Hide filter",
+				classes: "govuk-button--secondary",
+			},
+			closeButton: {
+				container: $(".moj-filter__header-action"),
+				text: "Close",
+			},
+			filter: {
+				container: $(".moj-filter"),
+			},
+		});
+
+		// function that allows the user to select/check all checkboxes
+		// when the select all link/button is clicked
+		// specify the target checkboxes using the 'data-target' attribute
+		// and the select all link/button using the 'data-select-all' attribute
+		// e.g. <a href="#" data-select-all="true" data-target="checkboxes">Select all</a>
+		// e.g. <button data-select-all="true" data-target="checkboxes">Select all</button>
+		$('[data-select-all="true"]').on('click', function (e) {
+			e.preventDefault();
+			var target = $(this).data('target');
+			$('input[type="checkbox"][name="' + target + '"]').prop('checked', true);
+		});
+	})
+</script>
+{% endblock %}
