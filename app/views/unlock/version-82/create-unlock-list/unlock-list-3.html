@@ -104,112 +104,6 @@ Appointments prototype
 						</button>
 	
 	
-	<div class="govuk-form-group govuk-!-margin-bottom-1">
-	
-	  <fieldset class="govuk-fieldset">
-	  
-	  <legend class="govuk-fieldset__legend govuk-label--m">
-	  
-		Showing
-	  
-	  </legend>
-	  
-	  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes"> 
-
-	
-				<div class="govuk-checkboxes__item">
-					<input class="govuk-checkboxes__input" id="name" name="showing" type="checkbox" value="Name" checked disabled="" >
-					<label class="govuk-label govuk-checkboxes__label" for="name">
-				Name
-			</label>
-					
-				</div>
-
-
-			  	
-			  {% if 'Cell location' in data['showing'] %}
-			
-			  <div class="govuk-checkboxes__item">
-				<input class="govuk-checkboxes__input" id="cell" name="showing" type="checkbox" value="Cell location" checked="">
-				<label class="govuk-label govuk-checkboxes__label" for="cell">
-			Cell location
-		  </label>
-				
-			  </div>
-			  
-			
-			  {% else %}
-			 
-			  <div class="govuk-checkboxes__item">
-				<input class="govuk-checkboxes__input" id="cell" name="showing" type="checkbox" value="Cell location">
-				<label class="govuk-label govuk-checkboxes__label" for="cell">
-			Cell location
-		  </label>
-				
-			  </div>
-			  
-			
-			  {% endif %}
-		 
-			  	
-			  {% if 'Relevant alerts' in data['showing'] %}
-			  <div class="govuk-checkboxes__item">
-				<input class="govuk-checkboxes__input" id="alerts" name="showing" type="checkbox" value="Relevant alerts" checked="">
-				<label class="govuk-label govuk-checkboxes__label" for="alerts">
-			Relevant alerts
-		  </label>
-				
-			  </div>
-			  
-			  {% else %}
-			  <div class="govuk-checkboxes__item">
-				<input class="govuk-checkboxes__input" id="alerts" name="showing" type="checkbox" value="Relevant alerts">
-				<label class="govuk-label govuk-checkboxes__label" for="alerts">
-			Relevant alerts
-		  </label>
-				
-			  </div>
-			  
-			  {% endif %}
-			  
-			  
-			  {% if 'Activity' in data['showing'] %}
-			  <div class="govuk-checkboxes__item">
-				<input class="govuk-checkboxes__input" id="activity" name="showing" type="checkbox" value="Activity" checked="">
-				<label class="govuk-label govuk-checkboxes__label" for="activity">
-			Activity
-		  </label>
-				
-			  </div>
-
-			  {% else %}
-			  <div class="govuk-checkboxes__item">
-				<input class="govuk-checkboxes__input" id="activity" name="showing" type="checkbox" value="Activity" >
-				<label class="govuk-label govuk-checkboxes__label" for="activity">
-			Activity
-		  </label>
-				
-			  </div>
-			  
-			  {% endif %}
-			  
-			
-		  
-		
-	  </div>
-	  
-	
-	</fieldset>
-	
-	
-	</div>
-	
-				<p class="govuk-!-margin-bottom-7">
-					<a class="govuk-link" href="#" data-target="showing" data-select-all="true">
-						Select all
-					</a>
-				</p>
-		
 			<!-- GOVUK checkboxes HTML for filtering by landing in residentialLocations data -->
 			<div class="govuk-form-group govuk-!-margin-bottom-1">
 				<div class="govuk-checkboxes govuk-checkboxes--small">
@@ -509,20 +403,17 @@ Appointments prototype
 				<div class="moj-button-menu">
 					<div class="moj-button-menu__wrapper">
 						
-						<div class="moj-button-menu">
-							<div class="moj-button-menu__wrapper">
-								<form action="print-unlock-list" >
-
-									{{govukButton({
-										text: "Print this unlock list",
-										classes: "govuk-button--blue moj-button-menu__item",
-										attributes: {
-										"data-module": "govuk-button"
-										}
-										})}}
-								</form>
-							</div>
-						</div>
+	  
+	
+	
+	  
+		
+	  
+	
+	<a href="how-to-print-unlock-list-v2" role="button" draggable="false" class="govuk-button govuk-button--blue moj-button-menu__item" data-module="govuk-button">
+	  Print this unlock list
+	</a>
+	
 					</div>
 				</div>
 			</div>
@@ -2464,7 +2355,6 @@ Appointments prototype
 {% endblock %}
 {% block pageScripts %}
 <script type="text/javascript">
-
 	$(document).ready(function () {
 		new MOJFrontend.FilterToggleButton({
 			bigModeMediaQuery: "(min-width: 48.063em)",

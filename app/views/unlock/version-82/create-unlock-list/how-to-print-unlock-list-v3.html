@@ -1,0 +1,71 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{ govukBackLink({
+	text: "Back",
+	href: 'unlock-list-4'
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-three-quarters">
+        {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+          <span class="govuk-caption-l">
+              Print unlock list
+          </span>
+          <h1 class="govuk-heading-l">
+              Select what you want printed on the unlock list
+          </h1>
+  
+        {{ govukCheckboxes({
+          name: "to-print", 
+          hint: {
+            text: "Names, prison numbers and cell locations are always included."
+          },
+          items: [
+            {
+              value: "name",
+              text: "Name, prison number and cell location",
+              disabled: true,
+              checked: true
+
+            },
+            {
+              value: "Alerts",
+              text: "Alerts"
+            },
+            {
+              value: "Event",
+              text: "Event details"
+            },
+            {
+              value: "Boxes for recording abscence",
+              text: "Boxes for recording abscence"
+            },
+            {
+              value: "Section for notes",
+              text: "Section for notes"
+            }
+          ]
+        }) }}
+        {% from "govuk/components/button/macro.njk" import govukButton %}
+          <form action="print-unlock-list" >
+
+                {{govukButton({
+                    text: "Confirm and print",
+                    classes: "",
+                    attributes: {
+                    "data-module": "govuk-button"
+                    }
+                    })}}
+            </form>
+
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}

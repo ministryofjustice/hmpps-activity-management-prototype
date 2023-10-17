@@ -1,0 +1,58 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{ govukBackLink({
+	text: "Houseblock 1 - unlock list",
+	href: '../whereabouts'
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">
+			Print an unlock list
+		</span>
+		<h1 class="govuk-heading-l">
+			How do you want the unlock list to be printed?
+		</h1>
+		<form method="post" action="unlock-list-2">
+
+			{% set today = '_'|today() %}
+			{{ govukRadios({
+				name: "date",
+				items: [
+				{
+					value: "Compact",
+					text: "Compact",
+					hint: "This will..."
+				},
+				{
+					value: "Basic",
+					text: "Basic",
+					hint: "This will..."
+				},
+				{
+					value: "Detailed",
+					text: "Detailed",
+					hint: "This will..."
+				}
+				]
+			}) }}
+
+	<div class="govuk-form-group govuk-!-margin-bottom-1 govuk-visually-hidden">
+	  
+	  </div>
+	  
+
+			{{govukButton({
+				text: "Confirm and print"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}

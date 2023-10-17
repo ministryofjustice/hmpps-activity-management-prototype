@@ -1,0 +1,92 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{ govukBackLink({
+	text: "Back",
+	href: 'unlock-list-3'
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-margin-bottom-8">
+                        <span class="govuk-caption-l">
+                            Print unlock list
+                        </span>
+                        <h1 class="govuk-heading-l">
+                            Select how to print the unlock list
+                        </h1>
+                
+                    </legend>
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="unlock-list--compact" aria-describedby="signIn-item-hint">
+                            <label class="govuk-label govuk-radios__label" for="signIn">
+                                Compact
+                            </label>
+                            <div id="signIn-item-hint" class="govuk-hint govuk-radios__hint">
+                                Names, prison numbers and cell locations only.
+                            </div> 
+                            <div class="govuk-fake-image" style="margin-left: 15px; width: 300px; height: 150px; background-color: lightgray;">
+                                
+                            </div>    
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="unlock-list--basic" aria-describedby="signIn-2-item-hint">
+                            <label class="govuk-label govuk-radios__label" for="signIn-2">
+                                Basic
+                            </label>
+                            <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+                                Names, prison numbers, cell locations and scheduled events.
+                            </div>  
+                            <div class="govuk-fake-image" style="margin-left: 15px; width: 300px; height: 150px; background-color: lightgray;">
+                                
+                            </div>   
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="signIn-3" name="signIn" type="radio" value="unlock-list--detailed" aria-describedby="signIn-3-item-hint">
+                            <label class="govuk-label govuk-radios__label" for="signIn-3">
+                                Detailed
+                            </label>
+                            <div id="signIn-3-item-hint" class="govuk-hint govuk-radios__hint">
+                                Names, prison numbers, cell locations, scheduled events, alerts and boxes for recording absence.
+                            </div>
+                            <div class="govuk-fake-image" style="margin-left: 15px; width: 300px; height: 150px; background-color: lightgray;">
+                                
+                            </div>   
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+
+            <form action="print-unlock-list" >
+
+                {{govukButton({
+                    text: "Confirm and print",
+                    classes: "",
+                    attributes: {
+                    "data-module": "govuk-button"
+                    }
+                    })}}
+            </form>
+    </div>
+{% endblock %}
+
+<!-- css for the fake image 
+
+.govuk-fake-image {
+    margin:25px 0; 
+    padding:75px;
+    Width:15px;
+    background-color: #b1b4b6;
+}
+
+-->
