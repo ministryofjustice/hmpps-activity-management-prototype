@@ -48,6 +48,8 @@ Add attendance details for {{prisonersNoun}}
 		</p>
 		{% endif %}
 
+		<!--
+
 		{% if showSearchBar %}
 		<div class="app-search">
 			<form action="/applications" method="get" novalidate="" class="govuk-!-margin-bottom-8">
@@ -63,6 +65,9 @@ Add attendance details for {{prisonersNoun}}
 			</form>
 		</div>
 		{% endif %}
+
+		-->
+
 
 		<form method="post">
 			{% for prisoner in filteredPrisoners %}
@@ -173,8 +178,20 @@ Add attendance details for {{prisonersNoun}}
 
 			{% set notRequiredHtml %}
 			<p>
-				The prisoner will be paid and their attendance will be recorded as an acceptable absence.
+				{{prisoner.name.firstname + " " + prisoner.name.surname}} will be paid and their attendance will be recorded as an acceptable absence.
 			</p>
+				{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+				{{ govukCharacterCount({
+					name: "attendance-details[" + prisoner.id + "][sick-detail]",
+					id: "sick-detail" + prisoner.id",
+					maxlength: 100,
+					label: {
+						text: "Can you provide more detail? (optional)",
+						classes: "govuk-label--s govuk-!-font-weight-regular",
+						isPageHeading: true
+					}
+				}) }}
 			{% endset %}
 
 			{% set restDayHtml %}
@@ -201,6 +218,7 @@ Add attendance details for {{prisonersNoun}}
 				}
 				]
 			}) }}
+			
 			{% endset %}
 
 			{% set elsewhereHtml %}
@@ -243,7 +261,8 @@ Add attendance details for {{prisonersNoun}}
 					classes: "govuk-radios",
 					fieldset: {
 						legend: {
-							text: "Why did " + prisoner.name.firstname + " " + prisoner.name.surname + " not attend?"
+							text: "Why did " + prisoner.name.firstname + " " + prisoner.name.surname + " not attend?",
+							classes: "govuk-visually-hidden"
 						}
 					},
 					items: [
