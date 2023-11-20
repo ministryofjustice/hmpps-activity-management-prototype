@@ -1,0 +1,88 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+
+	<a href="/dps-home" class="govuk-back-link">Digital Prison Services</a>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+
+    <div class="moj-search">
+
+        <form action="./search-for-a-prisoner-results" method="post">
+      
+          <div class="govuk-form-group">
+            <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
+                <h1 class="govuk-heading-l govuk-!-margin-top-7">    
+                    <span class="govuk-caption-l">Exclusions</span>
+                    Search for a prisoner
+                </h1>
+            </label>
+      
+            <div id="search-hint" class="govuk-hint moj-search__hint ">
+              You can search by prisoner name or number
+            </div>
+      
+            <input class="govuk-input moj-search__input " id="search" name="search" type="search" aria-describedby="search-hint">
+      
+          </div>
+      
+          <button class="govuk-button moj-search__button " data-module="govuk-button">
+            Search
+          </button>
+      
+        </form>
+        <p style="text-align:right" class="govuk-!-margin-top-6"><strong>Prisoners listed:</strong> 2</p>
+        <div class="results-table">
+            <table class="govuk-table" data-qa="prisoner-search-results-table" data-module="moj-sortable-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">                   
+                        <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Picture</span></th>                   
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" data-index="1">Name</button></th>                   
+                        <th scope="col" class="govuk-table__header">Prison number</th>                   
+                        <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="3">Location</button></th>                   
+                        <th scope="col" class="govuk-table__header"></th>
+                        <th scope="col" class="govuk-table__header"></th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <img src="/prisoner/A8239DY/image" alt="Photograph of Firstname Lastname, Test" class="results-table__image">
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="Firstname Lastname, Test">Firstname Lastname</td>
+                        <td class="govuk-table__cell">A8239DY</td>
+                        <td class="govuk-table__cell">1-3</td>
+                        <td class="govuk-table__cell">
+                            <a href="./users-activities" class="govuk-link" data-qa="start-report-link">Select<span class="govuk-visually-hidden">for Firstname Lastname</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <img src="/prisoner/A5152DY/image" alt="Photograph of Lastname, Firstname" class="results-table__image">
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="Lastname, Firstname">Lastname, Firstname</td>
+                        <td class="govuk-table__cell">A5152DY</td>
+                        <td class="govuk-table__cell">5-1-B-027</td> 
+                        <td class="govuk-table__cell">
+                            <a href="./users-activities" class="govuk-link" data-qa="start-report-link">Select<span class="govuk-visually-hidden">for Firstname Lastname</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+             </table>
+
+          <div aria-live="polite" role="status" aria-atomic="true" class="govuk-visually-hidden"></div>
+        </div>
+      </div>
+</div>
+
+{% endblock %}

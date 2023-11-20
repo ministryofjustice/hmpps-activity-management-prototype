@@ -1,0 +1,67 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">Allocate to {{activity.name}}</span>
+
+        <h1 class="govuk-heading-xl">
+            How much do you want to pay {{prisoner.name.firstname}} {{prisoner.name.surname}}?
+        </h1>
+        <p class="govuk-inset-text">
+            {{prisoner.name.firstname}} {{prisoner.name.surname}} is currently on a {{prisoner.incentiveLevel}} incentive level.
+        </p>
+        <form method="post">
+            {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+            {{ govukRadios({
+            fieldset: {
+            legend: {
+            isPageHeading: true,
+            text: "Select a standard incentive level pay rate",
+            classes: "govuk-label--s"
+            }
+            },
+            label: {
+            text: "Select the correct pay rate",
+            classes: "govuk-label--m"
+            },
+            idPrefix: "pay-rate",
+            name: "allocation[pay-rate]",
+            items: [
+            {
+            value: "General - £1.00",
+            text: "General - £1.00",
+            checked: true if data.allocation["pay-rate"] == "General - £1.00"
+            },
+            {
+            value: "Skilled - £1.45",
+            text: "Skilled - £1.45",
+            checked: true if data.allocation["pay-rate"] == "Skilled - £1.45"
+            },
+            {
+            value: "Specialist - £1.59",
+            text: "Specialist - £1.59",
+            checked: true if data.allocation["pay-rate"] == "Specialist - £1.59"
+            }
+            ]
+            }) }}
+
+
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

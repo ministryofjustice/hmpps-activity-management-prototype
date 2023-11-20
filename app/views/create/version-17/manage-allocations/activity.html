@@ -1,0 +1,703 @@
+{% extends "layout_hmpps.html" %}
+
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+<form method="post">
+    <div class="govuk-width-container">
+        {% block beforeContent %}
+        <!-- {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+        {{ govukBreadcrumbs({
+        classes: "govuk-!-display-none-print",
+        items: [
+        {
+        text: "Digital Prison Services",
+        href: "/dps-home"
+        },
+        {
+        text: "Manage activities and allocations",
+        href: "../manage-activities"
+        },
+        {
+        text: "Manage allocations",
+        href: "../manage-allocations"
+        }
+        ]
+        })}} -->
+        {{ govukBackLink({
+        text: "Allocation dashboard",
+        href: "../manage-allocations"
+        }) }}
+        {% endblock %}
+
+        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+            {% block content %}
+            {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+            {% if data['confirmation-dialog'].display == true %}
+            {% set p = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
+            {% if data['confirmation-dialog'].type == 'rejected' %}
+            {% set bannerHtml %}
+            <h2 class="govuk-notification-banner__heading">
+                We've removed {{p.name.firstname}} {{p.name.surname}} from the waitlist for
+                {{activity.name}}.
+            </h2>
+            {% endset %}
+            {{ govukNotificationBanner({
+            html: bannerHtml,
+            titleText: "Success",
+            type: "success"
+            }) }}
+            {% endif %}
+
+            {% if data['confirmation-dialog'].type == 'eligible' %}
+            {% set bannerHtml %}
+            <h2 class="govuk-notification-banner__heading">
+                We've changed {{p.name.firstname}} {{p.name.surname}}'s suitability to 'checks passed'.
+            </h2>
+            {% endset %}
+            {{ govukNotificationBanner({
+            html: bannerHtml,
+            titleText: "Success",
+            type: "success"
+            }) }}
+            {% endif %}
+
+            {% if data['confirmation-dialog'].type == 'pending' %}
+            {% set bannerHtml %}
+            <h2 class="govuk-notification-banner__heading">
+                We've changed {{p.name.firstname}} {{p.name.surname}}'s suitability to 'checks needed'.
+            </h2>
+            {% endset %}
+            {{ govukNotificationBanner({
+            html: bannerHtml,
+            titleText: "Success",
+            type: "success"
+            }) }}
+            {% endif %}
+            {% endif %}
+
+            <div class="govuk-grid-row govuk-!-margin-bottom-4">
+                <div class="govuk-grid-column-two-thirds">
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+                        <span class="govuk-caption-l">
+                            Manage allocations <span class="govuk-visually-hidden"> for </span>
+                        </span>
+                        {{activity.name}}
+                    </h1>
+
+                    <ul class="govuk-list govuk-!-margin-bottom-5">
+                        <li>
+                            Vacancies: {{activity.vacancies}}
+                        </li>
+                        <li>
+                            Capacity: {{activity.capacity}}
+                        </li>
+                    </ul>
+
+                    {% set riskAssessment %}
+                    {{"Low, Medium or High" if activity.riskAssessment == "any"}}
+                    {{"Low" if activity.riskAssessment == "low-only"}}
+                    {{"Low or Medium" if activity.riskAssessment == "low-or-medium"}}
+                    {% endset %}
+
+                    {% set activityInfoHtml %}
+                    {{ govukSummaryList({
+                    classes: "govuk-summary-list--no-borderr",
+                    rows: [
+                    {
+                    classes: "govuk-summary-list__row--no-actions",
+                    key: {
+                    text: "Suitable for workplace risk assessment"
+                    },
+                    value: {
+                    text: riskAssessment
+                    }
+                    },
+                    {
+                    key: {
+                    text: "Suitable for incentive level"
+                    },
+                    value: {
+                    html: '<p>Basic, Standard or Enhanced</p>
+                    <p class="govuk-hint">
+                        You can control which incentive levels are suitable by <a href="edit/pay-rates">adding or
+                            removing corresponding pay rates</a>.
+                    </p>'
+                    }
+                    },
+                    {
+                    key: {
+                    text: "Education level"
+                    },
+                    value: {
+                    text: "English level 1"
+                    }
+                    }
+                    ]
+                    }) }}
+                    {% endset %}
+
+                    {{govukDetails({
+                    summaryText: "Check the requirements for this activity",
+                    html: activityInfoHtml
+                    })}}
+                </div>
+
+                <div class="govuk-grid-column-one-third">
+                    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+                        Related tasks
+                    </h2>
+
+                    <ul class="govuk-list govuk-!-margin-bottom-7">
+                        <li>
+                            <a href="../edit-activity/{{activity.id}}/schedule-dates#schedule"
+                                class="govuk-link govuk-link--no-visited-state" target="_blank">
+                                View activity schedule (opens in new tab)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../edit-activity/{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
+                                Edit activity details
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a href="../create-activity" class="govuk-link govuk-link--no-visited-state">
+                                Create an activity
+                            </a>
+                        </li> -->
+                        <!-- <li>
+                            <a href="../log-request" class="govuk-link govuk-link--no-visited-state">
+                                Log a request
+                            </a>
+                        </li> -->
+                        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+                        <li class="govuk-!-margin-top-0">
+                            <a href="/dps-home" class="govuk-link govuk-link--no-visited-state">
+                                Go to DPS home
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- <div class="govuk-!-padding-4" style="background-color: #f1f2f3;">
+                        <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-visually-hidden">
+                            Weekly schedule
+                        </h2>
+                        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-0">
+                            {% for day in activityDaysWithTimes %}
+                            <div class="govuk-summary-list__row">
+                                <dt
+                                    class="govuk-summary-list__key govuk-!-font-size-16 govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-top-1 govuk-!-padding-bottom-1">
+                                    {% if day.times %}
+                                    {{day.day|capitalize}}
+                                    {% else %}
+                                    <span class="govuk-hint govuk-!-font-size-16">{{day.day|capitalize}}</span>
+                                    {% endif %}
+                                </dt>
+                                <dd
+                                    class="govuk-summary-list__value govuk-!-font-size-16 govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-top-1 govuk-!-padding-bottom-1">
+                                    {% if day.times %}
+                                    {{day.times}}
+                                    {% else %}
+                                    <span class="govuk-hint govuk-!-font-size-16">Not scheduled</span>
+                                    {% endif %}
+                                </dd>
+                            </div>
+                            {% endfor %}
+                        </dl>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="govuk-tabs" data-module="govuk-tabs">
+                <h2 class="govuk-tabs__title">
+                    Contents
+                </h2>
+                <ul class="govuk-tabs__list">
+                    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                        <a class="govuk-tabs__tab" href="{{activity.id}}">
+                            Currently allocated ({{currentlyAllocated.length}})
+                        </a>
+                    </li>
+                    <li class="govuk-tabs__list-item">
+                        <a class="govuk-tabs__tab" href="{{activity.id}}/waitlist">
+                            Waitlist
+                        </a>
+                    </li>
+                    <li class="govuk-tabs__list-item">
+                        <a class="govuk-tabs__tab" href="{{activity.id}}/allocate?page=1">
+                            Other people
+                        </a>
+                    </li>
+                </ul>
+                <div class="govuk-tabs__panel" id="curently-allocated">
+                    <h2 class="govuk-heading-l govuk-!-margin-bottom-5">
+                        {{currentlyAllocated.length}} people currently allocated
+                    </h2>
+
+                    <div class="govuk-button-group govuk-!-margin-bottom-5">
+                        <!-- <a href="deallocate" class="govuk-link" style="color: #be0e0e;">
+                            Remove people from this activity
+                        </a> -->
+                    </div>
+
+                    <table class="govuk-table govuk-!-margin-bottom-5" data-module="moj-multi-select"
+                        data-multi-select-checkbox="#select-all">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th class="govuk-table__header govuk-!-padding-right-2 govuk-!-padding-left-1"
+                                    scope="col" id="select-all"></th>
+                                <th scope="col" class="govuk-table__header">Prisoner details</th>
+                                <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
+                                <th scope="col" class="govuk-table__header">Allocation start and end</th>
+                                <th scope="col" class="govuk-table__header">Other allocations</th>
+                                <th scope="col" class="govuk-table__header">Earliest release date</th>
+                                <th scope="col" class="govuk-table__header"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            {% for prisoner in currentlyAllocated | sort(false,true,'name.surname') %}
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">
+                                    <div
+                                        class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox govuk-!-margin-right-2 govuk-!-margin-left-1">
+                                        <input type="checkbox" class="govuk-checkboxes__input"
+                                            id="prisoner-{{loop.index}}" name="selected-prisoners"
+                                            value="{{prisoner.id}}">
+                                        <label class="govuk-label govuk-checkboxes__label"
+                                            for="prisoner-{{loop.index}}">
+                                            <span class="govuk-visually-hidden">Select {{prisoner.name.surname}},
+                                                {{prisoner.name.firstname}}</span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="govuk-table__cell">
+                                    <b>
+                                        <a href="#" class="govuk-link--no-visited-state">
+                                            {{prisoner.name.surname}}, {{prisoner.name.firstname}}
+                                        </a>
+                                    </b>
+                                    <br>
+                                    {{prisoner.id}}
+                                    <br>
+                                    {{prisoner.location.cell}}
+                                </td>
+                                <td class="govuk-table__cell">
+                                    {% if loop.index == 3 %}
+                                    <ul class="govuk-list">
+                                        <li><a href="#" class="govuk-link--no-visited-state">Jordan Johnson-Jones</a>
+                                        </li>
+                                    </ul>
+                                    <!-- <details class="govuk-details" data-module="govuk-details">
+                                        <summary class="govuk-details__summary">
+                                            <span class="govuk-details__summary-text">
+                                                3 non associations
+                                            </span>
+                                        </summary>
+                                        <div class="govuk-details__text">
+                                            <ul class="govuk-list">
+                                                <li><a href="#" class="govuk-link--no-visited-state">Jordan Johnson-Jones</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </details> -->
+                                    {% else %}
+                                    None
+                                    {% endif %}
+                                </td>
+                                <td class="govuk-table__cell">
+                                    {{prisoner.allocations[prisoner.activityIndex].startDate|convertShortDateToMediumDate}}
+                                    {% if prisoner.allocations[prisoner.activityIndex].endDate %}
+                                    <br>
+                                    to
+                                    {{prisoner.allocations[prisoner.activityIndex].endDate|convertShortDateToMediumDate}}
+                                    {% endif %}
+                                </td>
+                                <td class="govuk-table__cell">
+                                    {% if prisoner.activity == activity.id or prisoner.activity|length == 0 %}
+                                    <span class="govuk-hint">None</span>
+                                    {% else %}
+                                    <ul class="govuk-list">
+                                        {% for allocation in prisoner.activity %}
+                                        <!-- don't show the allocation if it's the same as the current activity -->
+                                        {% if allocation != activity.id %}
+                                        {% set activity = allocation|getActivityDetails %}
+                                        <li><a href="../{{activity.id}}"
+                                                class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                </td>
+                                <td class="govuk-table__cell">
+                                    {{prisoner.releaseDate|convertShortDateToMediumDate}}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="waitlist">
+                    <h2 class="govuk-heading-l govuk-!-margin-bottom-5">
+                        {{activityApplications|length}} {{'people' if activityApplications|length != 1 else 'person'
+                        }} on the waitlist
+                    </h2>
+
+                    <table class="govuk-table moj-sortable-table" data-module="moj-sortable-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Prisoner</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="ascending">Request date</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Requester</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Current allocations</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Status</th>
+                                <th scope="col" class="govuk-table__header"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            {% for application in activityApplications | sort(false, true, 'date') %}
+                            {% set prisoner = application["selected-prisoner"]|getPrisonerDetails %}
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">
+                                    <b><a href="#" class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
+                                            {{prisoner.name.surname}}</a></b><br>
+                                    {{prisoner.id}}<br>
+                                    {{prisoner.location.cell}}
+                                </td>
+                                <td class="govuk-table__cell govuk-!-padding-top-4"
+                                    data-sort-value="{{application.date}}">
+                                    {{application.date|convertShortDateToMediumDate}}
+                                </td>
+                                <td class="govuk-table__cell govuk-!-padding-top-4">
+                                    {% if application.applicant == "prisoner" %}
+                                    Self-requested
+                                    {% else %}
+                                    {{application.applicant|capitalize}}
+                                    {% endif %}
+                                </td>
+                                <td class="govuk-table__cell govuk-!-padding-top-4">
+                                    <ul class="govuk-list">
+                                        {% if prisoner.activity|length == 0 %}
+                                        <span class="govuk-hint">None</span>
+                                        {% endif %}
+                                        {% for allocation in prisoner.activity %}
+                                        {% set activity = allocation|getActivityDetails %}
+                                        <li><a href="../{{activity.id}}"
+                                                class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                                <td class="govuk-table__cell govuk-!-padding-top-4">
+                                    {% if application.eligible == "yes" %}
+                                    <span class="govuk-tag govuk-tag--green">Approved</span>
+                                    {% elif application.eligible == "no" %}
+                                    <span class="govuk-tag govuk-tag--red">Rejected</span>
+                                    {% else %}
+                                    <span class="govuk-tag govuk-tag--yellow">Pending</span>
+                                    {% endif %}
+                                </td>
+                                <td class="govuk-table__cell govuk-!-padding-top-4">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item">
+                                            <a class="govuk-link govuk-link--no-visited-state"
+                                                href="{{activity.id}}/applications/{{application.id}}">
+                                                View or edit <span class="govuk-visually-hidden"> {{prisoner.name.firstname}}
+                                                    {{prisoner.name.surname}}'s request</span>
+                                            </a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item">
+                                            <a class="govuk-link govuk-link--no-visited-state" href="{{activity.id}}/allocate/{{prisoner.id}}">
+                                                Allocate<span class="govuk-visually-hidden"> {{prisoner.name.firstname}}
+                                                    {{prisoner.name.surname}}</span></a>
+                                        </li>
+                                    </ul>
+                                    <!-- <a class="govuk-link govuk-link--no-visited-state"
+                                        href="{{activity.id}}/applications/{{application.id}}">
+                                        View details<span class="govuk-visually-hidden"> request for
+                                            {{prisoner.name.firstname}}
+                                            {{prisoner.name.surname}}</span></a> -->
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="other-people">
+                    <h2 class="govuk-heading-l">
+                        Find someone to allocate
+                    </h2>
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-two-thirds">
+                            <div class="moj-search govuk-!-margin-top-4">
+
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="name">
+                                        Search by name or prison number
+                                    </label>
+                                    <input class="govuk-input moj-search__input " id="name" name="search" type="search"
+                                        value="{{data['person-search']}}">
+                                </div>
+                                <button class="govuk-button moj-search__button" data-module="govuk-button">
+                                    Search
+                                </button>
+
+                            </div>
+
+                            {{govukInsetText({
+                            text: "Some people shown are not available for allocation because there is no suitable pay
+                            rate for them on this activity.",
+                            classes: "govuk-!-margin-top-7"
+                            })}}
+                        </div>
+                    </div>
+
+                    <table class="govuk-table govuk-!-margin-top-5" id="list">
+                        <caption class="govuk-table__caption govuk-table__caption--m">
+                            {{data['timetable-complete-1']['prisoners']|getOtherPrisonersCount(activity.id)}} people
+                            available for allocation
+                        </caption>
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Prisoner</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="ascending">Non-associations</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Current allocation</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Education level held</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Earliest release date</th>
+                                <th scope="col" class="govuk-table__header govuk-table__header--numeric"
+                                    aria-sort="none">Other waitlists</th>
+                                <th scope="col" class="govuk-table__header"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            {% for prisoner in prisonersWithoutApplication | sort(false, false, 'activity') %}
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">
+                                    <a href="../../../prisoner/{{prisoner.id}}"
+                                        class="govuk-link--no-visited-state govuk-!-display-block"><b>{{prisoner.name.surname}}</b>,
+                                        {{prisoner.name.firstname}}</a>
+                                    <span
+                                        class="govuk-hint govuk-!-font-size-16 govuk-!-display-block govuk-!-margin-0">{{prisoner.id}}</span>
+                                    <span
+                                        class="govuk-hint govuk-!-font-size-16 govuk-!-display-block govuk-!-margin-0">{{prisoner.location.cell}}</span>
+                                </td>
+                                <td class="govuk-table__cell" data-sort-value="{{application.date}}">
+                                    {% if loop.index == 4 %}
+                                    <a href="#" class="govuk-link--no-visited-state">Joe Bloggs</a>
+                                    {% elif loop.index == 5 %}
+                                    <ul class="govuk-list">
+                                        <li><a href="#" class="govuk-link--no-visited-state">Joe Bloggs</a></li>
+                                        <li><a href="#" class="govuk-link--no-visited-state">Bob Smith</a></li>
+                                    </ul>
+                                    {% else %}
+                                    <span class="govuk-hint">None</span>
+                                    {% endif %}
+                                </td>
+                                <td class="govuk-table__cell">
+                                    <ul class="govuk-list">
+                                        <!-- {% if prisoner.activity|length == 0 %}
+                                        <span class="govuk-hint">None</span>
+                                        {% endif %}
+                                        {% for allocation in prisoner.activity %}
+                                        {% set activity = allocation|getActivityDetails %}
+                                        <li><a href="../{{activity.id}}" class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                                        {% endfor %} -->
+                                        <li><span class="govuk-hint">None</span></li>
+                                    </ul>
+                                </td>
+                                <td class="govuk-table__cell">
+                                    <ul class="govuk-list">
+                                        {% if loop.index == 5 or loop.index == 3 %}
+                                        <li><span class="govuk-hint">N/A</span></li>
+                                        {% else %}
+                                        <li>English level 1</li>
+                                        {% endif %}
+                                    </ul>
+                                </td>
+                                <td class="govuk-table__cell" data-sort-value="{{prisoner.releaseDate}}">
+                                    {{prisoner.releaseDate|convertShortDateToMediumDate}}
+                                </td>
+                                <td class="govuk-table__cell" data-sort-value="{{prisoner.releaseDate}}"
+                                    style="text-align: center;">
+                                    <ul class="govuk-list">
+                                        {% if (loop.index == 1 and data['page'] == 1) or (loop.index == 2 and
+                                        data['page'] == 1) %}
+                                        <li>0</li>
+                                        {% else %}
+                                        <li>1</li>
+                                        {% endif %}
+                                    </ul>
+                                </td>
+                                <td class="govuk-table__cell">
+                                    <a href="{{activity.id}}/allocate/{{prisoner.id}}"
+                                        class="govuk-link--no-visited-state">Allocate</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- PAGINATION -->
+                    <nav class="moj-pagination" aria-label="Pagination navigation">
+                        <ul class="moj-pagination__list">
+                            {% if data.page > 1 %}
+                            <li class="moj-pagination__item  moj-pagination__item--prev">
+                                <a class="moj-pagination__link"
+                                    href="?page={{data.page|int - 1|int}}#list">Previous<span
+                                        class="govuk-visually-hidden"> page</span></a>
+                            </li>
+                            {% endif %}
+
+                            {% for page in range(1, 6) %}
+                            <li
+                                class="moj-pagination__item {% if page == data.page %}moj-pagination__item--active{% endif %}">
+                                {% if page != data.page %}
+                                <a class="moj-pagination__link" href="?page={{page}}#list"
+                                    aria-label="Page {{page}} of {{totalPages}}">{{page}}</a>
+                                {% else %}
+                                {{page}}
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+
+                            {% if data.page < 5 %} <li class="moj-pagination__item  moj-pagination__item--next">
+                                <a class="moj-pagination__link" href="?page={{data.page|int + 1|int}}#list">Next<span
+                                        class="govuk-visually-hidden"> page</span></a>
+                                </li>
+                                {% endif %}
+                        </ul>
+                        <p class="moj-pagination__results">Showing <b>{{offset+1}}</b> to <b>{{offset+limit}}</b> of
+                            <b>{{5*limit}}</b>
+                            people
+                        </p>
+                    </nav>
+                </div>
+                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-year">
+                    <h2 class="govuk-heading-l">Past year</h2>
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Case manager</th>
+                                <th scope="col" class="govuk-table__header">Cases opened</th>
+                                <th scope="col" class="govuk-table__header">Cases closed</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">David Francis</td>
+                                <td class="govuk-table__cell">1380</td>
+                                <td class="govuk-table__cell">1472</td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">Paul Farmer</td>
+                                <td class="govuk-table__cell">1129</td>
+                                <td class="govuk-table__cell">1083</td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">Rita Patel</td>
+                                <td class="govuk-table__cell">1539</td>
+                                <td class="govuk-table__cell">1265</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            {% endblock %}
+        </main>
+    </div>
+    <div class="app-actions-toolbar" aria-live="polite" aria-disabled="true" role="toolbar"
+        aria-label="Attendance actions" id="allocation-toolbar">
+        <div class="govuk-width-container">
+            <p class="govuk-!-margin-bottom-0">
+                <span id="app-selected-count">
+                    No prisoners selected. Select prisoners to begin marking attendance.
+                </span>
+                <a href="#" class="govuk-link--no-visited-state govuk-!-margin-left-4" id="clear-selection"
+                    style="color: white">Clear</a>
+            </p>
+            <div class="govuk-button-group govuk-!-margin-bottom-0">
+                <button class="govuk-button govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn"
+                    data-module="govuk-button" value="deallocate" name="allocation-action">
+                    Remove from activity
+                </button>
+                <button class="govuk-button govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn"
+                    data-module="govuk-button" value="edit-allocation" id="edit-allocation" name="allocation-action">
+                    Edit allocation
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript">
+    // toggle .app-attendance-sticky-bar--bottom toolbar to display when any table checkboxes are checked
+    // ... and hide when no checkboxes are checked
+    const toolbar = $('#allocation-toolbar');
+    const checkbox = $('table').find('input[type="checkbox"]');
+    const selectedCount = $('#app-selected-count');
+    const clearButton = $('#clear-selection');
+
+    // store the original count string
+    selectedCount.attr('data-html', $('#app-selected-count').html());
+
+    const generateCountString = (count) => {
+        let noun = count == 1 ? ' person' : ' people'; // if count is 1, use "person", otherwise use "people"
+        return count + noun + ' selected'; // return the count string with the noun
+    }
+
+    function updateToolbar() {
+        // if any checkboxes are checked, show the toolbar
+        if (checkbox.is(':checked')) {
+            toolbar.addClass('active').attr("aria-disabled", false); // enable the toolbar
+            selectedCount.html(generateCountString(checkbox.filter(':checked').length)); // update the count
+        } else {
+            toolbar.removeClass('active').attr("aria-disabled", true); // disable the toolbar
+            selectedCount.html(selectedCount.attr('data-html')); // reset the count
+        }
+
+        // if more than one checkbox is checked, hide the "Edit allocation" button
+        if (checkbox.filter(':checked').length > 1) {
+            $('#edit-allocation').hide(); // hide the button
+        } else {
+            $('#edit-allocation').show(); // show the button
+        }
+    };
+
+    $('body').on('change', 'table input[type="checkbox"]', updateToolbar); // update the toolbar when any checkbox is changed
+
+    // run the function on window load to check if any checkboxes are already checked
+    $(window).on('load', updateToolbar);
+
+    // clear all checkboxes when the "Clear selection" button is clicked
+    clearButton.on('click', function (event) {
+        event.preventDefault(); // prevent the page from jumping to the top
+
+        // get the first checkbox in the table
+        let selectAllCheckbox = $('body').find('table input[type="checkbox"]').first();
+
+        // if the first checkbox in the table is checked, uncheck it
+        if (selectAllCheckbox.is(':checked')) {
+            selectAllCheckbox.click();
+        } else {
+            // otherwise, uncheck all other checkboxes
+            checkbox.prop('checked', false);
+        }
+
+        // disable the toolbar and reset the count
+        toolbar.removeClass('active').attr("aria-disabled", true);
+
+        // reset the count
+        selectedCount.html(selectedCount.attr('data-html'));
+    });
+</script>
+{% endblock %}

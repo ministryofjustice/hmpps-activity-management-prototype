@@ -1,0 +1,68 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                End activities
+            </span>
+
+            <h1 class="govuk-heading-xl">
+                Check and confirm
+            </h1>
+
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        {{"Activity" if activitiesData.length == 1 else "Activities"}} being ended
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {% if activitiesData.length == 1 %}
+                        {{activitiesData[0].name}}
+                        {% else %}
+                        <ul class="govuk-list govuk-list--spaced">
+                            {% for activity in activitiesData %}
+                            <li>
+                                {{activity.name}}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        End date
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {{data["end-date"] | convertShortDateToVeryLongDate}}
+                    </dd>
+                </div>
+            </dl>
+
+            {{ govukInsetText({
+            text: "Anyone allocated to the activity who was due to be taken off after the end date will finish on this
+            date."
+            }) }}
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

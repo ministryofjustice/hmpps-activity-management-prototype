@@ -1,0 +1,38 @@
+<div class="app-attendance-sticky-bar--bottom">
+	<div class="govuk-width-container">
+		<p class="govuk-!-margin-bottom-0" id="app-selected-count">
+			No prisoners selected. Select prisoners to begin marking attendance.
+		</p>
+		<div class="govuk-button-group govuk-!-margin-bottom-0">
+			{{ govukButton({
+				text: "Refused to attend",
+				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
+				value: "refused",
+				name: "refusal-type",
+				attributes: {
+					formAction: houseblock + "/add-absence-details"
+				}
+			}) }}
+			{{ govukButton({
+				text: "Sickness",
+				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
+				value: "sickness",
+				name: "refusal-type",
+				attributes: {
+					formAction: houseblock + "/add-absence-details"
+				}
+			}) }}
+			{{ govukButton({
+				text: "Other non-attendance",
+				classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
+				value: "other",
+				name: "refusal-type",
+				attributes: {
+					formAction: houseblock + "/add-absence-details"
+				}
+			}) }}
+			<input type="hidden" name="attendance-action" value="not-attended">
+			<input type="hidden" name="attendance-url" value="refusals">
+		</div>
+	</div>
+</div>

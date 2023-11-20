@@ -1,0 +1,80 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-xl">{{journeyName}}</span>
+
+            {{ govukRadios({
+            idPrefix: "eligible",
+            name: "new-application[eligible]",
+            fieldset: {
+            legend: {
+            text: "Record a status for this application",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            hint: {
+                html: '<p>You can approve the application and add the applicant to the waitlist, decline it, or add as pending. If you decline the application, make sure you tell the person concerned.</p><p class="govuk-hint">Select one option.</p>'
+            },
+            items: [
+            {
+            value: "yes",
+            html: '<span class="govuk-tag govuk-tag--green">Approved</span>',
+            hint: {
+                text: 'Add the applicant to the waitlist. They’re ready to be allocated.'
+            }
+            },
+            {
+            value: "no",
+            html: '<span class="govuk-tag govuk-tag--red">Declined</span>',
+            hint: {
+                text: 'Reject the application and inform the person concerned.'
+            }
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "",
+            html: '<span class="govuk-tag govuk-tag--yellow">Pending</span>',
+            hint: {
+                text: 'Add the applicant to the waitlist as ‘Pending’. Follow your usual procedure to check if they can be allocated.'
+            }
+            }
+            ]
+            }) }}
+
+            {{govukCharacterCount({
+            id: "comment",
+            name: "new-application[comments]",
+            maxlength: 500,
+            label: {
+            text: "Add a comment (optional)",
+            classes: "govuk-label--m govuk-!-margin-top-8"
+            },
+            hint: {
+            text: "If you add a comment, you may want to include your name and date."
+            }
+            })}}
+
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

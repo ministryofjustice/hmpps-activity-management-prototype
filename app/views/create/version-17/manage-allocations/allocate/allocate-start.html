@@ -1,0 +1,260 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+{% if (application and application.eligible != 'yes') %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    Suitability checks have not been carried out for this prisoner.
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml
+}) }}
+{% endif %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set activity = application['activity'] | getActivityDetails %}
+        {% set prisoner = data['new-activity']['prisoner'] %}
+
+        <span class="govuk-caption-l">
+            Allocate to {{activity.name}}
+        </span>
+        <h1 class="govuk-heading-xl">
+            Before you allocate
+        </h1>
+
+        <p class="govuk-body-l">
+            Use the information on this page to decide if <a href="#">{{prisoner.name.firstname}}
+                {{prisoner.name.surname}}</a> is suitable for {{activity.name}}.
+        </p>
+        <p class="govuk-body-l">
+            You may need to consult with other departments before making your decision.
+        </p>
+
+        {% if application and application.status != 'rejected' %}
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Suitability
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if application['eligible'] == 'yes' %}
+                    <span class="govuk-tag govuk-tag--green">Checks passed</span>
+                    {% elif application['eligible'] == 'no' %}
+                    <span class="govuk-tag govuk-tag--red">Rejected</span>
+                    {% else %}
+                    <span class="govuk-tag govuk-tag--yellow">Checks needed</span>
+                    {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    {{"2023-01-01" | convertShortDateToLongDate}}
+                </dd>
+            </div>
+        </dl>
+        {% endif %}
+
+        <h2 class="govuk-heading-m" id="requirements">
+            Activity requirements
+        </h2>
+        <p class="govuk-body">
+            Review the requirements for {{activity.name}} and check if {{prisoner.name.firstname}}
+            {{prisoner.name.surname}} meets them.
+        </p>
+
+        <table class="govuk-table govuk-!-margin-bottom-8">
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Type of requirement</th>
+                    <th scope="col" class="govuk-table__header">{{prisoner.name.firstname}} {{prisoner.name.surname}}'s
+                        details</th>
+                    <th scope="col" class="govuk-table__header">Meets requirement</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Workplace risk assessment level</th>
+
+                    <td class="govuk-table__cell">{{prisoner.riskAssessment|capitalize}}</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Incentive level</th>
+
+                    <td class="govuk-table__cell">{{prisoner.incentiveLevel|capitalize}}</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Education levels</th>
+
+                    <td class="govuk-table__cell">English level 1</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--green">Yes</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Earliest release date</th>
+
+                    <td class="govuk-table__cell">{{prisoner.releaseDate | convertShortDateToLongDate}}</td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--grey">Not applicable</span>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Non-associations</th>
+
+                    <td class="govuk-table__cell">
+                        <a href="#" class="govuk-link--no-visited-state">Junior Smith</a>
+                    </td>
+
+                    <td class="govuk-table__cell">
+                        <span class="govuk-tag govuk-tag--red">No</span>
+                    </td>
+            </tbody>
+        </table>
+
+        <h2 class="govuk-heading-m">
+            Current allocations
+        </h2>
+        <p class="govuk-body">
+            Check if {{prisoner.name.firstname}} {{prisoner.name.surname}}'s current allocation would be compatible with
+            Anger Management Class.
+        </p>
+        {{govukTable({
+        classes: "govuk-!-margin-bottom-5",
+        firstCellIsHeader: true,
+        head: [
+        {
+        text: "Activity"
+        },
+        {
+        text: "Start date"
+        },
+        {
+        text: "End date"
+        },
+        {
+        text: "Pay rate"
+        }
+        ],
+        rows: [
+        [
+        {
+        text: "Gardens"
+        },
+        {
+        text: "2021-01-23"|convertShortDateToLongDate
+        },
+        {
+        text: "None set"
+        },
+        {
+        text: "£1.00 (General)"
+        }
+        ]
+        ]
+        })}}
+        <p class="govuk-!-margin-bottom-8">
+            <a href="#" class="govuk-link--no-visited-state">View allocations from the last 12 months</a>
+        </p>
+
+
+        <!-- <h2 class="govuk-heading-m">
+            Previous requests
+        </h2>
+        <p class="govuk-body">
+            Check if {{prisoner.name.firstname}} {{prisoner.name.surname}}'s previous activity requests are compatible
+            with allocation to {{activity.name}}.
+        </p>
+        {% include "../../includes/_previous-requests-table.html" %} -->
+
+        <form method="post" class="govuk-!-margin-top-8">
+            {% if application %}
+            {{govukRadios({
+            idPrefix: "application-status",
+            name: "allocate",
+            fieldset: {
+            legend: {
+            text: "Do you want to allocate " + prisoner.name.firstname + " " + prisoner.name.surname + " to " +
+            activity.name + "?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            items: [
+            {
+            value: "allocate",
+            html: "Yes"
+            },
+            {
+            value: "return",
+            html: "No, I want to return to the waitlist"
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "remove",
+            html: "No, I want to decline " + prisoner.name.firstname + " " + prisoner.name.surname + "'s application and return to the waitlist"
+            }
+            ]
+            })}}
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+
+            {% else %}
+
+            {{govukRadios({
+            idPrefix: "application-status",
+            name: "allocate",
+            fieldset: {
+            legend: {
+            text: "Do you want to allocate " + prisoner.name.firstname + " " + prisoner.name.surname + " to " +
+            activity.name + "?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+            }
+            },
+            items: [
+            {
+            value: "allocate",
+            html: "Yes"
+            },
+            {
+            value: "return",
+            html: "No, I want to review the list of other people"
+            }
+            ]
+            })}}
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

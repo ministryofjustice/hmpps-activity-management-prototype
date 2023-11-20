@@ -1,0 +1,194 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{data['period']|upper}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+<form>
+    <div class="govuk-width-container">
+        {% block beforeContent %}
+        {{govukBackLink({
+        text: "Back to select date",
+        "href": "javascript: window.history.go(-1)"
+        })}}
+        {% endblock %}
+
+        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+                        Locations with activities or appointments in this session
+                    </h1>
+                    <span class="govuk-caption-l">
+                        {{period|upper}} session
+                    </span>
+                    <span class="govuk-caption-l">
+                        {{data['date']|longDateFormat(data['date'])}}
+                    </span>
+
+                    <!-- <ul class="govuk-list govuk-!-margin-bottom-6 govuk-!-margin-top-4">
+                        <li>
+                            <a href="../select-date" class="govuk-link--no-visited-state">Change movement list
+                                date</a>
+                        </li>
+                    </ul> -->
+
+                    <!-- <div class="govuk-inset-text">
+                        You'll only see locations where there are activities running on the date and in the time period
+                        you choose.
+                    </div> -->
+
+                    <div class="moj-search govuk-!-margin-bottom-6 govuk-!-margin-top-4">
+                        <form action="{{date}}" method="get" novalidate="">
+                            <!-- <div class="govuk-form-group">
+                                <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
+                                    Search
+                                </label>
+                                <input class="govuk-input moj-search__input " id="keywords" name="search" type="search"
+                                    value="{{data['search']}}">
+                            </div>
+                            <button class="govuk-button moj-search__button" data-module="govuk-button">
+                                Search
+                            </button> -->
+                        </form>
+                    </div>
+
+                    <div class="moj-search govuk-!-margin-bottom-6">
+                        <form action="{{data['date']}}" method="get" novalidate="">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
+                                    Search by location, activity or appointment
+                                </label>
+                                <input class="govuk-input moj-search__input " id="keywords" name="search" type="search"
+                                    value="{{data['search']}}">
+                            </div>
+                            <button class="govuk-button moj-search__button" data-module="govuk-button">
+                                Search
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="govuk-heading-m">
+                {{locations.length}} locations
+            </h2>
+
+            <table
+                class="govuk-table app-whereabouts-table app-whereabouts-table--sticky-head app-whereabouts-table--font-size-normal govuk-!-margin-bottom-8"
+                data-module="moj-sortable-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending">Location</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending">Allocated</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Activity</th>
+                        <th scope="col" class="govuk-table__header"></th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    {% for location in locations | sort(false, true, 'name') %}
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <h2 class="govuk-heading-m govuk-!-margin-0 govuk-!-padding-0">{{location.name}}</h2>
+                        </td>
+                        <td class="govuk-table__cell">
+                            {{location.prisoners}}
+                        </td>
+                        <td class="govuk-table__cell">
+                            <ul class="govuk-list govuk-!-margin-bottom-0">
+                                {% for activity in location.activities %}
+                                <li>
+                                    <a href="activities/{{data['date']}}/{{data['period']|upper}}/{{activity.id}}"
+                                        class="govuk-link--no-visited-state">{{activity.name}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td class="govuk-table__cell">
+                            <a href="{{period}}/{{location.activityIds or 'null'}}?location={{location.name}}"
+                                class="govuk-link--no-visited-state">View movement list</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+    </div>
+    {% include './_locations-toolbar.html' %}
+</form>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        new MOJFrontend.FilterToggleButton({
+            bigModeMediaQuery: "(min-width: 48.063em)",
+            startHidden: true,
+            toggleButton: {
+                container: $(".moj-filter-button"),
+                showText: "Show filter",
+                hideText: "Hide filter",
+                classes: "govuk-button--secondary",
+            },
+            closeButton: {
+                container: $(".moj-filter__header-action"),
+                text: "Close",
+            },
+            filter: {
+                container: $(".moj-filter"),
+            },
+        });
+
+        function toggleToolbar(btn) {
+            let checkbox = $('.app-whereabouts-table input[type="checkbox"]')
+            let count = checkbox.filter(':checked').length - $('th .moj-multi-select__checkbox input:checkbox:checked').length
+
+            if (!btn.data('html')) {
+                $.each(btn, function () {
+                    $(this).attr('data-html', $(this).html())
+                })
+
+                $('#app-selected-count').attr('data-html', $('#app-selected-count').html())
+            }
+
+            if (checkbox.is(':checked')) {
+                let countText = (count > 1) ? "locations" : "location"
+
+                $('#app-selected-count').html(count + " " + countText + " selected")
+
+                $.each(btn, function () {
+                    $(this).attr("disabled", false).html($(this).data('html'))
+                })
+
+                $('.app-attendance-sticky-bar--bottom').addClass('active').attr("aria-disabled", false).find('.govuk-button-group').show()
+            } else {
+                $.each(btn, function () {
+                    $(this).attr("disabled", true).html($(this).data('html'))
+                })
+
+                $('.app-attendance-sticky-bar--bottom').removeClass('active').attr("aria-disabled", true).find('.govuk-button-group').hide()
+                $('#app-selected-count').html($('#app-selected-count').data('html'))
+            }
+        }
+        $(window).load(function () {
+            toggleToolbar($('.app-attendance-btn'))
+        })
+        $('.app-whereabouts-table input[type="checkbox"]').on('change', function () {
+            toggleToolbar($('.app-attendance-btn'))
+        })
+
+        const el = document.querySelector(".app-attendance-sticky-bar--bottom")
+        const observer = new IntersectionObserver(
+            ([e]) => e.target.classList.toggle("is-pinned", e.intersectionRatio < 1),
+            { threshold: [1] }
+        );
+
+        observer.observe(el);
+    })
+</script>
+{% endblock %}

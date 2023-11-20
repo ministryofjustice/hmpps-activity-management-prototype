@@ -1,0 +1,81 @@
+{% extends "layout_hmpps.html" %} {% block pageTitle %} Activities Management
+prototype {% endblock %} {% block primaryNavigation %} {% endblock %} {% block
+beforeContent %} {{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %} {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">
+      Create an activity
+    </span>
+    
+    <form method="post">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="days-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              Week {{data['week']}}: enter the days and times when the activity will run
+            </h1>
+          </legend>
+
+          <div id="days-hint" class="govuk-hint">
+            Select each day that the activity will run, then select the slots when the activity will run on that day.
+            You can choose any or all of AM (morning), PM (afternoon) and ED (evening duty).
+          </div>
+
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            {% for day in days %}
+            {% set dayIndex = loop.index0 %}
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="day-{{dayIndex}}" name="days" type="checkbox" {{"checked" if
+                day.am !=null or day.pm !=null}} value="{{dayIndex}}" aria-controls="conditional-day-{{dayIndex}}"
+                aria-expanded="false" />
+              <label class="govuk-label govuk-checkboxes__label" for="day-{{dayIndex}}">
+                {{day|capitalize}}
+                {% if loop.index == 3 and data['week'] == 1 %}
+                <!-- – you have scheduled this activity to start on Wednesday 7 June 2023 -->
+                <span class="govuk-tag govuk-tag--grey">start day</span>
+                {% endif %}
+              </label>
+            </div>
+
+            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+              id="conditional-day-{{dayIndex}}">
+              <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                  <legend class="govuk-fieldset__legend govuk-visually-hidden">
+                    Times
+                  </legend>
+
+                  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                    {% set periods = [ "am", "pm", "ed" ] %}
+                    {% for period in periods %}
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="times-{{dayIndex}}-{{period}}" {{ "checked" if
+                        day[period][0] !=null }} name="times-{{dayIndex}}" type="checkbox" value="{{period}}" />
+                      <label class="govuk-label govuk-checkboxes__label" for="times-{{dayIndex}}-{{period}}">
+                        {{period|upper}}
+                      </label>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </fieldset>
+      </div>
+
+      {% if data['week'] == 1 %}
+      {{govukInsetText({
+        html: "You set the start date for this activity as Wednesday 7 June 2023."
+      })}}
+      {% endif %}
+
+      <button class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

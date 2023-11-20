@@ -1,0 +1,475 @@
+{% extends "layout_hmpps.html" %}
+
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+<form method="post">
+    <div class="govuk-width-container">
+        {% block beforeContent %}
+        <!-- {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+        {{ govukBreadcrumbs({
+        classes: "govuk-!-display-none-print",
+        items: [
+        {
+        text: "Digital Prison Services",
+        href: "/dps-home"
+        },
+        {
+        text: "Manage activities and allocations",
+        href: "../manage-activities"
+        },
+        {
+        text: "Manage allocations",
+        href: "../manage-allocations"
+        }
+        ]
+        })}} -->
+        {{ govukBackLink({
+        text: "Allocation dashboard",
+        href: "../../manage-allocations"
+        }) }}
+        {% endblock %}
+
+        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+            {% block content %}
+            {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+            {% if data['confirmation-dialog'].display == true %}
+            {% set p = data['confirmation-dialog'].prisoner | getPrisonerDetails %}
+            {% if data['confirmation-dialog'].type == 'rejected' %}
+            {% set bannerHtml %}
+            <h2 class="govuk-notification-banner__heading">
+                We've removed {{p.name.firstname}} {{p.name.surname}} from the waitlist for
+                {{activity.name}}.
+            </h2>
+            {% endset %}
+            {{ govukNotificationBanner({
+            html: bannerHtml,
+            titleText: "Success",
+            type: "success"
+            }) }}
+            {% endif %}
+
+            {% if data['confirmation-dialog'].type == 'eligible' %}
+            {% set bannerHtml %}
+            <h2 class="govuk-notification-banner__heading">
+                We've changed {{p.name.firstname}} {{p.name.surname}}'s suitability to 'checks passed'.
+            </h2>
+            {% endset %}
+            {{ govukNotificationBanner({
+            html: bannerHtml,
+            titleText: "Success",
+            type: "success"
+            }) }}
+            {% endif %}
+
+            {% if data['confirmation-dialog'].type == 'pending' %}
+            {% set bannerHtml %}
+            <h2 class="govuk-notification-banner__heading">
+                We've changed {{p.name.firstname}} {{p.name.surname}}'s suitability to 'checks needed'.
+            </h2>
+            {% endset %}
+            {{ govukNotificationBanner({
+            html: bannerHtml,
+            titleText: "Success",
+            type: "success"
+            }) }}
+            {% endif %}
+            {% endif %}
+
+            <div class="govuk-grid-row govuk-!-margin-bottom-4">
+                <div class="govuk-grid-column-two-thirds">
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+                        <span class="govuk-caption-l">
+                            Manage allocations <span class="govuk-visually-hidden"> for </span>
+                        </span>
+                        {{activity.name}}
+                    </h1>
+
+                    <ul class="govuk-list govuk-!-margin-bottom-5">
+                        <li>
+                            Vacancies: {{activity.vacancies}}
+                        </li>
+                        <li>
+                            Capacity: {{activity.capacity}}
+                        </li>
+                    </ul>
+
+                    {% set riskAssessment %}
+                    {{"Low, Medium or High" if activity.riskAssessment == "any"}}
+                    {{"Low" if activity.riskAssessment == "low-only"}}
+                    {{"Low or Medium" if activity.riskAssessment == "low-or-medium"}}
+                    {% endset %}
+
+                    {% set activityInfoHtml %}
+                    {{ govukSummaryList({
+                    classes: "govuk-summary-list--no-borderr",
+                    rows: [
+                    {
+                    classes: "govuk-summary-list__row--no-actions",
+                    key: {
+                    text: "Suitable for workplace risk assessment"
+                    },
+                    value: {
+                    text: riskAssessment
+                    }
+                    },
+                    {
+                    key: {
+                    text: "Suitable for incentive level"
+                    },
+                    value: {
+                    html: '<p>Basic, Standard or Enhanced</p>
+                    <p class="govuk-hint">
+                        You can control which incentive levels are suitable by <a href="edit/pay-rates">adding or
+                            removing corresponding pay rates</a>.
+                    </p>'
+                    }
+                    },
+                    {
+                    key: {
+                    text: "Education level"
+                    },
+                    value: {
+                    text: "English level 1"
+                    }
+                    }
+                    ]
+                    }) }}
+                    {% endset %}
+
+                    {{govukDetails({
+                    summaryText: "Check the requirements for this activity",
+                    html: activityInfoHtml
+                    })}}
+                </div>
+
+                <div class="govuk-grid-column-one-third">
+                    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+                        Related tasks
+                    </h2>
+
+                    <ul class="govuk-list govuk-!-margin-bottom-7">
+                        <li>
+                            <a href="../edit-activity/{{activity.id}}/schedule-dates#schedule"
+                                class="govuk-link govuk-link--no-visited-state" target="_blank">
+                                View activity schedule (opens in new tab)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../edit-activity/{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
+                                Edit activity details
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a href="../create-activity" class="govuk-link govuk-link--no-visited-state">
+                                Create an activity
+                            </a>
+                        </li> -->
+                        <!-- <li>
+                            <a href="../log-request" class="govuk-link govuk-link--no-visited-state">
+                                Log a request
+                            </a>
+                        </li> -->
+                        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+                        <li class="govuk-!-margin-top-0">
+                            <a href="/dps-home" class="govuk-link govuk-link--no-visited-state">
+                                Go to DPS home
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- <div class="govuk-!-padding-4" style="background-color: #f1f2f3;">
+                        <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-visually-hidden">
+                            Weekly schedule
+                        </h2>
+                        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-0">
+                            {% for day in activityDaysWithTimes %}
+                            <div class="govuk-summary-list__row">
+                                <dt
+                                    class="govuk-summary-list__key govuk-!-font-size-16 govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-top-1 govuk-!-padding-bottom-1">
+                                    {% if day.times %}
+                                    {{day.day|capitalize}}
+                                    {% else %}
+                                    <span class="govuk-hint govuk-!-font-size-16">{{day.day|capitalize}}</span>
+                                    {% endif %}
+                                </dt>
+                                <dd
+                                    class="govuk-summary-list__value govuk-!-font-size-16 govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-top-1 govuk-!-padding-bottom-1">
+                                    {% if day.times %}
+                                    {{day.times}}
+                                    {% else %}
+                                    <span class="govuk-hint govuk-!-font-size-16">Not scheduled</span>
+                                    {% endif %}
+                                </dd>
+                            </div>
+                            {% endfor %}
+                        </dl>
+                    </div> -->
+                </div>
+            </div>
+
+            
+
+            <div class="govuk-tabs" data-module="govuk-tabs">
+                <h2 class="govuk-tabs__title">
+                    Contents
+                </h2>
+                <ul class="govuk-tabs__list">
+                    <li class="govuk-tabs__list-item">
+                        <a class="govuk-tabs__tab" href="../{{activity.id}}">
+                            Currently allocated ({{currentlyAllocated.length}})
+                        </a>
+                    </li>
+                    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                        <a class="govuk-tabs__tab" href="../{{activity.id}}/waitlist">
+                            Waitlist
+                        </a>
+                    </li>
+                    <li class="govuk-tabs__list-item">
+                        <a class="govuk-tabs__tab" href="../{{activity.id}}/allocate?page=1">
+                            Other people
+                        </a>
+                    </li>
+                </ul>
+                <div class="govuk-tabs__panel" id="waitlist">
+                    <h2 class="govuk-heading-l govuk-!-margin-bottom-5">
+                        {{activityApplications|length}} {{'people' if activityApplications|length != 1 else 'person'
+                        }} on the waitlist
+                    </h2>
+
+                    <div class="app-filter-area govuk-!-display-none-print" id="filters" tabindex="0">
+                        <h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+                            Filters
+                        </h2>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <div
+                                    class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-padding-right-3">
+                                    <label class="govuk-label">
+                                        Employment
+                                    </label>
+                                    <select class="govuk-select" id="" name="filters[attendance]">
+                                        <option value="not-in-work">Not in work</option>
+                                        <option value="in-work">In work</option>
+                                        <option value="all" selected>Everyone</option>
+                                    </select>
+                                </div>
+        
+                                <div
+                                    class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-padding-right-3">
+                                    <label class="govuk-label">
+                                        Workplace risk assessment level
+                                    </label>
+                                    <select class="govuk-select" id="" name="filters[attendance]">
+                                        <option value="any">Any</option>
+                                        <option value="low-only">Low only</option>
+                                        <option value="low-or-medium">Low or medium</option>
+                                        <option value="medium-only">Medium only</option>
+                                    </select>
+                                </div>
+        
+                                <div
+                                    class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-padding-right-3">
+                                    <label class="govuk-label">
+                                        Incentive level
+                                    </label>
+                                    <select class="govuk-select" id="" name="filters[attendance]">
+                                        <option value="any">Any</option>
+                                        <option value="basic">Basic only</option>
+                                        <option value="standard">Standard only</option>
+                                        <option value="enhanced">Enhanced only</option>
+                                    </select>
+                                </div>
+        
+                                <div
+                                    class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-padding-right-3">
+                                    <label class="govuk-label">
+                                        Waitlist status
+                                    </label>
+                                    <select class="govuk-select" id="" name="filters[attendance]">
+                                        <option value="any">Any</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="approved">Approved</option>
+                                        <option value="rejected">Rejected</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-0" data-module="govuk-button"
+                            type="submit" name="submit-action" value="apply-filters">
+                            Apply filters
+                        </button>
+                    </div>
+
+                    <table class="govuk-table moj-sortable-table" data-module="moj-sortable-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Name</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="ascending">Request date</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Requester</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Current allocations</th>
+                                <th scope="col" class="govuk-table__header" aria-sort="none">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            {% for application in activityApplications | sort(false, true, 'date') %}
+                            {% set prisoner = application["selected-prisoner"]|getPrisonerDetails %}
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-padding-top-1">
+                                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                                        <div class="govuk-radios__item">
+                                            <input
+                                                class="govuk-radios__input govuk-!-margin-right-2 govuk-!-margin-left-1"
+                                                type="radio" id="prisoner-{{loop.index}}" name="selected-prisoner"
+                                                value="{{prisoner.id}},{{application.id}}">
+                                            <label class="govuk-label govuk-radios__label"
+                                                for="prisoner-{{loop.index}}">
+                                                <b><a href="#"
+                                                        class="govuk-link--no-visited-state">{{prisoner.name.firstname}}
+                                                        {{prisoner.name.surname}}</a></b>
+                                                <br>
+                                                {{prisoner.id}}
+                                                <br>
+                                                {{prisoner.location.cell}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="govuk-table__cell govuk-!-padding-top-4"
+                                    data-sort-value="{{application.date}}">
+                                    {{application.date|convertShortDateToMediumDate}}
+                                </td>
+                                <td class="govuk-table__cell govuk-!-padding-top-4">
+                                    {% if application.applicant == "prisoner" %}
+                                    Self-requested
+                                    {% else %}
+                                    {{application.applicant|capitalize}}
+                                    {% endif %}
+                                </td>
+                                <td class="govuk-table__cell govuk-!-padding-top-4">
+                                    <ul class="govuk-list">
+                                        {% if prisoner.activity|length == 0 %}
+                                        <span class="govuk-hint">None</span>
+                                        {% endif %}
+                                        {% for allocation in prisoner.activity %}
+                                        {% set activity = allocation|getActivityDetails %}
+                                        <li><a href="../{{activity.id}}"
+                                                class="govuk-link--no-visited-state">{{activity.name}}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                                <td class="govuk-table__cell govuk-!-padding-top-4">
+                                    {% if application.eligible == "yes" %}
+                                    <span class="govuk-tag govuk-tag--green">Approved</span>
+                                    {% elif application.eligible == "no" %}
+                                    <span class="govuk-tag govuk-tag--red">Rejected</span>
+                                    {% else %}
+                                    <span class="govuk-tag govuk-tag--yellow">Pending</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endblock %}
+        </main>
+    </div>
+    <div class="app-actions-toolbar" aria-live="polite" aria-disabled="true" role="toolbar"
+        aria-label="Attendance actions" id="allocation-toolbar">
+        <div class="govuk-width-container">
+            <p class="govuk-!-margin-bottom-0">
+                <span id="app-selected-count">
+                    No prisoners selected. Select prisoners to begin marking attendance.
+                </span>
+                <a href="#" class="govuk-link--no-visited-state govuk-!-margin-left-4" id="clear-selection"
+                    style="color: white">Clear</a>
+            </p>
+            <div class="govuk-button-group govuk-!-margin-bottom-0">
+                <button class="govuk-button govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn"
+                    data-module="govuk-button" value="view-edit" name="submit-action">
+                    View or edit application
+                </button>
+                <button class="govuk-button govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn"
+                    data-module="govuk-button" value="allocate" name="submit-action">
+                    Allocate
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript">
+    // toggle .app-attendance-sticky-bar--bottom toolbar to display when any table checkboxes are checked
+    // ... and hide when no checkboxes are checked
+    const toolbar = $('#allocation-toolbar');
+    const radio = $('table').find('input[type="radio"]');
+    const selectedCount = $('#app-selected-count');
+    const clearButton = $('#clear-selection');
+
+    // store the original count string
+    selectedCount.attr('data-html', $('#app-selected-count').html());
+
+    const generateCountString = (count) => {
+        let noun = count == 1 ? ' person' : ' people'; // if count is 1, use "person", otherwise use "people"
+        return count + noun + ' selected'; // return the count string with the noun
+    }
+
+    function updateToolbar() {
+        // if any checkboxes are checked, show the toolbar
+        if (radio.is(':checked')) {
+            toolbar.addClass('active').attr("aria-disabled", false); // enable the toolbar
+            selectedCount.html(generateCountString(radio.filter(':checked').length)); // update the count
+        } else {
+            toolbar.removeClass('active').attr("aria-disabled", true); // disable the toolbar
+            selectedCount.html(selectedCount.attr('data-html')); // reset the count
+        }
+
+        // if more than one checkbox is checked, hide the "Edit allocation" button
+        if (radio.filter(':checked').length > 1) {
+            $('#edit-allocation').hide(); // hide the button
+        } else {
+            $('#edit-allocation').show(); // show the button
+        }
+    };
+
+    $('body').on('change', 'table input[type="radio"]', updateToolbar); // update the toolbar when any checkbox is changed
+
+    // run the function on window load to check if any checkboxes are already checked
+    $(window).on('load', updateToolbar);
+
+    // clear all checkboxes when the "Clear selection" button is clicked
+    clearButton.on('click', function (event) {
+        event.preventDefault(); // prevent the page from jumping to the top
+
+        // get the first checkbox in the table
+        let selectAllCheckbox = $('body').find('table input[type="checkbox"]').first();
+
+        // if the first checkbox in the table is checked, uncheck it
+        if (selectAllCheckbox.is(':checked')) {
+            selectAllCheckbox.click();
+        } else {
+            // otherwise, uncheck all other checkboxes
+            radio.prop('checked', false);
+        }
+
+        // disable the toolbar and reset the count
+        toolbar.removeClass('active').attr("aria-disabled", true);
+
+        // reset the count
+        selectedCount.html(selectedCount.attr('data-html'));
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-xl">
+                {{activity.name}}
+            </span>
+
+            <!-- <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                            Select which prisoners you want to deallocate from this activity
+                        </h1>
+                    </legend>
+
+                    <div class="govuk-checkboxes">
+                        {% for prisoner in prisonerData %}
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="prisoner-{{prisoner.id}}" name="prisoner"
+                                type="checkbox" value="{{prisoner.id}}">
+                            <label class="govuk-label govuk-checkboxes__label" for="prisoner-{{prisoner.id}}">
+                                {{prisoner.name.surname}}, {{prisoner.name.firstname}} ({{prisoner.id}})
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div> -->
+
+            <h1 class="govuk-heading-xl">
+                Select which prisoners you want to deallocate from this activity
+            </h1>
+            
+            <table
+				class="govuk-table"
+				data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+                <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
+                    Prisoners on the {{payRate.payBand}} pay band
+                </caption>
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="col"
+                            id="select-all"></th>
+                        <th scope="col" class="govuk-table__header">Prisoner</th>
+                        <th scope="col" class="govuk-table__header">Incentive level</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    {% for prisoner in prisonerData %}
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div
+                                class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                                <input type="checkbox" class="govuk-checkboxes__input" id="prisoner-{{loop.index}}"
+                                    name="selected-prisoners" value="{{prisoner.id}}">
+                                <label class="govuk-label govuk-checkboxes__label" for="prisoner-{{loop.index}}">
+                                    <span class="govuk-visually-hidden">Select {{prisoner.name.surname}},
+                                        {{prisoner.name.firstname}}</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">{{prisoner.name.surname}}, {{prisoner.name.firstname}}
+                            ({{prisoner.id}})</td>
+                        <td class="govuk-table__cell">{{prisoner.incentiveLevel|capitalize}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {{govukButton({
+            text: "Continue",
+            classes: "govuk-!-margin-top-6"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}

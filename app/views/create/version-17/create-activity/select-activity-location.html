@@ -1,0 +1,140 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                Create an activity
+            </span>
+
+            {% set search1Html %}
+            <div id="subject-hint" class="govuk-hint">
+                Start typing a location and select the one you need from the list of options.
+            </div>
+            <select class="govuk-select" id="off-wing-location" name="new-activity[location]">
+                <option value="">Select a location</option>
+                {% for location in locations|sort() %}
+                <option value="{{ location }}" {{"selected" if location==data['new-activity']['location']}}>{{ location
+                    }}</option>
+                {% endfor %}
+                <option value="Not listed">Other (not listed)</option>
+            </select>
+            {% endset %}
+
+            {% set search2Html %}
+            <div id="subject-hint" class="govuk-hint">
+                Start typing a location and select the one you need from the list of options.
+            </div>
+            <div id="subject-hint" class="govuk-hint">
+                If the location you need isn't listed, select 'Other (not listed)'.
+            </div>
+            <select class="govuk-select" id="on-wing-location" name="new-activity[location]">
+                <option value="">Select a location</option>
+                {% for location in locations|sort() %}
+                <option value="{{ location }}" {{"selected" if location==data['new-activity']['location']}}>{{ location
+                    }}</option>
+                {% endfor %}
+                <option value="Not listed">Other (not listed)</option>
+            </select>
+            {% endset %}
+
+            {% set hintHtml %}
+            <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-5">
+                If the location is not listed, choose the relevant option to make sure the unlock lists can be filtered
+                to show who is staying on the wing or leaving.
+            </p>
+
+            <!-- {{govukDetails({
+            "summaryText": "Help with selecting a location",
+            "html": "<p>If you have searched for a location and it isn't listed, you should select either 'Off wing –
+                not listed' or 'On wing – not listed'.</p>
+            <p>For example, if the activity is taking place in a classroom, you should select 'Off wing – not listed'.
+            </p>
+            <p>If the activity is taking place on the wing, you should select 'On wing – not listed'.</p>"
+            })}} -->
+            {% endset %}
+
+            {{ govukRadios({
+            "id": "activity-location",
+            "name": "new-activity[location]",
+            "fieldset": {
+            "legend": {
+            "text": "Select the location of the activity",
+            "isPageHeading": true,
+            "classes": "govuk-fieldset__legend--l"
+            }
+            },
+            "hint": {
+            "html": hintHtml
+            },
+            "items": [
+            {
+            "value": "prison",
+            "text": "Search for a location",
+            "conditional": {
+            "html": search1Html
+            }
+            },
+            {
+            "value": "other-in-cell",
+            "text": "In cell"
+            },
+            {
+            "value": "other-on-wing",
+            "text": "Off wing – not listed"
+            },
+            {
+            "value": "other-out-of-cell",
+            "text": "On wing – not listed"
+            }
+            ]
+            }) }}
+
+            <!-- {{govukDetails({
+            "summaryText": "Help with selecting a location",
+            "html": "<p>If you have searched for a location and it isn't listed, you should select either 'Off wing –
+                not listed' or 'On wing – not listed'.</p>
+            <p>For example, if the activity is taking place in a classroom, you should select 'Off wing – not listed'.</p>
+            <p>If the activity is taking place on the wing, you should select 'On wing – not listed'.</p>"
+            })}} -->
+
+            <button class="govuk-button" data-module="govuk-button">Continue</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#off-wing-location'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+
+    // accessibleAutocomplete.enhanceSelectElement({
+    //     selectElement: document.querySelector('#on-wing-location'),
+    //     showAllValues: true,
+    //     defaultValue: '',
+    //     autoselect: true,
+    //     confirmOnBlur: false,
+    // })
+</script>
+{% endblock %}

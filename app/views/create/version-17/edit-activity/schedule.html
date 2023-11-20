@@ -1,0 +1,101 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {% set days = [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+            ] %}
+            {% set timesHtml %}
+
+            {% endset %}
+
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="days-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-margin-bottom-0">
+                        <h1 class="govuk-fieldset__heading">
+                            Change the days and times when this activity runs
+                        </h1>
+                    </legend>
+
+                    <p class="govuk-inset-text govuk-!-margin-bottom-6" id="days-hint">
+                        Any changes to the schedule will take effect from tomorrow.
+                    </p>
+
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        {% for day in activitySchedule %}
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="day-{{day.day}}" name="days" type="checkbox"
+                                {{"checked" if day.am !=null or day.pm !=null}} value="{{day.day}}"
+                                aria-controls="conditional-day-{{day.day}}" aria-expanded="false" />
+                            <label class="govuk-label govuk-checkboxes__label" for="day-{{day.day}}">
+                                {{days[day.day]|capitalize}}
+                            </label>
+                        </div>
+
+                        <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-day-{{loop.index0}}">
+                            <div class="govuk-form-group">
+                                <fieldset class="govuk-fieldset">
+                                    <legend class="govuk-fieldset__legend govuk-visually-hidden">
+                                        Times
+                                    </legend>
+
+                                    <div class="govuk-checkboxes govuk-checkboxes--small"
+                                        data-module="govuk-checkboxes">
+                                        {% set periods = [ "am", "pm", "ed" ] %}
+                                        {% for period in periods %}
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="times-{{day.day}}-{{period}}"
+                                                {{ "checked" if day[period][0] !=null }} name="times-{{day.day}}"
+                                                type="checkbox" value="{{period}}" />
+                                            <label class="govuk-label govuk-checkboxes__label"
+                                                for="times-{{day.day}}-{{period}}">
+                                                {{period|upper}}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
+
+            {{ govukButton({
+            text: "Update schedule"
+            }) }}
+
+            <p class="govuk-body">
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

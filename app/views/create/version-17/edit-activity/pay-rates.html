@@ -1,0 +1,123 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<!-- {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{{ govukNotificationBanner({
+text: "You have updated the pay rates for this activity.",
+type: "success"
+}) }} -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+            <h1 class="govuk-heading-l">
+                Edit pay rates
+            </h1>
+
+            {% for incentiveLevel, payRates in payRatesByIncentiveLevel %}
+            <h2 class="govuk-heading-m {{'govuk-!-margin-top-8' if loop.index > 1}}">
+                {{incentiveLevel|capitalize}} incentive level pay rates
+            </h2>
+            {% if payRates.length > 0 %}
+            <ul class="govuk-list govuk-button-group">
+                <li>
+                    <a href="#" class="govuk-link">
+                        Add pay rate <span class="govuk-visually-hidden"> for {{incentiveLevel}} incentive level</span>
+                    </a>
+                </li>
+            </ul>
+            {% for payRate in payRates %}
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title">
+                        {{payRate.name|capitalize}}
+                    </h2>
+
+                    <ul class="govuk-summary-card__actions">
+                        <li class="govuk-summary-card__action">
+                            <a class="govuk-link" href="pay-rate">
+                                Change
+                            </a>
+                        </li>
+                        {% if payRates.length > 1 %}
+                        <li class="govuk-summary-card__action">
+                            <a class="govuk-link" href="#">
+                                Delete
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Amount
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                £{{payRate.amount|decimalPlaces(2)}}
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                People allocated
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                5
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>
+                There are no pay rates for the enhanced incentive level.
+            </p>
+            {{ govukButton({
+            text: "Add pay rate",
+            classes: "govuk-button--secondary"
+            }) }}
+            {% endif %}
+            {% if payRates.length == 1 %}
+            <div class="govuk-inset-text">
+                <p>
+                    You cannot delete this pay rate because there are 9 people allocated to
+                    it and it is the only pay rate for this incentive level.
+                </p>
+                <p>
+                    If you want to delete this pay rate, you must first <a href="#">add a new pay rate for the Standard
+                        incentive level</a>.
+                </p>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+            <p>
+                {{ govukButton({
+                text: "Go back to activity details",
+                classes: "govuk-!-margin-top-8"
+                }) }}
+            </p>
+            <!-- <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p> -->
+        </form>
+    </div>
+</div>
+
+{% endblock %}
