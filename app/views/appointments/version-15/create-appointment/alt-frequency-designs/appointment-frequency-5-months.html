@@ -1,0 +1,68 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full"> 
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Schedule an appointment</span>
+        How often will the appointment repeat?
+       </h1> 
+       {% from "govuk/components/radios/macro.njk" import govukRadios %}
+        {% from "govuk/components/input/macro.njk" import govukInput %}
+
+       <div class="govuk-!-margin-bottom-5">
+        {{ govukRadios({
+          idPrefix: "appointment-frequency-monthly",
+          name: "appointment-frequency-monthly", 
+          items: [ 
+            {
+              value: "On the 18th of every month",
+              text: "On the 18th of every month",
+              hint: {
+                text: "Or the last day if there is no matching date in the month."
+              }
+            },
+            {
+              value: "Every third Friday of the month",
+              text: "Every third Friday of the month"
+            }
+          ]
+        }) }} 
+    
+   
+    <form id="form" method="post" action="appointment-frequency-5-ends">
+     <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    
+      
+    </div>
+
+  </div>
+</div>
+{% endblock %}

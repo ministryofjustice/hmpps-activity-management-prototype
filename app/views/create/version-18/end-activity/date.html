@@ -1,0 +1,113 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                End activities
+            </span>
+
+            {% set dateHtml %}
+            {{ govukDateInput({
+            id: "end-date",
+            namePrefix: "end-date",
+            fieldset: {
+            legend: {
+            text: "Date",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--s"
+            }
+            },
+            hint: {
+            text: "For example, 29 12 2022"
+            },
+            items: [
+            {
+            name: "day",
+            classes: "govuk-input--width-2",
+            value: endDate.day
+            },
+            {
+            name: "month",
+            classes: "govuk-input--width-2",
+            value: endDate.month
+            },
+            {
+            name: "year",
+            classes: "govuk-input--width-4",
+            value: endDate.year
+            }
+            ]
+            }) }}
+            {% endset %}
+
+            {% set noun %}
+            {% if activitiesData.length == 1 %}
+            {{activitiesData[0].name}}
+            {%- else -%}
+            the {{activitiesData.length}} activities you've selected
+            {%- endif -%}
+            {% endset %}
+
+            {{govukRadios({
+            name: "date-type",
+            fieldset: {
+            legend: {
+            text: "When do you want to end " + noun + "?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            items: [
+            {
+            value: "asap",
+            text: "Before the next session"
+            },
+            {
+            value: "date",
+            text: "On a specific date",
+            conditional: {
+            html: dateHtml
+            }
+            }
+            ]
+            })}}
+
+            {% if activitiesData.length > 1 %}
+            {% set activitiesList %}
+            <ul class="govuk-list govuk-list--bullet">
+                {% for activity in activitiesData %}
+                <li>
+                    {{activity.name}}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endset %}
+
+            {{ govukDetails({
+            summaryText: "View the " + activitiesData.length + " activities you've selected",
+            html: activitiesList
+            }) }}
+            {% endif %}
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

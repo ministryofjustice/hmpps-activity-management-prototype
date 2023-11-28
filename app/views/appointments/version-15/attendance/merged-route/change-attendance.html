@@ -1,0 +1,120 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+
+
+{% block main %}
+ 
+<div class="govuk-width-container">   
+  {% block beforeContent %}
+    <nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+      <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+        Go to all appointments tasks
+      </a>
+    </nav>
+  {% endblock %}
+
+
+  <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main"> 
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+          <h1 class="govuk-heading-l">
+            Change attendance details for Amby Abraham
+          </h1> 
+          <div class="govuk-inset-text"> 
+            <p>
+              {% if data['alt-appointment-name'] !='' %}
+
+              {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+      
+              {% else %}
+              
+              {{ data['apppointment-type']}}
+              {% endif %} on {{ data['date-of-appointment-day']}} October 2023 (AM)
+            </p> 
+          </div>  
+    
+    <div class="govuk-form-group">
+    
+      <fieldset class="govuk-fieldset">
+      
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      
+        
+          Did Amby Abraham attend the {% if data['alt-appointment-name'] !='' %}
+
+          {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+  
+          {% else %}
+          
+          {{ data['apppointment-type']}}
+          {% endif %} AM session on {{ data['date-of-appointment-day']}} October 2023?
+          
+      
+      </legend>
+      
+    
+      <div class="govuk-radios" data-module="govuk-radios"> 
+            
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="attendance-action" name="attendance-action" type="radio" value="attended">
+          <label class="govuk-label govuk-radios__label" for="attendance-action">
+            Yes
+          </label> 
+        </div>  
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="attendance-action-2" name="attendance-action" type="radio" value="not-attended">
+          <label class="govuk-label govuk-radios__label" for="attendance-action-2">
+            No
+          </label>    
+        </div> 
+        <div class="govuk-radios__divider">or</div> 
+          <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="attendance-action-4" name="attendance-action" type="radio" value="remove">
+          <label class="govuk-label govuk-radios__label" for="attendance-action-4">
+            Reset attendance record
+          </label> 
+        </div> 
+      </div>
+      
+    
+    </fieldset>
+    
+    
+    </div>
+    
+          <input type="hidden" name="selected-prisoners" value="ZG2176A">
+          
+    
+      
+        
+      
+    
+    <button class="govuk-button" data-module="govuk-button">
+      Continue
+    </button>
+    
+        </form>
+      </div>
+    </div>
+
+    
+    
+  </main>
+
+</div> 
+
+</form>
+{% endblock %}
+ 

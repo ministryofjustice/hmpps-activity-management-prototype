@@ -1,0 +1,135 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %} 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds"> 
+        <h1 class="govuk-heading-l">
+			<span class="govuk-caption-l">Schedule a set of back-to-backs</span>
+          Review attendee alerts
+        </h1>
+    </div>
+  </div>
+
+  
+  <div class="govuk-warning-text">
+	<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+	<strong class="govuk-warning-text__text">
+	  <span class="govuk-warning-text__assistive">Important</span>
+	  Check an attendee's prisoner profile for full details on their alerts.
+	</strong>
+  </div>
+
+
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <!-- <p class="govuk-body">Only attendees with alerts are displayed.</p> -->
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Neil Rudge, G2044E</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove appointment
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			<div class="govuk-summary-card__content"> 
+         <div class="govuk-!-margin-bottom-3" style="font-family: GDS Transport, arial, sans-serif;"> 
+			<li class="DPS-alert-status DPS-alert-status--acct">ACCT open</li> 
+			<li class="DPS-alert-status DPS-alert-status--security">Arsonist</li>
+			<li class="DPS-alert-status DPS-alert-status--security">Escape list</li>
+			<li class="DPS-alert-status DPS-alert-status--security">Gang mamber</li> 
+			<li class="DPS-alert-status DPS-alert-status--security">Hostage taker</li>  
+			<li class="DPS-alert-status DPS-alert-status--risk">No one-to-one</li> 
+			<li class="DPS-alert-status DPS-alert-status--security">Racist</li> 
+			<li class="DPS-alert-status DPS-alert-status--security">Risk to females</li>
+			<li class="DPS-alert-status DPS-alert-status--risk">Risk to LGBT</li>
+			<li class="DPS-alert-status DPS-alert-status--security">Staff assaulter</li> 
+			<li class="DPS-alert-status DPS-alert-status--mappp">ViSOR</li>
+         </div>
+		 <details class="govuk-details"  style="margin-bottom: 0px;" data-module="govuk-details">
+			<summary class="govuk-details__summary">
+			  <span class="govuk-details__summary-text">
+				View all 15 alerts
+			  </span>
+			</summary>
+			<div class="govuk-details__text">
+				<ul class="govuk-list govuk-list--bullet"> 
+					<li>ACCT open</li>
+					<li>Arsonist</li> 
+					<li>Escape list</li>
+					<li>Gang mamber</li>
+					<li>Hostage taker</li>
+					<li>L1 Restriction No contact with any child </li> 
+					<li>MAPPA</li>
+					<li>No one-to-one</li>
+					<li>PSO4400 CH1 Children</li>
+					<li>Racist</li> 
+					<li>Risk to Children</li>
+					<li>Risk to females</li>
+					<li>Risk to lesbian/gay/bisexual people</li>
+					<li>Staff assaulter</li>
+					<li>ViSOR </li>
+				  </ul>
+			</div>
+		  </details>
+			</div>
+		  </div> 
+
+
+
+
+
+
+
+      <form method="post"> 
+  
+        <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
+          {{govukButton({
+            text: "Continue",
+            attributes: {
+              "formaction": "appointment-name",
+              "formmethod": "get"
+              }
+            })}}
+            
+        </div>
+  
+  
+  
+      </form>
+
+      
+       
+
+   
+
+
+
+
+  </div>
+</div>
+{% endblock %}

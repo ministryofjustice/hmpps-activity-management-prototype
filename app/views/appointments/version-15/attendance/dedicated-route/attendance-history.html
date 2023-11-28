@@ -1,0 +1,110 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+
+
+{% block main %}
+
+<form method="post" action="apply-to">
+<div class="govuk-width-container">   
+  {% block beforeContent %}
+    <nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+      <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+        Go to all appointments tasks
+      </a>
+    </nav>
+  {% endblock %}
+
+
+  <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main"> 
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l"> {% if data['alt-appointment-name'] !='' %}
+
+          {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+  
+          {% else %}
+          
+          {{ data['apppointment-type']}}
+          {% endif %}</span>
+        <h1 class="govuk-heading-l">
+          Attendance record for Amby Abraham
+        </h1>
+    
+        <div class="govuk-inset-text">
+          <a href="../../appointment-management/appointment-summary/repeating/summary" class="govuk-link--no-visited-state"> {% if data['alt-appointment-name'] !='' %}
+
+            {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+    
+            {% else %}
+            
+            {{ data['apppointment-type']}}
+            {% endif %}</a> on {{ data['date-of-appointment-day']}} October 2023 at {{ data['start-hours']}}:{{ data['start-minutes']}} to {{ data['end-hours']}}:{{ data['end-minutes']}}  (AM)
+        </div>
+    
+        
+        
+        
+        <!-- <h2 class="govuk-heading-m">
+          Attendance record
+        </h2> -->
+        
+        
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Attendance
+            </dt>
+            <dd class="govuk-summary-list__value"> 
+              Attended 
+            </dd> 
+            <dd class="govuk-summary-list__actions"> 
+              <a class="govuk-link govuk-link--no-visited-state" href="change-attendance">
+                Change<span class="govuk-visually-hidden"> attendance</span>
+              </a> 
+            </dd> 
+          </div>  
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key"> 
+              Recorded by
+              </dt>
+            <dd class="govuk-summary-list__value">
+              Person Name
+            </dd>
+          </div>
+    
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Date and time
+            </dt>
+            <dd class="govuk-summary-list__value">
+              5 October 2023 at 17:26:07
+            </dd>
+          </div>
+        </dl>  
+        <p>
+          <a href="../../../../prisoner/ZG2176A">View the prisoner's profile</a>
+        </p>
+      </div>
+    </div>
+
+    
+    
+  </main>
+
+</div> 
+
+</form>
+{% endblock %}
+ 

@@ -1,0 +1,71 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="FRD-edit-route">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds"> 
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">
+        {% if data['alt-appointment-name'] !='' %}
+
+        {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+
+        {% else %}
+        
+        {{ data['apppointment-type']}}
+        {% endif %}
+      </span>
+      Enter the new tier
+    </h1>
+    <p class="govuk-body">Recording whether the appointment is tier 1 (core curriculum, for example a GP appointment or a maths exam), tier 2 (extra-curricular, for example an Alcohol Awareness Day event or Storybook Mums and Dads') or or routine activities (for example showers or exercise) helps ensure there is a balanced regime.</p>
+       
+
+    {{ govukRadios({
+      idPrefix: "FRD-tier",
+      name: "FRD-tier",
+      items: [
+        {
+          value: "Tier 1",
+          text: "Tier 1"
+          
+        },
+        {
+          value: "Tier 2",
+          text: "Tier 2"
+        },
+        {
+          value: "Routine activities (also called foundational) ",
+          text: "Routine activities (also called foundational) "
+        }
+      ]
+     }) }}
+     
+
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </div>
+</div>
+</form>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post" action="../../appointment-summary/repeating/summary?edit-appt=tier">
+               <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="which-occurrence-alt-prisoners-hint">
+                  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                    <h1 class="govuk-fieldset__heading">
+                      <span class="govuk-caption-l">
+                        {% if data['alt-appointment-name'] !='' %}
+            
+                        {{ data['alt-appointment-name']}} ({{ data['apppointment-type']}})
+            
+                        {% else %}
+                        
+                        {{ data['apppointment-type']}}
+                        {% endif %}
+                      </span>
+                      Which appointments do you want to change the tier for?
+                    </h1>
+                  </legend> 
+                  <div class="govuk-radios" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="which-occurrence-alt-prisoners" name="which-occurrence-alt-prisoners" type="radio" value="government-gateway" aria-describedby="which-occurrence-alt-prisoners-item-hint">
+                      <label class="govuk-label govuk-radios__label" for="which-occurrence-alt-prisoners">
+                        Just this one - Monday, 3 July 2023 (1 of 6)
+                      </label>
+                    </div>
+
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="which-occurrence-alt-prisoners-3" name="which-occurrence-alt-prisoners" type="radio" value="govuk-verify" aria-describedby="which-occurrence-alt-prisoners-3-item-hint">
+                      <label class="govuk-label govuk-radios__label" for="which-occurrence-alt-prisoners-3">
+                        This one and all appointments in the series that haven't happened yet
+                      </label>
+                      <div id="which-occurrence-alt-prisoners-2-item-hint" class="govuk-hint govuk-radios__hint">
+                        You’re changing the following 6 appointments: <br> 3 July 2023 (1 of 6) to 7 October 2023 (6 of 6)
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+
+              <div class="govuk-inset-text">
+                This appointment repeats every week.
+              </div>
+
+            {{ govukButton({
+            text: "Update tier"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

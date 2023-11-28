@@ -1,0 +1,92 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">
+            <span class="govuk-caption-xl">{{activity.name}}</span>
+            Check and confirm who you're taking off this activity
+        </h1>
+
+        <dl class="govuk-summary-list">
+            {% if prisonerData | length == 1 %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisonerData[0].name.firstname}} {{prisonerData[0].name.surname}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Prison number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{prisonerData[0].id}}
+                </dd>
+            </div>
+            {% else %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    People you're taking off
+                </dt>
+                <dd class="govuk-summary-list__value">
+                <ul class="govuk-list govuk-list--spaced">
+                    {% for prisoner in prisonerData %}
+                    <li>
+                        {{prisoner.name.firstname}} {{prisoner.name.surname}} ({{prisoner.id}})
+                    </li>
+                    {% endfor %}
+                </ul>
+            </dd>
+            </div>
+            {% endif %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    End of allocation
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['deallocation'][prisonerData[0].id]['date']|convertShortDateToVeryLongDate}}
+                </dd>
+                <!-- Change link -->
+                <dd class="govuk-summary-list__actions">
+                    <a href="date?redirect=check-deallocation"
+                        class="govuk-link--no-visited-state">Change</a
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Reason
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{data['deallocation'][prisonerData[0].id]['reason']}}
+                </dd>
+                <!-- Change link -->
+                <dd class="govuk-summary-list__actions">
+                    <a href="reason?redirect=check-deallocation" class="govuk-link--no-visited-state">Change</a>
+                </dd>
+            </div>
+        </dl>
+
+        <form method="post">
+            {{ govukButton({
+            text: "Confirm and remove"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Changes in circumstances - {{serviceName}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBackLink({
+text: "Select a different date",
+href: '/' + data['prototype-versions']['create-and-allocate']['url'] ~ "/change-of-circumstance/select-date"
+})}}
+{% endblock %}
+
+{% block content %}
+
+
+<!-- new design -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <div class="govuk-form-group">
+            <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
+                <h1 class="govuk-heading-l">
+                <span class="govuk-caption-l">
+                    Change someone's activity schedule
+                </span>
+                Find a prisoner
+                </h1>
+            </label>
+            <div id="search-hint" class="govuk-hint moj-search__hint ">
+                Search by name prison number
+            </div>
+            <input class="govuk-input moj-search__input" id="search" name="search" type="search" aria-describedby="search-hint">
+            </div>
+            <button class="govuk-button govuk-button--secondary moj-search__button" data-module="govuk-button">
+            Search
+            </button>
+        </form>
+    </div>
+
+    <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-m">Select the correct result from the list (maximum of 50 results shown)</h2>
+
+        <form action="./list-of-changes-grouped" method="post">
+            <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+                <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
+                    Prisoners
+                </caption>
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="0"></button>Name</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="1"></button>Prison number</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="2"></button>Cell location</th>
+                        <th scope="col" class="govuk-table__header"></th>
+                    </tr>
+                </thead> 
+                {% for prisoner in prisoners | sort(attribute='prisoner.location.cell') %}
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-form-group govuk-!-margin-bottom-0">
+                                <fieldset class="govuk-fieldset">
+                                <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="prisonerName" name="prisonerName" type="radio" value="{{ prisoner.name.firstname }} {{ prisoner.name.surname }}">
+                                    <label class="govuk-label govuk-radios__label" for="prisonerName">
+                                        <b>{{ prisoner.name.surname }}</b>, {{ prisoner.name.firstname }}
+                                    </label>
+                                    </div>
+                                </div>
+                                </fieldset>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">{{ prisoner._id }}</td>
+                        <td class="govuk-table__cell">{{ prisoner.location.cell }}-{{ prisoner.location.landing }}-{{ prisoner.location.houseblock }}</td>
+                        <td class="govuk-table__cell"><a href="#">View prisoner profile</a></td>
+                    </tr> 
+                </tbody>
+                {% endfor %}
+            </table>
+            <div class="govuk-button-group">
+                <button class="govuk-button" data-module="govuk-button">
+                Continue
+                </button> 
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

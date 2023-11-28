@@ -1,0 +1,294 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %} 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds"> 
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Schedule an appointment</span>
+          Review 3 people with non-associations
+        </h1>
+    </div>
+  </div>
+
+  <div class="govuk-warning-text">
+	<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+	<strong class="govuk-warning-text__text">
+	  <span class="govuk-warning-text__assistive">Important</span>
+	  Check an attendee's prisoner profile for full details of their non-associations.
+	</strong>
+  </div>
+
+
+
+
+  <ul class="govuk-list ">
+
+	<li class="govuk-body">People with non-associations: 3</li>
+
+	<li class="govuk-body">People you're adding: 9</li> 
+  
+</ul>
+
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <!-- <p class="govuk-body">Only attendees with alerts are displayed.</p> -->
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a href="#">Dan Brown, G2044E</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="non-associations-resolved">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			<div class="govuk-summary-card__content">  
+
+      
+				<table class="govuk-table" data-qa="active-alerts-table" style="margin-bottom: 0px;">
+				<!-- <caption class="govuk-table__caption govuk-table__caption--m"><b>All alerts</b> -->
+				<thead class="govuk-table__head">
+					<tr class="govuk-table__row">
+					
+					  <th scope="col" class="govuk-table__header">Name</th>
+					
+					  <th scope="col" class="govuk-table__header">Prison number</th>
+					
+					  <th scope="col" class="govuk-table__header">Cell location</th>
+					
+					  <!-- <th scope="col" class="govuk-table__header">Where to keep apart</th> -->
+					
+					  <!-- <th scope="col" class="govuk-table__header govuk-!-width-one-third">Comments</th> -->
+					
+					  <!-- <th scope="col" class="govuk-table__header">Date added</th> -->
+					
+					</tr>
+				  </thead>
+				  
+				  <tbody class="govuk-table__body">
+					
+						<tr class="govuk-table__row">
+						
+						  <td class="govuk-table__cell">   
+							<a href="#" class="govuk-link--no-visited-state"><b>Amby Abraham</b></a> 
+							</td>
+						  
+						  <td class="govuk-table__cell">C7950C</td>
+						  
+						  <td class="govuk-table__cell">1-1-122</td>
+						  
+						  <!-- <td class="govuk-table__cell">Cell and landing</td> -->
+						  
+						  <!-- <td class="govuk-table__cell">Dan Brown to be kept separate from Amby Abraham due to bullying. There was a recent fight. There is a mercury reference number INE235203.</td> -->
+						
+						  <!-- <td class="govuk-table__cell">1 June 2023 <br> by Steve Thompson</td> -->
+						</tr>
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell">
+								<a href="#" class="govuk-link--no-visited-state"><b>Matthew Doyle</b></a> 
+							</td>
+							<td class="govuk-table__cell">E4911C</td>
+							
+							<td class="govuk-table__cell">2-1-342</td>
+							
+							<!-- <td class="govuk-table__cell">Cell only</td> -->
+							
+							<!-- <td class="govuk-table__cell">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu (240 characters)</td> -->
+							
+							<!-- <td class="govuk-table__cell">13 June 2022 <br> by Steve Thompson</td> -->
+						</tr>
+				  </tbody>
+				</table>
+			</div>
+		  </div> 
+
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a href="#" class="govuk-link">Amby Abraham, G2044E</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="non-associations-4b">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+		
+			<div class="govuk-summary-card__content">  
+				
+      
+				<table class="govuk-table" data-qa="active-alerts-table" style="margin-bottom: 0px;">
+					<!-- <caption class="govuk-table__caption govuk-table__caption--m"><b>All alerts</b> -->
+					<thead class="govuk-table__head">
+						<tr class="govuk-table__row">
+					
+							<th scope="col" class="govuk-table__header">Name</th>
+						  
+							<th scope="col" class="govuk-table__header">Prison number</th>
+						  
+							<th scope="col" class="govuk-table__header">Cell location</th>
+						  
+							<!-- <th scope="col" class="govuk-table__header">Where to keep apart</th> -->
+						
+						  <!-- <th scope="col" class="govuk-table__header govuk-!-width-one-third">Comments</th> -->
+						
+						  <!-- <th scope="col" class="govuk-table__header">Date added</th> -->
+						
+						</tr>
+					  </thead>
+					  
+					  <tbody class="govuk-table__body">
+						
+							<tr class="govuk-table__row">
+							
+							  <td class="govuk-table__cell">   
+								<a href="#" class="govuk-link--no-visited-state"><b>Dan Brown</b></a> 
+								</td>
+							  
+							  <td class="govuk-table__cell">G2044E</td>
+							  
+							  <td class="govuk-table__cell">1-2-211</td>
+							  
+							  <!-- <td class="govuk-table__cell">Cell and landing</td> -->
+							  
+							  <!-- <td class="govuk-table__cell">Dan Brown to be kept separate from Amby Abraham due to bullying. There was a recent fight. There is a mercury reference number INE235203.</td> -->
+							
+							  <!-- <td class="govuk-table__cell">1 June 2023 <br> by Steve Thompson</td> -->
+							</tr>
+					  </tbody>
+					</table>
+			</div>
+		</div> 
+
+
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a href="#" class="govuk-link">Matthew Doyle, E4911C</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="non-associations-4c">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+      		<div class="govuk-summary-card__content">  
+				
+      
+				<table class="govuk-table" data-qa="active-alerts-table" style="margin-bottom: 0px;">
+					<!-- <caption class="govuk-table__caption govuk-table__caption--m"><b>All alerts</b> -->
+					<thead class="govuk-table__head">
+						<tr class="govuk-table__row">
+					
+							<th scope="col" class="govuk-table__header">Name</th>
+						  
+							<th scope="col" class="govuk-table__header">Prison number</th>
+						  
+							<th scope="col" class="govuk-table__header">Cell location</th>
+						  
+							<!-- <th scope="col" class="govuk-table__header">Where to keep apart</th> -->
+						
+						  <!-- <th scope="col" class="govuk-table__header govuk-!-width-one-third">Comments</th> -->
+						
+						  <!-- <th scope="col" class="govuk-table__header">Date added</th> -->
+						
+						</tr>
+					  </thead>
+					  
+					  <tbody class="govuk-table__body">
+						
+							<tr class="govuk-table__row">
+								
+								<td class="govuk-table__cell">   
+									<a href="#" class="govuk-link--no-visited-state"><b>Dan Brown</b></a> 
+									</td>
+								  
+								  <td class="govuk-table__cell">G2044E</td>
+								  
+								  <td class="govuk-table__cell">1-2-211</td>
+								
+								<!-- <td class="govuk-table__cell">Cell only</td> -->
+								
+								<!-- <td class="govuk-table__cell">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu (240 characters)</td> -->
+								
+								<!-- <td class="govuk-table__cell">13 June 2022 <br> by Steve Thompson</td> -->
+							</tr>
+					  </tbody>
+					</table>
+     		</div>
+		  </div> 
+
+		  <!-- <div class="govuk-form-group">
+			<fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+			  <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+				<h1 class="govuk-fieldset__heading">
+				  Before you continue
+				</h1>
+			  </legend>
+			  <div id="waste-hint" class="govuk-hint">
+				By continuing, you accept that this appointment can go ahead with non-associated attendees.
+			  </div>
+			  <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+				<div class="govuk-checkboxes__item">
+				  <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+				  <label class="govuk-label govuk-checkboxes__label" for="waste">
+					I confirm
+				  </label>
+				</div> 
+			  </div>
+			</fieldset>
+		  </div> -->
+
+      <form method="post"> 
+  
+        <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
+          {{govukButton({
+            text: "Continue",
+            attributes: {
+              "formaction": "appointment-name",
+              "formmethod": "get"
+              }
+            })}}
+            
+        </div>
+  
+  
+  
+      </form>
+
+      
+       
+
+   
+
+
+
+
+  </div>
+</div>
+{% endblock %}

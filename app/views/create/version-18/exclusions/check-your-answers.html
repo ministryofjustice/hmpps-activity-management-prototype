@@ -1,0 +1,59 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Changes in circumstances - {{serviceName}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBackLink({
+text: "Select a different date",
+href: "/"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Change someone's activity schedule
+        </span>
+        <h1 class="govuk-heading-l">
+          Check changes to when {{prisoner.name.firstname}} {{prisoner.name.surname}} should attend {{activty.name}}
+        </h1>
+
+        <!--Excluding activities-->
+        <p>You're excluding {{prisoner.name.firstname}} {{prisoner.name.surname}} from {{activity.name}} on:</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>Day of week</li>
+        </ul>
+        <p>This means:</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>they will not be on the attendance list</li>
+            <li>{{prisoner.name.firstname}} will not have this activity on unlock and movement lists</li>
+        </ul>
+        <p>They will stay excluded until this session is added back to their schedule.</p>
+        <p>Changes take effect from tomorrow</p>
+        <!--Removing an exclusion-->
+        <p>{{prisoner.name.firstname}} {{prisoner.name.surname}} will be due to attend {{activity.name}} on:</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>Day of the week</li>
+        </ul>
+        <p>This will be on unlock, movement and attendance lists from tomorrow.</p>
+        <!--No changes made-->
+        <p>You are not making any changes to when {{prisoner.name.firstname}} {{prisoner.name.surname}} should attend.</p>
+
+        {% from "govuk/components/button/macro.njk" import govukButton %}
+
+        <div class="govuk-button-group gov-!-margin-top-5">
+          {{ govukButton({
+            text: "Confirm"
+          }) }}
+        
+          <a href="#" class="govuk-link">Change when {{prisoner.name.firstname}} should attend</a>
+        </div>
+{% endblock %}

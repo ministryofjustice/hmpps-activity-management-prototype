@@ -1,0 +1,63 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+            {{ govukRadios({
+            "idPrefix": "end-date-check",
+            "name": "end-date-check",
+            "fieldset": {
+            "legend": {
+            "text": "Do you want to change or remove the end date?",
+            "isPageHeading": true,
+            "classes": "govuk-fieldset__legend--l"
+            }
+            },
+            "hint": {
+            "text": "If you remove the end date, the activity will continue indefinitely."
+            },
+            "items": [
+            {
+            "value": "change",
+            "text": "Change the end date"
+            },
+            {
+            "value": "remove",
+            "text": "Remove the end date",
+            "conditional": {
+                "html": '<p class="govuk-hint">You\'ll need to confirm this change on the next page.</p>'
+            }
+            }
+            ]
+            }) }}
+
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+
+            <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

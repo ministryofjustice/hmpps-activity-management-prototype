@@ -1,0 +1,70 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+{{ super() }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+    text: "Back",
+    href: "javascript:history.back()"
+    }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row govuk-!-margin-bottom-">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-xl">
+                {{ activity.name }}
+            </span>
+            <h1 class="govuk-heading-xl">
+                Add a planned cancellation
+            </h1>
+            {{ govukDateInput({
+            classes: "govuk-!-margin-bottom-5",
+            idPrefix: "date",
+            namePrefix: "date",
+            fieldset: {
+            legend: {
+            text: "Start of cancelled period",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            hint: {
+            text: "For example, 31 3 2020"
+            }
+            }) }}
+
+            {{ govukDateInput({
+            idPrefix: "date",
+            namePrefix: "date",
+            fieldset: {
+            legend: {
+            text: "End of cancelled period",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            hint: {
+            text: "For example, 31 3 2020"
+            }
+            }) }}
+
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
+    </div>
+</div>
+{% endblock %}
