@@ -1,0 +1,94 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set requesterHtml %}
+        {% set applicantOptions = [
+        "Education staff",
+        "Workshop staff",
+        "Neurodiversity staff",
+        "Mental health staff",
+        "Offender Management Unit",
+        "Workshop staff",
+        "Mental health staff",
+        "Wing staff",
+        "Keyworker/POM",
+        "Reception staff",
+        "Orderly or Red Band",
+        "Activity leader"
+        ]
+        %}
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="other-applicant">Who made the request?</label>
+            <select class="govuk-select" name="other-applicant" id="other-applicant">
+                <option value="" disabled selected>Select an option</option>
+                {% for option in applicantOptions %}
+                <option value="{{option}}">{{option}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endset %}
+
+        <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+            {{govukRadios({
+            idPrefix: "requester",
+            name: "requester",
+            fieldset: {
+            legend: {
+            text: "Change the requester for " + prisoner.name.firstname + " " + prisoner.name.surname + "'s application",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            items: [
+            {
+            value: "prisoner",
+            text: prisoner.name.firstname + " " + prisoner.name.surname,
+            checked: true if application.requester == "prisoner" else false
+            },
+            {
+            value: "iag",
+            text: "IAG or CXK careers information, advice and guidance staff",
+            checked: true if application.requester == "iag" else false
+            },
+            {
+            divider: "or"
+            },
+            {
+            value: "other",
+            text: "Someone else, for example a member of staff, an activity leader or an orderly",
+            checked: true if application.requester != "prisoner" and application.requester != "iag" else false,
+            hint: {
+            text: "You'll need to select from a list"
+            },
+            conditional: {
+            html: requesterHtml
+            }
+            }
+            ]
+            })}}
+
+            {{ govukButton({
+            text: "Update requester details"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

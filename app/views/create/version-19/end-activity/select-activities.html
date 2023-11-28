@@ -1,0 +1,74 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                            Select activities you want to end
+                        </h1>
+                    </legend>
+
+                    <p class="govuk-hint">
+                        You can end multiple activities at the same time. When you end an activity, you can choose
+                        whether it should end immediately or on a specific date.
+                    </p>
+        
+                    {{govukDetails({
+                    summaryText: "What does ending an activity do?",
+                    html: "<p>Ending an activity will remove all people who are allocated to it. You can end multiple
+                        activities at once.</p>
+                    <p>When the end date of an activity is reached, it will be automatically ended and moved to
+                        'Archived activities'.</p>"
+                    })}}
+
+                    {{govukButton({
+                    text: "Confirm selection",
+                    classes: "govuk-!-margin-bottom-8 govuk-!-margin-top-2"
+                    })}}
+
+                    <h3 class="govuk-heading-m">
+                        {{activities.length}} activities
+                    </h3>
+
+                    <div class="govuk-checkboxes govuk-checkboxes" data-module="govuk-checkboxes">
+                        {% for activity in activities | sort(attribute='name') %}
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="activity-{{activity.id}}"
+                                name="selected-activities" type="checkbox" value="{{activity.id}}">
+                            <label class="govuk-label govuk-checkboxes__label" for="activity-{{activity.id}}">
+                                {{activity.name}}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
+
+            {{ govukButton({
+            text: "Confirm selection"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

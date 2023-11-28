@@ -1,0 +1,83 @@
+{% extends "layout_hmpps.html" %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Create an activity
+        </span>
+
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+            Enter the pay amount and pay band name for the {{data['payrate']['incentive-level']}} incentive level pay
+            rate
+        </h1>
+
+        <!-- <p>
+            You can create up to 10 rates for each incentive level.
+        </p> -->
+
+        <p class="govuk-inset-text">
+            Minimum pay for people in your prison is £0.60 and maximum pay is £2.75 per session.
+        </p>
+
+        <form method="post">
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--s" for="paymentIncentiveAmount">
+                    How much will someone be paid for a session?
+                </label>
+                <div id="paymentIncentiveAmount-hint" class="govuk-hint">
+                    For example, 1.50
+                </div>
+                <div class="govuk-input__wrapper">
+                    <div class="govuk-input__prefix" aria-hidden="true">£</div>
+                    <input class="govuk-input govuk-input--width-5" id="paymentIncentiveAmount" name="payrate[amount]"
+                        type="text" spellcheck="false" value="{{payrateData.amount or ''}}">
+                </div>
+            </div>
+
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--s" for="paymentPayBand">
+                    Select a pay band
+                </label>
+                <!-- <div id="paymentPayBand-hint" class="govuk-hint">
+                    ‘Pay band’ is a label to help you easily tell the difference between the pay rates that someone can be paid for this activity
+                </div> -->
+                <select class="govuk-select" id="paymentPayBand" name="payrate[pay-band]">
+                    <option value="" disabled selected>Select a pay band</option>
+                    {% for payBand in payBands %}
+                    <option value="{{payBand}}" {{'selected' if payrateData.payBand==payBand}}>{{payBand}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {{govukDetails({
+            summaryText: "What is a pay band?",
+            html: "<p>'Pay band' is a label to help you easily tell the difference between the pay rates that someone
+                can be paid for this activity.</p>
+            <p>For example, you might have a pay band called ‘unskilled’ and another called ‘skilled’.</p>"
+            })}}
+
+            <input type="hidden" name="payrate[incentive-level]"
+                value="{{data['payrate']['incentive-level'] or 'basic'}}">
+
+            {{govukButton({
+            text: "Save and continue"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}

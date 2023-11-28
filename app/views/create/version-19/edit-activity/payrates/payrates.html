@@ -1,0 +1,204 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+{{ super() }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Edit activities",
+href: "../../edit-activity"
+}) }}
+
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% if data['confirmation-dialog'] %}
+{{ govukNotificationBanner({
+text: "You have updated the pay rates for this activity.",
+type: "success",
+classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
+}) }}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row govuk-!-margin-bottom-">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Edit activity details
+        </span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+            {{activity.name}} <span class="govuk-tag govuk-tag--green">Live</span>
+        </h1>
+
+        <div class="govuk-list govuk-button-group">
+            <a href="../../end-activity/{{activity.id}}" class="govuk-button govuk-button--warning">
+                End this activity
+            </a>
+        </div>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+            Related tasks
+        </h2>
+
+        <ul class="govuk-list govuk-!-margin-bottom-7">
+            <li>
+                <a href="../../manage-allocations/{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
+                    Manage allocations
+                </a>
+            </li>
+            <!-- <li>
+                <a href="../edit-activity/{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
+                    Edit activity details
+                </a>
+            </li> -->
+            <!-- <li>
+                <a href="../create-activity" class="govuk-link govuk-link--no-visited-state">
+                    Create an activity
+                </a>
+            </li> -->
+            <!-- <li>
+                <a href="../log-request" class="govuk-link govuk-link--no-visited-state">
+                    Log a request
+                </a>
+            </li> -->
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            <li class="govuk-!-margin-top-0">
+                <a href="/dps-home" class="govuk-link govuk-link--no-visited-state">
+                    Go to DPS home
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<nav class="moj-sub-navigation" aria-label="Sub navigation" id="subnav">
+    <ul class="moj-sub-navigation__list">
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" {% if currentPage=='details' %}aria-current="page" {% endif
+                %}href="details">Details and requirements</a>
+        </li>
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" {% if currentPage=='pay-rates' %}aria-current="page" {% endif
+                %}href="payrates">Pay rates</a>
+        </li>
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" {% if currentPage=='schedule' %}aria-current="page" {% endif
+                %}href="schedule-dates">Schedule and dates</a>
+        </li>
+    </ul>
+</nav>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {{govukButton({
+            text: "Add new pay rate",
+            href: "payrates/add"
+            })}}
+
+            <div class="govuk-inset-text govuk-!-margin-top-">
+                <p>
+                    You can change pay band names or amounts. You can delete any pay rate, but if there is someone
+                    assigned to it you’ll need to change their pay rate or take them off the activity first.
+                </p>
+            </div>
+
+            {% for incentiveLevel, payRates in payRatesByIncentiveLevel %}
+            {% if payRates.length > 0 %}
+            <h2 class="govuk-heading-m govuk-!-margin-top-{{'8' if loop.index > 1 else '4'}}">
+                {% if incentiveLevel == 'flatRate' %}
+                Flat rates
+                {% else %}
+                {{incentiveLevel|capitalize}} incentive level pay rates
+                {% endif %}
+            </h2>
+            {% for payRate in payRates %}
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title">
+                        {{payRate.payBand|capitalize}}
+                    </h2>
+
+                    <ul class="govuk-summary-card__actions">
+                        <li class="govuk-summary-card__action">
+                            <a class="govuk-link" href="payrates/edit/{{payRate.payRate_id}}">
+                                Change
+                            </a>
+                        </li>
+                        {% if payRate.canDelete == true %}
+                        <li class="govuk-summary-card__action">
+                            <a class="govuk-link" href="payrates/delete/{{payRate.payRate_id}}">
+                                Delete pay rate
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Amount
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                £{{payRate.amount|decimalPlaces(2)}}
+                            </dd>
+                            <!-- <dd class="govuk-summary-list__actions">
+                                <a href="#" class="govuk-summary-list__action">Change</a>
+                            </dd> -->
+                        </div>
+                        <!-- <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Pay band
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {{payRate.payBand}}
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                                <a href="#" class="govuk-summary-list__action">Change</a>
+                            </dd>
+                        </div> -->
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                People on this rate
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {{payRate.prisonerCount or 'None'}}
+                            </dd>
+                        </div>
+                    </dl>
+                    <!-- <p class="govuk-inset-text govuk-!-margin-bottom-2">
+                        You can't delete this pay rate because there are people assigned to it and it's the only pay rate for this incentive level.
+                    </p> -->
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+
+            {% endif %}
+            {% endfor %}
+
+            <!-- <p>
+                {{ govukButton({
+                text: "Go back to activity details",
+                classes: "govuk-!-margin-top-8"
+                }) }}
+            </p> -->
+            <!-- <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p> -->
+        </form>
+    </div>
+</div>
+
+{% endblock %}

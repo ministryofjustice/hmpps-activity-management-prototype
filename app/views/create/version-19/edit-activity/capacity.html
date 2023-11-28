@@ -1,0 +1,56 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({ text: "Back", "href": "javascript:
+window.history.go(-1)" })}} {% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+
+            {{govukInput({
+            id: "capacity",
+            name: "capacity",
+            classes: "govuk-input--width-5",
+            label: {
+            text: "Change the capacity",
+            classes: "govuk-label--l"
+            },
+            hint: {
+            html: '<p class="govuk-hint">Enter the maximum number of people that can be allocated</p>'
+            },
+            value: activity.capacity
+            })}}
+
+            {% set noun = "person is" %}
+            
+            {% if currentlyAllocatedCount > 1 %}
+            {% set noun = "people are" %}
+            {% endif %}
+
+            {{govukInsetText({
+            text: currentlyAllocatedCount + " " + noun + " currently allocated to this activity."
+            })}}
+
+
+            {{ govukButton({
+            text: "Update capacity"
+            }) }}
+
+            <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

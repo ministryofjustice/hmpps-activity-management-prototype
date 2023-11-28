@@ -1,0 +1,212 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+
+{{govukBackLink({
+    text: "Back",
+    "href": "javascript: window.history.go(-1)"
+})}}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">
+            Change someone's activity schedule
+        </span>
+        <h1 class="govuk-heading-xl">
+            {{data['selectedPrisoner']}} activities 
+        </h1>
+        <p>Unselect a session to exclude {{data['selectedPrisoner']}}. They will no longer be scheduled to attend that session.</p>
+        <p>Select a session to add it to {{data['selectedPrisoner']}}’s schedule.</p>
+    </div>
+    <form action="v2-check-your-answers" method="post">
+        <div class="govuk-grid-column-one-half">
+            <div class="govuk-form-group">
+                <h2 class="govuk-heading-l">Week one</h2>
+                <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-heading-m">
+                        Monday
+                        </h2>
+                    </legend>
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="w1-monday" name="monday" type="checkbox" value="Monday PM" {{ checked('monday','Monday PM') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-monday">
+                                PM
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-heading-m">
+                        Tuesday
+                        </h2>
+                    </legend>
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="w1-tuesday" name="tuesday" type="checkbox" value="Tuesday PM" {{ checked('tuesday','PM') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-tuesday">
+                                PM
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="w1-tuesday" name="tuesday" type="checkbox" value="ED" {{ checked('tuesday','ED') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-tuesday">
+                              ED
+                            </label>
+                          </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-heading-m">
+                        Wednesday
+                        </h2>
+                    </legend>
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="w1-wednesday" name="wednesday" type="checkbox" value="AM" {{ checked('wednesday','AM') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-wednesday">
+                                AM
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-heading-m">
+                        Thursday
+                        </h2>
+                    </legend>
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="w1-thursday" name="thursday" type="checkbox" value="PM" {{ checked('thursday','PM') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-thursday">
+                                PM
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" iid="w1-thursday" name="thursday" type="checkbox" value="ED" {{ checked('thursday','ED') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-thursday">
+                              ED
+                            </label>
+                          </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="govuk-grid-column-one-half">
+            <div class="govuk-form-group">
+                <h2 class="govuk-heading-l">Week one</h2>
+                <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-heading-m">
+                        Monday
+                        </h2>
+                    </legend>
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="w1-monday" name="w2monday" type="checkbox" value="PM" {{ checked('w2monday','PM') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-monday">
+                                PM
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-heading-m">
+                        Tuesday
+                        </h2>
+                    </legend>
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="w1-tuesday" name="w2tuesday" type="checkbox" value="PM" {{ checked('w2tuesday','PM') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-tuesday">
+                                PM
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="w1-tuesday" name="w2tuesday" type="checkbox" value="ED" {{ checked('w2tuesday','ED') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-tuesday">
+                              ED
+                            </label>
+                          </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-heading-m">
+                        Wednesday
+                        </h2>
+                    </legend>
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="w1-wednesday" name="w2wednesday" type="checkbox" value="AM" {{ checked('w2wednesday','AM') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-wednesday">
+                                AM
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-heading-m">
+                        Thursday
+                        </h2>
+                    </legend>
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="w1-thursday" name="w2thursday" type="checkbox" value="PM" {{ checked('w2thursday','PM') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-thursday">
+                                PM
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" iid="w1-thursday" name="w2thursday" type="checkbox" value="ED" {{ checked('w2thursday','ED') }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="w1-thursday">
+                              ED
+                            </label>
+                          </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="govuk-grid-column-two-thirds">
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+            <div class="govuk-button-group govuk-!-margin-top-9">
+                {{ govukButton({
+                    text: "Continue"
+                }) }}
+    
+                <a class="govuk-link" href="#">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock%}

@@ -1,0 +1,59 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Changes in circumstances - {{serviceName}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+    {{govukBackLink({
+        text: "Back",
+        "href": "javascript: window.history.go(-1)"
+    })}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">
+            Change someone's activity schedule
+        </span>
+        <h1 class="govuk-heading-xl">
+          Check changes to when {{ data['selectedPrisoner'] }} should attend Computer skills class
+        </h1>
+
+        <!--Excluding activities-->
+            <p>You're excluding {{data['selectedPrisoner']}} from {{activity.name}} on:</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>{{ data['monday'] }}</li>
+                {% if data['monday'] | safe %}
+                <li>Monday PM</li>
+                
+                <!--<li class="govuk-visually-hidden">Nothing selected</li>-->
+                {% endif %}
+
+                
+            </ul>
+            <p>This means:</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>they will not be on the attendance list</li>
+                <li>{{prisoner.name.firstname}} will not have this activity on unlock and movement lists</li>
+            </ul>
+            <p>They will stay excluded until this session is added back to their schedule.</p>
+            <p>Changes take effect from tomorrow</p>
+
+        <form action="v2-schedule" method="post">
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+
+            <div class="govuk-button-group gov-!-margin-top-5">
+              {{ govukButton({
+                text: "Confirm"
+              }) }}
+            
+              <a href="#" class="govuk-link">Change when {{data['selectedPrisoner']}} should attend</a>
+            </div>
+        </form>
+{% endblock %}

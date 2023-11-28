@@ -1,0 +1,42 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      <span class="govuk-caption-l">
+        {{activity.name}}
+      </span>
+      {{ govukDateInput({
+      id: "start-date",
+      namePrefix: "application-date",
+      fieldset: {
+      legend: {
+      text: "Change the date of " + prisoner.name.firstname + " " + prisoner.name.surname + "'s application",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--xl"
+      }
+      },
+      hint: {
+      html: "<p class='govuk-!-margin-top-1'>If the application has not been dated, use today's date.</p>
+      For example, " + date|today|convertShortDateToExampleDate
+      }
+      }) }}
+      <button class="govuk-button" data-module="govuk-button">Update application date</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
