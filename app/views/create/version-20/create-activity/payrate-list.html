@@ -1,0 +1,88 @@
+{% extends "layout_hmpps.html" %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Create an activity
+        </span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+            Review the pay rates for {{data['new-activity']['name'] or 'Maths level
+            1'}}
+        </h1>
+
+        
+
+        {% if noPayrates == false %}
+        {% for incentiveLevel, payrates in data.payrates %}
+        <h2 class="govuk-heading-m govuk-!-margin-top-7">{{incentiveLevel|capitalize + ' incentive level pay rates' if
+            incentiveLevel !=
+            'flat-rate' else 'Flat rates'}}</h2>
+        <dl class="govuk-summary-list">
+            {% for payrate in payrates %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    {{payrate.payBand or 'Payment rate A'}}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    &pound;{{payrate.amount|decimalPlaces(2) or '1.10'}}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link govuk-!-margin-right-3" href="payrate-details?id={{payrate.id}}">
+                        Change<span class="govuk-visually-hidden"> incentive pay</span>
+                    </a>
+                    <a class="govuk-link" href="remove-payrate/{{payrate.id}}">
+                        Remove<span class="govuk-visually-hidden"> incentive pay</span>
+                    </a>
+                </dd>
+            </div>
+            {% endfor %}
+        </dl>
+        {% endfor %}
+        {% else %}
+        <p>
+            No pay rates have been set for this activity. You must set at least one pay rate.
+        </p>
+        {% endif %}
+
+        <p class="govuk-inset-text">
+            You can create up to 10 rates for each incentive level.
+        </p>
+
+        <form method="post">
+            <p>
+                {{ govukButton({
+                text: "Add a pay rate",
+                classes: "govuk-button--secondary" if noPayrates == false else "",
+                attributes: {
+                "formaction": "payrate-incentive-levels",
+                "formmethod": "get"
+                }
+                }) }}
+            </p>
+
+            <input type="hidden" name="id" value="">
+
+            {% if noPayrates == false %}
+            {{govukButton({
+            text: "Continue"
+            })}}
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

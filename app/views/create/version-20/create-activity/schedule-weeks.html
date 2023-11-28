@@ -1,0 +1,55 @@
+{% extends "layout_hmpps.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      <span class="govuk-caption-l">
+        Create an activity
+      </span>
+      {{ govukRadios({
+      idPrefix: "schedule-weeks",
+      name: "new-activity[schedule-weeks]",
+      fieldset: {
+      legend: {
+      text: "How many weeks are there in the schedule for this activity?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+      }
+      },
+      items: [
+      {
+      value: "1",
+      text: "1 week",
+      hint: {
+      text: "This means the activity runs on the same days every week"
+      }
+      },
+      {
+      value: "2",
+      text: "2 weeks",
+      hint: {
+      text: "This means the activity runs on different days in alternate weeks"
+      }
+      }
+      ]})}}
+
+      <button class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

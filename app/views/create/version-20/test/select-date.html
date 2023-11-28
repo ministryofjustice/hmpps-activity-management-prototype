@@ -1,0 +1,201 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Select activity date - {{serviceName}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBackLink({
+	text: "Manage activities and allocations",
+	href: '/' + data['prototype-versions']['create-and-allocate']['url'] ~ "/manage-activities"
+})}}
+{% endblock %}
+
+{% block content %}
+<form method="post">
+	{% set dateHtml %}
+	{{ govukDateInput({
+		id: "other-date",
+		namePrefix: "other-date",
+		fieldset: {
+			legend: {
+				text: "Date"
+			}
+		},
+		hint: {
+			text: "For example, 27 3 2022"
+		}
+	}) }}
+	{% endset %}
+
+	{% set today = '_'|today() %}
+
+  <span class="govuk-caption-xl">View changes in circumstances</span>
+
+	{{ govukRadios({
+		name: "date",
+		fieldset: {
+			legend: {
+				text: "Select a date",
+				isPageHeading: true,
+				classes: "govuk-fieldset__legend--xl"
+			}
+		},
+		items: [
+		{
+			value: today,
+			text: "Today – " + today|convertShortDateToLongDate
+		},
+		{
+			value: today|dayBefore(today),
+			text: "Yesterday – " + today|dayBefore(today)|convertShortDateToLongDate
+		},
+		{
+			value: "other-date",
+			text: "A different date",
+			conditional: {
+				html: dateHtml
+			}
+		}
+		]
+	}) }}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			
+
+			<div class="govuk-button-group">
+				{{govukButton({
+					text: "Continue"
+				})}}
+			</div>
+		</div>
+	</div>
+</form>
+
+
+<!-- new design -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Change someone's activity schedule
+        </span>
+        <h1 class="govuk-heading-l">
+          {{ prisoner.name.firstname }} {{ prisoner.name.surname }} activities 
+        </h1>
+
+        {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+        {{ govukInsetText({
+        text: "You're seeing only sessions when each activity is scheduled to run"
+        }) }}
+        
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m"><span class="govuk-visually-hidden">Title</span></caption>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Activity</th>
+                <th scope="col" class="govuk-table__header">Schedule</th>
+                <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Text link</span></th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header govuk-!-font-weight-regular">{{activity.name}}Activity title</th>
+                <td class="govuk-table__cell">
+                    <h2 class="govuk-heading-s">Week one</h2>
+                    <ul class="govuk-list">
+                        <li>Monday</li>
+                        <li>Tuesday</li>
+                        <li>Wednesday</li>
+                        <li>Thursday</li>
+                        <li>Friday</li>
+                        <li>Saturday</li>
+                        <li>Sunday</li>
+                    </ul>
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header govuk-!-font-weight-regular">{{activity.name}}Activity title</th>
+                <td class="govuk-table__cell">£109.80 per week</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header govuk-!-font-weight-regular">{{activity.name}}Activity title</th>
+                <td class="govuk-table__cell">£4,282.20</td>
+              </tr>
+            </tbody>
+        </table>
+
+        <dl class="govuk-summary-list govuk-!-margin-">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Schedule
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                                {% for day in schedule %}
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__value">
+                                        {% if day.am or day.pm and (day !== "null") and (day.am !== "null" and day.pm !== "null") %}
+                                            {{day.day|capitalize}}
+                                            {% if day.am or day.pm %}
+                                                {% if day.am %}
+                                                    AM {{"" if day.pm == null else "and "}}
+                                                {% endif %}
+                                                {% if day.pm %}
+                                                    PM {{"" if day.am == null}}
+                                                {% endif %} 
+                                            {% endif %}
+                                        {% endif %}
+                                    </dt>
+                                </div>
+                                {% endfor %}
+                            </dl>
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                            <a href="{{prisoner.id}}/schedule" class="govuk-link--no-visited-state">Change</a>
+                        </dd>
+                    </div>
+    </div>
+</div>
+{% for day in daysWithSessions %}
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="days-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-5">
+            <h2 class="govuk-fieldset__heading">
+                {{days[day.day]|capitalize}} sessions
+            </h2>
+        </legend>
+
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            {% set periods = [ "am", "pm", "ed" ] %}
+            {% for period in periods %}
+            {% if day[period][0] != null %}
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="day-{{day.day}}-{{period}}" name="days"
+                    type="checkbox" value="{{day.day}}"
+                    aria-controls="conditional-session-{{day.day}}-{{period}}" aria-expanded="false">
+                <label class="govuk-label govuk-checkboxes__label" for="day-{{day.day}}-{{period}}">
+                    {{period|upper}} session
+                </label>
+            </div>
+            <!--
+            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                id="conditional-session-{{day.day}}-{{period}}">
+                <span class="govuk-hint">
+                    Not scheduled to attend
+                </span>
+            </div>
+            -->
+            {% endif %}
+            {% endfor %}
+        </div>
+    </fieldset>
+</div>
+{% endfor %}
+{% endblock %}

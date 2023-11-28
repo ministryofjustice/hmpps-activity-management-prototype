@@ -1,0 +1,71 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block main %}
+{% block beforeContent %}
+<div class="govuk-width-container">
+    <a href="/dps-home" class="govuk-back-link">Digital Prison Services</a>
+    <!-- <h1 class="govuk-heading-l govuk-!-margin-top-7">Manage activities and allocations</h1> -->
+</div>
+{% endblock %}
+{% block content %}
+<div class="govuk-width-container govuk-!-margin-top-7">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Activities, allocations, unlock and attendance</h1>
+
+            <h2 class="govuk-heading-m">
+                Managing waitlists and allocations
+            </h2>
+            <!-- <p class="govuk-body">
+                You can manage waitlists and allocations for activities. You can also manage changes in circumstance.
+            </p> -->
+            <ul class="govuk-list govuk-list--spaced">
+                <li><a href="log-an-application" class="govuk-link--no-visited-state">Log an application</a></li>
+                <li><a href="#">Allocate people to activities and edit allocations</a></li>
+                <li><a href="#">Review changes in circumstance</a></li>
+            </ul>
+
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+            <h2 class="govuk-heading-m">
+                Creating and editing activities
+            </h2>
+            <!-- <p>
+                You can create an activity and edit details of an existing activity, including the activity schedule.
+            </p> -->
+            <ul class="govuk-list govuk-list--spaced">
+                <li><a href="create-activity" class="govuk-link--no-visited-state">Create an activity</a></li>
+                <li><a href="edit-activity" class="govuk-link--no-visited-state">Edit an activity</a></li>
+            </ul>
+
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+            <h2 class="govuk-heading-m">
+                Recording and updating attendance
+            </h2>
+            <!-- <p>
+                You can record attendance and cancel activity sessions. You can also view a daily attendance summary.
+            </p> -->
+            <ul class="govuk-list govuk-list--spaced">
+                <li><a href="../../{{data['prototype-versions']['unlock-and-attend']['url']}}/../record-attendance" class="govuk-link--no-visited-state">Record attendance and cancel activity sessions</a></li>
+                <li><a href="../../{{data['prototype-versions']['unlock-and-attend']['url']}}/../attendance-dashboard" class="govuk-link--no-visited-state">View daily attendance summary</a></li>
+            </ul>
+
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+            <h2 class="govuk-heading-m">
+                Managing unlock
+            </h2>
+            <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-9">
+                <li><a href="../../{{data['prototype-versions']['unlock-and-attend']['url']}}/../create-unlock-list" class="govuk-link--no-visited-state">Create an unlock list</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% endblock %}

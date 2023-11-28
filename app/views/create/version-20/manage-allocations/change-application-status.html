@@ -1,0 +1,73 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+            {{govukRadios({
+            idPrefix: "new-application-status",
+            name: "new-application-status",
+            hint: {
+                html: '<p>If you decline the application, make sure you tell the person concerned.</p>'
+            },
+            fieldset: {
+            legend: {
+            text: "Change the status of " + prisoner.name.firstname + " " + prisoner.name.surname + "'s application",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+            }
+            },
+            items: [
+            {
+            value: "yes",
+            html: '<span class="govuk-tag govuk-tag--green">Approved</span>',
+            checked: true if application.eligible == "yes" else false,
+            hint: {
+                text: "The applicant is ready to be allocated."
+            }
+            },
+            {
+            value: "no",
+            html: '<span class="govuk-tag govuk-tag--red">Declined</span>',
+            checked: true if application.eligible == "no" else false,
+            hint: {
+                text: "You're declining the application. You should inform the person concerned."
+            }
+            },
+            {
+                divider: "or"
+            },
+            {
+            value: "pending",
+            html: '<span class="govuk-tag govuk-tag--yellow">Pending</span>',
+            checked: true if application.eligible != "no" and application.eligible != "yes" else false,
+            hint: {
+                text: "You'll need to follow your usual procedure to check if the application can be approved."
+            }
+            }
+            ]
+            })}}
+
+            {{ govukButton({
+            text: "Update application status"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+{{ super() }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "javascript:history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row govuk-!-margin-bottom-">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">
+            {{ activity.name }}
+        </span>
+        <h1 class="govuk-heading-xl">
+            Check and confirm cancelled sessions
+        </h1>
+
+        <div class="govuk-summary-list govuk-!-margin-bottom-5">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Cancellation period
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    20 March 2024 to 9 April 2024
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a href="#" class="govuk-link">Change<span class="govuk-visually-hidden"> cancellation
+                            period</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Sessions cancelled
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <a href="#" class="govuk-link">5 sessions</a>
+                </dd>
+            </div>
+        </div>
+
+        <!-- <h2 class="govuk-heading-m govuk-!-margin-top-7">
+            Details of sessions to be cancelled
+        </h2>
+        <div class="govuk-summary-list govuk-!-margin-bottom-5">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Monday sessions
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>23 March 2024 - AM</li>
+                        <li>30 March 2024 - AM</li>
+                        <li>6 April 2024 - AM</li>
+                    </ul>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Thursday sessions
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>26 March 2024 - AM</li>
+                        <li>2 April 2024 - AM</li>
+                    </ul>
+                </dd>
+            </div>
+        </div> -->
+
+        {{govukInsetText({
+        text: "All sessions taking place during the cancellation period will be marked as cancelled. You can un-cancel
+        individual sessions after you have confirmed the cancellation."
+        })}}
+
+        <form method="post">
+            {{ govukButton({
+            text: "Confirm cancellation"
+            }) }}
+        </form>
+    </div>
+</div>
+{% endblock %}

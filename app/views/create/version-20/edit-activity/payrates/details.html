@@ -1,0 +1,105 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <!-- <span class="govuk-caption-xl">
+                Change pay rate
+            </span> -->
+            <h1 class="govuk-heading-xl">
+                Change the pay amount or pay band name for {{'flat rate' if payRate.incentiveLevel == 'flatRate' else payRate.incentiveLevel|replace('-',' ')|lower}} incentive level: {{payRate.payBand|lower}}
+            </h1>
+
+            <!-- pay rate amount input with currency prefix -->
+            {{govukInput({
+            id: "pay-rate-amount",
+            name: "pay-rate-amount",
+            label: {
+            text: "Amount"
+            },
+            prefix: {
+            text: "£"
+            },
+            classes: "govuk-input--width-10",
+            value: payRate.amount or ""
+            })}}
+
+            <!-- pay rate pay band select input -->
+            <div class="govuk-form-group">
+                <label class="govuk-label" for="pay-rate-pay-band">
+                    Pay band
+                </label>
+                <select class="govuk-select" id="pay-rate-pay-band" name="pay-rate-pay-band">
+                    <option value="" disabled selected>Select a pay band</option>
+                    {% set bandOptions = ["Band 1", "Band 2", "Band 3", "Band 4", "Band 5"] %}
+                    {% for bandOption in bandOptions %}
+                    <option value="{{bandOption}}" {{'selected' if payRate.payBand == bandOption}}>{{bandOption}}</option>
+                    {% endfor %}
+                    {% if payRate.payBand not in bandOptions %}
+                    <option value="{{payRate.payBand}}" {{'selected' if journey=='edit'}}>{{payRate.payBand|capitalize}}</option>
+                    {% endif %}
+                </select>
+            </div>
+
+            <!-- <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="incentive-level-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h1 class="govuk-fieldset__heading">
+                            Incentive level
+                        </h1>
+                    </legend>
+                    <span id="incentive-level-hint" class="govuk-hint">
+                        Select the incentive level for this pay rate
+                    </span>
+                </fieldset>
+                <div class="govuk-radios">
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="incentive-level-basic" name="incentive-level"
+                            type="radio" value="basic">
+                        <label class="govuk-label govuk-radios__label" for="incentive-level-basic">
+                            Basic
+                        </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="incentive-level-standard" name="incentive-level"
+                            type="radio" value="standard">
+                        <label class="govuk-label govuk-radios__label" for="incentive-level-standard">
+                            Standard
+                        </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="incentive-level-enhanced" name="incentive-level"
+                            type="radio" value="enhanced">
+                        <label class="govuk-label govuk-radios__label" for="incentive-level-enhanced">
+                            Enhanced
+                        </label>
+                    </div>
+                </div>
+            </div> -->
+
+            {% if journey == "add" %}
+            {{govukButton({
+            text: "Confirm and add new pay rate"
+            })}}
+            {% else %}
+            {{govukButton({
+            text: "Update pay rate"
+            })}}
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

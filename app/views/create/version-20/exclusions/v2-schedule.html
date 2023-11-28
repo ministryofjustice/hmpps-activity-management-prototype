@@ -1,0 +1,97 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Change someone's activity schedule
+        </span>
+        <h1 class="govuk-heading-xl">
+            {{data['selectedPrisoner']}} activities 
+        </h1>
+
+        {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+        {{ govukInsetText({
+        text: "You're seeing only sessions when each activity is scheduled to run"
+        }) }}
+        
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m"><span class="govuk-visually-hidden">Title</span></caption>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Activity</th>
+                <th scope="col" class="govuk-table__header">Schedule</th>
+                <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Text link</span></th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Computer skills class</th>
+                <td class="govuk-table__cell">
+                    <h2 class="govuk-heading-s">Week one 
+                        <strong class="govuk-tag govuk-tag--green govuk-!-margin-left-6">
+                        Current week
+                      </strong></h2>
+                    <ul class="govuk-list">
+                        <li>Monday PM</li>
+                        <li>Tuesday AM and ED</li>
+                        <li>Wednesday AM</li>
+                        <li>Thursday PM and ED</li>
+                    </ul>
+                    <h2 class="govuk-heading-s">Week two</h2>
+                    <ul class="govuk-list">
+                        <li>Monday AM and PM</li>
+                        <li>Tuesday AM and ED</li>
+                        <li>Wednesday AM</li>
+                        <li>Thursday PM and ED</li>
+                    </ul>
+                </td>
+                <td class="govuk-table__cell"><a href="v2-activity.html" class="govuk-link">Change</a></td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Cleaning</th>
+                <td class="govuk-table__cell">
+                    <h2 class="govuk-heading-s">Week one 
+                        <strong class="govuk-tag govuk-tag--green govuk-!-margin-left-6">
+                        Current week
+                      </strong></h2>
+                      <ul class="govuk-list">
+                        <li>Monday AM and PM</li>
+                        <li>Tuesday PM</li>
+                        <li>Wednesday PM</li>
+                        <li>Thursday AM</li>
+                    </ul>
+                    <h2 class="govuk-heading-s">Week two</h2>
+                    <ul class="govuk-list">
+                        <li>Monday AM and PM</li>
+                        <li>Tuesday PM</li>
+                        <li>Wednesday PM</li>
+                        <li>Thursday AM</li>
+                    </ul>
+                </td>
+                <td class="govuk-table__cell"><a href="#" class="govuk-link">Change</a></td>
+              </tr>
+            </tbody>
+        </table>
+
+        <p>
+            <a href="#" class="govuk-link">Find another prisoner to change their activity schedule</a>
+        </p>
+{% endblock %}

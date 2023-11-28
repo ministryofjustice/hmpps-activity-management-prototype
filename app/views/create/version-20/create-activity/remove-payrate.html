@@ -1,0 +1,49 @@
+{% extends "layout_hmpps.html" %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      {{ govukRadios({
+        name: "confirm-remove-payrate",
+        fieldset: {
+          legend: {
+            text: "Are you sure you want to remove pay rate " + (payrateData.name or 'Payment rate A')+ " for " + (data.activityName or 'Maths level 1') + "?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+        {
+          value: "yes",
+          text: "Yes"
+        },
+        {
+          value: "no",
+          text: "No"
+        }
+        ]
+      }) }}
+
+      <button class="govuk-button" data-module="govuk-button">
+        Save and continue
+      </button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
