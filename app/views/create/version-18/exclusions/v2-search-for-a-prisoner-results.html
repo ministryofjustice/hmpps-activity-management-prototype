@@ -16,36 +16,37 @@ Appointments prototype
 {% endblock %}
 
 {% block content %}
-<form method="post">
-  <div class="govuk-grid-row">
 
-    <div class="govuk-grid-column-full">
-        <form method="post">
-            <div class="govuk-form-group">
-              <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
-                <h1 class="govuk-heading-l">
-                  <span class="govuk-caption-l">
-                    Change someone's activity schedule
-                  </span>
-                  Find a prisoner
-                </h1>
-              </label>
-              <div id="search-hint" class="govuk-hint moj-search__hint ">
-                Search by name prison number
-              </div>
-              <input class="govuk-input moj-search__input govuk-input--width-30" id="search" name="search" type="search" aria-describedby="search-hint">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full"> 
+    <form action="v2-search-for-a-prisoner-results" method="post">
+        <div class="moj-search govuk-!-margin-bottom-9">
+        <div class="govuk-form-group">
+            <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
+            <h1 class="govuk-heading-xl">
+                <span class="govuk-caption-l">
+                Change someone's activity schedule
+                </span>
+                Find a prisoner
+            </h1>
+            </label>
+            <div id="search-hint" class="govuk-hint moj-search__hint ">
+            Search by name prison number
             </div>
-            <button class="govuk-button govuk-button--secondary moj-search__button " data-module="govuk-button">
-              Search
-            </button>
-        </form>
-    </div>
+            <input class="govuk-input moj-search__input govuk-input--width-30" id="search" name="search" type="search" aria-describedby="search-hint">
+        </div>
+        <button class="govuk-button govuk-button--secondary moj-search__button " data-module="govuk-button">
+            Search
+        </button>
+        </div>
+      </form>
+    </div> 
     <div class="govuk-grid-column-full">
       <form action="v2-schedule" method="post">
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h2 class="govuk-heading-m" style="clear: both;">
+            <h2 class="govuk-heading-m govuk-!-margin-0">
               There is 1 matching result
             </h2>
           </legend>
@@ -74,19 +75,19 @@ Appointments prototype
                   </td>  
                   <td class="govuk-table__cell" id="prisoner-number" data-sort-value="G3494GC">G3494GC</td> 
                   <td class="govuk-table__cell" id="prisoner-cell-location" data-sort-value="D-1-32S">D-1-32S</td>  
-                  <td class="govuk-table__cell" id="prisoner-actions"><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">View <span class="govuk-visually-hidden">Ynrvanfer Johneh's</span> prisoner profile<span class="govuk-visually-hidden"> (opens in new tab)</span></a></td>           
+                  <td class="govuk-table__cell" id="prisoner-actions">
+                    <a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">View <span class="govuk-visually-hidden">Ynrvanfer Johneh's</span> prisoner profile<span class="govuk-visually-hidden"> (opens in new tab)</span>
+                    </a>
+                  </td>           
                 </tr>
-              </tbody>
-            </table>
-          
-            <div class="govuk-button-group">
-              <button class="govuk-button" data-module="govuk-button">
+            </tbody>
+          </table>
+            <button class="govuk-button" data-module="govuk-button">
               Continue
-              </button> 
-            </div>
+            </button> 
+        
           </fieldset>
-        </div>
-      </form>
+      </div>
     </div>
 
 

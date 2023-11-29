@@ -28,19 +28,32 @@ Changes in circumstances - {{serviceName}}
         <!--Excluding activities-->
             <p>You're excluding {{data['selectedPrisoner']}} from {{activity.name}} on:</p>
             <ul class="govuk-list govuk-list--bullet">
-                <li>{{ data['monday'] }}</li>
-                {% if data['monday'] | safe %}
-                <li>Monday PM</li>
-                
-                <!--<li class="govuk-visually-hidden">Nothing selected</li>-->
+                {% if data['monday'] !== "checked" %}
+                    {% for session in data['monday'] %}
+                    <li>{{ session }}</li>
+                    {% endfor %}
                 {% endif %}
-
+                {% if data['tuesday'] !== "checked" %}
+                    {% for session in data['tuesday'] %}
+                    <li>{{ session }}</li>
+                    {% endfor %}
+                {% endif %}
+                {% if data['wednesday'] !== "checked" %}
+                    {% for session in data['wednesday'] %}
+                    <li>{{ session }}</li>
+                    {% endfor %}
+                {% endif %}
+                {% if data['thursday'] !== "checked" %}
+                    {% for session in data['thursday'] %}
+                    <li>{{ session }}</li>
+                    {% endfor %}
+                {% endif %}
                 
             </ul>
             <p>This means:</p>
             <ul class="govuk-list govuk-list--bullet">
                 <li>they will not be on the attendance list</li>
-                <li>{{prisoner.name.firstname}} will not have this activity on unlock and movement lists</li>
+                <li>{{data['selectedPrisoner']}} will not have this activity on unlock and movement lists</li>
             </ul>
             <p>They will stay excluded until this session is added back to their schedule.</p>
             <p>Changes take effect from tomorrow</p>
