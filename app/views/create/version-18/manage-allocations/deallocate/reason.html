@@ -17,13 +17,12 @@ text: "Back",
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
             {% set reasons = [
-            "Unacceptable behaviour",
-            "Unacceptable attendance",
-            "Personal reason",
-            "Security",
+            "Completed course or task",
+            "Transferred to another activity",
+            "Withdrawn by staff",
+            "Withdraw at own request",
             "Health",
-            "Withdrawn",
-            "Problem understanding material",
+            "Security",
             "Other"
             ] %}
 
@@ -37,16 +36,27 @@ text: "Back",
 
             <!-- GOV.UK textarea compontent for user to provide more comments -->
             {% set commentHtml %}
-            <div class="govuk-form-group">
-                <label class="govuk-label" for="deallocation-comment">
-                    Can you provide more information? (optional)
-                </label>
-                <!-- <div id="deallocation-comment-hint" class="govuk-hint">
-                    This will be visible to other users on the system.
-                </div> -->
-                <textarea class="govuk-textarea" id="deallocation-comment" name="deallocation-comment" rows="5"
-                    aria-describedby="deallocation-comment-hint"></textarea>
-            </div>
+            <!--
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="deallocation-comment">
+                        Add a case note (optional)
+                    </label>
+                    <textarea class="govuk-textarea" id="deallocation-comment" name="deallocation-comment" rows="5"
+                        aria-describedby="deallocation-comment-hint"></textarea>
+                </div>
+            -->
+            {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+            {{ govukCharacterCount({
+                name: "deallocation-comment",
+                id: "deallocation-commentt",
+                maxlength: 400,
+                label: {
+                    text: "Add a case note (optional)",
+                    classes: "govuk-label",
+                    isPageHeading: false
+                }
+                }) }}
             {% endset %}
 
             <!-- GOVUK radios component HTML for selecting the reason for deallocation -->
