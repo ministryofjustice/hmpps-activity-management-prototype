@@ -1,0 +1,78 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+    {{govukBackLink({
+        text: "Back",
+        "href": "javascript: window.history.go(-1)"
+    })}}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="govuk-heading-l">Check and confirm who you're suspending</h1>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Prisoner name
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {{data['selectedPrisoner']}}
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Prisoner number
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        number
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Suspended activity
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        Computer skills class
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> customer reference</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        End of suspension
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {{data['end-date-day']}} {{data['end-date-month']}} {{data['end-date-year']}}
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> contact details</span></a>
+                    </dd>
+                </div>
+              </dl>
+              
+              <form action="remove-manage-suspensions" method="post" novalidate>
+                <input type="hidden" name="removed-answers-checked" value="true">
+                <button type="submit" class="govuk-button" data-module="govuk-button">
+                  Confirm and suspend
+                </button>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

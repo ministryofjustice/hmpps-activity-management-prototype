@@ -1,0 +1,74 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Manage suspensions
+        </span>
+        <h1 class="govuk-heading-xl">
+            Manage {{data['selectedPrisoner']}} suspensions
+        </h1>
+        
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m"><span class="govuk-visually-hidden">Title</span></caption>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Activity</th>
+                <th scope="col" class="govuk-table__header">Schedule</th>
+                <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Text link</span></th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Computer skills class</th>
+                <td class="govuk-table__cell">
+                    <ul class="govuk-list">
+                        <li>Monday PM</li>
+                        <li>Tuesday AM and ED</li>
+                        <li>Wednesday AM</li>
+                        <li>Thursday PM and ED</li>
+                    </ul>
+                </td>
+                <td class="govuk-table__cell">
+                    <a href="start-date" class="govuk-link" style="float:right">Suspend</a>
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Cleaning</th>
+                <td class="govuk-table__cell"></h2>
+                      <ul class="govuk-list">
+                        <li>Monday AM and PM</li>
+                        <li>Tuesday PM</li>
+                        <li>Wednesday PM</li>
+                        <li>Thursday AM</li>
+                    </ul>
+                </td>
+                <td class="govuk-table__cell"><a href="#" class="govuk-link" style="float:right">Suspend</a></td>
+              </tr>
+            </tbody>
+        </table>
+        <form method="post" action="all-end-date">
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                Suspend all activities
+            </button> 
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -552,6 +552,14 @@ router.use("/:activityId/exclusions", function (req, res, next) {
     require("./exclusions/routes")(req, res, next);
 });
 
+// suspensions journey routes
+router.use("/:activityId/suspensions", function (req, res, next) {
+    req.activityId = req.params.activityId;
+    req.protoUrl = req.serviceName + "/" + req.version + "/" + req.journey + "/" + req.subJourney;
+
+    require("./suspensions/routes")(req, res, next);
+});
+
 module.exports = router;
 
 // generate the activity schedule from the activity schedule data

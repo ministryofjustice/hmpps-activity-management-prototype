@@ -1,0 +1,72 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}}
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="post" action="remove-check-your-answers">
+                <span class="govuk-caption-xl">Manage suspensions</span>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset" role="group" aria-describedby="end-date">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">
+                            When do you want {{data['selectedPrisoner']}} suspension to end?
+                        </h1>
+                      </legend>
+                      <div id="end-date" class="govuk-hint">
+                        Enter the date, for example 29/9/2024, or click on the calendar to select
+                      </div>
+                      <div class="govuk-date-input" id="remove-end-date">
+                        <div class="govuk-date-input__item">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="remove-end-date-day">
+                              Day
+                            </label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="remove-end-date-day" name="remove-end-date-day" type="text" inputmode="numeric">
+                          </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="end-date-month">
+                              Month
+                            </label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="remove-end-date-month" name="remove-end-date-month" type="text" inputmode="numeric">
+                          </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="remove-end-date-year">
+                              Year
+                            </label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="remove-end-date-year" name="remove-end-date-year" type="text" inputmode="numeric">
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                </div>
+
+                {% from "govuk/components/button/macro.njk" import govukButton %}
+
+                {{ govukButton({
+                text: "Continue"
+                }) }}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -34,30 +34,6 @@ text: "Back",
 
             <span class="govuk-caption-xl">{{activity.name}}</span>
 
-            <!-- GOV.UK textarea compontent for user to provide more comments -->
-            {% set commentHtml %}
-            <!-- original component
-            <div class="govuk-form-group">
-                <label class="govuk-label" for="deallocation-comment">
-                    Add a case note (optional)
-                </label>
-                <textarea class="govuk-textarea  govuk-js-character-count" id="deallocation-comment" name="deallocation-comment" rows="5"
-                    aria-describedby="deallocation-comment-hint"></textarea>
-            </div>
-            -->
-            <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="200">
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="deallocation-comment">
-                        Add a case note (optional)
-                    </label>
-                  <textarea class="govuk-textarea govuk-js-character-count" id="deallocation-comment" name="deallocation-comment" rows="5" aria-describedby="deallocation-comment-info deallocation-comment-hint">{{ data['deallocation-comment'] }}</textarea>
-                </div>
-                <div id="deallocation-comment-info" class="govuk-hint govuk-character-count__message">
-                  You can enter up to 200 characters
-                </div>
-              </div>
-            {% endset %}
-
             <!-- GOVUK radios component HTML for selecting the reason for deallocation -->
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset" aria-describedby="deallocation-reason-hint">
@@ -79,10 +55,6 @@ text: "Back",
                             <label class="govuk-label govuk-radios__label" for="deallocation-reason-{{ loop.index }}">
                                 {{ reason }}
                             </label>
-                        </div>
-                        <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                            id="conditional-deallocation-reason-{{ loop.index }}">
-                            {{commentHtml|safe}}
                         </div>
                         {% endfor %}
                     </div>

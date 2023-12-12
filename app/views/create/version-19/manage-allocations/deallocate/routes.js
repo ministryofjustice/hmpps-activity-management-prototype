@@ -404,6 +404,14 @@ router.post("/:prisonerIds/reason", function (req, res) {
   });
 
   res.redirect("check-deallocation");
+
+  if (req.query.redirect === "reason") {
+    if (req.query["deallocation-reason"] = "deallocation-reason-3" or "deallocation-reason-7") {
+      res.redirect("../case-note");
+    } else {
+      res.redirect("../check-deallocation");
+    }
+  } 
 });
 
 // check same reason page
