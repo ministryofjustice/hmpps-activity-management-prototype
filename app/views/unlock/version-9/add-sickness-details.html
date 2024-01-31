@@ -65,10 +65,10 @@ Add attendance details for {{prisonersNoun}}
 				{{ govukRadios({
 					id: "pay-prisoner--sick",
 					name: "attendance-details[" + prisoner.id + "][pay-prisoner]",
-					classes: "govuk-radios--small govuk-radios--inline",
+					classes: "govuk-radios govuk-radios--inline",
 					fieldset: {
 						legend: {
-							text: "Should the prisoner be paid?"
+							text: "Should they be paid?"
 						}
 					},
 					items: [
@@ -85,15 +85,57 @@ Add attendance details for {{prisonersNoun}}
 					}
 					]
 				}) }}
+
+				{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+				{{ govukCharacterCount({
+				name: "withHint",
+				id: "with-hint",
+				maxlength: 100,
+				label: {
+					text: "Can you provide more detail?",
+					classes: "govuk-label--s govuk-!-font-weight-regular",
+					isPageHeading: false
+				}
+				}) }}
 			</div>
 			{% endfor %}
 
+			{% for prisoner in prisonersWithEvents | sort(false, true, ('location.full')) %}
+				{% set events = [] %}
+				{% for event in prisoner.events | sort(false, true, 'times.startTime') %}
+				{% set events = (events.push(event.id), events) %}
+			{% endfor %}
+			
+			{{ event.name }}
+
+			{% for event in prisoner.events %}
+			{% if loop.index > 1 %}
+			</tr>
+			<tr style="display: none;"></tr>
+			<tr class="govuk-table__row">
+			{% endif %}
+			<td class="govuk-table__cell" data-sort-value="{{activityName}}" scope="col">
+				{% if event.type != 'activity' %}
+				<a href="#" class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{
+					event.name }}</a>
+				<br>
+				<span
+					class="govuk-tag govuk-!-margin-bottom-1 govuk-!-margin-top-1">Appointment</span>
+				{% else %}
+				<a href="../../../record-attendance/activities/{{date}}/{{period}}/{{event.id}}"
+					class="govuk-link--no-visited-state govuk-!-font-weight-bold">{{
+					event.name }}</a>
+				{% endif %}
+		{% endfor %}
 			<div class="govuk-button-group govuk-!-margin-top-9">
 				{{govukButton({
-					text: "Record sickness details and finish"
+					text: "Confirm sickness"
 				})}}
 			</div>
 		</form>
 	</div>
 </div>
+
+
 {% endblock %}

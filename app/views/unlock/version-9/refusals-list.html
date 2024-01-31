@@ -10,10 +10,11 @@ Activities Management prototype
 <form>
 	<div class="govuk-width-container">
 		{% block beforeContent %}
-		{{govukBackLink({
-			text: "Select date and location",
-			href: "../../../select-refusals-locations"
-			})}}
+			{{govukBackLink({
+				text: "Select date and location",
+				href: "../../../select-refusals-locations"
+				})
+			}}
 		{% endblock %}
 
 		<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
@@ -34,7 +35,7 @@ Activities Management prototype
 					<div class="moj-search govuk-!-margin-bottom-6">
 						<div class="govuk-form-group" style="width: 74%;">
 							<label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
-								Search by prisoner name
+								Search by prisoner name, number or activity
 							</label>
 							<input class="govuk-input moj-search__input" id="keywords" name="search" type="search"
 								value="{{data['search']}}">
@@ -102,7 +103,7 @@ Activities Management prototype
 											<input class="govuk-checkboxes__input" id="residentialLocation-{{loop.index}}"
 												name="residentialLocation" type="checkbox" value="{{residentialLocation}}" checked>
 											<label class="govuk-label govuk-checkboxes__label" for="residentialLocation-{{loop.index}}">
-												Landing {{residentialLocation}}
+												Landing {{residentialLocation}} {{houseblock}}
 											</label>
 										</div>
 										{% endfor %}
@@ -182,33 +183,81 @@ Activities Management prototype
 										Select all
 									</a>
 								</p>
+								{{ govukRadios({
+									fieldset: {
+										legend: {
+										text: "Relevant alerts",
+										classes: "govuk-label--m"
+										}
+									},
+									idPrefix: 'events',
+									classes: "govuk-radios--small",
+									name: 'filters[alerts]',
+									items: [{
+										text: 'Include relevant alerts',
+										id: 'inlcudeAlerts',
+										value: 'Include relevant alerts',
+										checked: 'true'
+									},
+									{
+										text: 'No revelant alerts',
+										id: 'noAlerts',
+										value: 'No relevant alerts'
+									}]
+								}) }}
+								{{ govukRadios({
+									fieldset: {
+										legend: {
+										text: "Show people who have",
+										classes: "govuk-label--m"
+										}
+									},
+									idPrefix: 'events',
+									classes: "govuk-radios--small",
+									name: 'filters[events]',
+									items: [{
+										text: 'Scheduled events',
+										id: 'scheduledEvents',
+										value: 'Scheduled events'
+									},
+									{
+										text: 'No events',
+										id: 'noEvents',
+										value: 'No events'
+									},
+									{
+										text: 'Either',
+										id: 'either',
+										value: 'Either'
+									}]
+								}) }}
 						
 								{{ govukRadios({
-								fieldset: {
-								legend: {
-								text: "Staying or leaving wing",
-								classes: "govuk-label--m"
-								}
-								},
-								idPrefix: 'attendance',
-								classes: "govuk-radios--small",
-								name: 'filters[attendance]',
-								items: [{
-								text: 'All',
-								id: 'all',
-								value: 'all',
-								checked: true
-								},
-								{
-								text: 'Staying on wing',
-								id: 'Staying',
-								value: 'Staying'
-								},
-								{
-								text: 'Leaving wing',
-								id: 'Leaving',
-								value: 'Leaving'
-								}]
+									fieldset: {
+										legend: {
+										text: "Staying or leaving wing",
+										classes: "govuk-label--m"
+										}
+									},
+									idPrefix: 'attendance',
+									classes: "govuk-radios--small",
+									name: 'filters[attendance]',
+									items: [{
+										text: 'All',
+										id: 'all',
+										value: 'all',
+										checked: true
+									},
+									{
+										text: 'Staying on wing',
+										id: 'Staying',
+										value: 'Staying'
+									},
+									{
+										text: 'Leaving wing',
+										id: 'Leaving',
+										value: 'Leaving'
+									}]
 								}) }}
 			
 								<button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6"
@@ -240,16 +289,7 @@ Activities Management prototype
 					</div> -->
 
 					<div class="moj-scrollable-pane">
-						{% if data['selected-prisoners'].length == 1 -%}
-						{% set prisonerName -%}
-						{% for prisoner in prisonersByHouseblock -%}
-						{% if data['selected-prisoners'][0] == prisoner.id -%}
-						{{prisoner.name.firstname}} {{prisoner.name.surname}}
-						{%- endif %}
-						{%- endfor %}
-						{%- endset %}
-						{%- endif %}
-
+		
 						{% if data['attendance-confirmation'] == 'true' %}
 						{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 						{% set html %}
@@ -299,9 +339,11 @@ Activities Management prototype
 									<th class="govuk-table__header" aria-sort="ascending" width="120">
 										Cell location
 									</th>
+									{% if data['filters[alerts]'] == "Include relevant alerts" %}
 									<th class="govuk-table__header" width="250">
 										Relevant alerts
 									</th>
+									{% endif %}
 									<th class="govuk-table__header" aria-sort="none">
 										Activity
 									</th>
@@ -337,9 +379,7 @@ Activities Management prototype
 										</div>
 									</td>
 									{% endif %}
-									<td class="govuk-table__cell" width="180" scope="col"
-										rowspan="{{prisoner.events|length}}" {% if prisoner.attendance %}colspan="2" {%
-										endif %}>
+									<td class="govuk-table__cell" width="180" scope="col" rowspan="{{prisoner.events|length}}" {% if prisoner.attendance %}colspan="2" {% endif %}>
 										<a href="../../../prisoner/{{prisoner.id}}"
 											class="govuk-link--no-visited-state"><b>{{prisoner.name.surname}}</b>,
 											{{prisoner.name.firstname}}</a><br>
@@ -350,6 +390,7 @@ Activities Management prototype
 										scope="col" rowspan="{{prisoner.events|length}}">
 										{{prisoner.location.cell}}
 									</td>
+									{% if data['filters[alerts]'] == "Include relevant alerts" %}
 									<td class="govuk-table__cell" rowspan="{{prisoner.events|length}}">
 										{% if prisoner.alerts.length > 0 %}
 										<ul class="alerts-list">
@@ -360,6 +401,7 @@ Activities Management prototype
 										</ul>
 										{%- endif -%}
 									</td>
+									{% endif %}
 
 									{% for event in prisoner.events %}
 									{% if loop.index > 1 %}
@@ -390,8 +432,7 @@ Activities Management prototype
 										<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">{{
 											event.location }}</div>
 									</td>
-									<td class="govuk-table__cell" {%- if not prisoner.attendance %}colspan="2" {% endif
-										-%}>
+									<td class="govuk-table__cell" {%- if not prisoner.attendance %}colspan="2" {% endif -%}>
 										<ul class="govuk-list govuk-!-margin-0">
 											{%- if prisoner.attendance[loop.index0].attendance == 'attended' %}
 											<li class="govuk-!-display-inline-block govuk-!-margin-0"><span

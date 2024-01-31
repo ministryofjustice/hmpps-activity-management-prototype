@@ -1,0 +1,58 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %} 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds"> 
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Schedule an appointment</span>
+          Review attendee alerts
+        </h1>
+    </div>
+  </div>
+
+  	<p>You've removed all 12 attendees.</p> 
+  	<p>You need to add someone to continue scheduling it. </p> 
+
+
+	<form method="post">
+
+	<div class="govuk-!-margin-bottom-3 govuk-button-group">
+	{{ govukButton({
+	text: "Add someone to the list",
+	attributes: {
+	"formaction": "upload-or-per-person",
+	"formmethod": "get"
+	}
+	}) }}
+
+	</div>
+
+	</form>
+       
+
+
+  </div>
+</div>
+{% endblock %}

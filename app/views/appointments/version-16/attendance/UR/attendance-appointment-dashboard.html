@@ -1,0 +1,303 @@
+{% extends "layout_hmpps-no-nav.html" %}
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Choose a different date",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="search-results-03102023"> 
+	
+    <div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+		
+		<h1 class="govuk-heading-l">
+			<span class="govuk-caption-l">Record attendance</span>
+			Find an appointment to record or edit attendance
+			<span class="govuk-caption-l">Tuesday, {{ data['date-of-appointment-day']}} October 2023</span>
+		</h1>
+	
+<!-- 
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-two-thirds">
+			<div class="moj-search govuk-!-margin-bottom-6">
+				<form action="{{date}}" method="get" novalidate="">
+					<div class="govuk-form-group govuk-!-width-two-thirds">
+						<label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
+							Search by appointment name
+						</label>
+						<input class="govuk-input moj-search__input " id="keywords" name="search" type="search" value="">
+					</div>
+					<button class="govuk-button moj-search__button" data-module="govuk-button">
+						Search
+					</button>
+				</form>
+			</div>
+		</div>
+		</div> -->
+
+
+	
+		<div class="moj-filter-layout__content">
+
+			<!-- <div class="moj-action__filter"></div> -->
+
+			<h2 class="govuk-heading-s">
+				Showing 11 appointments
+			</h2>
+
+		
+			{% from "govuk/components/table/macro.njk" import govukTable %}
+
+
+			<table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
+				<thead class="govuk-table__head">
+					<tr class="govuk-table__row"> 
+						<!-- <th class="govuk-table__header" scope="col">Date</th> -->
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Appointment name</th>
+						<th class="govuk-table__header" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Location</th>
+						<th class="govuk-table__header" style="width:13%" scope="col" aria-sort="none"><button type="button" data-index="1"></button>Time</th>
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Attendees</th> 
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Attended</th> 
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Not recorded</th> 
+						<th class="govuk-table__header govuk-table__header--numeric" scope="col" aria-sort="none"><button type="button" data-index="0"></button>Not attended</th> 
+					</tr>
+				</thead>
+				<tbody class="govuk-table__body">
+
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">
+							<b><a class="govuk-link" href="attendee-list-40">Chaplaincy</a></b>
+						</td>
+						<td class="govuk-table__cell">Chapel</td>
+						<td class="govuk-table__cell">8:30 to 9:30</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">40</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">40</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+					</tr> 
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell">
+							<b><a class="govuk-link" href="#">Case - Legal aid</a></b>
+						</td>
+						<td class="govuk-table__cell">Classroom 1</td>
+						<td class="govuk-table__cell">9:00 to 9:45</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">20</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+					</tr> 
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">
+							<b><a class="govuk-link" href="#">Job Centre Plus</a></b>
+						</td>
+						<td class="govuk-table__cell">Classroom 2</td>
+						<td class="govuk-table__cell">9:00 to 10:00</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">12</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">12</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+					</tr> 
+					<tr class="govuk-table__row">
+						<td class="govuk-table__cell">
+							<b><a class="govuk-link" href="#">Chaplaincy</a></b>
+						</td>
+						<td class="govuk-table__cell">Chapel</td> 
+						<td class="govuk-table__cell">9:00 to 10:00</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">10</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">10</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+					</tr>
+
+					<tr class="govuk-table__row ">  
+						<td class="govuk-table__cell">
+							<b><a class="govuk-link" href="#">Gym - Weights</a></b>
+						</td>
+						<td class="govuk-table__cell">Gym</td>
+						<td class="govuk-table__cell">8:45 to 10:00</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">8</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">7</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+					</tr>
+				
+					
+					<tr class="govuk-table__row "> 
+						
+						<td class="govuk-table__cell"> 
+							<b>
+								<a class="govuk-link" href="attendee-list">
+									The Bridge (Programmes appointment)
+								</a></b>
+						</td>
+						<td class="govuk-table__cell">Classroom 2</td>
+						<td class="govuk-table__cell">
+							9:00 to 10:00  </td>
+					
+						<td class="govuk-table__cell govuk-table__cell--numeric">8</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">8</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+					</tr>
+		
+					<tr class="govuk-table__row ">
+						<td class="govuk-table__cell"> 
+							<b><a class="govuk-link" href="attendee-list-one">Medical - Dentist</a></b>
+						</td>
+						<td class="govuk-table__cell">Medical room 1</td>
+						<td class="govuk-table__cell">8:45 to 9:15</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric"><a href="#" class="govuk-link">Bert Hungerford</a><br>C2598E<br>1-3-44 </td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+					</tr> 
+
+
+					<tr class="govuk-table__row "> 
+						<td class="govuk-table__cell"> 
+							<b><a class="govuk-link" href="#">
+								Medical - Dentist
+							</a></b>
+						</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell">9:00 to 9:15</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric"><a href="#" class="govuk-link"> Amby Abraham</a><br>G2044E <br>1-2-33 </td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td>  
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+					</tr>
+					<tr class="govuk-table__row">  
+						<td class="govuk-table__cell"> 
+							<b><a class="govuk-link" href="#">
+								Medical - Dentist
+							</a></b>
+						</td>
+						<td class="govuk-table__cell">Medical Room 1</td>
+						<td class="govuk-table__cell">9:00 to 9:15</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric"><a href="#" class="govuk-link">Wade Brumbie</a><br>B4942H<br>2-4-5</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+					</tr>
+
+					
+					<tr class="govuk-table__row ">
+						<td class="govuk-table__cell"> 
+							<b>
+								<a class="govuk-link" href="#">
+									Medical - Dentist
+								</a></b>
+						</td>
+						<td class="govuk-table__cell">Medical Room 1</td> 
+						<td class="govuk-table__cell">9:15 to 9:30</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric"><a href="#" class="govuk-link">Robin Bab</a><br>F4933A<br>1-3-66</td> 
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+					</tr>
+					<tr class="govuk-table__row ">
+						<td class="govuk-table__cell">
+							<b>
+								<a class="govuk-link" href="#">
+									Medical - Dentist
+								</a></b>
+						</td>
+						<td class="govuk-table__cell">Medical Room 1</td> 
+						<td class="govuk-table__cell">9:30 to 9:45</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric"><a href="#" class="govuk-link">Matthew Doyle</a><br>E4911C<br>1-2-22</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">0</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+
+
+			</div>
+		</div>
+
+	</div>
+
+	</div>
+</form>
+{% endblock %}
+
+
+
+{% block pageScripts %}
+<script type="text/javascript">
+	$(document).ready(function () {
+		new MOJFrontend.FilterToggleButton({
+			bigModeMediaQuery: "(min-width: 48.063em)",
+			startHidden: true,
+			toggleButton: {
+				container: $(".moj-action__filter"),
+				showText: "Show filter",
+				hideText: "Hide filter",
+				classes: "govuk-button--secondary",
+			},
+			closeButton: {
+				container: $(".moj-filter__header-action"),
+				text: "Close",
+			},
+			filter: {
+				container: $(".moj-filter"),
+			},
+		});
+	})
+</script>
+
+
+
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#appointment-location-fltr'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+</script>
+
+
+
+
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#appointment-type-fltr'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+</script>
+
+
+
+<script type="text/javascript" src="/public/javascripts/accessible-autocomplete.min.js"></script>
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.querySelector('#appointment-prisoner-name'),
+        showAllValues: true,
+        defaultValue: '',
+        autoselect: true,
+        confirmOnBlur: false,
+    })
+</script>
+{% endblock %}

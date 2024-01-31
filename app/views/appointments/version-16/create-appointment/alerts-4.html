@@ -1,0 +1,347 @@
+
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %} 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full"> 
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Schedule an appointment</span>
+          Review 6 people with alerts
+        </h1>
+    </div>
+  </div>
+
+  
+  <div class="govuk-warning-text">
+	<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+	<strong class="govuk-warning-text__text">
+	  <span class="govuk-warning-text__assistive">Important</span>
+	  Check an attendee's prisoner profile for full details on their alerts.
+	</strong>
+  </div>
+
+
+
+
+  <ul class="govuk-list ">
+
+	<li class="govuk-body">People with alerts: 6</li>
+
+	<li class="govuk-body">People you're adding: 9</li> 
+  
+</ul>
+
+
+{%- from "moj/components/filter/macro.njk" import mojFilter -%}
+{%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
+<div class="moj-filter-layout">
+	<div class="moj-filter-layout__filter">
+		<div class="moj-filter">
+			<div class="moj-filter__header">
+				<div class="moj-filter__header-title">
+					<h2 class="govuk-heading-m">Filter</h2>
+				</div>
+				<div class="moj-filter__header-action"></div>
+			</div>
+			<div class="moj-filter__content">
+				{% if selectedFilters.length %}
+				<div class="moj-filter__selected">
+					<div class="moj-filter__selected-heading">
+						<div class="moj-filter__heading-title">
+							<h2 class="govuk-heading-m">Selected filters</h2>
+						</div>
+						<div class="moj-filter__heading-action">
+							<p><a class="govuk-link govuk-link--no-visited-state" href="">Clear filters</a>
+							</p>
+						</div>
+					</div>
+					{% for filter in selectedFilters %}
+					<h3 class="govuk-heading-s govuk-!-margin-bottom-0">Colour</h3>
+					<ul class="moj-filter-tags">
+						<li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove
+									this
+									filter</span> Blue</a></li>
+						<li><a class="moj-filter__tag" href="#"><span class="govuk-visually-hidden">Remove
+									this
+									filter</span> Yellow</a></li>
+					</ul>
+					{% endfor %}
+				</div>
+				{% endif %}
+
+				<div class="moj-filter__options">
+					<button class="govuk-button" data-module="govuk-button" action="appointment-view">
+						Apply filters
+					</button>
+
+				 
+				<!-- Alert type GOVUK checkboxes with component - HTML -->
+				{{ govukCheckboxes({
+					classes: "govuk-checkboxes--small",
+					id: "alert-fltr",
+					name: "alert-fltr",
+
+					fieldset: {
+					legend: {
+					text: "Alert type",
+					isPageHeading: false,
+					classes: "govuk-fieldset__legend--s"
+					}
+					},
+					items: [
+
+					{
+					value: "Child communication measures",
+					text: "Child communication measures",
+					checked: "true"
+					},
+
+					{
+					value: "MAPPP Case",
+					text: "MAPPP Case",
+					checked: "true"
+					},
+					
+					{
+					value: "Other",
+					text: "Other",
+					checked: "true"
+					},
+
+					{
+					value: "Risk",
+					text: "Risk",
+					checked: "true"
+					},
+					{
+					value: "Security",
+					text: "Security",
+					checked: "true"
+					},
+					{
+					value: "Self harm",
+					text: "Self harm",
+					checked: "true"
+					},
+
+					{
+					value: "Sexual offence",
+					text: "Sexual offence",
+					checked: "true"
+					}
+					]
+					}) }}
+
+					
+
+					
+					<button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+						data-module="govuk-button" action="appointment-view">
+						Apply filters
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="moj-filter-layout__content">
+
+	<div class="moj-action__filter"></div>
+
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full"> 
+		{% if data == 'remove-ryan' %}
+		{% else %}
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+				<h2 class="govuk-summary-card__title"><a class="govuk-link" href="">Ryan Gee, F5132C</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" onclick="?remove-ryan" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			<div class="govuk-summary-card__content"> 
+        
+		 
+				<ul class="govuk-list govuk-list--bullet"> 
+					<li>ACCT open</li>
+					<li>Arsonist</li> 
+					<li>Escape list</li>
+					<li>Gang mamber</li>
+					<li>Hostage taker</li>
+					<li>L1 Restriction No contact with any child </li> 
+					<li>MAPPA</li>
+					<li>No one-to-one</li>
+					<li>PSO4400 CH1 Children</li>
+					<li>Racist</li> 
+					<li>Risk to Children</li>
+					<li>Risk to females</li>
+					<li>Risk to lesbian/gay/bisexual people</li>
+					<li>Staff assaulter</li>
+					<li>ViSOR </li>
+				  </ul>
+			</div>
+		
+		  </div> 
+		  {% endif %}
+
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Matthew Doyle, E4911C</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+      		<div class="govuk-summary-card__content"> 
+				<ul class="govuk-list govuk-list--bullet">  	
+					<li>CSIP</li>
+					<li>MAPPA </li> 
+					<li>PSO4400 CH1 Children</li>
+					<li>Risk to females</li> 
+					<li>Veteran</li>
+					<li>ViSOR</li> 
+				</ul>
+     		</div>
+		  </div> 
+
+
+
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Bert Hungerford, C2598E</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+      		<div class="govuk-summary-card__content"> 
+  
+			<ul class="govuk-list govuk-list--bullet">  
+				<li>MAPPA</li> 
+				<li>PSO4400 CH1 Children</li>
+				<li>Risk to Children</li> 
+			</ul> 
+     		</div>
+		  </div> 
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Robin Bab, F4933A</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			
+			<div class="govuk-summary-card__content">  
+				<ul class="govuk-list govuk-list--bullet">  	
+					<li>Care experienced</li> 
+					<li>Risk to LGBT</li>  
+				</ul>
+			</div>
+		  </div> 
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Neil Rudge, G2044E</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+			<div class="govuk-summary-card__content"> 
+				<ul class="govuk-list govuk-list--bullet">  
+					<li>MAPPA</li>  
+					<li>ViSOR</li> 
+				</ul>
+			</div> 
+		  </div> 
+
+		  <div class="govuk-summary-card">
+			<div class="govuk-summary-card__title-wrapper">
+			  <h2 class="govuk-summary-card__title"><a class="govuk-link" href="#">Amby Abraham, C4048R</a></h2>
+			  <ul class="govuk-summary-card__actions"> 
+				<li class="govuk-summary-card__action"> 
+				  <a class="govuk-link" href="#">
+					Remove attendee
+				  </a>
+				</li>
+			  </ul>
+			</div>
+		
+			<div class="govuk-summary-card__content"> 
+			<p>PEEP</p>   
+			</div>
+		  </div> 
+
+
+      <form method="post"> 
+  
+        <div class="govuk-grid-row govuk-grid-column-full govuk-button-group">
+          {{govukButton({
+            text: "Continue",
+            attributes: {
+              "formaction": "non-associations",
+              "formmethod": "get"
+              }
+            })}}
+            
+        </div>
+  
+  
+  
+      </form>
+	</div>
+	</div>
+	</div>
+
+      
+       
+
+   
+
+
+
+
+  </div>
+</div>
+{% endblock %}
