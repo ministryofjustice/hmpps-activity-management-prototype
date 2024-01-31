@@ -45,7 +45,7 @@
 			<form action="{{date}}" method="get" novalidate="">
 				<div class="govuk-form-group">
 					<label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
-						Search by prisoner name, number or activity
+						Search by prisoner name, prison number, or by event name
 					</label>
 					<input class="govuk-input moj-search__input " id="keywords" name="search" type="search"
 						value="{{data['search']}}">
@@ -186,11 +186,11 @@
 		{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
 		{{ govukCheckboxes({
-		  name: "waste",
+		  name: "relevantAlerts",
 		  classes: "govuk-checkboxes--small",
 		  fieldset: {
 			legend: {
-			  text: "Alerts",
+			  text: "Relevant alerts",
 			  isPageHeading: false,
 			  classes: "govuk-fieldset__legend--m"
 			}
@@ -198,7 +198,8 @@
 		  items: [
 			{
 			  value: "alerts",
-			  text: "Include alerts"
+			  text: "Include alerts",
+			  checked:true
 			}
 		  ]
 		}) }}
