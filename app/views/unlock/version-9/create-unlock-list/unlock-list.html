@@ -183,26 +183,6 @@
 			</a>
 		</p>
 		-->
-		{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-
-		{{ govukCheckboxes({
-		  name: "relevantAlerts",
-		  classes: "govuk-checkboxes--small",
-		  fieldset: {
-			legend: {
-			  text: "Relevant alerts",
-			  isPageHeading: false,
-			  classes: "govuk-fieldset__legend--m"
-			}
-		  },
-		  items: [
-			{
-			  value: "alerts",
-			  text: "Include alerts",
-			  checked:true
-			}
-		  ]
-		}) }}
 
 		{{ govukRadios({
 			fieldset: {
@@ -232,32 +212,54 @@
 		}) }}
 
 		{{ govukRadios({
-		fieldset: {
-		legend: {
-		text: "Staying or leaving wing",
-		classes: "govuk-label--m"
-		}
-		},
-		idPrefix: 'attendance',
-		classes: "govuk-radios--small",
-		name: 'filters[attendance]',
-		items: [{
-		text: 'All',
-		id: 'all',
-		value: 'all',
-		checked: true
-		},
-		{
-		text: 'Staying on wing',
-		id: 'Staying',
-		value: 'Staying'
-		},
-		{
-		text: 'Leaving wing',
-		id: 'Leaving',
-		value: 'Leaving'
-		}]
+			fieldset: {
+			legend: {
+			text: "Staying or leaving wing",
+			classes: "govuk-label--m"
+			}
+			},
+			idPrefix: 'attendance',
+			classes: "govuk-radios--small",
+			name: 'filters[attendance]',
+			items: [{
+			text: 'All',
+			id: 'all',
+			value: 'all',
+			checked: true
+			},
+			{
+			text: 'Staying on wing',
+			id: 'Staying',
+			value: 'Staying'
+			},
+			{
+			text: 'Leaving wing',
+			id: 'Leaving',
+			value: 'Leaving'
+			}
+			]
 		}) }}
+		{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+		{{ govukCheckboxes({
+		  name: "relevantAlerts",
+		  classes: "govuk-checkboxes--small",
+		  fieldset: {
+			legend: {
+			  text: "Relevant alerts",
+			  isPageHeading: false,
+			  classes: "govuk-fieldset__legend--m"
+			}
+		  },
+		  items: [
+			{
+			  value: "alerts",
+			  text: "Include alerts",
+			  checked:true
+			}
+		  ]
+		}) }}
+
 		{% endset %}
 
 		<div class="moj-filter">
