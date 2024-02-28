@@ -1,0 +1,78 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% set titleText %}
+
+{% endset %}
+
+{% block pageTitle %}
+{{titleText}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			<h1 class="govuk-heading-l">
+				Change attendance details for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+			</h1>
+
+			{% set insetTextHtml %}
+			<p>
+				{{activity.name}} on {{date|convertShortDateToLongDate}} ({{period|upper}})
+			</p>
+			{% endset %}
+
+			{{govukInsetText({
+				html: insetTextHtml
+			})}}
+
+			{% set titleText %}
+			Did {{prisoner.name.firstname}} {{prisoner.name.surname}} attend the {{activity.name}} {{period|upper}} session on {{date|convertShortDateToLongDate}}?
+			{% endset %}
+
+			{{ govukRadios({
+				name: "attendance-action",
+				fieldset: {
+					legend: {
+						text: titleText,
+						classes: "govuk-fieldset__legend--m"
+					}
+				},
+				items: [
+				{
+					value: "attended",
+					html: 'Yes'
+				},
+				{
+					value: "not-attended",
+					html: "No"
+				},
+				{
+					divider: "or"
+				},
+				{
+					value: "remove",
+					html: "Reset attendance record"
+				}
+				]
+			}) }}
+			<input type="hidden" name="selected-prisoners" value="{{prisoner.id}}">
+			{{govukButton({
+				text: "Continue"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+{% endblock %}

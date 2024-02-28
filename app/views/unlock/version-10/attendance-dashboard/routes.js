@@ -2,25 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
 
-
-// Run this code when a form is submitted to 'attendance-dashboard-route'
-router.post('/attendance-dashboard-route', function (req, res) {
-
-  // Make a variable and give it the value from 'selectDate'
-  var dateRoute = req.session.data['selectDate']
-
-  // Check whether the variable matches a condition
-  if (dateRoute == "Between 2 dates"){
-    // Send user to next page
-    res.redirect('/dead-page')
-  } else {
-    // Send user to ineligible page
-    res.redirect('/attendance-summary')
-  }
-
-})
-
-
 router.get("/", function (req, res) {
   let date = new Date().toISOString().slice(0, 10);
   res.redirect("attendance-dashboard/select-date");
@@ -129,6 +110,9 @@ router.get("/:selectedDate/:selectedPeriod", function (req, res) {
     if (period == "AM" || period == "Morning" || period == "morning") {
       totalAllocated = attendanceTotals.morning["scheduled"];
       period = "AM";
+    } else if (period == "Lunch" || period == "Lunch time" || period == "lunch") {
+      totalAllocated = attendanceTotals.afternoon["scheduled"];
+      period = "Lunch time";
     } else if (period == "PM" || period == "Afternoon" || period == "afternoon") {
       totalAllocated = attendanceTotals.afternoon["scheduled"];
       period = "PM";
@@ -1020,4 +1004,3 @@ function getPrisonersWithActivity(activities, prisoners, date, period) {
 function paginate(array, pageSize, pageNumber) {
   return array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
 }
-

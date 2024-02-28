@@ -1,0 +1,110 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}{% endblock %}
+{% block beforeContent %}
+{{ govukBackLink({
+	text: "Record and check attendance",
+	href: '/' + data['prototype-versions']['create-and-allocate']['url'] ~ "/record-check-attendance"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">View not attended prisoners</span>
+        <h1 class="govuk-heading-xl">
+            Not attended yet list: select a date
+        </h1>
+        <form method="post">
+            {% set dateHtml %}
+            {{ govukDateInput({
+            id: "other-date",
+            namePrefix: "other-date",
+            fieldset: {
+            legend: {
+            text: "Date"
+            }
+            },
+            hint: {
+            html: "For example, " + dateIn30Days|convertShortDateToExampleDate
+            }
+            }) }}
+            {% endset %}
+            {% set today = '_'|today() %}
+            {{ govukRadios({
+            name: "date",
+            fieldset: {
+            legend: {
+            text: "Date",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            hint: {
+            text: "You can view any of the last 15 days."
+            },
+            items: [
+            {
+            value: today,
+            text: "Today – " + today|convertShortDateToLongDate
+            },
+            {
+            value: today|dayBefore,
+            text: "Yesterday – " + today|dayBefore(today)|convertShortDateToLongDate
+            },
+            {
+            value: "other-date",
+            text: "A different date",
+            conditional: {
+            html: dateHtml
+            }
+            }
+            ]
+            }) }}
+
+            <input type="hidden" name="period" value="daily">
+
+            <!-- select period -->
+            <!-- {{ govukRadios({
+            name: "period",
+            fieldset: {
+            legend: {
+            text: "Period",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            items: [
+            {
+            value: "am",
+            text: "AM session"
+            },
+            {
+            value: "pm",
+            text: "PM session"
+            },
+            {
+            value: "evening",
+            text: "ED session"
+            },
+            {
+                divider: "or"
+            },
+            {
+            value: "daily",
+            text: "All sessions"
+            }
+            ]
+            }) }} -->
+
+
+
+            {{ govukButton({
+            text: "Continue"
+            })}}
+        </form>
+    </div>
+</div>
+{% endblock %}

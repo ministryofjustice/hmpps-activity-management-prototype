@@ -486,7 +486,22 @@ router.post(`/create-b2b-appointment/bulk-more-people`, function (req, res) {
 	}
   });
 
+// Run this code when a form is submitted to 'attendance-dashboard-route'
+router.post('/attendance-dashboard-route', function (req, res) {
 
+	// Make a variable and give it the value from 'selectDate'
+	var dateRoute = req.session.data['selectDate']
+  
+	// Check whether the variable matches a condition
+	if (dateRoute === "Between 2 dates"){
+	  // Send user to next page
+	  res.redirect('/dead-page')
+	} else {
+	  // Send user to ineligible page
+	  res.redirect('/attendance-summary')
+	}
+  
+  })
 
 // print unlock list
 router.get("/attendance/print-attendee-list", function (req, res) {

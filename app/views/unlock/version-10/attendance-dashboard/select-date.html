@@ -13,24 +13,36 @@
 {% block content %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <span class="govuk-caption-xl">Appointments attendance summary</span>
-			<h1 class="govuk-heading-xl">When do you want to see the attendance summary for?</h1>
-
-            <form method="post" action="attendance-dashboard-route">
-
+            <h1 class="govuk-heading-l">
+                What date do you want to see the daily attendance summary for?
+            </h1>
+            <form method="post">
+                {% set dateHtml %}
+                {{ govukDateInput({
+				id: "other-date",
+				namePrefix: "other-date",
+				fieldset: {
+					legend: {
+						text: "Date"
+					}
+				},
+				hint: {
+					html: "For example, " + dateIn30Days|convertShortDateToExampleDate
+				}
+			}) }}
+                {% endset %}
                 {% set today = '_'|today() %}
                 {{ govukRadios({
-				name: "selectDate",
+				name: "date",
 				fieldset: {
 					legend: {
 						text: "Date",
 						isPageHeading: false,
-						classes: "govuk-fieldset__legend--m govuk-visually-hidden",
-						caption: "test"
+						classes: "govuk-fieldset__legend--m"
 					}
 				},
 				hint: {
-					text: "You can view the summary from the first day of the previous calendar month, up to today."
+					text: "You can view the summary for any of the last 15 days."
 				},
 				items: [
 				{
@@ -47,13 +59,6 @@
 					conditional: {
 						html: dateHtml
 					}
-				},
-				{
-					value: today|dayBefore,
-					text: "Between 2 dates",
-						hint: {
-							text: "To view the summary for a particular week, or last month, for example."
-						}
 				}
 				]
 			}) }}
