@@ -1,0 +1,60 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+{% block primaryNavigation %}
+{% endblock %}
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			{% set count = data["selected-prisoners"]|length %}
+			{% if count == 1 %}
+			{{ govukNotificationBanner({
+			text: "You've recorded attendance for 1 person",
+			type: "success"
+			}) }}
+			{% elif count > 1 %}
+			{{ govukNotificationBanner({
+			text: "You've recorded attendance for " ~ count ~ " people",
+			type: "success"
+			}) }}
+			{% endif %}
+
+
+			<h1 class="govuk-heading-xl">
+				View and print incentive level warnings
+			</h1>
+
+			{% if prisonersWithWarnings|length == 1 %}
+			<p>
+				You can view and print incentive level warnings for {{prisonersWithWarnings|length}} person:
+			</p>
+			{% else %}
+			<p>
+				You can view and print incentive level warnings for {{prisonersWithWarnings|length}} people:
+			</p>
+			{% endif %}
+
+			<ul class="govuk-list govuk-list--spaced govuk-list--bullet">
+				{% for id, warning in prisonersWithWarnings %}
+				{% set prisoner = id|getPrisonerDetails %}
+				<li>{{prisoner.name.surname}}, {{prisoner.name.firstname}}, {{prisoner.id}} – <a href="print-incentive-level-warning" target="_blank" rel="noopener noreferrer">view and print (opens in a new tab)</a></li>
+				{% endfor %}
+			</ul>
+
+			{{govukButton({
+			text: "Finish and return to record attendance",
+			classes: "govuk-!-margin-top-6"
+			})}}
+		</form>
+	</div>
+</div>
+{% endblock %}
