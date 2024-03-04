@@ -1,16 +1,21 @@
 {% extends "layout_hmpps.html" %}
+
 {% set serviceName = "Activities Management" %}
+
 {% block pageTitle %}
-Activities Management prototype
+	Activities Management prototype
 {% endblock %}
+
 {% block primaryNavigation %}
 {% endblock %}
+
 {% block beforeContent %}
-{{ govukBackLink({
-	text: "Unlocking, refusals and movement lists",
-	href: '../whereabouts'
-})}}
+	{{ govukBackLink({
+		text: "Back",
+		href: '../whereabouts'
+	})}}
 {% endblock %}
+
 {% block content %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
@@ -35,10 +40,13 @@ Activities Management prototype
 				name: "movement-date",
 				fieldset: {
 					legend: {
-						text: "Date",
+						text: "Movement date",
 						isPageHeading: false,
 						classes: "govuk-fieldset__legend--m"
 					}
+				},
+				hint: {
+					text: "You can get movement lists for dates up to 60 days from today."
 				},
 				items: [
 				{
@@ -74,10 +82,6 @@ Activities Management prototype
 					text: "AM (morning)"
 				},
 				{
-					value: "lunch",
-					text: "Lunch time (between 12pm and 1pm)"
-				},
-				{
 					value: "pm",
 					text: "PM (afternon)"
 				},
@@ -87,6 +91,24 @@ Activities Management prototype
 				}
 				]
 			}) }}
+
+			<div class="govuk-form-group govuk-!-margin-bottom-6">
+				<fieldset class="govuk-fieldset" aria-describedby="locations-hint">
+					<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+						Location
+					</legend>
+					<div class="govuk-radios" id="locations-radios" data-module="govuk-radios">
+						{% for houseblock in data['residential-locations-2'] %}
+						<div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="locations-{{houseblock.id}}" name="selected-locations[houseblocks]" type="radio" value="{{houseblock.id}}" aria-controls="conditional-locations-{{houseblock.id}}" aria-expanded="false">
+							<label class="govuk-label govuk-radios__label" for="locations-{{houseblock.id}}">
+								{{houseblock.name}}
+							</label>
+						</div>
+						{% endfor %}
+					</div>
+				</fieldset>
+			</div>
 
 			{{govukButton({
 				text: "Continue"

@@ -1,21 +1,26 @@
 {% extends "layout_hmpps.html" %}
+
 {% set serviceName = "Activities Management" %}
+
 {% block pageTitle %}
-Movement list
+	Movement list
 {% endblock %}
+
 {% block primaryNavigation %}
 {% endblock %}
+
 {% block beforeContent %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{{govukBackLink({
-text: "Back to all locations",
-"href": "javascript: window.history.go(-1)"
-})}}
+	{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+	{{govukBackLink({
+	text: "Back",
+	"href": "javascript: window.history.go(-1)"
+	})}}
 {% endblock %}
+
 {% block content %}
 <div class="govuk-grid-row govuk-!-margin-bottom-5">
 	<div class="govuk-grid-column-two-thirds">
-		<h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+		<h1 class="govuk-heading-l govuk-!-margin-bottom-0">
 			{{data['location']}} &ndash; movement list
 		</h1>
 		<span class="govuk-caption-l">
@@ -29,28 +34,118 @@ text: "Back to all locations",
 
 {%- from "moj/components/filter/macro.njk" import mojFilter -%}
 {%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
-<!-- <div class="moj-filter-layout">
+<div class="moj-filter-layout">
 	<div class="moj-filter-layout__filter">
 		{% set filtersHtml %}
 		<div class="govuk-form-group govuk-!-margin-bottom-2">
-			<fieldset class="govuk-fieldset">
+			<fieldset class="govuk-fieldset govuk-!-margin-bottom-5">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
 					<h2 class="govuk-fieldset__heading">
-						Houseblock
+						Residential location
 					</h2>
 				</legend>
-			</fieldset>
-			<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-				{% for houseblock in houseblocks %}
-				<div class="govuk-checkboxes__item">
-					<input class="govuk-checkboxes__input" id="{{houseblock}}" name="houseblock" type="checkbox"
-						value="{{houseblock}}" checked>
-					<label class="govuk-label govuk-checkboxes__label" for="{{houseblock}}">
-						Houseblock {{houseblock}}
-					</label>
+				<div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+					{% for houseblock in houseblocks %}
+					<div class="govuk-checkboxes__item">
+						<input class="govuk-checkboxes__input" id="{{houseblock}}" name="houseblock" type="checkbox"
+							value="{{houseblock}}" checked>
+						<label class="govuk-label govuk-checkboxes__label" for="{{houseblock}}">
+							Houseblock {{houseblock}}
+						</label>
+					</div>
+					{% endfor %}
 				</div>
-				{% endfor %}
-			</div>
+			</fieldset>
+
+		{{ govukRadios({
+			fieldset: {
+			legend: {
+			text: "Staying or leaving wing",
+			classes: "govuk-label--m"
+			}
+			},
+			idPrefix: 'attendance',
+			classes: "govuk-radios--small",
+			name: 'filters[attendance]',
+			items: [{
+			text: 'All',
+			id: 'all',
+			value: 'all',
+			checked: true
+			},
+			{
+			text: 'Staying on wing',
+			id: 'Staying',
+			value: 'Staying'
+			},
+			{
+			text: 'Leaving wing',
+			id: 'Leaving',
+			value: 'Leaving'
+			}
+			]
+		}) }}
+
+		{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+		{{ govukCheckboxes({
+		  name: "relevantAlerts",
+		  classes: "govuk-checkboxes--small",
+		  fieldset: {
+			legend: {
+			  text: "Alerts",
+			  isPageHeading: false,
+			  classes: "govuk-fieldset__legend--m"
+			}
+		  },
+		  items: [
+		  {
+			value: "ACCT",
+			text: "ACCT",
+			checked:true
+		  },
+		  {
+			value: "Controlled unlock",
+			text: "Controlled unlock",
+			checked:true
+		  },
+		  {
+			value: "Escape list",
+			text: "Escape list",
+			checked:true
+		  },
+		  {
+			value: "PEEP",
+			text: "PEEP",
+			checked:true
+		  },
+		  {
+			value: "Category A",
+			text: "Category A",
+			checked:true
+		  },
+		  {
+			value: "Category A - high",
+			text: "Category A - high",
+			checked:true
+		  },
+		  {
+			value: "Category A - provisional",
+			text: "Category A - provisional",
+			checked:true
+		  },
+		  {
+			divider: "or"
+		  },
+		  {
+			value: "none",
+			text: "No alerts",
+			behaviour: "exclusive"
+		  }
+		  ]
+		}) }}
+
+		
 		</div>
 		<p>
 			<a href="#" class="govuk-link" data-select-all="true" data-target="houseblock">Select all</a>
@@ -101,33 +196,30 @@ text: "Back to all locations",
 				</div>
 			</div>
 		</div>
-	</div> -->
-
+	</div>			<h2 class="govuk-heading-m">
+		{{prisonersForActivities|length}} people allocated
+	</h2>
 	<div class="moj-filter-layout__content">
 		<div class="moj-action-bar">
-			<!-- <div class="moj-action-bar__filter"></div> -->
+			<div class="moj-action-bar__filter"></div>
 
 			<div class="moj-button-menu">
 				<div class="moj-button-menu__wrapper">
 					{{govukButton({
-						text: "Print this page",
-						classes: "govuk-button--blue moj-button-menu__item",
-						attributes: {
-						"data-module": "govuk-button"
-						},
-						href: "../../print-movement-list"
-						})}}
+					text: "Print this page",
+					classes: "govuk-button--blue moj-button-menu__item",
+					attributes: {
+					"data-module": "govuk-button"
+					},
+					href: "../../print-unlock-list"
+					})}}
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="moj-scrollable-pane">
-		<h2 class="govuk-heading-m">
-			{{prisonersForActivities|length}} people allocated
-		</h2>
+		<div class="moj-scrollable-pane">
 		<table
-			class="govuk-table app-whereabouts-table app-whereabouts-table--font-size-normal app-whereabouts-table--sticky-head"
+			class="govuk-table"
 			data-module="moj-sortable-table">
 			<thead class="govuk-table__head">
 				<tr>
@@ -173,9 +265,11 @@ text: "Back to all locations",
 						{% for activity in prisoner.movementData %}
 						<a href="../../../record-attendance/activities/{{date}}/{{period|upper}}/{{activity.id}}"
 							class="govuk-link--no-visited-state">{{activity.name}}</a>
+							<!--
 							{% if activity.appointment == true %}
-							<br><span class="govuk-tag govuk-!-margin-bottom-1 govuk-!-margin-top-1">Appointment</span>
+								<br><span class="govuk-tag govuk-!-margin-bottom-1 govuk-!-margin-top-1">Appointment</span>
 							{% endif %}
+							-->
 						<div class="govuk-!-margin-bottom-0 govuk-hint govuk-!-font-size-16">
 							{{activity.times.startTime}}&thinsp;–&thinsp;{{activity.times.endTime}}</div>
 						{% endfor %}

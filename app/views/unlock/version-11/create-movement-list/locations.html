@@ -2,7 +2,7 @@
 {% set serviceName = "Activities Management" %}
 
 {% block pageTitle %}
-Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{data['period']|upper}}
+    Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{data['period']|upper}}
 {% endblock %}
 
 {% block primaryNavigation %}
@@ -12,16 +12,16 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
 <form>
     <div class="govuk-width-container">
         {% block beforeContent %}
-        {{govukBackLink({
-        text: "Back to select date",
-        "href": "javascript: window.history.go(-1)"
-        })}}
+            {{govukBackLink({
+            text: "Back",
+            "href": "javascript: window.history.go(-1)"
+            })}}
         {% endblock %}
 
         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
-                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+                    <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
                         Locations with activities or appointments in this session
                     </h1>
                     <span class="govuk-caption-l">
@@ -57,7 +57,7 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
                             </button> -->
                         </form>
                     </div>
-
+                    <!-- hidden to replicate dev
                     <div class="moj-search govuk-!-margin-bottom-6">
                         <form action="{{data['date']}}" method="get" novalidate="">
                             <div class="govuk-form-group">
@@ -72,51 +72,36 @@ Movement locations for {{data['date']|longDateFormat(data['date'])}} &ndash; {{d
                             </button>
                         </form>
                     </div>
+                    -->
                 </div>
+
+            <div class="govuk-grid-column-two-thirds"> 
+                <h2 class="govuk-heading-m">
+                    {{locations.length}} locations
+                </h2>
+
+                <table class="govuk-table govuk-!-margin-bottom-8" data-module="moj-sortable-table">
+                    <thead class="govuk-table__head">
+                        <tr class="govuk-table__row">
+                            <th scope="col" class="govuk-table__header" aria-sort="ascending">Location</th>
+                            <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Movement lists</span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="govuk-table__body">
+                        {% for location in locations | sort(false, true, 'name') %}
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">
+                                {{location.name}}
+                            </td>
+                            <td class="govuk-table__cell govuk-!-text-align-right">
+                                <a href="{{period}}/{{location.activityIds or 'null'}}?location={{location.name}}"
+                                    class="govuk-link--no-visited-state">View movement list</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-
-            <h2 class="govuk-heading-m">
-                {{locations.length}} locations
-            </h2>
-
-            <table
-                class="govuk-table app-whereabouts-table app-whereabouts-table--sticky-head app-whereabouts-table--font-size-normal govuk-!-margin-bottom-8"
-                data-module="moj-sortable-table">
-                <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                        <th scope="col" class="govuk-table__header" aria-sort="ascending">Location</th>
-                        <th scope="col" class="govuk-table__header" aria-sort="ascending">Allocated</th>
-                        <th scope="col" class="govuk-table__header" aria-sort="none">Activity</th>
-                        <th scope="col" class="govuk-table__header"></th>
-                    </tr>
-                </thead>
-                <tbody class="govuk-table__body">
-                    {% for location in locations | sort(false, true, 'name') %}
-                    <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">
-                            <h2 class="govuk-heading-m govuk-!-margin-0 govuk-!-padding-0">{{location.name}}</h2>
-                        </td>
-                        <td class="govuk-table__cell">
-                            {{location.prisoners}}
-                        </td>
-                        <td class="govuk-table__cell">
-                            <ul class="govuk-list govuk-!-margin-bottom-0">
-                                {% for activity in location.activities %}
-                                <li>
-                                    <a href="activities/{{data['date']}}/{{data['period']|upper}}/{{activity.id}}"
-                                        class="govuk-link--no-visited-state">{{activity.name}}</a>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </td>
-                        <td class="govuk-table__cell">
-                            <a href="{{period}}/{{location.activityIds or 'null'}}?location={{location.name}}"
-                                class="govuk-link--no-visited-state">View movement list</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
         </main>
     </div>
     {% include './_locations-toolbar.html' %}
