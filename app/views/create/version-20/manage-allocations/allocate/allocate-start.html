@@ -43,7 +43,7 @@ html: bannerHtml
         <p class="govuk-body-l">
             You may need to consult with other departments before making your decision.
         </p>
-
+        <!-- hidden to match dev
         {% if application and application.status != 'rejected' %}
         <dl class="govuk-summary-list govuk-!-margin-bottom-8">
             <div class="govuk-summary-list__row">
@@ -65,13 +65,13 @@ html: bannerHtml
             </div>
         </dl>
         {% endif %}
+        -->
 
         <h2 class="govuk-heading-m" id="requirements">
             Activity requirements
         </h2>
         <p class="govuk-body">
-            Review the requirements for {{activity.name}} and check if {{prisoner.name.firstname}}
-            {{prisoner.name.surname}} meets them.
+            Check if {{prisoner.name.firstname}} {{prisoner.name.surname}}'s current allocation would be compatible with {{activity.name}}.
         </p>
 
         <table class="govuk-table govuk-!-margin-bottom-8">

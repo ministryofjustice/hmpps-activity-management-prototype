@@ -217,32 +217,30 @@ Find an activity to record or edit attendance
                 </div>
             </div>
 
-            <div class="govuk-tabs" data-module="govuk-tabs">
-                <h2 class="govuk-tabs__title">
-                    Contents
-                </h2>
-                <ul class="govuk-tabs__list">
-                    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-                        <a class="govuk-tabs__tab" href="{{activity.id}}">
+            <nav class="moj-sub-navigation" aria-label="Sub navigation">
+                <ul class="moj-sub-navigation__list">
+                    <li class="moj-sub-navigation__item">
+                        <a class="moj-sub-navigation__link" aria-current="page" href="{{activity.id}}">
                             Currently allocated ({{currentlyAllocated.length}})
                         </a>
                     </li>
-                    <li class="govuk-tabs__list-item">
+                    <li class="moj-sub-navigation__item">
                         <a class="govuk-tabs__tab" href="{{activity.id}}/waitlist">
                             Waitlist
                         </a>
                     </li>
-                    <li class="govuk-tabs__list-item">
+                    <li class="moj-sub-navigation__item">
                         <a class="govuk-tabs__tab" href="{{activity.id}}/allocate?page=1">
                             Other people
                         </a>
                     </li>
                 </ul>
-                <div class="govuk-tabs__panel" id="curently-allocated">
+                <div class="" id="curently-allocated">
+                    <!-- hidden to match dev
                     <h2 class="govuk-heading-l govuk-!-margin-bottom-5">
                         {{currentlyAllocated.length}} people currently allocated
                     </h2>
-
+                    --> 
                     <div class="govuk-button-group govuk-!-margin-bottom-5">
                         <!-- <a href="deallocate" class="govuk-link" style="color: #be0e0e;">
                             Remove people from this activity
@@ -345,7 +343,7 @@ Find an activity to record or edit attendance
                         </tbody>
                     </table>
                 </div>
-                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="waitlist">
+                <div class="" id="waitlist">
                     <h2 class="govuk-heading-l govuk-!-margin-bottom-5">
                         {{activityApplications|length}} {{'people' if activityApplications|length != 1 else 'person'
                         }} on the waitlist

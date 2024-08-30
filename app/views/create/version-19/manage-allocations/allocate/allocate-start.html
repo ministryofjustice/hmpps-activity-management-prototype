@@ -30,20 +30,19 @@ html: bannerHtml
         {% set prisoner = data['new-activity']['prisoner'] %}
 
         <span class="govuk-caption-l">
-            Allocate to {{activity.name}}
+            {{activity.name}}
         </span>
         <h1 class="govuk-heading-xl">
-            Before you allocate
+            Before you allocate {{prisoner.name.firstname}} {{prisoner.name.surname}}
         </h1>
 
         <p class="govuk-body-l">
-            Use the information on this page to decide if <a href="#">{{prisoner.name.firstname}}
-                {{prisoner.name.surname}}</a> is suitable for {{activity.name}}.
+            Use the information on this page to decide if <a href="#" class="govuk-link">{{prisoner.name.firstname}} {{prisoner.name.surname}}'s</a> is suitable for {{activity.name}}.
         </p>
         <p class="govuk-body-l">
             You may need to consult with other departments before making your decision.
         </p>
-
+        <!-- hidden to match dev
         {% if application and application.status != 'rejected' %}
         <dl class="govuk-summary-list govuk-!-margin-bottom-8">
             <div class="govuk-summary-list__row">
@@ -65,7 +64,7 @@ html: bannerHtml
             </div>
         </dl>
         {% endif %}
-
+        -->
         <h2 class="govuk-heading-m" id="requirements">
             Activity requirements
         </h2>
@@ -120,18 +119,20 @@ html: bannerHtml
                         <span class="govuk-tag govuk-tag--grey">Not applicable</span>
                     </td>
                 </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Non-associations</th>
-
-                    <td class="govuk-table__cell">
-                        <a href="#" class="govuk-link--no-visited-state">Junior Smith</a>
-                    </td>
-
-                    <td class="govuk-table__cell">
-                        <span class="govuk-tag govuk-tag--red">No</span>
-                    </td>
             </tbody>
         </table>
+
+        <h2 class="govuk-heading-m">
+            Non-associations
+        </h2>
+        <p class="govuk-body">
+            {{prisoner.name.firstname}} {{prisoner.name.surname}} has 4 open non-associations with people in Leeds (HMP).
+        </p>
+        <p class="govuk-body govuk-!-margin-bottom-8">
+            <a class="govuk-link" href="#">
+                Review {{prisoner.name.firstname}} {{prisoner.name.surname}}' non-associations
+            </a>
+        </p>
 
         <h2 class="govuk-heading-m">
             Current allocations
@@ -208,14 +209,7 @@ html: bannerHtml
             },
             {
             value: "return",
-            html: "No, I want to return to the waitlist"
-            },
-            {
-            divider: "or"
-            },
-            {
-            value: "remove",
-            html: "No, I want to decline " + prisoner.name.firstname + " " + prisoner.name.surname + "'s application and return to the waitlist"
+            html: "No,  want to review the list of other people"
             }
             ]
             })}}

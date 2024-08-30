@@ -21,6 +21,12 @@
 {% endblock %}
 
 {% block content %}
+<style>
+    .highlight-box {
+		padding: 15px;
+        background-color:#f3f2f1;
+    }
+</style>
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-l govuk-!-margin-bottom-4">
@@ -30,30 +36,16 @@
 				{{date|longDateFormat(date)}}
 			</span>
 		</h1>
-		<div class="govuk-!-margin-top-2">
-			<div class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">
+		<div class="highlight-box govuk-!-margin-top-5 govuk-!-margin-bottom-5">
+			<h2 class="govuk-heading-m govuk-!-margin-bottom-3">
 				174 people to unlock
-			</div>
-			<div class="govuk-body govuk-!-margin-bottom-0">128
+			</h2>
+			<p class="govuk-body govuk-!-margin-bottom-1">128
 				leaving wing
-			</div>
-			<div class="govuk-body govuk-!-margin-bottom-5">46
+			</p>
+			<p class="govuk-body govuk-!-margin-bottom-0">46
 				staying on wing
-			</div>
-		</div>
-		<div class="moj-search govuk-!-margin-bottom-6">
-			<form action="{{date}}" method="get" novalidate="">
-				<div class="govuk-form-group">
-					<label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
-						Search by prisoner name, prison number, or by event name
-					</label>
-					<input class="govuk-input moj-search__input " id="keywords" name="search" type="search"
-						value="{{data['search']}}">
-				</div>
-				<button class="govuk-button moj-search__button" data-module="govuk-button">
-					Search
-				</button>
-			</form>
+			</p>
 		</div>
 	</div>
 	<!-- hidden to match dev
@@ -85,6 +77,20 @@
 <div class="moj-filter-layout">
 	<div class="moj-filter-layout__filter">
 		{% set filtersHtml %}
+		<div class="moj-search govuk-!-margin-bottom-6">
+			<form action="{{date}}" method="get" novalidate="">
+				<div class="govuk-form-group">
+					<label class="govuk-label govuk-label-l moj-search__label govuk-!-font-weight-bold" for="search">
+						Search by prisoner name, prison number, or by event name
+					</label>
+					<input class="govuk-input moj-search__input " id="keywords" name="search" type="search"
+						value="{{data['search']}}">
+				</div>
+				<button class="govuk-button moj-search__button" data-module="govuk-button">
+					Search
+				</button>
+			</form>
+		</div>
 		<!-- GOVUK checkboxes HTML for filtering by landing in residentialLocations data -->
 		<div class="govuk-form-group govuk-!-margin-bottom-1">
 			<div class="govuk-checkboxes govuk-checkboxes--small">
@@ -501,7 +507,7 @@
 				container: $(".moj-action-bar__filter"),
 				showText: "Show filter",
 				hideText: "Hide filter",
-				classes: "govuk-button--blue",
+				classes: "govuk-button--secondary",
 			},
 			closeButton: {
 				container: $(".moj-filter__header-action"),
