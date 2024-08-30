@@ -24,82 +24,30 @@ Appointments prototype
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <div class="moj-search">
-            <form action="" method="get">
-              <div class="govuk-form-group">
-                <label class="govuk-label--l" for="search">
-                  Find a person
-                </label>
-          
-                <div id="search-hint" class="govuk-hint moj-search__hint ">
-                 Search by name or prison number
-                </div>
-          
-                <input class="govuk-input moj-search__input " id="search" name="search" type="search" aria-describedby="search-hint">
-          
-              </div>
-          
-              <button type="submit" class="govuk-button moj-search__button " data-module="govuk-button">
-                Search
-              </button>
-          
-            </form>
-        </div>
-    </div>
-    <div class="govuk-grid-column-full">
-        <h2 class="govuk-heading-m" style="clear: both;">There is {{prisoners.length}} matching result</h2>
-    
-        <table class="govuk-table app-whereabouts-table--sticky-head" data-module="moj-sortable-table">
-          <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
-              Prisoners
-          </caption>
-          <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                  <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="0"></button>Name</th>
-                  <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="1"></button>Prison number</th>
-                  <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="2"></button>Cell location</th>
-                  <th scope="col" class="govuk-table__header"></th>
-              </tr>
-          </thead>
-          {%i}
-          {% for prisoner in prisoners %}
-          {% if loop.index0 < 5 %}
-          <tbody class="govuk-table__body">
-              <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
-                    <div class="govuk-form-group">
-                      <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                          <h1 class="govuk-fieldset__heading govuk-visually-hidden">
-                            Search results
-                          </h1>
-                        </legend>
-                        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-                          <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="changedName" name="changedName" type="radio" value="month">
-                            <label class="govuk-label govuk-radios__label" for="changedName">
-                              <b>{{ prisoner.name.surname }}</b>, {{ prisoner.name.firstname }}
-                            </label>
-                          </div>
-                        </div>
-                      </fieldset>
-                    </div>
-                    
-                  </td>
-                  <td class="govuk-table__cell">{{ prisoner._id }}</td>
-                  <td class="govuk-table__cell">{{ prisoner.location.cell }}-{{ prisoner.location.landing }}-{{ prisoner.location.houseblock }}</td>
-                  <td class="govuk-table__cell"><a href="#">View prisoner profile</a></td>
-              </tr> 
-          </tbody>
-          {% endif %}
-          {% endfor %}
-      </table>
-      
-      <div class="govuk-button-group">
-        <button class="govuk-button" data-module="govuk-button">
-        Continue
-        </button> 
-      </div>
+        <span class="govuk-caption-xl">Caption</span>
+        <h1 class="govuk-heading-l">Find a prisoner</h1>
     </div>
 </div>
+
+<form method="POST" action="search-prisoner">
+    <input type="hidden" name="_csrf" value="7Fv01h7Y-N8KG2XT8Uy229Wo9PrPYE3v6NMQ">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"> 
+            <div class="search-input ">
+                <div class="search-input__form-inputs govuk-input--width-30">
+                    <div class="govuk-form-group">
+                        <div id="query-hint" class="govuk-hint">
+                        Search by name or prison number
+                        </div>
+                        <input class="govuk-input" id="query" name="query" type="search" aria-describedby="query-hint">
+                    </div>
+                    <button type="submit" class="govuk-button" data-module="govuk-button">
+                    Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 {% endblock %}
