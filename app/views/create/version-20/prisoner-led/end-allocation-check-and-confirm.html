@@ -1,0 +1,109 @@
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">Maths level 1</span>
+        <h1 class="govuk-heading-l">Check and confirm who you're taking off the activity</h1>
+        <form action="summary" method="post">
+            {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+            {{ govukSummaryList({
+              rows: [
+                {
+                  key: {
+                    text: "People you're taking off"
+                  },
+                  value: {
+                    text: "David Jones"
+                  },
+                  actions: {
+                    items: [
+                      {
+                        href: "#",
+                        text: "Change",
+                        visuallyHiddenText: "name",
+                        classes: "govuk-visually-hidden"
+                      }
+                    ]
+                  }
+                },
+                {
+                  key: {
+                    text: "Activity"
+                  },
+                  value: {
+                    text: "Maths level 1"
+                  },
+                  actions: {
+                    items: [
+                      {
+                        href: "#",
+                        text: "Change",
+                        visuallyHiddenText: "Maths level 1"
+                      }
+                    ]
+                  }
+                },
+                {
+                  key: {
+                    text: "End of allocation"
+                  },
+                  value: {
+                    text: "[date]"
+                  },
+                  actions: {
+                    items: [
+                      {
+                        href: "#",
+                        text: "Change",
+                        visuallyHiddenText: "end of allocation"
+                      }
+                    ]
+                  }
+                },
+                {
+                  key: {
+                    text: "Reason for allocation ending"
+                  },
+                  value: {
+                    text: "Completed course or task"
+                  },
+                  actions: {
+                    items: [
+                      {
+                        href: "#",
+                        text: "Change",
+                        visuallyHiddenText: "contact details"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }) }}
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Confirm and continue"
+                }) }}
+
+                <a class="govuk-link" href="summary.html">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -22,9 +22,9 @@ Appointments prototype
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full hmpps-profile-banner-top">
                     <a href="#" class="hmpps-clickable-image" data-qa="prisoner-photo-link">
-                    <img class="hmpps-profile-photo" src="/public/images/test-image-5.jpeg" alt="Jones, David">
+                    <img class="hmpps-profile-photo" src="/public/images/test-profile.jpeg" alt="Jones, David">
                     </a>
-                    <h2 class="govuk-heading-l hmpps-profile-prisoner-name">Jones, David</h2>
+                    <h2 class="govuk-heading-l hmpps-profile-prisoner-name">Lafferty, Tom</h2>
                     <div class="info">
                         <p class="govuk-body govuk-!-font-size-24 hmpps-profile-prisoner-number" aria-label="Prisoner Number">
                             G7006VF
@@ -40,11 +40,11 @@ Appointments prototype
                             </div>               
                             <div class="">
                                 <h3 class="govuk-heading-s">CSRA</h3>                 
-                                <a data-qa="prisoner-csra-info-with-link" href="#" aria-label="View CSRA history" class="govuk-link govuk-link--inverse">Standard</a>   
+                                <a data-qa="prisoner-csra-info-with-link" href="#" aria-label="View CSRA history" class="govuk-link govuk-link--inverse">Low</a>   
                             </div>
                             <div class="remove-column-gutter-right">
                                 <h3 class="govuk-heading-s">Incentive level</h3>
-                                <a data-qa="prisoner-csra-info-with-link" href="#" aria-label="View incentive level details" class="govuk-link govuk-link--inverse">Standard</a>
+                                <a data-qa="prisoner-csra-info-with-link" href="#" aria-label="View incentive level details" class="govuk-link govuk-link--inverse">Enhanced</a>
                             </div> 
                         </div>
                     </div>
@@ -90,8 +90,8 @@ Appointments prototype
                 <nav class="govuk-grid-row govuk-!-display-none-print">
                     <div class="govuk-grid-column-full">
                         <ul class="hmpps-profile-tab-links">
-                            <li class="govuk-heading-s hmpps-profile-tab-link-selected" data-qa="active-tab">
-                                <span data-qa="Overview">Overview</span>
+                            <li class="govuk-heading-s" data-qa="active-tab">
+                                <a href="prisoner-profile-2" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline"  data-qa="Overview">Overview</a>
                             </li>
                             <li class="govuk-heading-s">
                                 <a href="#" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline" data-qa="Personal">Personal</a>
@@ -105,8 +105,8 @@ Appointments prototype
                             <li class="govuk-heading-s">
                                 <a href="#" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline" data-qa="Offences">Offences</a>
                             </li>
-                            <li class="govuk-heading-s">
-                                <a href="prisoner-profile-work-and-skills" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline" data-qa="Work and skills">Work and skills</a>
+                            <li class="govuk-heading-s hmpps-profile-tab-link-selected">
+                                <span data-qa="Work and skills">Work and skills</span>
                             </li>
                         </ul>
                     </div>
@@ -116,439 +116,248 @@ Appointments prototype
     </div>
 <!-- main body -->
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters">
-            <h1 class="govuk-heading-l govuk-!-margin-top-6">Overview</h1>
+        <div class="govuk-grid-column-three-quarters hmpps-full-width-print">
+            <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-6">Work and skills</h1>
         </div>
     </div>
-    <div class="govuk-grid-row hmpps-three-quarters-responsive">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-quarter app-sidebar govuk-!-display-none-print">
+            <ul class="govuk-list hmpps-sidebar">
+              <li><a class="govuk-link" href="#functional-skills-level">Functional skills level</a></li>
+              <li><a class="govuk-link" href="#courses-and-qualifications">Courses and qualifications</a></li>
+              <li><a class="govuk-link" href="#work-and-activities">Work and activities</a></li>
+              <li><a class="govuk-link" href="#goals">Goals</a></li>
+              <li><a class="govuk-link" href="#employability-skills">Employability skills</a></li>
+            </ul>
+        </div>
         <div class="govuk-grid-column-three-quarters hmpps-full-width-print">
-            <div class="govuk-grid-row">
-                <section class="govuk-grid-column-full" aria-label="Status List">
-                    <ul class="hmpps-status-list">
-                        <li class="hmpps-status hmpps-status--success">
-                            <p>In Leeds (HMP)</p>
-                        </li>
-                    </ul>
-                </section>
+            <div class="govuk-grid-row" data-qa="courses-and-qualifications">
+              <div class="govuk-grid-column-full">
+                <div class="hmpps-summary-card " id="functional-skills-level">
+                    <div class="hmpps-summary-card__header" data-qa="summary-header">
+                        <h2 class="govuk-heading-m">Functional skills level</h2>
+                    </div>
+                    <div class="hmpps-summary-card__body">
+                        <p>These functional skills levels are from the prisoner’s induction assessment. To view their recent functional skills levels, go to courses and qualifications.</p>
+                        <h3 class="govuk-heading-s">Current activities</h3>
+                            <hr class="govuk-section-break govuk-section-break--visible">
+                            <dl class="govuk-summary-list hmpps-font-weight-normal">
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        English
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                        Entry level 1
+                                    </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        Assessment date
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                        25 June 2024
+                                    </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        Assessment location
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                        HMP Leeds
+                                    </dd>
+                                </div>
+                            </dl>
+                            <dl class="govuk-summary-list hmpps-font-weight-normal">
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        Maths
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                        Entry level 1
+                                    </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        Assessment date
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                        25 June 2024
+                                    </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        Assessment location
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                        HMP Leeds
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full" data-qa="overview-mini-summary-group-a">
-                    <div class="govuk-grid-row hmpps-miniSummaryWrapper" data-qa="mini-summary-list-macro">
-                        <div class="govuk-grid-column-one-third">
-                            <div class="hmpps-summary-card " id=""> 
-                                <div class="hmpps-summary-card__header" data-qa="summary-header">
-                                    <h2 class="govuk-heading-m">Money</h2>
-                                </div> 
-                                <div class="hmpps-summary-card__body">
-                                    <div class="govuk-grid-row card-body ">
-                                        <div class="govuk-grid-column-full">
-                                            <p class="govuk-body card-label">Spends</p>
-                                            <p class="govuk-body hmpps-mini-card__big ">£1,116.55</p>
-                                            <p class="govuk-body card-label">Private cash</p>
-                                            <p class="govuk-body hmpps-mini-card__big">£10.00 </p>
-                                            <p class="govuk-body hmpps-mini-card__link">
-                                                <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-display-none-print">Transactions and savings</a>
-                                            </p>
-                                        </div>
-                                    </div>
+              <div class="govuk-grid-column-full">
+                <div class="hmpps-summary-card " id="courses-and-qualifications">
+                    <div class="hmpps-summary-card__header" data-qa="summary-header">
+                        <h2 class="govuk-heading-m">In-prison courses and qualifications</h2>
+                    </div>
+                    <div class="hmpps-summary-card__body">
+                        <p class="govuk-hint">Information from Curious. This only includes educational courses. Contact the local education team to find out more.</p>
+                        <p class="govuk-body" data-qa="no-in-prison-courses-message">Tom Lafferty has no courses and qualifications recorded in Curious.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="hmpps-summary-card " id="work-and-activities">         
+                <div class="hmpps-summary-card__header" data-qa="summary-header">
+                    <h2 class="govuk-heading-m">Work and activities</h2>
+                </div>         
+                <div class="hmpps-summary-card__body">
+                    <div class="govuk-grid-row" data-qa="work-and-activities">
+                <div class="govuk-grid-column-full">
+                    <p>This includes anything that’s logged as an activity using NOMIS.</p>
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-full" data-qa="current-activities">
+                            <h3 class="govuk-heading-s">Current activities</h3>
+                            <hr class="govuk-section-break govuk-section-break--visible">
+                            <dl class="govuk-summary-list hmpps-font-weight-normal">
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        English entry level 1
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                        Started on 24 October 2023
+                                    </dd>
                                 </div>
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        Workshop 6 AM - Packing
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                        Started on 24 October 2023
+                                    </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        A Wing Cleaner 2
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                        Started on 1 August 2024
+                                    </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        Box making
+                                    </dt>
+                                    <dd class="govuk-summary-list__value">
+                                        Started on 30 August 2024
+                                    </dd>
+                                </div>
+                            </dl>
+                            <p class="govuk-body">
+                                <a class="govuk-link--no-visited-state govuk-!-display-none-print" href="https://digital-dev.prison.service.justice.gov.uk/prisoner/G3031UX/work-activities">View work and activities for the last 12 months</a>
+                            </p>
+                            <div data-qa="visible-7-day-schedule" class="">
+                                <p class="govuk-body">
+                                    <a class="govuk-link--no-visited-state govuk-!-display-none-print" href="/prisoner/G3031UX/schedule">View 7 day schedule</a>
+                                </p>
                             </div>
                         </div>
-                        <div class="govuk-grid-column-one-third">
-                            <div class="hmpps-summary-card " id="">  
-                                <div class="hmpps-summary-card__header" data-qa="summary-header">
-                                    <h2 class="govuk-heading-m">Adjudications</h2>
+                    </div>
+                    <div class="govuk-grid-row" data-qa="work-and-activities">
+                        <div class="govuk-grid-column-full">
+                            <h3 class="govuk-heading-s">Unacceptable absences</h3>
+                
+                            <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-3">
+                            <div class="govuk-grid-row">
+                                <div class="govuk-grid-column-one-third">
+                                    <h3 class="govuk-heading-s">Last 30 days</h3>
                                 </div>
-                                <div class="hmpps-summary-card__body">
-                                    <div class="govuk-grid-row card-body ">
-                                        <div class="govuk-grid-column-full">
-                                            <p class="govuk-body card-label">Proven in last 3 months</p>
-                                            <p class="govuk-body hmpps-mini-card__big ">0</p>
-                                            <p class="govuk-body card-label">Active </p>
-                                            <p class="govuk-body hmpps-mini-card__small"> No active punishments</p>
-                                            <p class="govuk-body hmpps-mini-card__link">
-                                                <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-display-none-print">Adjudication history</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="govuk-grid-column-one-third">
-                            <div class="hmpps-summary-card " id="">
-                                <div class="hmpps-summary-card__header" data-qa="summary-header">
-                                    <h2 class="govuk-heading-m">Visits</h2>
-                                </div>
-                                <div class="hmpps-summary-card__body">
-                                    <div class="govuk-grid-row card-body ">
-                                        <div class="govuk-grid-column-full">
-                                            <p class="govuk-body card-label">Next visit date</p>
-                                            <p class="govuk-body hmpps-mini-card__small hmpps-mini-card__filler">None scheduled</p>
-                                            <p class="govuk-body card-label">Remaining visits</p>
-                                            <p class="govuk-body hmpps-mini-card__small">26</p>
-                                            <p class="govuk-body hmpps-mini-card__sub-text">Including 1 privileged visits</p>
-                                            <p class="govuk-body hmpps-mini-card__link">
-                                                <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-display-none-print">Visits details</a>
-                                            </p>
-                                        </div>
-                                    </div>
+                                <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0 govuk-body" data-qa="unacceptable-absence-last-month">
+                                    1
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        <div class="govuk-grid-row hmpps-miniSummaryWrapper">
-            <div class="govuk-grid-column-one-third">
-                <div class="hmpps-summary-card " id="">
-                    <div class="hmpps-summary-card__header" data-qa="summary-header">
-                        <h2 class="govuk-heading-m">Non-associations</h2>
-                    </div>
-                    <div class="hmpps-summary-card__body">
-                        <dl class="govuk-summary-list non-association-summary">
+        </div>
+    </div>
+</div>
+</div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="hmpps-summary-card " id="goals">
+                <div class="hmpps-summary-card__header" data-qa="summary-header">
+                    <h2 class="govuk-heading-m">Goals</h2>
+                </div>
+                <div class="hmpps-summary-card__body">
+                    <div data-qa="no-goals">
+                        <p class="govuk-!-margin-bottom-7" data-qa="goals-info-text">The careers information, advice and guidance (CIAG) team set these goals. They do not include sentence plan targets.</p>
+                        <dl class="govuk-summary-list hmpps-font-weight-normal">
                             <div class="govuk-summary-list__row">
-                                <div class="govuk-!-padding-bottom-3 govuk-!-padding-top-2">
-                                    <dt class="govuk-!-font-weight-bold govuk-!-margin-bottom-2" data-qa="overview-na-prison-name">In Risley (HMP)</dt>
-                                    <dd class="govuk-!-font-size-36 govuk-!-margin-left-0 govuk-!-margin-bottom-2" data-qa="overview-na-prison-count">0</dd>
-                                </div>
+                                <dt class="govuk-summary-list__key">
+                                    Employment goals
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    To return to catering work
+                                </dd>
                             </div>
-                            <div class="govuk-summary-list__row--no-border">
-                                <div class="govuk-!-padding-top-3">
-                                    <dt class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">In other establishments</dt>
-                                    <dd class="govuk-!-font-size-36 govuk-!-margin-left-0 govuk-!-margin-bottom-4" data-qa="overview-na-other-prisons-count">0</dd>
-                                    <dd class="govuk-!-margin-left-0" data-qa="overview-non-associations-link"><a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-display-none-print">Non-associations</a></dd>
-                                </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Personal goals
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    To keep fit and active
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Short-term goals
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    To attend a work placement to keep busy and motivated
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Long-term goals
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    To get back to work and life
+                                </dd>
                             </div>
                         </dl>
-                    </div>
-                </div>
-            </div>
-            <div class="govuk-grid-column-two-thirds hmpps-full-width-print">
-                <div class="hmpps-summary-card " id="">
-                    <div class="hmpps-summary-card__header" data-qa="summary-header">
-                        <h2 class="govuk-heading-m">Staff contacts</h2>
-                    </div>
-                    <div class="hmpps-summary-card__body">
-                        <div class="govuk-grid-row staff-contacts-card" data-qa="staff-contacts">
-                            <div class="govuk-grid-column-full">
-                                <dl class="govuk-summary-list govuk-summary-list--no-border">
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-!-width-one-half">
-                                                Key worker
-                                            </dt>
-                                            <dd class="govuk-summary-list__value govuk-!-width-one-half">
-                                                <p class="govuk-body" data-qa="keyworker-details">Not allocated- No previous session</p>
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-!-width-one-half">
-                                                Prison Offender Manager
-                                            </dt>
-                                            <dd class="govuk-summary-list__value govuk-!-width-one-half">
-                                                Not assigned
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-!-width-one-half">
-                                                Co-working Prison Offender Manager
-                                            </dt>
-                                            <dd class="govuk-summary-list__value govuk-!-width-one-half">
-                                                Not assigned
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-!-width-one-half">
-                                                Community Offender Manager
-                                            </dt>
-                                            <dd class="govuk-summary-list__value govuk-!-width-one-half">
-                                                Not assigned
-                                            </dd>    
-                                        </div>
-                                </dl>
-                            </div>
-                        </div>
-                        <div class="govuk-grid-row">
-                            <div class="govuk-grid-column-full">
-                                <p class="govuk-body">
-                                    <a class="govuk-link--no-visited-state govuk-!-display-none-print" href="#">Professional contacts</a>
-                                </p>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-full">
-                <div class="hmpps-summary-card " id="">
-                    <div class="hmpps-summary-card__header" data-qa="summary-header">
-                        <h2 class="govuk-heading-m">Personal</h2>
-                    </div>
-                    <div class="hmpps-summary-card__body">
-                        <div class="govuk-grid-row" data-qa="personal-details">
-                            <div class="govuk-grid-column-one-half hmpps-full-width-print">
-                                <dl class="govuk-summary-list">
-                                    <div class="govuk-summary-list__row" data-qa="preferred-name-row">
-                                        <dt class="govuk-summary-list__key" data-qa="preferred-name-key">Preferred name</dt>
-                                        <dd class="govuk-summary-list__value" data-qa="preferred-name">Dave</dd>
-                                    </div>
-                                    <div class="govuk-summary-list__row" data-qa="date-of-birth-row">
-                                    <dt class="govuk-summary-list__key" data-qa="date-of-birth-key">Date of birth</dt>
-                                        <dd class="govuk-summary-list__value" data-qa="date-of-birth">18/01/1994</dd>
-                                    </div>
-                                    <div class="govuk-summary-list__row" data-qa="age-row">
-                                        <dt class="govuk-summary-list__key" data-qa="age-key">Age</dt>
-                                        <dd class="govuk-summary-list__value" data-qa="age">30 years, 7 months</dd>
-                                    </div>
-                                    <div class="govuk-summary-list__row" data-qa="nationality-row">
-                                        <dt class="govuk-summary-list__key" data-qa="nationality-key">Nationality</dt>
-                                        <dd class="govuk-summary-list__value" data-qa="nationality">British</dd>
-                                    </div>
-                                    <div class="govuk-summary-list__row" data-qa="spoken-language-row">
-                                        <dt class="govuk-summary-list__key" data-qa="spoken-language-key">Spoken language</dt>
-                                        <dd class="govuk-summary-list__value" data-qa="spoken-language">No language entered</dd>
-                                    </div>
-                                </dl>
-                            </div>
-                            <div class="govuk-grid-column-one-half hmpps-full-width-print">
-                                <dl class="govuk-summary-list">
-                                    <div class="govuk-summary-list__row" data-qa="ethnic-group-row">
-                                        <dt class="govuk-summary-list__key" data-qa="ethnic-group-key">Ethnic group</dt>
-                                        <dd class="govuk-summary-list__value" data-qa="ethnic-group">Other: Any other background (O9)</dd>
-                                    </div>
-                                    <div class="govuk-summary-list__row" data-qa="religion-or-belief-row">
-                                        <dt class="govuk-summary-list__key" data-qa="religion-or-belief-key">Religion or belief</dt>
-                                        <dd class="govuk-summary-list__value" data-qa="religion-or-belief">Church of England (Anglican)</dd>
-                                    </div>
-                                    <div class="govuk-summary-list__row" data-qa="cro-number-row">
-                                        <dt class="govuk-summary-list__key" data-qa="cro-number-key">CRO number</dt>
-                                        <dd class="govuk-summary-list__value" data-qa="cro-number">646649/07Z</dd>
-                                    </div>
-                                    <div class="govuk-summary-list__row" data-qa="pnc-number-row">
-                                        <dt class="govuk-summary-list__key" data-qa="pnc-number-key">PNC number</dt>
-                                        <dd class="govuk-summary-list__value" data-qa="pnc-number">07/828182D</dd> 
-                                    </div>
-                                </dl>
-                            </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="hmpps-summary-card hmpps-employability-card" id="employability-skills">
+                <div class="hmpps-summary-card__header" data-qa="summary-header">
+                    <h2 class="govuk-heading-m">Employability skills</h2>
+                </div>
+                <div class="hmpps-summary-card__body">
+                    <p>The local education team record these employability skills in Curious.</p>
+                    <h3 class="govuk-heading-s">Most recent levels</h3>
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-full">
+                            <p class="govuk-body">Tom Lafferty has no employability skills.</p>         
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-full" data-qa="overview-mini-summary-group-b">
-                <div class="govuk-grid-row hmpps-miniSummaryWrapper" data-qa="mini-summary-list-macro">
-                    <div class="govuk-grid-column-one-third">           
-                        <div class="hmpps-summary-card " id=""> 
-                            <div class="hmpps-summary-card__body">
-                                <div class="govuk-grid-row card-body hmpps-summary-card__no-header">
-                                    <div class="govuk-grid-column-full">
-                                        <p class="govuk-body card-label">
-                                        Category
-                                        </p>
-                                        <p class="govuk-body hmpps-mini-card__small">
-                                            C
-                                        </p>
-                                        <p class="govuk-body hmpps-mini-card__sub-text">
-                                            Next review: 31/08/2017
-                                        </p>
-                                        <p class="govuk-body hmpps-mini-card__link">
-                                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-display-none-print">
-                                            Category
-                                        </a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <div class="govuk-grid-column-one-third">             
-                    <div class="hmpps-summary-card " id="">
-                        <div class="hmpps-summary-card__body">
-                            <div class="govuk-grid-row card-body hmpps-summary-card__no-header">
-                                <div class="govuk-grid-column-full">
-                                    <p class="govuk-body card-label">Incentives: since last review </p>
-                                    <p class="govuk-body hmpps-mini-card__small">Positive behaviours: 0</p>                                 
-                                    <p class="govuk-body hmpps-mini-card__small"> Negative behaviours: 0</p>
-                                    <p class="govuk-body hmpps-mini-card__sub-text">Next review by: 15/02/2018</p>
-                                    <p class="govuk-body hmpps-mini-card__error">2388 days overdue</p>
-                                    <p class="govuk-body hmpps-mini-card__link">
-                                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-display-none-print">
-                                            Incentive level details
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="govuk-grid-column-one-third">
-                    <div class="hmpps-summary-card " id="">
-                        <div class="hmpps-summary-card__body">
-                            <div class="govuk-grid-row card-body hmpps-summary-card__no-header">
-                                <div class="govuk-grid-column-full">
-                                <p class="govuk-body card-label">CSRA</p>
-                                <p class="govuk-body hmpps-mini-card__small">Standard</p>
-                                <p class="govuk-body hmpps-mini-card__sub-text">Last review: 27/01/2017</p>
-                                <p class="govuk-body hmpps-mini-card__link">
-                                    <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-display-none-print">
-                                        CSRA history
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-  
-    <div data-qa="visible-overview-schedule" class="">
-      
-
-  <div class="hmpps-summary-card " id="">
-    
-      <div class="hmpps-summary-card__header" data-qa="summary-header">
-        <h2 class="govuk-heading-m">Today's schedule</h2>
-      </div>
-    
-        <div class="hmpps-summary-card__body">
-        <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-third" data-qa="morning-schedule">
-        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Morning</p>
-        
-    
-    
-        <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <p class="govuk-body" data-qa="empty-schedule-item">Maths level 1<br>08:30 to 11:45</p>
-        </div>
-        </div>
-    
-
-        </div>
-        <div class="govuk-grid-column-one-third" data-qa="afternoon-schedule">
-        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Afternoon</p>
-        
-    
-    
-        <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <p class="govuk-body" data-qa="empty-schedule-item">English level 2<br>13:30 to 16:30</p>
-        </div>
-        </div>
-    
-
-        </div>
-        <div class="govuk-grid-column-one-third" data-qa="evening-schedule">
-        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Evening</p>
-        
-    
-    
-        <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <p class="govuk-body" data-qa="empty-schedule-item">Nothing scheduled</p>
-        </div>
-        </div>
-    
-
-                        </div>
-                            </div>
-                            <div class="govuk-grid-row">
-                                <div class="govuk-grid-column-full">
-                                    <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-display-none-print">7 day schedule</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-full" data-qa="overview-offences">
-                <div class="hmpps-summary-card " id="">
-                    <div class="hmpps-summary-card__header" data-qa="summary-header">
-                        <h2 class="govuk-heading-m">Offences and release dates</h2>
-                    </div>
-                    <div class="hmpps-summary-card__body">
-                        <div class="govuk-grid-row">
-                            <div class="govuk-grid-column-full">
-                                <p data-qa="overview-main-offence" class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-2 govuk-!-margin-bottom-1">Main offence</p>
-                                <p>Burglary dwelling - with intent to steal</p>
-                                <hr class="govuk-section-break govuk-section-break--visible">
-                                <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4 govuk-!-margin-bottom-1">Imprisonment status</p>
-                                <p> Adult Imprisonment Without Option CJA03</p>
-                                <hr class="govuk-section-break govuk-section-break--visible">
-                                <p data-qa="overview-confirmed-release-label" class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4 govuk-!-margin-bottom-1">Confirmed release date</p>
-                                <p data-qa="overview-confirmed-release"> 23 May 2029</p>
-                                <div class="govuk-inset-text">
-                                    This person is currently due to be released from prison on this date.
-                                </div>
-                                <hr class="govuk-section-break govuk-section-break--visible">
-                                <p class="govuk-body govuk-!-margin-top-4">
-                                    <a data-qa="overview-offences-view-all" href="#" class="govuk-link govuk-link--no-visited-state govuk-!-display-none-print">Offences, sentences and release dates</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-column-one-quarter govuk-!-display-none-print">
-        <div data-qa="visible-overview-side-bar" class="">
-            <div class="govuk-grid-row">
-                <aside class="govuk-grid-column-full">
-                    <div class="hmpps-actions-block govuk-!-margin-bottom-5">
-                        <h2 class="govuk-heading-m">Actions</h2>
-                        <ul class="hmpps-actions-block__list">
-                            <li>
-                                <img src="/public/images/add-case-note.svg" role="presentation" alt="" width="40px" height="40px">
-                                <a href="#" class="govuk-link govuk-link--no-visited-state" data-qa="add-case-note-action-link" referrerpolicy="no-referrer-when-downgrade">Add case note</a>
-                            </li>
-                            <li>
-                                <img src="/public/images/add-appointment.svg" role="presentation" alt="" width="40px" height="40px">
-                                <a href="summary.html" class="govuk-link govuk-link--no-visited-state" data-qa="add-case-note-action-link" referrerpolicy="no-referrer-when-downgrade">Manage activities and appointments</a>
-                            </li>
-                            
-                            <li>
-                                <img src="/public/images/report-use-of-force.svg" role="presentation" alt="" width="40px" height="40px">
-                                <a href="#" class="govuk-link govuk-link--no-visited-state" data-qa="report-use-of-force-action-link" referrerpolicy="no-referrer-when-downgrade">Report use of force</a>
-                            </li>
-                            
-                            <li>
-                                <img src="/public/images/log-an-activity-appointment.svg" role="presentation" alt="" width="40px" height="40px">
-                                <a href="#" class="govuk-link govuk-link--no-visited-state" data-qa="log-an-activity-application-link" referrerpolicy="no-referrer-when-downgrade">Log an activity application</a>
-                            </li>   
-                        </ul>
-                    </div>
-                </aside>
-            </div>
-            <div class="govuk-grid-row">
-                <aside class="govuk-grid-column-full">
-                    <div class="hmpps-summary-card " id="">
-                        <div class="hmpps-summary-card__body">
-                            <div class="govuk-grid-row hmpps-more-info-block">
-                                <div class="govuk-grid-column-full">
-                                    <h2 class="govuk-heading-m">More information</h2>
-                                    <ul>
-                                        <li>
-                                            <a href="#" class="govuk-link govuk-link--no-visited-state" data-qa="probation-documents-info-link">Probation documents</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </aside>
-            </div>
-        </div>
-    </div>
-</div>
-
 
   <!-- Profile banner -->
 <style>
