@@ -150,8 +150,8 @@ Appointments prototype
                         <a class="govuk-link govuk-link--no-visited-state" href="#">Kitchens</a>
                     </h3>
                     <div class="summary-box-actions">
-                        <a class="govuk-link govuk-link--no-visited-state" href="./end-allocation/date.html">End allocation</a>
-                        <a class="govuk-link govuk-link--no-visited-state" href="#">Manage allocation</a>
+                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="./end-allocation/date.html">End allocation</a>
+                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="./manage-activity/kitchens-2">Manage allocation</a>
                     </div>
                 </div>
                 <div class="govuk-grid-column-full summary-box-bottom">
@@ -216,9 +216,7 @@ Appointments prototype
                 </div>
             </div>
             {% endif %}
-            {% if (data['reason'] == "completed-task") %}
-            <!-- empty -->
-            {% else %}
+            {% if (data['reason'] !== "transferred") %}
             <div class="govuk-grid-column-full summary-box summary-box-first">
                 <div class="govuk-grid-column-full summary-box-top">
                     <h3 class="govuk-heading-s">
@@ -226,7 +224,7 @@ Appointments prototype
                     </h3>
                     <div class="summary-box-actions">
                         <a class="govuk-body govuk-link govuk-link--no-visited-state" href="./end-allocation/date.html">End allocation</a>
-                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="#">Manage allocation</a>
+                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="./manage-activity/unemployed-2">Manage allocation</a>
                     </div>
                 </div>
                 <div class="govuk-grid-column-full summary-box-bottom">
@@ -291,6 +289,7 @@ Appointments prototype
                 </div>
             </div>
             {% endif %}
+
             <!-- hidden for testing
             <div class="govuk-grid-column-full summary-box">
                 <div class="govuk-grid-column-full summary-box-top">
