@@ -122,7 +122,7 @@ Appointments prototype
                     </div>
                 </div>
                 -->
-                <p class="govuk-body govuk-!-margin-bottom-0">There are no wait list applications.</p>
+                <p class="govuk-body govuk-!-margin-bottom-0">No waitlist applications to review.</p>
             </div>
         </section>
     </div>    
@@ -135,8 +135,81 @@ Appointments prototype
         <section id="activities" class="govuk-!-margin-top-8 govuk-!-margin-bottom-6">
             <h2 class="govuk-heading-m">Allocations</h2>
             <div class="govuk-body">
-                <a class="govuk-link govuk-link--no-visited-state"href="#">Allocate to an activity</a>
+                <a class="govuk-link govuk-link--no-visited-state" href="allocate-new-activity/search-for-an-activity">Allocate to an activity</a>
             </div>
+            {% if (data['confirmAllocationDavid'] == "yes") %}
+            <div class="govuk-grid-column-full summary-box summary-box-first">
+                <div class="govuk-grid-column-full summary-box-top">
+                    <h3 class="govuk-heading-s">
+                        <a class="govuk-link" href="#">Kitchens</a>
+                    </h3>
+                    <div class="summary-box-actions">
+                        <a class="govuk-body" href="end-allocation-date.html">End allocation</a>
+                        <a class="govuk-body" href="#">Manage allocation</a>
+                    </div>
+                </div>
+                <div class="govuk-grid-column-full summary-box-bottom">
+                    <div class="govuk-grid-column-one-quarter summary-box-content">                 
+                        <dl class="govuk-body">
+                            <dt>Start of allocation</dt>
+                            <dd>1 June 2024</dd>
+                        </dl>
+                    </div>
+                    <div class="govuk-grid-column-one-quarter summary-box-content">  
+                        <dl class="govuk-body govuk-!-margin-bottom-0">
+                            <dt>End of allocation</dt>
+                            <dd>1 October 2024</dd>
+                        </dl>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <dl class="govuk-body">
+                            <dt>Schedule</dt>
+                            <dd>
+                                <details class="govuk-details">
+                                    <summary class="govuk-details__summary">
+                                        <span class="govuk-details__summary-text">
+                                            When is David Jones due to attend
+                                        </span>
+                                    </summary>
+                                    <div class="govuk-details__text">
+                                        <div class="govuk-summary-list__row">
+                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
+                                              <span>Monday</span>
+                                            </dt>
+                                            <dd class="govuk-summary-list__value">
+                                                <div class="govuk-summary-list__key--normal-key-weight">
+                                                    AM  (08:30 to 11:45)
+                                                </div>
+                                            </dd>
+                                        </div>
+                                        <div class="govuk-summary-list__row">
+                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
+                                              <span>Tuesday</span>
+                                            </dt>
+                                            <dd class="govuk-summary-list__value">
+                                                <div class="govuk-summary-list__key--normal-key-weight">
+                                                    AM  (08:30 to 11:45)
+                                                </div>
+                                            </dd>
+                                        </div>
+                                        <div class="govuk-summary-list__row">
+                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
+                                              <span>Wednesday</span>
+                                            </dt>
+                                            <dd class="govuk-summary-list__value">
+                                                <div class="govuk-summary-list__key--normal-key-weight">
+                                                    AM  (08:30 to 11:45)
+                                                </div>
+                                            </dd>
+                                        </div>
+                                    </div>
+                                </details>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
             <div class="govuk-grid-column-full summary-box summary-box-first">
                 <div class="govuk-grid-column-full summary-box-top">
                     <h3 class="govuk-heading-s">

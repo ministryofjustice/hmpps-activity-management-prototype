@@ -16,26 +16,27 @@ Appointments prototype
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-        <form action="check-and-confirm" method="post">
+        <form action="pay-band" method="post">
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <span class="govuk-caption-l">Kitchens</span>
                     <h1 class="govuk-fieldset__heading">
-                        Select Tom Lafferty's pay rate
+                    Do you want to set an end date for this allocation?
                     </h1>
                 </legend>
-                {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-
-                {{ govukInsetText({
-                html: "<p>Tom Lafferty is currently <strong>enhanced</strong> incentive level.</p>"
-                }) }}
                 <div class="govuk-radios" data-module="govuk-radios">
                     <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="setEndDate" name="setEndDate" type="radio" value="yes">
-                        <label class="govuk-label govuk-radios__label govuk-radios__label--bold" for="setEndDate">
-                            Payband 3 - £1.50
-                        </label>
+                    <input class="govuk-radios__input" id="setEndDate" name="setEndDate" type="radio" value="yes">
+                    <label class="govuk-label govuk-radios__label" for="setEndDate">
+                        Yes
+                    </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="setEndDate-2" name="setEndDate" type="radio" value="no">
+                    <label class="govuk-label govuk-radios__label" for="setEndDate-2">
+                        No
+                    </label>
                     </div>
                 </div>
                 </fieldset>
