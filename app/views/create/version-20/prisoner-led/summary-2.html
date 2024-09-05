@@ -26,7 +26,7 @@ Appointments prototype
 <!-- mini profile -->
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full"> 
-        <h1 class="govuk-heading-l">Manage Tom Lafferty’s activity allocations and appointments</h1>
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-7">Manage Tom Lafferty’s activity allocations and appointments</h1>
         <div class="hmpps-mini-banner">
             <img class="hmpps-mini-banner__photo" src="/public/images/test-profile.jpeg" alt="Jones, David" width="80" height="100">
             <div class="hmpps-mini-banner__name">
@@ -217,7 +217,6 @@ Appointments prototype
                 </div>
             </div>
             {% endif %}
-            {% if (data['reason'] !== "transferred") %}
             <div class="govuk-grid-column-full summary-box summary-box-first">
                 <div class="govuk-grid-column-full summary-box-top">
                     <h3 class="govuk-heading-s">
@@ -238,7 +237,11 @@ Appointments prototype
                     <div class="govuk-grid-column-one-quarter summary-box-content">  
                         <dl class="govuk-body govuk-!-margin-bottom-0">
                             <dt>End of allocation</dt>
+                            {% if (data['reason'] == "transferred") %}
+                            <dd>10 September 2024</dd>
+                            {% else %}
                             <dd>None set</dd>
+                            {% endif %}
                         </dl>
                     </div>
                     <div class="govuk-grid-column-one-third">
@@ -288,8 +291,6 @@ Appointments prototype
                         </dl>
                     </div>
                 </div>
-            </div>
-            {% endif %}
 
             <!-- hidden for testing
             <div class="govuk-grid-column-full summary-box">

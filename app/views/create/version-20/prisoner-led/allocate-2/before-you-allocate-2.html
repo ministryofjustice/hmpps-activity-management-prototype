@@ -93,7 +93,11 @@ Appointments prototype
                     <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Unemployed</th>
                         <td class="govuk-table__cell">1 June 2024</td>
+                        {% if (data['reason'] == "transferred") %}
+                        <td class="govuk-table__cell">10 September 2024</td>
+                        {% else %}
                         <td class="govuk-table__cell">None set</td>
+                        {% endif %}
                         <td class="govuk-table__cell">£1.00 (Pay band 1 (Lowest))</td>
                     </tr>
                 </tbody>
