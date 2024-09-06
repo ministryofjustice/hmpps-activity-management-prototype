@@ -1,0 +1,452 @@
+{% extends "layout_hmpps-new-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+DPS search results prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+<!-- heading -->
+<h1 class="govuk-heading-l">
+    Prisoner search results
+</h1>
+<!-- hidden -->
+<dl class="govuk-summary-list prisoner-search__summary" aria-hidden="true">
+    <div>
+        <dt class="govuk-!-display-inline-block govuk-!-font-weight-bold">Name or prison number:</dt> 
+        <dd class="govuk-!-display-inline-block govuk-!-margin-0">jo</dd>
+    </div>
+    <div>
+        <dt class="govuk-!-display-inline-block govuk-!-font-weight-bold">Selected location:</dt>
+        <dd class="govuk-!-display-inline-block govuk-!-margin-0">Leeds (HMP)</dd>
+    </div>
+</dl>
+<div class="govuk-!-display-none-print">
+    <form novalidate="novalidate" class="prisoner-search__form" data-test="prisoner-search-form">
+      <div class="horizontal-form govuk-!-margin-bottom-3">
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="keywords">
+                Enter name or prison number
+            </label>
+            <input class="govuk-input govuk-!-width-full" id="keywords" name="keywords" type="text" value="David Jones" data-test="prisoner-search-keywords">
+        </div>
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="location">
+                Select location
+            </label>
+            <select class="govuk-select" id="location" name="location" data-test="prisoner-search-location">
+                <option value="RSI" selected="">Leeds (HMP)</option>
+                <option value="RSI-S">CSU</option>
+                <option value="RSI-A">Wing A</option>
+                <option value="RSI-B">Wing B</option>
+                <option value="RSI-C">Wing C</option>
+                <option value="RSI-D">Wing D</option>
+                <option value="RSI-E">Wing E</option>
+                <option value="RSI-F">Wing F</option>
+                <option value="RSI-G">Wing G</option>
+                <option value="RSI-R">Wing R</option>
+                </select>
+        </div>
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+        Search
+        </button>
+        <input type="hidden" name="feature" value="/">
+    </div>
+    <details class="govuk-details govuk-!-margin-bottom-0" data-module="govuk-details" data-test="prisoner-search-alerts-container">
+        <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+            View by alerts
+            </span>
+        </summary>
+        <div class="govuk-details__text">
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            Select alerts to view
+        </legend>
+        <div class="govuk-checkboxes prisoner-search__alerts govuk-checkboxes--small js-prisoner-search-alerts" data-test="prisoner-search-alerts" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts" name="alerts[]" type="checkbox" value="HA">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts">
+                    ACCT open
+                </label>      
+            </div>
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-2" name="alerts[]" type="checkbox" value="HA1">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-2">
+                    ACCT post closure
+                </label>              
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-3" name="alerts[]" type="checkbox" value="XA">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-3">
+                    Arsonist
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-4" name="alerts[]" type="checkbox" value="LCE">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-4">
+                    Care experienced
+                </label> 
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-5" name="alerts[]" type="checkbox" value="XCA">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-5">
+                    Chemical attacker
+                </label> 
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-6" name="alerts[]" type="checkbox" value="XCI">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-6">
+                    Concerted indiscipline
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-7" name="alerts[]" type="checkbox" value="RCON">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-7">
+                    Conflict
+                </label> 
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-8" name="alerts[]" type="checkbox" value="XCU">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-8">
+                    Controlled unlock
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-9" name="alerts[]" type="checkbox" value="XCO">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-9">
+                    Corruptor
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-10" name="alerts[]" type="checkbox" value="CSIP">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-10">
+                    CSIP
+                </label> 
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-11" name="alerts[]" type="checkbox" value="XEL">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-11">
+                    E-list
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-12" name="alerts[]" type="checkbox" value="XELH">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-12">
+                    E-list heightened
+                </label> 
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-13" name="alerts[]" type="checkbox" value="XER">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-13">
+                    Escape risk
+                </label>  
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-14" name="alerts[]" type="checkbox" value="XGANG">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-14">
+                    Gang member
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-15" name="alerts[]" type="checkbox" value="HID">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-15">
+                    Hidden disability
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-16" name="alerts[]" type="checkbox" value="XHT">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-16">
+                    Hostage taker
+                </label> 
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-17" name="alerts[]" type="checkbox" value="XCDO">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-17">
+                    Involved in 2024 civil disorder
+                </label> 
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-18" name="alerts[]" type="checkbox" value="VIP">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-18">
+                    Isolated
+                </label>        
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-19" name="alerts[]" type="checkbox" value="RNO121">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-19">
+                    No one-to-one
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-20" name="alerts[]" type="checkbox" value="PEEP">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-20">
+                    PEEP
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-21" name="alerts[]" type="checkbox" value="UPIU">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-21">
+                    Protective Isolation Unit
+                </label>  
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-22" name="alerts[]" type="checkbox" value="RCDR">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-22">
+                    Quarantined
+                </label> 
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-23" name="alerts[]" type="checkbox" value="XR">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-23">
+                    Racist
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-24" name="alerts[]" type="checkbox" value="URS">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-24">
+                    Refusing to shield
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-25" name="alerts[]" type="checkbox" value="URCU">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-25">
+                    Reverse Cohorting Unit
+                </label> 
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-26" name="alerts[]" type="checkbox" value="XRF">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-26">
+                    Risk to females
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-27" name="alerts[]" type="checkbox" value="RKS">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-27">
+                    Risk to known adults
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-28" name="alerts[]" type="checkbox" value="RTP,RLG">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-28">
+                    Risk to LGBT
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-29" name="alerts[]" type="checkbox" value="USU">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-29">
+                    Shielding Unit
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-30" name="alerts[]" type="checkbox" value="XSA,SA">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-30">
+                    Staff assaulter
+                </label>    
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-31" name="alerts[]" type="checkbox" value="XTACT">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-31">
+                    TACT
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-32" name="alerts[]" type="checkbox" value="F1">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-32">
+                    Veteran
+                </label>
+                
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-33" name="alerts[]" type="checkbox" value="XVL">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-33">
+                    Violent
+                </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="alerts-34" name="alerts[]" type="checkbox" value="PVN">
+                <label class="govuk-label govuk-checkboxes__label" for="alerts-34">
+                    ViSOR
+                </label>   
+            </div>
+        </div>
+    </fieldset>
+</div>
+<a href="#" class="govuk-link govuk-link--no-visited-state js-prisoner-search-clear-alerts" data-test="prisoner-search-clear-alerts">
+      Clear selected alerts
+</a>
+</div>
+</details>
+</form>
+    
+    
+    
+<div class="prisoner-search__results-options">
+    <form method="POST" class="horizontal-form" data-test="prisoner-search-order-form">
+      <input type="hidden" name="_csrf" value="0BF3GcrD-bdUt_I9vZf3XRcrO7Jrac02CL8w">
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="sortFieldsWithOrder">
+                Order 15 results by
+            </label>
+            <select class="govuk-select" id="sortFieldsWithOrder" name="sortFieldsWithOrder" data-test="prisoner-search-order">
+                <option value="lastName,firstName:ASC">Last name, First name - A to Z</option>            
+                <option value="lastName,firstName:DESC">Last name, First name - Z to A</option>
+                <option value="assignedLivingUnitDesc:ASC">Location - Numbers then A to Z</option>
+                <option value="assignedLivingUnitDesc:DESC">Location - Z to A then numbers</option>
+                <option value="dateOfBirth:DESC">Age - youngest to oldest</option>
+                <option value="dateOfBirth:ASC">Age - oldest to youngest</option>
+            </select>
+            </div>
+            <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-test="prisoner-search-order-form-submit">
+            Reorder
+            </button>
+        </form>
+          <div class="prisoner-search__toggles">      
+                <a href="/prisoner-search?keywords=jo&amp;location=RSI&amp;view=list" class="govuk-body prisoner-search__toggles__toggle prisoner-search__toggles__toggle--list prisoner-search__toggles__toggle--active">
+                    <span>List</span>
+                    <svg width="19.7px" height="15.6px" style="margin-left: 10px;">
+                    <g>
+                        <path d="M2,4.2c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S3.2,4.2,2,4.2z M2,9.6
+                        c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S3.2,9.6,2,9.6z M2,15c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S3.2,15,2,15z M19,3.1
+                        c0,0.2-0.2,0.3-0.3,0.3H5.8c-0.2,0-0.3-0.2-0.3-0.3v-2c0-0.2,0.2-0.3,0.3-0.3h12.9c0.2,0,0.3,0.2,0.3,0.3V3.1z M19,8.6
+                        c0,0.2-0.2,0.3-0.3,0.3H5.8c-0.2,0-0.3-0.2-0.3-0.3v-2c0-0.2,0.2-0.3,0.3-0.3h12.9c0.2,0,0.3,0.2,0.3,0.3V8.6z M19,14
+                        c0,0.2-0.2,0.3-0.3,0.3H5.8c-0.2,0-0.3-0.2-0.3-0.3v-2c0-0.2,0.2-0.3,0.3-0.3h12.9c0.2,0,0.3,0.2,0.3,0.3V14z"></path>
+                    </g>
+                    </svg>
+                </a>
+                <a href="/prisoner-search?keywords=jo&amp;location=RSI&amp;view=grid" class="govuk-body prisoner-search__toggles__toggle prisoner-search__toggles__toggle--grid ">
+                    <span>Grid</span>
+                    <svg width="17.9px" height="15.6px" style="margin-left: 10px;">
+                    <g>
+                        <path d="M8.1,5.7C8.1,6.4,7.5,7,6.8,7H1.4C0.6,7,0,6.4,0,5.7V1.6c0-0.7,0.6-1.4,1.4-1.4h5.4
+                        c0.7,0,1.4,0.6,1.4,1.4V5.7z M8.1,13.8c0,0.7-0.6,1.4-1.4,1.4H1.4c-0.7,0-1.4-0.6-1.4-1.4V9.7C0,9,0.6,8.4,1.4,8.4h5.4
+                        c0.7,0,1.4,0.6,1.4,1.4V13.8z M17.6,5.7C17.6,6.4,17,7,16.3,7h-5.4c-0.7,0-1.4-0.6-1.4-1.4V1.6c0-0.7,0.6-1.4,1.4-1.4h5.4
+                        c0.7,0,1.4,0.6,1.4,1.4V5.7z M17.6,13.8c0,0.7-0.6,1.4-1.4,1.4h-5.4c-0.7,0-1.4-0.6-1.4-1.4V9.7c0-0.7,0.6-1.4,1.4-1.4h5.4
+                        c0.7,0,1.4,0.6,1.4,1.4V13.8z"></path>
+                    </g>
+                    </svg>
+                </a>
+            </div>
+        </div>
+</div>
+<!-- print -->
+<div style="text-align: right" class="govuk-!-margin-bottom-2">
+    <a href="javascript:window.print()" class="govuk-link print-link govuk-!-display-none-print">
+      Print displayed results
+    </a>
+</div>
+<!-- pagination -->
+<nav class="moj-pagination govuk-!-font-size-19" id="pagination-label">
+    <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
+    <ul class="moj-pagination__list"></ul>
+    <p class="moj-pagination__results">Showing <b>1</b> to <b>1</b> of <b>1</b> results</p>
+</nav>
+<!-- results -->
+<div class="prisoner-search__results-list">
+    <table class="govuk-table" data-test="prisoner-search-results-table">
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Picture</span></th>
+                <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" data-index="1">Name</button></th>
+                <th scope="col" class="govuk-table__header">Prison number</th>
+                <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" data-index="3">Location</button></th>
+                <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" data-index="4">Incentive level</button></th>
+                <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" data-index="5">Age</button></th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Relevant alerts</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell"><img src="/public/images/test-image-5.jpeg" alt="Image of Jones David" class="prisoner-search__results-list__image" loading="lazy" style="height:150px; width:120px"></td>
+                <td class="govuk-table__cell" data-sort-value="Jones Davi"><a href="prisoner-profile.html" class="govuk-link">Jones, David</a></td>
+                <td class="govuk-table__cell">G7006VF</td>
+                <td class="govuk-table__cell">D-2-08N</td>
+                <td class="govuk-table__cell">Standard</td>
+                <td class="govuk-table__cell">30</td>
+                <td class="govuk-table__cell">
+                    <ul class="alerts-list">
+ 
+                    </ul>
+                    <span class="">
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- pagination -->
+<nav class="moj-pagination govuk-!-font-size-19" id="pagination-label">
+    <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
+    <ul class="moj-pagination__list"></ul>
+    <p class="moj-pagination__results">Showing <b>1</b> to <b>1</b> of <b>1</b> results</p>
+</nav>
+
+<style>
+.prisoner-search__summary {
+    margin: -10px 0 10px;
+    font-size: 14px;
+}
+.prisoner-search__summary {
+    display: none;
+}
+.prisoner-search__form {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f3f2f1;
+}
+
+@media (min-width: 48.0625em) {
+    .prisoner-search__alerts .govuk-checkboxes__item {
+        flex-basis: 25%;
+    }
+}
+@media (min-width: 20em) {
+    .prisoner-search__alerts {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+@media (min-width: 48.0625em) {
+    .prisoner-search__results-options {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        align-items: baseline;
+    }
+}
+.prisoner-search__toggles {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+.prisoner-search__toggles__toggle--active {
+    text-decoration: none;
+    color: #0b0c0c;
+}
+
+.prisoner-search__toggles__toggle--list {
+    border-right: 1px solid #0b0c0c;
+    padding-right: 10px;
+}
+.prisoner-search__toggles__toggle {
+    display: flex;
+    align-items: center;
+    color: #1d70b8;
+}
+.prisoner-search__results-list {
+    overflow: auto;
+}
+.prisoner-search__results-list .govuk-table__cell {
+    vertical-align: middle !important;
+}
+
+</style>
+{% endblock %}
