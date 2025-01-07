@@ -1,0 +1,133 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            {% set days = [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+            ] %}
+            {% set timesHtml %}
+
+            {% endset %}
+
+            <span class="govuk-caption-l">
+                Edit allocation for {{prisoner.name.firstname}} {{prisoner.name.surname}}
+            </span>
+            <h1 class="govuk-heading-xl">
+                Select sessions {{prisoner.name.firstname}} {{prisoner.name.surname}} should attend
+            </h1>
+
+            {% set href = "../../../../edit-activity/" + activity.id + "/details" %}
+
+            <!-- {{govukInsetText({
+            html: "<p>You are editing " + prisoner.name.firstname + "’s schedule for <a href='" + href + "' target='_blank'>" + activity.name + "</a>.</p><p>" + prisoner.name.firstname + " is not currently scheduled to be excluded from any sessions.</p>"
+            })}} -->
+
+            {{govukInsetText({
+            html: "<p>You're seeing only sessions when <a href='" + href + "' target='_blank'>" + activity.name + "</a>
+                is scheduled to run.</p>"
+            })}}
+
+            {% for day in daysWithSessions %}
+            {% set periods = [ "am", "pm", "ed" ] %}
+            <h2 class="govuk-heading-m">{{days[day.day]|capitalize}}</h2>
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header"></th>
+                        {% for period in periods %}
+                        <th scope="col" class="govuk-table__header">{{period|upper}}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    {% set states = [ "included", "excluded" ] %}
+
+                    {% for state in states %}
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">
+                            {{state|capitalize}}
+                        </th>
+                        
+                        <td class="govuk-table__cell">
+                            <div class="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="included-{{day.day}}-{{period}}"
+                                        name="included-{{day.day}}-{{period}}" type="radio" value="yes" {% if
+                                        day[period][0].included==true %} checked {% endif %} checked>
+                                    <label class="govuk-label govuk-radios__label"
+                                        for="included-{{day.day}}-{{period}}">
+                                        a
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="govuk-table__cell">
+                            <div class="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="included-{{day.day}}-{{period}}"
+                                        name="included-{{day.day}}-{{period}}" type="radio" value="yes" {% if
+                                        day[period][0].included==true %} checked {% endif %}>
+                                    <label class="govuk-label govuk-radios__label"
+                                        for="included-{{day.day}}-{{period}}">
+                                        b
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="govuk-table__cell">
+                            <div class="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="included-{{day.day}}-{{period}}"
+                                        name="included-{{day.day}}-{{period}}" type="radio" value="yes" {% if
+                                        day[period][0].included==true %} checked {% endif %}>
+                                    <label class="govuk-label govuk-radios__label"
+                                        for="included-{{day.day}}-{{period}}">
+                                        c
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endfor %}
+
+            {{govukInsetText({
+            html: "<p>Any changes will take effect from tomorrow.</p>"
+            })}}
+
+            {{ govukButton({
+            text: "Update " + prisoner.name.firstname + "’s schedule"
+            }) }}
+
+            <p class="govuk-body">
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

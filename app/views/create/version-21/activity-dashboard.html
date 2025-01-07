@@ -1,0 +1,175 @@
+{% extends "layout_hmpps.html" %}
+
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">
+    Wing cleaning 1: manage waitlist and allocate
+</h1>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <p>
+            Use the tabbed sections of this page to view people currently allocated, manage the waitlist and allocate to
+            this activity.
+        </p>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m">
+            Related tasks
+        </h2>
+        <ul class="govuk-list">
+            <li>Take someone off this activity</li>
+            <li>Edit activities and schedules</li>
+            <li>Find other activities with vacancies</li>
+        </ul>
+    </div>
+</div>
+
+<div class="govuk-tabs" data-module="govuk-tabs">
+    <h2 class="govuk-tabs__title">
+        Contents
+    </h2>
+    <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+            <a class="govuk-tabs__tab" href="#past-day">
+                Currently allocated
+            </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#past-week">
+                Manage waitlist
+            </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#past-month">
+                Allocate
+            </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#past-year">
+                Schedule for Wing cleaning 1
+            </a>
+        </li>
+    </ul>
+    <div class="govuk-tabs__panel" id="past-day">
+        <h2 class="govuk-heading-l">
+            Currently allocated
+        </h2>
+        <p>
+            Review the list of people currently allocated to identify any non-associations.
+        </p>
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m">Dates and amounts</caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Prisoner details</th>
+                    <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
+                    <th scope="col" class="govuk-table__header">Date allocated</th>
+                    <th scope="col" class="govuk-table__header">Other allocations</th>
+                    <th scope="col" class="govuk-table__header">Earliest release date</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="where-do-you-live" name="where-do-you-live"
+                                    type="radio" value="england">
+                                <label class="govuk-label govuk-radios__label" for="where-do-you-live">
+                                    <b><a href="">FORENAME SURNAME</a></b><br>
+                                    NUMBER<br>
+                                    LOCATION
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">None</td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">ACTIVITY</td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-week">
+        <h2 class="govuk-heading-l">
+            Manage waitlist
+        </h2>
+        <p>
+            View the status of applications which have been added to the waitlist.
+        </p>
+        <p>
+            Select someone if you need to approve or reject their application.
+        </p>
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m">Dates and amounts</caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Prisoner details</th>
+                    <th scope="col" class="govuk-table__header">Non-associations in this prison</th>
+                    <th scope="col" class="govuk-table__header">Date allocated</th>
+                    <th scope="col" class="govuk-table__header">Other allocations</th>
+                    <th scope="col" class="govuk-table__header">Earliest release date</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                {% for application in data['applications'] %}
+                {% set prisoner = application.prisoner|getPrisonerDetails %}
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="where-do-you-live" name="where-do-you-live"
+                                    type="radio" value="england">
+                                <label class="govuk-label govuk-radios__label" for="where-do-you-live">
+                                    <b><a href="">{{prisoner.name.firstname}} {{prisoner.name.surname}}</a></b><br>
+                                    {{prisoner.id}}<br>
+                                    {{prisoner.location.cell}}
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">None</td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">{{application.date|convertShortDateToMediumDate}}</td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">
+                        <ul class="govuk-list">
+                        {% for allocation in prisoner.activity %}
+                        {% set activity = allocation|getActivityDetails %}
+                        <li>{{activity.name}}</li>
+                        {% endfor %}
+                        </ul>
+                    </td>
+                    <td class="govuk-table__cell govuk-!-padding-top-4">DATE</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-month">
+        <h2 class="govuk-heading-l">
+            Allocate
+        </h2>
+
+    </div>
+    <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-year">
+        <h2 class="govuk-heading-l">
+            Schedule for Wing cleaning 1
+        </h2>
+
+    </div>
+</div>
+
+{% endblock %}

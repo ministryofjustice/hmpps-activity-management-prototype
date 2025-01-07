@@ -1,0 +1,130 @@
+{% extends "layout_hmpps-new-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <!-- hidden for testing
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all activity tasks
+  </a>
+  -->
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">Maths level 1</span>
+        <h1 class="govuk-heading-l">
+            Change allocation details for David Jones
+        </h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Start of allocation
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    1 June 2024
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    End of allocation
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    None set
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Pay rate
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Enhanced incentive level:<br>Pay band 3 - £1.50
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> end of allocation</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Schedule
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <dl class="govuk-summary-list govuk-summary-list--no-border govuk-summary-list--equal-widths">
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
+                                <span>Monday</span>
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__key--normal-key-weight">
+                                    AM  (08:30 to 11:45)
+                                </div>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
+                                <span>Tuesday</span>
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__key--normal-key-weight">
+                                    AM  (08:30 to 11:45)
+                                </div>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
+                                <span>Wednesday</span>
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__key--normal-key-weight">
+                                    AM  (08:30 to 11:45)
+                                </div>
+                            </dd>
+                        </div>
+                    </dl>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> end of allocation</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Allocated by
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    S.Davidson - 4 September 2024
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> end of allocation</span></a>
+                </dd>
+            </div>
+        </dl>
+        <form action="../summary-2" method="post">
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Return to summary"
+                }) }}
+                {{ govukButton({
+                    text: "Suspend from this activity",
+                    classes: "govuk-button--warning"
+                }) }}
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

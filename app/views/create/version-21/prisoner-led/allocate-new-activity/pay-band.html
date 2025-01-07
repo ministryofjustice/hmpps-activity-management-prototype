@@ -1,0 +1,54 @@
+{% extends "layout_hmpps-new-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <form action="check-and-confirm" method="post">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                    <span class="govuk-caption-l">Gardens</span>
+                    <h1 class="govuk-fieldset__heading">
+                        Select David Jones pay rate
+                    </h1>
+                </legend>
+                {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+                {{ govukInsetText({
+                html: "<p>David Jones currently <strong>standard</strong> incentive level.</p>"
+                }) }}
+                <div class="govuk-radios" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="setEndDate" name="setEndDate" type="radio" value="yes">
+                        <label class="govuk-label govuk-radios__label govuk-radios__label--bold" for="setEndDate">
+                            Payband 3 - £1.50
+                        </label>
+                    </div>
+                </div>
+                </fieldset>
+            </div>
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Continue"
+                }) }}
+                <a class="govuk-link" href="summary-2.html">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

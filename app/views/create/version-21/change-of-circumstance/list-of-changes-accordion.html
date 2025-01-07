@@ -1,0 +1,93 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+
+{% block pageTitle %}
+Changes in circumstances - {{serviceName}}
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{{ govukBackLink({
+text: "Select a different date",
+href: '/' + data['prototype-versions']['create-and-allocate']['url'] ~ "/change-of-circumstance/select-date"
+})}}
+{% endblock %}
+
+{% block content %}
+
+<span class="govuk-caption govuk-caption-l">29 June 2023</span>
+<h1 class="govuk-heading-xl">Changes in circumstances</h1>
+
+{{govukButton({
+text: "Show filter",
+classes: "govuk-button--secondary"
+})}}
+
+<div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+{% for type, changes in changesByType %}
+    <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+                <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                    {{ type | capitalize }} – {{ changes | length }} {{ "changes" if changes | length > 1 else "change" }}
+                </span>
+            </h2>
+        </div>
+
+        <div id="accordion-default-content-1" class="govuk-accordion__section-content"
+            aria-labelledby="accordion-default-heading-1">
+            <table class="govuk-table govuk-!-margin-bottom-8">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Cell</th>
+                        <th scope="col" class="govuk-table__header">Current allocations</th>
+                        <th scope="col" class="govuk-table__header">Details</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    {% for change in changes | sort(attribute='prisoner.location.cell') %}
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a href="#"><b>{{ change.prisoner.name.surname }}</b>, {{
+                                change.prisoner.name.firstname }}</a><br>
+                            <span class="govuk-hint govuk-!-font-size-16">{{ change.prisoner.id }}</span>
+                        </td>
+                        <td class="govuk-table__cell">{{ change.prisoner.location.cell }}</td>
+                        <td class="govuk-table__cell">
+                            <ul class="govuk-list">
+                                {% for allocation in change.prisoner.activity %}
+                                {% set activity = allocation | getActivityDetails %}
+                                <li><a href="../manage-allocations/{{ activity.id }}"
+                                        class="govuk-link govuk-link--no-visited-state">{{ activity.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td class="govuk-table__cell">{{ change.changeType.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% set dayBefore = "2023-06-29" | dayBefore %}
+{% set dayAfter = "2023-06-29" | dayAfter %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+{{ govukPagination({
+previous: {
+text: "Previous day",
+labelText: dayBefore | convertShortDateToVeryLongDate,
+href: dayBefore
+},
+next: {
+text: "Next day",
+labelText: dayAfter | convertShortDateToVeryLongDate,
+href: dayAfter
+}
+}) }}
+{% endblock %}

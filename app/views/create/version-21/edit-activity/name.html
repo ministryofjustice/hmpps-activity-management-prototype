@@ -1,0 +1,51 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <span class="govuk-caption-l">
+                {{activity.name}}
+            </span>
+            {{govukInput({
+            id: "name",
+            name: "name",
+            label: {
+            text: "Enter the new name of the activity",
+            classes: "govuk-label--l",
+            isPageHeading: true
+            },
+            hint: {
+            text: "Say what the activity is in plain English."
+            },
+            value: activity.name
+            })}}
+
+            {{govukInsetText({
+            text: "If you change the name of this activity, it will update all records. This includes any previous
+            sessions of the activity on unlock, movement and attendance lists."
+            })}}
+
+            {{ govukButton({
+            text: "Update activity name"
+            }) }}
+            <p>
+                <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

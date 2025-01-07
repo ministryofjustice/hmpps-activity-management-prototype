@@ -1,0 +1,148 @@
+{% extends "layout_hmpps.html" %}
+{% block pageTitle %}
+Activities Management prototype
+{% endblock %}
+
+{% block primaryNavigation %} {% endblock %}
+
+{% block beforeContent %}
+{{govukBackLink({
+text: "Back",
+"href": "javascript: window.history.go(-1)"
+})}}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% set days = [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday"
+        ] %}
+        {% set timesHtml %}
+
+        {% endset %}
+
+        <span class="govuk-caption-l">
+            {{activity.name}}
+        </span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-8">
+            Check changes to when {{prisoner.name.firstname}} {{prisoner.name.surname}} should attend {{activity.name}}
+        </h1>
+    </div>
+</div>
+
+{% set href = "../../../../edit-activity/" + activity.id + "/details" %}
+
+<p>You're excluding {{prisoner.name.firstname}} {{prisoner.name.surname}} from {{activity.name}} on:</p>
+<ul class="govuk-list govuk-list--bullet">
+    {% if day = "monday" %}
+    <li>
+        Monday
+    </li>
+    {% endif %}
+</ul>
+<p>Select a session to add it to {{prisoner.name.firstname}} {{prisoner.name.surname}}’s schedule.</p>
+
+<form method="post">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+            <h2 class="govuk-heading-l govuk-!-margin-top-6">
+                Week 1
+            </h2>
+            {% for day in daysWithSessions %}
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="days-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-5">
+                        <h2 class="govuk-fieldset__heading">
+                            {{days[day.day]|capitalize}} sessions
+                        </h2>
+                    </legend>
+
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        {% set periods = [ "am", "pm", "ed" ] %}
+                        {% for period in periods %}
+                        {% if day[period][0] != null %}
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="day-{{day.day}}-{{period}}" name="days"
+                                type="checkbox" value="{{day.day}}"
+                                aria-controls="conditional-session-{{day.day}}-{{period}}" aria-expanded="false">
+                            <label class="govuk-label govuk-checkboxes__label" for="day-{{day.day}}-{{period}}">
+                                {{period|upper}} session
+                            </label>
+                        </div>
+                        <!--
+                        <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-session-{{day.day}}-{{period}}">
+                            <span class="govuk-hint">
+                                Not scheduled to attend
+                            </span>
+                        </div>
+                        -->
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="govuk-grid-column-one-half">
+            <h2 class="govuk-heading-l govuk-!-margin-top-6">
+                Week 2
+            </h2>
+            {% for day in daysWithSessions %}
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="days-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-5">
+                        <h2 class="govuk-fieldset__heading">
+                            {{days[day.day]|capitalize}} sessions
+                        </h2>
+                    </legend>
+
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        {% set periods = [ "am", "pm", "ed" ] %}
+                        {% for period in periods %}
+                        {% if day[period][0] != null %}
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="day-{{day.day}}-{{period}}" name="days"
+                                type="checkbox" value="{{day.day}}"
+                                aria-controls="conditional-session-{{day.day}}-{{period}}" aria-expanded="false" checked>
+                            <label class="govuk-label govuk-checkboxes__label" for="day-{{day.day}}-{{period}}">
+                                {{period|upper}} session
+                            </label>
+                        </div>
+                        <!--
+                        <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-session-{{day.day}}-{{period}}">
+                            <span class="govuk-hint">
+                                Not scheduled to attend
+                            </span>
+                        </div>
+                        -->
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {{ govukButton({
+    text: "Continue"
+    }) }}
+
+    <p class="govuk-body">
+        <a href="../details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+    </p>
+</form>
+</div>
+</div>
+
+{% endblock %}

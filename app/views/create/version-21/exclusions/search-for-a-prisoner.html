@@ -1,0 +1,53 @@
+{% extends "layout_hmpps-no-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all appointments tasks
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds"> 
+       {%- from "moj/components/search/macro.njk" import mojSearch -%}
+
+       <div class="moj-search">
+        <form action="search-for-a-prisoner-results" method="post">
+          <div class="govuk-form-group">
+            <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="search">
+              <h1 class="govuk-heading-l">
+                <span class="govuk-caption-l">
+                  Change someone's activity schedule
+                </span>
+                Find a prisoner
+              </h1>
+            </label>
+            <div id="search-hint" class="govuk-hint moj-search__hint ">
+              Search by name prison number
+            </div>
+            <input class="govuk-input moj-search__input govuk-input--width-30" id="search" name="search" type="search" aria-describedby="search-hint">
+          </div>
+          <button class="govuk-button govuk-button--secondary moj-search__button " data-module="govuk-button">
+            Search
+          </button>
+        </form>
+      </div>
+      
+    </div> 
+    
+  </div> 
+{% endblock %}

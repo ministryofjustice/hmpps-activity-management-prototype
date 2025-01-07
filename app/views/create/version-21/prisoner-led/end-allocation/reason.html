@@ -1,0 +1,91 @@
+{% extends "layout_hmpps-new-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form action="check-and-confirm" method="post">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <span class="govuk-caption-l">Unemployed</span>
+                        <h1 class="govuk-fieldset__heading">
+                            Why are you taking Tom Lafferty off this activity?
+                        </h1>
+                    </legend>
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="reason" name="reason" type="radio" value="completed-task" data-aria-controls="conditional-contact">
+                            <label class="govuk-label govuk-radios__label" for="reason">
+                                Completed course or task
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="reason-2" name="reason" type="radio" value="transferred" data-aria-controls="conditional-reason-2">
+                            <label class="govuk-label govuk-radios__label" for="reason-2">
+                                Transferred to another activity
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="reason-3" name="reason" type="radio" value="text" data-aria-controls="conditional-reason-3">
+                            <label class="govuk-label govuk-radios__label" for="reason-3">
+                                Withdrawn by staff
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="reason" name="reason" type="radio" value="email" data-aria-controls="conditional-contact">
+                            <label class="govuk-label govuk-radios__label" for="reason">
+                                Withdrawn at own request
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="reason-2" name="reason" type="radio" value="phone" data-aria-controls="conditional-reason-2">
+                            <label class="govuk-label govuk-radios__label" for="reason-2">
+                                Dismissed
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="reason-3" name="reason" type="radio" value="text" data-aria-controls="conditional-reason-3">
+                            <label class="govuk-label govuk-radios__label" for="reason-3">
+                                Health
+                            </label>
+                        </div>            <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="reason" name="reason" type="radio" value="email" data-aria-controls="conditional-contact">
+                            <label class="govuk-label govuk-radios__label" for="reason">
+                                Security
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="reason-2" name="reason" type="radio" value="phone" data-aria-controls="conditional-reason-2">
+                            <label class="govuk-label govuk-radios__label" for="reason-2">
+                                Other
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+            
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Continue"
+                }) }}
+    
+                <a class="govuk-link" href="summary-2.html">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

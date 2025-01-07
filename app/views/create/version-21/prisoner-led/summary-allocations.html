@@ -1,0 +1,291 @@
+{% extends "layout_hmpps-new-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <!-- hidden for testing
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all activity tasks
+  </a>
+  -->
+</nav>
+{% endblock %}
+
+{% block content %}
+<!-- mini profile -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full"> 
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-7">Manage David Jones’ activity allocations</h1>
+        <div class="hmpps-mini-banner">
+            <img class="hmpps-mini-banner__photo" src="/public/images/test-image-5.jpeg" alt="Jones, David" width="80" height="100">
+            <div class="hmpps-mini-banner__name">
+                <h2 class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="prisoner-profile.html">Jones, David</a></h2>
+                <div class="govuk-body" id="prisonerNumber">G7006VF</div>
+            </div>
+            <div class="dps-mini-profile-header">
+                <dl class="govuk-body">
+                    <dt>Location</dt>
+                    <dd>
+                    <a class="black-link govuk-link--no-visited-state" href="#">D-2-08N</a>
+                    </dd>
+                </dl>
+                <dl class="govuk-body">
+                    <dt>Incentive level</dt>
+                    <dd>
+                        <a class="black-link" href="#">Standard</a>
+                    </dd>
+                </dl>
+                <dl class="govuk-body">
+                    <dt>Earliest release date</dt>
+                    <dd>
+                        <a class="black-link" href="#">17 June 2032</a>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Schedule -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-m">David Jones' 7 day schedule</h2>
+        <p>
+            <a class="govuk-link govuk-link--no-visited-state" href="#">View David Jones schedule for the next 7 days</a>
+        </p>
+    </div>
+</div>
+
+<!-- Sub nav -->
+
+<nav class="moj-sub-navigation" aria-label="Sub navigation">
+    <ul class="moj-sub-navigation__list">
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" href="./summary.html">Waitlists</a>
+        </li>
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" aria-current="page" href="#activities">Allocations</a>
+        </li>
+    </ul>
+</nav>
+  
+
+
+<!-- Activities-->
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full"> 
+        <section id="activities" class="govuk-!-margin-bottom-6">
+            <h2 class="govuk-heading-m">Allocations</h2>
+            <div class="govuk-body">
+                <a class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-6" href="allocate-new-activity/search-for-an-activity">Allocate David Jones to an activity</a>
+                <a class="govuk-link govuk-link--no-visited-state"href="#">Suspend from all activities</a>
+            </div>
+            <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Month you apply</caption>
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Activity</th>
+                    <th scope="col" class="govuk-table__header" width="15% !important">Start date</th>
+                    <th scope="col" class="govuk-table__header" width="15% !important">End date</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><span class="govuk-visually-hidden">Management links</span></th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
+                        <a href="x" class="govuk-link">Activity title</a>
+                    </th>
+                    <td class="govuk-table__cell">6 January 2025</td>
+                    <td class="govuk-table__cell">30 September 2025</td>
+                    <td class="govuk-table__cell">
+                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2">Suspend</a>
+                        <a href="#" class="govuk-link govuk-link--no-visited-state">Manage or end allocation</a>
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
+                        <a href="x" class="govuk-link">Activity title</a>
+                    </th>
+                    <td class="govuk-table__cell">6 January 2025</td>
+                    <td class="govuk-table__cell">30 September 2025</td>
+                    <td class="govuk-table__cell">
+                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Suspend</a>
+                        <a href="#" class="govuk-link govuk-link--no-visited-state">Manage or change end date</a>
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
+                        <a href="x" class="govuk-link">Activity title</a>
+                    </th>
+                    <td class="govuk-table__cell">6 January 2025</td>
+                    <td class="govuk-table__cell">30 September 2025</td>
+                    <td class="govuk-table__cell">
+                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Suspend</a>
+                        <a href="#" class="govuk-link govuk-link--no-visited-state">Manage end allocation</a>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>    
+</div>
+
+<style>
+.black-link, .govvk-link--no-visited-state {
+    color:#000000 !important;
+}
+
+.hmpps-mini-banner {
+    background-color: #f3f2f1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px;
+    padding: 15px
+}
+.hmpps-mini-banner__location {
+    margin: 0
+}
+
+.hmpps-mini-banner__location dt {
+    font-weight: 700
+}
+
+.hmpps-mini-banner__location dd {
+    margin: 0
+}
+
+.dps-mini-profile-header {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    background: #f3f2f1
+}
+
+.dps-mini-profile-header .app-prisoner-photo--small {
+    margin-right: 30px
+}
+
+.dps-mini-profile-header dl {
+    margin-right: 60px
+}
+
+.dps-mini-profile-header dl:last-child {
+    margin-right: 0
+}
+
+.dps-mini-profile-header .dps-mini-profile-header--align-right {
+    align-self: center;
+    margin-left: auto
+}
+
+.dps-mini-profile-header .dps-mini-profile-header--align-right .govuk-button,.dps-mini-profile-header .dps-mini-profile-header--align-right .hmpps-action-button {
+    margin-bottom: 0
+}
+
+@media(max-width: 40.0525em) {
+    .dps-mini-profile-header {
+        display:block
+    }
+
+    .dps-mini-profile-header .app-prisoner-photo--small {
+        margin-bottom: 20px
+    }
+
+    .dps-mini-profile-header dl {
+        margin-right: 0
+    }
+
+    .dps-mini-profile-header dl:last-child {
+        margin-bottom: 0
+    }
+
+    .dps-mini-profile-header dl:last-child dd {
+        margin-bottom: 0
+    }
+}
+
+.app-prisoner-photo,.app-prisoner-photo--large,.app-prisoner-photo--small {
+    width: 90px
+}
+
+.app-prisoner-photo--small {
+    width: 80px
+}
+
+.app-prisoner-photo--large {
+    width: 120px
+}
+
+dl dt {
+    font-weight: bold;
+    font-size: 19px;
+}
+
+dl dd {
+    margin-left: 0;
+    font-size:19px;
+}
+
+dl dd,dl,p,.govuk-body,.govuk-body-m {
+    margin-top: 0;
+    /* margin-bottom:15px; */
+} 
+.summary-box {
+    padding:15px;
+    border-bottom:1px solid #b1b4b6;
+    padding:20px 0;
+}
+.summary-box-first {
+    border-top:1px solid#b1b4b6;
+}
+.summary-box-action-link {
+    margin-right:30px;
+}
+.summary-box-top {
+    padding:0;
+    margin-bottom:5px;
+}
+
+.summary-box-top h3 {
+    display: inline-block;
+}
+.summary-box-actions {
+    float:right;
+}
+.summary-box-actions a {
+    margin-left:30px;
+}
+
+.summary-box-bottom {
+    padding:0px;
+    margin-bottom:0px;
+}
+
+.summary-box-bottom .govuk-details {
+    margin-bottom:0 !important;
+}
+
+.summary-box-bottom .govuk-details__summary {
+    margin-bottom:0 !important;
+}
+
+.gov-grid-column-one-quarter, .summary-box-content {
+    padding:0px !important;
+}
+
+</style>
+
+
+{% endblock %}

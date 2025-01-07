@@ -1,0 +1,403 @@
+{% extends "layout_hmpps.html" %}
+{% set serviceName = "Activities Management" %}
+{% set activitiesCount = activitiesForDate.morning|length + activitiesForDate.afternoon|length %}
+
+{% block pageTitle %}
+Find an activity to record or edit attendance
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block main %}
+{{ super() }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Edit activities",
+href: "../../edit-activity"
+}) }}
+
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% if data['confirmation-dialog'].display == true %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    {% if data['confirmation-dialog'].change == "bank holidays" %}
+    {% if activity.bankHolidays == 'yes' %}
+    You've scheduled this activity to run on bank holidays
+    {% else %}
+    You've scheduled this activity not to run on bank holidays
+    {% endif %}
+    {% else %}
+    You've changed the {{data['confirmation-dialog'].change | lower}}
+    {% endif %}
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Success",
+type: "success",
+classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
+}) }}
+{% endif %}
+
+<!-- {% if activity.endDate != null %}
+{% set bannerHtml %}
+<h2 class="govuk-notification-banner__heading">
+    This activity is scheduled to end on {{activity.endDate|convertShortDateToVeryLongDate}}
+</h2>
+{% endset %}
+{{ govukNotificationBanner({
+html: bannerHtml,
+titleText: "Information",
+type: "info",
+classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
+}) }}
+{% endif %} -->
+
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row govuk-!-margin-bottom-">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+            Edit activity details
+        </span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+            {{activity.name}} <span class="govuk-tag govuk-tag--green">Live</span>
+        </h1>
+
+        <div class="govuk-list govuk-button-group">
+            <a href="../../end-activity/{{activity.id}}" class="govuk-button govuk-button--warning">
+                End this activity
+            </a>
+        </div>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+            Related tasks
+        </h2>
+
+        <ul class="govuk-list govuk-!-margin-bottom-7">
+            <li>
+                <a href="../../manage-allocations/{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
+                    Manage allocations
+                </a>
+            </li>
+            <!-- <li>
+                <a href="../edit-activity/{{activity.id}}" class="govuk-link govuk-link--no-visited-state">
+                    Edit activity details
+                </a>
+            </li> -->
+            <!-- <li>
+                <a href="../create-activity" class="govuk-link govuk-link--no-visited-state">
+                    Create an activity
+                </a>
+            </li> -->
+            <!-- <li>
+                <a href="../log-request" class="govuk-link govuk-link--no-visited-state">
+                    Log a request
+                </a>
+            </li> -->
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            <li class="govuk-!-margin-top-0">
+                <a href="/dps-home" class="govuk-link govuk-link--no-visited-state">
+                    Go to DPS home
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<nav class="moj-sub-navigation" aria-label="Sub navigation" id="subnav">
+    <ul class="moj-sub-navigation__list">
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" {% if currentPage=='details' %}aria-current="page" {% endif
+                %}href="details">Details and requirements</a>
+        </li>
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" {% if currentPage=='pay-rates' %}aria-current="page" {% endif
+                %}href="payrates">Pay rates</a>
+        </li>
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" {% if currentPage=='schedule' %}aria-current="page" {% endif
+                %}href="schedule-dates">Schedule and dates</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="govuk-grid-row govuk-!-margin-top-7">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-3">
+            Activity details
+        </h2>
+
+        {% if data['FRD-tier'] == 'Tier 2' %}
+
+        {{ govukSummaryList({
+        rows: [
+
+
+        {
+            key: {
+        text: "Name"
+        },
+        value: {
+        text: activity.name
+        },
+        actions: {
+        items: [
+        {
+        href: "name",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        }
+        },
+        
+        {
+        key: {
+        text: "Activity category"
+        },
+        value: {
+        text: activity.category | getActivityCategoryName
+        },
+        actions: {
+        items: [
+        {
+        href: "category",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        }
+        },
+
+
+        {
+        key: {
+        text: "Tier"
+        },
+        value: {
+        text: data['FRD-tier'] or 'Tier 2'
+        },
+        actions: {
+        items: [
+        {
+        href: "tier",
+        text: "Change",
+        visuallyHiddenText: "activity tier"
+        }
+        ]
+        }
+        },
+
+        {
+        key: {
+        text: "Organiser"
+        },
+        value: {
+        text: data['FRD-provider']
+        },
+        actions: {
+        items: [
+        {
+        href: "provider",
+        text: "Change",
+        visuallyHiddenText: "Activity organiser"
+        }
+        ]
+        }
+        }
+
+
+        ]
+        }) }}
+        {% else %}
+
+
+        {{ govukSummaryList({
+            rows: [
+    
+    
+           
+    
+            {
+                key: {
+            text: "Name"
+            },
+            value: {
+            text: activity.name
+            },
+            actions: {
+            items: [
+            {
+            href: "name",
+            text: "Change",
+            visuallyHiddenText: "activity name"
+            }
+            ]
+            }
+            },
+            
+            {
+            key: {
+            text: "Activity category"
+            },
+            value: {
+            text: activity.category | getActivityCategoryName
+            },
+            actions: {
+            items: [
+            {
+            href: "category",
+            text: "Change",
+            visuallyHiddenText: "activity name"
+            }
+            ]
+            }
+            },
+    
+    
+            {
+            key: {
+            text: "Tier"
+            },
+            value: {
+            text: data['FRD-tier'] or 'Tier 1'
+            },
+            actions: {
+            items: [
+            {
+            href: "tier",
+            text: "Change",
+            visuallyHiddenText: "activity tier"
+            }
+            ]
+            }
+            }
+    
+            ]
+            }) }}
+
+        {% endif %}
+
+
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-3">
+            Location and capacity
+        </h2>
+
+
+
+        {{ govukSummaryList({
+        rows: [
+
+        {
+        key: {
+        text: "Location"
+        },
+        actions: {
+        items: [
+        {
+        href: "location",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.location
+        }
+        },
+        {
+        key: {
+        text: "Capacity"
+        },
+        actions: {
+        items: [
+        {
+        href: "capacity",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        text: activity.capacity
+        }
+        }
+        ]
+        }) }}
+
+
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-8">
+            Requirements and suitability
+        </h2>
+        {% if activity.educationLevels.length > 0 %}
+        {% set educationLevels %}
+        <ul class="govuk-list govuk-list--spaced">
+            {% for educationLevel in activity.educationLevels %}
+            <li>{{ educationLevel.name }}: {{ educationLevel.areaOfStudy }}</li>
+            {% endfor %}
+        </ul>
+        {% endset %}
+
+        {% else %}
+        {% set educationLevels = "None set" %}
+        {% endif %}
+
+        {% set riskLevels %}
+        <ul class="govuk-list">
+            {% if activity.riskAssessment == 'any' %}
+            Low, medium or high
+            {% else %}
+            {{activity.riskAssessment | capitalize | replace('-',' ')}}
+            {% endif %}
+        </ul>
+        {% endset %}
+
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Suitable for workplace risk assessment"
+        },
+        actions: {
+        items: [
+        {
+        href: "risk-assessment-level",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        html: riskLevels
+        }
+        },
+        {
+        key: {
+        text: "Education level"
+        },
+        actions: {
+        items: [
+        {
+        href: "education-levels",
+        text: "Change",
+        visuallyHiddenText: "activity name"
+        }
+        ]
+        },
+        value: {
+        html: educationLevels
+        }
+        }
+        ]
+        }) }}
+    </div>
+</div>
+
+{% endblock %}

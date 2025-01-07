@@ -1,0 +1,139 @@
+{% extends "layout_hmpps-new-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">Kitchens</span>
+        <h1 class="govuk-heading-xl">Before you allocate Tom Lafferty</h1>
+
+        <p class="govuk-body-l">Use the information on this page to decide if <a href="#" class="govuk-link" target="_blank">Tom Lafferty<span class="govuk-visually-hidden"> (opens in new tab)</span></a> is suitable for Kitchens.</p>
+        <p class="govuk-body-l">You may need to consult with other departments before making your decision.</p>
+
+        <h2 class="govuk-heading-m">Activity requirements</h2>
+        <p class="govuk-body">Review the requirements for Kitchens and check if Tom Lafferty meets them.</p>
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-visually-hidden">Activity requirements</caption>
+            <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-table__header">Type of requirement</th>
+                    <th scope="col" class="govuk-table__header govuk-table__header">Tom Lafferty's details</th>
+                    <th scope="col" class="govuk-table__header govuk-table__header">Meets requirement</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Workplace risk assessment level</th>
+                    <td class="govuk-table__cell">Low</td>
+                    <td class="govuk-table__cell">
+                        <strong class="govuk-tag govuk-tag--green">
+                        Yes
+                        </strong>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Incentive level</th>
+                    <td class="govuk-table__cell">Enhanced</td>
+                    <td class="govuk-table__cell">
+                        <strong class="govuk-tag govuk-tag--green">
+                        Yes
+                        </strong>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Education levels</th>
+                    <td class="govuk-table__cell">
+                        None
+                    </td> 
+                    <td class="govuk-table__cell">
+                        <strong class="govuk-tag govuk-tag--green">
+                        Yes
+                        </strong>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Earliest release date</th>
+                    <td class="govuk-table__cell">
+                        <div>17 June 2032</div>
+                    </td>
+                    <td class="govuk-table__cell">
+                        <strong class="govuk-tag govuk-tag--green">
+                        Yes
+                        </strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="govuk-heading-m">Current allocations</h2>
+        <p class="govuk-body">Check if Tom Lafferty's current allocation would be compatible with Kitchens.</p>
+        <div class="govuk-!-margin-bottom-8 govuk-body">
+            <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-visually-hidden">Current Allocations</caption>
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-table__header">Activity</th>
+                    <th scope="col" class="govuk-table__header govuk-table__header">Start date</th>
+                    <th scope="col" class="govuk-table__header govuk-table__header">End date</th>
+                    <th scope="col" class="govuk-table__header govuk-table__header">Pay rate</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Unemployed</th>
+                        <td class="govuk-table__cell">1 June 2024</td>
+                        {% if (data['reason'] == "transferred") %}
+                        <td class="govuk-table__cell">10 September 2024</td>
+                        {% else %}
+                        <td class="govuk-table__cell">None set</td>
+                        {% endif %}
+                        <td class="govuk-table__cell">£1.00 (Pay band 1 (Lowest))</td>
+                    </tr>
+                </tbody>
+            </table>
+            <span class="govuk-body"><a href="#" class="govuk-link" target="_blank">View allocations for the last 12 months<span class="govuk-visually-hidden"> (opens in new tab)</span></a></span>
+        </div>
+        <div class="govuk-!-margin-top-8">
+            <form action="start-date.html" action="post">
+                <input type="hidden" name="_csrf" value="fixmcMpQ-_70sRNo4PkZ_dOhymRWY6JplF9g">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            Do you want to allocate Tom Lafferty to Kitchens?
+                        </legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="confirmAllocation" name="confirmAllocation" type="radio" value="yes">
+                                <label class="govuk-label govuk-radios__label" for="confirmAllocation">
+                                    Yes
+                                </label>                               
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="confirmAllocation-2" name="confirmAllocation" type="radio" value="no">
+                                <label class="govuk-label govuk-radios__label" for="confirmAllocation-2">
+                                    No, return to Tom Lafferty's summary
+                                </label>        
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">
+                Continue
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
