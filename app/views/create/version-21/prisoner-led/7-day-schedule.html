@@ -5,26 +5,45 @@
 Appointments prototype
 {% endblock %}
 
-
-
 {% block beforeContent %}
+
+<div class="prisoner-profile-breadcrumbs govuk-!-display-none-print">
+    <div class="prisoner-profile-breadcrumbs__search">
+        <a href="/" class="govuk-link govuk-link--no-visited-state" data-qa="back-link">
+            View most recent search
+        </a>
+    </div>
+    <div class="prisoner-profile-breadcrumbs__breadcrumbs">
+        <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">Digital Prison Services</a>
+                </li>
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">David Jones</a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
 <nav class="govuk-!-display-none-print">
-{{govukBackLink({
-  text: "Back",
-  "href": "javascript: window.history.go(-1)"
-  })}} 
-  <!-- hidden for testing
-  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
-    Go to all activity tasks
-  </a>
-  -->
-</nav>
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+      <!-- hidden for testing
+      <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+        Go to all activity tasks
+      </a>
+      -->
+    </nav>
+
 {% endblock %}
 
 {% block content %}
 
 <div class="prisoner-schedule">
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-1">Ekasahani Alejoy’s schedule</h1>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-1">David Jones’ schedule</h1>
     <p class="govuk-body govuk-!-font-size-24" data-test="schedule-dates">Friday 10 January 2025 to Thursday 16 January 2025</p>
 
     <div class="govuk-grid-row">
@@ -281,4 +300,144 @@ Appointments prototype
 </div>
 </div>
 
+<style>
+.prisoner-profile-breadcrumbs {
+    margin-top: 15px;
+    margin-bottom: 15px
+}
+
+.prisoner-profile-breadcrumbs::after {
+    content: "";
+    display: block;
+    clear: both
+}
+
+.prisoner-profile-breadcrumbs__back {
+    float: left
+}
+
+.prisoner-profile-breadcrumbs__back a::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 2px;
+    width: .4375em;
+    height: .4375em;
+    margin: auto 0;
+    -ms-transform: rotate(225deg);
+    transform: rotate(225deg);
+    border: solid;
+    border-width: 1px 1px 0 0;
+    border-color: #0b0c0c
+}
+
+.prisoner-profile-breadcrumbs__back a:link,.prisoner-profile-breadcrumbs__back a:visited {
+    display: inline-block;
+    position: relative;
+    padding-left: 12px;
+    color: #0b0c0c
+}
+
+.prisoner-profile-breadcrumbs__search {
+    font-family: "GDS Transport",arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: .875rem;
+    line-height: 1.1428571429;
+    float: left
+}
+@media print {
+    .prisoner-profile-breadcrumbs__search {
+        font-family: sans-serif
+    }
+}
+
+@media(min-width: 40.0625em) {
+    .prisoner-profile-breadcrumbs__search {
+        font-size:1rem;
+        line-height: 1.25
+    }
+}
+
+@media print {
+    .prisoner-profile-breadcrumbs__search {
+        font-size: 14pt;
+        line-height: 1.2
+    }
+}
+
+.prisoner-profile-breadcrumbs__search:has(+.prisoner-profile-breadcrumbs__breadcrumbs ol>li>a) {
+    border-right: 1px solid #505a5f;
+    padding-right: 15px;
+    margin-right: 15px
+}
+
+.prisoner-profile-breadcrumbs__breadcrumbs {
+    float: left
+}
+
+.prisoner-profile-breadcrumbs .govuk-breadcrumbs {
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+
+.prisoner-schedule__day {
+    page-break-inside: avoid
+}
+
+@media print,(min-width: 769px) {
+    .prisoner-schedule__periods {
+        flex:1 0 auto;
+        display: flex
+    }
+}
+
+.prisoner-schedule__periods__period:first-of-type {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0
+}
+
+@media print,(min-width: 769px) {
+    .prisoner-schedule__periods__period {
+        display:flex;
+        flex-direction: column;
+        flex: 1 33.3333%;
+        margin-left: 30px
+    }
+}
+
+@media print {
+    .prisoner-schedule__periods__period {
+        padding-left: 15px;
+        border-left: 1px solid #b1b4b6
+    }
+}
+
+.prisoner-schedule-events {
+    flex: 1 0 auto
+}
+
+@media screen {
+    .prisoner-schedule-events {
+        padding: 15px
+    }
+
+    .prisoner-schedule-events--morning {
+        background-color: #e9f3f9
+    }
+
+    .prisoner-schedule-events--afternoon {
+        background-color: #d5e8f4
+    }
+
+    .prisoner-schedule-events--evening {
+        background-color: #bedcee
+    }
+}
+</style>
 {% endblock %}

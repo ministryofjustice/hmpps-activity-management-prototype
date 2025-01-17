@@ -73,9 +73,19 @@ Appointments prototype
     <div class="govuk-grid-column-full"> 
         <section id="waitlist-applications" class="govuk-!-margin-top-4 govuk-!-margin-bottom-6">
             <h2 class="govuk-heading-m">Waitlist applications</h2>
-            <div class="govuk-body">
-                <a class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-6"href="#">Log an activity application</a>
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Allocate to an activity"
+                }) }}
+                
+                {{ govukButton({
+                    text: "Suspend all allocations",
+                    classes: "govuk-button--secondary"
+                }) }}
             </div>
+
             {% if (data['confirmAllocation'] == "yes") %}
             <div class="govuk-grid-column-full summary-box summary-box-first">
                 <div class="govuk-grid-column-full summary-box-top">

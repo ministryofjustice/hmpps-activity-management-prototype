@@ -67,43 +67,17 @@ GOV.UK Prototype Kit
   }
 }) }} -->
 
-{% include './includes/dps-header.html' %}
-
+{% include './includes/new-dps-header.html' %}
+{% include './includes/dps-homepage-banner.html' %}
+{% include './includes/dps-homepage-search.html' %}
 {% block primaryNavigation %}
-{{ mojPrimaryNavigation({
-  classes: "govuk-!-display-none-print",
-  label: 'Primary navigation',
-  items: [
-    {
-      text: 'Nav item 1',
-      href: '#1',
-      active: true
-    },
-    {
-      text: 'Nav item 2',
-      href: '#2'
-    },
-    {
-      text: 'Nav item 3',
-      href: '#3'
-    }
-  ]
-}) }}
+
 {% endblock %}
 
-{% block identityBar %}
-  <div class="govuk-width-container">
-    {{ mojIdentityBar({
-      classes: "govuk-!-display-none-print",
-      title: {
-        html: "<span class='govuk-tag govuk-tag--red govuk-!-margin-right-2'>Prototype</span><b class='govuk-!-font-size-19'>" + (data['prison-name']) + "</b>"
-      }
-    }) }}
-  </div>
-  {% endblock %}
+
 {% endblock %}
 
-{% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}
+{% set mainClasses = mainClasses | default("dps-homepage-container govuk-!-padding-top-4") %}
 
 {% if useAutoStoreData %}
 {% block footer %}
@@ -117,10 +91,6 @@ GOV.UK Prototype Kit
     {
       href: "/prototype-admin/clear-data",
       text: "Clear data"
-    },
-    {
-      href: "/unlock/version-7/attendance-dashboard/generate-data",
-      text: "Generate attendance data"
     },
     {
       href: "https://github.com/ministryofjustice/hmpps-activity-management-prototype",

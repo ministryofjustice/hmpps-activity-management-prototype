@@ -24,9 +24,24 @@ Appointments prototype
 {% block content %}
 <!-- mini profile -->
 <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds"> 
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-2">Manage David Jones’ activity allocations</h1>
+        <p class="govuk-body">Review and edit allocations, allocate to and remove from activities and manage allocations.</p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <div class="related-tasks">
+            <h2 class="govuk-heading-s">Related tasks</h2>
+            <p class="govuk-body govuk-!-margin-bottom-0">
+                <a class="govuk-link govuk-link--no-visited-state" href="7-day-schedule">
+                    View David Jones' 7 day schedule
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="govuk-grid-row">
     <div class="govuk-grid-column-full"> 
-        <h1 class="govuk-heading-l govuk-!-margin-bottom-7">Manage David Jones’ activity allocations</h1>
-        <div class="hmpps-mini-banner">
+        <div class="hmpps-mini-banner govuk-!-margin-top-6">
             <img class="hmpps-mini-banner__photo" src="/public/images/test-image-5.jpeg" alt="Jones, David" width="80" height="100">
             <div class="hmpps-mini-banner__name">
                 <h2 class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="prisoner-profile.html">Jones, David</a></h2>
@@ -56,13 +71,12 @@ Appointments prototype
     </div>
 </div>
 
-<!-- Schedule -->
+<!-- Non-associations -->
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        <h2 class="govuk-heading-m">David Jones' 7 day schedule</h2>
-        <p>
-            <a class="govuk-link govuk-link--no-visited-state" href="#">View David Jones schedule for the next 7 days</a>
-        </p>
+    <div class="govuk-grid-column-full"> 
+        <div class="govuk-inset-text">
+            <a href="" class="govuk-link">View David Jones' open non-associations</a>, to check if any changes need to be made to their allocations.
+        </div>
     </div>
 </div>
 
@@ -78,8 +92,6 @@ Appointments prototype
         </li>
     </ul>
 </nav>
-  
-
 
 <!-- Activities-->
 
@@ -87,9 +99,17 @@ Appointments prototype
     <div class="govuk-grid-column-full"> 
         <section id="activities" class="govuk-!-margin-bottom-6">
             <h2 class="govuk-heading-m">Allocations</h2>
-            <div class="govuk-body">
-                <a class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-6" href="allocate-new-activity/search-for-an-activity">Allocate David Jones to an activity</a>
-                <a class="govuk-link govuk-link--no-visited-state"href="#">Suspend from all activities</a>
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Allocate to an activity"
+                }) }}
+                
+                {{ govukButton({
+                    text: "Suspend all allocations",
+                    classes: "govuk-button--secondary"
+                }) }}
             </div>
             <table class="govuk-table">
                 <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Month you apply</caption>
@@ -97,8 +117,8 @@ Appointments prototype
                   <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Activity</th>
                     <th scope="col" class="govuk-table__header" width="15% !important">Start date</th>
-                    <th scope="col" class="govuk-table__header" width="15% !important">End date</th>
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><span class="govuk-visually-hidden">Management links</span></th>
+                    <th scope="col" class="govuk-table__header" width="25% !important">End date</th>
+                    <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Management links</span></th>
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
@@ -107,10 +127,21 @@ Appointments prototype
                         <a href="x" class="govuk-link">Activity title</a>
                     </th>
                     <td class="govuk-table__cell">6 January 2025</td>
-                    <td class="govuk-table__cell">30 September 2025</td>
+                    <td class="govuk-table__cell">None set</td>
                     <td class="govuk-table__cell">
-                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Suspend</a>
-                        <a href="#" class="govuk-link govuk-link--no-visited-state">Manage or end allocation</a>
+                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Edit or suspend allocation</a>
+                        <a href="#" class="govuk-link govuk-link--no-visited-state">Remove from activity</a>
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
+                        <a href="x" class="govuk-link">Activity title</a>
+                    </th>
+                    <td class="govuk-table__cell">6 January 2025</td>
+                    <td class="govuk-table__cell">None set</td>
+                    <td class="govuk-table__cell">
+                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Edit or suspend allocation</a>
+                        <a href="#" class="govuk-link govuk-link--no-visited-state">Remove from activity</a>
                     </td>
                   </tr>
                   <tr class="govuk-table__row">
@@ -120,25 +151,48 @@ Appointments prototype
                     <td class="govuk-table__cell">6 January 2025</td>
                     <td class="govuk-table__cell">30 September 2025</td>
                     <td class="govuk-table__cell">
-                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Suspend</a>
-                        <a href="#" class="govuk-link govuk-link--no-visited-state">Manage or change end date</a>
-                    </td>
-                  </tr>
-                  <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">
-                        <a href="x" class="govuk-link">Activity title</a>
-                    </th>
-                    <td class="govuk-table__cell">6 January 2025</td>
-                    <td class="govuk-table__cell">30 September 2025</td>
-                    <td class="govuk-table__cell">
-                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Suspend</a>
-                        <a href="#" class="govuk-link govuk-link--no-visited-state">Manage end allocation</a>
+                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Edit or suspend allocation</a>
+                        <a href="#" class="govuk-link govuk-link--no-visited-state">Change end date</a>
                     </td>
                   </tr>
                 </tbody>
             </table>
         </section>
     </div>    
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-m">
+            Suspended allocations
+        </h2>
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Month you apply</caption>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Activity</th>
+                <th scope="col" class="govuk-table__header">Suspension start date</th>
+                <th scope="col" class="govuk-table__header">Suspension end date</th>
+                <th scope="col" class="govuk-table__header">Being paid while suspended?</th>
+                <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Management links</span></th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
+                        <a href="x" class="govuk-link">Activity title</a>
+                    </th>
+                    <td class="govuk-table__cell">6 January 2025</td>
+                    <td class="govuk-table__cell">None set</td>
+                    <td class="govuk-table__cell">Yes</td>
+                    <td class="govuk-table__cell">
+                        <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">View or end suspension</a>
+                        <a href="#" class="govuk-link govuk-link--no-visited-state">Remove from activity</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <style>
@@ -151,7 +205,7 @@ Appointments prototype
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
-    margin-bottom: 40px;
+    margin-bottom:  0px;
     padding: 15px
 }
 .hmpps-mini-banner__location {

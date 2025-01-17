@@ -56,13 +56,12 @@ Appointments prototype
     </div>
 </div>
 
-<!-- Schedule -->
+<!-- Non-associations -->
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        <h2 class="govuk-heading-m">David Jones' 7 day schedule</h2>
-        <p>
-            <a class="govuk-link govuk-link--no-visited-state" href="#">View David Jones schedule for the next 7 days</a>
-        </p>
+    <div class="govuk-grid-column-full"> 
+        <div class="govuk-inset-text">
+            <a href="" class="govuk-link">View David Jones' open non-associations</a>, to check if they affect their applications or being on a waitlist.
+        </div>
     </div>
 </div>
 
@@ -83,19 +82,23 @@ Appointments prototype
 <!-- Waitlist -->
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full"> 
+    <div class="govuk-grid-column-two-thirds"> 
         <section id="waitlist-applications" class=" govuk-!-margin-bottom-6">
             <h2 class="govuk-heading-m">Waitlist applications</h2>
-            <div class="govuk-body">
-                <a class="govuk-link govuk-link--no-visited-state"href="#">Log an application to add David Jones to a waitlist</a>
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Log an activity application"
+                }) }}
             </div>
             <h3 class="govuk-heading-s">Approved and on the waitlist</h3>
-            <table class="govuk-table">
+            <table class="govuk-table" data-module="moj-sortable-table">
                 <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Month you apply</caption>
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Activity</th>
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Request date</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter" aria-sort="ascending">Activity</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter" data-sort-type="alphabetic" >Request date</th>
                     <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Requester</th>
                     <th scope="col" class="govuk-table__header govuk-!-width-one-third"><span class="govuk-visually-hidden">Management links</span></th>
                   </tr>
@@ -105,27 +108,31 @@ Appointments prototype
                         <th scope="row" class="govuk-table__header">
                             <a href="x" class="govuk-link">Activity title</a>
                         </th>
-                        <td class="govuk-table__cell">6 January 2025</td>
+                        <td class="govuk-table__cell" data-sort-value="2 January 2025">2 January 2025</td>
                         <td class="govuk-table__cell">David Jones</td>
-                        <td class="govuk-table__cell" style="text-align:right">
-                            <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">View waitlist</a>
-                            <a href="#" class="govuk-link govuk-link--no-visited-state">Allocate</a>
+                        <td class="govuk-table__cell">
+                            <a href="#" class="govuk-link govuk-link--no-visited-state">View waitlist</a>
+                            <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-left-2">Allocate</a>
                         </td>
                     </tr>
                     <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">
                             <a href="x" class="govuk-link">Activity title</a>
                         </th>
-                        <td class="govuk-table__cell">6 January 2025</td>
+                        <td class="govuk-table__cell" data-sort-value="6 January 2025">6 January 2025</td>
                         <td class="govuk-table__cell">David Jones</td>
-                        <td class="govuk-table__cell" style="text-align:right">
-                            <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">View waitlist</a>
-                            <a href="#" class="govuk-link govuk-link--no-visited-state">Allocate</a>
+                        <td class="govuk-table__cell">
+                            <a href="#" class="govuk-link govuk-link--no-visited-state">View waitlist</a>
+                            <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-left-2">Allocate</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <p class="govuk-body">David Jones is not on a waitlist for any activities.</p>
+        </section>
+    </div>
+    <div class="govuk-grid-column-full"> 
+        <section id="pending-waitlist-applications" class=" govuk-!-margin-bottom-6">
             <h3 class="govuk-heading-s">Pending</h3>
             <table class="govuk-table">
                 <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Month you apply</caption>
@@ -163,6 +170,8 @@ Appointments prototype
                 </tbody>
             </table>
             <p class="govuk-body">David Jones has no pending applications.</p>
+        </section>
+        <section id="declined-waitlist-applications" class=" govuk-!-margin-bottom-6"></section>
             <h3 class="govuk-heading-s">Declined</h3>
             <table class="govuk-table">
                 <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Month you apply</caption>
@@ -215,7 +224,7 @@ Appointments prototype
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 0px;
     padding: 15px
 }
 .hmpps-mini-banner__location {
