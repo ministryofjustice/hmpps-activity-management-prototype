@@ -6,9 +6,125 @@ DPS home prototype
 {% endblock %}
 
 {% block primaryNavigation %}
+<section class="dps-homepage-search" data-qa="homepage-search-section">
+    <div class="govuk-width-container">
+        <form method="post" action="dps-search-results.html" autocomplete="off">
+            <fieldset class="govuk-fieldset">
+                <legend>
+                    <h2 class="govuk-heading-m">Search for a prisoner</h2>
+                </legend>
+                <input type="hidden" name="_csrf" value="jLjTfgZe-krWcNVS-Qk5alYto3QT-XVIfIkM">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios govuk-radios--inline govuk-radios--small" data-qa="local-global-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="search-type-local" name="searchType" type="radio" value="local" checked="">
+                            <label class="govuk-label govuk-radios__label" for="search-type-local">
+                                In Leeds (HMP)
+                            </label>                        
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="search-type-global" name="searchType" type="radio" value="global">
+                            <label class="govuk-label govuk-radios__label" for="search-type-global">
+                                In any establishment (global)
+                            </label>                      
+                        </div>
+                    </div>      
+                </div>
+                <div class="govuk-form-group govuk-form-group--inline govuk-!-margin-bottom-3">
+                    <div class="govuk-form-group govuk-form-group__item">
+                        <label class="govuk-label" for="name">
+                            Name or prison number
+                        </label>
+                        <input class="govuk-input hmpps-width-20" id="name" name="name" type="text">
+                    </div>
+                    <div class="govuk-form-group govuk-form-group__item">
+                        <label class="govuk-label" for="location">
+                            Residential location
+                        </label>
+                        <select class="govuk-select" id="location" name="location">
+                            <option value="RSI" selected="">All</option>
+                            <option value="RSI-S">CSU</option>
+                            <option value="RSI-A">Wing A</option>
+                            <option value="RSI-B">Wing B</option>
+                            <option value="RSI-C">Wing C</option>
+                            <option value="RSI-D">Wing D</option>
+                            <option value="RSI-E">Wing E</option>
+                            <option value="RSI-F">Wing F</option>
+                            <option value="RSI-G">Wing G</option>
+                            <option value="RSI-R">Wing R</option>
+                        </select>
+                    </div>
+                    <div class="govuk-form-group__button">
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button" data-qa="homepage-search-button">
+                        Search
+                        </button>
+                    </div>
+                </div>
+                <div class="govuk-form-group">
+                    <a class="govuk-heading-link" href="#" class="govuk-link govuk-link--no-visited-state">All prisoners in
+                        Leeds (HMP)</a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</section>
+
+<style>
+
+.dps-homepage-search {
+    background-color: #f3f2f1;
+    padding: 25px 0
+}
+
+.dps-homepage-search h2 {
+    font-size: 24px;
+    margin: 0 0 10px 0
+}
+
+.dps-homepage-search .govuk-radios__label {
+    max-width: unset
+}
+
+.dps-homepage-search .govuk-form-group {
+    margin-bottom: 5px
+}
+
+.dps-homepage-search .govuk-form-group.govuk-form-group__item {
+    margin-bottom: 0
+}
+
+.dps-homepage-search .govuk-form-group--inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 30px;
+    align-items: end
+}
+
+.dps-homepage-search .govuk-form-group__button {
+    display: flex;
+    align-items: end;
+    padding-bottom: 2px
+}
+
+.dps-homepage-search .govuk-form-group__button .govuk-button {
+    margin-bottom: 0
+}
+
+.dps-homepage-search .govuk-form-group .govuk-error-message {
+    margin-bottom: 10px
+}
+
+.dps-homepage-search .govuk-radios__label:before {
+    background-color: #fff
+}
+.hmpps-width-20 {
+    width: 20em
+}
+</style>
 {% endblock %}
 
 {% block beforeContent %}
+
 {% endblock %}
 
 {% block content %}
@@ -19,98 +135,98 @@ DPS home prototype
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Accredited Programmes</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Accredited Programmes</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">Search for Accredited Programmes, find out where they’re running and start a referral.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Activities, unlock and attendance</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Activities, unlock and attendance</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">Create and edit activities. Allocate people and edit allocations. Log applications and manage waitlists. Print unlock lists and record activity attendance.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Adjudications</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Adjudications</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">Place a prisoner on report after an incident, view reports and manage adjudications.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Appointments scheduling and attendance</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Appointments scheduling and attendance</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">Create, manage and edit appointments. Print movement slips. Record appointment attendance.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">CAS2 - Short-Term Accommodation</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">CAS2 - Short-Term Accommodation</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">Apply for accommodation and support for someone leaving prison on Home Detention Curfew</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Check my diary</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Check my diary</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">View your prison staff detail (staff rota) from home.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Establishment roll check</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Establishment roll check</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">View the roll broken down by residential unit and see who is arriving and leaving.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Global search</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Global search</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">Search for someone in any establishment, or who has been released.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Historical Prisoner Application</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Historical Prisoner Application</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">This service allows users to view historical prisoner information.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Incentives</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Incentives</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">Manage incentive level reviews by residential location and view incentives data charts.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Manage user accounts</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Manage user accounts</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">As a Local System Administrator (LSA) or administrator, manage accounts and groups for service users.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">People due to leave</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">People due to leave</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">View people due to leave this establishment for court appearances, transfers or being released.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Reporting</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Reporting</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">Digital Prison Reporting - Find and view reports.</p>
             </div>
             <div class="hmpps-service-item">
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-static-margin-top-0">
                 <div class="hmpps-service-item__header">
-                    <a href="/" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Submit an Intelligence Report</a>
+                    <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-link--no-visited-state">Submit an Intelligence Report</a>
                 </div>
                 <p class="govuk-!-static-margin-top-3 govuk-!-static-margin-bottom-0">Access to the new Mercury submission form</p>
             </div>

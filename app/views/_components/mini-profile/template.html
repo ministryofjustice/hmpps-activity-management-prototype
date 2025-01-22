@@ -1,0 +1,115 @@
+<section class="dps-homepage-search" data-qa="homepage-search-section">
+    <div class="govuk-width-container">
+        <form method="post" action="\_create/version-21/prisoner-led/dps-search-results" routes="" novalidate="" autocomplete="off">
+            <fieldset class="govuk-fieldset">
+                <legend>
+                    <h2 class="govuk-heading-m">Search for a prisoner</h2>
+                </legend>
+                <input type="hidden" name="_csrf" value="jLjTfgZe-krWcNVS-Qk5alYto3QT-XVIfIkM">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios govuk-radios--inline govuk-radios--small" data-qa="local-global-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="search-type-local" name="searchType" type="radio" value="local" checked="">
+                            <label class="govuk-label govuk-radios__label" for="search-type-local">
+                                In Leeds (HMP)
+                            </label>                        
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="search-type-global" name="searchType" type="radio" value="global">
+                            <label class="govuk-label govuk-radios__label" for="search-type-global">
+                                In any establishment (global)
+                            </label>                      
+                        </div>
+                    </div>      
+                </div>
+                <div class="govuk-form-group govuk-form-group--inline govuk-!-margin-bottom-3">
+                    <div class="govuk-form-group govuk-form-group__item">
+                        <label class="govuk-label" for="name">
+                            Name or prison number
+                        </label>
+                        <input class="govuk-input hmpps-width-20" id="name" name="name" type="text">
+                    </div>
+                    <div class="govuk-form-group govuk-form-group__item">
+                        <label class="govuk-label" for="location">
+                            Residential location
+                        </label>
+                        <select class="govuk-select" id="location" name="location">
+                            <option value="RSI" selected="">All</option>
+                            <option value="RSI-S">CSU</option>
+                            <option value="RSI-A">Wing A</option>
+                            <option value="RSI-B">Wing B</option>
+                            <option value="RSI-C">Wing C</option>
+                            <option value="RSI-D">Wing D</option>
+                            <option value="RSI-E">Wing E</option>
+                            <option value="RSI-F">Wing F</option>
+                            <option value="RSI-G">Wing G</option>
+                            <option value="RSI-R">Wing R</option>
+                        </select>
+                    </div>
+                    <div class="govuk-form-group__button">
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button" data-qa="homepage-search-button">
+                        Search
+                        </button>
+                    </div>
+                </div>
+                <div class="govuk-form-group">
+                    <a class="govuk-heading-link" href="https://digital-dev.prison.service.justice.gov.uk/prisoner-search?keywords=&amp;location=RSI" class="govuk-link govuk-link--no-visited-state">All prisoners in
+                        Leeds (HMP)</a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</section>
+
+<style>
+
+.dps-homepage-search {
+    background-color: #f3f2f1;
+    padding: 25px 0
+}
+
+.dps-homepage-search h2 {
+    font-size: 24px;
+    margin: 0 0 10px 0
+}
+
+.dps-homepage-search .govuk-radios__label {
+    max-width: unset
+}
+
+.dps-homepage-search .govuk-form-group {
+    margin-bottom: 5px
+}
+
+.dps-homepage-search .govuk-form-group.govuk-form-group__item {
+    margin-bottom: 0
+}
+
+.dps-homepage-search .govuk-form-group--inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 30px;
+    align-items: end
+}
+
+.dps-homepage-search .govuk-form-group__button {
+    display: flex;
+    align-items: end;
+    padding-bottom: 2px
+}
+
+.dps-homepage-search .govuk-form-group__button .govuk-button {
+    margin-bottom: 0
+}
+
+.dps-homepage-search .govuk-form-group .govuk-error-message {
+    margin-bottom: 10px
+}
+
+.dps-homepage-search .govuk-radios__label:before {
+    background-color: #fff
+}
+.hmpps-width-20 {
+    width: 20em
+}
+</style>
