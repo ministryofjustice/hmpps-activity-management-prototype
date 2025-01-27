@@ -9,14 +9,19 @@ Appointments prototype
 {% endblock %}
 
 {% block beforeContent %}
-
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+</nav>
 {% endblock %}
 
 {% block content %}
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-        <form action="pay-band" method="post">
+        <form action="exclusions" method="post">
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">

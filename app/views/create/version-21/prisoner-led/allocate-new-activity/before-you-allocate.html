@@ -6,10 +6,16 @@ Appointments prototype
 {% endblock %}
 
 {% block primaryNavigation %}
+
 {% endblock %}
 
 {% block beforeContent %}
-
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+</nav>
 {% endblock %}
 
 {% block content %}
@@ -76,6 +82,10 @@ Appointments prototype
                 </tr>
             </tbody>
         </table>
+        <!-- Non associations -->
+        <h2 class="govuk-heading-m">Non-associations</h2>
+        <p class="govuk-body">David Jones has no open non-associations with anyone in Leeds (HMP).</p>        
+        <!-- Current allocations -->
         <h2 class="govuk-heading-m">Current allocations</h2>
         <p class="govuk-body">Check if David Jones's current allocation would be compatible with Gardens.</p>
         <div class="govuk-!-margin-bottom-8 govuk-body">
@@ -108,7 +118,7 @@ Appointments prototype
         </div>
         <div class="govuk-!-margin-top-8">
             <form action="start-date" action="post">
-                <input type="hidden" name="_csrf" value="fixmcMpQ-_70sRNo4PkZ_dOhymRWY6JplF9g">
+                <input type="hidden" name="_csrf" value="">
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
