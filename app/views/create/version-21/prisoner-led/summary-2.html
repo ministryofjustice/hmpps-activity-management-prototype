@@ -5,8 +5,7 @@
 Appointments prototype
 {% endblock %}
 
-{% block primaryNavigation %}
-{% endblock %}
+
 
 {% block beforeContent %}
 <nav class="govuk-!-display-none-print">
@@ -24,26 +23,42 @@ Appointments prototype
 
 {% block content %}
 <!-- mini profile -->
+<!-- mini profile -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds"> 
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-2">Manage Matt Bellamy’s activity allocations</h1>
+        <p class="govuk-body">Review and edit allocations, allocate to and remove from activities and manage allocations.</p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <div class="related-tasks">
+            <h2 class="govuk-heading-s">Related tasks</h2>
+            <p class="govuk-body govuk-!-margin-bottom-0">
+                <a class="govuk-link govuk-link--no-visited-state" href="7-day-schedule">
+                    View Matt Bellamy's 7 day schedule
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full"> 
-        <h1 class="govuk-heading-l govuk-!-margin-bottom-7">Manage Tom Lafferty’s activity allocations and appointments</h1>
-        <div class="hmpps-mini-banner">
-            <img class="hmpps-mini-banner__photo" src="/public/images/test-profile.jpeg" alt="Jones, David" width="80" height="100">
+        <div class="hmpps-mini-banner govuk-!-margin-top-6">
+            <img class="hmpps-mini-banner__photo" src="/public/images/test-image-5.jpeg" alt="Bellamy, Matt" width="80" height="100">
             <div class="hmpps-mini-banner__name">
-                <h2 class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="prisoner-profile-2.html">Lafferty, Tom</a></h2>
-                <div class="govuk-body" id="prisonerNumber">RF9090HT</div>
+                <h2 class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="prisoner-profile.html">Bellamy, Matt</a></h2>
+                <div class="govuk-body" id="prisonerNumber">G2444ZD</div>
             </div>
             <div class="dps-mini-profile-header">
                 <dl class="govuk-body">
                     <dt>Location</dt>
                     <dd>
-                    <a class="black-link govuk-link--no-visited-state" href="#">B-7-03B</a>
+                    <a class="black-link govuk-link--no-visited-state" href="#">D-2-08N</a>
                     </dd>
                 </dl>
                 <dl class="govuk-body">
                     <dt>Incentive level</dt>
                     <dd>
-                        <a class="black-link" href="#">Enhanced</a>
+                        <a class="black-link" href="#">Standard</a>
                     </dd>
                 </dl>
                 <dl class="govuk-body">
@@ -53,523 +68,167 @@ Appointments prototype
                     </dd>
                 </dl>
             </div>
-            
         </div>
     </div>
 </div>
 
-<!-- Schedule -->
+<!-- Non-associations -->
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full"> 
-        <p>
-            <a class="govuk-link govuk-link--no-visited-state" href="#">View Tom Lafferty's schedule for the next 7 days</a>
-        </p>
+        <div class="govuk-inset-text">
+            <a href="" class="govuk-link">View Matt Bellamy's open non-associations</a>, to check if they affect their applications or being on a waitlist.
+        </div>
     </div>
 </div>
+
+<!-- Sub nav -->
+
+<nav class="moj-sub-navigation" aria-label="Sub navigation">
+    <ul class="moj-sub-navigation__list">
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" aria-current="page" href="#waitlist-applications">Waitlists</a>
+        </li>
+        <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" href="./summary-allocations.html">Allocations</a>
+        </li>
+    </ul>
+</nav>
+  
 
 <!-- Waitlist -->
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full"> 
-        <section id="waitlist-applications" class="govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+    <div class="govuk-grid-column-two-thirds"> 
+        <section id="waitlist-applications" class=" govuk-!-margin-bottom-6">
             <h2 class="govuk-heading-m">Waitlist applications</h2>
             {% from "govuk/components/button/macro.njk" import govukButton %}
 
             <div class="govuk-button-group">
                 {{ govukButton({
-                    text: "Allocate to an activity"
-                }) }}
-                
-                {{ govukButton({
-                    text: "Suspend all allocations",
-                    classes: "govuk-button--secondary"
+                    text: "Log an activity application"
                 }) }}
             </div>
-
-            {% if (data['confirmAllocation'] == "yes") %}
-            <div class="govuk-grid-column-full summary-box summary-box-first">
-                <div class="govuk-grid-column-full summary-box-top">
-                    <p class="govuk-body govuk-!-margin-bottom-0">There are no waitlist applications.</p>
-                </div>
-            </div>
-            {% else %}
-            <div class="govuk-grid-column-full summary-box summary-box-first">
-                <div class="govuk-grid-column-full summary-box-top">
-                    <h3 class="govuk-heading-s">
-                        <a class="govuk-link govuk-link--no-visited-state" href="#">Kitchens</a>
-                    </h3>
-                    <div class="summary-box-actions">
-                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="#">View or edit application</a>
-                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="allocate-2/before-you-allocate-2.html">Allocate</a>
-                    </div>
-                </div>
-                <div class="govuk-grid-column-full summary-box-bottom">
-                    <div class="govuk-grid-column-one-quarter summary-box-content">                 
-                        <dl class="govuk-body">
-                            <dt>Requester</dt>
-                            <dd>Self-requested</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">  
-                        <dl class="govuk-body govuk-!-margin-bottom-0">
-                            <dt>Requester date</dt>
-                            <dd>15 July 2024</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">  
-                        <dl class="govuk-body">
-                            <dt>Status</dt>
-                            <dd>
-                                {{ govukTag({
-                                    text: "Approved",
-                                    classes: "govuk-tag--green"
-                                }) }}
-                            </dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">  
-                        <dl class="govuk-body govuk-!-margin-bottom-0"">
-                            <dt>Comments</dt>
-                            <dd>
-                                {{ govukDetails({
-                                  summaryText: "Comments",
-                                  text: "Security approved."
-                                }) }}</dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
+            <h3 class="govuk-heading-s">Approved and on the waitlist</h3>
+            <table class="govuk-table" data-module="moj-sortable-table">
+                <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Month you apply</caption>
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter" aria-sort="ascending">Activity</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter" data-sort-type="alphabetic" >Request date</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Requester</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third"><span class="govuk-visually-hidden">Management links</span></th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">
+                            <a href="x" class="govuk-link">Activity title</a>
+                        </th>
+                        <td class="govuk-table__cell" data-sort-value="2 January 2025">2 January 2025</td>
+                        <td class="govuk-table__cell">Matt Bellamy<s/td>
+                        <td class="govuk-table__cell">
+                            <a href="#" class="govuk-link govuk-link--no-visited-state">View waitlist</a>
+                            <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-left-2">Allocate</a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">
+                            <a href="x" class="govuk-link">Activity title</a>
+                        </th>
+                        <td class="govuk-table__cell" data-sort-value="6 January 2025">6 January 2025</td>
+                        <td class="govuk-table__cell">Matt Bellamy<s/td>
+                        <td class="govuk-table__cell">
+                            <a href="#" class="govuk-link govuk-link--no-visited-state">View waitlist</a>
+                            <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-left-2">Allocate</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="govuk-body">Matt Bellamy sis not on a waitlist for any activities.</p>
         </section>
-    </div>    
-</div>
-
-<!-- Activities-->
-
-<div class="govuk-grid-row">
+    </div>
     <div class="govuk-grid-column-full"> 
-        <section id="activities" class="govuk-!-margin-top-8 govuk-!-margin-bottom-6">
-            <h2 class="govuk-heading-m">Allocations</h2>
-            <div class="govuk-body">
-                <a class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-6"href="#">Allocate to an activity</a>
-                <a class="govuk-link govuk-link--no-visited-state"href="#">Suspend all activities</a>
-            </div>
-            {% if (data['confirmAllocation'] == "yes") %}
-            <div class="govuk-grid-column-full summary-box summary-box-first">
-                <div class="govuk-grid-column-full summary-box-top">
-                    <h3 class="govuk-heading-s">
-                        <a class="govuk-link govuk-link--no-visited-state" href="#">Kitchens</a>
-                    </h3>
-                    <div class="summary-box-actions">
-                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="./end-allocation/date.html">End allocation</a>
-                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="./manage-activity/kitchens-2">Manage allocation</a>
-                    </div>
-                </div>
-                <div class="govuk-grid-column-full summary-box-bottom">
-                    <div class="govuk-grid-column-one-quarter summary-box-content">                 
-                        <dl class="govuk-body">
-                            <dt>Start of allocation</dt>
-                            <dd>11 September 2024</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">  
-                        <dl class="govuk-body govuk-!-margin-bottom-0">
-                            <dt>End of allocation</dt>
-                            <dd>None set</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-third">
-                        <dl class="govuk-body">
-                            <dt>Schedule</dt>
-                            <dd>
-                                <details class="govuk-details">
-                                    <summary class="govuk-details__summary">
-                                        <span class="govuk-details__summary-text">
-                                            When is Tom Lafferty due to attend
-                                        </span>
-                                    </summary>
-                                    <div class="govuk-details__text">
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Monday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    AM  (08:30 to 11:45)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Tuesday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    AM  (08:30 to 11:45)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Wednesday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    AM  (08:30 to 11:45)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                    </div>
-                                </details>
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-            <div class="govuk-grid-column-full summary-box summary-box-first">
-                <div class="govuk-grid-column-full summary-box-top">
-                    <h3 class="govuk-heading-s">
-                        <a class="govuk-link govuk-link--no-visited-state" href="#">Unemployed</a>
-                    </h3>
-                    <div class="summary-box-actions">
-                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="./end-allocation/date.html">End allocation</a>
-                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="./manage-activity/unemployed-2">Manage allocation</a>
-                    </div>
-                </div>
-                <div class="govuk-grid-column-full summary-box-bottom">
-                    <div class="govuk-grid-column-one-quarter summary-box-content">                 
-                        <dl class="govuk-body">
-                            <dt>Start of allocation</dt>
-                            <dd>1 June 2024</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">  
-                        <dl class="govuk-body govuk-!-margin-bottom-0">
-                            <dt>End of allocation</dt>
-                            {% if (data['reason'] == "transferred") %}
-                            <dd>10 September 2024</dd>
-                            {% else %}
-                            <dd>None set</dd>
-                            {% endif %}
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-third">
-                        <dl class="govuk-body">
-                            <dt>Schedule</dt>
-                            <dd>
-                                <details class="govuk-details">
-                                    <summary class="govuk-details__summary">
-                                        <span class="govuk-details__summary-text">
-                                            When is Tom Lafferty due to attend
-                                        </span>
-                                    </summary>
-                                    <div class="govuk-details__text">
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Monday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    AM  (08:30 to 11:45)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Tuesday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    AM  (08:30 to 11:45)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Wednesday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    AM  (08:30 to 11:45)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                    </div>
-                                </details>
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-
-            <!-- hidden for testing
-            <div class="govuk-grid-column-full summary-box">
-                <div class="govuk-grid-column-full summary-box-top">
-                    <h3 class="govuk-heading-s">
-                        <a class="govuk-link" href="#">English level 2</a>
-                    </h3>
-                    <div class="summary-box-actions">
-                        <a class="govuk-body" href="#">End allocation</a>
-                        <a class="govuk-body" href="#">Manage allocation</a>
-                    </div>
-                </div>
-                <div class="govuk-grid-column-full summary-box-bottom">
-                    <div class="govuk-grid-column-one-quarter summary-box-content">                 
-                        <dl class="govuk-body">
-                            <dt>Start of allocation</dt>
-                            <dd>26 August 2024</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">  
-                        <dl class="govuk-body govuk-!-margin-bottom-0">
-                            <dt>End of allocation</dt>
-                            <dd>Not entered</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-third">
-                        <dl class="govuk-body">
-                            <dt>Schedule</dt>
-                            <dd>
-                                <details class="govuk-details">
-                                    <summary class="govuk-details__summary">
-                                        <span class="govuk-details__summary-text">
-                                            When is David Jones due to attend
-                                        </span>
-                                    </summary>
-                                    <div class="govuk-details__text">
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Monday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    PM  (13:30 to 16:30)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Tuesday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    PM  (13:30 to 16:30)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Wednesday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    PM  (13:30 to 16:30)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                    </div>
-                                </details>
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-            <div class="govuk-grid-column-full summary-box">
-                <div class="govuk-grid-column-full summary-box-top">
-                    <h3 class="govuk-heading-s">
-                        <a class="govuk-link" href="#">Kitchens</a>
-                    </h3>
-                    <div class="summary-box-actions">
-                        <a class="govuk-body" href="#">End allocation</a>
-                        <a class="govuk-body" href="#">Manage allocation</a>
-                    </div>
-                </div>
-                <div class="govuk-grid-column-full summary-box-bottom">
-                    <div class="govuk-grid-column-one-quarter summary-box-content">                 
-                        <dl class="govuk-body">
-                            <dt>Start of allocation</dt>
-                            <dd>9 November 2023</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">  
-                        <dl class="govuk-body govuk-!-margin-bottom-0">
-                            <dt>End of allocation</dt>
-                            <dd>Not entered</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-third">
-                        <dl class="govuk-body">
-                            <dt>Schedule</dt>
-                            <dd>
-                                <details class="govuk-details">
-                                    <summary class="govuk-details__summary">
-                                        <span class="govuk-details__summary-text">
-                                            When is David Jones due to attend
-                                        </span>
-                                    </summary>
-                                    <div class="govuk-details__text">
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Thursday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    AM  (08:30 to 11:45)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Friday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    PM  (13:30 to 16:30)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
-                                              <span>Saturday</span>
-                                            </dt>
-                                            <dd class="govuk-summary-list__value">
-                                                <div class="govuk-summary-list__key--normal-key-weight">
-                                                    PM  (13:30 to 16:30)
-                                                </div>
-                                            </dd>
-                                        </div>
-                                    </div>
-                                </details>
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-            -->
+        <section id="pending-waitlist-applications" class=" govuk-!-margin-bottom-6">
+            <h3 class="govuk-heading-s">Pending</h3>
+            <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Month you apply</caption>
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Activity</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Request date</th>
+                    <th scope="col" class="govuk-table__header">Requester</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third"><span class="govuk-visually-hidden">Management links</span></th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">
+                            <a href="x" class="govuk-link">Activity title</a>
+                        </th>
+                        <td class="govuk-table__cell">6 January 2025</td>
+                        <td class="govuk-table__cell">Matt Bellamy<s/td>
+                        <td class="govuk-table__cell" style="text-align:right">
+                            <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">View waitlist</a>
+                            <a href="#" class="govuk-link govuk-link--no-visited-state">View or edit application</a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">
+                            <a href="x" class="govuk-link">Activity title</a>
+                        </th>
+                        <td class="govuk-table__cell">6 January 2025</td>
+                        <td class="govuk-table__cell">Matt Bellamy<s/td>
+                        <td class="govuk-table__cell" style="text-align:right">
+                            <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">View waitlist</a>
+                            <a href="#" class="govuk-link govuk-link--no-visited-state">View or edit application</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="govuk-body">Matt Bellamy shas no pending applications.</p>
+        </section>
+        <section id="declined-waitlist-applications" class=" govuk-!-margin-bottom-6"></section>
+            <h3 class="govuk-heading-s">Declined</h3>
+            <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Month you apply</caption>
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Activity</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Request date</th>
+                    <th scope="col" class="govuk-table__header">Requester</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third"><span class="govuk-visually-hidden">Management links</span></th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">
+                            <a href="x" class="govuk-link">Activity title</a>
+                        </th>
+                        <td class="govuk-table__cell">6 January 2025</td>
+                        <td class="govuk-table__cell">Matt Bellamy<s/td>
+                        <td class="govuk-table__cell" style="text-align:right">
+                            <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2">View waitlist</a>
+                            <a href="#" class="govuk-link govuk-link--no-visited-state">View or edit application</a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">
+                            <a href="x" class="govuk-link">Activity title</a>
+                        </th>
+                        <td class="govuk-table__cell">6 January 2025</td>
+                        <td class="govuk-table__cell">Matt Bellamy<s/td>
+                        <td class="govuk-table__cell" style="text-align:right">
+                            <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2">View waitlist</a>
+                            <a href="#" class="govuk-link govuk-link--no-visited-state">View or edit application</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="govuk-body">Matt Bellamy shas no declined applications.</p>
         </section>
     </div>    
 </div>
 
-<!-- Scheduled appointments -->
-
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full"> 
-        <section id="waitlist-applications" class="govuk-!-margin-top-8 govuk-!-margin-bottom-6">
-            <h2 class="govuk-heading-m">Appointments</h2>
-            <p class="govuk-body govuk-!-font-weight-bold">Scheduled appointments in the next 7 days</p>
-            <div class="govuk-body">
-                <a class="govuk-link govuk-link--no-visited-state summary-box-action-link" href="#">Schedule an appointment</a>
-                <a class="govuk-link govuk-link--no-visited-state summary-box-action-link" href="#">Add to an existing appointment</a>
-            </div>
-            <div class="govuk-grid-column-full summary-box summary-box-first">
-                <div class="govuk-grid-column-full summary-box-top">
-                    <h3 class="govuk-heading-s">
-                        <a class="govuk-link govuk-link--no-visited-state" href="#">Chaplaincy</a>
-                    </h3>
-                    <div class="summary-box-actions">
-                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="#">Change</a>
-                    </div>
-                </div>
-                <div class="govuk-grid-column-full summary-box-bottom">
-                    <div class="govuk-grid-column-one-quarter summary-box-content">                 
-                        <dl class="govuk-body">
-                            <dt>Date</dt>
-                            <dd>Friday, 8 September 2024</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">  
-                        <dl class="govuk-body govuk-!-margin-bottom-0">
-                            <dt>Time</dt>
-                            <dd>12:00 to 13:00</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">
-                        <dl class="govuk-body">
-                            <dt>Location</dt>
-                            <dd>Faith room</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">  
-                        <dl class="govuk-body">
-                            <dt>Tier</dt>
-                            <dd>Tier 2</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">
-                        <dl class="govuk-body">
-                            <dt>Extra information</dt>
-                            <dd>
-                                <details class="govuk-details">
-                                    <summary class="govuk-details__summary">
-                                    <span class="govuk-details__summary-text">
-                                        Comments
-                                    </span>
-                                    </summary>
-                                    <div class="govuk-details__text">
-                                        All are welcome.
-                                    </div>
-                                </details>
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-            <div class="govuk-grid-column-full summary-box">
-                <div class="govuk-grid-column-full summary-box-top">
-                    <h3 class="govuk-heading-s">
-                        <a class="govuk-link govuk-link--no-visited-state" href="#">Medical - doctor</a>
-                    </h3>
-                    <div class="summary-box-actions">
-                        <a class="govuk-body govuk-link govuk-link--no-visited-state" href="#">Change</a>
-                    </div>
-                </div>
-                <div class="govuk-grid-column-full summary-box-bottom">
-                    <div class="govuk-grid-column-one-quarter summary-box-content">                 
-                        <dl class="govuk-body">
-                            <dt>Date</dt>
-                            <dd>Tuesday, 12 September 2024</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">  
-                        <dl class="govuk-body govuk-!-margin-bottom-0">
-                            <dt>Time</dt>
-                            <dd>15:30 to 16:15</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">
-                        <dl class="govuk-body">
-                            <dt>Location</dt>
-                            <dd>Medical room</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">  
-                        <dl class="govuk-body">
-                            <dt>Tier</dt>
-                            <dd>Tier 2</dd>
-                        </dl>
-                    </div>
-                    <div class="govuk-grid-column-one-quarter summary-box-content">
-                        <dl class="govuk-body">
-                            <dt>Extra information</dt>
-                            <dd>
-                                <details class="govuk-details">
-                                    <summary class="govuk-details__summary">
-                                    <span class="govuk-details__summary-text">
-                                        Comments
-                                    </span>
-                                    </summary>
-                                    <div class="govuk-details__text">
-                                        None entered.
-                                    </div>
-                                </details>
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>    
-</div>
 
 <style>
 .black-link, .govvk-link--no-visited-state {
@@ -581,7 +240,7 @@ Appointments prototype
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 0px;
     padding: 15px
 }
 .hmpps-mini-banner__location {
