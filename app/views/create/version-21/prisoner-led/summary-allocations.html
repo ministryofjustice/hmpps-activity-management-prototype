@@ -99,17 +99,19 @@ Appointments prototype
     <div class="govuk-grid-column-full"> 
         <section id="activities" class="govuk-!-margin-bottom-6">
             <h2 class="govuk-heading-m">Allocations</h2>
-            <form method="post" action="./allocate-new-activity/before-you-allocate.html">
                 {% from "govuk/components/button/macro.njk" import govukButton %}
                 <div class="govuk-button-group">
-                    {{ govukButton({
-                        text: "Allocate to an activity"
-                    }) }}
-                    
-                    {{ govukButton({
-                        text: "Suspend all allocations",
-                        classes: "govuk-button--secondary"
-                    }) }}
+                    <form method="post" action="allocate-new-activity/before-you-allocate">
+                        {{ govukButton({
+                            text: "Allocate to an activity"
+                        }) }}
+                    </form>
+                    <form method="post" action="suspend-all-activities">
+                        {{ govukButton({
+                            text: "Suspend all allocations",
+                            classes: "govuk-button--secondary"
+                        }) }}
+                    </form>
                 </div>
             </form>
             <table class="govuk-table">

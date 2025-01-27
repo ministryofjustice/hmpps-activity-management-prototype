@@ -101,13 +101,14 @@ Appointments prototype
     <div class="govuk-grid-column-two-thirds"> 
         <section id="waitlist-applications" class=" govuk-!-margin-bottom-6">
             <h2 class="govuk-heading-m">Waitlist applications</h2>
-            {% from "govuk/components/button/macro.njk" import govukButton %}
-
-            <div class="govuk-button-group">
-                {{ govukButton({
-                    text: "Log an activity application"
-                }) }}
-            </div>
+            <form method="post" action="log-an-activity-application">
+                {% from "govuk/components/button/macro.njk" import govukButton %}
+                <div class="govuk-button-group">
+                    {{ govukButton({
+                        text: "Log an activity application"
+                    }) }}
+                </div>
+            </form>
             <h3 class="govuk-heading-s">Approved and on the waitlist</h3>
             <table class="govuk-table" data-module="moj-sortable-table">
                 <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Month you apply</caption>
