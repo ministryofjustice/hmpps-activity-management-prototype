@@ -9,7 +9,12 @@ Appointments prototype
 {% endblock %}
 
 {% block beforeContent %}
-
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+</nav>
 {% endblock %}
 
 {% block content %}
@@ -21,7 +26,7 @@ Appointments prototype
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                         <span class="govuk-caption-l">Unemployed</span>
                         <h1 class="govuk-fieldset__heading">
-                            Why are you taking Tom Lafferty off this activity?
+                            Why are you taking Matt Bellamy off this activity?
                         </h1>
                     </legend>
                     <div class="govuk-radios" data-module="govuk-radios">

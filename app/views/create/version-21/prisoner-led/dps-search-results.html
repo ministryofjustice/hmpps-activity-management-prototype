@@ -46,7 +46,7 @@ DPS search results prototype
             <label class="govuk-label" for="keywords">
                 Enter name or prison number
             </label>
-            <input class="govuk-input govuk-!-width-full" id="keywords" name="keywords" type="text" value="David Jones" data-test="prisoner-search-keywords">
+            <input class="govuk-input govuk-!-width-full" id="keywords" name="keywords" type="text" value="{{ data['keywords'] }}" data-test="prisoner-search-keywords">
         </div>
         <div class="govuk-form-group">
             <label class="govuk-label" for="location">
@@ -362,6 +362,7 @@ DPS search results prototype
 </nav>
 <!-- results -->
 <div class="prisoner-search__results-list">
+    {% if (data['keywords'] == "David Jones") %}
     <table class="govuk-table" data-test="prisoner-search-results-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -392,6 +393,40 @@ DPS search results prototype
             </tr>
         </tbody>
     </table>
+    {% elif (data['keywords'] == "Matt Bellamy") %}
+    <table class="govuk-table" data-test="prisoner-search-results-table">
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Picture</span></th>
+                <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" data-index="1">Name</button></th>
+                <th scope="col" class="govuk-table__header">Prison number</th>
+                <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" data-index="3">Location</button></th>
+                <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" data-index="4">Incentive level</button></th>
+                <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" data-index="5">Age</button></th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Relevant alerts</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell"><img src="/public/images/test-image-5.jpeg" alt="Image of Jones David" class="prisoner-search__results-list__image" loading="lazy" style="height:150px; width:120px"></td>
+                <td class="govuk-table__cell" data-sort-value="Jones Davi"><a href="prisoner-profile-2" class="govuk-link">Bellamy, Matt</a></td>
+                <td class="govuk-table__cell">G7006VF</td>
+                <td class="govuk-table__cell">D-2-08N</td>
+                <td class="govuk-table__cell">Standard</td>
+                <td class="govuk-table__cell">30</td>
+                <td class="govuk-table__cell">
+                    <ul class="alerts-list">
+ 
+                    </ul>
+                    <span class="">
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {% else %}
+    <p>No results found.</p>
+    {% endif %}
 </div>
 <!-- pagination -->
 <nav class="moj-pagination govuk-!-font-size-19" id="pagination-label">

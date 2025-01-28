@@ -1,0 +1,61 @@
+{% extends "layout_hmpps-new-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post" action="reason">
+            {% from "govuk/components/radios/macro.njk" import govukRadios %}
+            <span class="govuk-caption-l">Unemployed</span>
+            {{ govukRadios({
+            name: "removeOption",
+            fieldset: {
+                legend: {
+                text: "Select how you want to end Matt Bellamy's allocation for this activity",
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--l"
+                }
+            },
+            items: [
+                {
+                value: "remove-now",
+                text: "Remove them now - they will not be due to attend any sessions today that have not already started",
+                hint : {
+                    text: "Unlock and movement lists for later today may need to be printed again."
+                    }
+                },
+                {
+                value: "remove-day",
+                text: "Set the day they'll attend their last session"
+                }
+            ]
+            }) }}
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+            
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Continue"
+                }) }}
+    
+                <a class="govuk-link" href="summary-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
