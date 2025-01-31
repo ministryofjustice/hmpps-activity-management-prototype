@@ -42,7 +42,7 @@ Appointments prototype
 </div>
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full"> 
-        <div class="hmpps-mini-banner govuk-!-margin-top-6">
+        <div class="hmpps-mini-banner govuk-!-margin-top-6 govuk-!-margin-bottom-6"">
             <img class="hmpps-mini-banner__photo" src="/public/images/test-image-1.jpeg" alt="Bellamy, Matt" width="80" height="100">
             <div class="hmpps-mini-banner__name">
                 <h2 class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="prisoner-profile-3.html">Carlsen, Marek</a></h2>
@@ -73,6 +73,7 @@ Appointments prototype
 </div>
 
 <!-- Non-associations -->
+ <!-- hidden for testing
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full"> 
         <div class="govuk-inset-text">
@@ -80,25 +81,24 @@ Appointments prototype
         </div>
     </div>
 </div>
+-->
 
 <!-- Sub nav -->
-
-<nav class="moj-sub-navigation" aria-label="Sub navigation">
+<nav class="moj-sub-navigation aria-label="Sub navigation">
     <ul class="moj-sub-navigation__list">
         <li class="moj-sub-navigation__item">
             <a class="moj-sub-navigation__link" aria-current="page" href="#waitlist-applications">Waitlist applications</a>
         </li>
         <li class="moj-sub-navigation__item">
-            <a class="moj-sub-navigation__link" href="./summary-allocations-2">Allocations</a>
+            <a class="moj-sub-navigation__link" href="./summary-allocations-3">Allocations</a>
         </li>
     </ul>
 </nav>
-  
 
 <!-- Waitlist -->
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds"> 
+    <div class="govuk-grid-column-full"> 
         <section id="waitlist-applications" class=" govuk-!-margin-bottom-6">
             <h2 class="govuk-heading-m">Waitlist applications</h2>
             {% from "govuk/components/button/macro.njk" import govukButton %}
@@ -126,8 +126,8 @@ Appointments prototype
                         </th>
                         <td class="govuk-table__cell" data-sort-value="20 January 2025">20 January 2025</td>
                         <td class="govuk-table__cell">David Jones</td>
-                        <td class="govuk-table__cell">
-                            <a href="#" class="govuk-link govuk-link--no-visited-state">View waitlist</a>
+                        <td class="govuk-table__cell" style="text-align:right">
+                            <a href="waitlist/manage-allocations" class="govuk-link govuk-link--no-visited-state">View waitlist</a>
                             <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-left-2">Allocate</a>
                         </td>
                     </tr>
@@ -137,7 +137,7 @@ Appointments prototype
                         </th>
                         <td class="govuk-table__cell" data-sort-value="22 January 2025">22 January 2025</td>
                         <td class="govuk-table__cell">Mental health</td>
-                        <td class="govuk-table__cell">
+                        <td class="govuk-table__cell" style="text-align:right">
                             <a href="#" class="govuk-link govuk-link--no-visited-state">View waitlist</a>
                             <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-left-2">Allocate</a>
                         </td>

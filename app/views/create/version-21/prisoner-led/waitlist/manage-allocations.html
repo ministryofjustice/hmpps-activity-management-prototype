@@ -1,0 +1,209 @@
+{% extends "layout_hmpps-new-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">Manage allocations</span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-7">Plastering workshop</h1>
+        <p class="govuk-body-l">Check the requirements for this activity so that you can allocate suitable candidates.</p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <div class="related-tasks">
+            <h2 class="govuk-heading-s">
+                Related tasks
+            </h2>
+            <ul class="govuk-list">
+                <li><a href="#" class="govuk-link govuk-link--no-visited-state">Find other activities with vacancies</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Current allocation and requirments -->
+<div class="govuk-grid-row govuk-!-margin-bottom-6">
+    <div class="govuk-grid-column-one-third">
+        <div class="information-card">
+            <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-table__caption--m">Current allocation</caption>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Vacancies:</th>
+                        <td class="govuk-table__cell">1</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Allocated and due to attend:</th>
+                        <td class="govuk-table__cell">4</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Allocated but not started yet:</th>
+                        <td class="govuk-table__cell">0</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Capacity:</th>
+                        <td class="govuk-table__cell">5</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">On waitlist:</th>
+                        <td class="govuk-table__cell">4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+        <div class="information-card">
+            <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-table__caption--m">Requirements</caption>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Suitable for workplace risk assessment:</th>
+                        <td class="govuk-table__cell">Low</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Suitable for incentive level:</th>
+                        <td class="govuk-table__cell">
+                            <div>Standard, Enhanced</div>
+                            <div class="govuk-!-margin-top-2">
+                                <p class="govuk-hint">You can control which incentive levels are suitable by <a class="govuk-link govuk-link--no-visited-state" href="#" target="_blank">adding or removing corresponding pay rates.</a></p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Education level:</th>
+                        <td class="govuk-table__cell">
+                            <div>                       
+                                None
+                            </div>
+                        </td>        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+ </div>
+<!-- Waitlist -->
+<div class="govuk-tabs govuk-tabs--borderless" data-module="govuk-tabs" data-govuk-tabs-init="">
+    <h2 class="govuk-tabs__title">
+      Contents
+    </h2>
+    <ul class="govuk-tabs__list" role="tablist">
+        <li class="govuk-tabs__list-item" role="presentation">
+            <a class="govuk-tabs__tab" href="#" id="tab_currently-allocated-tab" role="tab" aria-controls="currently-allocated-tab" aria-selected="false" tabindex="-1">
+            Currently allocated
+            </a>
+        </li>
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
+            <a class="govuk-tabs__tab" href="# id="tab_waitlist-tab" role="tab" aria-controls="waitlist-tab" aria-selected="true" tabindex="0">
+            Waitlist
+            </a>
+        </li>
+        <li class="govuk-tabs__list-item" role="presentation">
+            <a class="govuk-tabs__tab" href="#" id="tab_candidates-tab" role="tab" aria-controls="candidates-tab" aria-selected="false" tabindex="-1">
+            Other people
+            </a>
+        </li>
+        <li class="govuk-tabs__list-item" role="presentation">
+            <a class="govuk-tabs__tab" href="#" id="tab_schedule-tab" role="tab" aria-controls="schedule-tab" aria-selected="false" tabindex="-1">
+            A Wing Ready Room Orderley AM schedule
+            </a>
+        </li>
+    </ul>
+    <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="currently-allocated-tab" role="tabpanel" aria-labelledby="tab_currently-allocated-tab">
+      <form method="POST">
+          <input type="hidden" name="_csrf" value="ptbezMHN-oTC62XgiNS8hxp4I9qdv7ikY5yw">
+          <div class="filter__items filter__items--quarters" id="waitlist-filter">
+                <div class="govuk-form-group">
+                <label class="govuk-label" for="employmentFilter">
+                    Showing people who are:
+                </label>
+                <select class="govuk-select govuk-!-width-full" id="employmentFilter" name="employmentFilter">
+                    <option value="Not allocated to any activity">Not allocated to any activity</option>
+                    <option value="Not in work">Not in work</option>
+                    <option value="In work">In work</option>         
+                    <option value="Everyone" selected="">Everyone</option>     
+                </select>      
+                </div>
+                <div class="govuk-form-group">
+                <label class="govuk-label" for="riskLevelFilter">
+                    Showing people whose workplace risk assessment is:
+                </label>
+                <select class="govuk-select govuk-!-width-full" id="riskLevelFilter" name="riskLevelFilter">
+                    <option value="Any Workplace Risk Assessment" selected="">Any workplace risk assessment</option>
+                    <option value="Low">Low</option>
+                    <option value="Low or Medium">Low or Medium</option>
+                    <option value="Low or Medium or High">Low or Medium or High</option>
+                    <option value="No Workplace Risk Assessment">No workplace risk assessment</option>
+                </select>
+                </div>
+            <div class="govuk-form-group">
+                <label class="govuk-label" for="incentiveLevelFilter">
+                    Showing people who have the following incentive level:
+                </label>
+                <select class="govuk-select govuk-!-width-full" id="incentiveLevelFilter" name="incentiveLevelFilter">
+                    <option value="Basic, Standard, Enhanced" selected="">Any suitable incentive level</option>
+                    <option value="Basic">Basic</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Enhanced">Enhanced</option>
+                    <option value="Enhanced 2">Enhanced 2</option>
+                    <option value="Gold">Gold</option>
+                    <option value="New Mike Level">New Mike Level</option>
+                    <option value="All Incentive Levels">All incentive levels</option>
+                </select>
+            </div>
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="waitlistStatusFilter">
+                Showing people whose application is:
+              </label>
+                <select class="govuk-select govuk-!-width-full" id="waitlistStatusFilter" name="waitlistStatusFilter">
+                    <option value="Any">Any</option>
+                    <option value="APPROVED">Approved</option>
+                    <option value="DECLINED">Declined</option>
+                    <option value="PENDING">Pending</option>
+                </select>
+            </div>
+            <button value="true" type="submit" name="filtersApplied" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+                Apply filters
+            </button>
+        </div>
+    </form>
+</div></div>
+<style>
+.information-card {
+    border: 2px solid #f3f2f1;
+}
+.information-card .govuk-table__caption {
+    background-color: #f3f2f1;
+    padding: 10px 0 10px 20px;
+}
+.information-card .govuk-table__body {
+    padding: 0px;
+}
+.information-card .govuk-table__header {
+    padding: 10px 0 10px 20px;
+}
+.information-card .govuk-table__cell {
+    padding: 10px 0 10px 20px;
+}
+.information-card, .govuk-table__header:last-child {
+    border-bottom:0px solid white;
+
+}
+</style>
+{% endblock %}
