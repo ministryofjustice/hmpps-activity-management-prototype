@@ -35,7 +35,7 @@ Appointments prototype
         </div>
     </div>
 </div>
-<!-- Current allocation and requirments -->
+<!-- Current allocation and requirements -->
 <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
         <div class="information-card">
@@ -98,92 +98,851 @@ Appointments prototype
         </div>
     </div>
  </div>
-<!-- Waitlist -->
+<!-- Tabs -->
 <div class="govuk-tabs govuk-tabs--borderless" data-module="govuk-tabs" data-govuk-tabs-init="">
     <h2 class="govuk-tabs__title">
       Contents
     </h2>
     <ul class="govuk-tabs__list" role="tablist">
         <li class="govuk-tabs__list-item" role="presentation">
-            <a class="govuk-tabs__tab" href="#" id="tab_currently-allocated-tab" role="tab" aria-controls="currently-allocated-tab" aria-selected="false" tabindex="-1">
+            <a class="govuk-tabs__tab" href="#currently-allocated-tab" id="tab_currently-allocated-tab" role="tab" aria-controls="currently-allocated-tab" aria-selected="false" tabindex="-1">
             Currently allocated
             </a>
         </li>
         <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
-            <a class="govuk-tabs__tab" href="# id="tab_waitlist-tab" role="tab" aria-controls="waitlist-tab" aria-selected="true" tabindex="0">
+            <a class="govuk-tabs__tab" href="#waitlist-tab" id="tab_waitlist-tab" role="tab" aria-controls="waitlist-tab" aria-selected="true" tabindex="0">
             Waitlist
             </a>
         </li>
         <li class="govuk-tabs__list-item" role="presentation">
-            <a class="govuk-tabs__tab" href="#" id="tab_candidates-tab" role="tab" aria-controls="candidates-tab" aria-selected="false" tabindex="-1">
+            <a class="govuk-tabs__tab" href="#candidates-tab" id="tab_candidates-tab" role="tab" aria-controls="candidates-tab" aria-selected="false" tabindex="-1">
             Other people
             </a>
         </li>
         <li class="govuk-tabs__list-item" role="presentation">
-            <a class="govuk-tabs__tab" href="#" id="tab_schedule-tab" role="tab" aria-controls="schedule-tab" aria-selected="false" tabindex="-1">
-            A Wing Ready Room Orderley AM schedule
+            <a class="govuk-tabs__tab" href="#schedule-tab" id="tab_schedule-tab" role="tab" aria-controls="schedule-tab" aria-selected="false" tabindex="-1">
+             Plastering workshop
             </a>
-        </li>
+        </li>  
     </ul>
     <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="currently-allocated-tab" role="tabpanel" aria-labelledby="tab_currently-allocated-tab">
-      <form method="POST">
-          <input type="hidden" name="_csrf" value="ptbezMHN-oTC62XgiNS8hxp4I9qdv7ikY5yw">
-          <div class="filter__items filter__items--quarters" id="waitlist-filter">
-                <div class="govuk-form-group">
-                <label class="govuk-label" for="employmentFilter">
-                    Showing people who are:
-                </label>
-                <select class="govuk-select govuk-!-width-full" id="employmentFilter" name="employmentFilter">
-                    <option value="Not allocated to any activity">Not allocated to any activity</option>
-                    <option value="Not in work">Not in work</option>
-                    <option value="In work">In work</option>         
-                    <option value="Everyone" selected="">Everyone</option>     
-                </select>      
+        <form method="POST">
+            <input type="hidden" name="_csrf" value="ptbezMHN-oTC62XgiNS8hxp4I9qdv7ikY5yw">
+            <div class="sticky-select" data-module="activities-sticky-select">
+                <table class="govuk-table" data-multi-select-checkbox="#select-all">
+                    <caption class="govuk-table__caption govuk-visually-hidden">Currently allocated</caption>
+                    <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header govuk-!-display-none-print" id="select-all"><div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">  <input type="checkbox" class="govuk-checkboxes__input" id="checkboxes-all" autocomplete="off">  <label class="govuk-label govuk-checkboxes__label moj-multi-select__toggle-label" for="checkboxes-all">    <span class="govuk-visually-hidden">Select all</span>  </label></div></th>
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" data-index="1">Prisoner details</button></th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="2">Cell location</button></th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="3">Allocation start and end</button></th>
+                        <th scope="col" class="govuk-table__header">Non-associations</th>
+                        <th scope="col" class="govuk-table__header">Other allocations</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="6">Earliest release date</button></th>
+                    </tr>
+                    </thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell govuk-!-display-none-print">
+                                <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                                    <input type="checkbox" name="selectedAllocations" value="7512" class="govuk-checkboxes__input" id="allocated-2" autocomplete="off">
+                                    <label class="govuk-label govuk-checkboxes__label" for="allocated-2">
+                                      <span class="govuk-visually-hidden">Select Anastey, Aatdondavid</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="govuk-table__cell" data-sort-value="Anastey, Aatdondavid">
+                                <div data-qa="prisoner-summary">
+                                    <div data-qa="prisoner-name">
+                                        <a href="https://digital-dev.prison.service.justice.gov.uk/prisoner/G4770VR" target="_blank" class="govuk-link govuk-link--no-visited-state">
+                                        <strong>Anastey</strong>, Aatdondavid
+                                        </a>
+                                    </div>
+                                    <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-number">G4770VR</div>
+                                </div>
+                            </td>
+                            <td class="govuk-table__cell">
+                                C-S-2-018
+                            </td>
+                            <td class="govuk-table__cell" data-sort-value="1731715200">
+                                <div>16 November 2024</div>
+                                <div>to 1 February 2025</div>
+                            </td>
+                            <td class="govuk-table__cell">
+                                <p class="govuk-body govuk-!-margin-bottom-0">None</p>
+                            </td>
+                            <td class="govuk-table__cell">
+                                <ul class="govuk-list">
+                                     <li>
+                                        <a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Unemployed AM</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Unemployed PM</a>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td class="govuk-table__cell" data-sort-value="1550793600"> 
+                                <div>22 February 2019</div>
+                            </td>
+                         </tr>
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell govuk-!-display-none-print">
+                                <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                                    <input type="checkbox" name="selectedAllocations" value="3257" class="govuk-checkboxes__input" id="allocated-1" autocomplete="off">
+                                    <label class="govuk-label govuk-checkboxes__label" for="allocated-1">
+                                      <span class="govuk-visually-hidden">Select Jarullah, Ytialel</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="govuk-table__cell" data-sort-value="Jarullah, Ytialel">
+                                <div data-qa="prisoner-summary">
+                                    <div data-qa="prisoner-name">
+                                        <a href="https://digital-dev.prison.service.justice.gov.uk/prisoner/G5857UE" target="_blank" class="govuk-link govuk-link--no-visited-state">
+                                        <strong>Jarullah</strong>, Ytialel
+                                        </a>
+                                    </div>
+                                    <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-number">G5857UE</div>
+                                </div>
+                            </td>
+                            <td class="govuk-table__cell">
+                                A-N-2-29N
+                            </td>
+                            <td class="govuk-table__cell" data-sort-value="1698102000">
+                                <div>24 October 2023</div>
+                                <div>to 1 February 2025</div>
+                            </td>
+                            <td class="govuk-table__cell">
+                                <p class="govuk-body govuk-!-margin-bottom-0">None</p>
+                            </td>
+                            <td class="govuk-table__cell">
+                                <ul class="govuk-list">                 
+                                    <li>
+                                        <a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Plastering workshop</a>
+                                    </li>            
+                                </ul>
+                            </td>
+                            <td class="govuk-table__cell" data-sort-value="1633478400"> 
+                                <div>6 October 2021</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <nav class="govuk-pagination govuk-pagination--block govuk-!-display-none-print" role="navigation" aria-label="results">  
+                </nav>
+                <div class="sticky-select-action-bar " role="toolbar" aria-live="polite" aria-label="actions" aria-disabled="true" data-description-singular="person" data-description-plural="people">
+                    <div class="govuk-width-container">
+                        <div class="sticky-select-action-bar__selected-summary">
+                            <span class="sticky-select-action-bar__count"></span>
+                            <a class="sticky-select-action-bar__clear-link">Clear</a>
+                        </div>
+                        <div class="govuk-button-group">
+                            <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--white" data-module="govuk-button" id="allocated-action-0" formaction="475/deallocate" data-max-items="" data-govuk-button-init="">
+                                End allocation
+                            </button>
+                            <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--white" data-module="govuk-button" id="allocated-action-1" formaction="475/check-allocation" data-max-items="1" data-govuk-button-init="">
+                                Manage allocation
+                            </button> 
+                        </div>
+                    </div>
                 </div>
-                <div class="govuk-form-group">
-                <label class="govuk-label" for="riskLevelFilter">
-                    Showing people whose workplace risk assessment is:
-                </label>
-                <select class="govuk-select govuk-!-width-full" id="riskLevelFilter" name="riskLevelFilter">
-                    <option value="Any Workplace Risk Assessment" selected="">Any workplace risk assessment</option>
-                    <option value="Low">Low</option>
-                    <option value="Low or Medium">Low or Medium</option>
-                    <option value="Low or Medium or High">Low or Medium or High</option>
-                    <option value="No Workplace Risk Assessment">No workplace risk assessment</option>
-                </select>
+            <div aria-live="polite" role="status" aria-atomic="true" class="govuk-visually-hidden"></div></div>
+        </form>
+    </div>
+    <!-- Waitlist tab -->
+    <div class="govuk-tabs__panel" id="waitlist-tab" role="tabpanel" aria-labelledby="tab_waitlist-tab">
+        <div class="filter">
+            <form method="GET">
+                <div class="filter__items filter__items--quarters" id="waitlist-filter">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="employmentFilter">
+                        Showing people who are:
+                        </label>
+                        <select class="govuk-select govuk-!-width-full" id="employmentFilter" name="employmentFilter">
+                            <option value="Not allocated to any activity">Not allocated to any activity</option>
+                            <option value="Not in work">Not in work</option>
+                            <option value="In work">In work</option>
+                            <option value="Everyone" selected="">Everyone</option>
+                        </select>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="riskLevelFilter">
+                            Showing people whose workplace risk assessment is:
+                        </label>
+                        <select class="govuk-select govuk-!-width-full" id="riskLevelFilter" name="riskLevelFilter">
+                            <option value="Any Workplace Risk Assessment" selected="">Any workplace risk assessment</option>
+                            <option value="Low">Low</option>
+                            <option value="Low or Medium">Low or Medium</option>
+                            <option value="Low or Medium or High">Low or Medium or High</option>
+                            <option value="No Workplace Risk Assessment">No workplace risk assessment</option>
+                        </select>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="incentiveLevelFilter">
+                            Showing people who have the following incentive level:
+                        </label>
+                        <select class="govuk-select govuk-!-width-full" id="incentiveLevelFilter" name="incentiveLevelFilter">
+                            <option value="Basic, Standard, Enhanced" selected="">Any suitable incentive level</option>
+                            <option value="Basic">Basic</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Enhanced">Enhanced</option>
+                            <option value="Enhanced 2">Enhanced 2</option>
+                            <option value="Gold">Gold</option>
+                            <option value="New Mike Level">New Mike Level</option>
+                            <option value="All Incentive Levels">All incentive levels</option>
+                        </select>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="waitlistStatusFilter">
+                        Showing people whose application is:
+                        </label>
+                        <select class="govuk-select govuk-!-width-full" id="waitlistStatusFilter" name="waitlistStatusFilter">
+                            <option value="Any">Any</option>
+                            <option value="APPROVED">Approved</option>
+                            <option value="DECLINED">Declined</option>
+                            <option value="PENDING">Pending</option>
+                        </select>
+                    </div>
                 </div>
-            <div class="govuk-form-group">
-                <label class="govuk-label" for="incentiveLevelFilter">
-                    Showing people who have the following incentive level:
-                </label>
-                <select class="govuk-select govuk-!-width-full" id="incentiveLevelFilter" name="incentiveLevelFilter">
-                    <option value="Basic, Standard, Enhanced" selected="">Any suitable incentive level</option>
-                    <option value="Basic">Basic</option>
-                    <option value="Standard">Standard</option>
-                    <option value="Enhanced">Enhanced</option>
-                    <option value="Enhanced 2">Enhanced 2</option>
-                    <option value="Gold">Gold</option>
-                    <option value="New Mike Level">New Mike Level</option>
-                    <option value="All Incentive Levels">All incentive levels</option>
-                </select>
-            </div>
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="waitlistStatusFilter">
-                Showing people whose application is:
-              </label>
-                <select class="govuk-select govuk-!-width-full" id="waitlistStatusFilter" name="waitlistStatusFilter">
-                    <option value="Any">Any</option>
-                    <option value="APPROVED">Approved</option>
-                    <option value="DECLINED">Declined</option>
-                    <option value="PENDING">Pending</option>
-                </select>
-            </div>
             <button value="true" type="submit" name="filtersApplied" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
                 Apply filters
             </button>
-        </div>
-    </form>
-</div></div>
+        </form>
+    </div>
+    <form method="POST">
+          <input type="hidden" name="_csrf" value="ptbezMHN-oTC62XgiNS8hxp4I9qdv7ikY5yw">
+          <div class="sticky-select" data-module="activities-sticky-select">
+            <table class="govuk-table" data-multi-select-checkbox="#select-all">
+                <caption class="govuk-table__caption govuk-visually-hidden">Waitlist applications</caption>
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header"></th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="1">Name</button></th>
+                        <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" data-index="2">Request date and requester</button></th>
+                        <th scope="col" class="govuk-table__header">Non-associations</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" data-index="4">Release date</button></th>
+                        <th scope="col" class="govuk-table__header">Current allocations</th>
+                        <th scope="col" class="govuk-table__header min-width--110" aria-sort="none"><button type="button" data-index="6">Status</button></th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell govuk-!-display-none-print">
+                            <div class="govuk-radios__item govuk-radios--small moj-multi-select__radio">
+                                <input type="radio" name="selectedWaitlistApplication" value="144" class="govuk-radios__input" id="waitlist-1" autocomplete="off">
+                                <label class="govuk-label govuk-radios__label" for="waitlist-1">
+                                    <span class="govuk-visually-hidden">Select Aianilan Joannamin</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="Joannamin, Aianilan">
+                            <div data-qa="prisoner-summary">
+                                <div data-qa="prisoner-name">
+                                    <a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">
+                                    <strong>Aiken</strong>, Steven
+                                    </a>
+                                </div>
+                                <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-number">G3056UO</div>
+                                <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-cell-location">
+                                    D-N-3-070
+                                </div>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="1721084400">
+                            <div>16 January 2025</div>
+                            <div class="govuk-body-s govuk-!-margin-0">Mental health staff</div>
+                        </td>
+                        <td class="govuk-table__cell">
+                            <p class="govuk-body govuk-!-margin-bottom-0">None</p>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="1421936000">
+                            <div>14 September 2028</div>
+                        </td>
+                        <td class="govuk-table__cell">
+                            <ul class="govuk-list">
+                                <li>
+                                    <a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Unemployed</a>
+                                </li> 
+                            </ul>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="APPROVED">
+                            <strong class="govuk-tag govuk-tag--green">
+                                Approved and on the waitlist
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell govuk-!-display-none-print">
+                            <div class="govuk-radios__item govuk-radios--small moj-multi-select__radio">
+                                <input type="radio" name="selectedWaitlistApplication" value="144" class="govuk-radios__input" id="waitlist-1" autocomplete="off">
+                                <label class="govuk-label govuk-radios__label" for="waitlist-1">
+                                    <span class="govuk-visually-hidden">Select Fredrick Gould</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="Joannamin, Aianilan">
+                            <div data-qa="prisoner-summary">
+                                <div data-qa="prisoner-name">
+                                    <a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">
+                                    <strong>Gould</strong>, Fredrick
+                                    </a>
+                                </div>
+                                <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-number">G3726JD</div>
+                                <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-cell-location">
+                                    D-N-1-055
+                                </div>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="1721084400">
+                            <div>18 January 2025</div>
+                            <div class="govuk-body-s govuk-!-margin-0">Self-requested</div>
+                        </td>
+                        <td class="govuk-table__cell">
+                            <p class="govuk-body govuk-!-margin-bottom-0">None</p>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="1421936000">
+                            <div>12 August 2026</div>
+                        </td>
+                        <td class="govuk-table__cell">
+                            <ul class="govuk-list">
+                                <li>
+                                    <a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">D Wing Cleaning</a>
+                                </li> 
+                            </ul>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="APPROVED">
+                            <strong class="govuk-tag govuk-tag--yellow">
+                                Pending
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell govuk-!-display-none-print">
+                            <div class="govuk-radios__item govuk-radios--small moj-multi-select__radio">
+                                <input type="radio" name="selectedWaitlistApplication" value="144" class="govuk-radios__input" id="waitlist-1" autocomplete="off">
+                                <label class="govuk-label govuk-radios__label" for="waitlist-1">
+                                    <span class="govuk-visually-hidden">Select Aianilan Joannamin</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="Joannamin, Aianilan">
+                            <div data-qa="prisoner-summary">
+                                <div data-qa="prisoner-name">
+                                    <a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">
+                                    <strong>Carlsen</strong>, Marek
+                                    </a>
+                                </div>
+                                <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-number">TBC</div>
+                                <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-cell-location">
+                                    TBC
+                                </div>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="1721084400">
+                            <div>20 January 2025</div>
+                            <div class="govuk-body-s govuk-!-margin-0">Self-requested</div>
+                        </td>
+                        <td class="govuk-table__cell">
+                            <p class="govuk-body govuk-!-margin-bottom-0">None</p>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="1421936000">
+                            <div>27 June 2026</div>
+                        </td>
+                        <td class="govuk-table__cell">
+                            <ul class="govuk-list">
+                                <li>
+                                    <a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Box making</a>
+                                </li> 
+                            </ul>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="APPROVED">
+                            <strong class="govuk-tag govuk-tag--green">
+                                Approved and on the waitlist
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell govuk-!-display-none-print">
+                            <div class="govuk-radios__item govuk-radios--small moj-multi-select__radio">
+                                <input type="radio" name="selectedWaitlistApplication" value="144" class="govuk-radios__input" id="waitlist-1" autocomplete="off">
+                                <label class="govuk-label govuk-radios__label" for="waitlist-1">
+                                    <span class="govuk-visually-hidden">Select Eli Carter</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="Joannamin, Aianilan">
+                            <div data-qa="prisoner-summary">
+                                <div data-qa="prisoner-name">
+                                    <a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">
+                                    <strong>Carter</strong>, Eli
+                                    </a>
+                                </div>
+                                <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-number">G098NJ4</div>
+                                <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-cell-location">
+                                    A-C-2-021
+                                </div>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="1721084400">
+                            <div>1 February 2025</div>
+                            <div class="govuk-body-s govuk-!-margin-0">Self-requested</div>
+                        </td>
+                        <td class="govuk-table__cell">
+                            <p class="govuk-body govuk-!-margin-bottom-0">None</p>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="1421936000">
+                            <div>18 March 2026</div>
+                        </td>
+                        <td class="govuk-table__cell">
+                            <ul class="govuk-list">
+                                <li>
+                                    <a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">D Wing Cleaning</a>
+                                </li> 
+                            </ul>
+                        </td>
+                        <td class="govuk-table__cell" data-sort-value="APPROVED">
+                            <strong class="govuk-tag govuk-tag--yellow">
+                                Pending
+                            </strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+              <nav class="govuk-pagination govuk-pagination--block govuk-!-display-none-print" role="navigation" aria-label="results">  
+              </nav>
+              <div class="sticky-select-action-bar " role="toolbar" aria-live="polite" aria-label="actions" aria-disabled="true" data-description-singular="person" data-description-plural="people">
+                  <div class="govuk-width-container">
+                      <div class="sticky-select-action-bar__selected-summary">
+                          <span class="sticky-select-action-bar__count"></span>
+                          <a class="sticky-select-action-bar__clear-link">Clear</a>
+                      </div>
+                      <div class="govuk-button-group">
+      <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--white" data-module="govuk-button" id="waitlist-action-0" formaction="475/view-waitlist-application" data-max-items="" data-govuk-button-init="">
+        View or edit application
+      </button>
+      <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--white" data-module="govuk-button" id="waitlist-action-1" formaction="475/allocate?source=Waitlist" data-max-items="" data-govuk-button-init="">
+        Allocate
+      </button> 
+                      </div>
+                  </div>
+              </div>
+          <div aria-live="polite" role="status" aria-atomic="true" class="govuk-visually-hidden"></div></div>
+      </form>
+    </div>
+        <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="candidates-tab" role="tabpanel" aria-labelledby="tab_candidates-tab">
+      <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-one-half">
+              <p>
+                  Select the person you want to allocate. The list shows people who are not currently allocated or on the waitlist. People who have had an application declined are shown.
+                  Use the filters to identify candidates, or search for someone.
+              </p>
+          </div>
+          <div class="govuk-grid-column-one-third-from-desktop govuk-grid-column-one-half">
+              <form method="GET">
+                  <label class="govuk-label" for="candidate-search-input">Search by name or prison number:</label>       
+          <div class="search-bar">
+      <div class="govuk-form-group">
+        <input class="govuk-input" id="candidate-search-input" name="candidateQuery" type="text">      
+      </div>
+      <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+        Search
+      </button>
+          </div>
+              </form>
+          </div>
+      </div>
+      <div class="filter">
+          <form method="GET">
+              <div class="filter__items" id="candidates-filter">
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="employmentFilter">
+          Showing people who are:
+        </label>
+        <select class="govuk-select govuk-!-width-full" id="employmentFilter" name="employmentFilter">
+          <option value="Not allocated to any activity">Not allocated to any activity</option>
+          <option value="Not in work">Not in work</option>
+          <option value="In work">In work</option>
+          <option value="Everyone" selected="">Everyone</option>
+        </select>
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="riskLevelFilter">
+          Showing people whose workplace risk assessment is:
+        </label>
+        <select class="govuk-select govuk-!-width-full" id="riskLevelFilter" name="riskLevelFilter">
+          <option value="Any Workplace Risk Assessment" selected="">Any workplace risk assessment</option>
+          <option value="Low">Low</option>
+          <option value="Low or Medium">Low or Medium</option>
+          <option value="Low or Medium or High">Low or Medium or High</option>
+          <option value="No Workplace Risk Assessment">No Workplace Risk Assessment</option>
+        </select>
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="incentiveLevelFilter">
+          Showing people who have the following incentive level:
+        </label>
+        <select class="govuk-select govuk-!-width-full" id="incentiveLevelFilter" name="incentiveLevelFilter">
+          <option value="Basic, Standard, Enhanced" selected="">Any suitable incentive level</option>
+          <option value="Basic">Basic</option>
+          <option value="Standard">Standard</option>
+          <option value="Enhanced">Enhanced</option>
+          <option value="Enhanced 2">Enhanced 2</option>
+          <option value="Gold">Gold</option>
+          <option value="New Mike Level">New Mike Level</option>
+          <option value="All Incentive Levels">All incentive levels</option>
+        </select>
+      </div>
+              </div>
+      <button value="true" type="submit" name="filtersApplied" class="govuk-button" data-module="govuk-button" id="apply-filters" data-govuk-button-init="">
+        Apply filters
+      </button>
+          </form>
+      </div>
+      <form method="POST">
+          <input type="hidden" name="_csrf" value="ptbezMHN-oTC62XgiNS8hxp4I9qdv7ikY5yw">
+          <div class="sticky-select" data-module="activities-sticky-select">
+              <table class="govuk-table" data-multi-select-checkbox="#select-all">
+        <caption class="govuk-table__caption govuk-visually-hidden">Candidates</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header"></th>
+            <th scope="col" class="govuk-table__header">Candidate details</th>
+            <th scope="col" class="govuk-table__header">Current allocations</th>
+            <th scope="col" class="govuk-table__header">Non-associations</th>
+            <th scope="col" class="govuk-table__header">Earliest release date</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-display-none-print">
+                                  <div class="govuk-radios__item govuk-radios--small moj-multi-select__radio">
+                                      <input type="radio" name="selectedAllocation" value="G9566GQ" class="govuk-radios__input" id="candidate-1" autocomplete="off">
+                                      <label class="govuk-label govuk-radios__label" for="candidate-1">
+                                          <span class="govuk-visually-hidden">Select Ekasahani Alejoy</span>
+                                      </label>
+                                  </div>
+                              </td>
+            <td class="govuk-table__cell" data-sort-value="Alejoy, Ekasahani">
+          <div data-qa="prisoner-summary">
+            <div data-qa="prisoner-name">
+                <a href="https://digital-dev.prison.service.justice.gov.uk/prisoner/G9566GQ" target="_blank" class="govuk-link govuk-link--no-visited-state">
+                  <strong>Alejoy</strong>, Ekasahani
+                </a>
+            </div>
+              <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-number">G9566GQ</div>
+              <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-cell-location">A-N-1-39N</div>
+          </div>
+      </td>
+            <td class="govuk-table__cell">
+              <ul class="govuk-list">
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">A Wing Servery</a></li>
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Gardens</a></li>             
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Unemployed PM</a></li>                 
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">A Wing Cleaner 2</a></li>                  
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">121 reading support</a></li>
+              </ul>
+          </td>
+            <td class="govuk-table__cell">
+              <p class="govuk-body govuk-!-margin-bottom-0">None</p>
+          </td>
+            <td class="govuk-table__cell">
+              <div>29 June 2018</div>
+      </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-display-none-print">
+                                  <div class="govuk-radios__item govuk-radios--small moj-multi-select__radio">
+                                      <input type="radio" name="selectedAllocation" value="G2343GK" class="govuk-radios__input" id="candidate-2" autocomplete="off">
+                                      <label class="govuk-label govuk-radios__label" for="candidate-2">
+                                          <span class="govuk-visually-hidden">Select Bumahwaju Alfres</span>
+                                      </label>
+                                  </div>
+                              </td>
+            <td class="govuk-table__cell" data-sort-value="Alfres, Bumahwaju">
+          <div data-qa="prisoner-summary">
+            <div data-qa="prisoner-name">
+                <a href="https://digital-dev.prison.service.justice.gov.uk/prisoner/G2343GK" target="_blank" class="govuk-link govuk-link--no-visited-state">
+                  <strong>Alfres</strong>, Bumahwaju
+                </a>
+            </div>
+              <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-number">G2343GK</div>
+              <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-cell-location">A-N-2-37N</div>
+          </div>
+      </td>
+            <td class="govuk-table__cell">
+              <ul class="govuk-list">
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">C Wing Orderly</a></li>                 
+                       <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Unemployed PM</a></li>
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">A Wing Cleaner 2</a></li>
+              </ul>
+          </td>
+            <td class="govuk-table__cell">
+              <p class="govuk-body govuk-!-margin-bottom-0" data-qa="non-associations-link-G2343GK"><a href="/activities/non-associations/475/G2343GK" class="govuk-link govuk-link--no-visited-state" target="_blank">View non-associations<span class="govuk-visually-hidden">for Bumahwaju Alfres</span></a></p>
+          </td>
+            <td class="govuk-table__cell">
+              <div>14 April 2018</div>
+      </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-display-none-print">
+                                  <div class="govuk-radios__item govuk-radios--small moj-multi-select__radio">
+                                      <input type="radio" name="selectedAllocation" value="G0133VN" class="govuk-radios__input" id="candidate-3" autocomplete="off">
+                                      <label class="govuk-label govuk-radios__label" for="candidate-3">
+                                          <span class="govuk-visually-hidden">Select Eksinrn Alinda</span>
+                                      </label>
+                                  </div>
+                              </td>
+            <td class="govuk-table__cell" data-sort-value="Alinda, Eksinrn">
+          <div data-qa="prisoner-summary">
+            <div data-qa="prisoner-name">
+                <a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">
+                  <strong>Alinda</strong>, Eksinrn
+                </a>
+            </div>
+              <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-number">G0133VN</div>
+              <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-cell-location">B-3-044</div>
+          </div>
+      </td>
+            <td class="govuk-table__cell">
+              <ul class="govuk-list">                 
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Unemployed PM</a></li>                  
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">C Wing - Cleaning</a></li>
+              </ul>
+          </td>
+            <td class="govuk-table__cell">
+              <p class="govuk-body govuk-!-margin-bottom-0">None</p>
+          </td>
+            <td class="govuk-table__cell">
+              <div>17 May 2017</div>
+      </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-display-none-print">
+                                  <div class="govuk-radios__item govuk-radios--small moj-multi-select__radio">
+                                      <input type="radio" name="selectedAllocation" value="G4977UO" class="govuk-radios__input" id="candidate-4" autocomplete="off">
+                                      <label class="govuk-label govuk-radios__label" for="candidate-4">
+                                          <span class="govuk-visually-hidden">Select Egurztof Alishole</span>
+                                      </label>
+                                  </div>
+                              </td>
+            <td class="govuk-table__cell" data-sort-value="Alishole, Egurztof">
+          <div data-qa="prisoner-summary">
+            <div data-qa="prisoner-name">
+                <a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">
+                  <strong>Alishole</strong>, Egurztof
+                </a>
+            </div>
+              <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-number">G4977UO</div>
+              <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-cell-location">D-N-1-013</div>
+          </div>
+      </td>
+            <td class="govuk-table__cell">
+              <ul class="govuk-list">
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Unemployed PM</a></li>
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">ED1 - FSM L1 Block AM</a></li>  
+              </ul>
+          </td>
+            <td class="govuk-table__cell">
+              <p class="govuk-body govuk-!-margin-bottom-0">None</p>
+          </td>
+            <td class="govuk-table__cell">
+              <div>27 February 2018</div
+      </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-display-none-print">
+                                  <div class="govuk-radios__item govuk-radios--small moj-multi-select__radio">
+                                      <input type="radio" name="selectedAllocation" value="G6749VJ" class="govuk-radios__input" id="candidate-5" autocomplete="off">
+                                      <label class="govuk-label govuk-radios__label" for="candidate-5">
+                                          <span class="govuk-visually-hidden">Select Erkiusdu Alishole</span>
+                                      </label>
+                                  </div>
+                              </td>
+            <td class="govuk-table__cell" data-sort-value="Alishole, Erkiusdu">
+          <div data-qa="prisoner-summary">
+            <div data-qa="prisoner-name">
+                <a href="#" target="_blank" class="govuk-link govuk-link--no-visited-state">
+                  <strong>Alishole</strong>, Erkiusdu
+                </a>
+            </div>
+              <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-number">G6749VJ</div>
+              <div class="govuk-body-s govuk-!-margin-0" data-qa="prisoner-cell-location">E-N-2-014</div>
+          </div>
+      </td>
+            <td class="govuk-table__cell">
+              <ul class="govuk-list">
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Unemployed PM</a></li>
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">CGL Wing Peer Mentor</a></li>
+                      <li><a href="#" class="govuk-link govuk-link--no-visited-state" target="_blank">Unemployed AM</a></li>
+              </ul>
+          </td>
+            <td class="govuk-table__cell">
+              <p class="govuk-body govuk-!-margin-bottom-0">None</p>
+          </td>
+            <td class="govuk-table__cell">
+              <div>19 August 2020</div>     
+      </td>
+          </tr>
+        </tbody>
+      </table>
+              <nav class="govuk-pagination govuk-pagination--block govuk-!-display-none-print" role="navigation" aria-label="results">
+                      <div class="govuk-pagination__next">
+                          <a class="govuk-link govuk-pagination__link" href="/page/1?id=candidates-tab" rel="next">
+                              <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                                  <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+                              </svg>
+                              <span class="govuk-pagination__link-title">Next page</span>
+                              <span class="govuk-visually-hidden">:</span>
+                              <span class="govuk-pagination__link-label">2 of 204</span>
+                          </a>
+                      </div>
+                  
+              </nav>
+              <div class="sticky-select-action-bar " role="toolbar" aria-live="polite" aria-label="actions" aria-disabled="true" data-description-singular="person" data-description-plural="people">
+                  <div class="govuk-width-container">
+                      <div class="sticky-select-action-bar__selected-summary">
+                          <span class="sticky-select-action-bar__count"></span>
+                          <a class="sticky-select-action-bar__clear-link">Clear</a>
+                      </div>
+                      <div class="govuk-button-group">
+      <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--white" data-module="govuk-button" id="candidate-action-0" formaction="475/allocate?source=Other people" data-max-items="" data-govuk-button-init="">
+        Allocate
+      </button>  
+                      </div>
+                  </div>
+              </div>
+          <div aria-live="polite" role="status" aria-atomic="true" class="govuk-visually-hidden"></div></div>
+      </form>
+    </div>
+    <!-- Schedule tab -->
+    <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="schedule-tab" role="tabpanel" aria-labelledby="tab_schedule-tab">
+      <p>This activity runs on bank holidays.</p>
+          <table class="govuk-table govuk-!-margin-bottom-6">
+        <caption class="govuk-table__caption govuk-visually-hidden">Schedule</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Days</th>
+            <th scope="col" class="govuk-table__header">AM</th>
+            <th scope="col" class="govuk-table__header">PM</th>
+            <th scope="col" class="govuk-table__header">ED</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-width-one-quarter">Monday</td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag">
+        Yes
+      </strong>
+      08:30 to 11:45</td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+        No
+      </strong>
+      </td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+        No
+      </strong>
+      </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-width-one-quarter">Tuesday</td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag">
+        Yes
+      </strong>
+      08:30 to 11:45</td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+        No
+      </strong>
+      </td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+        No
+      </strong>
+      </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-width-one-quarter">Wednesday</td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag">
+        Yes
+      </strong>
+      08:30 to 11:45</td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+        No
+      </strong>
+      </td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+        No
+      </strong>
+      </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-width-one-quarter">Thursday</td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag">
+        Yes
+      </strong>
+      08:30 to 11:45</td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+        No
+      </strong>
+      </td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+        No
+      </strong>
+      </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-width-one-quarter">Friday</td>
+
+    <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag">
+        Yes
+      </strong>
+      08:30 to 11:45</td>
+
+    <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+        No
+      </strong>
+      </td> 
+        <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+        No
+      </strong>
+      </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-width-one-quarter">Saturday</td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag">
+        Yes
+      </strong>
+      08:30 to 11:45</td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+        No
+      </strong>
+      </td>
+                <td class="govuk-table__cell govuk-!-width-one-quarter"><strong class="govuk-tag govuk-tag--grey">
+                        No
+                    </strong>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell govuk-!-width-one-quarter">Sunday</td>
+                <td class="govuk-table__cell govuk-!-width-one-quarter">
+                    <strong class="govuk-tag">
+                    Yes
+                    </strong>
+                    08:30 to 11:45
+                </td>
+                <td class="govuk-table__cell govuk-!-width-one-quarter">
+                    <strong class="govuk-tag govuk-tag--grey">
+                        No
+                    </strong>
+                </td>
+                <td class="govuk-table__cell govuk-!-width-one-quarter">
+                    <strong class="govuk-tag govuk-tag--grey">
+                    No
+                    </strong>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <style>
 .information-card {
     border: 2px solid #f3f2f1;
@@ -204,6 +963,37 @@ Appointments prototype
 .information-card, .govuk-table__header:last-child {
     border-bottom:0px solid white;
 
+}
+
+.filter {
+    padding: 20px 0;
+    margin-bottom: 20px;
+    background-color: #f3f2f1;
+}
+.filter__items {
+    display: flex;
+    flex-wrap: wrap;
+}
+.filter__items--quarters .govuk-form-group {
+    flex: 0 0 calc(25% - 20px) !important;
+}
+.filter__items .govuk-form-group {
+    flex: 0 0 calc(33.3% - 20px);
+    padding: 0 10px;
+}
+@media (min-width: 40.0625em) {
+    .filter__items .govuk-form-group .govuk-label {
+        min-height: 75px;
+    }
+}
+@media (min-width: 40.0625em) {
+    .govuk-label {
+        font-size: 1.1875rem;
+        line-height: 1.3157894737;
+    }
+}
+.filter button {
+    margin: 0 10px;
 }
 </style>
 {% endblock %}
