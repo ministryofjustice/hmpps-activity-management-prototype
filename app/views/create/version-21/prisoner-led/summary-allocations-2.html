@@ -106,7 +106,7 @@ Appointments prototype
                             text: "Allocate to an activity"
                         }) }}
                     </form>
-                    <form method="post" action="suspend-all-activities">
+                    <form method="post" action="#">
                         {{ govukButton({
                             text: "Suspend all allocations",
                             classes: "govuk-button--secondary"
@@ -125,7 +125,7 @@ Appointments prototype
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
-                    <!--{% if data['removeOption'] !== "remove-now" %}-->
+                    {% if data['remove-option'] !== "remove-now" %}
                     <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">
                             <a href="x" class="govuk-link">Thinking Skills Programme</a>
@@ -137,7 +137,9 @@ Appointments prototype
                             <a href="end-allocation/option" class="govuk-link govuk-link--no-visited-state">Remove from activity</a>
                         </td>
                     </tr>
-                    <!-- {% endif %} -->
+                    {% else %}
+                    <p class="govuk-visually-hidden">empty state</p>
+                    {% endif %}
                     <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">
                             <a href="x" class="govuk-link">Kitchens AM</a>

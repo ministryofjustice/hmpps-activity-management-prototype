@@ -1,5 +1,8 @@
 {% extends "layout_hmpps-new-nav.html" %}
+
 {% set serviceName = "Appointments" %}
+{% set prisonerName = "Matt Bellamy" %}
+{% set activityTitle = "Thinking Skills Programme" %}
 
 {% block pageTitle %}
 Appointments prototype
@@ -20,7 +23,7 @@ Appointments prototype
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l">Thinking Skills Programme</span>
+        <span class="govuk-caption-l">{{ activityTitle }}</span>
         <h1 class="govuk-heading-l">Check and confirm who you're taking off the activity</h1>
         <form action="confirmed.html" action="post">
             {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
@@ -67,7 +70,7 @@ Appointments prototype
                     text: "End of allocation"
                   },
                   value: {
-                    text: "[date]]"
+                    text: data['remove-option']
                   },
                   actions: {
                     items: [
@@ -84,7 +87,7 @@ Appointments prototype
                     text: "Reason for allocation ending"
                   },
                   value: {
-                    text: "Transferred to another activity"
+                    text: data['remove-reason']
                   },
                   actions: {
                     items: [
