@@ -108,7 +108,7 @@ Appointments prototype
                             text: "Allocate to an activity"
                         }) }}
                     </form>
-                    <form method="post" action="suspend-all-activities">
+                    <form method="post" action="#">
                         {{ govukButton({
                             text: "Suspend all allocations",
                             classes: "govuk-button--secondary"
@@ -127,18 +127,19 @@ Appointments prototype
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
-                    <!-- insert if statement -->
+                    {% if (data['confirmAllocationDavid'] == "yes") %}
                     <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">
                             <a href="x" class="govuk-link">Wing cleaning</a>
                         </th>
-                        <td class="govuk-table__cell">date</td>
+                        <td class="govuk-table__cell">12 February 2025</td>
                         <td class="govuk-table__cell">None set</td>
                         <td class="govuk-table__cell">
                             <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Edit or suspend allocation</a>
                             <a href="#" class="govuk-link govuk-link--no-visited-state">Remove from activity</a>
                         </td>
                     </tr>
+                    {% endif %}
                     <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">
                             <a href="x" class="govuk-link">Awaiting activity space</a>

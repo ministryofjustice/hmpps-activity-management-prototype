@@ -1,5 +1,8 @@
 {% extends "layout_hmpps-new-nav.html" %}
+
 {% set serviceName = "Appointments" %}
+{% set prisonerName = "David Jones" %}
+{% set activityTitle = "Wing Cleaning" %}
 
 {% block pageTitle %}
 Appointments prototype
@@ -22,20 +25,20 @@ Appointments prototype
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-        <span class="govuk-caption-l">Wing cleaning</span>
-        <h1 class="govuk-heading-xl">Before you allocate David Jones</h1>
+        <span class="govuk-caption-l">{{ activityTitle }}</span>
+        <h1 class="govuk-heading-xl">Before you allocate {{ prisonerName }}</h1>
 
-        <p class="govuk-body-l">Use the information on this page to decide if <a href="#" class="govuk-link" target="_blank">David Jones<span class="govuk-visually-hidden"> (opens in new tab)</span></a> is suitable for Wing cleaning.</p>
+        <p class="govuk-body-l">Use the information on this page to decide if <a href="../prisoner-profile-2" class="govuk-link" target="_blank">{{ prisonerName }}<span class="govuk-visually-hidden"> (opens in new tab)</span></a> is suitable for {{ activityTitle }}.</p>
         <p class="govuk-body-l">You may need to consult with other departments before making your decision.</p>
 
         <h2 class="govuk-heading-m">Activity requirements</h2>
-        <p class="govuk-body">Review the requirements for Wing cleaning and check if David Jones meets them.</p>
+        <p class="govuk-body">Review the requirements for {{ activityTitle }} and check if {{ prisonerName }} meets them.</p>
         <table class="govuk-table">
             <caption class="govuk-table__caption govuk-visually-hidden">Activity requirements</caption>
             <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header govuk-table__header">Type of requirement</th>
-                    <th scope="col" class="govuk-table__header govuk-table__header">David Jones's details</th>
+                    <th scope="col" class="govuk-table__header govuk-table__header">{{ prisonerName }}'s details</th>
                     <th scope="col" class="govuk-table__header govuk-table__header">Meets requirement</th>
                 </tr>
             </thead>
@@ -84,10 +87,10 @@ Appointments prototype
         </table>
         <!-- Non associations -->
         <h2 class="govuk-heading-m">Non-associations</h2>
-        <p class="govuk-body">David Jones has no open non-associations with anyone in Leeds (HMP).</p>        
+        <p class="govuk-body">{{ prisonerName }} has no open non-associations with anyone in Leeds (HMP).</p>        
         <!-- Current allocations -->
         <h2 class="govuk-heading-m">Current allocations</h2>
-        <p class="govuk-body">Check if David Jones's current allocation would be compatible with Wing cleaning.</p>
+        <p class="govuk-body">Check if {{ prisonerName }}'s current allocation would be compatible with {{ activityTitle }}.</p>
         <div class="govuk-!-margin-bottom-8 govuk-body">
             <table class="govuk-table">
                 <caption class="govuk-table__caption govuk-visually-hidden">Current Allocations</caption>
@@ -101,7 +104,7 @@ Appointments prototype
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <th scope="row" class="govuk-table__header"> Wing cleaning</th>
+                        <th scope="row" class="govuk-table__header"> {{ activityTitle }}</th>
                         <td class="govuk-table__cell">TBC</td>
                         <td class="govuk-table__cell">None set</td>
                         <td class="govuk-table__cell">£1.50 (Pay band 1 (Lowest))</td>
@@ -122,7 +125,7 @@ Appointments prototype
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                            Do you want to allocate David Jones to Wing cleaning?
+                            Do you want to allocate {{ prisonerName }} to {{ activityTitle }}?
                         </legend>
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
@@ -134,7 +137,7 @@ Appointments prototype
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="confirmAllocationDavid-2" name="confirmAllocationDavid" type="radio" value="no">
                                 <label class="govuk-label govuk-radios__label" for="confirmAllocationDavid-2">
-                                    No, return to David Jones' summary
+                                    No, return to {{ prisonerName }}' summary
                                 </label>        
                             </div>
                         </div>

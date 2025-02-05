@@ -1,5 +1,8 @@
 {% extends "layout_hmpps-new-nav.html" %}
-{% set serviceName = "Appointments" %}
+
+{% set serviceName = "Activities" %}
+{% set prisonerName = "Matt Bellamy" %}
+{% set activityTitle = "Thinking Skills Programme" %}
 
 {% block pageTitle %}
 Appointments prototype
@@ -22,12 +25,12 @@ Appointments prototype
     <div class="govuk-grid-column-two-thirds">
         <form method="post" action="reason">
             {% from "govuk/components/radios/macro.njk" import govukRadios %}
-            <span class="govuk-caption-l">Thinking Skills Programme</span>
+            <span class="govuk-caption-l">{{ activityTitle }}</span>
             {{ govukRadios({
             name: "removeOption",
             fieldset: {
                 legend: {
-                text: "Select how you want to end Matt Bellamy's allocation for this activity",
+                text: "Select how you want to end {{ prisonerName }} 's allocation for this activity",
                 isPageHeading: true,
                 classes: "govuk-fieldset__legend--l"
                 }
