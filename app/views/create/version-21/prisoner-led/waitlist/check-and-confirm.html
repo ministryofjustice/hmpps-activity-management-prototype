@@ -1,0 +1,157 @@
+{% extends "layout_hmpps-new-nav.html" %}
+
+{% set serviceName = "Activities" %}
+
+{% set prisonerName = "Marek Carlsen" %}
+{% set prisonerNameAlt = "Carlsen, Marek" %}
+{% set prisonerNumber = "G2444ZD" %}
+{% set prisonerLocation = "A-4-02E" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Standard" %}
+{% set prisonerEarliestReleaseDate = "27 June 2026" %}
+{% set prisonerImage = "/public/images/test-image-1.jpeg" %}
+{% set prisonerProfileURL = "prisoner-profile-3.html" %}
+
+{% set activityTitle = "Plastering workshop" %}
+
+{% block pageTitle %}
+Activities prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">{{ activityTitle }}</span>
+        <h1 class="govuk-heading-l">
+            Confirm and check this allocation
+        </h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Prisoner details
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ prisonerName }}<br>{{ prisonerNumber }}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Activity
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ activityTitle }}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Location
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Workshop 1
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Start of allocation
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    12 February 2025
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> start of allocation</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    End of allocation
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    None set
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> end of allocation</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Pay rate
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Low incentive level:<br>Pay band 3 - £1.50
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> end of allocation</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Schedule
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <ul>
+                        {% for sessions in data['countries'] %}
+                          <li>{{ country }}</li>
+                        {% endfor %}
+                        </ul>
+                    <ul>
+                        {% set excludeMonday = "AM, PM, ED" %}
+                        {% for excludeMonday in data['exclude-monday'] %}
+                          <li>{{ exclude-monday }} {{ exclude-monday-2 }}</li>
+                        {% endfor %}
+                    </ul>
+                    <dl class="govuk-summary-list govuk-summary-list--no-border govuk-summary-list--equal-widths">
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
+                                <span>Thursday</span>
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__key--normal-key-weight">
+                                    PM  (13:45 to 16:45)
+                                </div>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key govuk-summary-list__key--normal-key-weight">
+                                <span>Friday</span>
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__key--normal-key-weight">
+                                    PM  (13:45 to 16:45)
+                                </div>
+                            </dd>
+                        </div>
+                    </dl>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> end of allocation</span></a>
+                </dd>
+            </div>
+        </dl>
+        <form action="confirmed" method="post">
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Confirm this allocation"
+                }) }}
+                <a class="govuk-link" href="../summary-2.html">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

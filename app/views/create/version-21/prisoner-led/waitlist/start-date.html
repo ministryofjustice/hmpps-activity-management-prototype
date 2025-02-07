@@ -1,0 +1,102 @@
+{% extends "layout_hmpps-new-nav.html" %}
+
+{% set serviceName = "Activities" %}
+
+{% set prisonerName = "Marek Carlsen" %}
+{% set prisonerNameAlt = "Carlsen, Marek" %}
+{% set prisonerNumber = "G2444ZD" %}
+{% set prisonerLocation = "A-4-02E" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Standard" %}
+{% set prisonerEarliestReleaseDate = "27 June 2026" %}
+{% set prisonerImage = "/public/images/test-image-1.jpeg" %}
+{% set prisonerProfileURL = "prisoner-profile-3.html" %}
+
+{% set activityTitle = "Plastering workshop" %}
+
+{% block pageTitle %}
+{{ serviceName}} prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <form action="set-end-date" method="post"> 
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="session-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                    <h1 class="govuk-fieldset__heading">
+                        <span class="govuk-caption-l">{{ activityTitle }}</span>
+                        When do you want {{ prisonerName }} to start attending this activity?
+                    </h1>
+                </legend>
+                <div class="govuk-radios" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="session" name="session" type="radio" value="email" data-aria-controls="conditional-session">
+                        <label class="govuk-label govuk-radios__label" for="session">
+                            The next session - AM session on Wednesday, 12 February 2025
+                        </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="session-2" name="session" type="radio" value="phone" data-aria-controls="conditional-session-2">
+                        <label class="govuk-label govuk-radios__label" for="session-2">
+                            A different date
+                        </label>
+                    </div>
+                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-session-2">
+                        <div class="govuk-form-group">
+                            <div class="govuk-date-input" id="session">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="session-day">
+                                        Day
+                                        </label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="session-day" name="session-day" type="text" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="session-month">
+                                        Month
+                                        </label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="session-month" name="session-month" type="text" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="session-year">
+                                        Year
+                                        </label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="session-year" name="session-year" type="text" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Continue"
+                }) }}
+                <a class="govuk-link" href="summary-3.html">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends "layout_hmpps-new-nav.html" %}
+
+{% set serviceName = "Activities" %}
+
+{% set prisonerName = "Marek Carlsen" %}
+{% set prisonerNameAlt = "Carlsen, Marek" %}
+{% set prisonerNumber = "G2444ZD" %}
+{% set prisonerLocation = "A-4-02E" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Standard" %}
+{% set prisonerEarliestReleaseDate = "27 June 2026" %}
+{% set prisonerImage = "/public/images/test-image-1.jpeg" %}
+{% set prisonerProfileURL = "prisoner-profile-3.html" %}
+
+{% set activityTitle = "Plastering workshop" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">{{ activityTitle }}</span>
+        <h1 class="govuk-heading-xl">Before you allocate {{ prisonerName }}</h1>
+
+        <p class="govuk-body-l">Use the information on this page to decide if <a href="../prisoner-profile-3" class="govuk-link" target="_blank">{{ prisonerName }}<span class="govuk-visually-hidden"> (opens in new tab)</span></a> is suitable for {{ activityTitle }}.</p>
+        <p class="govuk-body-l">You may need to consult with other departments before making your decision.</p>
+
+        <h2 class="govuk-heading-m">Activity requirements</h2>
+        <p class="govuk-body">Review the requirements for {{ activityTitle }} and check if {{ prisonerName }} meets them.</p>
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-visually-hidden">Activity requirements</caption>
+            <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-table__header">Type of requirement</th>
+                    <th scope="col" class="govuk-table__header govuk-table__header">{{ prisonerName }}'s details</th>
+                    <th scope="col" class="govuk-table__header govuk-table__header">Meets requirement</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Workplace risk assessment level</th>
+                    <td class="govuk-table__cell">Low</td>
+                    <td class="govuk-table__cell">
+                        <strong class="govuk-tag govuk-tag--green">
+                        Yes
+                        </strong>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Incentive level</th>
+                    <td class="govuk-table__cell">Standard</td>
+                    <td class="govuk-table__cell">
+                        <strong class="govuk-tag govuk-tag--green">
+                        Yes
+                        </strong>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Education levels</th>
+                    <td class="govuk-table__cell">
+                        None
+                    </td> 
+                    <td class="govuk-table__cell">
+                        <strong class="govuk-tag govuk-tag--green">
+                        Yes
+                        </strong>
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Earliest release date</th>
+                    <td class="govuk-table__cell">
+                        <div>{{ prisonerEarliestReleaseDate }}</div>
+                    </td>
+                    <td class="govuk-table__cell">
+                        <strong class="govuk-tag govuk-tag--green">
+                        Yes
+                        </strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Non associations -->
+        <h2 class="govuk-heading-m">Non-associations</h2>
+        <p class="govuk-body">{{ prisonerName }} has no open non-associations with anyone in Leeds (HMP).</p>        
+        <!-- Current allocations -->
+        <h2 class="govuk-heading-m">Current allocations</h2>
+        <p class="govuk-body">Check if {{ prisonerName }}'s current allocation would be compatible with {{ activityTitle }}.</p>
+        <div class="govuk-!-margin-bottom-8 govuk-body">
+            <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-visually-hidden">Current Allocations</caption>
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-table__header">Activity</th>
+                    <th scope="col" class="govuk-table__header govuk-table__header">Start date</th>
+                    <th scope="col" class="govuk-table__header govuk-table__header">End date</th>
+                    <th scope="col" class="govuk-table__header govuk-table__header">Pay rate</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header"> Box making AM</th>
+                        <td class="govuk-table__cell">30 September 2024</td>
+                        <td class="govuk-table__cell">None set</td>
+                        <td class="govuk-table__cell">£1.50 (Pay band 1 (Lowest))</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header"> Box making PM</th>
+                        <td class="govuk-table__cell">30 September 2024</td>
+                        <td class="govuk-table__cell">None set</td>
+                        <td class="govuk-table__cell">£1.50 (Pay band 1 (Lowest))</td>
+                    </tr>
+                </tbody>
+            </table>
+            <span class="govuk-body">
+                <a href="#" class="govuk-link">View allocations for the last 12 months<span class="govuk-visually-hidden"> (opens in new tab)</span>
+                </a>
+            </span>
+        </div>
+        <div class="govuk-!-margin-top-8">
+            <form action="start-date" action="post">
+                <input type="hidden" name="" value="">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            Do you want to allocate {{ prisonerName }} to {{ activityTitle }}?
+                        </legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="confirmAllocationMarek" name="confirmAllocationMarek" type="radio" value="yes">
+                                <label class="govuk-label govuk-radios__label" for="confirmAllocationMarek">
+                                    Yes
+                                </label>                               
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="confirmAllocationMarek-2" name="confirmAllocationMarek" type="radio" value="no">
+                                <label class="govuk-label govuk-radios__label" for="confirmAllocationMarek-2">
+                                    No, return to {{ prisonerName }}' summary
+                                </label>        
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">
+                Continue
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

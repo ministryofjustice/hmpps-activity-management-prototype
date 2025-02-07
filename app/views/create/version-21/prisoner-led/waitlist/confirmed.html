@@ -1,0 +1,60 @@
+{% extends "layout_hmpps-new-nav.html" %}
+
+{% set serviceName = "Activities" %}
+
+{% set prisonerName = "Marek Carlsen" %}
+{% set prisonerNameAlt = "Carlsen, Marek" %}
+{% set prisonerNumber = "G2444ZD" %}
+{% set prisonerLocation = "A-4-02E" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Standard" %}
+{% set prisonerEarliestReleaseDate = "27 June 2026" %}
+{% set prisonerImage = "/public/images/test-image-1.jpeg" %}
+{% set prisonerProfileURL = "prisoner-profile-3.html" %}
+
+{% set activityTitle = "Plastering workshop" %}
+
+{% block pageTitle %}
+{{ serviceName }} prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">
+              Allocation complete
+            </h1>
+            <div class="govuk-panel__body">
+              {{ prisonerName }} is scheduled to be allocated to {{ activityTitle }} on 12 February 2025
+            </div>
+          </div>
+          <h2 class="govuk-heading-m">
+            What you can do next
+          </h2>
+          <p>You can either:</p>
+          <ul class="govuk-list govuk-list--bullet">
+                <li>
+                    <a href="../summary-allocations-3" class="govuk-link">Review {{ prisonerName }}' allocations</a>
+                </li>
+                <li>
+                  <a href="" class="govuk-link">Review the allocations for {{ activityTitle }} and continue allocating</a>
+                </li>
+                <li>
+                  <a href="" class="govuk-link">Find other activities with vacancies</a>
+                </li>
+                <li>
+                  <a href="" class="govuk-link">Find other prisoner</a>
+                </li>
+          </ul>
+    </div>
+</div>
+{% endblock %}

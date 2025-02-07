@@ -1,0 +1,219 @@
+{% extends "layout_hmpps-new-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">Wing cleaning</span>
+        <h1 class="govuk-heading-l">
+            Change when David Jones should attend Wing cleaning
+        </h1>
+        <p class="govuk-body">Unselect a session to exclude David Jones. They will not be scheduled to attend that session.</p>
+        <form action="check-and-confirm" method="post">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-half">      
+                    <div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    Monday
+                                </legend>
+                                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[monday]" name="week1[monday]" type="checkbox" value="AM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[monday]">
+                                            AM (08:30 to 11:45)
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[monday]-2" name="week1[monday]" type="checkbox" value="PM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[monday]-2">
+                                            PM (13:45 to 16:45)
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[monday]-3" name="week1[monday]" type="checkbox" value="ED" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[monday]-3">
+                                            ED (17:30 to 19:15)
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>              
+                    </div>            
+                    <div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    Tuesday
+                                </legend>
+                                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[tuesday]" name="week1[tuesday]" type="checkbox" value="AM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[tuesday]">
+                                            AM (08:30 to 11:45)
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[tuesday]-2" name="week1[tuesday]" type="checkbox" value="PM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[tuesday]-2">
+                                            PM (13:45 to 16:45)
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>                 
+                    </div>        
+                    <div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    Wednesday
+                                </legend>
+                                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[wednesday]" name="week1[wednesday]" type="checkbox" value="AM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[wednesday]">
+                                            AM (08:30 to 11:45)
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[wednesday]-2" name="week1[wednesday]" type="checkbox" value="PM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[wednesday]-2">
+                                            PM (13:45 to 16:45)
+                                        </label>  
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[wednesday]-3" name="week1[wednesday]" type="checkbox" value="ED" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[wednesday]-3">
+                                            ED (17:30 to 19:15)
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>                     
+                    </div>               
+                    <div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    Thursday
+                                </legend>
+                                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[thursday]" name="week1[thursday]" type="checkbox" value="PM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[thursday]">
+                                            PM (13:45 to 16:45)
+                                        </label> 
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>                       
+                    </div>               
+                    <div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    Friday
+                                </legend>
+                                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[friday]" name="week1[friday]" type="checkbox" value="AM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[friday]">
+                                            AM (08:30 to 11:45)
+                                        </label>  
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[friday]-2" name="week1[friday]" type="checkbox" value="PM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[friday]-2">
+                                            PM (13:45 to 16:45)
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>                   
+                    </div>           
+                    <div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    Saturday
+                                </legend>
+                                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[saturday]" name="week1[saturday]" type="checkbox" value="AM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[saturday]">
+                                            AM (08:30 to 11:45)
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[saturday]-2" name="week1[saturday]" type="checkbox" value="PM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[saturday]-2">
+                                            PM (13:45 to 16:45)
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>                     
+                    </div>
+                    <div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    Sunday
+                                </legend>
+                                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[sunday]" name="week1[sunday]" type="checkbox" value="AM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[sunday]">
+                                            AM (08:30 to 11:45)
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[sunday]-2" name="week1[sunday]" type="checkbox" value="PM" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[sunday]-2">
+                                            PM (13:45 to 16:45)
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="week1[sunday]-3" name="week1[sunday]" type="checkbox" value="ED" checked="">
+                                        <label class="govuk-label govuk-checkboxes__label" for="week1[sunday]-3">
+                                            ED (17:30 to 19:15)
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Continue"
+                }) }}
+                <a class="govuk-link" href="summary-2.html">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "layout_hmpps-new-nav.html" %}
+{% set serviceName = "Appointments" %}
+
+{% block pageTitle %}
+Appointments prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+{{govukBackLink({
+  text: "Back",
+  "href": "javascript: window.history.go(-1)"
+  })}} 
+  <!-- hidden for testing
+  <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+    Go to all activity tasks
+  </a>
+  -->
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds"> 
+    <form action="before-you-allocate" method="post">
+       <div class="govuk-form-group">
+          <span class="govuk-caption-l">Allocate to an activity</span>
+            <label class="govuk-label govuk-label--l" for="select">
+              Select an activity
+            </label>
+            <select class="govuk-select govuk-!-margin-bottom-6" id="select" name="select">
+              <option value="" disabled selected>Select an activity</option>
+              <option value="Admin orderly">Admin orderly</option>
+              <option value="Adjudication">Adjudication</option>
+              <option value="Gardens">Gardens</option>
+              <option value="Gym" >Gym</option>
+              <option value="Kitchens">Kitchens</option>
+              <option value="Mentoring">Mentoring</option>
+              <option value="Mentoring">Wing cleaning</option>
+            </select>
+            <button class="govuk-button" data-module="govuk-button">
+              Search
+            </button>
+        </div>
+    </form>
+  </div>
+</div>
+<style>
+    select.govuk-select {
+        width: 100% !important;
+    }
+</style>
+{% endblock %}

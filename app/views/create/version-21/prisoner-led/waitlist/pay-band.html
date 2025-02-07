@@ -1,0 +1,73 @@
+{% extends "layout_hmpps-new-nav.html" %}
+
+{% set serviceName = "Activities" %}
+
+{% set prisonerName = "Marek Carlsen" %}
+{% set prisonerNameAlt = "Carlsen, Marek" %}
+{% set prisonerNumber = "G2444ZD" %}
+{% set prisonerLocation = "A-4-02E" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Standard" %}
+{% set prisonerEarliestReleaseDate = "27 June 2026" %}
+{% set prisonerImage = "/public/images/test-image-1.jpeg" %}
+{% set prisonerProfileURL = "prisoner-profile-3.html" %}
+
+{% set activityTitle = "Plastering workshop" %}
+
+{% block pageTitle %}
+{{ serviceName }} prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <form action="exclusions" method="post">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                    <span class="govuk-caption-l">{{ activityTitle }}</span>
+                    <h1 class="govuk-fieldset__heading">
+                        Select {{ prisonerName }} pay rate
+                    </h1>
+                </legend>
+                {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+                {{ govukInsetText({
+                html: "<p>{{ prisonerName }} currently <strong>standard</strong> {{ prisonerIncentiveLevel }} level.</p>"
+                }) }}
+                <div class="govuk-radios" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="setEndDate" name="setEndDate" type="radio" value="yes">
+                        <label class="govuk-label govuk-radios__label govuk-radios__label--bold" for="setEndDate">
+                            Payband 3 - £1.50
+                        </label>
+                    </div>
+                </div>
+                </fieldset>
+            </div>
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Continue"
+                }) }}
+                <a class="govuk-link" href="summary-2.html">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
