@@ -1,5 +1,19 @@
 {% extends "layout_hmpps-new-nav.html" %}
+
+{% extends "layout_hmpps-new-nav.html" %}
+
 {% set serviceName = "Activities" %}
+
+{% set prisonerName = "Matt Bellamy" %}
+{% set prisonerNameAlt = "Bellamy, Matt" %}
+{% set prisonerNumber = "HB7891TD" %}
+{% set prisonerLocation = "A-3-01C" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Enchanced" %}
+{% set prisonerEarliestReleaseDate = "24 Novemer 2029" %}
+{% set prisonerImage = "/public/images/test-profile.jpeg" %}
+{% set prisonerProfileURL = "prisoner-profile-2.html" %}
 
 {% block pageTitle %}
 Manage activity allocations - {{ serviceName }} prototype
@@ -25,7 +39,7 @@ Manage activity allocations - {{ serviceName }} prototype
 <!-- mini profile -->
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds"> 
-        <h1 class="govuk-heading-l govuk-!-margin-bottom-2">Manage Matt Bellamy activity allocations</h1>
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-2">Manage {{ prisonerName }} activity allocations</h1>
         <p class="govuk-body">Review and edit applications, allocate to and remove from activities, and manage allocations.</p>
     </div>
     <div class="govuk-grid-column-one-third">
@@ -33,49 +47,21 @@ Manage activity allocations - {{ serviceName }} prototype
             <h2 class="govuk-heading-s">7 day schedule</h2>
             <p class="govuk-body govuk-!-margin-bottom-0">
                 <a class="govuk-link govuk-link--no-visited-state" href="7-day-schedule-2">
-                    View Matt Bellamy's 7 day schedule
+                    View {{ prisonerName }}'s 7 day schedule
                 </a>
             </p>
         </div>
     </div>
 </div>
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full"> 
-        <div class="hmpps-mini-banner govuk-!-margin-top-6">
-            <img class="hmpps-mini-banner__photo" src="/public/images/test-image-5.jpeg" alt="Jones, David" width="80" height="100">
-            <div class="hmpps-mini-banner__name">
-                <h2 class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="prisoner-profile-2.html">Bellamy, Matt</a></h2>
-                <div class="govuk-body" id="prisonerNumber">G7006VF</div>
-            </div>
-            <div class="dps-mini-profile-header">
-                <dl class="govuk-body">
-                    <dt>Location</dt>
-                    <dd>
-                    <a class="black-link govuk-link--no-visited-state" href="#">D-2-08N</a>
-                    </dd>
-                </dl>
-                <dl class="govuk-body">
-                    <dt>Incentive level</dt>
-                    <dd>
-                        <a class="black-link" href="#">Standard</a>
-                    </dd>
-                </dl>
-                <dl class="govuk-body">
-                    <dt>Earliest release date</dt>
-                    <dd>
-                        <a class="black-link" href="#">17 June 2032</a>
-                    </dd>
-                </dl>
-            </div>
-        </div>
-    </div>
-</div>
+
+<!-- mini profile -->
+{% include '../includes/mini-profile.html' %}
 
 <!-- Non-associations -->
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full"> 
         <div class="govuk-inset-text">
-            <a href="non-associations-2" class="govuk-link">View Matt Bellamy's open non-associations</a>, to check if any changes need to be made to their allocations.
+            <a href="non-associations-2" class="govuk-link">View {{ prisonerName }}'s open non-associations</a>, to check if any changes need to be made to their allocations.
         </div>
     </div>
 </div>

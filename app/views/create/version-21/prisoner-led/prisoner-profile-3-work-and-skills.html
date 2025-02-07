@@ -1,5 +1,17 @@
 {% extends "layout_hmpps-new-nav.html" %}
+
 {% set serviceName = "Activities" %}
+
+{% set prisonerName = "Marek Carlsen" %}
+{% set prisonerNameAlt = "Carlsen, Marek" %}
+{% set prisonerNumber = "G2444ZD" %}
+{% set prisonerLocation = "A-4-02E" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Standard" %}
+{% set prisonerEarliestReleaseDate = "2 February 2036" %}
+{% set prisonerImage = "/public/images/test-image-1.jpeg" %}
+{% set prisonerWorkAndSkills = "./prisoner-profile-3-work-and-skills" %}
 
 {% block pageTitle %}
 DPS profile - {{ serviceName }} prototype
@@ -197,7 +209,7 @@ DPS profile - {{ serviceName }} prototype
                     </div>
                     <div class="hmpps-summary-card__body">
                         <p class="govuk-hint">Information from Curious. This only includes educational courses. Contact the local education team to find out more.</p>
-                        <p class="govuk-body" data-qa="no-in-prison-courses-message">Marek Carlsen has no courses and qualifications recorded in Curious.</p>
+                        <p class="govuk-body" data-qa="no-in-prison-courses-message">{{prisonerName }} has no courses and qualifications recorded in Curious.</p>
                     </div>
                 </div>
             </div>
@@ -242,7 +254,7 @@ DPS profile - {{ serviceName }} prototype
                                     <a class="govuk-link--no-visited-state govuk-!-display-none-print" href="7-day-schedule-3">View 7 day schedule</a>
                                 </p>
                                 <p class="govuk-body">
-                                    <a class="govuk-link--no-visited-state govuk-!-display-none-print" href="summary-3">Manage David Jones' activity allocations</a>
+                                    <a class="govuk-link--no-visited-state govuk-!-display-none-print" href="summary-3">Manage {{ prisonerName }}' activity allocations</a>
                                 </p>
                             </div>
                         </div>
@@ -331,7 +343,7 @@ DPS profile - {{ serviceName }} prototype
                     <h3 class="govuk-heading-s">Most recent levels</h3>
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-full">
-                            Marek Carlsen has no employability skills recorded.       
+                            <p>{{prisonerName }} has no employability skills recorded.</p>       
                         </div>
                     </div>
                 </div>

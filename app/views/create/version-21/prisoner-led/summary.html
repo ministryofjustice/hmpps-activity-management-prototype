@@ -1,5 +1,17 @@
 {% extends "layout_hmpps-new-nav.html" %}
+
 {% set serviceName = "Activities" %}
+
+{% set prisonerName = "David Jones" %}
+{% set prisonerNameAlt = "Jones, David" %}
+{% set prisonerNumber = "G7006VF" %}
+{% set prisonerLocation = "D-2-08N" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Standard" %}
+{% set prisonerEarliestReleaseDate = "17 June 2032" %}
+{% set prisonerImage = "/public/images/test-image-5.jpeg" %}
+{% set prisonerProfileURL = "prisoner-profile.html" %}
 
 {% block pageTitle %}
 Manage activity allocations - {{ serviceName }} prototype
@@ -22,11 +34,10 @@ Manage activity allocations - {{ serviceName }} prototype
 {% endblock %}
 
 {% block content %}
-<!-- mini profile -->
-<!-- mini profile -->
+<!-- Heading section -->
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds"> 
-        <h1 class="govuk-heading-l govuk-!-margin-bottom-2">Manage David Jones’ activity allocations</h1>
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-2">Manage {{ prisonerName }}’ activity allocations</h1>
         <p class="govuk-body">Review and edit applications, allocate to and remove from activities, and manage allocations.</p>
     </div>
     <div class="govuk-grid-column-one-third">
@@ -34,50 +45,22 @@ Manage activity allocations - {{ serviceName }} prototype
             <h2 class="govuk-heading-s">7 day schedule</h2>
             <p class="govuk-body govuk-!-margin-bottom-0">
                 <a class="govuk-link govuk-link--no-visited-state" href="7-day-schedule">
-                    View David Jones' 7 day schedule
+                    View {{ prisonerName }}' 7 day schedule
                 </a>
             </p>
         </div>
     </div>
 </div>
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full"> 
-        <div class="hmpps-mini-banner govuk-!-margin-top-6">
-            <img class="hmpps-mini-banner__photo" src="/public/images/test-image-5.jpeg" alt="Jones, David" width="80" height="100">
-            <div class="hmpps-mini-banner__name">
-                <h2 class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="prisoner-profile.html">Jones, David</a></h2>
-                <div class="govuk-body" id="prisonerNumber">G7006VF</div>
-            </div>
-            <div class="dps-mini-profile-header">
-                <dl class="govuk-body">
-                    <dt>Location</dt>
-                    <dd>
-                    <a class="black-link govuk-link--no-visited-state" href="#">D-2-08N</a>
-                    </dd>
-                </dl>
-                <dl class="govuk-body">
-                    <dt>Incentive level</dt>
-                    <dd>
-                        <a class="black-link" href="#">Standard</a>
-                    </dd>
-                </dl>
-                <dl class="govuk-body">
-                    <dt>Earliest release date</dt>
-                    <dd>
-                        <a class="black-link" href="#">17 June 2032</a>
-                    </dd>
-                </dl>
-            </div>
-        </div>
-    </div>
-</div>
+
+<!-- mini profile -->
+{% include '../includes/mini-profile.html' %}
 
 <!-- Non-associations -->
 <!-- hidden for testing
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full"> 
         <div class="govuk-inset-text">
-            <a href="" class="govuk-link">View David Jones' open non-associations</a>, to check if they affect their applications or being on a waitlist.
+            <a href="" class="govuk-link">View {{ prisonerName }}' open non-associations</a>, to check if they affect their applications or being on a waitlist.
         </div>
     </div>
 </div>
@@ -128,7 +111,7 @@ Manage activity allocations - {{ serviceName }} prototype
                             <a href="x" class="govuk-link">Wing cleaning</a>
                         </th>
                         <td class="govuk-table__cell" data-sort-value="3 February 2025">3 February 2025</td>
-                        <td class="govuk-table__cell">David Jones</td>
+                        <td class="govuk-table__cell">{{ prisonerName }}</td>
                         <td class="govuk-table__cell">
                             <a href="#" class="govuk-link govuk-link--no-visited-state">View waitlist</a>
                             <a href="allocate-new-activity/search-for-an-activity" class="govuk-link govuk-link--no-visited-state govuk-!-margin-left-2">Allocate</a>
@@ -139,7 +122,7 @@ Manage activity allocations - {{ serviceName }} prototype
                             <a href="#" class="govuk-link">Wing Servery</a>
                         </th>
                         <td class="govuk-table__cell" data-sort-value="3 February 2025">3 February 2025</td>
-                        <td class="govuk-table__cell">David Jones</td>
+                        <td class="govuk-table__cell">{{ prisonerName }}</td>
                         <td class="govuk-table__cell">
                             <a href="#" class="govuk-link govuk-link--no-visited-state">View waitlist</a>
                             <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-left-2">Allocate</a>
@@ -179,7 +162,7 @@ Manage activity allocations - {{ serviceName }} prototype
         </section>
         <section id="declined-waitlist-applications" class=" govuk-!-margin-bottom-6"></section>
             <h3 class="govuk-heading-s">Declined</h3>
-            <p class="govuk-body">David Jones has no declined activity applications.</p>
+            <p class="govuk-body">{{ prisonerName }} has no declined activity applications.</p>
         </section>
     </div>    
 </div>
