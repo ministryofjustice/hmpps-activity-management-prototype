@@ -36,6 +36,42 @@ Manage activity allocations - {{ serviceName }} prototype
 {% endblock %}
 
 {% block content %}
+<!-- updated allocation from edit an allocation -->
+ <!-- hidden
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-top-3 govuk-!-margin-bottom-10 govuk-!-display-none-print" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" data-govuk-notification-banner-init="">
+            <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Success
+            </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+                <h3 class="govuk-notification-banner__heading">Allocation updated</h3>
+                <p class="govuk-body">You have changed when {{ prisonerName }} should attend Kitchens PM</p>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+<!-- updated allocation from edit an allocation -->
+{% if data['remove-option'] == "remove-now" %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-top-3 govuk-!-margin-bottom-10 govuk-!-display-none-print" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" data-govuk-notification-banner-init="">
+            <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Success
+            </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+                <h3 class="govuk-notification-banner__heading">Allocation updated</h3>
+                <p class="govuk-body">You have removed {{ prisonerName }} from Thinking Skills Programme</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 <!-- mini profile -->
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds"> 
@@ -119,7 +155,7 @@ Manage activity allocations - {{ serviceName }} prototype
                         <td class="govuk-table__cell">31 January 2025</td>
                         <td class="govuk-table__cell">None set</td>
                         <td class="govuk-table__cell">
-                            <a href="edit/edit-activity" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Edit or suspend allocation</a>
+                            <a href="edit/edit-activity-thinking-skills-programme.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Edit or suspend allocation</a>
                             <a href="end-allocation/option" class="govuk-link govuk-link--no-visited-state">Remove from activity</a>
                         </td>
                     </tr>
@@ -144,7 +180,7 @@ Manage activity allocations - {{ serviceName }} prototype
                         <td class="govuk-table__cell">12 September 2023</td>
                         <td class="govuk-table__cell">None set</td>
                         <td class="govuk-table__cell">
-                            <a href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Edit or suspend allocation</a>
+                            <a href="edit/edit-activity-kitchens-pm" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-4">Edit or suspend allocation</a>
                             <a href="#" class="govuk-link govuk-link--no-visited-state">Remove from activity</a>
                         </td>
                     </tr>
@@ -173,7 +209,7 @@ Manage activity allocations - {{ serviceName }} prototype
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">
-                        <a href="" class="govuk-link govuk-link--no-visited-state">Activity title</a>
+                        <a href="#" class="govuk-link govuk-link--no-visited-state">Gym</a>
                     </th>
                     <td class="govuk-table__cell">6 January 2025</td>
                     <td class="govuk-table__cell">None set</td>
@@ -189,6 +225,28 @@ Manage activity allocations - {{ serviceName }} prototype
 </div>
 
 <style>
+.govuk-notification-banner--success {
+    border-color: #00703c;
+    background-color: #00703c
+}
+
+.govuk-notification-banner--success .govuk-notification-banner__link:link,.govuk-notification-banner--success .govuk-notification-banner__link:visited {
+    color: #00703c
+}
+
+.govuk-notification-banner--success .govuk-notification-banner__link:hover {
+    color: #004e2a
+}
+
+.govuk-notification-banner--success .govuk-notification-banner__link:active {
+    color: #00703c
+}
+
+.govuk-notification-banner--success .govuk-notification-banner__link:focus {
+    color: #0b0c0c
+}
+
+
 .black-link, .govvk-link--no-visited-state {
     color:#000000 !important;
 }

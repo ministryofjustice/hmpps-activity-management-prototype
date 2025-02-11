@@ -34,6 +34,24 @@ Manage activity allocations - {{ serviceName }} prototype
 {% endblock %}
 
 {% block content %}
+<!-- success banner for updating allocation from waitlist-->
+{% if (data['confirmAllocationDavid'] == "yes") %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-top-3 govuk-!-margin-bottom-10 govuk-!-display-none-print" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" data-govuk-notification-banner-init="">
+            <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Success
+            </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+                <h3 class="govuk-notification-banner__heading">Allocation updated</h3>
+                <p class="govuk-body">You have changed when {{ prisonerName }}a should attend Kitchens PM</p>
+            </div>
+        </div>
+    </div>
+</div>
+<{% endif %}
 <!-- Heading section -->
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds"> 
@@ -102,10 +120,13 @@ Manage activity allocations - {{ serviceName }} prototype
                     <th scope="col" class="govuk-table__header govuk-!-width-one-quarter" aria-sort="ascending">Activity</th>
                     <th scope="col" class="govuk-table__header govuk-!-width-one-quarter" data-sort-type="alphabetic" >Request date</th>
                     <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Requester</th>
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-third"><span class="govuk-visually-hidden">Management links</span></th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">
+                        <span class="govuk-visually-hidden">Management links</span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
+                    {% if (data['confirmAllocationDavid'] !== "yes") %}
                     <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">
                             <a href="x" class="govuk-link">Wing cleaning</a>
@@ -117,6 +138,13 @@ Manage activity allocations - {{ serviceName }} prototype
                             <a href="allocate-new-activity/search-for-an-activity" class="govuk-link govuk-link--no-visited-state govuk-!-margin-left-2">Allocate</a>
                         </td>
                     </tr>
+                    {% else %}
+                    <tr class="govuk-table__row">
+                        <span class="govuk-visually-hidden">
+                            test
+                        </span>
+                    </tr>
+                    {% endif %}
                     <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">
                             <a href="#" class="govuk-link">Wing Servery</a>

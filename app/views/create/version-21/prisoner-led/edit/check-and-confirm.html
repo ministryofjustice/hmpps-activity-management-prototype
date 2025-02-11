@@ -1,0 +1,71 @@
+{% extends "layout_hmpps-new-nav.html" %}
+
+{% set serviceName = "Activity" %}
+
+{% set prisonerName = "Matt Bellamy" %}
+{% set activityTitle = "Kitchens PM" %}
+
+{% block pageTitle %}
+{{ serviceName }} prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+      <!-- hidden for testing
+      <a href="../dps-home.html" class="govuk-link govuk-link--no-visited-state govuk-!-margin-top-3 govuk-!-margin-bottom-3 float-right">
+        Go to all activity tasks
+      </a>
+      -->
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">Modify someone’s activity schedule</span>
+        <h1 class="govuk-heading-l">Check changes to when {{ prsionerName }} should attend {{ activityTitle }}</h1>
+
+        <h2 class="govuk-heading-l">Sessions you’re excluding {{ prsionerName }} from</h2>
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
+            {% for values in data['exclusions-monday'] %}
+            <li>{{ values }}</li>
+            {% endfor %}
+            {% for values in data['exclusions-tuesday'] %}
+            <li>{{ values }}</li>
+            {% endfor %}
+            {% for values in data['exclusions-wednesday'] %}
+            <li>{{ values }}</li>
+            {% endfor %}
+            {% for values in data['exclusions-thursday'] %}
+            <li>{{ values }}</li>
+            {% endfor %}
+            {% for values in data['exclusions-friday'] %}
+            <li>{{ values }}</li>
+            {% endfor %}
+        </ul>
+        <p class="govuk-body">This means they will not:</p>
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
+            <li>be on the attendance list</li>
+            <li>have this activity on unlock and movement lists</li>
+        </ul>
+        <p class="govuk-body">They will stay excluded until this session is added back to their schedule.</p>
+        <p class="govuk-body">Changes take effect from tomorrow.</p>
+        <form method="POST" action="../summary-allocations-2">
+            <input type="hidden" name="_csrf" >
+            <div class="govuk-button-group govuk-!-margin-top-6">
+                <button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+                Confirm
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

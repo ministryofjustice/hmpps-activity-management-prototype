@@ -1,0 +1,246 @@
+{% extends "layout_hmpps-new-nav.html" %}
+
+{% set serviceName = "Activities" %}
+
+{% set prisonerName = "Matt Bellamy" %}
+{% set prisonerNameAlt = "Bellamy, Matt" %}
+{% set prisonerNumber = "HB7891TD" %}
+{% set prisonerLocation = "A-3-01C" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Enchanced" %}
+{% set prisonerEarliestReleaseDate = "24 Novemer 2029" %}
+{% set prisonerImage = "/public/images/test-profile.jpeg" %}
+{% set prisonerProfileURL = "prisoner-profile-2.html" %}
+
+{% set activityTitle = "Kitchens PM" %}
+
+{% block pageTitle %}
+Manage activity allocations - {{ serviceName }} prototype
+{% endblock %}
+
+{% block primaryNavigation %}
+
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="govuk-!-display-none-print">
+    {{govukBackLink({
+      text: "Back",
+      "href": "javascript: window.history.go(-1)"
+      })}} 
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">{{ activityTitle }}</span>
+        <h1 class="govuk-heading-l">
+            Change when {{ prisonerName }} should attend {{ activityTitle }}
+        </h1>
+        <p class="govuk-body">Unselect a session to exclude {{ prisonerName }}. They will not be scheduled to attend that session.</p>
+        <form action="check-and-confirm" method="post">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-half">      
+                    {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+                    {{ govukCheckboxes({
+                    name: "exclusions-monday",
+                    fieldset: {
+                        legend: {
+                        text: "Monday",
+                        isPageHeading: false,
+                        classes: "govuk-fieldset__legend--m"
+                        }
+                    },
+                    items: [
+                        {
+                        value: "AM (08:30 to 11:45)",
+                        text: "AM (08:30 to 11:45)"
+                        },
+                        {
+                        value: "PM (12:30 to 16:30)",
+                        text: "PM (12:30 to 16:30)",
+                        checked: true
+                        },
+                        {
+                        value: "ED (17:00 to 18:30)",
+                        text: "ED (17:00 to 18:30)"
+                        }
+                    ]
+                    }) }}
+                    
+
+                    {{ govukCheckboxes({
+                    name: "exclusions-tuesday",
+                    fieldset: {
+                        legend: {
+                        text: "Tuesday",
+                        isPageHeading: false,
+                        classes: "govuk-fieldset__legend--m"
+                        }
+                    },
+                    items: [
+                        {
+                        value: "AM (08:30 to 11:45)",
+                        text: "AM (08:30 to 11:45)"
+                        },
+                        {
+                        value: "PM (12:30 to 16:30)",
+                        text: "PM (12:30 to 16:30)",
+                        checked: true
+                        },
+                        {
+                        value: "ED (17:00 to 18:30)",
+                        text: "ED (17:00 to 18:30)"
+                        }
+                    ]
+                    }) }}
+
+                    {{ govukCheckboxes({
+                        name: "exclusions-wednesday",
+                        fieldset: {
+                            legend: {
+                            text: "Wednesday",
+                            isPageHeading: false,
+                            classes: "govuk-fieldset__legend--m"
+                            }
+                        },
+                        items: [
+                            {
+                            value: "AM (08:30 to 11:45)",
+                            text: "AM (08:30 to 11:45)"
+                            },
+                            {
+                            value: "PM (12:30 to 16:30)",
+                            text: "PM (12:30 to 16:30)",
+                            checked: true
+                            },
+                            {
+                            value: "ED (17:00 to 18:30)",
+                            text: "ED (17:00 to 18:30)"
+                            }
+                        ]
+                    }) }}
+
+                    {{ govukCheckboxes({
+                        name: "exclusions-thursday",
+                        fieldset: {
+                            legend: {
+                            text: "Thursday",
+                            isPageHeading: false,
+                            classes: "govuk-fieldset__legend--m"
+                            }
+                        },
+                        items: [
+                            {
+                            value: "AM (08:30 to 11:45)",
+                            text: "AM (08:30 to 11:45)"
+                            },
+                            {
+                            value: "PM (12:30 to 16:30)",
+                            text: "PM (12:30 to 16:30)",
+                            checked: true
+                            },
+                            {
+                            value: "ED (17:00 to 18:30)",
+                            text: "ED (17:00 to 18:30)"
+                            }
+                        ]
+                    }) }}
+                    {{ govukCheckboxes({
+                        name: "exclusions-friday",
+                        fieldset: {
+                            legend: {
+                            text: "Friday",
+                            isPageHeading: false,
+                            classes: "govuk-fieldset__legend--m"
+                            }
+                        },
+                        items: [
+                            {
+                            value: "AM (08:30 to 11:45)",
+                            text: "AM (08:30 to 11:45)"
+                            },
+                            {
+                            value: "PM (12:30 to 16:30)",
+                            text: "PM (12:30 to 16:30)",
+                            checked: true
+                            },
+                            {
+                            value: "ED (17:00 to 18:30)",
+                            text: "ED (17:00 to 18:30)"
+                            }
+                        ]
+                    }) }}
+
+                    {{ govukCheckboxes({
+                        name: "exclusions-saturday",
+                        fieldset: {
+                            legend: {
+                            text: "Saturday",
+                            isPageHeading: false,
+                            classes: "govuk-fieldset__legend--m"
+                            }
+                        },
+                        items: [
+                            {
+                            value: "AM (08:30 to 11:45)",
+                            text: "AM (08:30 to 11:45)",
+                            checked: checked("exclusions-saturday", "AM (08:30 to 11:45)")
+                            },
+                            {
+                            value: "PM (12:30 to 16:30)",
+                            text: "PM (12:30 to 16:30)",
+                            checked: checked("exclusions-saturday", "PM (12:30 to 16:30)")
+                            },
+                            {
+                            value: "ED (17:00 to 18:30)",
+                            text: "ED (17:00 to 18:30)",
+                            checked: checked("exclusions-saturday", "ED (17:00 to 18:30)")
+                            }
+                        ]
+                    }) }}
+
+                    {{ govukCheckboxes({
+                        name: "exclusions-sunday",
+                        fieldset: {
+                            legend: {
+                            text: "Sunday",
+                            isPageHeading: false,
+                            classes: "govuk-fieldset__legend--m"
+                            }
+                        },
+                        items: [
+                            {
+                            value: "AM (08:30 to 11:45)",
+                            text: "AM (08:30 to 11:45)",
+                            checked: checked("exclusions-sunday", "AM (08:30 to 11:45)")
+                            },
+                            {
+                            value: "PM (12:30 to 16:30)",
+                            text: "PM (12:30 to 16:30)",
+                            checked: checked("exclusions-sunday", "PM (12:30 to 16:30)")
+                            },
+                            {
+                            value: "ED (17:00 to 18:30)",
+                            text: "ED (17:00 to 18:30)",
+                            checked: checked("exclusions-sunday", "ED (17:00 to 18:30)")
+                            }
+                        ]
+                    }) }}
+                        
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Continue"
+                }) }}
+                <a class="govuk-link" href="">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
