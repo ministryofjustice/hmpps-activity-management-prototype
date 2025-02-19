@@ -1,6 +1,8 @@
 {% extends "layout_hmpps-extended-width.html" %}
 {% set serviceName = "Activities" %}
 
+{% set prisonLocation = "Westbridge" %}
+
 {% block pageTitle %}
 DPS Home - {{ serviceName }} prototype
 {% endblock %}
@@ -19,7 +21,7 @@ DPS Home - {{ serviceName }} prototype
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="search-type-local" name="searchType" type="radio" value="local" checked="">
                             <label class="govuk-label govuk-radios__label" for="search-type-local">
-                                In Leeds (HMP)
+                                In {{ prisonLocation }} (HMP)
                             </label>                        
                         </div>
                         <div class="govuk-radios__item">
@@ -62,7 +64,7 @@ DPS Home - {{ serviceName }} prototype
                 </div>
                 <div class="govuk-form-group">
                     <a class="govuk-heading-link" href="#" class="govuk-link govuk-link--no-visited-state">All prisoners in
-                        Leeds (HMP)</a>
+                        {{ prisonLocation }} (HMP)</a>
                 </div>
             </fieldset>
         </form>
@@ -236,7 +238,7 @@ DPS Home - {{ serviceName }} prototype
     <hr class="govuk-section-break--l">
 
     <section class="dps-homepage-today" data-qa="homepage-today-section">
-        <h2 class="govuk-heading-m">Today in Leeds (HMP)</h2>
+        <h2 class="govuk-heading-m">Today in {{ prisonLocation }} (HMP)</h2>
         <div class="today-card-container">
             <div class="today-card" data-qa="today-unlock-roll-card">
                 <h3 class="govuk-heading-s">Today's unlock roll</h3>
