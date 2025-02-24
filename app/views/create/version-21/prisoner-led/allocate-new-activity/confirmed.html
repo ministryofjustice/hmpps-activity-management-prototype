@@ -1,8 +1,20 @@
 {% extends "layout_hmpps-new-nav.html" %}
-{% set serviceName = "Appointments" %}
+
+{% set serviceName = "Activities" %}
+
+{% set prisonerName = "David Jones" %}
+{% set prisonerNameAlt = "Jones, David" %}
+{% set prisonerNumber = "G7006VF" %}
+{% set prisonerLocation = "D-2-08N" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Standard" %}
+{% set prisonerEarliestReleaseDate = "17 June 2032" %}
+
+{% set activityTitle = "Wing cleaning" %}
 
 {% block pageTitle %}
-Appointments prototype
+Allocate - {{ serviceName }} prototype
 {% endblock %}
 
 {% block primaryNavigation %}
@@ -20,7 +32,7 @@ Appointments prototype
               Allocation complete
             </h1>
             <div class="govuk-panel__body">
-              David Jones is scheduled to be allocated to Wing cleaning on Wednesday, 12 February 2025
+              {{ prisonerName }} is scheduled to be allocated to {{activityTitle }} on Wednesday, 12 February 2025
             </div>
           </div>
           <h2 class="govuk-heading-m">
@@ -29,10 +41,10 @@ Appointments prototype
           <p>You can either:</p>
           <ul class="govuk-list govuk-list--bullet">
                 <li>
-                    <a href="../summary-allocations" class="govuk-link">Review David Jones' allocations</a>
+                    <a href="../summary-allocations" class="govuk-link">Review {{ prisonerName }}' allocations</a>
                 </li>
                 <li>
-                  <a href="" class="govuk-link">Review the allocations for Wing cleaning and continue allocating</a>
+                  <a href="" class="govuk-link">Review the allocations for {{activityTitle }} and continue allocating</a>
                 </li>
                 <li>
                   <a href="" class="govuk-link">Find other activities with vacancies</a>

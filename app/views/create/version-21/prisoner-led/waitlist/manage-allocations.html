@@ -1,8 +1,20 @@
 {% extends "layout_hmpps-new-nav.html" %}
-{% set serviceName = "Appointments" %}
+
+{% set serviceName = "Activities" %}
+
+{% set prisonerName = "David Jones" %}
+{% set prisonerNameAlt = "Jones, David" %}
+{% set prisonerNumber = "G7006VF" %}
+{% set prisonerLocation = "D-2-08N" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Standard" %}
+{% set prisonerEarliestReleaseDate = "17 June 2032" %}
+
+{% set activityTitle = "Plastering workshop" %}
 
 {% block pageTitle %}
-Appointments prototype
+Waitlist - {{ serviceName }} prototype
 {% endblock %}
 
 {% block primaryNavigation %}
@@ -21,7 +33,7 @@ Appointments prototype
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l">Manage allocations</span>
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-7">Plastering workshop</h1>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-7">{{ activityTitle }}</h1>
         <p class="govuk-body-l">Check the requirements for this activity so that you can allocate suitable candidates.</p>
     </div>
     <div class="govuk-grid-column-one-third">
@@ -252,10 +264,10 @@ Appointments prototype
                             <a class="sticky-select-action-bar__clear-link">Clear</a>
                         </div>
                         <div class="govuk-button-group">
-                            <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--white" data-module="govuk-button" id="allocated-action-0" formaction="475/deallocate" data-max-items="" data-govuk-button-init="">
+                            <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--blue" data-module="govuk-button" id="allocated-action-0" formaction="475/deallocate" data-max-items="" data-govuk-button-init="">
                                 End allocation
                             </button>
-                            <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--white" data-module="govuk-button" id="allocated-action-1" formaction="475/check-allocation" data-max-items="1" data-govuk-button-init="">
+                            <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--blue" data-module="govuk-button" id="allocated-action-1" formaction="475/check-allocation" data-max-items="1" data-govuk-button-init="">
                                 Manage allocation
                             </button> 
                         </div>
@@ -841,7 +853,7 @@ Appointments prototype
                             <a class="sticky-select-action-bar__clear-link">Clear</a>
                         </div>
                         <div class="govuk-button-group">
-                            <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--white" data-module="govuk-button" id="candidate-action-0" formaction="#" data-max-items="" data-govuk-button-init="">
+                            <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--blue" data-module="govuk-button" id="candidate-action-0" formaction="#" data-max-items="" data-govuk-button-init="">
                                 Allocate
                             </button>  
                         </div>
@@ -1012,7 +1024,7 @@ Appointments prototype
 		<div class="govuk-button-group govuk-!-margin-bottom-0">
 			{{ govukButton({
 			text: "Remove from activity",
-			classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
+			classes: "govuk-!-margin-bottom-0 govuk-button--blue app-attendance-btn",
 			attributes: {
 				"value": "deallocate",
 				name: "allocation-action"
@@ -1020,7 +1032,7 @@ Appointments prototype
 			}) }}
 			{{ govukButton({
 			text: "Edit allocation",
-			classes: "govuk-!-margin-bottom-0 govuk-button--white app-attendance-btn",
+			classes: "govuk-!-margin-bottom-0 govuk-button--blue app-attendance-btn",
 			attributes: {
 				"value": "edit-allocation",
 				name: "allocation-action"

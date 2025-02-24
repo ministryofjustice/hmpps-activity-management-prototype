@@ -1,8 +1,20 @@
 {% extends "layout_hmpps-new-nav.html" %}
-{% set serviceName = "Appointments" %}
+
+{% set serviceName = "Activities" %}
+
+{% set prisonerName = "David Jones" %}
+{% set prisonerNameAlt = "Jones, David" %}
+{% set prisonerNumber = "G7006VF" %}
+{% set prisonerLocation = "D-2-08N" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Standard" %}
+{% set prisonerEarliestReleaseDate = "17 June 2032" %}
+
+{% set activityTitle = "Wing cleaning" %}
 
 {% block pageTitle %}
-Appointments prototype
+Allocate - {{ serviceName }} prototype
 {% endblock %}
 
 {% block primaryNavigation %}
@@ -26,8 +38,8 @@ Appointments prototype
                 <fieldset class="govuk-fieldset" aria-describedby="session-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <h1 class="govuk-fieldset__heading">
-                        <span class="govuk-caption-l">Wing cleaning</span>
-                        When do you want David Jones to start attending this activity?
+                        <span class="govuk-caption-l">{{ activityTitle }}</span>
+                        When do you want {{ prisonerName }} to start attending this activity?
                     </h1>
                 </legend>
                 <div class="govuk-radios" data-module="govuk-radios">

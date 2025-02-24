@@ -1,8 +1,20 @@
 {% extends "layout_hmpps-new-nav.html" %}
-{% set serviceName = "Appointments" %}
+
+{% set serviceName = "Activities" %}
+
+{% set prisonerName = "David Jones" %}
+{% set prisonerNameAlt = "Jones, David" %}
+{% set prisonerNumber = "G7006VF" %}
+{% set prisonerLocation = "D-2-08N" %}
+{% set prisonerCategory = "C" %}
+{% set prisonerCSRA = "Standard" %}
+{% set prisonerIncentiveLevel = "Standard" %}
+{% set prisonerEarliestReleaseDate = "17 June 2032" %}
+
+{% set activityTitle = "Wing cleaning" %}
 
 {% block pageTitle %}
-Appointments prototype
+Allocate - {{ serviceName }} prototype
 {% endblock %}
 
 {% block primaryNavigation %}
@@ -22,7 +34,7 @@ Appointments prototype
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-        <span class="govuk-caption-l">Wing cleaning</span>
+        <span class="govuk-caption-l">{{ activityTitle }}</span>
         <h1 class="govuk-heading-l">
             Confirm and check this allocation
         </h1>
@@ -32,7 +44,7 @@ Appointments prototype
                     Prisoner details
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    David Jones<br>G7006VF
+                    {{ prisonerName }}<br> {{ prisonerNumber }}
                 </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -40,7 +52,7 @@ Appointments prototype
                     Activity
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    Wing cleaning
+                    {{ activityTitle }}
                 </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -78,7 +90,7 @@ Appointments prototype
                     Pay rate
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    Low incentive level:<br>Pay band 3 - £1.50
+                    {{ prisonerIncentiveLevel }} incentive level:<br>Pay band 3 - £1.50
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> end of allocation</span></a>

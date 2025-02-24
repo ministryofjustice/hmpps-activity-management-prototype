@@ -1,6 +1,8 @@
 {% extends "layout_hmpps-new-nav.html" %}
 {% set serviceName = "Activities" %}
 
+
+
 {% block pageTitle %}
 DPS search results - {{ serviceName }} prototype
 {% endblock %}
@@ -36,7 +38,7 @@ DPS search results - {{ serviceName }} prototype
     </div>
     <div>
         <dt class="govuk-!-display-inline-block govuk-!-font-weight-bold">Selected location:</dt>
-        <dd class="govuk-!-display-inline-block govuk-!-margin-0">Leeds (HMP)</dd>
+        <dd class="govuk-!-display-inline-block govuk-!-margin-0">{{ prisonLocation }} (HMP)</dd>
     </div>
 </dl>
 <div class="govuk-!-display-none-print">
@@ -53,7 +55,7 @@ DPS search results - {{ serviceName }} prototype
                 Select location
             </label>
             <select class="govuk-select" id="location" name="location" data-test="prisoner-search-location">
-                <option value="RSI" selected="">Leeds (HMP)</option>
+                <option value="RSI" selected="">{{ prisonLocation }} (HMP)</option>
                 <option value="RSI-S">CSU</option>
                 <option value="RSI-A">Wing A</option>
                 <option value="RSI-B">Wing B</option>

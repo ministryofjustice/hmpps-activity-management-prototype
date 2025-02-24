@@ -16,7 +16,7 @@
 {% set activityTitle = "Plastering workshop" %}
 
 {% block pageTitle %}
-Appointments prototype
+Waitlist - {{ serviceName }} prototype
 {% endblock %}
 
 {% block primaryNavigation %}
@@ -38,7 +38,7 @@ Appointments prototype
     <div class="govuk-grid-column-three-quarters">
         <span class="govuk-caption-l">{{ activityTitle }}</span>
         <h1 class="govuk-heading-l">
-            Change when {{ prisonerName }} should attend Wing cleaning
+            Change when {{ prisonerName }} should attend {{ activityTitle }}
         </h1>
         <p class="govuk-body">Unselect a session to exclude {{ prisonerName }}. They will not be scheduled to attend that session.</p>
         <form action="check-and-confirm" method="post">
@@ -59,17 +59,17 @@ Appointments prototype
                         {
                         value: "AM (08:30 to 11:45)",
                         text: "AM (08:30 to 11:45)",
-                        checked: checked("exclusions-monday", "AM (08:30 to 11:45)")
+                        checked: true
                         },
                         {
                         value: "PM (12:30 to 16:30)",
                         text: "PM (12:30 to 16:30)",
-                        checked: checked("exclusions-monday", "PM (12:30 to 16:30)")
+                        checked: true
                         },
                         {
                         value: "ED (17:00 to 18:30)",
                         text: "ED (17:00 to 18:30)",
-                        checked: checked("exclusions-monday", "D (17:00 to 18:30)")
+                        checked: false
                         }
                     ]
                     }) }}
@@ -88,17 +88,17 @@ Appointments prototype
                         {
                         value: "AM (08:30 to 11:45)",
                         text: "AM (08:30 to 11:45)",
-                        checked: checked("exclusions-tuesday", "AM (08:30 to 11:45)")
+                        checked: true
                         },
                         {
                         value: "PM (12:30 to 16:30)",
                         text: "PM (12:30 to 16:30)",
-                        checked: checked("exclusions-tuesday", "PM (12:30 to 16:30)")
+                        checked: true
                         },
                         {
                         value: "ED (17:00 to 18:30)",
                         text: "ED (17:00 to 18:30)",
-                        checked: checked("exclusions-tuesday", "ED (17:00 to 18:30)")
+                        checked: false
                         }
                     ]
                     }) }}
@@ -116,17 +116,17 @@ Appointments prototype
                             {
                             value: "AM (08:30 to 11:45)",
                             text: "AM (08:30 to 11:45)",
-                            checked: checked("exclusions-wednesday", "AM (08:30 to 11:45)")
+                            checked: true
                             },
                             {
                             value: "PM (12:30 to 16:30)",
                             text: "PM (12:30 to 16:30)",
-                            checked: checked("exclusions-wednesday", "PM (12:30 to 16:30)")
+                            checked: true
                             },
                             {
                             value: "ED (17:00 to 18:30)",
                             text: "ED (17:00 to 18:30)",
-                            checked: checked("exclusions-wednesday", "ED (17:00 to 18:30)")
+                            checked: false
                             }
                         ]
                     }) }}
@@ -144,17 +144,17 @@ Appointments prototype
                             {
                             value: "AM (08:30 to 11:45)",
                             text: "AM (08:30 to 11:45)",
-                            checked: checked("exclusions-thursday", "AM (08:30 to 11:45)")
+                            checked: true
                             },
                             {
                             value: "PM (12:30 to 16:30)",
                             text: "PM (12:30 to 16:30)",
-                            checked: checked("exclusions-thursday", "PM (12:30 to 16:30)")
+                            checked: true
                             },
                             {
                             value: "ED (17:00 to 18:30)",
                             text: "ED (17:00 to 18:30)",
-                            checked: checked("exclusions-thursday", "ED (17:00 to 18:30)")
+                            checked: false
                             }
                         ]
                     }) }}
@@ -171,17 +171,17 @@ Appointments prototype
                             {
                             value: "AM (08:30 to 11:45)",
                             text: "AM (08:30 to 11:45)",
-                            checked: checked("exclusions-friday", "AM (08:30 to 11:45)")
+                            checked: true
                             },
                             {
                             value: "PM (12:30 to 16:30)",
                             text: "PM (12:30 to 16:30)",
-                            checked: checked("exclusions-friday", "PM (12:30 to 16:30)")
+                            checked: true
                             },
                             {
                             value: "ED (17:00 to 18:30)",
                             text: "ED (17:00 to 18:30)",
-                            checked: checked("exclusions-friday", "ED (17:00 to 18:30)")
+                            checked: false
                             }
                         ]
                     }) }}
@@ -199,17 +199,17 @@ Appointments prototype
                             {
                             value: "AM (08:30 to 11:45)",
                             text: "AM (08:30 to 11:45)",
-                            checked: checked("exclusions-saturday", "AM (08:30 to 11:45)")
+                            checked: false
                             },
                             {
                             value: "PM (12:30 to 16:30)",
                             text: "PM (12:30 to 16:30)",
-                            checked: checked("exclusions-saturday", "PM (12:30 to 16:30)")
+                            checked: false
                             },
                             {
                             value: "ED (17:00 to 18:30)",
                             text: "ED (17:00 to 18:30)",
-                            checked: checked("exclusions-saturday", "ED (17:00 to 18:30)")
+                            checked: false
                             }
                         ]
                     }) }}
@@ -227,17 +227,17 @@ Appointments prototype
                             {
                             value: "AM (08:30 to 11:45)",
                             text: "AM (08:30 to 11:45)",
-                            checked: checked("exclusions-sunday", "AM (08:30 to 11:45)")
+                            checked: false
                             },
                             {
                             value: "PM (12:30 to 16:30)",
                             text: "PM (12:30 to 16:30)",
-                            checked: checked("exclusions-sunday", "PM (12:30 to 16:30)")
+                            checked: false
                             },
                             {
                             value: "ED (17:00 to 18:30)",
                             text: "ED (17:00 to 18:30)",
-                            checked: checked("exclusions-sunday", "ED (17:00 to 18:30)")
+                            checked: false
                             }
                         ]
                     }) }}
