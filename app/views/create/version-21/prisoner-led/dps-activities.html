@@ -1,4 +1,4 @@
-{% extends "layout_hmpps-extended-width.html" %}
+{% extends "layout_hmpps-new-nav-blank.html" %}
 
 {% set serviceName = "Activities" %}
 
@@ -10,7 +10,13 @@ DPS Home - {{ serviceName }} prototype
 
 {% block primaryNavigation %}
 <div class="govuk-width-container">
-    <h1 class="govuk-heading-l">Activities, unlock and attendance</h1>
+    <nav class="govuk-!-display-none-print">
+        <a href="dps-home" class="govuk-back-link">Digital Prison Services</a>
+    </nav>
+</div>
+
+<div class="govuk-width-container">
+    <h1 class="govuk-heading-l govuk-!-margin-top-6">Activities, unlock and attendance</h1>
 </div>
 
 <div class="homepage-content">
@@ -51,5 +57,8 @@ DPS Home - {{ serviceName }} prototype
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block content %}
 
 {% endblock %}
